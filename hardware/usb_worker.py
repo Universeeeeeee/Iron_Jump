@@ -12,6 +12,9 @@ import time
 
 from qtpy.QtCore import QObject, Signal, Slot, QTimer
 
+from hardware.protocol import UploadDataSubPack, crc8_poly_07
+from hardware.sensor_frame import AcquisitionIssue, DeviceLayout, SensorFrameAssembler
+
 try:
     from .receive import CyUsbInterfaceDevice, E_DATA_REPORT
 except ImportError:
@@ -27,12 +30,12 @@ LED_HEALTH_MIN_FRAMES = 20
 LED_HEALTH_TIMEOUT_S = 0.8
 
 
-def summarize_led_health(contact_frames: list[list[int]]) -> dict:
+def summarize_led_health(contact_frames: list[list[int]], bit_count: int = 96) -> dict:
     """Summarize per-LED continuity from a short unobstructed sampling window."""
     frames = [
-        [1 if int(bit) else 0 for bit in frame[:96]]
+        [1 if int(bit) else 0 for bit in frame[:bit_count]]
         for frame in contact_frames
-        if len(frame) >= 96
+        if len(frame) == bit_count
     ]
     sample_count = len(frames)
     if sample_count < LED_HEALTH_MIN_FRAMES:
@@ -46,7 +49,7 @@ def summarize_led_health(contact_frames: list[list[int]]) -> dict:
     disconnected: list[int] = []
     flickering: list[int] = []
     transition_threshold = max(4, math.ceil((sample_count - 1) * 0.10))
-    for led_index in range(96):
+    for led_index in range(bit_count):
         values = [frame[led_index] for frame in frames]
         if all(values):
             disconnected.append(led_index + 1)
@@ -69,23 +72,34 @@ def summarize_led_health(contact_frames: list[list[int]]) -> dict:
 class UsbWorker(QObject):
     data_received = Signal(str)   # 文本日志（HEX）- 节流
     device_state_changed = Signal(str, str)  # state, user-facing detail
-    led_bits_signal = Signal(list)  # 96 位 LED 位图 (物理语义: 1=LED亮/未遮挡) - 节流，供 UI
-    led_contact_signal = Signal(list)  # 96 位 LED 位图 (接触语义: 1=遮挡/触地) - 节流，供 UI
-    raw_contact_signal = Signal(list, float)  # 96 位无损状态 (1=触地) & 精确时间戳 - 供算法无损计算
+    sensor_frame_received = Signal(object)  # SensorFrame: complete, unfiltered, all modules
+    acquisition_issue = Signal(object)  # AcquisitionIssue: never substitute a clear frame
+    led_bits_signal = Signal(list)  # 全设备 LED 位图 (物理语义: 1=LED亮/未遮挡) - 节流，供 UI
+    led_contact_signal = Signal(list)  # 全设备 LED 位图 (接触语义: 1=遮挡/触地) - 节流，供 UI
+    raw_contact_signal = Signal(list, float)  # 单段兼容接口，保留 perf_counter 时间基准
     led_health_changed = Signal(dict)  # 轻量 LED 通断/闪烁检查结果
 
-    def __init__(self, dll_path=None, vid=0x04B4, pid=0x1004, timeout_ms=30, chunk_size=512):
+    def __init__(self, dll_path=None, vid=0x04B4, pid=0x1004, timeout_ms=30, chunk_size=512,
+                 *, layout: DeviceLayout | None = None, capture_command_required=False):
         super().__init__()
         self.dll_path = dll_path
         self.vid = int(vid)
         self.pid = int(pid)
         self.timeout_ms = int(timeout_ms)
         self.chunk_size = int(chunk_size)
+        if layout is None:
+            count = int(os.getenv("DAYU_SEGMENT_COUNT", "1"))
+            order = os.getenv("DAYU_SEGMENT_ORDER", "")
+            layout = DeviceLayout.linear(
+                count, wire_order=tuple(int(i) for i in order.split(",")) if order else None,
+            )
+        self.layout = layout
+        self.capture_command_required = capture_command_required
+        self._assembler = SensorFrameAssembler(layout)
+        self._frame_lock = threading.Lock()
         self.dev = None
         self._capturing = False
         self._stop = threading.Event()
-        # 分包缓存：frameIdx -> { 'packs': {packIdx: bytes}, 'packNum': int }
-        self._frames = {}
         # 节流设置（默认日志 100ms、LED 由目标采样率推导，可用环境变量覆盖）
         self.log_interval = max(0.0, float(os.getenv("DAYU_LOG_INTERVAL_MS", "100")) / 1000.0)
         target_rate = max(1.0, float(os.getenv("DAYU_TARGET_RATE_HZ", "200")))
@@ -119,14 +133,6 @@ class UsbWorker(QObject):
     def _emit_state(self, state: str, message: str) -> None:
         self.device_state_changed.emit(state, message)
         self._emit(message)
-
-    def _bytes_to_bits(self, payload: bytes):
-        # 按 LSB→MSB 展开，最多取前 12 字节 = 96 位
-        bits = []
-        for b in payload[:12]:
-            for i in range(8):
-                bits.append((b >> i) & 0x1)
-        return bits[:96]
 
     def _extract_payload(self, subpack) -> bytes:
         # 适配多种可能字段名
@@ -192,6 +198,11 @@ class UsbWorker(QObject):
                 pass
 
     def _on_flush_timer(self):
+        with self._frame_lock:
+            self._assembler.expire(time.perf_counter_ns())
+            issues = self._assembler.pop_issues()
+        for issue in issues:
+            self.acquisition_issue.emit(issue)
         self._maybe_flush()
 
     def _ensure_timer(self):
@@ -206,100 +217,47 @@ class UsbWorker(QObject):
         self._flush_timer.timeout.connect(self._on_flush_timer)
         self._flush_timer.start()
 
-    def _flush_led_if_ready(self, frameIdx: int):
-        node = self._frames.get(frameIdx)
-        if not node:
-            return
-        packs = node.get("packs", {})
-        packNum = node.get("packNum", 0)
-        if packNum <= 0 or len(packs) < packNum:
-            return
-        # 合并：兼容 packIdx 从 1 或 0 开始
-        payload = bytearray()
-        ordered = False
-        try:
-            for i in range(1, packNum + 1):
-                payload.extend(packs[i])
-            ordered = True
-        except Exception:
-            pass
-        if not ordered:
-            try:
-                for i in range(0, packNum):
-                    payload.extend(packs[i])
-            except Exception:
-                pass
-        if len(payload) >= 12:
-            body12 = bytes(payload[:12])
-            bits = self._bytes_to_bits(body12)
-            
-            # --- 1. 无损高频发射 (供算法通道) ---
-            contact_bits = [1 - b for b in bits]
-            self._record_led_health_frame(contact_bits)
-            try:
-                self.raw_contact_signal.emit(contact_bits, time.perf_counter())
-            except Exception:
-                pass
-                
-            # --- 2. 节流合并缓冲 (供 UI 通道) ---
-            self._queue_update(hex_text=body12.hex(" "), bits=bits)
-        # 清理该帧缓存
-        self._frames.pop(frameIdx, None)
-
     # --- 设备回调 ---
     def _on_bytes(self, data: bytes):
-        if not self.debug_raw:
-            return
-        try:
-            head = data[:16].hex(" ")
-            self._queue_update(hex_text=f"RAW len={len(data)} head={head}")
-        except Exception:
-            pass
+        if self.debug_raw:
+            self._queue_update(hex_text=f"RAW len={len(data)} head={data[:16].hex(' ')}")
 
     def _on_frame(self, frame_type, ack, subpack, status):
-        # 仅处理数据上报帧
-        if E_DATA_REPORT is not None and frame_type != E_DATA_REPORT:
+        if frame_type != E_DATA_REPORT or subpack is None:
             return
-        if not subpack:
-            return
-        # 读取分包标识
         try:
-            frameIdx = int(getattr(subpack, "frameIdx"))
-        except Exception:
-            frameIdx = 0
-        try:
-            packNum = int(getattr(subpack, "packNum"))
-        except Exception:
-            packNum = 1
-        try:
-            packIdx = int(getattr(subpack, "packIdx"))
-        except Exception:
-            packIdx = 1
-        payload = self._extract_payload(subpack)
-        if not payload:
+            packet = UploadDataSubPack(
+                frameIdx=int(subpack.frameIdx), packNum=int(subpack.packNum),
+                packIdx=int(subpack.packIdx), buffer=self._extract_payload(subpack),
+            )
+        except (TypeError, ValueError, AttributeError):
+            self.acquisition_issue.emit(AcquisitionIssue("invalid_packet", -1))
             return
-        # 单包直接处理
-        if packNum <= 1 and len(payload) >= 12:
-            body12 = payload[:12]
-            bits = self._bytes_to_bits(body12)
-            
-            # --- 1. 无损高频发射 (供算法通道) ---
-            contact_bits = [1 - b for b in bits]
-            self._record_led_health_frame(contact_bits)
-            try:
-                self.raw_contact_signal.emit(contact_bits, time.perf_counter())
-            except Exception:
-                import traceback
-                traceback.print_exc()
-                
-            # --- 2. 节流合并缓冲 (供 UI 通道) ---
-            self._queue_update(hex_text=body12.hex(" "), bits=bits)
+        with self._frame_lock:
+            frame = self._assembler.feed(packet, time.perf_counter_ns())
+            issues = self._assembler.pop_issues()
+        for issue in issues:
+            self.acquisition_issue.emit(issue)
+        if frame is None:
             return
-        # 多包：缓存并尝试合并
-        node = self._frames.setdefault(frameIdx, {"packs": {}, "packNum": packNum})
-        node["packs"][packIdx] = bytes(payload)
-        node["packNum"] = max(node.get("packNum", packNum), packNum)
-        self._flush_led_if_ready(frameIdx)
+        self.sensor_frame_received.emit(frame)
+        contacts = list(frame.contact_bits)
+        self._record_led_health_frame(contacts)
+        # Old algorithms expect a single 96-beam module and host clock. Never
+        # silently truncate a multi-module frame into that compatibility path.
+        if len(self.layout.segments) == 1:
+            self.raw_contact_signal.emit(contacts, time.perf_counter())
+        self._queue_update(
+            hex_text=frame.wire_payload.hex(" "), bits=[1 - bit for bit in contacts],
+        )
+
+    def _send_capture_command(self, enable):
+        if not self.capture_command_required:
+            return
+        command = bytes((0x00, 0x10, int(enable)))
+        wire = b"\x5a" * 4 + command + bytes((crc8_poly_07(command),)) + b"\xa5" * 4
+        if self.dev.write(wire) != len(wire):
+            raise RuntimeError("FPGA capture command was not fully written")
 
     # --- 生命周期 ---
     @Slot()
@@ -353,6 +311,9 @@ class UsbWorker(QObject):
 
     def _start_capture_stream(self) -> bool:
         """Start callbacks without deciding how the UI labels the stream."""
+        with self._frame_lock:
+            self._assembler.reset()
+        self._pending_bits = None
         self._ensure_timer()
         try:
             try:
@@ -362,13 +323,15 @@ class UsbWorker(QObject):
             self.dev.start_capture()
             self.dev.set_on_bytes(self._on_bytes)
             self.dev.set_on_frame(self._on_frame)
-            ret = self.dev.start_auto_read(self.chunk_size)
+            ret = self.dev.start_auto_read(self.chunk_size, timeout_ms=self.timeout_ms)
             if ret != 0:
-                self._emit_state("error", f"start_auto_read 失败: {ret}")
-                return False
+                raise RuntimeError(f"start_auto_read 失败: {ret}")
+            self._send_capture_command(True)
             self._capturing = True
             return True
         except Exception as e:
+            self.dev.stop_auto_read()
+            self.dev.stop_capture()
             self._capturing = False
             self._emit_state("error", f"启动读取失败: {e}")
             return False
@@ -414,10 +377,10 @@ class UsbWorker(QObject):
         if not self._health_check_active:
             return
         if (
-            len(contact_bits) >= 96
+            len(contact_bits) == self.layout.bit_count
             and len(self._health_frames) < LED_HEALTH_TARGET_FRAMES
         ):
-            self._health_frames.append(list(contact_bits[:96]))
+            self._health_frames.append(list(contact_bits))
 
     def _poll_led_health(self) -> None:
         if not self._health_check_active:
@@ -434,10 +397,14 @@ class UsbWorker(QObject):
             return
         self._health_check_active = False
         self._health_timer.stop()
-        result = summarize_led_health(self._health_frames)
+        result = summarize_led_health(self._health_frames, self.layout.bit_count)
         self._health_frames.clear()
 
         if self._health_owns_capture and self.dev is not None:
+            try:
+                self._send_capture_command(False)
+            except Exception as exc:
+                self._emit(f"停止采集命令失败: {exc}")
             try:
                 self.dev.set_on_bytes(None)
                 self.dev.set_on_frame(None)
@@ -471,6 +438,11 @@ class UsbWorker(QObject):
         # 尝试最后一次刷新
         self._maybe_flush(force=True)
         if self.dev:
+            if self._capturing:
+                try:
+                    self._send_capture_command(False)
+                except Exception as exc:
+                    self._emit(f"停止采集命令失败: {exc}")
             try:
                 self.dev.set_on_bytes(None)
             except Exception:

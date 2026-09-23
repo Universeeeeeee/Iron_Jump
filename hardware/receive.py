@@ -216,7 +216,9 @@ class CyUsbInterfaceDevice:
         self._on_frame: Optional[Callable[[int, object, object, object], None]] = None
         self._rx_buf = bytearray()
         self._lock = threading.Lock()
-        self._parser = ProtocolParser()
+        self._parser = ProtocolParser(
+            frame_index_byteorder=os.getenv("DAYU_FRAME_INDEX_BYTEORDER", "little")
+        )
         self._reader_thread: Optional[threading.Thread] = None
         self._stop_evt = threading.Event()
         self._vid = None
@@ -293,10 +295,13 @@ class CyUsbInterfaceDevice:
                 pass
         return self.dll.read(size)
 
-    def start_auto_read(self, chunk_size: int = 2048) -> int:
+    def start_auto_read(self, chunk_size: int = 2048, timeout_ms: int | None = None) -> int:
         if self._reader_thread and self._reader_thread.is_alive():
             return 0
         self._stop_evt.clear()
+        self._rx_buf.clear()
+        if timeout_ms is not None:
+            self._timeout_ms = timeout_ms
 
         def _loop():
             # Use a moderate timeout for responsiveness

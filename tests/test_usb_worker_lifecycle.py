@@ -32,7 +32,8 @@ class _FakeDevice:
     def set_on_frame(self, callback):
         self.on_frame = callback
 
-    def start_auto_read(self, _chunk):
+    def start_auto_read(self, _chunk, timeout_ms=None):
+        self.read_timeout_ms = timeout_ms
         self.auto_read_started = True
         return 0
 
@@ -65,6 +66,7 @@ def test_connect_does_not_start_capture(monkeypatch):
 
     assert worker.dev.capture_started
     assert worker.dev.auto_read_started
+    assert worker.dev.read_timeout_ms == worker.timeout_ms
     assert states[-1][0] == "streaming"
     worker.stop()
 

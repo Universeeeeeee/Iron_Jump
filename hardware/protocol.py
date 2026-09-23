@@ -15,14 +15,13 @@ Notes
 - Header: 4 bytes magic + 1 byte type + 2 bytes datalength, little-endian for the 16-bit length.
 - CRC: CRC-8 polynomial 0x07, init 0x00, no reflection, xorout 0x00; computed over (type + length + payload).
 - Tail: 4 bytes magic (0xA5A5A5A5).
-- DATA_REPORT payload layout: DATA_INFO (frameIdx: uint32 big-endian, packNum: u8, packIdx: u8) + raw bytes.
+- DATA_REPORT payload layout: DATA_INFO (frameIdx: uint32 little-endian (configurable for older firmware), packNum: u8, packIdx: u8) + raw bytes.
 - STATUS_REPORT payload layout: type: u8, value: u8 (fixing the apparent bug in C++ code that overwrote type twice).
 """
 from __future__ import annotations
 
 from dataclasses import dataclass
 from typing import Optional, Tuple
-import struct
 
 # =====================
 # Protocol constants
@@ -89,113 +88,76 @@ def crc8_poly_07(data: bytes) -> int:
 # =====================
 # Parser
 # =====================
-def _find_header(buf: bytes, start: int = 0) -> int:
-    magic = struct.pack('<I', FRAME_HEADER_FLAG)
-    idx = buf.find(magic, start)
-    return idx
+def protocol_parser(buf: bytearray, *, frame_index_byteorder="little") -> Tuple[int, Optional[int], Optional[AckData], Optional[UploadDataSubPack], Optional[StatusData]]:
+    """Parse the continuous byte stream, preserving split headers and packets.
 
-
-def protocol_parser(buf: bytearray) -> Tuple[int, Optional[int], Optional[AckData], Optional[UploadDataSubPack], Optional[StatusData]]:
-    """Parse one frame from the buffer if available.
-    - Mutates buf in place to drop consumed bytes (either a full frame or junk up to next viable position).
-    - Returns (ret, type, ack, subpack, status). ret==0 on success, -1 if no full valid frame found.
+    Firmware observed in the 0918 capture uses a little-endian counter. Older
+    firmware can explicitly select big-endian; never infer order per packet.
     """
-    idx = 0
-    bHaveParsed = False
-
-    while idx <= len(buf) - MIN_PACKET_LENGTH:
-        # Seek header
-        idx = _find_header(buf, idx)
+    if frame_index_byteorder not in ("little", "big"):
+        raise ValueError("frame_index_byteorder must be little or big")
+    missing = (-1, None, None, None, None)
+    magic = b"\x5a" * 4
+    while True:
+        idx = buf.find(magic)
         if idx < 0:
-            break
-
-        # Ensure we have at least minimal header/type/length to read
-        if len(buf) - idx < MIN_PACKET_LENGTH:
-            break  # wait for more data
-
-        # Read header magic, type, datalength (little-endian)
-        try:
-            # header magic already matched, but read fields
-            # After 4-byte magic, next 1 byte type, 2 bytes length
-            frame_type = buf[idx + 4]
-            datalength = struct.unpack_from('<H', buf, idx + 5)[0]
-        except struct.error:
-            break
-
-        packlen = FRAME_TYPE_LEN + FRAME_LENGTH_LEN + datalength  # bytes covered by CRC
-        total_len = FRAME_HEADER_LEN + packlen + FRAME_CRC_LEN + FRAME_TAIL_LEN
-
-        # If not enough bytes for this frame, wait for more
-        if len(buf) - idx < total_len:
-            break
-
-        # Compute and verify CRC (over type+length+data)
-        crc_region = bytes(buf[idx + FRAME_HEADER_LEN : idx + FRAME_HEADER_LEN + packlen])
-        calc = crc8_poly_07(crc_region)
-        recv_crc = buf[idx + FRAME_HEADER_LEN + packlen]
-
-        # Read and verify tail
-        tail_off = idx + FRAME_HEADER_LEN + packlen + FRAME_CRC_LEN
-        frametail = struct.unpack_from('<I', buf, tail_off)[0]
-
-        if calc != recv_crc or frametail != FRAME_TAIL_FLAG:
-            # Drop this frame and continue searching
-            del buf[: idx + total_len]
-            idx = 0
+            keep = 0
+            for size in (3, 2, 1):
+                if buf.endswith(magic[:size]):
+                    keep = size
+                    break
+            if len(buf) > keep:
+                del buf[:len(buf) - keep]
+            return missing
+        if idx:
+            del buf[:idx]
+        if len(buf) < 7:
+            return missing
+        frame_type = buf[4]
+        length = int.from_bytes(buf[5:7], "little")
+        valid_length = (
+            (frame_type == E_DATA_REPORT and 18 <= length <= 6 + 12 * 255
+             and (length - 6) % 12 == 0)
+            or (frame_type == E_ACK and length == 1)
+            or (frame_type == E_STATUS_REPORT and length == 2)
+        )
+        if not valid_length:
+            del buf[0]
             continue
-
-        # Valid frame; parse by type
-        payload_off = idx + FRAME_HEADER_LEN + FRAME_TYPE_LEN + FRAME_LENGTH_LEN
-        payload = bytes(buf[payload_off : payload_off + datalength])
-
-        ack: Optional[AckData] = None
-        subpack: Optional[UploadDataSubPack] = None
-        status: Optional[StatusData] = None
-
-        if frame_type == E_ACK:
-            ack_val = payload[0] if len(payload) >= 1 else 0
-            ack = AckData(ACK=ack_val)
-        elif frame_type == E_STATUS_REPORT:
-            t = payload[0] if len(payload) >= 1 else 0
-            v = payload[1] if len(payload) >= 2 else 0
-            status = StatusData(type=t, value=v)
-        elif frame_type == E_DATA_REPORT:
-            if len(payload) >= 6:
-                frameIdx = struct.unpack('!I', payload[0:4])[0]  # network (big-endian)
-                packNum = payload[4]
-                packIdx = payload[5]
-                body = payload[6:]
-                subpack = UploadDataSubPack(
-                    bufferLen=len(body),
-                    frameIdx=frameIdx,
-                    packNum=packNum,
-                    packIdx=packIdx,
-                    buffer=body,
-                )
-            else:
-                # payload too short; treat as invalid and drop
-                del buf[: idx + total_len]
-                idx = 0
+        if frame_type == E_DATA_REPORT:
+            if len(buf) < 13:
+                return missing
+            count, part = buf[11], buf[12]
+            if count < 1 or part > count or (count > 1 and length != 18):
+                del buf[0]
                 continue
-        else:
-            # Unknown type; report as unknown and still consume
-            frame_type = E_UNKNOWN_TYPE
-
-        # Consume the frame from buffer
-        del buf[: idx + total_len]
-        return 0, frame_type, ack, subpack, status
-
-    # No full valid frame parsed this round; optionally drop junk before first header to mimic C++ resync
-    first = _find_header(buf, 0)
-    if first > 0:
-        del buf[:first]
-    return -1, None, None, None, None
+        total = MIN_PACKET_LENGTH + length
+        if len(buf) < total:
+            return missing
+        if buf[8 + length:total] != b"\xa5" * 4 or crc8_poly_07(buf[4:7 + length]) != buf[7 + length]:
+            # An untrusted length must not skip the beginning of a valid frame.
+            del buf[0]
+            continue
+        payload = bytes(buf[7:7 + length])
+        del buf[:total]
+        if frame_type == E_DATA_REPORT:
+            packet = UploadDataSubPack(
+                bufferLen=length - 6,
+                frameIdx=int.from_bytes(payload[:4], frame_index_byteorder),
+                packNum=payload[4], packIdx=payload[5], buffer=payload[6:],
+            )
+            return 0, frame_type, None, packet, None
+        if frame_type == E_ACK:
+            return 0, frame_type, AckData(payload[0]), None, None
+        return 0, frame_type, None, None, StatusData(payload[0], payload[1])
 
 
 # Convenience class wrapper (optional)
 class ProtocolParser:
-    def __init__(self):
-        pass
+    def __init__(self, *, frame_index_byteorder="little"):
+        if frame_index_byteorder not in ("little", "big"):
+            raise ValueError("frame_index_byteorder must be little or big")
+        self.frame_index_byteorder = frame_index_byteorder
 
     def parse(self, buf: bytearray):
-        return protocol_parser(buf)
+        return protocol_parser(buf, frame_index_byteorder=self.frame_index_byteorder)
