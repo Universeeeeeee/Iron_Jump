@@ -1,0 +1,340 @@
+<html>
+<head>
+    <meta http-equiv="Content-Language" content="zh-cn">
+    <meta name="GENERATOR" content="Microsoft FrontPage 6.0">
+    <meta name="ProgId" content="FrontPage.Editor.Document">
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312">
+    <title>USB IC 卡读卡器控件调用例程 V1.0</title>
+
+    <script id="clientEventHandlersVBS" language="vbscript">
+<!--
+'控制字定义,控制字指定,控制字的含义请查看本公司网站提供的动态库说明
+Const BLOCK0_EN = &H1'读第一块的(16个字节)
+Const BLOCK1_EN = &H2'读第二块的(16个字节)
+Const BLOCK2_EN = &H4'读第四块的(16个字节)
+Const NEEDSERIAL = &H8'仅读指定序列号的卡
+Const EXTERNKEY = &H10'用明码认证密码,产品开发完成后，建议把密码放到设备的只写区，然后用该区的密码后台认证，这样谁都不知道密码是多少，需要这方面支持请联系
+Const NEEDHALT = &H20'读/写完卡后立即休眠该卡，相当于这张卡不在感应区。要相重新操作该卡必要拿开卡再放上去
+
+dim myctrlword
+dim mypiccserial
+dim myareano
+dim authmode
+dim mypicckey
+dim piccdata0_2 
+
+dim mypicckey_old'旧密码
+dim mypicckey_new'新密码
+
+dim retval
+
+dim strls
+dim errorno
+strls = "adsgdss"
+
+Sub readcard_onclick
+	'指定控制字
+	myctrlword=BLOCK0_EN + BLOCK1_EN + BLOCK2_EN + EXTERNKEY
+	'指定区号
+	myareano = 8 '指定为第8区
+	'批定密码模式
+	authmode = 1 '大于0表示用A密码认证，推荐用A密码认证
+	
+	'指定序列号，未知卡序列号时可指定为8个0
+	mypiccserial="00000000"
+
+	'指定密码，以下密码为厂家出厂密码
+	mypicckey = "ffffffffffff"
+	
+	strls=IcCardReader.piccreadex(myctrlword, mypiccserial,myareano,authmode,mypicckey)
+	errorno = mid(strls,1,4)
+	select case  errorno
+		case "ER08"
+			msgbox "寻不到卡"
+		case "ER09"
+			msgbox "寻不到卡"
+		case "ER10"
+			msgbox "寻不到卡"
+		case "ER11"
+			CardIDShower.value = "密码认证错误" & Chr(13) & Chr(10)
+			CardIDShower.value = CardIDShower.value & strls & Chr(13) & Chr(10)
+			CardIDShower.value = CardIDShower.value & "其中错误号为：" & errorno & Chr(13) & Chr(10)
+			CardIDShower.value = CardIDShower.value & "卡十六进制序列号为：" & mid(strls,6,8) & Chr(13) & Chr(10)
+			msgbox "密码认证错误"
+		case "ER12"
+			CardIDShower.value = "密码认证错误" & Chr(13) & Chr(10)
+			CardIDShower.value = CardIDShower.value & strls & Chr(13) & Chr(10)
+			CardIDShower.value = CardIDShower.value & "其中错误号为：" & errorno & Chr(13) & Chr(10)
+			CardIDShower.value = CardIDShower.value & "卡十六进制序列号为：" & mid(strls,6,8) & Chr(13) & Chr(10)
+			msgbox "密码认证错误"
+		case "ER13"
+			CardIDShower.value = "读卡错误" & Chr(13) & Chr(10)
+			CardIDShower.value = CardIDShower.value & strls & Chr(13) & Chr(10)
+			CardIDShower.value = CardIDShower.value & "其中错误号为：" & errorno & Chr(13) & Chr(10)
+			CardIDShower.value = CardIDShower.value & "卡十六进制序列号为：" & mid(strls,6,8) & Chr(13) & Chr(10)
+			msgbox "读卡错误"	
+			
+		case "ER14"
+			CardIDShower.value = "写卡错误" & Chr(13) & Chr(10)
+			CardIDShower.value = CardIDShower.value & strls & Chr(13) & Chr(10)
+			CardIDShower.value = CardIDShower.value & "其中错误号为：" & errorno & Chr(13) & Chr(10)
+			CardIDShower.value = CardIDShower.value & "卡十六进制序列号为：" & mid(strls,6,8) & Chr(13) & Chr(10)
+			msgbox "写卡错误"	
+			
+		case "ER21"
+			msgbox "没找到动态库"	
+			
+		case "ER22"
+			msgbox "动态库或驱动程序异常"	
+		
+		case "ER23"
+			msgbox "读卡器未插上或动态库或驱动程序异常"	
+		case "ER24"
+			msgbox "操作超时，一般是动态库没有反应"	
+		case "ER25"
+			msgbox "发送字数不够"	
+		case "ER26"
+			msgbox "发送的CRC错"	
+		case "ER27"
+			msgbox "接收的字数不够"	
+		case "ER28"
+			msgbox "接收的CRC错"
+		case "ER29"
+			msgbox "函数输入参数格式错误,请仔细查看"	
+		case else'读卡成功,其中ER00表示完全成功,ER01表示完全没读到卡数据，ER02表示仅读该卡的第一块成功,，ER02表示仅读该卡的第一二块成功，这是刷卡太快原因
+			CardIDShower.value = "读卡成功" & Chr(13) & Chr(10)
+			CardIDShower.value = CardIDShower.value & strls & Chr(13) & Chr(10)
+			CardIDShower.value = CardIDShower.value & "其中错误号为：" & errorno & Chr(13) & Chr(10)
+			CardIDShower.value = CardIDShower.value & "卡十六进制序列号为：" & mid(strls,6,8) & Chr(13) & Chr(10)
+			CardIDShower.value = CardIDShower.value & "该区第一块十六进制数据为：" & mid(strls,15,32) & Chr(13) & Chr(10)
+			CardIDShower.value = CardIDShower.value & "该区第二块十六进制数据为：" & mid(strls,47,32) & Chr(13) & Chr(10)
+			CardIDShower.value = CardIDShower.value & "该区第三块十六进制数据为：" & mid(strls,79,32) & Chr(13) & Chr(10)
+	
+	end select
+End Sub
+
+Sub writecard_onclick
+	'指定控制字
+	myctrlword=BLOCK0_EN + BLOCK1_EN + BLOCK2_EN + EXTERNKEY
+	'指定区号
+	myareano = 8 '指定为第8区
+	'批定密码模式
+	authmode = 1 '大于0表示用A密码认证，推荐用A密码认证
+	
+	'指定序列号，未知卡序列号时可指定为8个0
+	mypiccserial="00000000"
+
+	
+	'指定密码，以下密码为厂家出厂密码
+	mypicckey = "ffffffffffff"
+
+	
+	'指定写卡内容，长度为48个字节，其中每个字节以两个字符表示为十六进制数
+	piccdata0_2 = "000102030405060708090A0B0C0D0E0F101112131415161718191A1B1C1D1E1F202122232425262728292A2B2C2D2E2F"
+	strls=IcCardReader.piccwriteex(myctrlword, mypiccserial,myareano,authmode,mypicckey,piccdata0_2)
+	errorno = mid(strls,1,4)
+	select case  errorno
+		case "ER08"
+			msgbox "寻不到卡"
+		case "ER09"
+			msgbox "寻不到卡"
+		case "ER10"
+			msgbox "寻不到卡"
+		case "ER11"
+			CardIDShower.value = "密码认证错误" & Chr(13) & Chr(10)
+			CardIDShower.value = CardIDShower.value & strls & Chr(13) & Chr(10)
+			CardIDShower.value = CardIDShower.value & "其中错误号为：" & errorno & Chr(13) & Chr(10)
+			CardIDShower.value = CardIDShower.value & "卡十六进制序列号为：" & mid(strls,6,8) & Chr(13) & Chr(10)
+			msgbox "密码认证错误"
+		case "ER12"
+			CardIDShower.value = "密码认证错误" & Chr(13) & Chr(10)
+			CardIDShower.value = CardIDShower.value & strls & Chr(13) & Chr(10)
+			CardIDShower.value = CardIDShower.value & "其中错误号为：" & errorno & Chr(13) & Chr(10)
+			CardIDShower.value = CardIDShower.value & "卡十六进制序列号为：" & mid(strls,6,8) & Chr(13) & Chr(10)
+			msgbox "密码认证错误"
+		case "ER13"
+			CardIDShower.value = "读卡错误" & Chr(13) & Chr(10)
+			CardIDShower.value = CardIDShower.value & strls & Chr(13) & Chr(10)
+			CardIDShower.value = CardIDShower.value & "其中错误号为：" & errorno & Chr(13) & Chr(10)
+			CardIDShower.value = CardIDShower.value & "卡十六进制序列号为：" & mid(strls,6,8) & Chr(13) & Chr(10)
+			msgbox "读卡错误"	
+			
+		case "ER14"
+			CardIDShower.value = "写卡错误" & Chr(13) & Chr(10)
+			CardIDShower.value = CardIDShower.value & strls & Chr(13) & Chr(10)
+			CardIDShower.value = CardIDShower.value & "其中错误号为：" & errorno & Chr(13) & Chr(10)
+			CardIDShower.value = CardIDShower.value & "卡十六进制序列号为：" & mid(strls,6,8) & Chr(13) & Chr(10)
+			msgbox "写卡错误"	
+			
+		case "ER21"
+			msgbox "没找到动态库"	
+			
+		case "ER22"
+			msgbox "动态库或驱动程序异常"	
+		
+		case "ER23"
+			msgbox "读卡器未插上或动态库或驱动程序异常"	
+		case "ER24"
+			msgbox "操作超时，一般是动态库没有反应"	
+		case "ER25"
+			msgbox "发送字数不够"	
+		case "ER26"
+			msgbox "发送的CRC错"	
+		case "ER27"
+			msgbox "接收的字数不够"	
+		case "ER28"
+			msgbox "接收的CRC错"
+		case "ER29"
+			msgbox "函数输入参数格式错误,请仔细查看"	
+		case else'写卡成功,其中ER00表示完全成功,ER01表示完全没写到卡数据，ER02表示仅写该卡的第一块成功,，ER02表示仅写该卡的第一二块成功，这是刷卡太快原因
+			CardIDShower.value = "写卡成功" & Chr(13) & Chr(10)
+			CardIDShower.value = CardIDShower.value & strls & Chr(13) & Chr(10)
+			CardIDShower.value = CardIDShower.value & "其中错误号为：" & errorno & Chr(13) & Chr(10)
+			CardIDShower.value = CardIDShower.value & "卡十六进制序列号为：" & mid(strls,6,8) & Chr(13) & Chr(10)
+	
+	end select
+End Sub
+
+Sub beep_onclick
+	IcCardReader.pcdbeep 100'台数100表示响100毫秒
+	 
+End Sub
+
+Sub changecardkey_onclick
+	'指定控制字
+	myctrlword= EXTERNKEY
+	'指定区号
+	myareano = 8 '指定为第8区
+	'批定密码模式
+	authmode = 1 '大于0表示用A密码认证，推荐用A密码认证
+	
+	'指定序列号，未知卡序列号时可指定为8个0
+	mypiccserial="00000000"
+
+	
+	'旧密码
+	mypicckey_old = "ffffffffffff"
+
+	'新密码
+	mypicckey_new = "ffffffffffff"
+	
+	strls=IcCardReader.piccchangesinglekey(myctrlword, mypiccserial,myareano,authmode,mypicckey_old,mypicckey_new)
+	errorno = mid(strls,1,4)
+	if (errorno = "ER00") then
+
+		CardIDShower.value = "修改密码成功，卡序列为" & Chr(13) & Chr(10)
+		strls = right(strls,8)
+
+		CardIDShower.value = CardIDShower.value & strls & Chr(13) & Chr(10)	
+	elseif (errorno = "ER08") then
+
+		msgbox "寻不到卡"
+
+	else
+
+		CardIDShower.value = "修改密码，错误代码：" & errorno
+
+	end if 
+
+End Sub
+
+Sub getdevicenumber_onclick
+		
+	
+	strls=IcCardReader.pcdgetdevicenumber()
+	errorno = mid(strls,1,4)
+	if (errorno = "ER00") then
+
+		CardIDShower.value = "设备硬件号为" & Chr(13) & Chr(10)
+		strls = right(strls,8)
+
+		CardIDShower.value = CardIDShower.value & strls & Chr(13) & Chr(10)	
+
+	end if
+	
+
+End Sub
+
+
+
+
+
+
+
+Sub clears1_onclick
+	CardIDShower.value = ""
+End Sub
+
+
+
+-->
+    </script>
+
+</head>
+<body>
+<object classid="clsid:05782014-9FF7-468C-BE96-8EDC73084202" id="IcCardReader" viewastext
+        width="0" height="0">
+    </object>
+    
+
+    <table border="0" style="border-collapse: collapse" width="549" height="300">
+        <tr>
+            <td width="160" rowspan="5">
+                <textarea rows="22" cols="118" id="CardIDShower" name="S1">
+
+</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td width="160">
+                <input type="button" value=" 读 卡 " id="readcard">
+            </td>
+        </tr>
+        <tr>
+            <td width="160">
+                <input type="button" value=" 写 卡 " id="writecard">
+            </td>
+        </tr>
+        <tr>
+            <td width="160">
+                <input type="button" value="蜂鸣器响" id="beep">
+            </td>
+        </tr>
+
+	<tr>
+            <td width="160">
+                <input type="button" value="更改卡密码" id="changecardkey">
+            </td>
+        </tr>
+
+	<tr>
+            <td width="160">
+                <input type="button" value="读取读写器硬件号" id="getdevicenumber">
+            </td>
+        </tr>
+
+
+        <tr>
+            <td width="160">
+                <input type="button" value="清空提示" id="clears1">
+            </td>
+        </tr>
+    </table>
+    <p>
+        <font style="font-size: 9pt">提示：</font></p>
+    <p>
+        <font style="font-size: 9pt">&nbsp;&nbsp;&nbsp; 1、运行本例程前，需先注册 IcCardReader 控件，注册方法为：“开始”-&gt;“运行”-&gt;输入“regsvr32
+            ***\IcCardReader.ocx”-&gt;“确定”。其中“***”为控件所在路径。</font></p>
+    <p>
+        <font style="font-size: 9pt">&nbsp;&nbsp;&nbsp; 2、在IE的Internet 属性设定，让浏览器允许运行 ActiveX 控件。</font></p>
+    <p>
+        <font style="font-size: 9pt">&nbsp;&nbsp;&nbsp; 3、如果是在服务器端运行本网页，还需在IE的Internet 属性中设定，将服务器网址设为可信站点，否则网页无权运行本地控件。</font></p>
+
+	<p>
+        <font style="font-size: 9pt">&nbsp;&nbsp;&nbsp; 4、请注意，IE11以上浏览器不支持vbscript。</font></p>
+
+
+
+
+</body>
+</html>

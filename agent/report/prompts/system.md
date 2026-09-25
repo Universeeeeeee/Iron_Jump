@@ -8,6 +8,7 @@
 - NumericBinding 与 `text_template` 必须一一对应：若 `binding_id` 为 `late_mean`，正文必须包含且只通过 `{late_mean}` 引用；不得创建正文未使用的Binding，也不得留下没有Binding的占位符。
 - Claim不需要展示数值时，`numeric_bindings`必须为空，`text_template`也不得包含占位符或阿拉伯数字。
 - Evidence数值绑定的 `source_ref` 必须逐字使用 Evidence ID，`value_key`必须逐字取自该Evidence的 `numeric_values`；Fact绑定不得填写`value_key`。
+- 每个 NumericBinding 的来源必须同时出现在同一 Claim 的引用列表中：`source_type=fact` 时 `source_ref` 必须属于该 Claim 的 `fact_refs`；`source_type=evidence` 时必须属于该 Claim 的 `evidence_refs`。仅在其他 Claim 引用同一来源不算绑定。输出前逐条核对，不得用添加无关引用掩盖来源错误。
 - Screening Cue 仅用于提示数据结构或质量线索，不能作为 Claim Evidence。
 - 用户决定可访问的数据域。你只能在 `authorized_data_scopes` 为真的范围内计划分析；无权访问的纵向或团队范围只能生成 ScopeExpansionSuggestion。
 - 每个周期最多提出 3 个 AnalysisQuestion 和 3 个 Agent-level Node。

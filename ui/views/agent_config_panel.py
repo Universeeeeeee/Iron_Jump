@@ -186,6 +186,7 @@ class AgentConfigPanel(QWidget):
 
     config_confirmed = Signal(object)  # AnyTestConfig
     profile_changed = Signal()
+    voice_reply = Signal(str)
 
     def __init__(
         self,
@@ -682,6 +683,25 @@ class AgentConfigPanel(QWidget):
         self._status_label.show()
         self._llm_worker.start()
 
+    @property
+    def voice_submission_status(self) -> str:
+        if not getattr(self._llm_client, "configuration_enabled", True):
+            return "disabled"
+        if self._llm_worker is not None:
+            return "busy"
+        return "ready" if self._worker_ready else "unavailable"
+
+    def submit_voice(self, message: str) -> bool:
+        """Reuse the validated config worker and its visible conversation history."""
+        if self.voice_submission_status in {"disabled", "busy"}:
+            return False
+        if not self._worker_ready:
+            self._ensure_llm_worker_started()
+            return False
+        self._chat_input.setText(message)
+        self._on_send_message()
+        return self._llm_worker is not None
+
     def _on_llm_finished(self, config, reply: str) -> None:
         worker = self.sender()
         if getattr(worker, 'request_id', None) != self._active_request_id:
@@ -698,6 +718,24 @@ class AgentConfigPanel(QWidget):
 
         self._llm_worker = None
         self._sync_mode_state()
+        self.voice_reply.emit(
+            self._spoken_config_summary(config) if config is not None else reply
+        )
+
+    @staticmethod
+    def _spoken_config_summary(config: AnyTestConfig) -> str:
+        parts = ["建议配置已生成", getattr(config, "mode_label", config.test_type)]
+        if hasattr(config, "treadmill_speed"):
+            parts.append(f"速度每小时{config.treadmill_speed:g}公里")
+        if config.stop_type == "End of Time" and config.test_length:
+            minutes, seconds = map(int, config.test_length.split(":"))
+            parts.append(f"测试时长{minutes}分{seconds}秒")
+        elif config.stop_type == "Software command":
+            parts.append("通过结束测试指令停止")
+        elif getattr(config, "number_of_jumps", None):
+            parts.append(f"跳跃{config.number_of_jumps}次")
+        parts.append("请说确认配置后应用")
+        return "。".join(parts) + "。"
 
     def _on_llm_error(self, message: str) -> None:
         worker = self.sender()
@@ -711,6 +749,7 @@ class AgentConfigPanel(QWidget):
         self._chat_display.append(f"<b>错误:</b> {message}")
         self._llm_worker = None
         self._sync_mode_state()
+        self.voice_reply.emit("配置服务暂时不可用，请稍后重试。")
 
     def _on_reset_chat(self) -> None:
         self._active_request_id += 1

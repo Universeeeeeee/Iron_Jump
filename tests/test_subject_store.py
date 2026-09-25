@@ -1047,3 +1047,19 @@ class SubjectStoreTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+    def test_bind_card_uid_links_and_rejects_duplicates(self):
+        alice_id = self.store.create_subject("Alice", 1990)
+        bob_id = self.store.create_subject("Bob", 1985)
+        self.store.bind_card_uid(alice_id, "aa:bb:cc:dd")
+        alice = self.store.get_subject(alice_id)
+        self.assertEqual(alice.card_uid, "AABBCCDD")
+        found = self.store.get_subject_by_card_uid("aabbccdd")
+        self.assertEqual(found.id, alice_id)
+        with self.assertRaises(ValueError):
+            self.store.bind_card_uid(bob_id, "AABBCCDD")
+        self.store.unbind_card_uid(alice_id)
+        self.assertIsNone(self.store.get_subject(alice_id).card_uid)
+        self.store.bind_card_uid(bob_id, "AABBCCDD")
+        self.assertEqual(self.store.get_subject_by_card_uid("AABBCCDD").id, bob_id)

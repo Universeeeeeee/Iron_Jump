@@ -73,6 +73,7 @@ class UsbWorker(QObject):
     data_received = Signal(str)   # 文本日志（HEX）- 节流
     device_state_changed = Signal(str, str)  # state, user-facing detail
     sensor_frame_received = Signal(object)  # SensorFrame: complete, unfiltered, all modules
+    layout_detected = Signal(object)  # Verified DeviceLayout, emitted before the first frame
     acquisition_issue = Signal(object)  # AcquisitionIssue: never substitute a clear frame
     led_bits_signal = Signal(list)  # 全设备 LED 位图 (物理语义: 1=LED亮/未遮挡) - 节流，供 UI
     led_contact_signal = Signal(list)  # 全设备 LED 位图 (接触语义: 1=遮挡/触地) - 节流，供 UI
@@ -80,7 +81,7 @@ class UsbWorker(QObject):
     led_health_changed = Signal(dict)  # 轻量 LED 通断/闪烁检查结果
 
     def __init__(self, dll_path=None, vid=0x04B4, pid=0x1004, timeout_ms=30, chunk_size=512,
-                 *, layout: DeviceLayout | None = None, capture_command_required=False):
+                 *, layout: DeviceLayout | None = None, capture_command_required=None):
         super().__init__()
         self.dll_path = dll_path
         self.vid = int(vid)
@@ -88,14 +89,21 @@ class UsbWorker(QObject):
         self.timeout_ms = int(timeout_ms)
         self.chunk_size = int(chunk_size)
         if layout is None:
-            count = int(os.getenv("DAYU_SEGMENT_COUNT", "1"))
-            order = os.getenv("DAYU_SEGMENT_ORDER", "")
+            count_spec = os.getenv("DAYU_SEGMENT_COUNT")
+            order_spec = os.getenv("DAYU_SEGMENT_ORDER", "")
+            order = tuple(int(i) for i in order_spec.split(",")) if order_spec else None
+            count = int(count_spec) if count_spec else (len(order) if order else None)
+        if layout is None and count is not None:
             layout = DeviceLayout.linear(
-                count, wire_order=tuple(int(i) for i in order.split(",")) if order else None,
+                count, wire_order=order,
             )
         self.layout = layout
-        self.capture_command_required = capture_command_required
+        self.capture_command_required = (
+            os.getenv("DAYU_CAPTURE_COMMAND", "0") == "1"
+            if capture_command_required is None else capture_command_required
+        )
         self._assembler = SensorFrameAssembler(layout)
+        self._layout_announced = False
         self._frame_lock = threading.Lock()
         self.dev = None
         self._capturing = False
@@ -240,6 +248,10 @@ class UsbWorker(QObject):
             self.acquisition_issue.emit(issue)
         if frame is None:
             return
+        if not self._layout_announced:
+            self.layout = frame.layout
+            self._layout_announced = True
+            self.layout_detected.emit(frame.layout)
         self.sensor_frame_received.emit(frame)
         contacts = list(frame.contact_bits)
         self._record_led_health_frame(contacts)
@@ -293,6 +305,17 @@ class UsbWorker(QObject):
         )
 
     @Slot()
+    def prepare_walking_capture(self):
+        """Keep preflight and the formal passage on the same acquisition stream."""
+        self._health_check_active = False
+        self._health_owns_capture = False
+        self._health_timer.stop()
+        if self.dev is None:
+            self._emit_state("error", "设备尚未连接")
+        elif not self._capturing:
+            self._start_capture_stream()
+
+    @Slot()
     def start_capture(self):
         """Start formal acquisition after the user explicitly authorizes it."""
         if self.dev is None:
@@ -313,6 +336,8 @@ class UsbWorker(QObject):
         """Start callbacks without deciding how the UI labels the stream."""
         with self._frame_lock:
             self._assembler.reset()
+            self.layout = self._assembler.layout
+            self._layout_announced = False
         self._pending_bits = None
         self._ensure_timer()
         try:
@@ -323,6 +348,8 @@ class UsbWorker(QObject):
             self.dev.start_capture()
             self.dev.set_on_bytes(self._on_bytes)
             self.dev.set_on_frame(self._on_frame)
+            if hasattr(self.dev, "set_on_issue"):
+                self.dev.set_on_issue(lambda code: self.acquisition_issue.emit(AcquisitionIssue(code, -1)))
             ret = self.dev.start_auto_read(self.chunk_size, timeout_ms=self.timeout_ms)
             if ret != 0:
                 raise RuntimeError(f"start_auto_read 失败: {ret}")
@@ -377,7 +404,7 @@ class UsbWorker(QObject):
         if not self._health_check_active:
             return
         if (
-            len(contact_bits) == self.layout.bit_count
+            len(contact_bits) == (self.layout.bit_count if self.layout else 96)
             and len(self._health_frames) < LED_HEALTH_TARGET_FRAMES
         ):
             self._health_frames.append(list(contact_bits))
@@ -397,7 +424,10 @@ class UsbWorker(QObject):
             return
         self._health_check_active = False
         self._health_timer.stop()
-        result = summarize_led_health(self._health_frames, self.layout.bit_count)
+        result = summarize_led_health(
+            self._health_frames,
+            self.layout.bit_count if self.layout else 96,
+        )
         self._health_frames.clear()
 
         if self._health_owns_capture and self.dev is not None:
@@ -422,6 +452,7 @@ class UsbWorker(QObject):
         if self.dev is not None:
             self.start_capture()
 
+    @Slot()
     def stop(self):
         self._stop.set()
         self._health_check_active = False

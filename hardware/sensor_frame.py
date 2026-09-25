@@ -130,17 +130,16 @@ class SensorFrameAssembler:
     ambiguous (restart vs stale traffic): report it and require an explicit reset.
     """
 
-    def __init__(self, layout: DeviceLayout):
-        self.layout = layout
-        valid = bytearray([1]) * layout.bit_count
-        for i in layout.invalid_bit_indices:
-            valid[i] = 0
-        self.valid_bits = bytes(valid)
+    def __init__(self, layout: DeviceLayout | None = None):
+        self._configured_layout = layout
         self.reset()
 
     def reset(self):
         from uuid import uuid4
 
+        self.layout = self._configured_layout
+        self.valid_bits = self._valid_bits(self.layout) if self.layout else b""
+        self.layout_confirmed = False
         self.stream_id = uuid4().hex
         self._pending = {}
         self._packet_base = None
@@ -149,11 +148,37 @@ class SensorFrameAssembler:
         self._sample_index = 0
         self._issues = []
 
+    @staticmethod
+    def _valid_bits(layout: DeviceLayout) -> bytes:
+        valid = bytearray([1]) * layout.bit_count
+        for i in layout.invalid_bit_indices:
+            valid[i] = 0
+        return bytes(valid)
+
+    @staticmethod
+    def _packet_segment_count(count: int, payload: bytes) -> int | None:
+        if count == 1:
+            if len(payload) % 12 == 0 and 12 <= len(payload) <= 12 * 255:
+                return len(payload) // 12
+        elif 2 <= count <= 255 and len(payload) == 12:
+            return count
+        return None
+
     def pop_issues(self):
         issues, self._issues = self._issues, []
         return tuple(issues)
 
+    def _discard_superseded_pending(self):
+        if self._last_index is None:
+            return
+        for index in list(self._pending):
+            # Accepted samples already account for these missing counters. Use
+            # uint32 ordering so wraparound does not discard future fragments.
+            if 0 < ((self._last_index - index) & 0xFFFFFFFF) < 0x80000000:
+                del self._pending[index]
+
     def expire(self, now_ns):
+        self._discard_superseded_pending()
         for index, node in list(self._pending.items()):
             if now_ns - node["created"] >= 1_000_000_000:
                 base = self._packet_base
@@ -162,16 +187,37 @@ class SensorFrameAssembler:
                 )
                 self._issues.append(AcquisitionIssue("incomplete_frame", index, missing))
                 del self._pending[index]
+        if self._configured_layout is None and not self.layout_confirmed and not self._pending:
+            self._packet_base = None
 
     def feed(self, packet, received_ns: int):
         self.expire(received_ns)
         index, count, part = packet.frameIdx, packet.packNum, packet.packIdx
         payload = bytes(packet.buffer)
-        n = len(self.layout.segments)
-        if not 0 <= index <= 0xFFFFFFFF or count not in (1, n) or not 0 <= part <= count:
+        detected_count = self._packet_segment_count(count, payload)
+        if not 0 <= index <= 0xFFFFFFFF or detected_count is None or not 0 <= part <= count:
             if index in self._pending:
                 self._pending[index]["invalid"] = True
             self._issues.append(AcquisitionIssue("invalid_packet", index))
+            return None
+        if self._last_index is not None and ((index - self._last_index) & 0xFFFFFFFF) >= 0x80000000:
+            self._issues.append(AcquisitionIssue("out_of_order_or_reset", index))
+            return None
+        if self._configured_layout is None and (
+            self.layout is None or (
+                not self.layout_confirmed
+                and detected_count != len(self.layout.segments)
+                and not self._pending
+            )
+        ):
+            self.layout = DeviceLayout.linear(detected_count)
+            self.valid_bits = self._valid_bits(self.layout)
+            self._packet_base = None
+        n = len(self.layout.segments)
+        if detected_count != n:
+            if index in self._pending:
+                self._pending[index]["invalid"] = True
+            self._issues.append(AcquisitionIssue("layout_mismatch", index))
             return None
         if count == 1:
             if index in self._pending:
@@ -226,6 +272,8 @@ class SensorFrameAssembler:
             self._sample_index += delta
             dropped = delta - 1
         self._last_index, self._last_payload = index, payload
+        self._discard_superseded_pending()
+        self.layout_confirmed = True
         flags = []
         if dropped:
             flags.append("frame_gap")

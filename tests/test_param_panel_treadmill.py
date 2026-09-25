@@ -122,6 +122,8 @@ class TestParamPanelTreadmill:
             test_types.itemText(index) for index in range(test_types.count())
         ] == [
             "Jump Test",
+            "Sprint and Gait Test",
+            "地面跑步",
             "Treadmill Gait Test",
             "Treadmill Running Test",
         ]

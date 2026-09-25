@@ -148,6 +148,83 @@ def test_single_segment_legacy_channel_is_preserved(qapp):
     assert legacy[0][1] > 0  # legacy perf_counter time base is unchanged
 
 
+@pytest.mark.parametrize("count", [1, 3, 8, 12])
+def test_worker_detects_full_frame_segment_count(qapp, monkeypatch, count):
+    monkeypatch.delenv("DAYU_SEGMENT_COUNT", raising=False)
+    monkeypatch.delenv("DAYU_SEGMENT_ORDER", raising=False)
+    worker = UsbWorker()
+    events = []
+    worker.layout_detected.connect(lambda layout: events.append(("layout", len(layout.segments))))
+    worker.sensor_frame_received.connect(lambda frame: events.append(("frame", len(frame.contact_bits))))
+    assert worker.layout is None
+    worker._on_frame(E_DATA_REPORT, None, packet(0, b"\xff" * count * 12), None)
+    worker._on_frame(E_DATA_REPORT, None, packet(1, b"\xff" * count * 12), None)
+    assert events == [("layout", count), ("frame", count * 96), ("frame", count * 96)]
+
+
+@pytest.mark.parametrize("base", [0, 1])
+def test_auto_detection_waits_for_complete_split_frame(qapp, monkeypatch, base):
+    monkeypatch.delenv("DAYU_SEGMENT_COUNT", raising=False)
+    monkeypatch.delenv("DAYU_SEGMENT_ORDER", raising=False)
+    worker = UsbWorker()
+    layouts, frames = [], []
+    worker.layout_detected.connect(layouts.append)
+    worker.sensor_frame_received.connect(frames.append)
+    for i in (5, 0, 7, 2, 1, 6, 4):
+        worker._on_frame(E_DATA_REPORT, None, packet(42, b"\xff" * 12, 8, i + base), None)
+    assert worker.layout is None and not layouts and not frames
+    worker._on_frame(E_DATA_REPORT, None, packet(42, b"\xff" * 12, 8, 3 + base), None)
+    assert len(layouts) == len(frames) == 1
+    assert worker.layout == layouts[0] == frames[0].layout
+    assert len(worker.layout.segments) == 8
+
+
+def test_auto_detection_can_retry_after_incomplete_candidate():
+    assembler = SensorFrameAssembler()
+    assert assembler.feed(packet(1, b"\xff" * 12, 8, 0), 0) is None
+    assert assembler.layout_confirmed is False
+    assembler.expire(1_000_000_000)
+    frame = assembler.feed(packet(2, b"\xff" * 36), 1_000_000_001)
+    assert frame.layout == DeviceLayout.linear(3)
+    assert assembler.pop_issues()[0].code == "incomplete_frame"
+
+
+def test_auto_detection_can_retry_other_packet_numbering_after_timeout():
+    assembler = SensorFrameAssembler()
+    assert assembler.feed(packet(1, b"\xff" * 12, 3, 3), 0) is None
+    assembler.expire(1_000_000_000)
+    frames = [
+        assembler.feed(packet(2, b"\xff" * 12, 3, i), 1_000_000_001)
+        for i in (0, 1, 2)
+    ]
+    assert frames[-1] is not None and len(frames[-1].layout.segments) == 3
+
+
+def test_auto_detection_locks_count_until_stream_restart():
+    assembler = SensorFrameAssembler()
+    first = assembler.feed(packet(0, b"\xff" * 36), 0)
+    assert first.layout == DeviceLayout.linear(3)
+    assert assembler.feed(packet(1, b"\xff" * 96), 1) is None
+    assert assembler.pop_issues()[0].code == "layout_mismatch"
+    assembler.reset()
+    second = assembler.feed(packet(0, b"\xff" * 96), 2)
+    assert second.layout == DeviceLayout.linear(8)
+    assert second.stream_id != first.stream_id
+
+
+def test_auto_detection_rejects_invalid_length_without_locking():
+    assembler = SensorFrameAssembler()
+    assert assembler.feed(packet(0, b"\xff" * 11), 0) is None
+    assert assembler.layout is None and not assembler.layout_confirmed
+    assert assembler.pop_issues()[0].code == "invalid_packet"
+
+
+def test_capture_command_can_be_enabled_for_default_worker(qapp, monkeypatch):
+    monkeypatch.setenv("DAYU_CAPTURE_COMMAND", "1")
+    assert UsbWorker().capture_command_required is True
+    assert UsbWorker(capture_command_required=False).capture_command_required is False
+
+
 def test_worker_reports_layout_mismatch_instead_of_truncating(qapp):
     worker = UsbWorker(layout=DeviceLayout.linear())
     issues, frames = [], []
@@ -194,6 +271,7 @@ def test_replay_uses_sample_clock_across_csv_parts(tmp_path):
     result = replay(paths, DeviceLayout.linear(8))
     assert result["frames"] == 2 and result["missing_frames"] == 1
     assert result["sample_span_s"] == 0.002
+    assert replay(paths)["segments"] == 8
 
 
 def test_capture_commands_and_restart_reset_stream(qapp, monkeypatch):
@@ -241,3 +319,41 @@ def test_capture_command_failure_stops_reader(qapp, monkeypatch):
     assert states[-1] == "error"
     assert not worker.dev.auto_read_started and not worker.dev.capture_started
     worker.stop()
+
+
+@pytest.mark.parametrize('first', [0, 0xfffffffe])
+def test_superseded_partial_frame_does_not_raise_late_timeout(first):
+    assembler = SensorFrameAssembler()
+    complete = lambda idx, now: [assembler.feed(packet(idx, b'\xff' * 12, 3, part), now)
+                                 for part in range(3)][-1]
+    complete(first, 0)
+    missing = (first + 1) & 0xffffffff
+    assembler.feed(packet(missing, b'\xff' * 12, 3, 0), 1_000_000)
+    recovered = complete((first + 2) & 0xffffffff, 2_000_000)
+    assert recovered.dropped_frames_before == 1
+    assert not assembler.pop_issues()
+    # Partial data for a genuinely future frame must still expire.
+    future = (first + 3) & 0xffffffff
+    assembler.feed(packet(future, b'\xff' * 12, 3, 0), 3_000_000)
+    assembler.expire(1_001_000_000)
+    assert not assembler.pop_issues()
+    assembler.expire(1_003_000_000)
+    issues = assembler.pop_issues()
+    assert len(issues) == 1 and issues[0].frame_index == future
+
+
+def test_multipart_counter_reset_is_reported_without_waiting_for_expiry():
+    assembler = SensorFrameAssembler()
+    for part in range(3):
+        assembler.feed(packet(100, b'\xff' * 12, 3, part), 0)
+    assert assembler.feed(packet(0, b'\xff' * 12, 3, 0), 1) is None
+    assert assembler.pop_issues()[0].code == 'out_of_order_or_reset'
+
+
+def test_multipart_duplicate_still_detects_conflicting_complete_payload():
+    assembler = SensorFrameAssembler()
+    for part in range(3):
+        assembler.feed(packet(100, b'\xff' * 12, 3, part), 0)
+    for part in range(3):
+        assembler.feed(packet(100, b'\xfe' * 12, 3, part), 1)
+    assert assembler.pop_issues()[0].code == 'conflicting_frame'

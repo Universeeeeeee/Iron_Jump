@@ -273,6 +273,9 @@ class CyUsbInterfaceDevice:
     def set_on_bytes(self, cb: Optional[Callable[[bytes], None]]):
         self._on_bytes = cb
 
+    def set_on_issue(self, cb):
+        self._parser.on_error = cb
+
     def set_on_frame(self, cb: Optional[Callable[[int, object, object, object], None]]):
         self._on_frame = cb
 

@@ -133,12 +133,14 @@ class TreadmillProcessor:
         self._visual_recorder = FootprintTimelineRecorder()
         self._last_clusters = []
         self._touch_reference_cm: dict[tuple[str, float], float | None] = {}
+        self._pause_boundaries: list[float] = []
 
     # ---- ModeProcessor interface ----
 
     def reset(self) -> None:
         """Reset all internal state."""
         self.lift_count = 0
+        self._pause_boundaries.clear()
         self._cluster_tracker = ClusterTracker()
         self._contact_tracker.reset()
         self._accumulator = self._make_accumulator()
@@ -151,6 +153,11 @@ class TreadmillProcessor:
         self._visual_recorder.reset()
         self._last_clusters = []
         self._touch_reference_cm = {}
+
+    def pause_boundary(self) -> None:
+        self._pause_boundaries.append(self._last_rel_time)
+        self._accumulator.pause_boundary(self._last_rel_time)
+        self._cycle_builder.pause_boundary(self._last_rel_time)
 
     def process_raw_frame(
         self, contact_bits: List[int], rel_time: float, abs_time: float
@@ -285,6 +292,7 @@ class TreadmillProcessor:
         )
         rows = self._rows_with_cycle_stride(rows, gait_cycles)
         config_snapshot = self._config.to_dict()
+        config_snapshot["pause_boundaries_s"] = list(self._pause_boundaries)
 
         # Build metric summaries from valid, included rows
         valid_included = [

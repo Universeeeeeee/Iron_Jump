@@ -3,9 +3,10 @@
 from __future__ import annotations
 
 import logging
+import sys
 from datetime import datetime
 
-from qtpy.QtCore import QSignalBlocker, Signal, Qt
+from qtpy.QtCore import QSignalBlocker, QTimer, Signal, Qt
 from qtpy.QtWidgets import (
     QAbstractItemView,
     QComboBox,
@@ -36,6 +37,7 @@ from data.subject_store import (
     SubjectStore,
     TeamProfile,
 )
+from hardware.rc200u import STATUS_NO_CARD, Rc200uReader, Rc200uUnavailable
 
 
 log = logging.getLogger(__name__)
@@ -114,12 +116,34 @@ class AthletesView(QWidget):
     ALL_TEAMS = "all-teams"
     WITHOUT_TEAM = "without-team"
 
-    def __init__(self, subject_store: SubjectStore | None, parent=None):
+    def __init__(
+        self,
+        subject_store: SubjectStore | None,
+        parent=None,
+        *,
+        rfid_reader=None,
+    ):
         super().__init__(parent)
         self._subject_store = subject_store
         self._results: list[SubjectSearchResult] = []
+        self._rfid_reader = rfid_reader
+        self._rfid_uid: str | None = None
+        self._rfid_read_status: int | None = None
+        self._rfid_error: str | None = None
+        if self._rfid_reader is None and sys.platform == "win32":
+            try:
+                self._rfid_reader = Rc200uReader()
+            except Rc200uUnavailable as exc:
+                self._rfid_reader = None
+                self._rfid_error = str(exc)
         self._build_ui()
         self.refresh()
+        self._rfid_timer = QTimer(self)
+        self._rfid_timer.setInterval(250)
+        self._rfid_timer.timeout.connect(self._poll_rfid)
+        if self._rfid_reader is not None:
+            self._rfid_timer.start()
+        self._sync_rfid_status()
 
     def _build_ui(self) -> None:
         self.setObjectName("AthletesViewRoot")
@@ -134,6 +158,21 @@ class AthletesView(QWidget):
         subtitle.setObjectName("PageSubtitle")
         layout.addWidget(title)
         layout.addWidget(subtitle)
+
+        rfid_bar = QFrame()
+        rfid_bar.setObjectName("AthleteToolbar")
+        rfid_layout = QHBoxLayout(rfid_bar)
+        rfid_layout.setContentsMargins(12, 8, 12, 8)
+        rfid_layout.setSpacing(8)
+        self._rfid_status = QLabel()
+        self._btn_bind_card = QPushButton("绑定当前卡")
+        self._btn_bind_card.clicked.connect(self._bind_current_card)
+        self._btn_unbind_card = QPushButton("解绑卡片")
+        self._btn_unbind_card.clicked.connect(self._unbind_selected_card)
+        rfid_layout.addWidget(self._rfid_status, 1)
+        rfid_layout.addWidget(self._btn_bind_card)
+        rfid_layout.addWidget(self._btn_unbind_card)
+        layout.addWidget(rfid_bar)
 
         toolbar = QFrame()
         toolbar.setObjectName("AthleteToolbar")
@@ -174,7 +213,7 @@ class AthletesView(QWidget):
         card_layout.setContentsMargins(1, 1, 1, 12)
         card_layout.setSpacing(10)
 
-        self._table = QTableWidget(0, 7)
+        self._table = QTableWidget(0, 8)
         self._table.setHorizontalHeaderLabels(
             [
                 "姓名",
@@ -184,6 +223,7 @@ class AthletesView(QWidget):
                 "训练侧重",
                 "所属团队",
                 "最近测试",
+                "RFID",
             ]
         )
         self._table.setSelectionBehavior(QAbstractItemView.SelectRows)
@@ -253,6 +293,7 @@ class AthletesView(QWidget):
                 focus_labels.get(subject.focus_side, subject.focus_side),
                 "、".join(result.team_names) if result.team_names else "未加入团队",
                 result.last_session_at[:16] if result.last_session_at else "暂无",
+                subject.card_uid or "未绑卡",
             ]
             for column, value in enumerate(values):
                 item = QTableWidgetItem(value)
@@ -266,6 +307,90 @@ class AthletesView(QWidget):
         elif self._results:
             self._table.selectRow(0)
         self._sync_actions()
+        self._sync_rfid_status()
+
+    def _poll_rfid(self) -> None:
+        if self._rfid_reader is None:
+            return
+        result = self._rfid_reader.request_uid()
+        uid = result.uid
+        if uid == self._rfid_uid and result.status == self._rfid_read_status:
+            return
+        self._rfid_uid = uid
+        self._rfid_read_status = result.status
+        self._rfid_error = (
+            f"读卡异常（{result.status}）：{result.message}"
+            if uid is None and result.status != STATUS_NO_CARD else None
+        )
+        self._sync_rfid_status()
+        if uid is None or self._subject_store is None:
+            return
+        subject = self._subject_store.get_subject_by_card_uid(uid)
+        if subject is None:
+            return
+        if not self._select_subject_id(subject.id):
+            self._search.clear()
+            self._team_filter.setCurrentIndex(0)
+            self.refresh()
+            self._select_subject_id(subject.id)
+
+    def _select_subject_id(self, subject_id: int) -> bool:
+        for row, result in enumerate(self._results):
+            if result.subject.id == subject_id:
+                self._table.selectRow(row)
+                return True
+        return False
+
+    def _sync_rfid_status(self) -> None:
+        if not hasattr(self, "_rfid_status"):
+            return
+        if self._rfid_reader is None:
+            self._rfid_status.setText(
+                f"RFID：{self._rfid_error}"
+                if self._rfid_error else "RFID：读卡功能需要 Windows + CH375 驱动"
+            )
+            self._btn_bind_card.setEnabled(False)
+            self._btn_unbind_card.setEnabled(False)
+            return
+        if self._rfid_error:
+            self._rfid_status.setText(f"RFID：{self._rfid_error}")
+        elif self._rfid_uid:
+            subject = (
+                self._subject_store.get_subject_by_card_uid(self._rfid_uid)
+                if self._subject_store is not None
+                else None
+            )
+            if subject is None:
+                self._rfid_status.setText(f"RFID：已读到 {self._rfid_uid}，未绑定运动员")
+            else:
+                self._rfid_status.setText(
+                    f"RFID：已识别 {subject.display_name}  ({self._rfid_uid})"
+                )
+        else:
+            self._rfid_status.setText("RFID：等待贴卡")
+        selected = self._selected_result()
+        self._btn_bind_card.setEnabled(self._rfid_uid is not None and selected is not None)
+        self._btn_unbind_card.setEnabled(
+            selected is not None and bool(selected.subject.card_uid)
+        )
+
+    def _bind_current_card(self) -> None:
+        selected = self._selected_result()
+        if selected is None or not self._rfid_uid or self._subject_store is None:
+            return
+        try:
+            self._subject_store.bind_card_uid(selected.subject.id, self._rfid_uid)
+        except ValueError as exc:
+            QMessageBox.warning(self, "RFID", str(exc))
+            return
+        self.refresh()
+
+    def _unbind_selected_card(self) -> None:
+        selected = self._selected_result()
+        if selected is None or self._subject_store is None:
+            return
+        self._subject_store.unbind_card_uid(selected.subject.id)
+        self.refresh()
 
     def _populate_team_filter(self) -> None:
         if self._subject_store is None:
@@ -299,6 +424,7 @@ class AthletesView(QWidget):
         self._btn_team_results.setEnabled(
             isinstance(self._team_filter.currentData(), int)
         )
+        self._sync_rfid_status()
 
     def _create_subject(self) -> None:
         if self._subject_store is None:

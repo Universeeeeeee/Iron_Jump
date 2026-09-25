@@ -1,0 +1,870 @@
+{
+  "commit": "78fbb56f41e2b9bcddfae19bff886a1e48d7f8b3",
+  "scope": "主程序Python源文件；不含独立视觉、语音、测试、旧演示及知识库评测工具",
+  "ordering": "按仓库相对路径Unicode升序，各文件保持原始行序；计数包含空行、注释和文档字符串；不额外插入文件名行",
+  "physical_lines": 30722,
+  "nonblank_lines": 27153,
+  "files": [
+    {
+      "path": "agent/__init__.py",
+      "sha256": "745a71fdf525cfd10b0c039ddd29ffae24051cba36c6715af01d976ce472d91d",
+      "physical_lines": 40,
+      "nonblank_lines": 29,
+      "global_start": 1,
+      "global_end": 40
+    },
+    {
+      "path": "agent/common/__init__.py",
+      "sha256": "d345230318102189ef0510cc3f441f5e682b0ce838b876eda464ad5b7d62629d",
+      "physical_lines": 15,
+      "nonblank_lines": 13,
+      "global_start": 41,
+      "global_end": 55
+    },
+    {
+      "path": "agent/common/model_provider.py",
+      "sha256": "36a22f972b9c59ca6a4d2a2a884c66abf434cdec9e6ca3bead7790099a392096",
+      "physical_lines": 52,
+      "nonblank_lines": 41,
+      "global_start": 56,
+      "global_end": 107
+    },
+    {
+      "path": "agent/config/__init__.py",
+      "sha256": "62ef041bb7bad4336ec1b98a3d107e95f735e97ef64abad8b12646ddbd694213",
+      "physical_lines": 18,
+      "nonblank_lines": 13,
+      "global_start": 108,
+      "global_end": 125
+    },
+    {
+      "path": "agent/config/agent.py",
+      "sha256": "12ad0127de7a458bfa00a8ac5064b6b2562d9c1969d6a9546dd00c8b7193bb13",
+      "physical_lines": 745,
+      "nonblank_lines": 665,
+      "global_start": 126,
+      "global_end": 870
+    },
+    {
+      "path": "agent/config/models.py",
+      "sha256": "f0e3a516b665fb5ef678b27b88996440e45d0cc67e24a69504b6b5ab2296d80a",
+      "physical_lines": 431,
+      "nonblank_lines": 371,
+      "global_start": 871,
+      "global_end": 1301
+    },
+    {
+      "path": "agent/config/prompts/__init__.py",
+      "sha256": "f8b9801187b6bf081037478dba184d135367af5d30d7c88791e046b60db358be",
+      "physical_lines": 1,
+      "nonblank_lines": 1,
+      "global_start": 1302,
+      "global_end": 1302
+    },
+    {
+      "path": "agent/config/rule_engine.py",
+      "sha256": "a1d34202d0499bd766f233946e0d393ba3aae446bdd73ba95feac238d03ed6a1",
+      "physical_lines": 173,
+      "nonblank_lines": 148,
+      "global_start": 1303,
+      "global_end": 1475
+    },
+    {
+      "path": "agent/config/service.py",
+      "sha256": "b4f673179e6aa13970e0ad957af03c95c1bfe648f064de182964f8d8d06efa7e",
+      "physical_lines": 109,
+      "nonblank_lines": 87,
+      "global_start": 1476,
+      "global_end": 1584
+    },
+    {
+      "path": "agent/gait_agent.py",
+      "sha256": "c0520e58d641af09eddd506d6fcf11fd52fce46e69263304aecec442bce4f463",
+      "physical_lines": 9,
+      "nonblank_lines": 5,
+      "global_start": 1585,
+      "global_end": 1593
+    },
+    {
+      "path": "agent/llm_agent.py",
+      "sha256": "2a4b8e9ef340f5b2dfab7ed0a5079be1294c5043e9bae7bb04174f5af8d4ec59",
+      "physical_lines": 9,
+      "nonblank_lines": 5,
+      "global_start": 1594,
+      "global_end": 1602
+    },
+    {
+      "path": "agent/llm_worker.py",
+      "sha256": "4d52f018b74b29775cfff8493ca504e0c2998f53a9d19c9b94b3636db24c6413",
+      "physical_lines": 8,
+      "nonblank_lines": 5,
+      "global_start": 1603,
+      "global_end": 1610
+    },
+    {
+      "path": "agent/models.py",
+      "sha256": "784400fac6cd5fefe63f5891b283ee07a3a8be4920c57405c37a7044121d2027",
+      "physical_lines": 9,
+      "nonblank_lines": 5,
+      "global_start": 1611,
+      "global_end": 1619
+    },
+    {
+      "path": "agent/report/__init__.py",
+      "sha256": "0c67c0d12705f5a073acb3d17925b65a50e09182ca590cb7d2f743a905bcfa68",
+      "physical_lines": 5,
+      "nonblank_lines": 3,
+      "global_start": 1620,
+      "global_end": 1624
+    },
+    {
+      "path": "agent/report/agent.py",
+      "sha256": "ca77b23cdb62a2c25ad09bb76c9795d11824860bce360c8f3bd33a0131b1b08a",
+      "physical_lines": 194,
+      "nonblank_lines": 177,
+      "global_start": 1625,
+      "global_end": 1818
+    },
+    {
+      "path": "agent/report/analysis_loop.py",
+      "sha256": "3f281d21482f0efe9dc9802cef6d8c2b1c1b269881a812be84025cf9f686a1de",
+      "physical_lines": 254,
+      "nonblank_lines": 237,
+      "global_start": 1819,
+      "global_end": 2072
+    },
+    {
+      "path": "agent/report/checkpoint.py",
+      "sha256": "70b2d3ed5aa3aa4c77b7350745379ac16850c619743e3c59de461597c7486c5c",
+      "physical_lines": 20,
+      "nonblank_lines": 13,
+      "global_start": 2073,
+      "global_end": 2092
+    },
+    {
+      "path": "agent/report/execution.py",
+      "sha256": "9713383f1d724f8a7880e16845fe876d8d70a8eba7de21b681e8a6c96aac6fea",
+      "physical_lines": 115,
+      "nonblank_lines": 104,
+      "global_start": 2093,
+      "global_end": 2207
+    },
+    {
+      "path": "agent/report/models.py",
+      "sha256": "e4556ba5f935ef3a5d78eefc32a1d186ed23686868cdce6e19819d48f44624dc",
+      "physical_lines": 52,
+      "nonblank_lines": 46,
+      "global_start": 2208,
+      "global_end": 2259
+    },
+    {
+      "path": "agent/report/prompts/__init__.py",
+      "sha256": "113e0c7067743a310e1467d67c91a066f104a165b5b3bee9ab260992c4164cb7",
+      "physical_lines": 52,
+      "nonblank_lines": 40,
+      "global_start": 2260,
+      "global_end": 2311
+    },
+    {
+      "path": "agent/report/sequential_loop.py",
+      "sha256": "e0c4356fc3154868bba1e70c229cce1b505faa33906879893a7f3ef654f3434c",
+      "physical_lines": 514,
+      "nonblank_lines": 491,
+      "global_start": 2312,
+      "global_end": 2825
+    },
+    {
+      "path": "agent/report/service.py",
+      "sha256": "62e0cc553e03715ecd6e0ab24410d56df09a0197a1b2dc7ed16f937e6d2801e6",
+      "physical_lines": 526,
+      "nonblank_lines": 511,
+      "global_start": 2826,
+      "global_end": 3351
+    },
+    {
+      "path": "agent/report/skill_loader.py",
+      "sha256": "4f9a94cb8e3351ccf3d2c1b0b93bb79ed49e0dff05fd0e5d69f825c616d01f49",
+      "physical_lines": 142,
+      "nonblank_lines": 120,
+      "global_start": 3352,
+      "global_end": 3493
+    },
+    {
+      "path": "agent/report/state.py",
+      "sha256": "5ce3bb1561f57045cade6c0baad3467497f954c0c4f546f8879d4617d2762a69",
+      "physical_lines": 382,
+      "nonblank_lines": 362,
+      "global_start": 3494,
+      "global_end": 3875
+    },
+    {
+      "path": "agent/report/tools.py",
+      "sha256": "eb3de9426b2e3c2baad73fd8564881576469d8bae89db9c01e8da84710d92554",
+      "physical_lines": 150,
+      "nonblank_lines": 131,
+      "global_start": 3876,
+      "global_end": 4025
+    },
+    {
+      "path": "agent/rule_engine.py",
+      "sha256": "fbe9e8a66cedf857a693034b0ecbd648e4b5419a45eb4395d028e1843cd89265",
+      "physical_lines": 9,
+      "nonblank_lines": 5,
+      "global_start": 4026,
+      "global_end": 4034
+    },
+    {
+      "path": "agent/web_search_mcp.py",
+      "sha256": "74dc7d0337a4cf1ec94a63967ea92958002ebdf50516dd9a299a20fd867a317a",
+      "physical_lines": 79,
+      "nonblank_lines": 63,
+      "global_start": 4035,
+      "global_end": 4113
+    },
+    {
+      "path": "agent/worker.py",
+      "sha256": "45bf048b4c49c10ce816990e82f6c2311ad9a00455b531d8dd95c3cf58412740",
+      "physical_lines": 376,
+      "nonblank_lines": 323,
+      "global_start": 4114,
+      "global_end": 4489
+    },
+    {
+      "path": "config/__init__.py",
+      "sha256": "d066591b87c9eefa24f00b76e3ef5b1178a39d2b54eba841b6e4a1402442ee5f",
+      "physical_lines": 12,
+      "nonblank_lines": 10,
+      "global_start": 4490,
+      "global_end": 4501
+    },
+    {
+      "path": "config/config_validation.py",
+      "sha256": "faf8009a5592dfc33e0ab579433671ab4736bdbb342720aa8cc03eb93b265815",
+      "physical_lines": 48,
+      "nonblank_lines": 37,
+      "global_start": 4502,
+      "global_end": 4549
+    },
+    {
+      "path": "config/param_schema.py",
+      "sha256": "025adc46e13b262fc50fae981f0e5625f2cde5f12fdca6ca4b51fccde9b84a57",
+      "physical_lines": 345,
+      "nonblank_lines": 286,
+      "global_start": 4550,
+      "global_end": 4894
+    },
+    {
+      "path": "config/test_config.py",
+      "sha256": "306bf0d970e08b54fe5adb5c002de555e4d542c82e0c174d35aaf14a6ca9cbf4",
+      "physical_lines": 161,
+      "nonblank_lines": 129,
+      "global_start": 4895,
+      "global_end": 5055
+    },
+    {
+      "path": "config/test_report.py",
+      "sha256": "471ffbb9390fd44d06d0c2fd7b814ac0948366b89038996edb7c7eb9048f28b2",
+      "physical_lines": 152,
+      "nonblank_lines": 117,
+      "global_start": 5056,
+      "global_end": 5207
+    },
+    {
+      "path": "config/treadmill_config.py",
+      "sha256": "fe92b567903d6c4c05ee9406af717ff2fa15c302aa74522d40fea52c0615dcc8",
+      "physical_lines": 165,
+      "nonblank_lines": 131,
+      "global_start": 5208,
+      "global_end": 5372
+    },
+    {
+      "path": "config/treadmill_report.py",
+      "sha256": "5e069329bfc4dbf60f4316920611fb1a8bc2d634e99195c9d0c6413748109793",
+      "physical_lines": 227,
+      "nonblank_lines": 189,
+      "global_start": 5373,
+      "global_end": 5599
+    },
+    {
+      "path": "data/__init__.py",
+      "sha256": "5ce495e2e1ec4083c5ea72c69d3c90e8c29979ab38cfe7fc76f8064e2ab01168",
+      "physical_lines": 10,
+      "nonblank_lines": 8,
+      "global_start": 5600,
+      "global_end": 5609
+    },
+    {
+      "path": "data/subject_store.py",
+      "sha256": "88c0389704da23f23b3478c2d8e35940d5fe4e77a1ec333fef0f479a5f8435f7",
+      "physical_lines": 1538,
+      "nonblank_lines": 1411,
+      "global_start": 5610,
+      "global_end": 7147
+    },
+    {
+      "path": "engine/__init__.py",
+      "sha256": "21b8cfbe2492e2d99508869a8d72874710ad2c49c81d361b39ce0cb18ec8c48e",
+      "physical_lines": 18,
+      "nonblank_lines": 16,
+      "global_start": 7148,
+      "global_end": 7165
+    },
+    {
+      "path": "engine/contact_tracker.py",
+      "sha256": "5e288fcef7638c10eb42d76422311aaba95e48b1df2b52dd66cd81ee6d4c8610",
+      "physical_lines": 545,
+      "nonblank_lines": 467,
+      "global_start": 7166,
+      "global_end": 7710
+    },
+    {
+      "path": "engine/extra_parameter.py",
+      "sha256": "b31be74eb01821d0d3dd46994336748f84bb67688dfde1ec6abd34dc81ba13c9",
+      "physical_lines": 105,
+      "nonblank_lines": 90,
+      "global_start": 7711,
+      "global_end": 7815
+    },
+    {
+      "path": "engine/footprint_visualization.py",
+      "sha256": "8c5d22a1c1aa0edddbaf74f88325c1580b9966eb6410ace3ed2c21512716234f",
+      "physical_lines": 168,
+      "nonblank_lines": 133,
+      "global_start": 7816,
+      "global_end": 7983
+    },
+    {
+      "path": "engine/gait_cycle.py",
+      "sha256": "7cb751749468cba4edf81b22aa66c116a3626d98beee761fc4a3eb650dad6a3d",
+      "physical_lines": 349,
+      "nonblank_lines": 315,
+      "global_start": 7984,
+      "global_end": 8332
+    },
+    {
+      "path": "engine/gait_engine.py",
+      "sha256": "b56018d5cd58652582386a76ee9f25e99b2ad5c8201bdc7cf8b2674f25f31a2f",
+      "physical_lines": 585,
+      "nonblank_lines": 482,
+      "global_start": 8333,
+      "global_end": 8917
+    },
+    {
+      "path": "engine/modes/__init__.py",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "physical_lines": 0,
+      "nonblank_lines": 0,
+      "global_start": 8918,
+      "global_end": 8917
+    },
+    {
+      "path": "engine/modes/base.py",
+      "sha256": "b67e1e206b102c0d153a3759a9ddababd4cbe06ed4c919a664e2cd068be4ae8c",
+      "physical_lines": 45,
+      "nonblank_lines": 33,
+      "global_start": 8918,
+      "global_end": 8962
+    },
+    {
+      "path": "engine/modes/jump_processor.py",
+      "sha256": "2dddef71cfd46fdbfdc330945c015ebd6a97971e0e05546e95c0e40469ecaae2",
+      "physical_lines": 345,
+      "nonblank_lines": 314,
+      "global_start": 8963,
+      "global_end": 9307
+    },
+    {
+      "path": "engine/modes/treadmill_accumulator.py",
+      "sha256": "71b78d3d3243adef9c5ce63b5cc61e7b5574e1c110a6ce2a9484be4ace7b6752",
+      "physical_lines": 420,
+      "nonblank_lines": 352,
+      "global_start": 9308,
+      "global_end": 9727
+    },
+    {
+      "path": "engine/modes/treadmill_gait_accumulator.py",
+      "sha256": "593420b1bb459ff2a6001557fbfc1d6996f52ae1f0944461423750bf5fbc7b18",
+      "physical_lines": 244,
+      "nonblank_lines": 211,
+      "global_start": 9728,
+      "global_end": 9971
+    },
+    {
+      "path": "engine/modes/treadmill_processor.py",
+      "sha256": "4dffeb0565be1402469589427549846a3b561bbe53152c242afbf5a52a0d0b21",
+      "physical_lines": 689,
+      "nonblank_lines": 619,
+      "global_start": 9972,
+      "global_end": 10660
+    },
+    {
+      "path": "engine/modes/treadmill_running_accumulator.py",
+      "sha256": "dc531b538485c174c2a0d5f7619585e605ef1815a0577ca7acb19cf756f6881a",
+      "physical_lines": 263,
+      "nonblank_lines": 227,
+      "global_start": 10661,
+      "global_end": 10923
+    },
+    {
+      "path": "engine/modes/treadmill_v2.py",
+      "sha256": "e5239d6dd2ca95dfaac9f2f52b412b9c27b591954686a53f75739878f97d1988",
+      "physical_lines": 338,
+      "nonblank_lines": 304,
+      "global_start": 10924,
+      "global_end": 11261
+    },
+    {
+      "path": "engine/single_foot_tracker.py",
+      "sha256": "b49ee6ea73e5eef4fafe10b628a9caf3f229b88ac91a886b01f96010ba116993",
+      "physical_lines": 563,
+      "nonblank_lines": 477,
+      "global_start": 11262,
+      "global_end": 11824
+    },
+    {
+      "path": "engine/spatial_clusterer.py",
+      "sha256": "477d13f1ba91c78969e4ea405b9ef4789ac7bdd7512357e3b041036b7c9c7bd7",
+      "physical_lines": 825,
+      "nonblank_lines": 673,
+      "global_start": 11825,
+      "global_end": 12649
+    },
+    {
+      "path": "hardware/__init__.py",
+      "sha256": "c7c48be5dd6d96ab5c35add5ad14869ddcc8bb0be672f811cd394108d4033f4c",
+      "physical_lines": 15,
+      "nonblank_lines": 13,
+      "global_start": 12650,
+      "global_end": 12664
+    },
+    {
+      "path": "hardware/protocol.py",
+      "sha256": "39bd011ee980e6a3ae9df90d1e9a0fba2f885e6c28fe06041987fb0a52bbd579",
+      "physical_lines": 201,
+      "nonblank_lines": 166,
+      "global_start": 12665,
+      "global_end": 12865
+    },
+    {
+      "path": "hardware/receive.py",
+      "sha256": "dcebc4dfceee18a9c5788855f127456ac1d2386a5b6368305521ca9166fab94f",
+      "physical_lines": 497,
+      "nonblank_lines": 435,
+      "global_start": 12866,
+      "global_end": 13362
+    },
+    {
+      "path": "hardware/usb_worker.py",
+      "sha256": "e11dbb105697624b34caabe4fc4afd54d0acf235d2cb8bd7c6ed0e53f3fe9287",
+      "physical_lines": 496,
+      "nonblank_lines": 457,
+      "global_start": 13363,
+      "global_end": 13858
+    },
+    {
+      "path": "knowledge/__init__.py",
+      "sha256": "fd7cc807229303000381cc39898f12c47f8ecc43dd4fe5caabf4e209ab1bf549",
+      "physical_lines": 49,
+      "nonblank_lines": 47,
+      "global_start": 13859,
+      "global_end": 13907
+    },
+    {
+      "path": "knowledge/__main__.py",
+      "sha256": "0f7d54f3fbb1f79a85eb8110f11793db99da6f3c61ee979de5abe9a1b5f3fdb3",
+      "physical_lines": 4,
+      "nonblank_lines": 2,
+      "global_start": 13908,
+      "global_end": 13911
+    },
+    {
+      "path": "knowledge/catalog.py",
+      "sha256": "acd33910fb1a6ff98f36cc8c3056b70100e0767cb252b3cf2277fe0dd31ba297",
+      "physical_lines": 25,
+      "nonblank_lines": 18,
+      "global_start": 13912,
+      "global_end": 13936
+    },
+    {
+      "path": "knowledge/chunking.py",
+      "sha256": "78667956a865004d66d55ae7337ecadbde3b9c40daa92d78dbfb4426930076d2",
+      "physical_lines": 154,
+      "nonblank_lines": 141,
+      "global_start": 13937,
+      "global_end": 14090
+    },
+    {
+      "path": "knowledge/citations.py",
+      "sha256": "abb66b4cbbef14f2a91b4be9da80bc6c2666e3a110d18ce2cefdd9c2481858bb",
+      "physical_lines": 150,
+      "nonblank_lines": 130,
+      "global_start": 14091,
+      "global_end": 14240
+    },
+    {
+      "path": "knowledge/cli.py",
+      "sha256": "7b155c290aeb7f1141d642fb493583d503f4247dae68e3551a5a4972253fc32e",
+      "physical_lines": 119,
+      "nonblank_lines": 110,
+      "global_start": 14241,
+      "global_end": 14359
+    },
+    {
+      "path": "knowledge/embeddings.py",
+      "sha256": "9bd662cc151a4b83c060446e183c01adbcec58a491acfec39efc523a849eab0a",
+      "physical_lines": 30,
+      "nonblank_lines": 22,
+      "global_start": 14360,
+      "global_end": 14389
+    },
+    {
+      "path": "knowledge/ingestion.py",
+      "sha256": "fca5a2baec43c703ac980d6aa64f0da550302f11b5114208fc754043d28dd9a2",
+      "physical_lines": 184,
+      "nonblank_lines": 162,
+      "global_start": 14390,
+      "global_end": 14573
+    },
+    {
+      "path": "knowledge/integration.py",
+      "sha256": "5fd6df9017e8f2788d47fbba4f47124ae123cf2ba84558b1218df4a9e7d40dd3",
+      "physical_lines": 55,
+      "nonblank_lines": 50,
+      "global_start": 14574,
+      "global_end": 14628
+    },
+    {
+      "path": "knowledge/models.py",
+      "sha256": "9f83919a491902f79732b5bf9d0964002a8785565ff29c5c3689c5dde60b5e2b",
+      "physical_lines": 301,
+      "nonblank_lines": 240,
+      "global_start": 14629,
+      "global_end": 14929
+    },
+    {
+      "path": "knowledge/pipeline.py",
+      "sha256": "3bf55471c5f7e14fceca28c897514e3364aa6d14320a7b532232d9ed3fb8d41c",
+      "physical_lines": 202,
+      "nonblank_lines": 189,
+      "global_start": 14930,
+      "global_end": 15131
+    },
+    {
+      "path": "knowledge/planner.py",
+      "sha256": "81557db0e822031ac99b0ca9979688dd795ced60ad9621723e0ede44493f7b20",
+      "physical_lines": 128,
+      "nonblank_lines": 110,
+      "global_start": 15132,
+      "global_end": 15259
+    },
+    {
+      "path": "knowledge/recommendations.py",
+      "sha256": "5aa049460f67d42c3843974b9534eea0463a88c13dff13c479d8027b31c7fd84",
+      "physical_lines": 228,
+      "nonblank_lines": 208,
+      "global_start": 15260,
+      "global_end": 15487
+    },
+    {
+      "path": "knowledge/release_artifacts.py",
+      "sha256": "459b12a25b99cd7dbe3754fe7140df10f9d687f0877d74b9a305207a2cb81c28",
+      "physical_lines": 260,
+      "nonblank_lines": 237,
+      "global_start": 15488,
+      "global_end": 15747
+    },
+    {
+      "path": "knowledge/release_gate.py",
+      "sha256": "d913a3aa898520434d109767f45a4b65a65274a93ee59cd06e4a8d48650e8fd4",
+      "physical_lines": 87,
+      "nonblank_lines": 77,
+      "global_start": 15748,
+      "global_end": 15834
+    },
+    {
+      "path": "knowledge/retrieval.py",
+      "sha256": "5fe19d56464123cc68affefc38638e937084e5f24a2afaf4de328304d6a8671a",
+      "physical_lines": 155,
+      "nonblank_lines": 138,
+      "global_start": 15835,
+      "global_end": 15989
+    },
+    {
+      "path": "knowledge/store.py",
+      "sha256": "4b7c98054515f1f1352a55146607d1e0f1f1f7ff6a950fc53e2c9fce494ff0d6",
+      "physical_lines": 441,
+      "nonblank_lines": 419,
+      "global_start": 15990,
+      "global_end": 16430
+    },
+    {
+      "path": "path_utils.py",
+      "sha256": "fae3d919e5acb34975388f8e6d3defb78aa3de09e8009b9d0cd680d738cd436c",
+      "physical_lines": 40,
+      "nonblank_lines": 34,
+      "global_start": 16431,
+      "global_end": 16470
+    },
+    {
+      "path": "reporting/__init__.py",
+      "sha256": "df5b5e14d5b7264df61ea9cd91c13a6a8ce4bd1a6493c75b23130cd7daa89129",
+      "physical_lines": 20,
+      "nonblank_lines": 18,
+      "global_start": 16471,
+      "global_end": 16490
+    },
+    {
+      "path": "reporting/builders.py",
+      "sha256": "fd6320eda622b5a060b911bcd0b02619ceb59510e253e8cfc378b3f37563c6cb",
+      "physical_lines": 512,
+      "nonblank_lines": 482,
+      "global_start": 16491,
+      "global_end": 17002
+    },
+    {
+      "path": "reporting/kernel.py",
+      "sha256": "833f04f4470d7cb192df66f972f90d39c2a0ebe86e2ac562f2fd3acfe3b20762",
+      "physical_lines": 469,
+      "nonblank_lines": 434,
+      "global_start": 17003,
+      "global_end": 17471
+    },
+    {
+      "path": "reporting/metric_catalog.py",
+      "sha256": "ff74c488e20b9613f109e4715820c085b25f45ff479dbfe15fc42eee1b13fecd",
+      "physical_lines": 55,
+      "nonblank_lines": 46,
+      "global_start": 17472,
+      "global_end": 17526
+    },
+    {
+      "path": "reporting/models.py",
+      "sha256": "1e38f34a62f6cd63a8ca3c22e39ffe055ce6860d8d40f06763a909bdb4a08611",
+      "physical_lines": 957,
+      "nonblank_lines": 790,
+      "global_start": 17527,
+      "global_end": 18483
+    },
+    {
+      "path": "reporting/observation.py",
+      "sha256": "84e927c24e1ac5b53bf693c35b201210a753862a2ece5448346812fc2dcc6a4e",
+      "physical_lines": 382,
+      "nonblank_lines": 354,
+      "global_start": 18484,
+      "global_end": 18865
+    },
+    {
+      "path": "reporting/renderer.py",
+      "sha256": "6b163aa408572dc00514f6cabb3c1bbbb61c0e0cd8dc43eef2e1c5f8095aedbc",
+      "physical_lines": 76,
+      "nonblank_lines": 71,
+      "global_start": 18866,
+      "global_end": 18941
+    },
+    {
+      "path": "reporting/repository.py",
+      "sha256": "e69efe191719f4fb2d46bbd52a33ac5ae61270713c77f1b3ac28c5ca1a50ea9e",
+      "physical_lines": 387,
+      "nonblank_lines": 361,
+      "global_start": 18942,
+      "global_end": 19328
+    },
+    {
+      "path": "reporting/text.py",
+      "sha256": "65b19b76df3508e5763db5d0b29431b5b45f0b45cec6f394aaddb62472224cc5",
+      "physical_lines": 25,
+      "nonblank_lines": 18,
+      "global_start": 19329,
+      "global_end": 19353
+    },
+    {
+      "path": "reporting/tools.py",
+      "sha256": "26df8cad09d517b0c530f592d1da672ba65cdbe52042acf28ed130cabce43b8b",
+      "physical_lines": 129,
+      "nonblank_lines": 117,
+      "global_start": 19354,
+      "global_end": 19482
+    },
+    {
+      "path": "reporting/validators.py",
+      "sha256": "5950cff296917634cdae88ca2d5817fc4b037902247e24595d0f9c1b93311824",
+      "physical_lines": 983,
+      "nonblank_lines": 932,
+      "global_start": 19483,
+      "global_end": 20465
+    },
+    {
+      "path": "ui/__init__.py",
+      "sha256": "63e387511910b390ec90abfdc2c1944c8716216c1c4231fad373f196ba36ee4f",
+      "physical_lines": 5,
+      "nonblank_lines": 4,
+      "global_start": 20466,
+      "global_end": 20470
+    },
+    {
+      "path": "ui/app_shell.py",
+      "sha256": "e24a66568bef7e3c965e5c6d47bce1f14ec70bdde2d038fc4454eaaaf3f37b06",
+      "physical_lines": 313,
+      "nonblank_lines": 279,
+      "global_start": 20471,
+      "global_end": 20783
+    },
+    {
+      "path": "ui/camera.py",
+      "sha256": "15f49424b0c216345fed1986c7c6e45cca9db38c942f3c7300557bc3210e3a91",
+      "physical_lines": 191,
+      "nonblank_lines": 154,
+      "global_start": 20784,
+      "global_end": 20974
+    },
+    {
+      "path": "ui/embedded_camera_panel.py",
+      "sha256": "edb220c83a9dac8d5968dd4a2d831055b898f45baffb741dd8892e5d2daf91a0",
+      "physical_lines": 455,
+      "nonblank_lines": 394,
+      "global_start": 20975,
+      "global_end": 21429
+    },
+    {
+      "path": "ui/footprint_channel.py",
+      "sha256": "fcb556b3fbfebd490ff1c15329a027eba68f5fc3ca93c88b1a5f2c0bad0e91d6",
+      "physical_lines": 357,
+      "nonblank_lines": 309,
+      "global_start": 21430,
+      "global_end": 21786
+    },
+    {
+      "path": "ui/led_con.py",
+      "sha256": "986e967ad16bdcf9b27833a3099f76802b18c44199b7c85fbffa8309ee8e3095",
+      "physical_lines": 292,
+      "nonblank_lines": 254,
+      "global_start": 21787,
+      "global_end": 22078
+    },
+    {
+      "path": "ui/led_panel.py",
+      "sha256": "8acf249bfee00ec5ae11d0de33b8ecc13a4c37b7e6049e334200328ef4d1be41",
+      "physical_lines": 62,
+      "nonblank_lines": 54,
+      "global_start": 22079,
+      "global_end": 22140
+    },
+    {
+      "path": "ui/llm_client.py",
+      "sha256": "673b6991cf060ce5ca944dd80c340916380b725f11bc7202a51c1dacd23669d9",
+      "physical_lines": 227,
+      "nonblank_lines": 199,
+      "global_start": 22141,
+      "global_end": 22367
+    },
+    {
+      "path": "ui/main_window.py",
+      "sha256": "614a18eb39dde40f314db61c021a900fc2332093834f7e5572a44a3c8a3c187b",
+      "physical_lines": 713,
+      "nonblank_lines": 612,
+      "global_start": 22368,
+      "global_end": 23080
+    },
+    {
+      "path": "ui/param_panel.py",
+      "sha256": "c4103b5f2694f19f48ee9f48a4eb507bf0f21b67d23dde734c9f188cd750c7a4",
+      "physical_lines": 757,
+      "nonblank_lines": 651,
+      "global_start": 23081,
+      "global_end": 23837
+    },
+    {
+      "path": "ui/session_controller.py",
+      "sha256": "5e52e0e0cd1104e8ffc476a62c99475719c85e2a056dac8a3c1217fef624ef37",
+      "physical_lines": 459,
+      "nonblank_lines": 389,
+      "global_start": 23838,
+      "global_end": 24296
+    },
+    {
+      "path": "ui/views/__init__.py",
+      "sha256": "5699ecbc9d9d11fb88bb8b55366975d7a2a9652a2a91c85f3e2d382d95a2a3f9",
+      "physical_lines": 5,
+      "nonblank_lines": 4,
+      "global_start": 24297,
+      "global_end": 24301
+    },
+    {
+      "path": "ui/views/agent_config_panel.py",
+      "sha256": "c7aa2449ccf19d00985785ac53327a0cb4f398f0f21687137ad046e7832e145c",
+      "physical_lines": 812,
+      "nonblank_lines": 729,
+      "global_start": 24302,
+      "global_end": 25113
+    },
+    {
+      "path": "ui/views/athletes_view.py",
+      "sha256": "d095b0bc79987a80689c0616ca7175b91d46eca6bd6bfc98af36a26936760952",
+      "physical_lines": 618,
+      "nonblank_lines": 561,
+      "global_start": 25114,
+      "global_end": 25731
+    },
+    {
+      "path": "ui/views/execution_view.py",
+      "sha256": "c9f94ae6fa18eb9a9c58e55626bd6a4fe93c536d50d95c6a7bd9896cecdb7b05",
+      "physical_lines": 939,
+      "nonblank_lines": 814,
+      "global_start": 25732,
+      "global_end": 26670
+    },
+    {
+      "path": "ui/views/history_view.py",
+      "sha256": "5d23b0d4f73b569117513ba34554db0250f07883dbf0c698f68c8c3107f30599",
+      "physical_lines": 611,
+      "nonblank_lines": 551,
+      "global_start": 26671,
+      "global_end": 27281
+    },
+    {
+      "path": "ui/views/report_view.py",
+      "sha256": "65db8543f0840a8e816457c5e89c696e793b65e06980bc46e409c1aff1889b9c",
+      "physical_lines": 2052,
+      "nonblank_lines": 1860,
+      "global_start": 27282,
+      "global_end": 29333
+    },
+    {
+      "path": "ui/views/settings_view.py",
+      "sha256": "3c3b3ce7db459e1f2fdf928a34e4a503f47c7070b0e6569ee0386d55fe363afc",
+      "physical_lines": 202,
+      "nonblank_lines": 184,
+      "global_start": 29334,
+      "global_end": 29535
+    },
+    {
+      "path": "ui/views/setup_view.py",
+      "sha256": "a474a3639838371d70d30eeef587ac0e45a5e0e6d6d565d2380aebb0846011e5",
+      "physical_lines": 1187,
+      "nonblank_lines": 1078,
+      "global_start": 29536,
+      "global_end": 30722
+    }
+  ],
+  "excluded_paths": [
+    "agent/agent_test_ui.py",
+    "agent/diagnose_latency.py",
+    "knowledge/benchmark.py",
+    "knowledge/evaluation.py",
+    "knowledge/live_benchmark.py",
+    "knowledge/promote_groundedness_review.py",
+    "ui/data_show.py"
+  ],
+  "selected_ranges": [
+    [
+      1,
+      1500
+    ],
+    [
+      29223,
+      30722
+    ]
+  ],
+  "selected_lines": 3000,
+  "contains_protocol_reference_in_excerpt": false
+}

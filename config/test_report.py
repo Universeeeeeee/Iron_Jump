@@ -114,10 +114,10 @@ class GaitTestReport:
     lift_count: int
     stride_lengths: tuple
     velocities: tuple
-    avg_stride: float
-    max_stride: float
-    avg_velocity: float
-    max_velocity: float
+    avg_stride: Optional[float]
+    max_stride: Optional[float]
+    avg_velocity: Optional[float]
+    max_velocity: Optional[float]
     # 支撑时间
     foot_a_support_times: tuple = ()
     foot_b_support_times: tuple = ()
@@ -131,10 +131,15 @@ class GaitTestReport:
     export_frames: tuple = ()
     export_timestamps: tuple = ()
     visual_timeline: tuple = ()
+    walking_summary: dict = field(default_factory=dict)
+    report_config_snapshot: dict = field(default_factory=dict)
 
 
 # 统一类型别名
+from config.overground_running_report import OvergroundRunningReport
+
 TestReport = Union[
+    OvergroundRunningReport,
     JumpTestReport,
     GaitTestReport,
     TreadmillGaitReport,

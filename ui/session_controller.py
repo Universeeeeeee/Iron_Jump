@@ -18,7 +18,7 @@ import os
 import time
 from typing import Optional
 
-from qtpy.QtCore import QObject, Signal, Slot, QThread, Qt
+from qtpy.QtCore import QObject, Signal, Slot, QThread, Qt, QMetaObject
 
 from config.test_config import AnyTestConfig, TestConfig
 from config.test_report import TestReport, build_report
@@ -49,6 +49,8 @@ class SessionController(QObject):
     footprint_visual_frame = Signal(dict)   # canonical footprint frame
     device_message = Signal(str)            # 设备消息 (节流)
     device_state_changed = Signal(str, str)  # state, user-facing detail
+    walking_readiness_changed = Signal(dict)
+    prepare_walking_requested = Signal()
     led_health_changed = Signal(dict)        # LED 通断/闪烁诊断
 
     # ---- queued commands into the worker thread ----
@@ -62,9 +64,11 @@ class SessionController(QObject):
     # ---- 生命周期信号 → MainWindow ----
     session_started = Signal()
     session_finished = Signal(object)       # TestReport
+    pause_state_changed = Signal(bool)
 
-    def __init__(self, parent=None):
+    def __init__(self, parent=None, *, worker_factory=None):
         super().__init__(parent)
+        self._worker_factory = worker_factory or UsbWorker
 
         # 后台资源 (懒初始化)
         self._thread: Optional[QThread] = None
@@ -84,8 +88,10 @@ class SessionController(QObject):
         self._finish_reason: Optional[str] = None
         self._is_running = False
         self._is_paused = False
+        self._pause_pending = False
         self._start_pending = False
         self._device_state = "disconnected"
+        self._walking_ready = False
 
     # ------------------------------------------------------------------
     #  公共方法
@@ -103,7 +109,7 @@ class SessionController(QObject):
 
         self._device_state = "connecting"
         self._thread = QThread()
-        self._worker = UsbWorker(
+        self._worker = self._worker_factory(
             dll_path=self._dll_path,
             vid=self._vid,
             pid=self._pid,
@@ -147,6 +153,7 @@ class SessionController(QObject):
         self._config = config
         self._finish_reason = None
         self._is_paused = False
+        self._pause_pending = False
         self._start_pending = False
         self._device_state = prepared_device_state if reuse_device else "connecting"
 
@@ -155,7 +162,7 @@ class SessionController(QObject):
             self._thread = QThread()
 
             # 2. 创建 L1: USB 采集层
-            self._worker = UsbWorker(
+            self._worker = self._worker_factory(
                 dll_path=self._dll_path,
                 vid=self._vid,
                 pid=self._pid,
@@ -170,9 +177,22 @@ class SessionController(QObject):
         self._engine.moveToThread(self._thread)
 
         # 4. 连接 L1 → L2 (同线程 DirectConnection, 零开销)
-        self._worker.raw_contact_signal.connect(
-            self._engine.process_raw_frame, Qt.DirectConnection
-        )
+        if self._engine.overground is not None:
+            walking = self._engine.overground
+            self._walking_ready = False
+            # USB callbacks arrive on a Python reader thread. Queue frame/issue and
+            # arm commands onto one Qt thread, keeping the readiness handoff atomic.
+            self._worker.sensor_frame_received.connect(walking.on_frame, Qt.QueuedConnection)
+            self._worker.acquisition_issue.connect(walking.on_issue, Qt.QueuedConnection)
+            self._worker.device_state_changed.connect(walking.on_device_state)
+            self.prepare_walking_requested.connect(self._worker.prepare_walking_capture)
+            self.prepare_walking_requested.connect(walking.monitor)
+            walking.readiness.connect(self._on_walking_readiness)
+            walking.armed.connect(self._on_walking_armed)
+        else:
+            self._worker.raw_contact_signal.connect(
+                self._engine.process_raw_frame, Qt.DirectConnection
+            )
 
         # 5. 连接 L2 → Controller (跨线程 QueuedConnection, 低频)
         self._engine.hop_event.connect(self._on_hop_event)
@@ -181,6 +201,7 @@ class SessionController(QObject):
         self._engine.gait_status_snapshot.connect(self._on_gait_snapshot)
         self._engine.footprint_visual_frame.connect(self._on_footprint_visual_frame)
         self._engine.test_finished.connect(self._on_engine_finished)
+        self._engine.pause_state_changed.connect(self._on_pause_state_changed)
 
         # 6. 连接 L1 → Controller (设备消息, 节流)
         # 复用配置页 worker 时这些连接已经存在，不重复绑定。
@@ -204,6 +225,8 @@ class SessionController(QObject):
         if reuse_device:
             if self._device_state == "connected":
                 self.device_state_changed.emit("connected", "设备已连接")
+                if self._engine.overground is not None:
+                    self.prepare_walking_requested.emit()
             elif self._device_state in {"disconnected", "error"}:
                 self._device_state = "connecting"
                 self.device_state_changed.emit("connecting", "正在连接设备...")
@@ -219,6 +242,16 @@ class SessionController(QObject):
         """Start formal acquisition after the device has been prepared."""
         if self._thread is None or not self._thread.isRunning():
             log.warning("start() called but no session prepared")
+            return
+        if self._engine is not None and self._engine.overground is not None:
+            if self._is_running or self._start_pending:
+                return
+            if not self._walking_ready:
+                self.device_message.emit("设备段数识别及空场自检尚未通过，不能开始。")
+                return
+            self._start_pending = True
+            self._start_time = time.perf_counter()
+            self.engine_start_requested.emit(self._start_time)
             return
         if self._device_state != "connected":
             log.warning("start() called while device state is %s", self._device_state)
@@ -252,6 +285,8 @@ class SessionController(QObject):
         if self._worker is None:
             self.ensure_device_connected()
             return
+        if self._engine is not None and self._engine.overground is not None:
+            return  # Continuous walking preflight owns the acquisition stream.
         if self._device_state == "connected":
             self.refresh_led_health_requested.emit()
         elif self._device_state in {"disconnected", "error"}:
@@ -259,15 +294,25 @@ class SessionController(QObject):
 
     def pause(self):
         """Pause processing and the active test clock."""
-        if self._engine and not self._is_paused:
-            self._is_paused = True
+        if self._engine and self._engine.overground is not None:
+            return  # Physical stops remain part of the single passage.
+        if self._engine and self._is_running and not self._is_paused and not self._pause_pending:
+            self._pause_pending = True
             self.engine_pause_requested.emit()
 
     def resume(self):
         """Resume processing from the frozen test clock."""
-        if self._engine and self._is_paused:
-            self._is_paused = False
+        if self._engine and self._is_running and self._is_paused and not self._pause_pending:
+            self._pause_pending = True
             self.engine_resume_requested.emit()
+
+    @Slot(bool)
+    def _on_pause_state_changed(self, paused):
+        if not self._is_running:
+            return
+        self._pause_pending = False
+        self._is_paused = paused
+        self.pause_state_changed.emit(paused)
 
     def toggle_pause(self):
         if self._is_paused:
@@ -284,6 +329,7 @@ class SessionController(QObject):
             self._finish_reason = reason
         self._is_running = False
         self._is_paused = False
+        self._pause_pending = False
         report = self._do_stop(self._finish_reason or "manual")
 
         if report is not None:
@@ -301,6 +347,10 @@ class SessionController(QObject):
     @property
     def is_running(self) -> bool:
         return self._is_running
+
+    @property
+    def is_paused(self) -> bool:
+        return self._is_paused
 
     @property
     def engine(self) -> Optional[GaitEngine]:
@@ -362,7 +412,23 @@ class SessionController(QObject):
                 self._engine.paused = True
         self.device_state_changed.emit(state, message)
         if state == "connected" and not self._is_running and not self._start_pending:
-            self.refresh_led_health()
+            if self._engine is not None and self._engine.overground is not None:
+                self.prepare_walking_requested.emit()
+            else:
+                self.refresh_led_health()
+
+    @Slot(dict)
+    def _on_walking_readiness(self, result):
+        self._walking_ready = result["ready"]
+        if not self._walking_ready:
+            self._start_pending = False
+        self.walking_readiness_changed.emit(result)
+
+    @Slot()
+    def _on_walking_armed(self):
+        self._start_pending = False
+        self._is_running = True
+        self.session_started.emit()
 
     @Slot(dict)
     def _on_led_health(self, result: dict):
@@ -384,6 +450,8 @@ class SessionController(QObject):
         engine = self._engine
         report = None
 
+        if engine is not None and engine.overground is not None and self._thread and self._thread.isRunning():
+            QMetaObject.invokeMethod(engine.overground, "halt", Qt.BlockingQueuedConnection)
         # 1. 标记引擎完成 (防止后续回调)
         if engine is not None:
             engine._paused = True
@@ -395,7 +463,7 @@ class SessionController(QObject):
         # 2. 停止 USB 采集
         if self._worker:
             try:
-                self._worker.stop()
+                self._stop_worker()
             except Exception:
                 log.exception("Error stopping USB worker")
 
@@ -422,6 +490,15 @@ class SessionController(QObject):
         log.info("Session stopped: %s", reason)
         return report
 
+    def _stop_worker(self):
+        # Walking owns continuous Qt timers; stop them on their owning thread.
+        if (self._engine is not None and self._engine.overground is not None
+                and self._thread and self._thread.isRunning()
+                and self._worker.metaObject().indexOfMethod("stop()") >= 0):
+            QMetaObject.invokeMethod(self._worker, "stop", Qt.BlockingQueuedConnection)
+        else:
+            self._worker.stop()
+
     def _cleanup(self):
         """清理可能残留的上一次会话资源。"""
         if self._is_running:
@@ -429,9 +506,12 @@ class SessionController(QObject):
             self._do_stop("cleanup")
             return
 
+        if (self._engine is not None and self._engine.overground is not None
+                and self._thread and self._thread.isRunning()):
+            QMetaObject.invokeMethod(self._engine.overground, "halt", Qt.BlockingQueuedConnection)
         if self._worker:
             try:
-                self._worker.stop()
+                self._stop_worker()
             except Exception:
                 log.exception("Error stopping prepared USB worker")
         if self._thread and self._thread.isRunning():
@@ -447,6 +527,7 @@ class SessionController(QObject):
         self._is_paused = False
         self._start_pending = False
         self._device_state = "disconnected"
+        self._pause_pending = False
 
     @staticmethod
     def _parse_int_env(name: str, default: int) -> int:

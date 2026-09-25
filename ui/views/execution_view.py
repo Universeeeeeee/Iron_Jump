@@ -592,7 +592,7 @@ class ExecutionView(QWidget):
         self._device_label.setStyleSheet(f"font-size: 10pt; color: {color};")
         if state == "connected":
             self.btn_start.setText("开始采集")
-            self.btn_start.setEnabled(True)
+            self.btn_start.setEnabled(getattr(self._config, "test_type", "") not in {"Sprint and Gait Test", "Overground Running Test"})
         elif state == "error":
             self.btn_start.setText("重试设备")
             self.btn_start.setEnabled(True)
@@ -603,14 +603,22 @@ class ExecutionView(QWidget):
             self.btn_start.setText("开始采集")
             self.btn_start.setEnabled(False)
 
+    def on_walking_readiness(self, result):
+        count = result.get("segment_count")
+        prefix = f"{count} 段 / 标称 {count} 米 · " if count else ""
+        self._device_label.setText(prefix + result["message"])
+        self.btn_start.setText("开始测试" if result["ready"] else "等待自检通过")
+        self.btn_start.setEnabled(result["ready"])
+
     def on_session_started(self):
         """Enter the running UI only after the device confirms streaming."""
-        self._mode_label.setText(
-            f"{'纵跳测试' if self._mode == '纵跳' else '步态分析'} · 运行中"
-        )
+        label = "纵跳测试" if self._mode == "纵跳" else "步态分析"
+        if getattr(self._config, "test_type", "") == "Overground Running Test":
+            label = "地面跑步"
+        self._mode_label.setText(f"{label} · 运行中")
         self.btn_start.hide()
         self.btn_return_config.hide()
-        self.btn_pause.show()
+        self.btn_pause.setVisible(getattr(self._config, "test_type", "") not in {"Sprint and Gait Test", "Overground Running Test"})
         self.btn_stop.show()
         self._start_countdown()
 
@@ -720,6 +728,10 @@ class ExecutionView(QWidget):
     def on_gait_snapshot(self, snapshot: dict):
         """接收步态快照 (~10Hz)，更新仪表盘。"""
         self._card_steps.set_value(str(snapshot['touch_count']))
+        if "walking" in snapshot or "running" in snapshot:
+            self._mode_label.setText(("地面跑步" if "running" in snapshot else "地面走路") + " · " + snapshot["status"])
+            data = snapshot.get("running", snapshot.get("walking"))
+            self._device_label.setText(f"{data['segment_count']} 段 / 标称 {data['nominal_length_m']} 米 · 有效步数 {data['valid_steps']} · 异常 {len(data['issues'])}")
 
         if snapshot.get("stride_count", 0) > 0:
             latest = snapshot.get("latest_stride", 0)
@@ -772,7 +784,8 @@ class ExecutionView(QWidget):
 
     def on_device_message(self, msg: str):
         """显示设备状态。"""
-        self._device_label.setText(msg[:50])
+        if getattr(self._config, "test_type", "") not in {"Sprint and Gait Test", "Overground Running Test"}:
+            self._device_label.setText(msg[:50])
 
     # ------------------------------------------------------------------
     #  图表更新 (从 data_show.py 迁移)
@@ -847,7 +860,7 @@ class ExecutionView(QWidget):
         self._stop_countdown()
         self._jump_target = None
 
-        if config.stop_type == "Status change" and config.number_of_jumps:
+        if config.stop_type == "Status change" and getattr(config, "number_of_jumps", None):
             self._jump_target = config.number_of_jumps
             self._progress_bar.setMaximum(self._jump_target)
             self._progress_bar.setValue(0)
@@ -917,7 +930,13 @@ class ExecutionView(QWidget):
         self.start_requested.emit()
 
     def _on_pause(self):
-        if not self._paused:
+        self.pause_requested.emit()
+
+    def set_paused(self, paused: bool):
+        """Reflect the engine acknowledgement for both buttons and voice commands."""
+        if paused == self._paused:
+            return
+        if paused:
             self._paused = True
             self._stop_countdown()
             self.btn_pause.setText("▶ 继续分析")
@@ -932,7 +951,6 @@ class ExecutionView(QWidget):
             self._mode_label.setText(
                 f"{'纵跳测试' if self._mode == '纵跳' else '步态分析'} · 运行中"
             )
-        self.pause_requested.emit()
 
     def _on_stop(self):
         self._stop_countdown()

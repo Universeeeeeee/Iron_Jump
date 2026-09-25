@@ -28,7 +28,7 @@ from qtpy.QtGui import QColor, QPainter
 from qtpy.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QGridLayout,
     QLabel, QFrame, QSizePolicy, QMessageBox, QFileDialog,
-    QComboBox, QTabWidget, QTableWidget, QToolButton,
+    QComboBox, QTabWidget, QTableWidget, QToolButton, QTextBrowser, QLineEdit,
 )
 
 from dayu_widgets.label import MLabel
@@ -36,6 +36,7 @@ from dayu_widgets.push_button import MPushButton
 from dayu_widgets import dayu_theme
 
 from config.test_report import TestReport, JumpTestReport, GaitTestReport
+from config.overground_running_report import OvergroundRunningReport
 from config.treadmill_report import (
     TreadmillGaitReport,
     TreadmillRunningReport,
@@ -614,6 +615,7 @@ class _ReportAnalysisWorker(QThread):
 class ReportView(QWidget):
     """测试报告视图 — 统计汇总 + 图表回顾 + 导出。"""
 
+    voice_reply = Signal(str)
     return_home = Signal()
     export_requested = Signal()
 
@@ -794,6 +796,34 @@ class ReportView(QWidget):
 
         self._tabs.addTab(self._details_page, "明细")
 
+        self._gait_question_page = QWidget()
+        self._gait_question_page.setStyleSheet(
+            "QLineEdit, QTextBrowser { background: #151e2a; color: #e7edf5;"
+            "border: 1px solid #354151; border-radius: 5px; padding: 10px; font-size: 14px; }"
+            "QPushButton { background: #242e3c; color: #e7edf5; padding: 8px;"
+            "border: 1px solid #354151; border-radius: 5px; }"
+        )
+        question_layout = QVBoxLayout(self._gait_question_page)
+        self._gait_question = QLineEdit()
+        self._gait_question.setPlaceholderText("询问左右差异、步频稳定性、前后半程变化或排除数据")
+        self._gait_question.returnPressed.connect(
+            lambda: self.answer_gait_question(self._gait_question.text())
+        )
+        question_layout.addWidget(self._gait_question)
+        suggestions = QHBoxLayout()
+        for question in ("左右脚差异怎么样", "步频稳定吗", "前后半程有什么变化", "哪些数据没算进去"):
+            button = MPushButton(question)
+            button.clicked.connect(lambda checked=False, text=question: self.answer_gait_question(text))
+            suggestions.addWidget(button)
+        question_layout.addLayout(suggestions)
+        self._gait_answer = QTextBrowser()
+        self._gait_answer.document().setDefaultStyleSheet("a { color: #ffae55; }")
+        self._gait_answer.setOpenLinks(False)
+        self._gait_answer.anchorClicked.connect(self._locate_gait_evidence)
+        question_layout.addWidget(self._gait_answer)
+        self._gait_topic = ""
+        self._gait_question_index = self._tabs.addTab(self._gait_question_page, "步态专项问答")
+
         main_layout.addWidget(self._tabs, 1)
 
         self._analysis_panel = QFrame()
@@ -854,6 +884,10 @@ class ReportView(QWidget):
     def load_report(self, report: TestReport, session_id: int | None = None):
         """填充统计卡片和图表。"""
         self._report = report
+        self._gait_topic = ""
+        self._gait_question.clear()
+        self._gait_answer.clear()
+        self._tabs.setTabVisible(self._gait_question_index, isinstance(report, TreadmillGaitReport))
         self._session_id = session_id
         self._latest_requested_for = None
         self.clear_analysis()
@@ -869,9 +903,12 @@ class ReportView(QWidget):
         self._replay_panel.hide()
         self._plot_container.show()
         self._tabs.setCurrentIndex(0)
-        self._tabs.setTabVisible(1, isinstance(
+        is_walking = (isinstance(report, GaitTestReport) and bool(report.walking_summary)) or isinstance(report, OvergroundRunningReport)
+        self._tabs.setTabVisible(1, is_walking or isinstance(
             report, (TreadmillGaitReport, TreadmillRunningReport)
         ))
+        for i in range(1, self._detail_tabs.count()):
+            self._detail_tabs.setTabVisible(i, not is_walking)
         self._detail_tabs.setCurrentIndex(0)
         self._more_stats_button.setChecked(False)
         for detail_filter in (self._cycle_filter, self._step_filter):
@@ -882,12 +919,52 @@ class ReportView(QWidget):
 
         if isinstance(report, JumpTestReport):
             self._load_jump_report(report)
+        elif isinstance(report, OvergroundRunningReport):
+            self._load_overground_running(report)
         elif isinstance(report, GaitTestReport):
             self._load_gait_report(report)
         elif isinstance(report, (TreadmillGaitReport, TreadmillRunningReport)):
             self._load_treadmill_report(report)
 
+        if getattr(report, "report_config_snapshot", {}).get("data_source") == "simulation":
+            self._title.setText(self._title.text() + " · 模拟数据（非实测）")
+
         self._request_latest_if_available()
+
+    def answer_gait_question(self, question: str) -> str:
+        from reporting.gait_insights import answer_gait_question
+
+        answer = answer_gait_question(self._report, question, self._gait_topic)
+        self._gait_topic = answer.topic or self._gait_topic
+        self._gait_question.setText(question)
+        links = " · ".join(
+            f'<a href="{kind}:{index}">{"逐步" if kind == "step" else "周期"} {index + 1}</a>'
+            for kind, index in answer.references
+        )
+        self._gait_answer.setHtml(
+            "<p>" + html.escape(answer.text).replace("\n", "<br>") + "</p>"
+            + ("<p>点击定位证据：<br>" + links + "</p>" if links else "")
+        )
+        if isinstance(self._report, TreadmillGaitReport):
+            self._tabs.setCurrentIndex(self._gait_question_index)
+        return answer.text
+
+    def _locate_gait_evidence(self, url):
+        if url.scheme() not in {"cycle", "step"} or not url.path().isdigit():
+            return
+        cycle = url.scheme() == "cycle"
+        detail_filter = self._cycle_filter if cycle else self._step_filter
+        detail_filter.setCurrentIndex(0)
+        table = self._cycle_detail_table if cycle else self._treadmill_step_table
+        self._tabs.setCurrentWidget(self._details_page)
+        self._detail_tabs.setCurrentWidget(self._cycle_page if cycle else self._step_page)
+        number = str(int(url.path()) + 1)
+        for row in range(table.rowCount()):
+            if table.item(row, 0).text() == number:
+                table.setCurrentCell(row, 0)
+                table.scrollToItem(table.item(row, 0))
+                table.item(row, 0).setBackground(QColor("#805018"))
+                break
 
     def set_analysis_availability(self, available: bool) -> None:
         self._analysis_available = available
@@ -1031,6 +1108,14 @@ class ReportView(QWidget):
             return
         self._start_analysis_request("analyze")
 
+    def request_voice_analysis(self) -> bool:
+        if self._analysis_panel.isHidden() or self._session_id is None:
+            return False
+        if any(worker.isRunning() for worker in self._analysis_workers):
+            return False
+        self._start_analysis_request("analyze")
+        return True
+
     def _start_analysis_request(self, action: str) -> None:
         if self._llm_client is None or self._session_id is None:
             return
@@ -1078,6 +1163,9 @@ class ReportView(QWidget):
         self.set_analysis_loading(False)
         if isinstance(analysis, dict):
             self.show_validated_analysis(analysis)
+            if action == "analyze":
+                from voice.responses import analysis_speech
+                self.voice_reply.emit(analysis_speech(analysis))
 
     def _on_analysis_failed(
         self,
@@ -1089,6 +1177,7 @@ class ReportView(QWidget):
             return
         self.set_analysis_loading(False)
         if action == "analyze":
+            self.voice_reply.emit("报告分析暂时不可用，请查看界面提示后重试。")
             messages = {
                 "worker_not_ready": "智能分析服务尚未就绪。",
                 "external_scope_not_implemented": "当前版本仅支持本次记录分析。",
@@ -1210,6 +1299,9 @@ class ReportView(QWidget):
         self._replay_panel.set_direction("Interface side")
         self._replay_panel.set_timeline(getattr(r, "visual_timeline", ()))
 
+        if r.walking_summary:
+            self._load_walking_stats(r)
+            return
         stats = [
             ("总步数", f"{r.touch_count}", "检测到的触地事件总数。"),
             ("离地次数", f"{r.lift_count}", "检测到的离地事件总数。"),
@@ -1259,6 +1351,84 @@ class ReportView(QWidget):
     # ------------------------------------------------------------------
     #  跑步机报告
     # ------------------------------------------------------------------
+
+    def _load_overground_running(self, r):
+        from reporting.overground_running import detail_html, FINISH_LABELS
+        self._reason_label.setText(FINISH_LABELS.get(r.finish_reason, r.finish_reason))
+        self._title.setText("测试报告 — 地面跑步")
+        self._plot_container.hide()
+        self._replay_panel.show()
+        self._replay_panel.set_direction("Interface side")
+        self._replay_panel.set_timeline(r.visual_timeline)
+        s = r.running_summary
+        def value(x, unit=""):
+            return f"{x:.3f} {unit}" if x is not None else "数据不足"
+        group = s["groups"]["all"]
+        stats = [
+            ("设备长度", f"{s['segment_count']} 段 / {s['nominal_length_m']} 米", "距离使用实际光束坐标"),
+            ("有效步数 / 周期", f"{s['valid_steps']} / {s['valid_cycles']}", "时间指标有效的记录数；各空间指标独立筛选"),
+            ("平均步长", value(s['step_statistics']['length_m']['mean'], "m"), "脚尖到脚尖"),
+            ("平均跨步长", value(group['length_m']['mean'], "m"), "同脚脚尖到脚尖"),
+            ("平均速度", value(s['running_speed_m_s'], "m/s"), "有效距离总和除以对应时间总和"),
+            ("平均接触", value(group['contact_s']['mean'], "s"), "有效同脚周期接触时间"),
+            ("平均摆动", value(group['swing_s']['mean'], "s"), "同脚离地至再次触地"),
+            ("平均腾空", value(group['flight_s']['mean'], "s"), "完整同脚周期内腾空总和"),
+            ("单 / 双支撑", value(group['single_support_s']['mean'], "s") + " / " + value(group['double_support_s']['mean'], "s"), "各指标独立有效"),
+            ("测量时长", value(s['duration_s'], "s"), "包含停步，不含等待进入和结束确认"),
+            ("有腾空 / 无腾空 / 不确定", f"{s['flight_cycle_count']} / {s['zero_flight_cycle_count']} / {s['unknown_flight_cycle_count']}", "不据此判定走路"),
+            ("停步 / 异常", f"{len(s['stops'])} / {len(s['issues'])}", "原因与分组、左右比较见明细；实测待验证"),
+        ]
+        self._fill_stat_cards(stats)
+        details = QTextBrowser()
+        details.setHtml(detail_html(r))
+        self._add_detail_widget(details, self._summary_layout)
+
+    def _load_walking_stats(self, r):
+        s = r.walking_summary
+        self._title.setText("测试报告 — 地面走路")
+        def metric(label, key, unit, note):
+            value = s.get(key)
+            return (label, f"{value:.3f} {unit}" if value is not None else "数据不足", note)
+        stats = [
+            ("设备长度", f"{s['segment_count']} 段 / {s['nominal_length_m']} 米", "本次通过自检的标称长度；距离计算使用光束坐标。"),
+            ("有效步数 / 周期", f"{s['valid_steps']} / {s['valid_cycles']}", "仅统计完整、连续且身份关系明确的数据。"),
+            metric("平均步长", "mean_step_m", "m", "相邻有效落脚点距离。"),
+            metric("平均跨步长", "mean_stride_m", "m", "同脚连续两次有效落脚点距离。"),
+            metric("步频", "cadence_per_min", "步/min", "有效行走片段的步频，排除停步候选区间。"),
+            metric("平均接触时间", "mean_contact_s", "s", "完整光学遮挡接触区间，排除停步候选区间。"),
+            metric("单支撑时间", "single_support_s", "s", "完整步态周期内单支撑总时长的平均值。"),
+            metric("双支撑时间", "double_support_s", "s", "完整步态周期内双支撑总时长的平均值。"),
+            metric("测量时长", "duration_s", "s", "首次有效触地至最后遮挡结束，包含停步。"),
+            metric("整趟前进速度", "passage_speed_m_s", "m/s", "首末落脚点位移除以测量时长，包含停步；非人体质心速度，有采集缺口时留空。"),
+            metric("行走阶段速度", "walking_speed_m_s", "m/s", "有效步长总和除以对应步间时间总和。"),
+            ("停步 / 排除接触 / 异常", f"{len(s['stops'])} / {s['excluded_contacts']} / {len(s['issues'])}", "保留停步，不跨异常拼接周期；详细原因见测量明细。"),
+        ]
+        self._fill_stat_cards(stats)
+        reasons = {"passage_complete": "测试完成 · 已通过测量区域", "manual": "手动结束",
+                   "disconnected": "测试中断 · 设备断连", "data_timeout": "测试中断 · 数据超时",
+                   "layout_mismatch": "测试中断 · 段数变化", "device_changed": "测试中断 · 设备变化",
+                   "out_of_order_or_reset": "测试中断 · 帧序号异常", "turn_detected": "测试中断 · 检测到反向行走"}
+        self._reason_label.setText(reasons.get(r.finish_reason, "测试中断 · " + r.finish_reason))
+        details = QTextBrowser()
+        details.setOpenExternalLinks(False)
+        def table(title, headers, rows):
+            cells = lambda row: "".join("<td>" + html.escape(str(v) if v is not None else "数据不足") + "</td>" for v in row)
+            return "<h3>" + title + "</h3><table cellspacing='8'><tr>" + cells(headers) + "</tr>" + "".join("<tr>" + cells(row) + "</tr>" for row in rows) + "</table>"
+        reasons_cn = {"boundary_contact": "边缘接触不完整", "incomplete_contact": "接触尚未结束",
+                      "frame_gap": "丢帧", "unknown_touch_after_gap": "缺口后触地时间未知",
+                      "ambiguous_contacts": "遮挡合并或身份不确定", "simultaneous_contacts": "同时出现，身份不确定",
+                      "short_contact": "接触过短"}
+        content = table("接触记录", ["序号", "脚 / 身份段", "触地(s)", "离地(s)", "位置(m)", "排除原因"],
+                        [[c["id"], c["side"] if c["side"] != "unknown" else f"{c['label']} / {c['epoch']}",
+                          c["start"], c["end"], round(c["position_m"], 4), reasons_cn.get(c["exclusion"], c["exclusion"]) or ""]
+                         for c in s["contacts"]])
+        content += table("停步候选区间", ["开始(s)", "结束(s)"], [[x["start_s"], x["end_s"]] for x in s["stops"]])
+        content += table("采集异常", ["时间(s)", "原因", "帧标识"],
+                         [[x["time_s"], reasons_cn.get(x["code"], x["code"]), x["frame_index"]] for x in s["issues"]])
+        if r.report_config_snapshot.get("raw_buffer", {}).get("truncated"):
+            content = "<p>原始帧缓存已达到容量上限，导出仅包含末尾保留帧；统计结果仍基于完整处理过程。</p>" + content
+        details.setHtml(content)
+        self._add_detail_widget(details, self._summary_layout)
 
     def _load_treadmill_report(self, r: TreadmillGaitReport | TreadmillRunningReport):
         test_type_label = "跑步机步态" if isinstance(r, TreadmillGaitReport) else "跑步机跑步"
@@ -1675,7 +1845,9 @@ class ReportView(QWidget):
             or self._report.raw_gait_events
         )
 
-        if not frames and not has_jump_metrics and not has_treadmill_steps:
+        has_walking = isinstance(self._report, GaitTestReport) and bool(self._report.walking_summary)
+        has_running = isinstance(self._report, OvergroundRunningReport)
+        if not frames and not has_jump_metrics and not has_treadmill_steps and not has_walking and not has_running:
             QMessageBox.information(self, "导出", "本次测试无可导出数据。")
             return
 
@@ -1695,13 +1867,18 @@ class ReportView(QWidget):
 
         try:
             wb = Workbook()
+            snapshot = getattr(self._report, "report_config_snapshot", {})
+            if snapshot.get("data_source") == "simulation":
+                provenance = wb.create_sheet("数据来源")
+                provenance.append(["数据来源", "模拟演示数据，非受试者实测"])
+                provenance.append(["说明", snapshot.get("simulation_description", "")])
             default_ws = wb.active
             if frames:
                 default_ws.title = "LED Frames"
                 default_ws.append(["timestamp", "hex_string"])
                 for ts, bits in zip(timestamps, frames):
                     hex_bytes = []
-                    for i in range(0, min(96, len(bits)), 8):
+                    for i in range(0, len(bits), 8):
                         byte_val = 0
                         for j in range(8):
                             if i + j < len(bits):
@@ -1711,6 +1888,30 @@ class ReportView(QWidget):
                     default_ws.append([ts, hex_str])
             else:
                 wb.remove(default_ws)
+
+            if has_running:
+                from reporting.overground_running import export_sheets
+                export_sheets(wb, self._report)
+
+            if has_walking:
+                import json
+                summary = self._report.walking_summary
+                ws_summary = wb.create_sheet("Walking Summary")
+                ws_summary.append(["metric", "value"])
+                for key, value in summary.items():
+                    if not isinstance(value, (list, dict)):
+                        ws_summary.append([key, value])
+                ws_device = wb.create_sheet("Device and Config")
+                for key, value in snapshot.items():
+                    ws_device.append([key, json.dumps(value, ensure_ascii=False)])
+                for key in ("contacts", "steps", "cycles", "stops", "issues"):
+                    records = summary[key]
+                    ws = wb.create_sheet("Walking " + key)
+                    if records:
+                        columns = list(records[0])
+                        ws.append(columns)
+                        for record in records:
+                            ws.append([record.get(column) for column in columns])
 
             if isinstance(self._report, JumpTestReport):
                 ws = wb.create_sheet("Jump Metrics")

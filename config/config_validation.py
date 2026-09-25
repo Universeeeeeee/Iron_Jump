@@ -8,6 +8,8 @@ from config.test_config import AnyTestConfig
 
 SUPPORTED_TEST_TYPES = {
     "Jump Test",
+    "Sprint and Gait Test",
+    "Overground Running Test",
     "Treadmill Gait Test",
     "Treadmill Running Test",
 }
@@ -18,6 +20,25 @@ def validate_runtime_config(config: AnyTestConfig) -> list[str]:
     test_type = config.test_type
     if test_type not in SUPPORTED_TEST_TYPES:
         return [f"测试类型尚未接入正式流程: {test_type}"]
+
+    if test_type in {"Sprint and Gait Test", "Overground Running Test"}:
+        import math
+        errors = []
+        if config.stop_type not in {"Status change", "Software command"}:
+            errors.append("地面测试结束方式请选择自动结束或手动结束。")
+        if config.starting_foot not in {"Left", "Right", "Not defined"}:
+            errors.append("起始脚请选择左脚、右脚或未指定。")
+        from config.walking_config import WalkingConfig
+        from config.overground_running_config import OvergroundRunningConfig
+        defaults = OvergroundRunningConfig() if test_type == "Overground Running Test" else WalkingConfig()
+        names = ["min_contact_time", "confirmation_ms", "release_ms", "exit_clear_ms", "stop_threshold_s"]
+        if test_type == "Overground Running Test":
+            names.append("toe_platform_ms")
+        for name in names:
+            value = getattr(config, name, getattr(defaults, name))
+            if isinstance(value, bool) or not isinstance(value, (int, float)) or not math.isfinite(value) or value <= 0:
+                errors.append(f"{name} 必须是有限正数。")
+        return errors
 
     values = config.to_dict()
     values.setdefault(

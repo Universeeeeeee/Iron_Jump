@@ -17,7 +17,8 @@
 - 当 stop_type="End of Time" 时，test_length 必须提供（mm:ss 格式，如 02:00）
 - treadmill_speed: 跑步机速度，范围 0.1-20.0 km/h，未指定时默认 3.0 km/h
 - direction: "Interface side"（界面侧）或 "Opposite side"（对侧），未指定时默认 "Opposite side"
-- step_length_calculation: "Tip-to-Tip"（脚尖到脚尖）或 "Heel-to-Heel"（脚跟到脚跟）
+- step_length_calculation: "Tip-to-Tip"（脚尖到脚尖）或 "Heel-to-Heel"（脚跟到脚跟）。未指定时默认 "Tip-to-Tip"，不是必问项，不得因用户未指定此项而追问或延迟生成配置；用户明确选择时采用其选择。
+- 步长计算方式默认静默设置，不主动要求用户确认或解释该选项；用户主动询问时再说明。
 - 未指定停止方式 → stop_type="Software command"（默认手动停止）
 
 沉默规则：

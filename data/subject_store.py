@@ -1,6 +1,7 @@
 """SQLite persistence for athlete/subject profiles and test sessions."""
 
 from __future__ import annotations
+from config.overground_running_report import OvergroundRunningReport
 
 import json
 import math
@@ -48,6 +49,7 @@ class SubjectProfile:
     level: str = "intermediate"
     focus_side: str = ""
     notes: str = ""
+    card_uid: str | None = None
     archived: bool = False
     created_at: str = ""
     updated_at: str = ""
@@ -247,6 +249,7 @@ class SubjectStore:
             "level",
             "focus_side",
             "notes",
+            "card_uid",
             "archived",
         }
         unknown = set(fields) - allowed
@@ -271,6 +274,9 @@ class SubjectStore:
             fields.get("height_cm") if "height_cm" in fields else None,
             fields.get("weight_kg") if "weight_kg" in fields else None,
         )
+        if "card_uid" in fields:
+            fields = dict(fields)
+            fields["card_uid"] = normalize_card_uid(fields["card_uid"])
 
         assignments = [f"{name} = ?" for name in fields]
         values = [_db_value(fields[name]) for name in fields]
@@ -483,6 +489,38 @@ class SubjectStore:
             for row in rows
         ]
 
+    def get_subject_by_card_uid(self, card_uid: str) -> SubjectProfile | None:
+        normalized = normalize_card_uid(card_uid)
+        if normalized is None:
+            return None
+        with self._connect() as conn:
+            row = conn.execute(
+                "SELECT * FROM subjects WHERE card_uid = ?",
+                (normalized,),
+            ).fetchone()
+        return _subject_from_row(row) if row else None
+
+    def bind_card_uid(self, subject_id: int, card_uid: str) -> None:
+        normalized = normalize_card_uid(card_uid)
+        if normalized is None:
+            raise ValueError("card_uid is required")
+        with self._connect() as conn:
+            existing = conn.execute(
+                "SELECT id, display_name FROM subjects WHERE card_uid = ?",
+                (normalized,),
+            ).fetchone()
+            if existing is not None and int(existing["id"]) != int(subject_id):
+                raise ValueError(
+                    f"Card already bound to {existing['display_name']} (#{existing['id']})"
+                )
+            self._update_subject_in_connection(
+                conn, subject_id, {"card_uid": normalized}
+            )
+
+    def unbind_card_uid(self, subject_id: int) -> None:
+        with self._connect() as conn:
+            self._update_subject_in_connection(conn, subject_id, {"card_uid": None})
+
     def get_subject(self, subject_id: int) -> SubjectProfile | None:
         with self._connect() as conn:
             row = conn.execute(
@@ -628,6 +666,10 @@ class SubjectStore:
     ) -> int:
         summary = _report_summary(report)
         finish_reason = _normalize_finish_reason(report.finish_reason)
+        if isinstance(report, OvergroundRunningReport) and report.finish_reason not in FINISH_REASONS:
+            # Legacy SQL CHECK has a small vocabulary; preserve the precise reason
+            # in the report JSON without misclassifying automatic completion as error.
+            finish_reason = None
         now = _now()
         with self._connect() as conn:
             conn.execute("BEGIN IMMEDIATE")
@@ -787,6 +829,7 @@ class SubjectStore:
                     focus_side TEXT NOT NULL DEFAULT ''
                         CHECK(focus_side IN ('', 'left', 'right', 'both')),
                     notes TEXT NOT NULL DEFAULT '',
+                    card_uid TEXT,
                     archived INTEGER NOT NULL DEFAULT 0,
                     created_at TEXT NOT NULL DEFAULT (datetime('now')),
                     updated_at TEXT NOT NULL DEFAULT (datetime('now'))
@@ -877,6 +920,14 @@ class SubjectStore:
             )
             _ensure_column(
                 conn, "subjects", "measured_foot_length_cm", "measured_foot_length_cm REAL"
+            )
+            _ensure_column(conn, "subjects", "card_uid", "card_uid TEXT")
+            conn.execute(
+                """
+                CREATE UNIQUE INDEX IF NOT EXISTS idx_subjects_card_uid
+                ON subjects(card_uid)
+                WHERE card_uid IS NOT NULL AND card_uid != ''
+                """
             )
             _ensure_column(
                 conn, "test_sessions", "report_detail_json", "report_detail_json TEXT"
@@ -1077,11 +1128,25 @@ class SubjectStore:
             )
 
 
+def normalize_card_uid(value: str | None) -> str | None:
+    if value is None:
+        return None
+    cleaned = "".join(
+        ch for ch in str(value).strip().upper() if ch in "0123456789ABCDEF"
+    )
+    if len(cleaned) < 8:
+        return None
+    return cleaned
+
+
 def _subject_from_row(row: sqlite3.Row) -> SubjectProfile:
     try:
         measured_foot_length_cm = row["measured_foot_length_cm"]
     except (IndexError, KeyError):
         measured_foot_length_cm = None
+    card_uid = _optional_row_value(row, "card_uid")
+    if card_uid == "":
+        card_uid = None
     return SubjectProfile(
         id=int(row["id"]),
         display_name=row["display_name"],
@@ -1093,6 +1158,7 @@ def _subject_from_row(row: sqlite3.Row) -> SubjectProfile:
         level=row["level"],
         focus_side=row["focus_side"],
         notes=row["notes"],
+        card_uid=card_uid,
         archived=bool(row["archived"]),
         created_at=row["created_at"],
         updated_at=row["updated_at"],
@@ -1101,6 +1167,9 @@ def _subject_from_row(row: sqlite3.Row) -> SubjectProfile:
 
 def _session_from_row(row: sqlite3.Row) -> SessionRecord:
     subject_id = row["subject_id"]
+    finish_reason = row["finish_reason"]
+    if row["test_type"] == "Overground Running Test":
+        finish_reason = json.loads(row["report_summary_json"] or "{}").get("finish_reason", finish_reason)
     return SessionRecord(
         id=int(row["id"]),
         subject_id=int(subject_id) if subject_id is not None else None,
@@ -1111,7 +1180,7 @@ def _session_from_row(row: sqlite3.Row) -> SessionRecord:
         height_cm=row["height_cm"],
         weight_kg=row["weight_kg"],
         total_jumps=row["total_jumps"],
-        finish_reason=row["finish_reason"],
+        finish_reason=finish_reason,
         report_summary_json=row["report_summary_json"],
         report_detail_json=_optional_row_value(row, "report_detail_json"),
         subject_snapshot_json=_optional_row_value(
@@ -1163,6 +1232,11 @@ def _report_detail(report: TestReport) -> dict[str, Any]:
             "report_schema_version": 2,
             **detail,
         }
+    if isinstance(report, OvergroundRunningReport):
+        detail = _asdict(report)
+        detail.pop("export_frames", None)
+        detail.pop("export_timestamps", None)
+        return {"report_type": "overground_running", "report_schema_version": 1, **detail}
     if isinstance(report, GaitTestReport):
         detail = _asdict(report)
         detail.pop("export_frames", None)
@@ -1193,7 +1267,10 @@ def _report_detail(report: TestReport) -> dict[str, Any]:
         "left_right_results": {k: _asdict(v) for k, v in report.left_right_results.items()},
         "asymmetry_metrics": report.asymmetry_metrics,
         "report_config_snapshot": report.report_config_snapshot,
-        "visual_timeline": report.visual_timeline,
+        "visual_timeline": [
+            frame.to_dict() if hasattr(frame, "to_dict") else frame
+            for frame in report.visual_timeline
+        ],
         "raw_gait_events": [_asdict(event) for event in report.raw_gait_events],
         "gait_cycles": [_asdict(cycle) for cycle in report.gait_cycles],
         "boundary_partials": [_asdict(partial) for partial in report.boundary_partials],
@@ -1246,6 +1323,10 @@ def _report_from_detail(detail: dict[str, Any]) -> TestReport:
         if not values["jump_results"]:
             values["jump_results"] = _legacy_jump_results(values)
         return JumpTestReport(**values)
+
+    if report_type == "overground_running":
+        values["visual_timeline"] = tuple(values.get("visual_timeline", ()))
+        return OvergroundRunningReport(**values)
 
     if report_type == "gait":
         for key in (
@@ -1424,6 +1505,10 @@ def _report_summary(report: TestReport) -> dict[str, Any]:
                 "avg_cadence": report.avg_cadence,
             }
         )
+    elif isinstance(report, OvergroundRunningReport):
+        base.update({"report_type": "overground_running",
+                     "valid_steps": report.running_summary["valid_steps"],
+                     "running_speed_m_s": report.running_summary["running_speed_m_s"]})
     elif isinstance(report, GaitTestReport):
         base.update(
             {

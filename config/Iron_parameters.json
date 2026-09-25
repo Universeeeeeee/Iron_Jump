@@ -26,6 +26,7 @@
           "Jump Test",
           "Reaction Times",
           "Sprint and Gait Test",
+          "Overground Running Test",
           "Treadmill Running Test",
           "Treadmill Gait Test",
           "Tapping Test",
@@ -100,31 +101,31 @@
               {
                 "value": "Status change",
                 "description": "通过状态变化（进入/离开测试区）结束",
-                "applicable_tests": ["Jump Test", "Reaction Times"],
+                "applicable_tests": ["Jump Test", "Reaction Times", "Sprint and Gait Test", "Overground Running Test"],
                 "enables_fields": ["finish_position", "number_of_jumps"]
               },
               {
                 "value": "End of Time",
                 "description": "到达设定时长后自动结束",
-                "applicable_tests": ["Jump Test", "Sprint and Gait Test", "Treadmill Running Test", "Treadmill Gait Test", "Tapping Test", "Static Test (Sway)"],
+                "applicable_tests": ["Jump Test", "Treadmill Running Test", "Treadmill Gait Test", "Tapping Test", "Static Test (Sway)"],
                 "enables_fields": ["test_length"]
               },
               {
                 "value": "Timeout",
                 "description": "无信号超时后自动结束（超时时长由 test_timeout 配置）",
-                "applicable_tests": ["Sprint and Gait Test", "Tapping Test"],
+                "applicable_tests": ["Tapping Test"],
                 "enables_fields": ["finish_position"]
               },
               {
                 "value": "Software command",
                 "description": "由软件手动发送停止命令结束",
-                "applicable_tests": ["Treadmill Running Test", "Treadmill Gait Test", "Static Test (Sway)"]
+                "applicable_tests": ["Sprint and Gait Test", "Overground Running Test", "Treadmill Running Test", "Treadmill Gait Test", "Static Test (Sway)"]
               }
             ],
             "applicable_tests": [
               "Jump Test",
               "Reaction Times",
-              "Sprint and Gait Test",
+              "Sprint and Gait Test", "Overground Running Test",
               "Treadmill Running Test",
               "Treadmill Gait Test",
               "Tapping Test",
@@ -194,7 +195,7 @@
             "default": "Not defined",
             "applicable_tests": [
               "Jump Test",
-              "Sprint and Gait Test",
+              "Sprint and Gait Test", "Overground Running Test",
               "Tapping Test"
             ],
             "source": "4.2.2.2/4.2.2.4/4.2.2.7",
@@ -391,7 +392,7 @@
             "applicable_tests": [
               "Jump Test",
               "Reaction Times",
-              "Sprint and Gait Test",
+              "Sprint and Gait Test", "Overground Running Test",
               "Treadmill Running Test",
               "Treadmill Gait Test",
               "Tapping Test"

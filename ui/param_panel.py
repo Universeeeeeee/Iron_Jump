@@ -127,6 +127,8 @@ class ParamPanel(QWidget):
             "finish_position", "number_of_jumps", "test_length",
             "starting_foot",
         ],
+        "Sprint and Gait Test": ["stop_type", "starting_foot"],
+        "Overground Running Test": ["stop_type", "starting_foot"],
         "Treadmill Gait Test": [
             "stop_type", "test_length", "treadmill_speed", "direction",
         ],
@@ -140,6 +142,8 @@ class ParamPanel(QWidget):
 
     # 各测试类型 Layer3 滤波参数的创建顺序
     _LAYER3_ORDER: dict[str, list[str]] = {
+        "Sprint and Gait Test": ["min_contact_time"],
+        "Overground Running Test": ["min_contact_time"],
         "Jump Test": [
             "min_contact_time", "min_flight_time", "max_flight_time",
             "flight_time_review_threshold",
@@ -221,7 +225,7 @@ class ParamPanel(QWidget):
         if isinstance(test_type_widget, QComboBox):
             blocker = QSignalBlocker(test_type_widget)
             try:
-                idx = test_type_widget.findText(target_test_type)
+                idx = test_type_widget.findData(target_test_type)
                 if idx >= 0:
                     test_type_widget.setCurrentIndex(idx)
             finally:
@@ -264,7 +268,7 @@ class ParamPanel(QWidget):
         if not isinstance(test_type_widget, QComboBox):
             return
 
-        idx = test_type_widget.findText(test_type)
+        idx = test_type_widget.findData(test_type)
         if idx < 0:
             return
 
@@ -358,7 +362,7 @@ class ParamPanel(QWidget):
 
     def _on_test_type_changed(self, text: str) -> None:
         """test_type 变更 → 更新 _test_type 并重建模式字段。"""
-        self._test_type = text
+        self._test_type = self._widgets["test_type"].currentData() or text
         self._rebuild_mode_fields()
         self._refresh_visibility()
         self.config_changed.emit()
@@ -527,7 +531,11 @@ class ParamPanel(QWidget):
                 for test_type in self._LAYER2_ORDER
                 if test_type in values
             ]
-        combo.addItems(values)
+        if param_name == "test_type":
+            for value in values:
+                combo.addItem("地面跑步" if value == "Overground Running Test" else value, value)
+        else:
+            combo.addItems(values)
 
         # 设置默认值
         param_def = self._schema.get_param_def(param_name)
@@ -636,7 +644,13 @@ class ParamPanel(QWidget):
         """从当前 test_type 对应的配置 dataclass 读取字段默认值。"""
         test_type = self._test_type
         try:
-            if test_type == "Treadmill Gait Test":
+            if test_type == "Overground Running Test":
+                from config.overground_running_config import OvergroundRunningConfig
+                fields = OvergroundRunningConfig.__dataclass_fields__
+            elif test_type == "Sprint and Gait Test":
+                from config.walking_config import WalkingConfig
+                fields = WalkingConfig.__dataclass_fields__
+            elif test_type == "Treadmill Gait Test":
                 from config.treadmill_config import TreadmillGaitConfig
                 fields = TreadmillGaitConfig.__dataclass_fields__
             elif test_type == "Treadmill Running Test":
@@ -744,7 +758,7 @@ class ParamPanel(QWidget):
         result = {}
         for name, widget in self._widgets.items():
             if isinstance(widget, QComboBox):
-                result[name] = widget.currentText()
+                result[name] = (widget.currentData() if name == "test_type" else widget.currentText())
             elif isinstance(widget, MSpinBox):
                 result[name] = widget.value()
             elif isinstance(widget, QDoubleSpinBox):

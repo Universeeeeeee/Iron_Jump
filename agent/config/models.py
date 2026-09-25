@@ -142,7 +142,7 @@ class LLMTestConfig(BaseModel):
     def to_test_config(self):
         """转换为系统通用的 TestConfig dataclass。
 
-        exclude_none=True 确保 None 字段不传入，
+        显式保留必填但可为空的 test_length，其余 None 字段使用默认值，
         exclude={"reply_message"} 排除 LLM 专用字段。
         """
         from config.test_config import TestConfig
@@ -205,7 +205,7 @@ class LLMTreadmillGaitConfig(BaseModel):
     )
     step_length_calculation: Literal["Tip-to-Tip", "Heel-to-Heel"] = Field(
         default="Tip-to-Tip",
-        description="步长计算方式: Tip-to-Tip=脚尖到脚尖, Heel-to-Heel=脚跟到脚跟",
+        description="步长计算方式: Tip-to-Tip=脚尖到脚尖, Heel-to-Heel=脚跟到脚跟。未指定时默认Tip-to-Tip，无需追问；用户明确选择时采用其选择。",
     )
     min_foot_length: float = Field(
         default=10.0, gt=0,
@@ -275,14 +275,15 @@ class LLMTreadmillGaitConfig(BaseModel):
     def to_test_config(self):
         """转换为系统通用的 TreadmillGaitConfig dataclass。
 
-        exclude_none=True 确保 None 字段不传入，
+        显式保留必填但可为空的 test_length，其余 None 字段使用默认值，
         排除 LLM 专用字段和只读的测试类型判别字段。
         """
         from config.treadmill_config import TreadmillGaitConfig
         return TreadmillGaitConfig(
+            test_length=self.test_length,
             **self.model_dump(
                 exclude_none=True,
-                exclude={"reply_message", "test_type"},
+                exclude={"reply_message", "test_type", "test_length"},
             )
         )
 
@@ -341,7 +342,7 @@ class LLMTreadmillRunningConfig(BaseModel):
     )
     step_length_calculation: Literal["Tip-to-Tip", "Heel-to-Heel"] = Field(
         default="Tip-to-Tip",
-        description="步长计算方式: Tip-to-Tip=脚尖到脚尖, Heel-to-Heel=脚跟到脚跟",
+        description="步长计算方式: Tip-to-Tip=脚尖到脚尖, Heel-to-Heel=脚跟到脚跟。未指定时默认Tip-to-Tip，无需追问；用户明确选择时采用其选择。",
     )
     min_foot_length: float = Field(
         default=10.0, gt=0,
@@ -406,14 +407,15 @@ class LLMTreadmillRunningConfig(BaseModel):
     def to_test_config(self):
         """转换为系统通用的 TreadmillRunningConfig dataclass。
 
-        exclude_none=True 确保 None 字段不传入，
+        显式保留必填但可为空的 test_length，其余 None 字段使用默认值，
         排除 LLM 专用字段和只读的测试类型判别字段。
         """
         from config.treadmill_config import TreadmillRunningConfig
         return TreadmillRunningConfig(
+            test_length=self.test_length,
             **self.model_dump(
                 exclude_none=True,
-                exclude={"reply_message", "test_type"},
+                exclude={"reply_message", "test_type", "test_length"},
             )
         )
 

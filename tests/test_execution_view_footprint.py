@@ -138,6 +138,8 @@ def test_gait_running_controls_stack_in_right_column(qtbot):
 
     remaining_before_pause = view._countdown_remaining
     view._on_pause()
+    assert not view._paused  # UI waits for the engine acknowledgement.
+    view.set_paused(True)
     assert "暂停分析（计时已暂停）" in view._mode_label.text()
     assert view.btn_pause.text() == "▶ 继续分析"
     assert view._countdown_timer is None
@@ -145,6 +147,8 @@ def test_gait_running_controls_stack_in_right_column(qtbot):
     assert view._countdown_remaining == remaining_before_pause
 
     view._on_pause()
+    assert view._paused
+    view.set_paused(False)
     assert view.btn_pause.text() == "⏸ 暂停"
     assert view._countdown_timer is not None
     assert view._countdown_timer.isActive()

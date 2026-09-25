@@ -255,3 +255,70 @@ def test_duplicate_dialog_displays_profile_details_without_database_id(qtbot, tm
     assert "id" not in " ".join(
         dialog._table.item(0, column).text() for column in range(dialog._table.columnCount())
     ).casefold()
+
+
+def test_athletes_view_rfid_selects_bound_subject(qtbot, tmp_path):
+    from hardware.rc200u import SimulatedRc200u
+
+    store = SubjectStore(tmp_path / "subjects.sqlite3")
+    alice_id = store.create_subject("Alice", 1990)
+    bob_id = store.create_subject("Bob", 1985)
+    store.bind_card_uid(alice_id, "AABBCCDD")
+    reader = SimulatedRc200u()
+    view = AthletesView(store, rfid_reader=reader)
+    qtbot.addWidget(view)
+
+    reader.queue_uid("AABBCCDD")
+    view._poll_rfid()
+
+    selected = view._selected_result()
+    assert selected is not None
+    assert selected.subject.id == alice_id
+    assert "Alice" in view._rfid_status.text()
+    assert view._table.item(0 if view._results[0].subject.id == alice_id else 1, 7).text() in {
+        "AABBCCDD",
+        store.get_subject(alice_id).card_uid,
+    }
+    assert bob_id != alice_id
+
+
+def test_athletes_view_can_bind_unbound_card(qtbot, tmp_path):
+    from hardware.rc200u import SimulatedRc200u
+
+    store = SubjectStore(tmp_path / "subjects.sqlite3")
+    bob_id = store.create_subject("Bob", 1985)
+    reader = SimulatedRc200u()
+    view = AthletesView(store, rfid_reader=reader)
+    qtbot.addWidget(view)
+
+    reader.queue_uid("11223344")
+    view._poll_rfid()
+    view._select_subject_id(bob_id)
+    view._bind_current_card()
+
+    assert store.get_subject_by_card_uid("11223344").id == bob_id
+    assert view._table.item(
+        next(row for row, result in enumerate(view._results) if result.subject.id == bob_id),
+        7,
+    ).text() == "11223344"
+
+
+def test_athletes_view_rfid_reports_error_and_recovery(qtbot, tmp_path):
+    from unittest.mock import Mock
+    from hardware.rc200u import SimulatedRc200u, UidRead
+
+    store = SubjectStore(tmp_path / "subjects.sqlite3")
+    store.create_subject("Alice", 1990)
+    reader = SimulatedRc200u()
+    reader.request_uid = Mock(return_value=UidRead(None, 23, "driver missing"))
+    view = AthletesView(store, rfid_reader=reader)
+    qtbot.addWidget(view)
+    view._poll_rfid()
+    assert "23" in view._rfid_status.text()
+    assert not view._btn_bind_card.isEnabled()
+    reader.request_uid.return_value = UidRead(None, 24, "timeout")
+    view._poll_rfid()
+    assert "24" in view._rfid_status.text()
+    reader.request_uid.return_value = UidRead(None, 8, "no card")
+    view._poll_rfid()
+    assert view._rfid_status.text() == "RFID：等待贴卡"

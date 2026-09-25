@@ -31,6 +31,17 @@ class TreadmillGaitAccumulator(TreadmillAccumulator):
         self._completed_intervals: list[tuple[FootSide, float, float]] = []
         self._last_lift_time_s: float | None = None
 
+    def pause_boundary(self, time_s: float) -> None:
+        """Close interrupted contacts as excluded rows and reset pairings."""
+        for partial in tuple(self._active.values()):
+            self._finalize_partial(partial, time_s, "suspended")
+        self._completed_intervals.clear()
+        self._last_lift_time_s = None
+        self._last_touch_time_s = None
+        self._last_step_reference_cm = None
+        self._last_step_side = None
+        self._stagger_estimates.clear()
+
     def record_touch(
         self, time_s: float, side: str, heel_cm: float, toe_cm: float
     ) -> None:
@@ -72,7 +83,7 @@ class TreadmillGaitAccumulator(TreadmillAccumulator):
         """Record a foot-up event and finalize that foot's active row."""
         foot_side = normalize_foot_side(side)
         partial = self._active.get(foot_side)
-        if partial is None and len(self._active) == 1:
+        if partial is None and foot_side == "unknown" and len(self._active) == 1:
             # Hardware labels may be unavailable for a lift; when only one foot
             # is active, the intended row is still unambiguous.
             foot_side, partial = next(iter(self._active.items()))
@@ -97,7 +108,10 @@ class TreadmillGaitAccumulator(TreadmillAccumulator):
         event_invalid_reason: str | None = None
         statistics_exclusion_reason: str | None = None
 
-        if row_status == "no_step":
+        if row_status == "suspended":
+            event_invalid_reason = "Contact interrupted by pause"
+            statistics_exclusion_reason = "Contact interrupted by pause"
+        elif row_status == "no_step":
             is_event_valid = False
             is_included_in_statistics = False
             event_invalid_reason = "Touch was replaced before lift"

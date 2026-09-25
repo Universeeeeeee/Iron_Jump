@@ -542,7 +542,8 @@ def _finish_reason_label(reason: str | None) -> str:
     }
     if not reason:
         return "-"
-    return labels.get(reason, reason)
+    from reporting.overground_running import FINISH_LABELS
+    return labels.get(reason, FINISH_LABELS.get(reason, reason))
 
 
 def _detail_section_html(title: str, lines: list[str]) -> str:
@@ -601,6 +602,9 @@ def _session_summary(session: SessionRecord) -> str:
             return f"最大跳高 {max_height:.3f}m / 平均 {avg_height:.3f}m"
         if session.total_jumps is not None:
             return f"跳跃 {session.total_jumps} 次"
+    if report_type == "overground_running":
+        speed = summary.get("running_speed_m_s")
+        return f"地面跑步 {summary.get('valid_steps', 0)} 步 / " + (f"{speed:.3f} m/s" if speed is not None else "速度数据不足")
     if report_type == "gait":
         avg_stride = summary.get("avg_stride")
         avg_velocity = summary.get("avg_velocity")

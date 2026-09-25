@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import os
+from bisect import bisect_left
 
 from qtpy.QtCore import QLineF, QRectF, Qt, QTimer
 from qtpy.QtGui import QColor, QPainter, QPixmap
@@ -78,6 +79,7 @@ class FootprintChannelWidget(QFrame):
     def __init__(self, parent=None):
         super().__init__(parent)
         self._contact_bits = [0] * _LED_COUNT
+        self._positions_m = None
         self._feet: list[dict] = []
         self._direction = "Interface side"
         self._left_foot = self._load_pixmap("left_foot.png")
@@ -98,6 +100,7 @@ class FootprintChannelWidget(QFrame):
     def clear(self):
         self._contact_bits = [0] * _LED_COUNT
         self._feet = []
+        self._positions_m = None
         self.update()
 
     def set_direction(self, direction: str | None):
@@ -108,11 +111,12 @@ class FootprintChannelWidget(QFrame):
         if hasattr(frame, "to_dict"):
             frame = frame.to_dict()
 
-        bits = [1 if int(bit) else 0 for bit in frame.get("contact_bits", [])[:_LED_COUNT]]
+        bits = [1 if int(bit) else 0 for bit in frame.get("contact_bits", [])]
         if len(bits) < _LED_COUNT:
             bits.extend([0] * (_LED_COUNT - len(bits)))
 
         self._contact_bits = bits
+        self._positions_m = frame.get("positions_m")
         self._feet = []
         for foot in frame.get("feet", []):
             foot_state = dict(foot)
@@ -128,8 +132,13 @@ class FootprintChannelWidget(QFrame):
         self.update()
 
     def _y_for_index(self, index: float, top: float, height: float) -> float:
-        clamped = min(max(float(index), 0.0), float(_LED_COUNT - 1))
-        ratio = clamped / float(_LED_COUNT - 1)
+        clamped = min(max(float(index), 0.0), float(len(self._contact_bits) - 1))
+        ratio = clamped / float(len(self._contact_bits) - 1)
+        if self._positions_m and len(self._positions_m) == len(self._contact_bits):
+            i = int(clamped)
+            j = min(i + 1, len(self._positions_m) - 1)
+            position = self._positions_m[i] + (clamped - i) * (self._positions_m[j] - self._positions_m[i])
+            ratio = (position - self._positions_m[0]) / (self._positions_m[-1] - self._positions_m[0])
         if self._direction == "Opposite side":
             ratio = 1.0 - ratio
         return top + ratio * height
@@ -137,7 +146,7 @@ class FootprintChannelWidget(QFrame):
     def _rail_marker_rects(
         self, rail_x: float, top: float, height: float
     ) -> list[QRectF]:
-        spacing = height / float(_LED_COUNT - 1)
+        spacing = height / float(len(self._contact_bits) - 1)
         marker_height = min(6.0, max(2.0, spacing * 0.78))
         return [
             QRectF(
@@ -146,16 +155,18 @@ class FootprintChannelWidget(QFrame):
                 6.0,
                 marker_height,
             )
-            for index in range(_LED_COUNT)
+            for index in range(len(self._contact_bits))
         ]
 
     def _foot_size_for_lane(
         self, lane_width: int, lane_height: int, length_cm: float | None
     ) -> tuple[int, int]:
         length = self._resolved_foot_length_cm(length_cm)
-        channel_cm = float(_LED_COUNT - 1) * _LED_SPACING_CM
-        foot_h = max(48, int((length / channel_cm) * float(lane_height)))
-        foot_w = max(30, int(foot_h / 1.62))
+        channel_cm = float(len(self._contact_bits) - 1) * _LED_SPACING_CM
+        if self._positions_m:
+            channel_cm = (self._positions_m[-1] - self._positions_m[0]) * 100
+        foot_h = max(8 if len(self._contact_bits) > 96 else 48, int((length / channel_cm) * float(lane_height)))
+        foot_w = max(6 if len(self._contact_bits) > 96 else 30, int(foot_h / 1.62))
         if lane_width > 0:
             foot_w = min(foot_w, max(30, int(lane_width * 0.32)))
         return foot_w, foot_h
@@ -231,6 +242,10 @@ class FootprintChannelWidget(QFrame):
             return
 
         index = float(centroid_cm) / _LED_SPACING_CM
+        if self._positions_m:
+            pos = float(centroid_cm) / 100
+            j = min(max(bisect_left(self._positions_m, pos), 1), len(self._positions_m) - 1)
+            index = j - 1 + (pos - self._positions_m[j - 1]) / (self._positions_m[j] - self._positions_m[j - 1])
         y = self._y_for_index(index, top, height)
         side = foot.get("side", "unknown")
         status = foot.get("status", "confirmed")
@@ -247,12 +262,12 @@ class FootprintChannelWidget(QFrame):
             length_cm=foot.get("length_cm"),
         )
         x_center = lane_left + (lane_right - lane_left) * (
-            0.64 if side == "right" else 0.36
+            0.64 if side == "right" else (0.36 if side == "left" else 0.5)
         )
         target_x = int(x_center - foot_w / 2)
         target_y = int(y - foot_h / 2)
 
-        if pixmap.isNull():
+        if pixmap.isNull() or side == "unknown":
             painter.setPen(Qt.NoPen)
             painter.setBrush(color)
             painter.drawEllipse(target_x, target_y, foot_w, foot_h)

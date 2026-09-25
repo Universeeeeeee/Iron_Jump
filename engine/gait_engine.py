@@ -95,6 +95,7 @@ class GaitEngine(QObject):
 
     # === 自动停止信号 ===
     test_finished = Signal(str)           # 结束原因: "jump_count_reached" | "time_up"
+    pause_state_changed = Signal(bool)    # emitted after the worker applies the transition
 
     def __init__(self, config: AnyTestConfig | None = None, *, mode: str = "纵跳", parent=None):
         """
@@ -124,6 +125,22 @@ class GaitEngine(QObject):
         self._paused = False
         self._pause_started_at: Optional[float] = None
         self._finished = False  # 防止重复发射 test_finished
+
+        self.overground = None
+        self.walking = None  # Compatibility with existing walking integrations.
+        if self._config.test_type in {"Sprint and Gait Test", "Overground Running Test"}:
+            from config.test_config import config_from_dict
+            self._config = config_from_dict(self._config.to_dict())
+            if self._config.test_type == "Sprint and Gait Test":
+                from .walking_session import WalkingSession
+                self.overground = self.walking = WalkingSession(self._config, self)
+            else:
+                from .overground_session import OvergroundSession
+                from .modes.overground_running_processor import OvergroundRunningProcessor
+                self.overground = OvergroundSession(self._config, OvergroundRunningProcessor, self)
+            self.overground.snapshot.connect(self.gait_status_snapshot)
+            self.overground.visual.connect(self.footprint_visual_frame)
+            self.overground.finished.connect(self.test_finished)
 
         # ---- 处理器 ----
         self._processor = self._select_processor()
@@ -191,6 +208,9 @@ class GaitEngine(QObject):
     @Slot(float)
     def begin_session(self, t: float):
         """Enable processing and establish the time base immediately before capture."""
+        if self.overground is not None:
+            self.overground.arm(t)
+            return
         self._paused = False
         self._pause_started_at = None
         self.set_start_time(t)
@@ -206,6 +226,8 @@ class GaitEngine(QObject):
     @property
     def mode(self) -> str:
         """返回当前模式的中文显示标签。委托给 processor 或回退旧逻辑。"""
+        if self.overground is not None:
+            return self._config.mode_label
         if self._processor is not None:
             return self._processor.display_mode
         return "步态分析"
@@ -213,6 +235,8 @@ class GaitEngine(QObject):
     @property
     def processor_name(self) -> str:
         """返回当前 processor 的内部标识名。"""
+        if self.overground is not None:
+            return self.overground.processor_factory.name
         if self._processor is not None:
             return self._processor.name
         return "gait"
@@ -250,6 +274,7 @@ class GaitEngine(QObject):
             pause_boundary = getattr(self._processor, "pause_boundary", None)
             if callable(pause_boundary):
                 pause_boundary()
+        self.pause_state_changed.emit(True)
 
     @Slot()
     def resume_session(self):
@@ -269,10 +294,11 @@ class GaitEngine(QObject):
             and not self._finished
         ):
             self._stop_timer.start(self._stop_timer_remaining_ms)
+        self.pause_state_changed.emit(False)
 
     def _init_gait_detectors(self):
         """初始化步态模式检测器（仅在非纵跳模式时）。"""
-        if self._config.test_type == "Jump Test":
+        if self._config.test_type == "Jump Test" or self.overground is not None:
             self._cluster_tracker = None
             self._contact_tracker = None
         else:
@@ -346,7 +372,7 @@ class GaitEngine(QObject):
             contact_bits: 96 位接触状态列表 (1=触地)
             timestamp: time.perf_counter() 绝对时间
         """
-        if self._paused:
+        if self._paused or self.overground is not None:
             return
 
         # 转换为相对时间
@@ -474,6 +500,8 @@ class GaitEngine(QObject):
 
         Must be called after the test has stopped.
         """
+        if self.overground is not None:
+            return self.overground.build_report(reason)
         export_frames = tuple(list(frame) for frame in self._export_frames)
         export_timestamps = tuple(self._export_timestamps)
 

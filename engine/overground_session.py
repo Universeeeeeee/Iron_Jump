@@ -1,0 +1,160 @@
+"""Shared worker-thread lifecycle for independent overground modes."""
+from collections import deque
+import time
+
+from qtpy.QtCore import QObject, QTimer, Signal, Slot
+from hardware.walking_preflight import WalkingPreflight
+
+
+
+class OvergroundSession(QObject):
+    readiness = Signal(dict)
+    armed = Signal()
+    finished = Signal(str)
+    snapshot = Signal(dict)
+    visual = Signal(dict)
+    FATAL_ISSUES = {"layout_mismatch", "out_of_order_or_reset", "packet_base_changed", "device_changed"}
+
+    def __init__(self, config, processor_factory, parent=None):
+        super().__init__(parent)
+        self.config = config
+        self.processor_factory = processor_factory
+        self.preflight = WalkingPreflight()
+        self.processor = None
+        self.done = False
+        self.last_received_ns = None
+        self._last_update_ns = 0
+        self._last_ready = None
+        self.frames = deque(maxlen=600000)
+        self.timestamps = deque(maxlen=600000)
+        self.total_frames = 0
+        self._monitor_started_ns = None
+        self._timer = QTimer(self)
+        self._timer.setInterval(100)
+        self._timer.timeout.connect(self.poll)
+
+    @Slot()
+    def monitor(self):
+        self._monitor_started_ns = time.perf_counter_ns()
+        self._timer.start()
+        self.poll()
+
+    @Slot(float)
+    def arm(self, unused_host_time=0):
+        # Executed in the same Qt thread as frame handling; UI readiness is advisory.
+        if self.processor or self.done:
+            return
+        if not self.preflight.ready(time.perf_counter_ns()):
+            self.poll()
+            return
+        self.processor = self.processor_factory(self.config, self.preflight.context)
+        limit = min(600000, 64 * 1024 * 1024 // (self.preflight.context.layout.bit_count + 64))
+        self.frames = deque(maxlen=limit)
+        self.timestamps = deque(maxlen=limit)
+        self.armed.emit()
+
+    @Slot(object)
+    def on_frame(self, frame):
+        if self.done:
+            return
+        self.last_received_ns = frame.received_monotonic_ns
+        if self.processor is None:
+            self.preflight.feed(frame)
+            self._publish_ready()
+            return
+        self.total_frames += 1
+        self.frames.append(frame.contact_bits)  # bytes, not N Python integers/sample
+        self.timestamps.append(frame.sample_time_s)
+        self.processor.process(frame)
+        if self.processor.finished_reason:
+            self.finish(self.processor.finished_reason)
+        if frame.received_monotonic_ns - self._last_update_ns >= 100_000_000:
+            self._last_update_ns = frame.received_monotonic_ns
+            self.publish_snapshot()
+
+    @Slot(object)
+    def on_issue(self, issue):
+        if self.done:
+            return
+        if self.processor is None:
+            self.preflight.invalidate(f"采集异常：{issue.code}；重新自检")
+            self._publish_ready(force=True)
+        else:
+            self.processor.break_continuity(issue.code, issue.frame_index)
+            if issue.code in self.FATAL_ISSUES:
+                self.finish(issue.code)
+
+    @Slot(str, str)
+    def on_device_state(self, state, message):
+        if state in {"error", "disconnected"}:
+            self.preflight.invalidate(message)
+            if self.processor and not self.done:
+                self.processor.break_continuity("disconnected")
+                self.finish("disconnected")
+            else:
+                self._publish_ready(force=True)
+
+    def _publish_ready(self, force=False):
+        now = time.perf_counter_ns()
+        status = self.preflight.status(now)
+        if force or status["ready"] != self._last_ready or now - self._last_update_ns >= 100_000_000:
+            self._last_update_ns = now
+            self._last_ready = status["ready"]
+            self.readiness.emit(status)
+
+    @Slot()
+    def poll(self):
+        if self.done:
+            return
+        if self.processor is None:
+            if (self.last_received_ns is None and self._monitor_started_ns is not None
+                    and time.perf_counter_ns() - self._monitor_started_ns > 5_000_000_000):
+                self.preflight.invalidate("未收到完整帧，请检查连接及采集启动设置；可返回配置重新连接")
+            self._publish_ready(force=True)
+        elif self.last_received_ns is not None and time.perf_counter_ns() - self.last_received_ns > 1_000_000_000:
+            self.processor.break_continuity("data_timeout")
+            self.finish("data_timeout")
+
+    def publish_snapshot(self):
+        p = self.processor
+        if p is None:
+            return
+        s = p.summary()
+        running = p.name == "overground_running"
+        lengths = s["step_lengths_m"]
+        speed = s["running_speed_m_s" if running else "walking_speed_m_s"]
+        self.snapshot.emit({"touch_count": sum(c.confirmed for c in p.contacts),
+                            "running" if running else "walking": s,
+                            "status": "等待进入" if p.origin is None else s.get("status", "行走中"),
+                            "stride_count": len(lengths),
+                            "latest_stride": lengths[-1] * 100 if lengths else None,
+                            "velocity_count": int(speed is not None),
+                            "velocity_sum": (speed or 0) * 100})
+        if p.timeline:
+            self.visual.emit(p.timeline[-1])
+
+    def finish(self, reason):
+        if self.done:
+            return
+        self.done = True
+        self._timer.stop()
+        self.publish_snapshot()
+        self.finished.emit(reason)
+
+    @Slot()
+    def halt(self):
+        self.done = True
+        self._timer.stop()
+
+    def build_report(self, reason):
+        if self.processor is None:
+            raise RuntimeError("Overground session has not passed preflight and armed")
+        origin = self.processor.origin
+        pairs = [(bits, t - origin) for bits, t in zip(self.frames, self.timestamps)
+                 if origin is not None and t >= origin]
+        report = self.processor.build_report(reason, tuple(x[0] for x in pairs), tuple(x[1] for x in pairs))
+        report.report_config_snapshot["raw_buffer"] = {
+            "total_received_frames": self.total_frames, "retained_frames": len(self.frames),
+            "truncated": self.total_frames > len(self.frames), "budget_bytes": 64 * 1024 * 1024,
+        }
+        return report

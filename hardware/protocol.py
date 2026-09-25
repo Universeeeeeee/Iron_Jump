@@ -88,7 +88,7 @@ def crc8_poly_07(data: bytes) -> int:
 # =====================
 # Parser
 # =====================
-def protocol_parser(buf: bytearray, *, frame_index_byteorder="little") -> Tuple[int, Optional[int], Optional[AckData], Optional[UploadDataSubPack], Optional[StatusData]]:
+def protocol_parser(buf: bytearray, *, frame_index_byteorder="little", on_error=None) -> Tuple[int, Optional[int], Optional[AckData], Optional[UploadDataSubPack], Optional[StatusData]]:
     """Parse the continuous byte stream, preserving split headers and packets.
 
     Firmware observed in the 0918 capture uses a little-endian counter. Older
@@ -122,6 +122,8 @@ def protocol_parser(buf: bytearray, *, frame_index_byteorder="little") -> Tuple[
             or (frame_type == E_STATUS_REPORT and length == 2)
         )
         if not valid_length:
+            if on_error:
+                on_error("invalid_packet_length")
             del buf[0]
             continue
         if frame_type == E_DATA_REPORT:
@@ -129,12 +131,16 @@ def protocol_parser(buf: bytearray, *, frame_index_byteorder="little") -> Tuple[
                 return missing
             count, part = buf[11], buf[12]
             if count < 1 or part > count or (count > 1 and length != 18):
+                if on_error:
+                    on_error("invalid_packet")
                 del buf[0]
                 continue
         total = MIN_PACKET_LENGTH + length
         if len(buf) < total:
             return missing
         if buf[8 + length:total] != b"\xa5" * 4 or crc8_poly_07(buf[4:7 + length]) != buf[7 + length]:
+            if on_error:
+                on_error("checksum_or_tail_error")
             # An untrusted length must not skip the beginning of a valid frame.
             del buf[0]
             continue
@@ -158,6 +164,7 @@ class ProtocolParser:
         if frame_index_byteorder not in ("little", "big"):
             raise ValueError("frame_index_byteorder must be little or big")
         self.frame_index_byteorder = frame_index_byteorder
+        self.on_error = None
 
     def parse(self, buf: bytearray):
-        return protocol_parser(buf, frame_index_byteorder=self.frame_index_byteorder)
+        return protocol_parser(buf, frame_index_byteorder=self.frame_index_byteorder, on_error=self.on_error)

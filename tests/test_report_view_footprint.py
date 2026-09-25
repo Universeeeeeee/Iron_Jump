@@ -420,7 +420,8 @@ def test_treadmill_report_uses_overview_and_details_pages():
 
     view.load_report(report)
 
-    assert view._tabs.count() == 2
+    assert view._tabs.count() == 3
+    assert view._tabs.tabText(2) == "步态专项问答"
     assert view._tabs.tabText(0) == "概览"
     assert view._tabs.tabText(1) == "明细"
     assert view._overview_page.isAncestorOf(view._replay_panel)

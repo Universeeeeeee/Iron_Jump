@@ -24,7 +24,7 @@ if _project_root not in sys.path:
 from qtpy.QtCore import Qt
 from qtpy.QtGui import QIcon
 from qtpy.QtWidgets import (
-    QApplication, QMainWindow, QStackedWidget, QMessageBox,
+    QApplication, QMainWindow, QStackedWidget, QMessageBox, QPushButton,
 )
 from dayu_widgets import dayu_theme
 from dayu_widgets.qt import application
@@ -255,6 +255,19 @@ class MainWindow(QMainWindow):
 
         self._shell = ApplicationShell(self._stack)
         self.setCentralWidget(self._shell)
+        self._voice = None
+        self._voice_button = QPushButton("开启语音")
+        self._voice_button.setObjectName("VoiceToggle")
+        self._voice_button.setToolTip("豆包语音：配置、开始、暂停、继续、结束、分析报告")
+        self._voice_button.clicked.connect(self._toggle_voice)
+        self.statusBar().setStyleSheet(
+            "QStatusBar { background: #0c1119; color: #aeb7c5; }"
+            "QStatusBar::item { border: none; }"
+            "QPushButton#VoiceToggle { background: #242e3c; color: #f2f5f9;"
+            "border: 1px solid #354151; border-radius: 5px; padding: 5px 14px; }"
+            "QPushButton#VoiceToggle:hover { border-color: #ff8a1f; }"
+        )
+        self.statusBar().addPermanentWidget(self._voice_button)
 
         # ===== Camera =====
         self._logi_camera = None
@@ -341,9 +354,13 @@ class MainWindow(QMainWindow):
         )
 
         # Controller 生命周期 → MainWindow
+        if hasattr(self._controller, "walking_readiness_changed"):
+            self._controller.walking_readiness_changed.connect(self._exec_view.on_walking_readiness)
         self._controller.session_started.connect(self._exec_view.on_session_started)
         self._controller.session_started.connect(self._on_session_started)
         self._controller.session_finished.connect(self._on_session_finished)
+        if hasattr(self._controller, "pause_state_changed"):
+            self._controller.pause_state_changed.connect(self._exec_view.set_paused)
 
         # ReportView → MainWindow
         self._report_view.return_home.connect(self._go_to_setup)
@@ -504,6 +521,12 @@ class MainWindow(QMainWindow):
             return
         self._controller.start()
 
+    def _toggle_voice(self):
+        if self._voice is None:
+            from ui.voice_bridge import VoiceBridge
+            self._voice = VoiceBridge(self)
+        self._voice.toggle()
+
     def _on_return_to_config(self) -> None:
         if self._controller.is_running:
             return
@@ -659,6 +682,8 @@ class MainWindow(QMainWindow):
 
     def closeEvent(self, event):
         """关闭窗口时清理所有资源。"""
+        if self._voice is not None:
+            self._voice.close()
         # 停止测试会话
         if self._controller.is_running:
             self._controller.stop()

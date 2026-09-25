@@ -44,7 +44,7 @@ Iron_Jump 是一套兼容 OptoJump 工作方式的运动测试与分析系统，
 - 两根 96 LED 红外光栅；采样率固定为 1000 Hz。
 - OBSBOT Tiny SE 为可选设备。
 
-项目主要使用 PySide6、NumPy、OpenCV、MediaPipe、Pydantic、SQLite、pyqtgraph 和 openpyxl。完整 Python 依赖见 [`requirements.txt`](requirements.txt)。界面还依赖 `dayu_widgets`；该源码目录不随仓库提交，需要在运行环境中单独准备。
+项目主要使用 PySide6、NumPy、OpenCV、MediaPipe、Pydantic、SQLite、pyqtgraph 和 openpyxl。完整 Python 依赖见 [`requirements.txt`](requirements.txt)，其中包含界面依赖 `dayu_widgets==1.1.1`。
 
 ## 安装
 
@@ -80,11 +80,28 @@ OPENAI_API_KEY=<API 密钥>
 
 ## 使用方法
 
+先检查基础运行依赖：`python -m tools.check_runtime`。
+
+无需 USB 和 Key 的步态演示：
+
+```bash
+python -m ui.demo
+```
+
+演示默认使用手动步态配置，选择本次测试身份后依次准备、开始、暂停、继续、结束。
+建议采集至少 15 秒，报告页可使用“步态专项问答”并点击证据定位明细。
+演示使用独立的 `data/demo.sqlite3`；报告、重开的历史记录与 Excel 都标明模拟数据。
+此入口不启用云端助手或麦克风，模拟信号仍经过真实算法引擎；不能替代真实设备验收。
+完整验收步骤见 [步态与语音验收记录](docs/gait_voice_validation.md)。
+
 启动主程序：
 
 ```bash
 python ui/main_window.py
 ```
+
+可选的豆包 ASR/TTS + Pipecat 语音控制见 [语音使用说明](voice/README.md)。
+安装语音依赖并配置 API Key 后，点击窗口右下角“开启语音”，支持配置、开始、暂停、继续、结束和报告分析。
 
 启动视觉数据工具：
 
@@ -105,6 +122,8 @@ python tools/vision_event_validator.py --help
 ```bash
 python -m pytest -q
 ```
+
+Qt 自动化测试需要先安装 `python -m pip install -r requirements-dev.txt`。
 
 ## Windows 视觉工具打包
 

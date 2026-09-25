@@ -129,13 +129,13 @@ def test_treadmill_gait_schema_has_min_step_length_not_min_gap():
     assert "min_gap_between_feet" not in names
 
 
-def test_treadmill_schema_defaults_to_three_kmh_and_opposite_side():
+def test_treadmill_schema_uses_mode_specific_speeds_and_opposite_side():
     schema = get_schema()
     speed = schema.get_param_def("treadmill_speed")
     direction = schema.get_param_def("direction")
 
     assert speed is not None
-    assert speed.default == 3.0
+    assert speed.default == {"Treadmill Gait Test": 3.0, "Treadmill Running Test": 6.0}
     assert direction is not None
     assert direction.default == "Opposite side"
 

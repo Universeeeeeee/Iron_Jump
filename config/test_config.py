@@ -13,6 +13,8 @@ from __future__ import annotations
 from dataclasses import dataclass, field, asdict
 from typing import Any, Optional, Union
 
+from config.walking_config import WalkingConfig
+from config.overground_running_config import OvergroundRunningConfig
 from config.treadmill_config import TreadmillGaitConfig, TreadmillRunningConfig
 
 
@@ -119,7 +121,7 @@ class TestConfig:
 
 # ---- 多态配置类型别名 ----
 
-AnyTestConfig = Union[TestConfig, TreadmillGaitConfig, TreadmillRunningConfig]
+AnyTestConfig = Union[TestConfig, WalkingConfig, OvergroundRunningConfig, TreadmillGaitConfig, TreadmillRunningConfig]
 
 
 def config_from_dict(data: dict[str, Any]) -> AnyTestConfig:
@@ -127,6 +129,12 @@ def config_from_dict(data: dict[str, Any]) -> AnyTestConfig:
     test_type = data.get("test_type", "Jump Test")
     payload = {key: value for key, value in data.items() if key != "test_type"}
 
+    if test_type == "Overground Running Test":
+        known = {n for n, f in OvergroundRunningConfig.__dataclass_fields__.items() if f.init}
+        return OvergroundRunningConfig(**{k: v for k, v in payload.items() if k in known and v is not None})
+    if test_type == "Sprint and Gait Test":
+        known = {name for name, f in WalkingConfig.__dataclass_fields__.items() if f.init}
+        return WalkingConfig(**{k: v for k, v in payload.items() if k in known and v is not None})
     if test_type == "Treadmill Gait Test":
         known = {f.name for f in TreadmillGaitConfig.__dataclass_fields__.values()}
         filtered = {k: v for k, v in payload.items() if k in known}

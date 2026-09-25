@@ -122,6 +122,17 @@ class GaitCycleBuilder:
             ],
         }
 
+    def pause_boundary(self, time_s: float) -> None:
+        """Retain incomplete evidence but never pair touches across a pause."""
+        self._initial_boundary_partials = list(self.build_boundary_partials(time_s))
+        self._active_touch.clear()
+        self._last_touch.clear()
+        self._last_lift_after_touch.clear()
+        self._last_contact_included.clear()
+        self._last_contact_exclusion_reason.clear()
+        self._last_contact_quality_flags.clear()
+        self._contact_intervals.clear()
+
     def build_boundary_partials(
         self, time_s: float
     ) -> tuple[GaitBoundaryPartial, ...]:
