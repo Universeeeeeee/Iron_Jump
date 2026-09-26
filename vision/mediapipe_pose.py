@@ -55,10 +55,15 @@ class MediaPipePoseAdapter:
             ) from exc
 
         try:
+            base_options_values = {
+                "model_asset_path": str(self.model_path),
+            }
+            delegate_type = getattr(mp.tasks.BaseOptions, "Delegate", None)
+            cpu_delegate = getattr(delegate_type, "CPU", None)
+            if cpu_delegate is not None:
+                base_options_values["delegate"] = cpu_delegate
             options = mp.tasks.vision.PoseLandmarkerOptions(
-                base_options=mp.tasks.BaseOptions(
-                    model_asset_path=str(self.model_path)
-                ),
+                base_options=mp.tasks.BaseOptions(**base_options_values),
                 running_mode=mp.tasks.vision.RunningMode.VIDEO,
                 num_poses=1,
                 output_segmentation_masks=False,

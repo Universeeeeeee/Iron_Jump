@@ -9,6 +9,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from qtpy.QtGui import QPalette, QTextCursor
+from qtpy.QtTest import QTest
 from qtpy.QtWidgets import QApplication, QFrame, QScrollArea
 
 from config.treadmill_config import TreadmillGaitConfig
@@ -61,6 +62,25 @@ class _RestartingClient:
     def chat(self, message, athlete, agent_mode="jump"):
         self.chat_calls.append(message)
         return {"error": "worker 未启动"}
+
+
+class _RestartableClient(_FakeClient):
+    def __init__(self):
+        self.is_running = False
+        self.start_calls = 0
+
+    def start(self):
+        self.start_calls += 1
+        self.is_running = True
+        return True
+
+
+class _BusyWorker:
+    _agent_mode = "jump"
+
+    @staticmethod
+    def isRunning():
+        return True
 
 
 class _ModeCapturingClient:
@@ -281,6 +301,85 @@ class AgentConfigPanelRequestLifecycleTest(unittest.TestCase):
         self.assertIsNotNone(panel._llm_worker)
         self.assertEqual(panel._llm_worker._agent_mode, "treadmill_gait")
 
+    def test_switching_test_type_uses_independent_visible_conversations(self):
+        self._send_and_finish("纵跳问题", "纵跳回答")
+
+        self.panel._test_type_combo.setCurrentText("Treadmill Gait Test")
+
+        self.assertEqual(self.panel._chat_display.toPlainText(), "")
+        self.assertFalse(self.panel._prompt_chips.isHidden())
+
+        self._send_and_finish("步态问题", "步态回答")
+        self.panel._test_type_combo.setCurrentText("Jump Test")
+
+        jump_text = self.panel._chat_display.toPlainText()
+        self.assertIn("纵跳问题", jump_text)
+        self.assertIn("纵跳回答", jump_text)
+        self.assertNotIn("步态问题", jump_text)
+
+        self.panel._test_type_combo.setCurrentText("Treadmill Gait Test")
+
+        gait_text = self.panel._chat_display.toPlainText()
+        self.assertIn("步态问题", gait_text)
+        self.assertIn("步态回答", gait_text)
+        self.assertNotIn("纵跳问题", gait_text)
+
+    def test_reply_after_mode_switch_is_written_to_originating_conversation(self):
+        self.panel._chat_input.setText("纵跳问题")
+        original_start = _LLMHttpWorker.start
+        _LLMHttpWorker.start = lambda self: None
+        try:
+            self.panel._on_send_message()
+        finally:
+            _LLMHttpWorker.start = original_start
+        worker = self.panel._llm_worker
+
+        self.panel._test_type_combo.setCurrentText("Treadmill Gait Test")
+        worker.finished.emit(None, "迟到的纵跳回答")
+
+        self.assertEqual(self.panel._chat_display.toPlainText(), "")
+
+        self.panel._test_type_combo.setCurrentText("Jump Test")
+
+        self.assertIn("迟到的纵跳回答", self.panel._chat_display.toPlainText())
+
+    def test_mode_switch_allows_typing_while_another_request_is_busy(self):
+        self.panel._llm_worker = _BusyWorker()
+        self.panel._chat_input.setEnabled(False)
+        self.panel.show()
+
+        self.panel._test_type_combo.setCurrentText("Treadmill Gait Test")
+        QApplication.processEvents()
+
+        self.assertTrue(self.panel._chat_input.isEnabled())
+        self.assertFalse(self.panel._send_btn.isEnabled())
+        self.panel._chat_input.setFocus()
+        QTest.keyClicks(self.panel._chat_input, "next request")
+        self.assertEqual(self.panel._chat_input.text(), "next request")
+        self.panel._on_send_message()
+        self.assertEqual(self.panel._chat_input.text(), "next request")
+
+    def test_mode_switch_restarts_a_stopped_worker(self):
+        client = _RestartableClient()
+        panel = AgentConfigPanel(llm_client=client)
+        panel._worker_ready = True
+
+        panel._test_type_combo.setCurrentText("Treadmill Gait Test")
+
+        self.assertEqual(client.start_calls, 1)
+        self.assertTrue(panel._chat_input.isEnabled())
+        self.assertTrue(panel._send_btn.isEnabled())
+
+    def test_reset_clears_all_mode_documents_to_match_worker_reset(self):
+        self._send_and_finish("纵跳问题", "纵跳回答")
+        self.panel._test_type_combo.setCurrentText("Treadmill Gait Test")
+        self._send_and_finish("步态问题", "步态回答")
+
+        self.panel._on_reset_chat()
+
+        for document in self.panel._chat_documents.values():
+            self.assertTrue(document.isEmpty())
+
     def test_llm_worker_deserializes_treadmill_config_with_config_from_dict(self):
         client = _TreadmillConfigClient()
         worker = _LLMHttpWorker(
@@ -327,8 +426,15 @@ class AgentConfigPanelRequestLifecycleTest(unittest.TestCase):
         QApplication.processEvents()
 
         self.assertLessEqual(self.panel._profile_card.width(), 230)
+        self.assertTrue(self.panel._suggestion_card.isHidden())
+        self.assertGreaterEqual(self.panel._chat_card.width(), 900)
+
+        self.panel._on_offline_generate()
+        QApplication.processEvents()
+
+        self.assertTrue(self.panel._suggestion_card.isVisible())
         self.assertLessEqual(self.panel._suggestion_card.width(), 270)
-        self.assertGreaterEqual(self.panel._chat_card.width(), 680)
+        self.assertGreaterEqual(self.panel._chat_card.width(), 650)
         self.assertIn(
             "QFrame#AgentCard {\n  background-color: rgba(32, 37, 48, 0.72);\n"
             "  border: none;",
@@ -342,6 +448,50 @@ class AgentConfigPanelRequestLifecycleTest(unittest.TestCase):
         self.assertIsNotNone(suggestion_scroll)
         self.assertEqual(suggestion_scroll.frameShape(), QFrame.NoFrame)
         self.assertFalse(suggestion_scroll.isAncestorOf(self.panel._confirm_btn))
+
+    def test_standard_width_keeps_assistant_full_height_and_uses_suggestion_drawer(self):
+        self.panel.resize(900, 700)
+        self.panel.show()
+        QApplication.processEvents()
+
+        self.assertTrue(self.panel._compact_layout)
+        self.assertTrue(self.panel._suggestion_card.isHidden())
+        self.assertGreaterEqual(self.panel._chat_card.width(), 620)
+        self.assertEqual(self.panel._chat_card.height(), self.panel.height())
+
+        self.panel._on_offline_generate()
+        QApplication.processEvents()
+
+        drawer = self.panel._suggestion_card
+        self.assertTrue(drawer.isVisible())
+        self.assertLessEqual(
+            abs((drawer.x() + drawer.width()) - self.panel.width()),
+            2,
+        )
+        self.assertEqual(drawer.height(), self.panel.height())
+
+        self.panel._dismiss_suggestion_drawer()
+        QApplication.processEvents()
+
+        self.assertTrue(drawer.isHidden())
+        self.assertTrue(self.panel._suggestion_toggle_btn.isVisible())
+
+        self.panel._toggle_suggestion_drawer()
+        QApplication.processEvents()
+
+        self.assertTrue(drawer.isVisible())
+
+    def test_prompt_shortcuts_yield_height_to_conversation_after_first_message(self):
+        self.panel.resize(900, 700)
+        self.panel.show()
+        QApplication.processEvents()
+        initial_height = self.panel._chat_display.height()
+
+        self._send_and_finish("常规 5 次", "已生成建议")
+        QApplication.processEvents()
+
+        self.assertTrue(self.panel._prompt_chips.isHidden())
+        self.assertGreater(self.panel._chat_display.height(), initial_height)
 
     def test_intelligent_config_reflows_without_clipping_at_narrow_width(self):
         self.panel.setFixedSize(620, 480)

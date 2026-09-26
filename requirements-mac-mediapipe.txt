@@ -1,0 +1,6 @@
+-r requirements.txt
+
+# MediaPipe 1.0.1 aborts in DrishtiMetalHelper while opening Pose Landmarker
+# on the verified Apple Silicon/macOS environment. 0.10.35 passes model-open
+# and VIDEO inference smoke tests.
+mediapipe==0.10.35

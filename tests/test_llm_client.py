@@ -9,6 +9,8 @@ import unittest
 from pathlib import Path
 from unittest.mock import patch
 
+import requests
+
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 from ui.llm_client import LLMWorkerClient
@@ -112,10 +114,12 @@ class LLMWorkerClientTest(unittest.TestCase):
         self.port_file.write_text(json.dumps({"pid": 111, "port": 9876}))
         posted = {}
         posted_url = ""
+        posted_timeout = None
 
         def fake_post(url, json, timeout):
-            nonlocal posted_url
+            nonlocal posted_url, posted_timeout
             posted_url = url
+            posted_timeout = timeout
             posted.update(json)
             return _FakeResponse(
                 {"analysis": {"claims": []}, "analysis_run_id": "run_1"}
@@ -133,6 +137,23 @@ class LLMWorkerClientTest(unittest.TestCase):
         self.assertTrue(posted_url.endswith("/report/analyze"))
         self.assertEqual(posted, {"session_id": 12, "data_access_scope": scope})
         self.assertEqual(result["analysis_run_id"], "run_1")
+        self.assertEqual(posted_timeout, 105.0)
+
+    def test_analyze_report_distinguishes_client_timeout(self):
+        self.port_file.write_text(json.dumps({"pid": 111, "port": 9876}))
+        scope = {
+            "current_session": True,
+            "longitudinal": False,
+            "cohort": False,
+        }
+        with patch("ui.llm_client.requests.get", return_value=_FakeResponse({"status": "ready"})):
+            with patch(
+                "ui.llm_client.requests.post",
+                side_effect=requests.Timeout("deadline"),
+            ):
+                result = self.client.analyze_report(12, scope)
+
+        self.assertEqual(result, {"error_code": "analysis_client_timeout"})
 
     def test_get_latest_analysis_returns_none_for_non_success_response(self):
         self.port_file.write_text(json.dumps({"pid": 111, "port": 9876}))

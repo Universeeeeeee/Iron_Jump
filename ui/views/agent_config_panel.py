@@ -9,7 +9,7 @@ from html import escape
 
 from markdown_it import MarkdownIt
 from qtpy.QtCore import Qt, QSignalBlocker, Signal, QThread, QTimer
-from qtpy.QtGui import QTextBlockFormat, QTextCharFormat, QTextCursor
+from qtpy.QtGui import QTextBlockFormat, QTextCharFormat, QTextCursor, QTextDocument
 from qtpy.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QComboBox, QTextEdit,
     QFrame, QScrollArea, QSizePolicy,
@@ -38,6 +38,12 @@ QWidget#AgentConfigPanelRoot {
 QFrame#AgentCard {
   background-color: rgba(32, 37, 48, 0.72);
   border: none;
+  border-radius: 8px;
+}
+QFrame#SuggestionCard {
+  background-color: #1b222e;
+  border: none;
+  border-left: 1px solid #354151;
   border-radius: 8px;
 }
 QLabel#CardTitle {
@@ -133,7 +139,29 @@ QPushButton#PromptChip {
   padding: 0 14px;
   background-color: rgba(43, 48, 60, 0.70);
 }
+QPushButton#SuggestionToggleButton,
+QPushButton#SuggestionCloseButton {
+  min-height: 28px;
+  padding: 0 10px;
+  background-color: transparent;
+}
+QPushButton#SuggestionCloseButton {
+  min-width: 28px;
+  max-width: 28px;
+  padding: 0;
+  font-size: 16px;
+}
 """
+
+
+_THREE_COLUMN_MIN_WIDTH = 1180
+_SUGGESTION_DRAWER_MIN_WIDTH = 280
+_SUGGESTION_DRAWER_MAX_WIDTH = 320
+_AGENT_MODES = ("jump", "treadmill_gait", "treadmill_running")
+_CHAT_DOCUMENT_QSS = (
+    "table { border-collapse: collapse; margin: 8px 0; }"
+    "td, th { border: 1px solid #999; padding: 4px 10px; }"
+)
 
 
 def _md_to_html(text: str) -> str:
@@ -203,6 +231,7 @@ class AgentConfigPanel(QWidget):
         self._worker_error: str | None = None
         self._worker_start_requested = False
         self._pending_config: AnyTestConfig | None = None
+        self._suggestion_drawer_dismissed = False
         self._history: list[dict] = []
         self._worker_status_timer = QTimer(self)
         self._worker_status_timer.setInterval(1000)
@@ -353,6 +382,10 @@ class AgentConfigPanel(QWidget):
         )
         header.addWidget(self._assistant_title)
         header.addStretch()
+        self._suggestion_toggle_btn = MPushButton("查看建议")
+        self._suggestion_toggle_btn.setObjectName("SuggestionToggleButton")
+        self._suggestion_toggle_btn.hide()
+        header.addWidget(self._suggestion_toggle_btn)
         self._test_type_combo = QComboBox()
         self._test_type_combo.addItem("Jump Test", "jump")
         self._test_type_combo.addItem("Treadmill Gait Test", "treadmill_gait")
@@ -373,13 +406,17 @@ class AgentConfigPanel(QWidget):
             "告诉我受试者情况和测试目标，我会生成测试参数建议。\n"
             "示例：为普通用户生成 5 次纵跳测试配置。"
         )
-        self._chat_display.document().setDefaultStyleSheet(
-            "table { border-collapse: collapse; margin: 8px 0; }"
-            "td, th { border: 1px solid #999; padding: 4px 10px; }"
-        )
+        self._chat_documents = {}
+        for mode in _AGENT_MODES:
+            document = QTextDocument(self)
+            document.setDefaultStyleSheet(_CHAT_DOCUMENT_QSS)
+            self._chat_documents[mode] = document
+        self._chat_display.setDocument(self._chat_documents["jump"])
         chat_layout.addWidget(self._chat_display, 1)
 
-        chip_layout = QGridLayout()
+        self._prompt_chips = QWidget()
+        chip_layout = QGridLayout(self._prompt_chips)
+        chip_layout.setContentsMargins(0, 0, 0, 0)
         chip_layout.setHorizontalSpacing(8)
         chip_layout.setVerticalSpacing(8)
         for index, text in enumerate(
@@ -390,7 +427,7 @@ class AgentConfigPanel(QWidget):
             chip.clicked.connect(lambda _, value=text: self._chat_input.setText(value))
             row, column = divmod(index, 2)
             chip_layout.addWidget(chip, row, column)
-        chat_layout.addLayout(chip_layout)
+        chat_layout.addWidget(self._prompt_chips)
 
         input_layout = QHBoxLayout()
         self._chat_input = MLineEdit()
@@ -404,11 +441,19 @@ class AgentConfigPanel(QWidget):
         chat_layout.addLayout(input_layout)
 
         suggestion_card = self._create_card()
+        suggestion_card.setObjectName("SuggestionCard")
         self._suggestion_card = suggestion_card
         suggestion_layout = QVBoxLayout(suggestion_card)
         suggestion_layout.setContentsMargins(16, 14, 16, 14)
         suggestion_layout.setSpacing(10)
-        suggestion_layout.addWidget(self._card_title("建议配置"))
+        suggestion_header = QHBoxLayout()
+        suggestion_header.addWidget(self._card_title("建议配置"))
+        suggestion_header.addStretch()
+        self._suggestion_close_btn = MPushButton("×")
+        self._suggestion_close_btn.setObjectName("SuggestionCloseButton")
+        self._suggestion_close_btn.setToolTip("收起建议配置")
+        suggestion_header.addWidget(self._suggestion_close_btn)
+        suggestion_layout.addLayout(suggestion_header)
 
         self._suggestion_text = MLabel("尚未生成建议配置。")
         self._suggestion_text.setWordWrap(True)
@@ -429,14 +474,15 @@ class AgentConfigPanel(QWidget):
         self._confirm_btn.setMinimumHeight(42)
         self._confirm_btn.setEnabled(False)
         suggestion_layout.addWidget(self._confirm_btn)
-        self._apply_responsive_layout(self.width() < 820)
+        self._apply_responsive_layout(self.width() < _THREE_COLUMN_MIN_WIDTH)
 
     def _connect_signals(self) -> None:
-        self._test_type_combo.currentIndexChanged.connect(self._clear_pending_config)
-        self._test_type_combo.currentIndexChanged.connect(lambda *_: self._sync_mode_state())
+        self._test_type_combo.currentIndexChanged.connect(self._on_test_type_changed)
         self._send_btn.clicked.connect(self._on_send_message)
         self._chat_input.returnPressed.connect(self._on_send_message)
         self._reset_btn.clicked.connect(self._on_reset_chat)
+        self._suggestion_toggle_btn.clicked.connect(self._toggle_suggestion_drawer)
+        self._suggestion_close_btn.clicked.connect(self._dismiss_suggestion_drawer)
         self._confirm_btn.clicked.connect(self._on_confirm_clicked)
         self._age_spin.valueChanged.connect(self._clear_pending_config)
         self._weight_spin.valueChanged.connect(self._on_profile_input_changed)
@@ -451,7 +497,9 @@ class AgentConfigPanel(QWidget):
         return frame
 
     def resizeEvent(self, event) -> None:
-        self._apply_responsive_layout(event.size().width() < 820)
+        self._apply_responsive_layout(
+            event.size().width() < _THREE_COLUMN_MIN_WIDTH
+        )
         super().resizeEvent(event)
 
     def _apply_responsive_layout(self, compact: bool) -> None:
@@ -472,20 +520,24 @@ class AgentConfigPanel(QWidget):
             self._profile_card.setSizePolicy(
                 QSizePolicy.Preferred, QSizePolicy.Expanding
             )
-            self._suggestion_card.setMinimumWidth(0)
-            self._suggestion_card.setMaximumWidth(16777215)
+            self._chat_card.setMinimumWidth(0)
+            self._suggestion_card.setMinimumWidth(_SUGGESTION_DRAWER_MIN_WIDTH)
+            self._suggestion_card.setMaximumWidth(_SUGGESTION_DRAWER_MAX_WIDTH)
             self._suggestion_card.setSizePolicy(
-                QSizePolicy.Expanding, QSizePolicy.Expanding
+                QSizePolicy.Preferred, QSizePolicy.Expanding
             )
 
-            self._main_layout.addWidget(self._profile_card, 0, 0, 2, 1)
+            self._main_layout.addWidget(self._profile_card, 0, 0)
             self._main_layout.addWidget(self._chat_card, 0, 1)
-            self._main_layout.addWidget(self._suggestion_card, 1, 1)
+            self._main_layout.addWidget(
+                self._suggestion_card, 0, 1, Qt.AlignRight
+            )
             self._main_layout.setColumnStretch(0, 0)
             self._main_layout.setColumnStretch(1, 1)
             self._main_layout.setColumnStretch(2, 0)
-            self._main_layout.setRowStretch(0, 2)
-            self._main_layout.setRowStretch(1, 1)
+            self._main_layout.setRowStretch(0, 1)
+            self._main_layout.setRowStretch(1, 0)
+            self._sync_suggestion_presentation()
             return
 
         self._profile_card.setMinimumWidth(220)
@@ -493,6 +545,7 @@ class AgentConfigPanel(QWidget):
         self._profile_card.setSizePolicy(
             QSizePolicy.Preferred, QSizePolicy.Expanding
         )
+        self._chat_card.setMinimumWidth(560)
         self._suggestion_card.setMinimumWidth(250)
         self._suggestion_card.setMaximumWidth(270)
         self._suggestion_card.setSizePolicy(
@@ -507,6 +560,38 @@ class AgentConfigPanel(QWidget):
         self._main_layout.setColumnStretch(2, 0)
         self._main_layout.setRowStretch(0, 1)
         self._main_layout.setRowStretch(1, 0)
+        self._sync_suggestion_presentation()
+
+    def _sync_suggestion_presentation(self) -> None:
+        has_suggestion = self._pending_config is not None
+        self._suggestion_toggle_btn.setVisible(
+            has_suggestion and self._compact_layout
+        )
+        self._suggestion_close_btn.setVisible(bool(self._compact_layout))
+
+        if not has_suggestion:
+            self._suggestion_card.hide()
+            return
+
+        if self._compact_layout and self._suggestion_drawer_dismissed:
+            self._suggestion_toggle_btn.setText("查看建议")
+            self._suggestion_card.hide()
+            return
+
+        self._suggestion_toggle_btn.setText("收起建议")
+        self._suggestion_card.show()
+
+    def _toggle_suggestion_drawer(self) -> None:
+        if self._pending_config is None or not self._compact_layout:
+            return
+        self._suggestion_drawer_dismissed = not self._suggestion_drawer_dismissed
+        self._sync_suggestion_presentation()
+
+    def _dismiss_suggestion_drawer(self) -> None:
+        if not self._compact_layout:
+            return
+        self._suggestion_drawer_dismissed = True
+        self._sync_suggestion_presentation()
 
     @staticmethod
     def _card_title(text: str) -> MLabel:
@@ -527,10 +612,16 @@ class AgentConfigPanel(QWidget):
         layout.addWidget(label_widget, row, 0)
         layout.addWidget(widget, row, 1)
 
-    def _append_chat_entry(self, label: str, body_html: str) -> None:
-        document = self._chat_display.document()
+    def _append_chat_entry(
+        self, label: str, body_html: str, *, mode: str | None = None
+    ) -> None:
+        target_mode = mode or self._current_agent_mode()
+        document = self._chat_documents[target_mode]
+        is_active_document = document is self._chat_display.document()
         scrollbar = self._chat_display.verticalScrollBar()
-        follow_new_entries = scrollbar.value() == scrollbar.maximum()
+        follow_new_entries = (
+            is_active_document and scrollbar.value() == scrollbar.maximum()
+        )
         cursor = QTextCursor(document)
         cursor.movePosition(QTextCursor.End)
         if not document.isEmpty():
@@ -586,14 +677,16 @@ class AgentConfigPanel(QWidget):
         if self._pending_config is None:
             return
         self._pending_config = None
+        self._suggestion_drawer_dismissed = False
         self._confirm_btn.setEnabled(False)
         self._suggestion_text.setText("运动档案已变化，请重新生成建议配置。")
+        self._sync_suggestion_presentation()
 
     def _sync_mode_state(self) -> None:
         busy = self._llm_worker is not None and self._llm_worker.isRunning()
         if self._llm_client is not None and not self._llm_client.is_running:
             self._worker_ready = False
-        self._chat_input.setEnabled(not busy and self._worker_ready)
+        self._chat_input.setEnabled(self._llm_client is not None)
         self._send_btn.setEnabled(not busy and self._worker_ready)
         self._reset_btn.setEnabled(not busy and self._worker_ready)
         if self._llm_client is None:
@@ -613,7 +706,7 @@ class AgentConfigPanel(QWidget):
         if self._llm_client is None:
             self._sync_mode_state()
             return
-        if self._worker_ready:
+        if self._worker_ready and self._llm_client.is_running:
             self._sync_mode_state()
             return
         if not self._llm_client.is_running:
@@ -648,6 +741,15 @@ class AgentConfigPanel(QWidget):
     # Slots
     # ------------------------------------------------------------------
 
+    def _on_test_type_changed(self, *_args) -> None:
+        self._clear_pending_config()
+        mode = self._current_agent_mode()
+        document = self._chat_documents[mode]
+        self._chat_display.setDocument(document)
+        self._chat_input.clear()
+        self._prompt_chips.setVisible(document.isEmpty())
+        self._ensure_llm_worker_started()
+
     def _on_send_message(self) -> None:
         if self._llm_worker is not None and self._llm_worker.isRunning():
             return
@@ -666,6 +768,7 @@ class AgentConfigPanel(QWidget):
         self._worker_error = None
 
         self._append_chat_entry("你", escape(message))
+        self._prompt_chips.hide()
 
         self._chat_input.clear()
         self._active_request_id += 1
@@ -711,9 +814,10 @@ class AgentConfigPanel(QWidget):
             if worker is not None:
                 worker.deleteLater()
             return
-        self._append_chat_entry("AI", _md_to_html(reply))
+        mode = getattr(worker, "_agent_mode", self._current_agent_mode())
+        self._append_chat_entry("AI", _md_to_html(reply), mode=mode)
 
-        if config is not None:
+        if config is not None and mode == self._current_agent_mode():
             self._set_pending_config(config, "智能服务已生成建议配置。")
 
         self._llm_worker = None
@@ -746,7 +850,8 @@ class AgentConfigPanel(QWidget):
             if worker is not None:
                 worker.deleteLater()
             return
-        self._chat_display.append(f"<b>错误:</b> {message}")
+        mode = getattr(worker, "_agent_mode", self._current_agent_mode())
+        self._append_chat_entry("错误", escape(message), mode=mode)
         self._llm_worker = None
         self._sync_mode_state()
         self.voice_reply.emit("配置服务暂时不可用，请稍后重试。")
@@ -756,9 +861,13 @@ class AgentConfigPanel(QWidget):
         if self._llm_client is not None and self._worker_ready:
             self._llm_client.reset()
         self._pending_config = None
+        self._suggestion_drawer_dismissed = False
         self._confirm_btn.setEnabled(False)
         self._suggestion_text.setText("尚未生成建议配置。")
-        self._chat_display.clear()
+        for document in self._chat_documents.values():
+            document.clear()
+        self._prompt_chips.show()
+        self._sync_suggestion_presentation()
 
     def _on_offline_generate(self) -> None:
         test_types = {
@@ -790,8 +899,10 @@ class AgentConfigPanel(QWidget):
 
     def _set_pending_config(self, config: AnyTestConfig, reason: str) -> None:
         self._pending_config = config
+        self._suggestion_drawer_dismissed = False
         self._confirm_btn.setEnabled(True)
         self._suggestion_text.setText(self._format_config(config, reason))
+        self._sync_suggestion_presentation()
 
     def _format_config(self, config: AnyTestConfig, reason: str) -> str:
         stop_labels = {

@@ -1182,6 +1182,8 @@ class ReportView(QWidget):
                 "worker_not_ready": "智能分析服务尚未就绪。",
                 "external_scope_not_implemented": "当前版本仅支持本次记录分析。",
                 "analysis_unavailable": "暂时无法读取智能分析结果。",
+                "analysis_timeout": "智能分析超过服务端时间限制，请重试。",
+                "analysis_client_timeout": "智能分析服务未在预期时间内响应，请重试。",
             }
             self._analysis_status.setText(
                 messages.get(error_code, "智能分析未能生成通过验证的结果。")

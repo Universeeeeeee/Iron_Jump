@@ -108,3 +108,16 @@ def test_report_request_rejects_disabled_current_session_scope():
 
 def test_unknown_route_is_not_resolved():
     assert worker._route_name("/tools/run") is None
+
+
+@pytest.mark.parametrize(
+    "error_code,status",
+    (
+        ("analysis_timeout", 504),
+        ("report_configuration_invalid", 503),
+        ("analysis_failed", 500),
+        ("unsupported_predicate", 422),
+    ),
+)
+def test_report_error_codes_have_stable_http_status(error_code, status):
+    assert worker._report_error_status(error_code) == status

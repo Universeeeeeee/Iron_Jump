@@ -243,6 +243,22 @@ class AnalysisStateReducer:
             }
         )
 
+    def record_deadline_stop(
+        self,
+        state: SequentialAnalysisState,
+        reason_code: str,
+    ) -> SequentialAnalysisState:
+        if state.stop_reason_code is not None:
+            return state
+        return state.model_copy(
+            update={
+                "stop_reason_code": reason_code,
+                "limitations": tuple(
+                    dict.fromkeys((*state.limitations, reason_code))
+                ),
+            }
+        )
+
     def record_action_rejection(
         self,
         state: SequentialAnalysisState,

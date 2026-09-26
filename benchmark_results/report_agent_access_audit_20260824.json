@@ -1,0 +1,41 @@
+{
+  "audit_schema_version": "report-agent-access-audit/1.0",
+  "contains_subject_data": false,
+  "authorized_subject_store_reads": [
+    "get_session"
+  ],
+  "authorized_repository_calls": [
+    "create_analysis_run",
+    "finalize_analysis_run",
+    "get_package",
+    "get_resumable_analysis_checkpoint",
+    "save_analysis_checkpoint",
+    "update_analysis_run_metrics"
+  ],
+  "forbidden_subject_store_reads": [
+    "count_subject_session_candidates",
+    "count_team_session_candidates",
+    "get_all_sessions",
+    "get_recent_history",
+    "get_sessions",
+    "get_team_sessions"
+  ],
+  "forbidden_repository_calls": [
+    "get_manifest",
+    "get_scope_availability",
+    "get_session_context"
+  ],
+  "scenarios": [
+    "normal_sequential",
+    "model_failure_after_evidence",
+    "hard_tool_failure",
+    "transient_tool_retry_exhausted",
+    "rag_degraded",
+    "investigation_deadline_stop",
+    "synthesis_timeout",
+    "checkpoint_action_accepted",
+    "checkpoint_evidence_recorded",
+    "checkpoint_claim_repair_pending"
+  ],
+  "expected_unauthorized_reads": 0
+}

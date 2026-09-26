@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import sqlite3
 import sys
 import tempfile
 import time
@@ -19,7 +20,10 @@ if str(ROOT) not in sys.path:
 
 from agent.report.service import ReportAnalysisService  # noqa: E402
 from agent.report.agent import ReportAgent  # noqa: E402
-from agent.report.prompts import SEQUENTIAL_PROMPT_VERSION  # noqa: E402
+from agent.report.prompts import (  # noqa: E402
+    PROMPT_VERSION,
+    SEQUENTIAL_PROMPT_VERSION,
+)
 from agent.report.skill_loader import (  # noqa: E402
     REPORT_ANALYSIS_SKILL_VERSION,
     ReportAnalysisSkillLoader,
@@ -85,20 +89,65 @@ class TracedReportAgent(ReportAgent):
         self.skill_audit = None
         self.sequential_decisions = []
         self.synthesis_trace = []
+        self.stage_elapsed_ms = {
+            "decision": 0,
+            "legacy_plan": 0,
+            "legacy_review": 0,
+            "synthesis": 0,
+            "claim_repair": 0,
+        }
+        self.synthesis_count = 0
+        self.repair_count = 0
 
-    def propose_plan(self, observation, state):
-        decision = super().propose_plan(observation, state)
+    def _timed(self, stage, operation):
+        started = time.perf_counter()
+        try:
+            return operation()
+        finally:
+            self.stage_elapsed_ms[stage] += round(
+                (time.perf_counter() - started) * 1000
+            )
+
+    def propose_plan(self, observation, state, *, timeout_s=None):
+        decision = self._timed(
+            "legacy_plan",
+            lambda: super(TracedReportAgent, self).propose_plan(
+                observation, state, timeout_s=timeout_s
+            ),
+        )
         self.initial_decision = decision
         return decision
 
-    def review_evidence(self, observation, state, evidence):
-        decision = super().review_evidence(observation, state, evidence)
+    def review_evidence(
+        self, observation, state, evidence, *, timeout_s=None
+    ):
+        decision = self._timed(
+            "legacy_review",
+            lambda: super(TracedReportAgent, self).review_evidence(
+                observation, state, evidence, timeout_s=timeout_s
+            ),
+        )
         self.evidence_review = decision
         return decision
 
-    def decide(self, observation, state, evidence, skill_context):
-        decision = super().decide(
-            observation, state, evidence, skill_context
+    def decide(
+        self,
+        observation,
+        state,
+        evidence,
+        skill_context,
+        *,
+        timeout_s=None,
+    ):
+        decision = self._timed(
+            "decision",
+            lambda: super(TracedReportAgent, self).decide(
+                observation,
+                state,
+                evidence,
+                skill_context,
+                timeout_s=timeout_s,
+            ),
         )
         if self.initial_decision is None:
             self.initial_decision = decision
@@ -111,11 +160,36 @@ class TracedReportAgent(ReportAgent):
         }
         return decision
 
-    def synthesize_sequential(
-        self, observation, state, evidence, skill_context
+    def synthesize(
+        self, observation, state, evidence, *, timeout_s=None
     ):
-        draft = super().synthesize_sequential(
-            observation, state, evidence, skill_context
+        self.synthesis_count += 1
+        return self._timed(
+            "synthesis",
+            lambda: super(TracedReportAgent, self).synthesize(
+                observation, state, evidence, timeout_s=timeout_s
+            ),
+        )
+
+    def synthesize_sequential(
+        self,
+        observation,
+        state,
+        evidence,
+        skill_context,
+        *,
+        timeout_s=None,
+    ):
+        self.synthesis_count += 1
+        draft = self._timed(
+            "synthesis",
+            lambda: super(TracedReportAgent, self).synthesize_sequential(
+                observation,
+                state,
+                evidence,
+                skill_context,
+                timeout_s=timeout_s,
+            ),
         )
         self.synthesis_trace.append(
             {"stage": "initial", "draft": draft.model_dump(mode="json")}
@@ -130,14 +204,21 @@ class TracedReportAgent(ReportAgent):
         draft,
         error_code,
         error_message,
+        *,
+        timeout_s=None,
     ):
-        repaired = super().repair_synthesis(
-            observation,
-            state,
-            evidence,
-            draft,
-            error_code,
-            error_message,
+        self.repair_count += 1
+        repaired = self._timed(
+            "claim_repair",
+            lambda: super(TracedReportAgent, self).repair_synthesis(
+                observation,
+                state,
+                evidence,
+                draft,
+                error_code,
+                error_message,
+                timeout_s=timeout_s,
+            ),
         )
         self.synthesis_trace.append(
             {
@@ -166,7 +247,16 @@ class TracedReportAgent(ReportAgent):
                 for decision in self.sequential_decisions
             ],
             "synthesis_trace": self.synthesis_trace,
+            "stage_elapsed_ms": self.stage_elapsed_ms,
+            "synthesis_count": self.synthesis_count,
+            "repair_count": self.repair_count,
         }
+
+
+class LegacyTracedReportAgent(TracedReportAgent):
+    """Expose only the compatibility DAG interface for direct comparison."""
+
+    decide = None
 
 
 def load_report_analysis_skill(
@@ -248,6 +338,7 @@ def run_report_agent_benchmark(
     *,
     ablation: AblationConfig,
     skill_path: Path | None = None,
+    execution_mode: Literal["legacy", "sequential"] = "sequential",
 ) -> dict[str, Any]:
     runs = []
     for case in cases:
@@ -265,7 +356,12 @@ def run_report_agent_benchmark(
                         direction="Interface side",
                     )
                 )
-                agent = TracedReportAgent(
+                agent_type = (
+                    LegacyTracedReportAgent
+                    if execution_mode == "legacy"
+                    else TracedReportAgent
+                )
+                agent = agent_type(
                     skill_path=skill_path,
                     test_type=config.test_type,
                 )
@@ -287,6 +383,7 @@ def run_report_agent_benchmark(
                 )
                 try:
                     analysis = service.analyze(session_id, DataAccessScope())
+                    run_metrics = _latest_run_metrics(store)
                     decision_assertions = grade_initial_decision(
                         case, agent.initial_decision
                     )
@@ -308,10 +405,37 @@ def run_report_agent_benchmark(
                             "replan_count": analysis.replan_count,
                             "decision_trace": agent.decision_trace(),
                             "decision_assertions": decision_assertions,
+                            "decision_count": (
+                                run_metrics.get("decision_count", 0)
+                                or len(agent.sequential_decisions)
+                                if execution_mode == "sequential"
+                                else 2
+                            ),
+                            "tool_call_count": (
+                                run_metrics.get("tool_call_count", 0)
+                                or run_metrics.get("tool_run_count", 0)
+                            ),
+                            "tool_run_count": run_metrics.get(
+                                "tool_run_count", 0
+                            ),
+                            "synthesis_count": agent.synthesis_count,
+                            "repair_count": agent.repair_count,
+                            "investigation_elapsed_ms": (
+                                run_metrics.get("investigation_elapsed_ms", 0)
+                                or agent.stage_elapsed_ms["decision"]
+                                + agent.stage_elapsed_ms["legacy_plan"]
+                                + agent.stage_elapsed_ms["legacy_review"]
+                            ),
+                            "synthesis_elapsed_ms": (
+                                run_metrics.get("synthesis_elapsed_ms", 0)
+                                or agent.stage_elapsed_ms["synthesis"]
+                                + agent.stage_elapsed_ms["claim_repair"]
+                            ),
                             "elapsed_ms": round((time.perf_counter() - started) * 1000),
                         }
                     )
                 except Exception as exc:
+                    run_metrics = _latest_run_metrics(store)
                     runs.append(
                         {
                             "case_id": case.case_id,
@@ -323,6 +447,29 @@ def run_report_agent_benchmark(
                             "decision_trace": agent.decision_trace(),
                             "decision_assertions": grade_initial_decision(
                                 case, agent.initial_decision
+                            ),
+                            "decision_count": run_metrics.get(
+                                "decision_count",
+                                len(agent.sequential_decisions),
+                            ),
+                            "tool_call_count": run_metrics.get(
+                                "tool_call_count", 0
+                            ),
+                            "tool_run_count": run_metrics.get(
+                                "tool_run_count", 0
+                            ),
+                            "synthesis_count": agent.synthesis_count,
+                            "repair_count": agent.repair_count,
+                            "investigation_elapsed_ms": (
+                                run_metrics.get("investigation_elapsed_ms", 0)
+                                or agent.stage_elapsed_ms["decision"]
+                                + agent.stage_elapsed_ms["legacy_plan"]
+                                + agent.stage_elapsed_ms["legacy_review"]
+                            ),
+                            "synthesis_elapsed_ms": (
+                                run_metrics.get("synthesis_elapsed_ms", 0)
+                                or agent.stage_elapsed_ms["synthesis"]
+                                + agent.stage_elapsed_ms["claim_repair"]
                             ),
                             "elapsed_ms": round((time.perf_counter() - started) * 1000),
                         }
@@ -346,10 +493,16 @@ def run_report_agent_benchmark(
     ]
     p50_index = len(elapsed_values) // 2
     p95_index = max(0, math.ceil(len(elapsed_values) * 0.95) - 1)
+    p99_index = max(0, math.ceil(len(elapsed_values) * 0.99) - 1)
     return {
-        "benchmark_schema_version": "report-agent-benchmark/2.0-sequential",
+        "benchmark_schema_version": "report-agent-benchmark/3.0-production",
+        "execution_mode": execution_mode,
         "model_name": ReportAgent.model_name,
-        "prompt_version": SEQUENTIAL_PROMPT_VERSION,
+        "prompt_version": (
+            PROMPT_VERSION
+            if execution_mode == "legacy"
+            else SEQUENTIAL_PROMPT_VERSION
+        ),
         "observation_builder_version": OBSERVATION_BUILDER_VERSION,
         "analysis_tool_registry_version": ANALYSIS_TOOL_REGISTRY_VERSION,
         "analysis_method_registry_version": ANALYSIS_METHOD_REGISTRY_VERSION,
@@ -383,8 +536,124 @@ def run_report_agent_benchmark(
         ),
         "p50_elapsed_ms": elapsed_values[p50_index] if elapsed_values else None,
         "p95_elapsed_ms": elapsed_values[p95_index] if elapsed_values else None,
+        "p99_elapsed_ms": elapsed_values[p99_index] if elapsed_values else None,
         "runs": runs,
     }
+
+
+def _latest_run_metrics(store) -> dict[str, Any]:
+    with sqlite3.connect(store.db_path) as conn:
+        row = conn.execute(
+            "SELECT run_metrics_json FROM report_analyses ORDER BY id DESC LIMIT 1"
+        ).fetchone()
+    if row is None or not row[0]:
+        return {}
+    return json.loads(row[0])
+
+
+def run_report_agent_comparison(
+    cases: list[BenchmarkCase],
+    repetitions: int,
+    *,
+    ablation: AblationConfig,
+    skill_path: Path | None = None,
+) -> dict[str, Any]:
+    collected = {"legacy": [], "sequential": []}
+    templates = {}
+    pair_index = 0
+    for repetition in range(repetitions):
+        for case in cases:
+            modes = (
+                ("legacy", "sequential")
+                if pair_index % 2 == 0
+                else ("sequential", "legacy")
+            )
+            pair_index += 1
+            for mode in modes:
+                partial = run_report_agent_benchmark(
+                    [case],
+                    1,
+                    ablation=ablation,
+                    skill_path=skill_path,
+                    execution_mode=mode,
+                )
+                run = dict(partial["runs"][0])
+                run["repetition"] = repetition + 1
+                collected[mode].append(run)
+                templates[mode] = partial
+    return {
+        "benchmark_schema_version": "report-agent-comparison/1.0",
+        "execution_order": "paired_alternating",
+        "legacy": _merge_comparison_runs(
+            templates.get("legacy"),
+            collected["legacy"],
+            cases,
+            repetitions,
+        ),
+        "sequential": _merge_comparison_runs(
+            templates.get("sequential"),
+            collected["sequential"],
+            cases,
+            repetitions,
+        ),
+    }
+
+
+def _merge_comparison_runs(template, runs, cases, repetitions):
+    if template is None:
+        return {"runs": []}
+    result = dict(template)
+    expected_total = sum(
+        len(case.expected_predicates) * repetitions for case in cases
+    )
+    matched = sum(
+        len(
+            set(run.get("expected_predicates", ()))
+            & set(run.get("discovered_predicates", ()))
+        )
+        for run in runs
+    )
+    discovered_total = sum(
+        len(set(run.get("discovered_predicates", ()))) for run in runs
+    )
+    elapsed = sorted(run["elapsed_ms"] for run in runs)
+    assertion_values = [
+        value
+        for run in runs
+        for value in run["decision_assertions"].values()
+    ]
+
+    def percentile(fraction):
+        if not elapsed:
+            return None
+        return elapsed[max(0, math.ceil(len(elapsed) * fraction) - 1)]
+
+    result.update(
+        repetitions=repetitions,
+        case_count=len(cases),
+        release_sample_requirement_met=repetitions >= 3,
+        hidden_pattern_recall=(
+            matched / expected_total if expected_total else None
+        ),
+        legacy_raw_predicate_match_ratio=(
+            matched / discovered_total if discovered_total else None
+        ),
+        validated_run_rate=(
+            sum(run["status"] == "validated" for run in runs) / len(runs)
+            if runs
+            else None
+        ),
+        decision_assertion_pass_rate=(
+            sum(assertion_values) / len(assertion_values)
+            if assertion_values
+            else None
+        ),
+        p50_elapsed_ms=percentile(0.50),
+        p95_elapsed_ms=percentile(0.95),
+        p99_elapsed_ms=percentile(0.99),
+        runs=runs,
+    )
+    return result
 
 
 def main() -> int:
@@ -394,6 +663,11 @@ def main() -> int:
     parser.add_argument("--case", action="append", dest="case_ids")
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--skill-path", type=Path)
+    parser.add_argument(
+        "--execution-mode",
+        choices=("legacy", "sequential", "compare"),
+        default="sequential",
+    )
     args = parser.parse_args()
     if args.repetitions < 1:
         parser.error("--repetitions must be positive")
@@ -404,12 +678,21 @@ def main() -> int:
         missing = requested - {case.case_id for case in cases}
         if missing:
             parser.error(f"unknown case IDs: {sorted(missing)}")
-    result = run_report_agent_benchmark(
-        cases,
-        args.repetitions,
-        ablation=ABLATIONS[args.ablation],
-        skill_path=args.skill_path,
-    )
+    if args.execution_mode == "compare":
+        result = run_report_agent_comparison(
+            cases,
+            args.repetitions,
+            ablation=ABLATIONS[args.ablation],
+            skill_path=args.skill_path,
+        )
+    else:
+        result = run_report_agent_benchmark(
+            cases,
+            args.repetitions,
+            ablation=ABLATIONS[args.ablation],
+            skill_path=args.skill_path,
+            execution_mode=args.execution_mode,
+        )
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(
         json.dumps(result, ensure_ascii=False, indent=2),

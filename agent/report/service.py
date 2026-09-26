@@ -39,10 +39,16 @@ from reporting.validators import (
 from knowledge.integration import build_report_rag_context
 from knowledge.pipeline import degraded_rag_result
 
-from .agent import ReportAgent
+from .agent import ReportAgent, ReportAgentCallTimeout
 from .analysis_loop import AnalysisLoop, AnalysisLoopError
 from .checkpoint import RepositoryCheckpointSink
 from .execution import SequentialActionBoundary
+from .deadline import (
+    AnalysisDeadlineExceeded,
+    ReportAnalysisDeadline,
+    ReportAnalysisDeadlinePolicy,
+    call_with_optional_timeout,
+)
 from .sequential_loop import (
     SequentialAnalysisLoop,
     SequentialAnalysisLoopError,
@@ -52,9 +58,18 @@ from .tools import AnalysisToolGateway
 
 
 class ReportAnalysisError(RuntimeError):
-    def __init__(self, code: str, message: str):
+    def __init__(
+        self,
+        code: str,
+        message: str,
+        *,
+        analysis_run_id: str | None = None,
+        timeout_stage: str | None = None,
+    ):
         super().__init__(message)
         self.code = code
+        self.analysis_run_id = analysis_run_id
+        self.timeout_stage = timeout_stage
 
 
 class ReportAnalysisService:
@@ -73,6 +88,8 @@ class ReportAnalysisService:
         skill_loader: ReportAnalysisSkillLoader | None = None,
         rag_pipeline=None,
         rag_unavailable_error_code: str | None = None,
+        deadline_policy: ReportAnalysisDeadlinePolicy | None = None,
+        clock=time.monotonic,
     ):
         self._repository = repository
         self._agent = agent or ReportAgent()
@@ -92,12 +109,23 @@ class ReportAnalysisService:
         self._skill_loader = skill_loader or ReportAnalysisSkillLoader()
         self._rag_pipeline = rag_pipeline
         self._rag_unavailable_error_code = rag_unavailable_error_code
+        self._deadline_policy = (
+            deadline_policy
+            if deadline_policy is not None
+            else ReportAnalysisDeadlinePolicy.from_environment()
+        )
+        self._clock = clock
 
     def analyze(
         self,
         session_id: int,
         access_scope: DataAccessScope,
     ) -> AnalysisPackage:
+        deadline = ReportAnalysisDeadline(
+            self._deadline_policy,
+            clock=self._clock,
+        )
+        started = self._clock()
         if access_scope.longitudinal or access_scope.cohort:
             raise ReportAnalysisError(
                 "external_scope_not_implemented",
@@ -169,10 +197,11 @@ class ReportAnalysisService:
                 model_name=model_name,
                 prompt_version=prompt_version,
             )
-        started = time.perf_counter()
         result = None
         checkpoint_sink = None
         claim_repair_count = 0
+        timeout_stage = None
+        resumed_from_checkpoint = resume_from is not None
         try:
             gateway = AnalysisToolGateway(
                 tool_registry=self._tool_registry,
@@ -214,6 +243,7 @@ class ReportAnalysisService:
                         package,
                         access_scope,
                         resume_from=resume_from,
+                        deadline=deadline,
                     )
                     self._save_claim_checkpoint(
                         checkpoint_sink,
@@ -232,8 +262,14 @@ class ReportAnalysisService:
                     tool_gateway=gateway,
                     max_replans=self._max_replans,
                 )
-                result = loop.run(observation, package, access_scope)
+                result = loop.run(
+                    observation,
+                    package,
+                    access_scope,
+                    deadline=deadline,
+                )
             try:
+                deadline.require_total_time("claim_validation")
                 validated = self._claim_validator.validate(
                     result.draft,
                     package,
@@ -262,14 +298,22 @@ class ReportAnalysisService:
                         claim_repair_count=claim_repair_count,
                         prompt_content_digest=prompt_content_digest,
                     )
-                repaired_draft = repair(
-                    observation,
-                    result.state,
-                    result.evidence,
-                    result.draft,
-                    first_error.code,
-                    str(first_error),
-                )
+                try:
+                    repaired_draft = call_with_optional_timeout(
+                        repair,
+                        observation,
+                        result.state,
+                        result.evidence,
+                        result.draft,
+                        first_error.code,
+                        str(first_error),
+                        timeout_s=deadline.model_timeout_seconds(
+                            "claim_repair"
+                        ),
+                    )
+                    deadline.require_total_time("claim_repair")
+                except ReportAgentCallTimeout as exc:
+                    raise AnalysisDeadlineExceeded("claim_repair") from exc
                 try:
                     self._claim_repair_validator.validate(
                         result.draft,
@@ -300,18 +344,51 @@ class ReportAnalysisService:
                     result.evidence,
                     access_scope,
                 )
+            deadline.require_total_time("claim_validation")
+            runtime_limitations = tuple(
+                limitation
+                for limitation in getattr(result.state, "limitations", ())
+                if limitation in {
+                    "investigation_deadline_reached",
+                    "decision_request_timeout",
+                }
+            )
+            if runtime_limitations:
+                validated = validated.model_copy(
+                    update={
+                        "overall_limitations": tuple(
+                            dict.fromkeys(
+                                (
+                                    *validated.overall_limitations,
+                                    *runtime_limitations,
+                                )
+                            )
+                        )
+                    }
+                )
             rag_result = None
             if self._rag_pipeline is not None:
-                try:
-                    rag_context = build_report_rag_context(
-                        package, validated, result.evidence
-                    )
-                    rag_result = self._rag_pipeline.run(rag_context)
-                except Exception:
+                if deadline.remaining_total_seconds() <= 0:
                     rag_result = degraded_rag_result(
                         package.metadata.package_digest,
-                        "rag_integration_failed",
+                        "analysis_deadline_insufficient_for_rag",
                     )
+                else:
+                    try:
+                        rag_context = build_report_rag_context(
+                            package, validated, result.evidence
+                        )
+                        rag_result = self._rag_pipeline.run(rag_context)
+                        if deadline.remaining_total_seconds() <= 0:
+                            rag_result = degraded_rag_result(
+                                package.metadata.package_digest,
+                                "analysis_deadline_exceeded_during_rag",
+                            )
+                    except Exception:
+                        rag_result = degraded_rag_result(
+                            package.metadata.package_digest,
+                            "rag_integration_failed",
+                        )
             elif self._rag_unavailable_error_code is not None:
                 rag_result = degraded_rag_result(
                     package.metadata.package_digest,
@@ -337,6 +414,8 @@ class ReportAnalysisService:
                 prompt_content_digest,
                 started,
                 result,
+                claim_repair_count=claim_repair_count,
+                resumed_from_checkpoint=resumed_from_checkpoint,
             )
             self._repository.finalize_analysis_run(
                 run_id,
@@ -344,11 +423,68 @@ class ReportAnalysisService:
                 rendered.model_dump(mode="json"),
             )
             return rendered
+        except AnalysisDeadlineExceeded as exc:
+            timeout_stage = exc.stage
+            metrics_result = self._metrics_result(
+                result, exc, checkpoint_sink
+            )
+            self._safe_record_metrics(
+                run_id,
+                package.metadata.package_digest,
+                observation,
+                model_name,
+                prompt_version,
+                prompt_content_digest,
+                started,
+                metrics_result,
+                claim_repair_count=claim_repair_count,
+                timeout_stage=timeout_stage,
+                resumed_from_checkpoint=resumed_from_checkpoint,
+            )
+            self._repository.finalize_analysis_run(
+                run_id,
+                "failed",
+                None,
+                "analysis_timeout",
+            )
+            raise ReportAnalysisError(
+                "analysis_timeout",
+                str(exc),
+                analysis_run_id=run_id,
+                timeout_stage=timeout_stage,
+            ) from exc
         except (
             AnalysisLoopError,
             SequentialAnalysisLoopError,
             ClaimValidationError,
         ) as exc:
+            if exc.code == "analysis_timeout":
+                timeout_stage = getattr(exc, "timeout_stage", None)
+                metrics_result = self._metrics_result(
+                    result, exc, checkpoint_sink
+                )
+                self._safe_record_metrics(
+                    run_id,
+                    package.metadata.package_digest,
+                    observation,
+                    model_name,
+                    prompt_version,
+                    prompt_content_digest,
+                    started,
+                    metrics_result,
+                    claim_repair_count=claim_repair_count,
+                    timeout_stage=timeout_stage,
+                    resumed_from_checkpoint=resumed_from_checkpoint,
+                )
+                self._repository.finalize_analysis_run(
+                    run_id, "failed", None, "analysis_timeout"
+                )
+                raise ReportAnalysisError(
+                    "analysis_timeout",
+                    str(exc),
+                    analysis_run_id=run_id,
+                    timeout_stage=timeout_stage,
+                ) from exc
             metrics_result = self._metrics_result(
                 result, exc, checkpoint_sink
             )
@@ -361,6 +497,8 @@ class ReportAnalysisService:
                 prompt_content_digest,
                 started,
                 metrics_result,
+                claim_repair_count=claim_repair_count,
+                resumed_from_checkpoint=resumed_from_checkpoint,
             )
             self._repository.finalize_analysis_run(
                 run_id,
@@ -382,6 +520,8 @@ class ReportAnalysisService:
                 prompt_content_digest,
                 started,
                 metrics_result,
+                claim_repair_count=claim_repair_count,
+                resumed_from_checkpoint=resumed_from_checkpoint,
             )
             self._repository.finalize_analysis_run(
                 run_id,
@@ -442,7 +582,14 @@ class ReportAnalysisService:
         evidence = getattr(exc, "evidence", ())
         if checkpoint is not None and len(checkpoint.evidence) > len(evidence):
             evidence = checkpoint.evidence
-        return SimpleNamespace(state=state, evidence=evidence)
+        return SimpleNamespace(
+            state=state,
+            evidence=evidence,
+            investigation_elapsed_ms=getattr(
+                exc, "investigation_elapsed_ms", 0
+            ),
+            synthesis_elapsed_ms=getattr(exc, "synthesis_elapsed_ms", 0),
+        )
 
     def _checkpoint_skill_matches(self, checkpoint, test_type) -> bool:
         try:
@@ -481,6 +628,10 @@ class ReportAnalysisService:
         prompt_content_digest,
         started,
         result,
+        *,
+        claim_repair_count=0,
+        timeout_stage=None,
+        resumed_from_checkpoint=False,
     ):
         serialized = serialize_observation(observation)
         evidence = result.evidence if result is not None else ()
@@ -514,13 +665,46 @@ class ReportAnalysisService:
                 duplicate_request_count=0,
                 observation_size=len(serialized.encode("utf-8")),
                 estimated_tokens=estimate_observation_tokens(serialized),
-                elapsed_ms=max(0, round((time.perf_counter() - started) * 1000)),
+                elapsed_ms=max(0, round((self._clock() - started) * 1000)),
+                decision_count=(
+                    getattr(result.state, "decision_count", 0)
+                    if result is not None
+                    else 0
+                ),
+                tool_call_count=(
+                    getattr(result.state, "tool_call_count", 0)
+                    if result is not None
+                    else 0
+                ),
+                skill_reference_load_count=(
+                    len(getattr(result.state, "loaded_skill_references", ()))
+                    if result is not None
+                    else 0
+                ),
+                investigation_elapsed_ms=(
+                    getattr(result, "investigation_elapsed_ms", 0)
+                    if result is not None
+                    else 0
+                ),
+                synthesis_elapsed_ms=(
+                    getattr(result, "synthesis_elapsed_ms", 0)
+                    if result is not None
+                    else 0
+                ),
+                claim_repair_count=claim_repair_count,
+                stop_reason_code=(
+                    getattr(result.state, "stop_reason_code", None)
+                    if result is not None
+                    else None
+                ),
+                timeout_stage=timeout_stage,
+                resumed_from_checkpoint=resumed_from_checkpoint,
             ),
         )
 
-    def _safe_record_metrics(self, *args) -> None:
+    def _safe_record_metrics(self, *args, **kwargs) -> None:
         try:
-            self._record_metrics(*args)
+            self._record_metrics(*args, **kwargs)
         except Exception:
             # The original failure remains authoritative; the run is still finalized.
             pass

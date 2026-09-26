@@ -6,6 +6,11 @@ import json
 import pytest
 
 from agent.report.service import ReportAnalysisError, ReportAnalysisService
+from agent.report.agent import ReportAgentCallTimeout
+from agent.report.deadline import (
+    ReportAnalysisDeadlineConfigurationError,
+    ReportAnalysisDeadlinePolicy,
+)
 from knowledge.pipeline import degraded_rag_result
 from agent.report.skill_loader import ReportAnalysisSkillLoader, SkillLoadError
 from agent.report.state import AnalysisStateReducer
@@ -248,6 +253,56 @@ class _MaliciousRepairingAgent(_RepairingAgent):
 
 class _ProcessInterrupted(BaseException):
     pass
+
+
+class _FakeClock:
+    def __init__(self):
+        self.now = 0.0
+
+    def __call__(self):
+        return self.now
+
+    def advance(self, seconds):
+        self.now += seconds
+
+
+class _DeadlineStopAgent(_SequentialServiceFakeAgent):
+    def __init__(self, clock):
+        super().__init__()
+        self.clock = clock
+        self.synthesis_calls = 0
+
+    def decide(self, observation, state, evidence, skill_context):
+        self.clock.advance(2.1)
+        return StopAnalysis(reason_code="evidence_sufficient", reason="late")
+
+    def synthesize_sequential(
+        self, observation, state, evidence, skill_context
+    ):
+        self.synthesis_calls += 1
+        return DraftAnalysisPackage(summary="受限分析", claims=())
+
+
+class _SynthesisTimeoutAgent(_DeadlineStopAgent):
+    def __init__(self, clock):
+        super().__init__(clock)
+        self.fail_synthesis = True
+
+    def decide(self, observation, state, evidence, skill_context):
+        return StopAnalysis(reason_code="evidence_sufficient", reason="done")
+
+    def synthesize_sequential(
+        self, observation, state, evidence, skill_context
+    ):
+        self.synthesis_calls += 1
+        if self.fail_synthesis:
+            raise ReportAgentCallTimeout("synthesis")
+        return DraftAnalysisPackage(summary="重试成功", claims=())
+
+
+class _RepairTimeoutAgent(_SequentialRepairingAgent):
+    def repair_synthesis(self, *args, **kwargs):
+        raise ReportAgentCallTimeout("claim_repair")
 
 
 class _InterruptingRepository(ReportRepository):
@@ -645,3 +700,99 @@ def test_service_defaults_to_ablation_b_execution_policy(tmp_path):
     assert service._observation_builder._include_analysis_sketch is True
     assert service._observation_builder._include_compact_series is True
     assert service._observation_builder._include_screening_cues is False
+
+
+def test_investigation_deadline_stops_new_decisions_and_still_synthesizes(
+    tmp_path,
+):
+    clock = _FakeClock()
+    agent = _DeadlineStopAgent(clock)
+    store, session_id, _, service = _service(
+        tmp_path,
+        agent,
+        deadline_policy=ReportAnalysisDeadlinePolicy(
+            total_seconds=3,
+            synthesis_reserve_seconds=1,
+            max_model_request_seconds=1,
+        ),
+        clock=clock,
+    )
+
+    result = service.analyze(session_id, DataAccessScope())
+
+    assert result.claims == ()
+    assert "investigation_deadline_reached" in result.overall_limitations
+    assert agent.synthesis_calls == 1
+    assert _statuses(store) == ["validated"]
+    metrics = json.loads(_metrics_rows(store)[0])
+    assert metrics["stop_reason_code"] == "investigation_deadline_reached"
+    assert metrics["investigation_elapsed_ms"] == 2100
+
+
+def test_synthesis_timeout_is_failed_non_resumable_and_retry_creates_new_run(
+    tmp_path,
+):
+    clock = _FakeClock()
+    agent = _SynthesisTimeoutAgent(clock)
+    store, session_id, _, service = _service(
+        tmp_path,
+        agent,
+        deadline_policy=ReportAnalysisDeadlinePolicy(
+            total_seconds=3,
+            synthesis_reserve_seconds=1,
+            max_model_request_seconds=1,
+        ),
+        clock=clock,
+    )
+
+    with pytest.raises(ReportAnalysisError) as exc_info:
+        service.analyze(session_id, DataAccessScope())
+
+    assert exc_info.value.code == "analysis_timeout"
+    assert exc_info.value.timeout_stage == "synthesis"
+    first_run_id = exc_info.value.analysis_run_id
+    assert _statuses(store) == ["failed"]
+    metrics = json.loads(_metrics_rows(store)[0])
+    assert metrics["timeout_stage"] == "synthesis"
+
+    agent.fail_synthesis = False
+    result = service.analyze(session_id, DataAccessScope())
+
+    assert result.analysis_run_id != first_run_id
+    assert _statuses(store) == ["failed", "validated"]
+
+
+def test_claim_repair_timeout_is_reported_without_partial_package(tmp_path):
+    clock = _FakeClock()
+    store, session_id, _, service = _service(
+        tmp_path,
+        _RepairTimeoutAgent(),
+        deadline_policy=ReportAnalysisDeadlinePolicy(
+            total_seconds=3,
+            synthesis_reserve_seconds=1,
+            max_model_request_seconds=1,
+        ),
+        clock=clock,
+    )
+
+    with pytest.raises(ReportAnalysisError) as exc_info:
+        service.analyze(session_id, DataAccessScope())
+
+    assert exc_info.value.code == "analysis_timeout"
+    assert exc_info.value.timeout_stage == "claim_repair"
+    assert _statuses(store) == ["failed"]
+    with sqlite3.connect(store.db_path) as conn:
+        package = conn.execute(
+            "SELECT analysis_package_json FROM report_analyses"
+        ).fetchone()[0]
+    assert package is None
+
+
+def test_invalid_deadline_environment_is_rejected(monkeypatch, tmp_path):
+    monkeypatch.setenv("REPORT_ANALYSIS_DEADLINE_SECONDS", "20")
+    store = SubjectStore(tmp_path / "deadline-config.sqlite3")
+
+    with pytest.raises(ReportAnalysisDeadlineConfigurationError):
+        ReportAnalysisService(
+            ReportRepository(store), agent=_SequentialServiceFakeAgent()
+        )

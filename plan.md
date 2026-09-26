@@ -1,6 +1,6 @@
 # Iron_Jump 统一项目计划
 
-> 最后更新：2026-08-12
+> 最后更新：2026-08-25
 >
 > 本文件是项目唯一的计划类文档。已完成事项、当前实现状态和后续待办都集中在这里；具体参数定义、架构说明和实验诊断仍放在各自的参考文档中。
 
@@ -16,6 +16,7 @@
 - 当前分支为 `vae/iron_jump`。2026-08-12 已将此前工作区改动按 Report Agent、纵跳与 LED 健康检测、UI 和文档拆分为可追溯提交。
 - `vision.__all__` 保持小型稳定公共 API；`PoseInferenceRecord`、`VisionSessionRecorder` 和 `NullVisionSessionRecorder` 属于内部按需访问类型，不进入稳定导出集合。
 - 2026-08-12 使用 `/Users/vae/miniconda3/envs/Iron_Jump/bin/python` 和 `QT_QPA_PLATFORM=offscreen` 运行全量测试：`659 passed`、`12 subtests passed`。
+- 2026-08-25 完成 Report Agent 工程生产化收尾；全量回归为 `791 passed`、`12 subtests passed`。
 - 提交前审计未发现 `.env`、模型文件、真实受试者数据库或本地日志进入版本控制；本地对话记录和驱动压缩包已加入忽略规则。
 
 ## 1. 当前已完成能力
@@ -139,17 +140,17 @@ ReportDataPackage
 
 **已确认的实施边界**：
 
-- [ ] 新分析运行完全切换为单步`NextAnalysisAction`循环；旧Plan/DAG只保留兼容读取和非生产测试入口，不再进入生产分析路径。
-- [ ] 根领域Skill由系统根据Jump、Treadmill Gait或Treadmill Running确定；Skill正文只提供分析方法论，细分`quality`、`side`、`temporal`、`cross-metric`和`exclusion`资料按需加载。
-- [ ] 权限、Tool预算、Evidence约束、禁止因果/诊断/处方和输出Schema继续由Always-on Prompt与确定性代码强制，不能依赖可选Skill。
-- [ ] 每次运行最多5次确定性Analysis Tool调用、3次Skill Reference加载和9个Agent决策步骤；重复语义请求拒绝，接近HTTP时限时必须停止调查并保留综合时间。
-- [ ] `AnalysisState`显式保存假设目标及`active`、`supported`、`not_supported`、`inconclusive`状态。样本不足或质量不允许比较时只能进入`inconclusive`，Tool执行失败不能作为假设不成立的证据。
-- [ ] 每个Predicate Evidence拥有稳定引用；新Claim绑定精确Predicate Evidence，而不是只按`increase`等Predicate名称匹配。指标、RecordSet、侧别或分段不一致时Validator必须拒绝。
-- [ ] 运行结果统一为`EvidenceProduced`、`ActionRejected`或`ToolExecutionFailed`；只有`EvidenceProduced`可以更新假设证据状态。
-- [ ] 在Skill加载、Action接受、Evidence生成和State更新后保存Checkpoint。相同session、scope、package digest与版本组合下遗留的`running`记录可在再次请求时恢复；终止运行不恢复。
-- [ ] 当前记录分析不得查询或向Agent暴露未授权的个人历史、团队候选数或明细。纵向与团队Tool继续注册但禁用。
-- [ ] 新分析写入Schema v3；旧Schema v1/v2只读兼容，不原地重写。五种现有确定性分析结果的数值、Predicate语义、Evidence内容与`output_digest`必须保持不变。
-- [ ] 最终报告只能描述实际检验范围；没有对应负向Evidence时，不得把“没有继续发现高价值假设”写成“本次测试没有异常”。
+- [x] 新分析运行完全切换为单步`NextAnalysisAction`循环；旧Plan/DAG只保留兼容读取和非生产测试入口，不再进入生产分析路径。
+- [x] 根领域Skill由系统根据Jump、Treadmill Gait或Treadmill Running确定；Skill正文只提供分析方法论，细分`quality`、`side`、`temporal`、`cross-metric`和`exclusion`资料按需加载。
+- [x] 权限、Tool预算、Evidence约束、禁止因果/诊断/处方和输出Schema继续由Always-on Prompt与确定性代码强制，不能依赖可选Skill。
+- [x] 每次运行最多5次确定性Analysis Tool调用、3次Skill Reference加载和9个Agent决策步骤；重复语义请求拒绝，接近HTTP时限时必须停止调查并保留综合时间。
+- [x] `AnalysisState`显式保存假设目标及`active`、`supported`、`not_supported`、`inconclusive`状态。样本不足或质量不允许比较时只能进入`inconclusive`，Tool执行失败不能作为假设不成立的证据。
+- [x] 每个Predicate Evidence拥有稳定引用；新Claim绑定精确Predicate Evidence，而不是只按`increase`等Predicate名称匹配。指标、RecordSet、侧别或分段不一致时Validator必须拒绝。
+- [x] 运行结果统一为`EvidenceProduced`、`ActionRejected`或`ToolExecutionFailed`；只有`EvidenceProduced`可以更新假设证据状态。
+- [x] 在Skill加载、Action接受、Evidence生成和State更新后保存Checkpoint。相同session、scope、package digest与版本组合下遗留的`running`记录可在再次请求时恢复；终止运行不恢复。
+- [x] 当前记录分析不得查询或向Agent暴露未授权的个人历史、团队候选数或明细。纵向与团队Tool继续注册但禁用。
+- [x] 新分析写入Schema v3及后续兼容Schema；旧Schema v1/v2只读兼容，不原地重写。五种现有确定性分析结果的数值、Predicate语义、Evidence内容与`output_digest`保持不变。
+- [x] 最终报告只能描述实际检验范围；没有对应负向Evidence时，不得把“没有继续发现高价值假设”写成“本次测试没有异常”。
 
 **错误恢复默认策略**：
 
@@ -251,7 +252,7 @@ Literature Evidence
 - [x] 序贯Benchmark已迁移到v2：记录每轮判别联合决策及Draft/Repair轨迹，不再用旧`SmallAnalysisPlan`评分新循环。旧案例中的`comparison_supported`经Kernel能力核查后不再当作隐藏模式：均值相同但离散度变化当前无对应Method Predicate；排除前后反转只能得到`remains_after_exclusion=false`；质量标记案例改为期望实际的`increase`。这是可验证性修正，不是根据模型输出删减失败样本。
 - [x] B配置正式联网Benchmark完成12类固定合成案例×3次，结果保存于`benchmark_results/report_agent_sequential_b_12x3_20260811.json`：有效运行率`100% (36/36)`，Expected Predicate Recall `92.59% (25/27)`，决策断言通过率`96.53%`，P50 `17.875 s`，P95 `47.931 s`，满足既定三项发布门槛。`co_change`和排除稳健性各有一次未召回；存在一次`239.524 s`极端延迟，虽不改变P95结论，但需要独立的生产超时控制。
 - [x] 本阶段Report Agent、Service、Worker与UI聚焦回归为`147 passed`；Qt用例通过`QT_QPA_PLATFORM=offscreen`执行。
-- [ ] 仍需完成Repository权限Spy与组合故障验收、生产HTTP截止时间/综合保留时间控制，以及去标识化真实记录和专家标注实验；合成Benchmark不能解释为真实运动分析准确率。
+- [ ] 工程生产化已经完成；仍需完成去标识化真实记录和专家标注实验。合成Benchmark不能解释为真实运动分析准确率。
 
 **2026-08-19 Agent 模块当前待办（本节为后续实施入口）**：
 
@@ -286,11 +287,13 @@ Literature Evidence
 
 ### Report Agent / 报告生成
 
-- [ ] 评估序贯路径的延迟成本并建立对照：旧 DAG 一次规划 vs 序贯每轮一次
-  决策。当前固定 Benchmark 为 P50≈17.9s、P95≈47.9s，存在约239.5s极端值；
-  序贯路径预计因增加模型往返而更慢，但换取逐步证据约束。验收同时记录决策
-  轮数、Tool 次数、综合耗时和失败前已完成工作量。
-- [ ] 增加生产级服务端总截止时间：以当前 P95 和极端值实测为依据，默认
+- [x] 完成旧 DAG 与序贯路径的同条件延迟对照。2026-08-25 使用12类固定合成
+  案例×3次、B配置、逐案例成对交错且交替先后顺序运行：旧DAG有效率
+  `31/36 (86.11%)`、Expected Predicate Recall `0.852`、P50 `19.526 s`、
+  P95 `29.083 s`；序贯路径有效率`36/36`、Recall `0.889`、P50 `15.642 s`、
+  P95 `25.750 s`。两组均无90秒超限。结果保存于
+  `benchmark_results/report_agent_production_paired_compare_12x3_20260825.json`。
+- [x] 增加生产级服务端总截止时间：以当前 P95 和极端值实测为依据，默认
   `REPORT_ANALYSIS_DEADLINE_SECONDS = 90`。调查阶段最多使用约70秒，至少保留
   20秒给综合、一次 Claim Repair 和原子持久化；达到 deadline 后停止新的 Agent
   决策，保存最新 Checkpoint/partial metrics，并返回结构化 `analysis_timeout`。
@@ -305,13 +308,26 @@ Literature Evidence
   https://docs.langchain.com/oss/python/langgraph/fault-tolerance 、
   https://docs.aws.amazon.com/apigateway/latest/developerguide/http-api-quotas.html 。
   后续若真实 Benchmark 显示 P95 漂移，必须重新冻结该值并更新验收。
-- [ ] 完成 Repository 权限 Spy 验收：使用记录所有读取调用的 SubjectStore/
+- [x] 完成 Repository 权限 Spy 验收：使用记录所有读取调用的 SubjectStore/
   Repository spy，验证当前记录分析只读取目标 session 的 snapshot、当前 scope
   和必要能力信息；不得读取其他 session 明细、subject history、team candidates
   或执行任意 SQL。组合注入模型异常、Tool 异常、Checkpoint 恢复和 RAG 降级，
   仍须保持未授权读取数为0，并保存调用审计。已完成最小 Service Spy：当前
-  session 分析不再调用会统计历史/团队候选的 `get_scope_availability()`；其余
-  四类组合故障与底层 SubjectStore 调用清单仍待验收。
+  session 分析不再调用会统计历史/团队候选的 `get_scope_availability()`；成功、
+  模型异常、Tool瞬时/硬故障、三类Checkpoint恢复、RAG降级和两类deadline场景
+  共10项验收未授权读取均为0。冻结审计位于
+  `benchmark_results/report_agent_access_audit_20260824.json`。
+
+**2026-08-25 工程生产化完成结果**：服务端默认90秒、调查阶段保留20秒综合
+预算，模型调用同时使用`ModelSettings.timeout`和`asyncio.timeout()`；HTTP超时
+返回504与结构化`analysis_timeout`，客户端默认105秒并区分
+`analysis_client_timeout`。超时Run保存Checkpoint和partial metrics、按`failed`
+原子结束且不可恢复，重试创建新Run；UI不显示部分Draft。独立序贯发布门为
+`34/36 (94.44%)`、Recall `0.815`、P50 `16.788 s`、P95 `22.848 s`、P99
+`26.073 s`，0个90秒超限。该轮结果保存于
+`benchmark_results/report_agent_production_sequential_12x3_20260824.json`；早期按组
+顺序运行且受连接状态污染的对照工件已显式标记`comparison_valid=false`，不用于
+结论。
 - [ ] 完成去标识化真实运动数据验证。每条记录至少需要：不可逆受试者 ID、
   测试类型、完整 config snapshot、原始/处理后 Report snapshot、package digest、
   质量与缺失标记、测试时间段和设备/版本信息。Jump、Treadmill Gait、Treadmill

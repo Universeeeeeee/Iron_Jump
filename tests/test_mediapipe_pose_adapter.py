@@ -44,8 +44,10 @@ class _FakeMediaPipe:
 
         self.Image = Image
         self.ImageFormat = SimpleNamespace(SRGB="srgb")
+        base_options = lambda **kwargs: SimpleNamespace(**kwargs)
+        base_options.Delegate = SimpleNamespace(CPU="cpu", GPU="gpu")
         self.tasks = SimpleNamespace(
-            BaseOptions=lambda **kwargs: SimpleNamespace(**kwargs),
+            BaseOptions=base_options,
             vision=SimpleNamespace(
                 PoseLandmarker=PoseLandmarker,
                 PoseLandmarkerOptions=lambda **kwargs: SimpleNamespace(**kwargs),
@@ -78,6 +80,7 @@ class MediaPipePoseAdapterTests(unittest.TestCase):
             self.assertEqual(fake.options.running_mode, "video")
             self.assertEqual(fake.options.num_poses, 1)
             self.assertFalse(fake.options.output_segmentation_masks)
+            self.assertEqual(fake.options.base_options.delegate, "cpu")
 
     def test_infer_converts_bgr_to_rgb_and_normalizes_required_landmarks(self):
         with tempfile.TemporaryDirectory() as root:

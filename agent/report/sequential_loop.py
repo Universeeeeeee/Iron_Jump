@@ -26,6 +26,12 @@ from reporting.tools import ANALYSIS_TOOL_REGISTRY_VERSION
 from reporting.validators import ActionValidationError, ActionValidator
 
 from .execution import SequentialActionBoundary
+from .agent import ReportAgentCallTimeout
+from .deadline import (
+    AnalysisDeadlineExceeded,
+    ReportAnalysisDeadline,
+    call_with_optional_timeout,
+)
 from .skill_loader import (
     ReportAnalysisSkillContext,
     ReportAnalysisSkillLoader,
@@ -48,11 +54,17 @@ class SequentialAnalysisLoopError(RuntimeError):
         *,
         state: SequentialAnalysisState,
         outcome: ToolExecutionFailed | None = None,
+        timeout_stage: str | None = None,
+        investigation_elapsed_ms: int = 0,
+        synthesis_elapsed_ms: int = 0,
     ):
         super().__init__(message)
         self.code = code
         self.state = state
         self.outcome = outcome
+        self.timeout_stage = timeout_stage
+        self.investigation_elapsed_ms = investigation_elapsed_ms
+        self.synthesis_elapsed_ms = synthesis_elapsed_ms
 
 
 class SequentialAnalysisLoop:
@@ -86,6 +98,7 @@ class SequentialAnalysisLoop:
         access_scope: DataAccessScope,
         *,
         resume_from: SequentialLoopCheckpoint | None = None,
+        deadline: ReportAnalysisDeadline | None = None,
     ) -> SequentialLoopResult:
         if resume_from is None:
             context = self._load_initial_skill(observation)
@@ -122,12 +135,62 @@ class SequentialAnalysisLoop:
             state.stop_reason_code is None
             and state.decision_count < MAX_AGENT_DECISIONS
         ):
-            decision = self._agent.decide(
-                observation,
-                state,
-                tuple(evidence_bundles),
-                context,
-            )
+            if deadline is not None and deadline.investigation_expired():
+                state = self._record_deadline_stop(
+                    state, "investigation_deadline_reached"
+                )
+                self._save_checkpoint(
+                    "ready_for_synthesis",
+                    package,
+                    access_scope,
+                    context,
+                    state,
+                    evidence_bundles,
+                )
+                break
+            try:
+                if deadline is None:
+                    decision = self._agent.decide(
+                        observation,
+                        state,
+                        tuple(evidence_bundles),
+                        context,
+                    )
+                else:
+                    decision = call_with_optional_timeout(
+                        self._agent.decide,
+                        observation,
+                        state,
+                        tuple(evidence_bundles),
+                        context,
+                        timeout_s=deadline.model_timeout_seconds("decision"),
+                    )
+            except (ReportAgentCallTimeout, AnalysisDeadlineExceeded):
+                state = self._record_deadline_stop(
+                    state, "decision_request_timeout"
+                )
+                self._save_checkpoint(
+                    "ready_for_synthesis",
+                    package,
+                    access_scope,
+                    context,
+                    state,
+                    evidence_bundles,
+                )
+                break
+            if deadline is not None and deadline.investigation_expired():
+                state = self._record_deadline_stop(
+                    state, "investigation_deadline_reached"
+                )
+                self._save_checkpoint(
+                    "ready_for_synthesis",
+                    package,
+                    access_scope,
+                    context,
+                    state,
+                    evidence_bundles,
+                )
+                break
             if isinstance(decision, LoadSkillResource):
                 context, state, loaded = self._load_skill_reference(
                     decision,
@@ -240,6 +303,22 @@ class SequentialAnalysisLoop:
                 evidence_bundles,
             )
 
+        investigation_elapsed_ms = (
+            round(deadline.elapsed_seconds() * 1000)
+            if deadline is not None
+            else 0
+        )
+        if deadline is not None:
+            try:
+                deadline.require_total_time("synthesis")
+            except AnalysisDeadlineExceeded as exc:
+                raise SequentialAnalysisLoopError(
+                    "analysis_timeout",
+                    str(exc),
+                    state=state,
+                    timeout_stage=exc.stage,
+                    investigation_elapsed_ms=investigation_elapsed_ms,
+                ) from exc
         context, state = self._prepare_synthesis_context(
             package,
             access_scope,
@@ -250,25 +329,81 @@ class SequentialAnalysisLoop:
         synthesize_sequential = getattr(
             self._agent, "synthesize_sequential", None
         )
-        if callable(synthesize_sequential):
-            draft = synthesize_sequential(
-                observation,
-                state,
-                tuple(evidence_bundles),
-                context,
-            )
-        else:
-            draft = self._agent.synthesize(
-                observation,
-                state,
-                tuple(evidence_bundles),
-            )
+        synthesis_started = (
+            deadline.elapsed_seconds() if deadline is not None else 0.0
+        )
+        try:
+            if callable(synthesize_sequential):
+                if deadline is None:
+                    draft = synthesize_sequential(
+                        observation,
+                        state,
+                        tuple(evidence_bundles),
+                        context,
+                    )
+                else:
+                    draft = call_with_optional_timeout(
+                        synthesize_sequential,
+                        observation,
+                        state,
+                        tuple(evidence_bundles),
+                        context,
+                        timeout_s=deadline.model_timeout_seconds("synthesis"),
+                    )
+            elif deadline is None:
+                draft = self._agent.synthesize(
+                    observation,
+                    state,
+                    tuple(evidence_bundles),
+                )
+            else:
+                draft = call_with_optional_timeout(
+                    self._agent.synthesize,
+                    observation,
+                    state,
+                    tuple(evidence_bundles),
+                    timeout_s=deadline.model_timeout_seconds("synthesis"),
+                )
+            if deadline is not None:
+                deadline.require_total_time("synthesis")
+        except (ReportAgentCallTimeout, AnalysisDeadlineExceeded) as exc:
+            stage = getattr(exc, "stage", "synthesis")
+            raise SequentialAnalysisLoopError(
+                "analysis_timeout",
+                str(exc),
+                state=state,
+                timeout_stage=stage,
+                investigation_elapsed_ms=investigation_elapsed_ms,
+                synthesis_elapsed_ms=(
+                    round(
+                        (deadline.elapsed_seconds() - synthesis_started)
+                        * 1000
+                    )
+                    if deadline is not None
+                    else 0
+                ),
+            ) from exc
+        synthesis_elapsed_ms = (
+            round((deadline.elapsed_seconds() - synthesis_started) * 1000)
+            if deadline is not None
+            else 0
+        )
         return SequentialLoopResult(
             state=state,
             evidence=tuple(evidence_bundles),
             draft=draft,
             skill_version=context.skill_version,
             skill_content_digest=context.content_digest,
+            investigation_elapsed_ms=investigation_elapsed_ms,
+            synthesis_elapsed_ms=synthesis_elapsed_ms,
+        )
+
+    def _record_deadline_stop(self, state, reason_code):
+        return self._reduce(
+            state,
+            lambda: self._state_reducer.record_deadline_stop(
+                state, reason_code
+            ),
         )
 
     def _prepare_synthesis_context(

@@ -8,6 +8,8 @@ llm_client.py — Agent Worker HTTP 客户端
 from __future__ import annotations
 
 import json
+import math
+import os
 import tempfile
 import time
 from pathlib import Path
@@ -15,6 +17,23 @@ from pathlib import Path
 import requests
 
 PORT_FILE = Path(tempfile.gettempdir()) / "ironjump_llm_port.txt"
+DEFAULT_REPORT_ANALYSIS_DEADLINE_SECONDS = 90.0
+REPORT_ANALYSIS_CLIENT_GRACE_SECONDS = 15.0
+
+
+def _default_report_analysis_client_timeout() -> float:
+    raw = os.getenv("REPORT_ANALYSIS_DEADLINE_SECONDS")
+    try:
+        deadline = (
+            DEFAULT_REPORT_ANALYSIS_DEADLINE_SECONDS
+            if raw is None or not raw.strip()
+            else float(raw)
+        )
+    except ValueError:
+        deadline = DEFAULT_REPORT_ANALYSIS_DEADLINE_SECONDS
+    if not math.isfinite(deadline) or deadline <= 20:
+        deadline = DEFAULT_REPORT_ANALYSIS_DEADLINE_SECONDS
+    return deadline + REPORT_ANALYSIS_CLIENT_GRACE_SECONDS
 
 
 class AgentWorkerClient:
@@ -179,7 +198,7 @@ class AgentWorkerClient:
         self,
         session_id: int,
         scope: dict,
-        timeout: float = 120,
+        timeout: float | None = None,
     ) -> dict:
         url = self._base_url()
         if url is None:
@@ -193,9 +212,15 @@ class AgentWorkerClient:
                     "session_id": session_id,
                     "data_access_scope": scope,
                 },
-                timeout=timeout,
+                timeout=(
+                    _default_report_analysis_client_timeout()
+                    if timeout is None
+                    else timeout
+                ),
             )
             return response.json()
+        except requests.Timeout:
+            return {"error_code": "analysis_client_timeout"}
         except requests.RequestException:
             return {"error_code": "worker_unreachable"}
 

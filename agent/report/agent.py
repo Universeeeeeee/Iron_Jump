@@ -38,6 +38,12 @@ from .prompts import (
 from .skill_loader import ReportAnalysisSkillContext
 
 
+class ReportAgentCallTimeout(TimeoutError):
+    def __init__(self, stage: str):
+        super().__init__(f"Report Agent model call timed out during {stage}")
+        self.stage = stage
+
+
 class ReportAgent:
     model_name = "deepseek-v4-flash"
     prompt_version = PROMPT_VERSION
@@ -74,6 +80,8 @@ class ReportAgent:
         state: SequentialAnalysisState,
         evidence: tuple[EvidenceBundle, ...],
         skill_context: ReportAnalysisSkillContext,
+        *,
+        timeout_s: float | None = None,
     ) -> AnalysisDecision:
         prompt = (
             f"{DECISION_STAGE_TEMPLATE}\n"
@@ -86,25 +94,36 @@ class ReportAgent:
             AnalysisDecision,
             prompt,
             instructions=self._sequential_system_prompt,
+            timeout_s=timeout_s,
+            stage="decision",
         )
 
     def propose_plan(
         self,
         observation: AgentObservation,
         state: AnalysisState,
+        *,
+        timeout_s: float | None = None,
     ) -> InvestigationDecision:
         prompt = (
             f"{PLAN_STAGE_TEMPLATE}\n"
             f"Observation:\n{serialize_observation(observation)}\n"
             f"State:\n{self._json(state)}"
         )
-        return self._run(InvestigationDecision, prompt)
+        return self._run(
+            InvestigationDecision,
+            prompt,
+            timeout_s=timeout_s,
+            stage="legacy_plan",
+        )
 
     def review_evidence(
         self,
         observation: AgentObservation,
         state: AnalysisState,
         evidence: tuple[EvidenceBundle, ...],
+        *,
+        timeout_s: float | None = None,
     ) -> EvidenceReviewDecision:
         prompt = (
             f"{REVIEW_STAGE_TEMPLATE}\n"
@@ -112,13 +131,20 @@ class ReportAgent:
             f"State:\n{self._json(state)}\n"
             f"Evidence:\n{self._json(evidence)}"
         )
-        return self._run(EvidenceReviewDecision, prompt)
+        return self._run(
+            EvidenceReviewDecision,
+            prompt,
+            timeout_s=timeout_s,
+            stage="legacy_review",
+        )
 
     def synthesize(
         self,
         observation: AgentObservation,
         state: AnalysisState,
         evidence: tuple[EvidenceBundle, ...],
+        *,
+        timeout_s: float | None = None,
     ) -> DraftAnalysisPackage:
         prompt = (
             f"{SYNTHESIS_STAGE_TEMPLATE}\n"
@@ -126,7 +152,12 @@ class ReportAgent:
             f"State:\n{self._json(state)}\n"
             f"Evidence:\n{self._json(evidence)}"
         )
-        return self._run(DraftAnalysisPackage, prompt)
+        return self._run(
+            DraftAnalysisPackage,
+            prompt,
+            timeout_s=timeout_s,
+            stage="synthesis",
+        )
 
     def synthesize_sequential(
         self,
@@ -134,6 +165,8 @@ class ReportAgent:
         state: SequentialAnalysisState,
         evidence: tuple[EvidenceBundle, ...],
         skill_context: ReportAnalysisSkillContext,
+        *,
+        timeout_s: float | None = None,
     ) -> DraftAnalysisPackage:
         prompt = (
             f"{SEQUENTIAL_SYNTHESIS_STAGE_TEMPLATE}\n"
@@ -142,7 +175,12 @@ class ReportAgent:
             f"State:\n{self._json(state)}\n"
             f"Evidence:\n{self._json(evidence)}"
         )
-        return self._run(DraftAnalysisPackage, prompt)
+        return self._run(
+            DraftAnalysisPackage,
+            prompt,
+            timeout_s=timeout_s,
+            stage="synthesis",
+        )
 
     def repair_synthesis(
         self,
@@ -152,6 +190,8 @@ class ReportAgent:
         draft: DraftAnalysisPackage,
         error_code: str,
         error_message: str,
+        *,
+        timeout_s: float | None = None,
     ) -> DraftAnalysisPackage:
         prompt = (
             f"{REPAIR_STAGE_TEMPLATE}\n"
@@ -161,25 +201,48 @@ class ReportAgent:
             f"Evidence:\n{self._json(evidence)}\n"
             f"Rejected Draft:\n{self._json(draft)}"
         )
-        return self._run(DraftAnalysisPackage, prompt)
+        return self._run(
+            DraftAnalysisPackage,
+            prompt,
+            timeout_s=timeout_s,
+            stage="claim_repair",
+        )
 
-    def _run(self, output_type, prompt, *, instructions=None):
+    def _run(
+        self,
+        output_type,
+        prompt,
+        *,
+        instructions=None,
+        timeout_s: float | None = None,
+        stage: str,
+    ):
         async def flow():
             client = httpx.AsyncClient()
             try:
+                model_settings = default_model_settings()
+                if timeout_s is not None:
+                    model_settings = {**model_settings, "timeout": timeout_s}
                 runtime_agent = Agent(
                     model=build_chat_model(client),
                     output_type=output_type,
                     instructions=instructions or self._system_prompt,
                     retries=1,
-                    model_settings=default_model_settings(),
+                    model_settings=model_settings,
                 )
-                result = await runtime_agent.run(prompt)
+                if timeout_s is None:
+                    result = await runtime_agent.run(prompt)
+                else:
+                    async with asyncio.timeout(timeout_s):
+                        result = await runtime_agent.run(prompt)
                 return result.output
             finally:
                 await client.aclose()
 
-        return asyncio.run(flow())
+        try:
+            return asyncio.run(flow())
+        except TimeoutError as exc:
+            raise ReportAgentCallTimeout(stage) from exc
 
     def _json(self, value) -> str:
         if isinstance(value, tuple):

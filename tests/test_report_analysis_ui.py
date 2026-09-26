@@ -145,6 +145,29 @@ def test_failed_analysis_never_displays_partial_draft(qtbot):
     assert "未能生成通过验证的结果" in view._analysis_status.text()
 
 
+@pytest.mark.parametrize(
+    "error_code,expected",
+    (
+        ("analysis_timeout", "超过服务端时间限制"),
+        ("analysis_client_timeout", "未在预期时间内响应"),
+    ),
+)
+def test_timeout_errors_have_specific_messages(qtbot, error_code, expected):
+    client = _FakeAnalysisClient(analyze={"error_code": error_code})
+    view = ReportView(llm_client=client)
+    qtbot.addWidget(view)
+    view.show()
+    view.set_analysis_availability(True)
+    view.load_report(_report(), 12)
+    _wait_idle(qtbot, view)
+
+    view._analysis_button.click()
+    _wait_idle(qtbot, view)
+
+    assert expected in view._analysis_status.text()
+    assert view._analysis_result.isHidden()
+
+
 def test_switching_report_clears_previous_analysis(qtbot):
     client = _FakeAnalysisClient(
         latest={

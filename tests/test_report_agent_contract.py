@@ -110,7 +110,7 @@ def test_decide_includes_progressive_skill_and_uses_sequential_instructions(
         reason="没有值得继续验证的假设",
     )
 
-    def fake_run(output_type, prompt, *, instructions=None):
+    def fake_run(output_type, prompt, *, instructions=None, **kwargs):
         captured["prompt"] = prompt
         captured["instructions"] = instructions
         return expected
@@ -146,7 +146,7 @@ def test_sequential_synthesis_receives_loaded_evidence_guidelines(monkeypatch):
     )
     captured = {}
 
-    def fake_run(output_type, prompt, *, instructions=None):
+    def fake_run(output_type, prompt, *, instructions=None, **kwargs):
         captured["prompt"] = prompt
         return object()
 

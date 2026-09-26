@@ -840,6 +840,8 @@ class LoopResult(FrozenModel):
     state: AnalysisState
     evidence: tuple[EvidenceBundle, ...]
     draft: DraftAnalysisPackage
+    investigation_elapsed_ms: int = Field(default=0, ge=0)
+    synthesis_elapsed_ms: int = Field(default=0, ge=0)
 
 
 class SequentialLoopResult(FrozenModel):
@@ -848,6 +850,8 @@ class SequentialLoopResult(FrozenModel):
     draft: DraftAnalysisPackage
     skill_version: str
     skill_content_digest: str = Field(min_length=64, max_length=64)
+    investigation_elapsed_ms: int = Field(default=0, ge=0)
+    synthesis_elapsed_ms: int = Field(default=0, ge=0)
 
 
 class SequentialLoopCheckpoint(FrozenModel):
@@ -942,6 +946,15 @@ class AnalysisRunMetrics(FrozenModel):
     observation_size: int = Field(ge=0)
     estimated_tokens: int = Field(ge=0)
     elapsed_ms: int = Field(ge=0)
+    decision_count: int = Field(default=0, ge=0)
+    tool_call_count: int = Field(default=0, ge=0)
+    skill_reference_load_count: int = Field(default=0, ge=0)
+    investigation_elapsed_ms: int = Field(default=0, ge=0)
+    synthesis_elapsed_ms: int = Field(default=0, ge=0)
+    claim_repair_count: int = Field(default=0, ge=0, le=1)
+    stop_reason_code: str | None = None
+    timeout_stage: str | None = None
+    resumed_from_checkpoint: bool = False
 
     @model_validator(mode="before")
     @classmethod

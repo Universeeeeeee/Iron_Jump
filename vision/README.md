@@ -4,6 +4,34 @@ This package is independent from the Iron_Jump engine and reports a rejectable
 visual reference for timestamped touch events. It does not modify optical-grid
 timing, treadmill rows, reports, or UI state.
 
+## Mac MediaPipe L/R identity validator
+
+The Mac tool is intentionally smaller than the Windows event validator. It
+only checks whether MediaPipe keeps the anatomical left and right lower limbs
+stable over time. It does not connect to the optical grid, classify contact,
+calculate gait parameters, write CSV, or record video.
+
+Install the Mac-validated dependency set. Do not use MediaPipe 1.0.1 for this
+tool: it aborts inside the native Metal graph before Python can catch an error.
+
+```bash
+python -m pip install -r requirements-mac-mediapipe.txt
+```
+
+```bash
+python tools/mac_mediapipe_validator.py \
+  --camera-index 0 \
+  --model models/pose_landmarker_full.task
+```
+
+Keep the pelvis, both knees, and both ankles visible. The window displays all
+lower-body landmark names and qualities. `STABLE` means the raw MediaPipe L/R
+assignment agrees with trusted temporal tracks; `AMBIGUOUS` exposes overlap,
+an implausible jump, or a likely identity swap; `UNAVAILABLE` means the core
+landmarks are missing/low quality or the tracker is warming up. The validator
+does not silently swap MediaPipe labels. Press `Q` to exit. If macOS blocks the
+camera, grant camera access to Terminal or the Python host in System Settings.
+
 ## Inputs and output
 
 - `submit_frame(frame, captured_at_s)` accepts an unmirrored BGR frame and a

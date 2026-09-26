@@ -13,6 +13,12 @@ from reporting.models import (
 from reporting.validators import PlanValidationError, PlanValidator
 
 from .tools import AnalysisToolGateway
+from .agent import ReportAgentCallTimeout
+from .deadline import (
+    AnalysisDeadlineExceeded,
+    ReportAnalysisDeadline,
+    call_with_optional_timeout,
+)
 
 
 MAX_INVESTIGATION_CYCLES = 2
@@ -29,11 +35,17 @@ class AnalysisLoopError(RuntimeError):
         *,
         state: AnalysisState | None = None,
         evidence: tuple[EvidenceBundle, ...] = (),
+        timeout_stage: str | None = None,
+        investigation_elapsed_ms: int = 0,
+        synthesis_elapsed_ms: int = 0,
     ):
         super().__init__(message)
         self.code = code
         self.state = state
         self.evidence = evidence
+        self.timeout_stage = timeout_stage
+        self.investigation_elapsed_ms = investigation_elapsed_ms
+        self.synthesis_elapsed_ms = synthesis_elapsed_ms
 
 
 class AnalysisLoopRuntimeError(RuntimeError):
@@ -64,13 +76,31 @@ class AnalysisLoop:
         observation: AgentObservation,
         package: ReportDataPackage,
         access_scope: DataAccessScope,
+        *,
+        deadline: ReportAnalysisDeadline | None = None,
     ) -> LoopResult:
         state = AnalysisState()
         evidence_bundles: list[EvidenceBundle] = []
         seen_request_hashes: set[str] = set()
         seen_question_ids: set[str] = set()
         seen_node_ids: set[str] = set()
-        initial = self._agent.propose_plan(observation, state)
+        try:
+            if deadline is None:
+                initial = self._agent.propose_plan(observation, state)
+            else:
+                initial = call_with_optional_timeout(
+                    self._agent.propose_plan,
+                    observation,
+                    state,
+                    timeout_s=deadline.model_timeout_seconds("decision"),
+                )
+        except (ReportAgentCallTimeout, AnalysisDeadlineExceeded) as exc:
+            raise AnalysisLoopError(
+                "analysis_timeout",
+                str(exc),
+                state=state,
+                timeout_stage=getattr(exc, "stage", "legacy_plan"),
+            ) from exc
         validated = self._validate(initial.plan, package, access_scope)
         seen_request_hashes.update(validated.request_hashes)
         seen_question_ids.update(
@@ -91,16 +121,43 @@ class AnalysisLoop:
             replan_count=0,
         )
 
-        review = self._with_partial_state(
-            lambda: self._agent.review_evidence(
-                observation,
-                state,
-                tuple(evidence_bundles),
-            ),
-            state,
-            evidence_bundles,
-        )
-        if (
+        try:
+            if deadline is None:
+                review = self._with_partial_state(
+                    lambda: self._agent.review_evidence(
+                        observation,
+                        state,
+                        tuple(evidence_bundles),
+                    ),
+                    state,
+                    evidence_bundles,
+                )
+            else:
+                review = call_with_optional_timeout(
+                    self._agent.review_evidence,
+                    observation,
+                    state,
+                    tuple(evidence_bundles),
+                    timeout_s=deadline.model_timeout_seconds("decision"),
+                )
+        except (ReportAgentCallTimeout, AnalysisDeadlineExceeded):
+            review = None
+            state = state.model_copy(
+                update={
+                    "limitations": tuple(
+                        dict.fromkeys(
+                            (*state.limitations, "decision_request_timeout")
+                        )
+                    )
+                }
+            )
+        except Exception as exc:
+            raise AnalysisLoopRuntimeError(
+                str(exc),
+                state=state,
+                evidence=tuple(evidence_bundles),
+            ) from exc
+        if review is not None and (
             not review.evidence_sufficient
             and review.replan is not None
             and self._max_replans == 1
@@ -145,7 +202,7 @@ class AnalysisLoop:
                 replan_count=1,
                 unresolved_questions=review.unresolved_questions,
             )
-        elif not review.evidence_sufficient:
+        elif review is not None and not review.evidence_sufficient:
             state = state.model_copy(
                 update={
                     "unresolved_questions": review.unresolved_questions,
@@ -162,19 +219,69 @@ class AnalysisLoop:
                 }
             )
 
-        draft = self._with_partial_state(
-            lambda: self._agent.synthesize(
-                observation,
-                state,
-                tuple(evidence_bundles),
-            ),
-            state,
-            evidence_bundles,
+        investigation_elapsed_ms = (
+            round(deadline.elapsed_seconds() * 1000)
+            if deadline is not None
+            else 0
         )
+        synthesis_started = (
+            deadline.elapsed_seconds() if deadline is not None else 0.0
+        )
+        try:
+            if deadline is None:
+                draft = self._with_partial_state(
+                    lambda: self._agent.synthesize(
+                        observation,
+                        state,
+                        tuple(evidence_bundles),
+                    ),
+                    state,
+                    evidence_bundles,
+                )
+            else:
+                draft = call_with_optional_timeout(
+                    self._agent.synthesize,
+                    observation,
+                    state,
+                    tuple(evidence_bundles),
+                    timeout_s=deadline.model_timeout_seconds("synthesis"),
+                )
+                deadline.require_total_time("synthesis")
+        except (ReportAgentCallTimeout, AnalysisDeadlineExceeded) as exc:
+            raise AnalysisLoopError(
+                "analysis_timeout",
+                str(exc),
+                state=state,
+                evidence=tuple(evidence_bundles),
+                timeout_stage=getattr(exc, "stage", "synthesis"),
+                investigation_elapsed_ms=investigation_elapsed_ms,
+                synthesis_elapsed_ms=(
+                    round(
+                        (deadline.elapsed_seconds() - synthesis_started)
+                        * 1000
+                    )
+                    if deadline is not None
+                    else 0
+                ),
+            ) from exc
+        except Exception as exc:
+            raise AnalysisLoopRuntimeError(
+                str(exc),
+                state=state,
+                evidence=tuple(evidence_bundles),
+            ) from exc
         return LoopResult(
             state=state,
             evidence=tuple(evidence_bundles),
             draft=draft,
+            investigation_elapsed_ms=investigation_elapsed_ms,
+            synthesis_elapsed_ms=(
+                round(
+                    (deadline.elapsed_seconds() - synthesis_started) * 1000
+                )
+                if deadline is not None
+                else 0
+            ),
         )
 
     def _with_partial_state(self, operation, state, evidence_bundles):

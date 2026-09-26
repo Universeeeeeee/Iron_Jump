@@ -159,6 +159,16 @@ def _route_name(path: str) -> str | None:
     }.get(path)
 
 
+def _report_error_status(error_code: str) -> int:
+    if error_code == "analysis_timeout":
+        return 504
+    if error_code == "report_configuration_invalid":
+        return 503
+    if error_code == "analysis_failed":
+        return 500
+    return 422
+
+
 class _Handler(BaseHTTPRequestHandler):
 
     def _send_json(self, data: dict, status: int = 200):
@@ -296,9 +306,17 @@ class _Handler(BaseHTTPRequestHandler):
             )
         except Exception as exc:
             error_code = getattr(exc, "code", "analysis_failed")
+            status = _report_error_status(error_code)
+            payload = {"error_code": error_code, "message": str(exc)}
+            analysis_run_id = getattr(exc, "analysis_run_id", None)
+            timeout_stage = getattr(exc, "timeout_stage", None)
+            if analysis_run_id is not None:
+                payload["analysis_run_id"] = analysis_run_id
+            if timeout_stage is not None:
+                payload["timeout_stage"] = timeout_stage
             self._send_json(
-                {"error_code": error_code, "message": str(exc)},
-                422 if error_code != "analysis_failed" else 500,
+                payload,
+                status,
             )
 
     def _handle_report_latest(self, data: dict):
