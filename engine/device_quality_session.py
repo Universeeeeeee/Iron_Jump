@@ -45,10 +45,11 @@ class DeviceQualitySession(QObject):
         return result
 
     def _publish(self, force=False):
-        result = self._status()
-        key = (result["ready"], result["device_key"], result["requires_acknowledgement"])
         now = time.perf_counter_ns()
+        ready = self.preflight.ready(now)
+        key = (ready, self.preflight.context.key if ready else None)
         if force or key != self._last_status or now - self._last_publish >= 100_000_000:
+            result = self._status()
             self._last_publish, self._last_status = now, key
             self.readiness.emit(result)
 

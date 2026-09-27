@@ -19,7 +19,7 @@ def packet(index, body, count=1, part=0):
     return UploadDataSubPack(len(body), index, count, part, body)
 
 
-@pytest.mark.parametrize("count", [1, 3, 8, 12, 255])
+@pytest.mark.parametrize("count", [*range(1, 9), 12, 255])
 def test_variable_length_frames_and_little_endian_counter(count):
     layout = DeviceLayout.linear(count)
     buf = bytearray(wire_packet(257, b"\xff" * layout.payload_bytes))
@@ -33,6 +33,18 @@ def test_variable_length_frames_and_little_endian_counter(count):
 def test_explicit_big_endian_firmware():
     buf = bytearray(wire_packet(513, b"\xff" * 12, byteorder="big"))
     assert protocol_parser(buf, frame_index_byteorder="big")[3].frameIdx == 513
+
+
+def test_crc_and_contact_decode_match_reference_for_every_byte():
+    from led_con_package_8m_0918.hardware.protocol import crc8_poly_07 as reference_crc
+    from led_con_package_8m_0918.hardware.usb_worker_8m import _bytes_to_bits_8m
+    assert crc8_poly_07(b'123456789') == 0xf4
+    for value in range(256):
+        payload = bytes([value]) * 96
+        assert crc8_poly_07(payload) == reference_crc(payload)
+        assert DeviceLayout.linear(8).contact_bits(payload) == bytes(1 - b for b in _bytes_to_bits_8m(payload))
+    mixed = bytes(range(256)) * 12
+    assert crc8_poly_07(mixed) == reference_crc(mixed)
 
 
 def test_every_usb_split_and_corrupt_packet_recovery():
@@ -148,7 +160,7 @@ def test_single_segment_legacy_channel_is_preserved(qapp):
     assert legacy[0][1] > 0  # legacy perf_counter time base is unchanged
 
 
-@pytest.mark.parametrize("count", [1, 3, 8, 12])
+@pytest.mark.parametrize("count", [*range(1, 9), 12])
 def test_worker_detects_full_frame_segment_count(qapp, monkeypatch, count):
     monkeypatch.delenv("DAYU_SEGMENT_COUNT", raising=False)
     monkeypatch.delenv("DAYU_SEGMENT_ORDER", raising=False)
@@ -220,6 +232,10 @@ def test_auto_detection_rejects_invalid_length_without_locking():
 
 
 def test_capture_command_can_be_enabled_for_default_worker(qapp, monkeypatch):
+    monkeypatch.delenv("DAYU_CAPTURE_COMMAND", raising=False)
+    worker = UsbWorker()
+    assert (worker.timeout_ms, worker.chunk_size) == (10, 2048)
+    assert worker.capture_command_required is True
     monkeypatch.setenv("DAYU_CAPTURE_COMMAND", "1")
     assert UsbWorker().capture_command_required is True
     assert UsbWorker(capture_command_required=False).capture_command_required is False
@@ -283,7 +299,8 @@ def test_capture_commands_and_restart_reset_stream(qapp, monkeypatch):
             super().__init__(path)
             self.writes = []
 
-        def write(self, data):
+        def write(self, data, timeout_ms=1000):
+            self.dll.set_timeout(timeout_ms)
             self.writes.append(data)
             return len(data)
 
@@ -295,6 +312,7 @@ def test_capture_commands_and_restart_reset_stream(qapp, monkeypatch):
     worker.start_capture()
     assert worker._assembler.stream_id != before
     assert device.read_timeout_ms == 1
+    assert device.dll.timeout == 1  # The enable command must not reset reads to 1000 ms.
     worker.stop()
     for enable, wire in zip((1, 0), device.writes, strict=True):
         assert wire[:4] == b"ZZZZ" and wire[-4:] == b"\xa5" * 4
@@ -307,7 +325,7 @@ def test_capture_command_failure_stops_reader(qapp, monkeypatch):
     from tests.test_usb_worker_lifecycle import _FakeDevice
 
     class Device(_FakeDevice):
-        def write(self, data):
+        def write(self, data, timeout_ms=1000):
             return 0
 
     monkeypatch.setattr(worker_module, "CyUsbInterfaceDevice", Device)

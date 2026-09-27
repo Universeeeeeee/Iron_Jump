@@ -82,12 +82,15 @@ class WalkingPreflight:
         self.healthy_samples = len(self._window)
         # Re-evaluate every sample so a new obstruction immediately invalidates a UI acknowledgement.
         observed = tuple(sorted(i for i, count in self._counts.items() if count > 0))
-        self.bad_indices = tuple(i for i in observed if self._counts[i] >= self.policy.samples * .95
+        persistent_threshold = self.policy.samples * .95
+        self.bad_indices = tuple(i for i in observed if self._counts[i] >= persistent_threshold
                                  or self._transitions[i] >= 4)
-        self.transient_indices = tuple(i for i in observed if i not in self.bad_indices)
-        self.bad_types = tuple("持续遮挡" if self._counts[i] >= self.policy.samples * .95 else "闪烁"
+        bad_set = set(self.bad_indices)
+        self.transient_indices = tuple(i for i in observed if i not in bad_set)
+        self.bad_types = tuple("持续遮挡" if self._counts[i] >= persistent_threshold else "闪烁"
                                for i in self.bad_indices)
-        self.ratios = [sum(i // 96 == s for i in self.bad_indices) / 96 for s in range(len(frame.layout.segments))]
+        segment_counts = Counter(i // 96 for i in self.bad_indices)
+        self.ratios = [segment_counts[s] / 96 for s in range(len(frame.layout.segments))]
         self.consecutive = longest_run(self.bad_indices, frame.layout)
         self.context = None
         if len(self._window) < self.policy.samples:

@@ -5,7 +5,12 @@ The acquisition clock is the device's 1000 Hz counter, not USB delivery time.
 """
 
 from dataclasses import dataclass, field
+from functools import cached_property
 import math
+
+
+_CONTACT_BYTE_BITS = tuple(bytes(1 - ((value >> bit) & 1) for bit in range(8))
+                           for value in range(256))
 
 
 @dataclass(frozen=True)
@@ -70,7 +75,7 @@ class DeviceLayout:
     def payload_bytes(self):
         return len(self.segments) * 12
 
-    @property
+    @cached_property
     def positions_m(self):
         return tuple(s.origin_m + i * s.pitch_m for s in self.segments for i in range(96))
 
@@ -80,7 +85,7 @@ class DeviceLayout:
         result = bytearray()
         for segment in self.segments:
             offset = segment.wire_index * 12
-            bits = bytes(1 - ((b >> i) & 1) for b in payload[offset:offset + 12] for i in range(8))
+            bits = b"".join(_CONTACT_BYTE_BITS[b] for b in payload[offset:offset + 12])
             result.extend(bits[::-1] if segment.reversed else bits)
         return bytes(result)
 

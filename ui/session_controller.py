@@ -84,8 +84,8 @@ class SessionController(QObject):
         self._dll_path = _find_dll()
         self._vid = self._parse_int_env("DAYU_VID", 0x04B4)
         self._pid = self._parse_int_env("DAYU_PID", 0x1004)
-        self._timeout_ms = self._parse_int_env("DAYU_TIMEOUT", 30)
-        self._chunk_size = self._parse_int_env("DAYU_CHUNK", 512)
+        self._timeout_ms = self._parse_int_env("DAYU_TIMEOUT", 10)
+        self._chunk_size = self._parse_int_env("DAYU_CHUNK", 2048)
 
         # 会话状态
         self._config: Optional[AnyTestConfig] = None

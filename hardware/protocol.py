@@ -72,17 +72,20 @@ class UploadDataSubPack:
 # =====================
 # CRC-8 (poly 0x07, init 0x00, no-reflect, xorout 0x00)
 # =====================
+def _crc8_entry(value: int) -> int:
+    for _ in range(8):
+        value = ((value << 1) ^ (0x07 if value & 0x80 else 0)) & 0xFF
+    return value
+
+
+_CRC8_TABLE = tuple(_crc8_entry(value) for value in range(256))
+
+
 def crc8_poly_07(data: bytes) -> int:
-    crc = 0x00
-    poly = 0x07
-    for b in data:
-        crc ^= b
-        for _ in range(8):
-            if (crc & 0x80) != 0:
-                crc = ((crc << 1) & 0xFF) ^ poly
-            else:
-                crc = (crc << 1) & 0xFF
-    return crc & 0xFF
+    crc = 0
+    for value in data:
+        crc = _CRC8_TABLE[crc ^ value]
+    return crc
 
 
 # =====================

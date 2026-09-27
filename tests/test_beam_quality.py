@@ -330,3 +330,26 @@ def test_observation_retains_frame_gap_reason_until_window_recovers():
     state = gate.status(time.perf_counter_ns())
     assert state['ready']
     assert '缺失2帧' not in state['details']
+
+
+def test_preflight_display_work_is_throttled_but_readiness_changes_are_immediate(qtbot, monkeypatch):
+    from unittest.mock import Mock
+    import engine.device_quality_session as module
+    clock = 10_000_000_000
+    monkeypatch.setattr(module.time, 'perf_counter_ns', lambda: clock)
+    gate = DeviceQualitySession(config_from_dict({'test_type': 'Jump Test'}), BeamQualityPolicy())
+    status = Mock(wraps=gate.preflight.status)
+    monkeypatch.setattr(gate.preflight, 'status', status)
+    events = []
+    gate.readiness.connect(events.append)
+    for i in range(3000):
+        gate.on_frame(sample(i))
+    assert events[-1]['ready']
+    assert status.call_count == 2  # Initial observation and the ready transition.
+    gate.on_frame(sample(3000, (10,)))
+    assert not events[-1]['ready']  # Never defer disabling Start until a UI timer fires.
+    assert status.call_count == 3
+    clock += 100_000_000
+    gate.on_frame(sample(3001, (10,)))
+    assert status.call_count == 4
+    gate.halt()

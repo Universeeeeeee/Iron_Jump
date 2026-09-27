@@ -225,8 +225,8 @@ class SettingsView(QWidget):
     def refresh(self) -> None:
         vid = _parse_int_env("DAYU_VID", 0x04B4)
         pid = _parse_int_env("DAYU_PID", 0x1004)
-        timeout = _parse_int_env("DAYU_TIMEOUT", 30)
-        chunk = _parse_int_env("DAYU_CHUNK", 512)
+        timeout = _parse_int_env("DAYU_TIMEOUT", 10)
+        chunk = _parse_int_env("DAYU_CHUNK", 2048)
         db_path = (
             self._subject_store.db_path
             if self._subject_store is not None

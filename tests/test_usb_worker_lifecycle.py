@@ -43,6 +43,10 @@ class _FakeDevice:
     def stop_capture(self):
         self.capture_started = False
 
+    def write(self, data, timeout_ms=1000):
+        self.dll.set_timeout(timeout_ms)
+        return len(data)
+
     def close(self):
         self.opened = False
 

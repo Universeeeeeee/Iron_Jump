@@ -80,7 +80,7 @@ class UsbWorker(QObject):
     raw_contact_signal = Signal(list, float)  # 单段兼容接口，保留 perf_counter 时间基准
     led_health_changed = Signal(dict)  # 轻量 LED 通断/闪烁检查结果
 
-    def __init__(self, dll_path=None, vid=0x04B4, pid=0x1004, timeout_ms=30, chunk_size=512,
+    def __init__(self, dll_path=None, vid=0x04B4, pid=0x1004, timeout_ms=10, chunk_size=2048,
                  *, layout: DeviceLayout | None = None, capture_command_required=None):
         super().__init__()
         self.dll_path = dll_path
@@ -99,7 +99,7 @@ class UsbWorker(QObject):
             )
         self.layout = layout
         self.capture_command_required = (
-            os.getenv("DAYU_CAPTURE_COMMAND", "0") == "1"
+            os.getenv("DAYU_CAPTURE_COMMAND", "1") == "1"
             if capture_command_required is None else capture_command_required
         )
         self._assembler = SensorFrameAssembler(layout)
@@ -268,7 +268,7 @@ class UsbWorker(QObject):
             return
         command = bytes((0x00, 0x10, int(enable)))
         wire = b"\x5a" * 4 + command + bytes((crc8_poly_07(command),)) + b"\xa5" * 4
-        if self.dev.write(wire) != len(wire):
+        if self.dev.write(wire, timeout_ms=self.timeout_ms) != len(wire):
             raise RuntimeError("FPGA capture command was not fully written")
 
     # --- 生命周期 ---
