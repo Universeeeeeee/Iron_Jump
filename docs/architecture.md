@@ -387,3 +387,10 @@ test_sessions(subject_id, team_id, subject_snapshot, team_snapshot)
 8. **SessionController.prepare() 中信号连接顺序**: 先 moveToThread，再连接信号
 9. **ParamSchema.validate() 会检查 Layer 1 参数** — agent 调用时需补充 test_macro_type
 10. **camera 控制链 stop 后复用** — 只在 closeEvent 释放，Start/Stop 循环保持控制链存活
+
+
+### 五模式智能配置扩展（2026-09-27）
+
+地面走路与跑步沿用同一链路，分别使用 `LLMWalkingConfig` / `LLMOvergroundRunningConfig` 和独立 Prompt，转换成 `WalkingConfig` / `OvergroundRunningConfig`，再经统一运行时校验。两者仅暴露 `stop_type`、`starting_foot` 与固定类型判别字段，拒绝额外字段；设备段数由硬件识别，检测阈值使用各模式运行时默认值，不套用纵跳档案规则。
+
+`agent/config/modes.py` 统一声明五种配置模式；UI 选定模式后，语音转写与打字共用 ConfigService 和确认流程。模式选择不由自然语言自动切换。地面 Prompt 对跨模式或当前不支持的时长/距离要求进行解释与澄清，代码拒绝未知模式及跨模式结构化输出。切换模式期间到达的旧回复仅归入原对话，不恢复待确认配置或播报为当前建议。

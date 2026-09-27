@@ -17,6 +17,8 @@ from config.treadmill_config import (
     default_treadmill_running_config,
 )
 from .models import AthleteProfile
+from config.walking_config import WalkingConfig
+from config.overground_running_config import OvergroundRunningConfig
 
 
 # ---- 参数修正规则 ----
@@ -81,6 +83,8 @@ class RuleEngine:
             "Jump Test": default_jump_config,
             "Treadmill Gait Test": default_treadmill_gait_config,
             "Treadmill Running Test": default_treadmill_running_config,
+            "Sprint and Gait Test": WalkingConfig,
+            "Overground Running Test": OvergroundRunningConfig,
         }
         try:
             config = factories[test_type]()
@@ -88,7 +92,8 @@ class RuleEngine:
             raise ValueError(f"不支持的离线测试类型: {test_type}") from exc
 
         # 2. 按用户条件修正
-        config = self._apply_rules(config, ctx)
+        if not isinstance(config, (WalkingConfig, OvergroundRunningConfig)):
+            config = self._apply_rules(config, ctx)
 
         # 3. schema 校验
         self._validate(config)
@@ -153,11 +158,13 @@ class RuleEngine:
             "Treadmill Running Test": {
                 "stop_type", "test_length", "treadmill_speed", "direction",
             },
+            "Sprint and Gait Test": {"stop_type", "starting_foot"},
+            "Overground Running Test": {"stop_type", "starting_foot"},
         }[config.test_type]
         technical_values = {
             item.name: getattr(policy, item.name)
             for item in fields(policy)
-            if item.name not in intent_fields
+            if item.init and item.name not in intent_fields
         }
         if isinstance(config, TestConfig):
             normalized = TestConfig.from_dict(config.to_dict())

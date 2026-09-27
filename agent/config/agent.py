@@ -20,9 +20,10 @@ from pydantic_ai import Agent
 
 from config.config_validation import validate_runtime_config
 from config.test_config import TestConfig, AnyTestConfig
-from agent.common.model_provider import build_chat_model, default_model_settings
-from .models import AthleteProfile, LLMTestConfig, ChatResponse, LLMTreadmillGaitConfig, LLMTreadmillRunningConfig
+from agent.common.model_provider import build_chat_model, build_http_client, default_model_settings
+from .models import AthleteProfile, LLMTestConfig, ChatResponse, LLMTreadmillGaitConfig, LLMTreadmillRunningConfig, LLMWalkingConfig, LLMOvergroundRunningConfig
 from .rule_engine import RuleEngine
+from .modes import MODE_TEST_TYPES
 
 
 # ---- Load System Prompts ----
@@ -53,11 +54,6 @@ def _format_runtime_context(ctx: AthleteProfile, mode: str = "jump") -> str:
 
     level_labels = {"beginner": "入门", "intermediate": "进阶", "advanced": "高阶"}
 
-    supported_labels = {
-        "jump": "Jump Test",
-        "treadmill_gait": "Treadmill Gait Test",
-        "treadmill_running": "Treadmill Running Test",
-    }
     return (
         "用户信息：\n"
         f"- 年龄: {ctx.age}\n"
@@ -70,7 +66,7 @@ def _format_runtime_context(ctx: AthleteProfile, mode: str = "jump") -> str:
         "设备能力：\n"
         f"- 设备通道数: {ctx.device_channels}\n"
         "- 采样率: 1000Hz (硬件固定)\n"
-        f"- 当前支持的测试类型: {supported_labels.get(mode, supported_labels['jump'])}"
+        f"- 当前支持的测试类型: {MODE_TEST_TYPES[mode]}"
     )
 
 
@@ -91,6 +87,7 @@ class LLMConfigAgent:
         "test_length": "测试时长",
         "treadmill_speed": "跑步机速度",
         "direction": "跑步方向",
+        "starting_foot": "起始脚",
     }
     STRONG_CONFIG_PHRASES = (
         "配置",
@@ -148,6 +145,8 @@ class LLMConfigAgent:
         "jump": "jump.md",
         "treadmill_gait": "treadmill_gait.md",
         "treadmill_running": "treadmill_running.md",
+        "walking": "walking.md",
+        "overground_running": "overground_running.md",
     }
 
     MODE_CONSENSUS_FIELDS = {
@@ -157,15 +156,21 @@ class LLMConfigAgent:
         ],
         "treadmill_gait": ["treadmill_speed", "direction", "stop_type", "test_length"],
         "treadmill_running": ["treadmill_speed", "direction", "stop_type", "test_length"],
+        "walking": ["stop_type", "starting_foot"],
+        "overground_running": ["stop_type", "starting_foot"],
     }
 
     MODE_OUTPUT_TYPES = {
         "jump": Union[LLMTestConfig, ChatResponse],
         "treadmill_gait": Union[LLMTreadmillGaitConfig, ChatResponse],
         "treadmill_running": Union[LLMTreadmillRunningConfig, ChatResponse],
+        "walking": Union[LLMWalkingConfig, ChatResponse],
+        "overground_running": Union[LLMOvergroundRunningConfig, ChatResponse],
     }
 
     def __init__(self, mode: str = "jump"):
+        if mode not in MODE_TEST_TYPES:
+            raise ValueError(f"不支持的智能配置模式: {mode}")
         self._mode = mode
         self.message_history = None
         self._last_config: AnyTestConfig | None = None
@@ -183,6 +188,8 @@ class LLMConfigAgent:
           - "treadmill_gait" → Union[LLMTreadmillGaitConfig, ChatResponse]
           - "treadmill_running" → Union[LLMTreadmillRunningConfig, ChatResponse]
         """
+        if mode not in MODE_TEST_TYPES:
+            raise ValueError(f"不支持的智能配置模式: {mode}")
         model = build_chat_model(http_client)
         output_type = LLMConfigAgent.MODE_OUTPUT_TYPES.get(
             mode, LLMConfigAgent.MODE_OUTPUT_TYPES["jump"]
@@ -201,7 +208,7 @@ class LLMConfigAgent:
         """预热: 用 fresh client 初始化连接。"""
 
         async def _flow():
-            http_client = httpx.AsyncClient()
+            http_client = build_http_client()
             try:
                 agent = self._make_agent(http_client, self._mode)
                 ctx = AthleteProfile(age=30, weight=70, height=170, level="intermediate")
@@ -311,7 +318,10 @@ class LLMConfigAgent:
         raw_reply: str,
     ) -> str:
         """生成稳定的 Markdown 配置摘要，避免模型把多项设置挤在同一行。"""
-        if config.stop_type == "End of Time":
+        is_ground = config.test_type in {"Sprint and Gait Test", "Overground Running Test"}
+        if is_ground and config.stop_type == "Status change":
+            stop_label = "单次通过后空场自动结束"
+        elif config.stop_type == "End of Time":
             stop_label = f"按测试时长自动停止，共 {config.test_length}"
         elif config.stop_type == "Status change":
             stop_label = f"按跳跃次数自动停止，共 {config.number_of_jumps} 次"
@@ -344,7 +354,10 @@ class LLMConfigAgent:
             lines.append(f"- 跑步方向：{config.direction}")
         if hasattr(config, 'start_type'):
             lines.append(f"- 启动方式：{start_labels.get(config.start_type, config.start_type)}")
-        if hasattr(config, 'starting_foot'):
+        if is_ground:
+            foot_labels = {"Not defined": "未指定", "Left": "左脚", "Right": "右脚"}
+            lines.append(f"- 起始脚：{foot_labels[config.starting_foot]}")
+        elif hasattr(config, 'starting_foot'):
             lines.append(f"- 起跳方式：{foot_labels.get(config.starting_foot, config.starting_foot)}")
         if hasattr(config, 'start_position'):
             lines.append(f"- 起始位置：{position_labels.get(config.start_position, config.start_position)}")
@@ -352,7 +365,8 @@ class LLMConfigAgent:
             lines.append(f"- 结束位置：{position_labels.get(config.finish_position, config.finish_position or '未指定')}")
         lines.extend([
             "",
-            "其他参数已根据默认配置自动设定。准备好了就可以开始测试。",
+            ("请先确认配置，进入准备页完成空场自检并核对设备段数后开始。"
+             if is_ground else "其他参数已根据默认配置自动设定。准备好了就可以开始测试。"),
         ])
         return "\n".join(lines)
 
@@ -387,6 +401,8 @@ class LLMConfigAgent:
                 LLMTestConfig,
                 LLMTreadmillGaitConfig,
                 LLMTreadmillRunningConfig,
+                LLMWalkingConfig,
+                LLMOvergroundRunningConfig,
                 ChatResponse,
             ],
             float,
@@ -428,7 +444,7 @@ class LLMConfigAgent:
             timing.append(f"sample{i+1}={elapsed:.1f}s")
             print(f"[Timing] 并行采样 sample #{i + 1}: {elapsed:.1f}s")
 
-            if isinstance(output, (LLMTestConfig, LLMTreadmillGaitConfig, LLMTreadmillRunningConfig)):
+            if isinstance(output, (LLMTestConfig, LLMTreadmillGaitConfig, LLMTreadmillRunningConfig, LLMWalkingConfig, LLMOvergroundRunningConfig)):
                 configs.append(output)
                 config_results.append((output, result))
             elif isinstance(output, ChatResponse) and first_chat_result is None:
@@ -476,13 +492,16 @@ class LLMConfigAgent:
 
     def _finalize_config_output(
         self,
-        verified: Union[LLMTestConfig, LLMTreadmillGaitConfig, LLMTreadmillRunningConfig],
+        verified: Union[LLMTestConfig, LLMTreadmillGaitConfig, LLMTreadmillRunningConfig, LLMWalkingConfig, LLMOvergroundRunningConfig],
         t_start: float,
         timing: list[str],
         stream_callback: Callable[[str], None] | None = None,
         athlete_profile: AthleteProfile | None = None,
     ) -> tuple[AnyTestConfig | None, str]:
         """将已通过 ClarifyGPT 的 LLM 结构化输出转成系统 Config。"""
+        if verified.test_type != MODE_TEST_TYPES[self._mode]:
+            return self._finalize(None, "返回的配置与当前测试模式不一致，请重新生成。",
+                                  t_start, timing, "模式校验失败", stream_callback)
         config = verified.to_test_config()
         if athlete_profile is not None:
             config = RuleEngine().normalize_runtime_config(config, athlete_profile)
@@ -508,7 +527,7 @@ class LLMConfigAgent:
 
     async def _process_single_output(
         self,
-        output: Union[LLMTestConfig, LLMTreadmillGaitConfig, LLMTreadmillRunningConfig, ChatResponse],
+        output: Union[LLMTestConfig, LLMTreadmillGaitConfig, LLMTreadmillRunningConfig, LLMWalkingConfig, LLMOvergroundRunningConfig, ChatResponse],
         t_start: float,
         timing: list[str],
         stream_callback: Callable[[str], None] | None = None,
@@ -518,7 +537,7 @@ class LLMConfigAgent:
             return self._finalize(None, output.message, t_start, timing, "ChatResponse",
                                   stream_callback)
 
-        if isinstance(output, (LLMTestConfig, LLMTreadmillGaitConfig, LLMTreadmillRunningConfig)):
+        if isinstance(output, (LLMTestConfig, LLMTreadmillGaitConfig, LLMTreadmillRunningConfig, LLMWalkingConfig, LLMOvergroundRunningConfig)):
             return self._finalize_config_output(
                 output, t_start, timing, stream_callback,
             )
@@ -541,6 +560,8 @@ class LLMConfigAgent:
                 LLMTestConfig,
                 LLMTreadmillGaitConfig,
                 LLMTreadmillRunningConfig,
+                LLMWalkingConfig,
+                LLMOvergroundRunningConfig,
                 ChatResponse,
             ],
             float,
@@ -598,7 +619,7 @@ class LLMConfigAgent:
             )
 
         async def _flow() -> tuple[AnyTestConfig | None, str]:
-            http_client = httpx.AsyncClient()
+            http_client = build_http_client()
             try:
                 agent = self._make_agent(http_client, self._mode)
 
@@ -617,7 +638,7 @@ class LLMConfigAgent:
                 elapsed = time.perf_counter() - t0
                 print(f"[Timing] 单次 LLM 调用: {elapsed:.1f}s")
 
-                if isinstance(result.output, (LLMTestConfig, LLMTreadmillGaitConfig, LLMTreadmillRunningConfig)):
+                if isinstance(result.output, (LLMTestConfig, LLMTreadmillGaitConfig, LLMTreadmillRunningConfig, LLMWalkingConfig, LLMOvergroundRunningConfig)):
                     timing.append("gate=miss→config-verify")
                     return await self._run_parallel_clarify(
                         agent,
@@ -674,7 +695,7 @@ class LLMConfigAgent:
             )
 
         async def _flow_stream() -> tuple[AnyTestConfig | None, str]:
-            http_client = httpx.AsyncClient()
+            http_client = build_http_client()
             try:
                 agent = self._make_agent(http_client, self._mode)
 
@@ -695,7 +716,7 @@ class LLMConfigAgent:
                     async for partial in result.stream_output(debounce_by=0.05):
                         if isinstance(partial, ChatResponse):
                             current = partial.message or ""
-                        elif isinstance(partial, (LLMTestConfig, LLMTreadmillGaitConfig, LLMTreadmillRunningConfig)):
+                        elif isinstance(partial, (LLMTestConfig, LLMTreadmillGaitConfig, LLMTreadmillRunningConfig, LLMWalkingConfig, LLMOvergroundRunningConfig)):
                             current = ""
                         else:
                             continue
@@ -710,7 +731,7 @@ class LLMConfigAgent:
                     output = await result.get_output()
                     stream_history = result.all_messages()
 
-                if isinstance(output, (LLMTestConfig, LLMTreadmillGaitConfig, LLMTreadmillRunningConfig)):
+                if isinstance(output, (LLMTestConfig, LLMTreadmillGaitConfig, LLMTreadmillRunningConfig, LLMWalkingConfig, LLMOvergroundRunningConfig)):
                     timing.append("gate=miss→config-verify")
                     return await self._run_parallel_clarify(
                         agent,

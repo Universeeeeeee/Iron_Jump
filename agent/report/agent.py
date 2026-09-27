@@ -5,10 +5,9 @@ from __future__ import annotations
 import asyncio
 import json
 
-import httpx
 from pydantic_ai import Agent
 
-from agent.common.model_provider import build_chat_model, default_model_settings
+from agent.common.model_provider import build_chat_model, build_http_client, default_model_settings
 from reporting.models import (
     AnalysisDecision,
     AgentObservation,
@@ -218,7 +217,7 @@ class ReportAgent:
         stage: str,
     ):
         async def flow():
-            client = httpx.AsyncClient()
+            client = build_http_client()
             try:
                 model_settings = default_model_settings()
                 if timeout_s is not None:

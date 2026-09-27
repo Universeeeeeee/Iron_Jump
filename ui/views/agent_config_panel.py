@@ -21,6 +21,7 @@ from dayu_widgets.push_button import MPushButton
 from dayu_widgets.spin_box import MDoubleSpinBox, MSpinBox
 
 from agent.config.models import AthleteProfile
+from agent.config.modes import MODE_TEST_TYPES
 from agent.config.rule_engine import RuleEngine
 from config.test_config import AnyTestConfig, config_from_dict
 from data.subject_store import SubjectSearchResult, SubjectStore
@@ -157,7 +158,7 @@ QPushButton#SuggestionCloseButton {
 _THREE_COLUMN_MIN_WIDTH = 1180
 _SUGGESTION_DRAWER_MIN_WIDTH = 280
 _SUGGESTION_DRAWER_MAX_WIDTH = 320
-_AGENT_MODES = ("jump", "treadmill_gait", "treadmill_running")
+_AGENT_MODES = tuple(MODE_TEST_TYPES)
 _CHAT_DOCUMENT_QSS = (
     "table { border-collapse: collapse; margin: 8px 0; }"
     "td, th { border: 1px solid #999; padding: 4px 10px; }"
@@ -240,6 +241,7 @@ class AgentConfigPanel(QWidget):
         self._startup_timer.setSingleShot(True)
         self._startup_timer.timeout.connect(self._ensure_llm_worker_started)
         self._active_request_id = 0
+        self._mode_revision = 0
 
         self._build_ui()
         self._connect_signals()
@@ -387,9 +389,8 @@ class AgentConfigPanel(QWidget):
         self._suggestion_toggle_btn.hide()
         header.addWidget(self._suggestion_toggle_btn)
         self._test_type_combo = QComboBox()
-        self._test_type_combo.addItem("Jump Test", "jump")
-        self._test_type_combo.addItem("Treadmill Gait Test", "treadmill_gait")
-        self._test_type_combo.addItem("Treadmill Running Test", "treadmill_running")
+        for mode, test_type in MODE_TEST_TYPES.items():
+            self._test_type_combo.addItem(test_type, mode)
         self._test_type_combo.setMinimumWidth(150)
         self._test_type_combo.setMaximumWidth(190)
         header.addWidget(self._test_type_combo)
@@ -419,12 +420,14 @@ class AgentConfigPanel(QWidget):
         chip_layout.setContentsMargins(0, 0, 0, 0)
         chip_layout.setHorizontalSpacing(8)
         chip_layout.setVerticalSpacing(8)
+        self._prompt_chip_buttons = []
         for index, text in enumerate(
             ("入门 3 次", "常规 5 次", "1 分钟测试", "轻量测试")
         ):
             chip = MPushButton(text)
             chip.setObjectName("PromptChip")
-            chip.clicked.connect(lambda _, value=text: self._chat_input.setText(value))
+            chip.clicked.connect(lambda _, button=chip: self._chat_input.setText(button.text()))
+            self._prompt_chip_buttons.append(chip)
             row, column = divmod(index, 2)
             chip_layout.addWidget(chip, row, column)
         chat_layout.addWidget(self._prompt_chips)
@@ -742,9 +745,19 @@ class AgentConfigPanel(QWidget):
     # ------------------------------------------------------------------
 
     def _on_test_type_changed(self, *_args) -> None:
+        self._mode_revision += 1
         self._clear_pending_config()
         mode = self._current_agent_mode()
         document = self._chat_documents[mode]
+        examples = {
+            "jump": ("入门 3 次", "常规 5 次", "1 分钟测试", "轻量测试"),
+            "treadmill_gait": ("配置跑步机走路", "走路测试 1 分钟", "速度 3 公里每小时", "配置手动结束"),
+            "treadmill_running": ("配置跑步机跑步", "跑步测试 1 分钟", "速度 6 公里每小时", "配置手动结束"),
+            "walking": ("配置地面走路", "走路通过后自动结束", "配置左脚先进入", "配置手动结束"),
+            "overground_running": ("配置地面跑步", "跑步通过后自动结束", "配置右脚先进入", "配置手动结束"),
+        }
+        for button, text in zip(self._prompt_chip_buttons, examples[mode]):
+            button.setText(text)
         self._chat_display.setDocument(document)
         self._chat_input.clear()
         self._prompt_chips.setVisible(document.isEmpty())
@@ -767,6 +780,7 @@ class AgentConfigPanel(QWidget):
         self._worker_ready = True
         self._worker_error = None
 
+        self._clear_pending_config()
         self._append_chat_entry("你", escape(message))
         self._prompt_chips.hide()
 
@@ -778,6 +792,7 @@ class AgentConfigPanel(QWidget):
             request_id=self._active_request_id,
             agent_mode=self._current_agent_mode(),
         )
+        self._llm_worker.mode_revision = self._mode_revision
         self._llm_worker.finished.connect(self._on_llm_finished)
         self._llm_worker.error.connect(self._on_llm_error)
         self._chat_input.setEnabled(False)
@@ -816,15 +831,23 @@ class AgentConfigPanel(QWidget):
             return
         mode = getattr(worker, "_agent_mode", self._current_agent_mode())
         self._append_chat_entry("AI", _md_to_html(reply), mode=mode)
+        current_selection = (mode == self._current_agent_mode() and
+                             getattr(worker, "mode_revision", self._mode_revision) == self._mode_revision)
 
-        if config is not None and mode == self._current_agent_mode():
+        if config is not None and config.test_type != MODE_TEST_TYPES[mode]:
+            self._clear_pending_config()
+            config = None
+            reply = "返回的配置与请求模式不一致，请重新生成。"
+            self._append_chat_entry("错误", reply, mode=mode)
+        if config is not None and current_selection:
             self._set_pending_config(config, "智能服务已生成建议配置。")
 
         self._llm_worker = None
         self._sync_mode_state()
-        self.voice_reply.emit(
-            self._spoken_config_summary(config) if config is not None else reply
-        )
+        if current_selection:
+            self.voice_reply.emit(
+                self._spoken_config_summary(config) if config is not None else reply
+            )
 
     @staticmethod
     def _spoken_config_summary(config: AnyTestConfig) -> str:
@@ -836,8 +859,12 @@ class AgentConfigPanel(QWidget):
             parts.append(f"测试时长{minutes}分{seconds}秒")
         elif config.stop_type == "Software command":
             parts.append("通过结束测试指令停止")
+        elif config.test_type in {"Sprint and Gait Test", "Overground Running Test"}:
+            parts.append("单次通过后空场自动结束")
         elif getattr(config, "number_of_jumps", None):
             parts.append(f"跳跃{config.number_of_jumps}次")
+        if config.test_type in {"Sprint and Gait Test", "Overground Running Test"}:
+            parts.append("起始脚" + {"Left": "左脚", "Right": "右脚", "Not defined": "未指定"}[config.starting_foot])
         parts.append("请说确认配置后应用")
         return "。".join(parts) + "。"
 
@@ -870,14 +897,9 @@ class AgentConfigPanel(QWidget):
         self._sync_suggestion_presentation()
 
     def _on_offline_generate(self) -> None:
-        test_types = {
-            "jump": "Jump Test",
-            "treadmill_gait": "Treadmill Gait Test",
-            "treadmill_running": "Treadmill Running Test",
-        }
         try:
             config = self._rule_engine.configure(
-                test_types[self._current_agent_mode()],
+                MODE_TEST_TYPES[self._current_agent_mode()],
                 self._current_athlete_profile(),
             )
         except Exception as e:
@@ -889,6 +911,9 @@ class AgentConfigPanel(QWidget):
 
     def _on_confirm_clicked(self) -> None:
         if self._pending_config is None:
+            return
+        if self._pending_config.test_type != self.current_test_type():
+            self._clear_pending_config()
             return
         self._chat_display.append("<b>AI:</b> 配置已应用到参数面板。")
         self.config_confirmed.emit(self._pending_config)
@@ -905,9 +930,10 @@ class AgentConfigPanel(QWidget):
         self._sync_suggestion_presentation()
 
     def _format_config(self, config: AnyTestConfig, reason: str) -> str:
+        is_ground = config.test_type in {"Sprint and Gait Test", "Overground Running Test"}
         stop_labels = {
-            "Status change": "按跳跃次数结束",
-            "End of Time": f"按测试时长结束（{config.test_length}）",
+            "Status change": "单次通过后空场自动结束" if is_ground else "按跳跃次数结束",
+            "End of Time": f"按测试时长结束（{getattr(config, 'test_length', None)}）",
             "Software command": "软件指令停止",
         }
         start_labels = {
@@ -939,10 +965,15 @@ class AgentConfigPanel(QWidget):
         if hasattr(config, "start_position"):
             rows.append(("起始位置", position_labels.get(config.start_position, config.start_position)))
         if hasattr(config, "starting_foot"):
-            rows.append(("起跳脚", foot_labels.get(config.starting_foot, config.starting_foot)))
+            rows.append(("起始脚" if is_ground else "起跳脚",
+                         "未指定" if is_ground and config.starting_foot == "Not defined"
+                         else foot_labels.get(config.starting_foot, config.starting_foot)))
         if hasattr(config, "metronome_enabled"):
             rows.append(("节拍器", "开启" if config.metronome_enabled else "关闭"))
-        rows.append(("接触/腾空阈值", f">{config.min_contact_time}ms / >{config.min_flight_time}ms"))
+        if is_ground:
+            rows.append(("设备段数", "准备页自动识别，开始前核对"))
+        else:
+            rows.append(("接触/腾空阈值", f">{config.min_contact_time}ms / >{config.min_flight_time}ms"))
 
         row_html = "".join(
             "<tr>"

@@ -902,6 +902,12 @@ class SetupView(QWidget):
         self._btn_mode_manual.setChecked(index == 1)
         self._update_mode_status()
         self._config_stack.setCurrentIndex(index)
+        if index == 0 and self._current_config is not None:
+            combo = self._agent_panel._test_type_combo
+            target = combo.findText(self._current_config.test_type)
+            if target >= 0:
+                self._agent_panel._clear_pending_config()
+                combo.setCurrentIndex(target)
         if index == 1:
             if self._current_config is not None:
                 self._syncing_config_to_panel = True

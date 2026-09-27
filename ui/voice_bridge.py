@@ -150,9 +150,12 @@ class VoiceBridge(QObject):
             config = setup._agent_panel._pending_config
             if c.is_running or w._stack.currentWidget() is not setup:
                 self.say("请返回配置页面后再确认配置。")
+            elif setup._config_mode_index != 0:
+                self.say("当前为手动配置，请先进入智能配置生成建议。")
             elif config is None:
                 self.say("还没有建议配置，请先描述测试要求。")
-            elif validate_runtime_config(config):
+            elif (config.test_type != setup._agent_panel.current_test_type()
+                  or validate_runtime_config(config)):
                 self.say("配置校验未通过，请查看参数提示。")
             else:
                 setup._agent_panel._on_confirm_clicked()
@@ -184,6 +187,7 @@ class VoiceBridge(QObject):
                 self.say("分析尚未就绪，请查看页面提示。")
         elif w._stack.currentWidget() is w._setup_view:
             panel = w._setup_view._agent_panel
+            w._setup_view._set_config_mode(0)
             if panel.submit_voice(text):
                 self.agent_turn = self.turn
                 self.say("正在生成配置。")

@@ -431,3 +431,39 @@ class AthleteProfile:
     focus_side: str = ""            # "" / "left" / "right" / "both"
     device_channels: int = 8
     history: list[dict] = field(default_factory=list)
+
+
+class LLMWalkingConfig(BaseModel):
+    """地面单次步行；只让模型配置业务意图，技术阈值来自运行时默认值。"""
+
+    model_config = {"extra": "forbid"}
+    reply_message: str = "配置完成"
+    test_type: Literal["Sprint and Gait Test"] = "Sprint and Gait Test"
+    stop_type: Literal["Status change", "Software command"] = Field(
+        default="Status change", description="Status change=通过后空场自动结束；Software command=手动结束"
+    )
+    starting_foot: Literal["Left", "Right", "Not defined"] = Field(
+        default="Not defined", description="首个有效接触的起始脚；未知时保持 Not defined，不能猜测"
+    )
+
+    def to_test_config(self):
+        from config.walking_config import WalkingConfig
+        return WalkingConfig(stop_type=self.stop_type, starting_foot=self.starting_foot)
+
+
+class LLMOvergroundRunningConfig(BaseModel):
+    """地面单次跑步；独立于跑步机速度与定时配置。"""
+
+    model_config = {"extra": "forbid"}
+    reply_message: str = "配置完成"
+    test_type: Literal["Overground Running Test"] = "Overground Running Test"
+    stop_type: Literal["Status change", "Software command"] = Field(
+        default="Status change", description="Status change=通过后空场自动结束；Software command=手动结束"
+    )
+    starting_foot: Literal["Left", "Right", "Not defined"] = Field(
+        default="Not defined", description="首个有效接触的起始脚；未知时保持 Not defined，不能猜测"
+    )
+
+    def to_test_config(self):
+        from config.overground_running_config import OvergroundRunningConfig
+        return OvergroundRunningConfig(stop_type=self.stop_type, starting_foot=self.starting_foot)

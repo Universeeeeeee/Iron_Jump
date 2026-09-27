@@ -6,10 +6,9 @@ import asyncio
 import json
 import re
 
-import httpx
 from pydantic_ai import Agent
 
-from agent.common.model_provider import build_chat_model, default_model_settings
+from agent.common.model_provider import build_chat_model, build_http_client, default_model_settings
 
 from .catalog import load_catalog
 from .citations import build_citations, render_references_markdown
@@ -79,7 +78,7 @@ class DeepSeekRecommendationGenerator:
         prompt = self._prompt(context, evidence)
 
         async def flow():
-            client = httpx.AsyncClient()
+            client = build_http_client()
             try:
                 runtime_agent = Agent(
                     model=build_chat_model(client),
