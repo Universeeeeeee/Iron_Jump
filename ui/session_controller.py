@@ -469,6 +469,9 @@ class SessionController(QObject):
 
     @Slot(dict)
     def _on_walking_readiness(self, result):
+        if "effective_layout" in result and result["effective_layout"] != self._device_layout:
+            self._device_layout = result["effective_layout"]
+            self.device_layout_changed.emit(self._device_layout)
         self.quality_status = dict(result)
         self._walking_ready = result["ready"]
         self._walking_device_key = result.get("device_key")

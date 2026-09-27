@@ -565,9 +565,10 @@ class MainWindow(QMainWindow):
             return
         quality = getattr(self._controller, "quality_status", {})
         if quality.get("requires_acknowledgement"):
-            locations = "、".join(f"第 {i // 96 + 1} 段第 {i % 96 + 1} 束（{kind}）"
+            ids = quality.get("segment_ids", tuple(str(i + 1) for i in range(len(quality["segment_ratios"]))))
+            locations = "、".join(f"第 {ids[i // 96]} 段第 {i % 96 + 1} 束（{kind}）"
                                  for i, kind in zip(quality["bad_indices"], quality["bad_types"]))
-            ratios = "，".join(f"第 {i + 1} 段 {r:.2%}" for i, r in enumerate(quality["segment_ratios"]))
+            ratios = "，".join(f"第 {ids[i]} 段 {r:.2%}" for i, r in enumerate(quality["segment_ratios"]))
             text = (f"疑似异常共 {len(quality['bad_indices'])} 束：{locations}\n{ratios}\n"
                     f"最大连续 {quality['max_consecutive']} 束。\n"
                     "这些光束将冻结为不可用；邻近坏点的事件可能无法测量，精度不作保证。\n"

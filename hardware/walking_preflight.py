@@ -17,10 +17,13 @@ class PreparedDevice:
     bad_indices: tuple[int, ...] = ()
     bad_types: tuple[str, ...] = ()
     stability: dict = field(default_factory=dict)
+    segment_selection: dict = field(default_factory=dict)
 
     @property
     def key(self):
-        return (self.stream_id, self.layout, self.policy, self.bad_indices, self.bad_types)
+        return (self.stream_id, self.layout, self.policy, self.bad_indices, self.bad_types,
+                self.segment_selection.get("source_segment_count"),
+                self.segment_selection.get("source_segment_indices", ()))
 
     def snapshot(self):
         return {**asdict(self), "segment_count": len(self.layout.segments),
@@ -186,6 +189,7 @@ class WalkingPreflight:
         stability = self._stability_snapshot()
         visual = None if frame is None else {
             "positions_m": layout.positions_m,
+            "segment_ids": tuple(s.segment_id for s in layout.segments),
             "contact_bits": list(frame.contact_bits) if len(frame.contact_bits) == layout.bit_count else [0] * layout.bit_count,
             "valid_bits": [int(bool(v) and not (self.context and i in self.context.bad_indices))
                            for i, v in enumerate(frame.valid_bits)]
@@ -203,6 +207,7 @@ class WalkingPreflight:
                 "details": self._details(layout),
                 "segment_ratios": self.ratios, "max_consecutive": self.consecutive,
                 "policy": self.policy.snapshot(), "segment_count": len(layout.segments) if layout else None,
+                "segment_ids": tuple(s.segment_id for s in layout.segments) if layout else (),
                 "nominal_length_m": len(layout.segments) if layout else None,
                 "healthy_samples": self.healthy_samples,
                 "device_key": self.context.key if self.context else None, "visual_frame": visual}
@@ -223,19 +228,20 @@ class WalkingPreflight:
         parts = (["重新观察原因：" + self.restart_reason]
                  if self.healthy_samples < self.policy.samples and self.restart_reason else [])
         for s in range(len(layout.segments)):
+            segment_id = layout.segments[s].segment_id
             bad = [i % 96 + 1 for i in self.bad_indices if i // 96 == s]
             transient = [i % 96 + 1 for i in self.transient_indices if i // 96 == s]
             pending = [i % 96 + 1 for i in self.pending_indices if i // 96 == s]
             filtered = [i % 96 + 1 for i, count in sorted(self._filtered_counts.items()) if count > 0 and i // 96 == s]
             if bad:
                 types = "、".join(sorted({kind for i, kind in zip(self.bad_indices, self.bad_types) if i // 96 == s}))
-                parts.append(f"第{s + 1}段：异常束{self._ranges(bad)}（{types}，{len(bad)}/96，{len(bad) / 96:.2%}）")
+                parts.append(f"第{segment_id}段：异常束{self._ranges(bad)}（{types}，{len(bad)}/96，{len(bad) / 96:.2%}）")
             if transient:
-                parts.append(f"第{s + 1}段：短暂遮挡束{self._ranges(transient)}（尚未确认为闪烁，等待稳定空场）")
+                parts.append(f"第{segment_id}段：短暂遮挡束{self._ranges(transient)}（尚未确认为闪烁，等待稳定空场）")
             if pending:
-                parts.append(f"第{s + 1}段：待稳定确认束{self._ranges(pending)}")
+                parts.append(f"第{segment_id}段：待稳定确认束{self._ranges(pending)}")
             if filtered:
-                parts.append(f"第{s + 1}段：短时变化束{self._ranges(filtered)}（已回落，未计入坏灯）")
+                parts.append(f"第{segment_id}段：短时变化束{self._ranges(filtered)}（已回落，未计入坏灯）")
         if self._broad_events:
             parts.append(f"观察窗内大范围变化{len(self._broad_events)}次，达到{self.BROAD_CHANGE_LIMIT}次判为采集不稳定")
         if self.bad_indices or self.transient_indices:

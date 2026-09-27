@@ -55,7 +55,8 @@ class OvergroundSession(QObject):
 
     def start_prepared(self, context):
         self.processor = self.processor_factory(self.config, context)
-        limit = min(600000, 64 * 1024 * 1024 // (context.layout.bit_count + 64))
+        raw_bit_count = context.segment_selection.get("source_segment_count", len(context.layout.segments)) * 96
+        limit = min(600000, 64 * 1024 * 1024 // (raw_bit_count + 64))
         self.frames = deque(maxlen=limit)
         self.timestamps = deque(maxlen=limit)
         self.armed.emit()
@@ -167,6 +168,7 @@ class OvergroundSession(QObject):
             visual = dict(p.timeline[-1]) if p.timeline else {"feet": []}
             origin = p.origin if p.origin is not None else frame.sample_time_s
             visual.update({"timestamp_s": max(0, frame.sample_time_s - origin),
+                           "segment_ids": tuple(s.segment_id for s in p.device.layout.segments),
                            "positions_m": p.positions,
                            "contact_bits": list(frame.contact_bits) if len(frame.contact_bits) == len(p.positions) else [0] * len(p.positions),
                            "valid_bits": [0] * len(p.positions) if invalid else list(frame.valid_bits)})

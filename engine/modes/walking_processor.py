@@ -259,6 +259,7 @@ class WalkingProcessor:
             "timestamp_s": frame.sample_time_s - self.origin,
             "contact_bits": list(frame.contact_bits),
             "positions_m": self.positions,
+            "segment_ids": tuple(s.segment_id for s in self.device.layout.segments),
             "valid_bits": list(frame.valid_bits),
             "quality_flags": list(frame.quality_flags),
             "feet": [{"contact_id": c.id, "side": c.side, "label": c.label,

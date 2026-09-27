@@ -224,6 +224,7 @@ class OvergroundRunningProcessor:
         if self.origin is not None and n - self._last_visual >= 40:
             self._last_visual = n
             self.timeline.append({"timestamp_s": n / 1000 - self.origin,
+                                  "segment_ids": tuple(s.segment_id for s in self.device.layout.segments),
                                   "contact_bits": list(frame.contact_bits), "positions_m": self.positions,
                                   "valid_bits": list(frame.valid_bits), "quality_flags": list(frame.quality_flags),
                                   "feet": [{"contact_id": c.id, "side": c.side, "label": c.label,

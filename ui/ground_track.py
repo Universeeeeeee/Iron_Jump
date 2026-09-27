@@ -26,10 +26,12 @@ class GroundChannelWidget(FootprintChannelWidget):
         super().clear()
         self._contact_bits = []
         self.valid_bits = []
+        self.segment_ids = ()
         self.selected_segment = 0
 
     def render_state(self, frame):
         super().render_state(frame)
+        self.segment_ids = frame.get("segment_ids", tuple(str(i + 1) for i in range(len(self._contact_bits) // 96)))
         if len(self.valid_bits) != len(self._contact_bits) or not all(self.valid_bits):
             self._feet = []
         self.selected_segment = min(self.selected_segment, max(0, len(self._contact_bits) // 96 - 1))
@@ -82,7 +84,7 @@ class GroundChannelWidget(FootprintChannelWidget):
             position = painter.fontMetrics().elidedText(position, Qt.ElideRight, 21)
             painter.drawText(QRectF(2, y - 8, 21, 18), Qt.AlignRight | Qt.AlignVCenter, position)
             painter.drawText(QRectF(self.width() - 23, y - 8, 22, 18),
-                             Qt.AlignLeft | Qt.AlignVCenter, f"{segment + 1}段")
+                             Qt.AlignLeft | Qt.AlignVCenter, f"{self.segment_ids[segment]}段")
         painter.setPen(QColor("#8f9bad"))
         painter.drawText(QRectF(0, rect.bottom() + 7, self.width(), 20), Qt.AlignCenter,
                          f"{self._positions_m[-1]:.3f} m · 末光束")
@@ -170,6 +172,9 @@ class GroundTrackPanel(QWidget):
 
     def render_state(self, frame):
         if not frame.get("positions_m"):
+            if "positions_m" in frame:
+                self.clear()
+                self.device_label.setText("无可用段")
             return
         self._frame = frame
         self.channel.render_state(frame)
@@ -204,7 +209,7 @@ class GroundTrackPanel(QWidget):
         positions = self._frame["positions_m"][start:end]
         bits = self._frame["contact_bits"][start:end]
         valid = self._frame.get("valid_bits", [1] * len(self._frame["contact_bits"]))[start:end]
-        self.detail_title.setText(f"第 {index + 1} 段 · 光束详情")
+        self.detail_title.setText(f"第 {self.channel.segment_ids[index]} 段 · 光束详情")
         self.detail_range.setText(f"{positions[0]:.3f}–{positions[-1]:.3f} m")
         self.detail_channel.render_state({"positions_m": positions, "contact_bits": bits, "valid_bits": valid,
                                           "feet": [foot for foot in self._frame.get("feet", [])

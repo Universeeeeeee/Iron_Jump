@@ -937,11 +937,15 @@ class ReportView(QWidget):
 
         quality = report.report_config_snapshot.get("beam_quality")
         transient_pulses = (quality or {}).get("preflight", {}).get("stability", {}).get("transient_beam_pulses", 0)
-        if quality and (quality.get("degraded") or quality.get("events") or transient_pulses):
+        selection = (quality or {}).get("preflight", {}).get("segment_selection", {})
+        excluded_segments = selection.get("excluded_segment_indices", ())
+        if quality and (quality.get("degraded") or quality.get("events") or transient_pulses or excluded_segments):
             count = len(quality.get("preflight", {}).get("bad_indices", ()))
             self._reason_label.setText(self._reason_label.text() +
                 f"\n设备质量：冻结 {count} 束不可用，运行中 {quality.get('event_count', 0)} 项记录。" +
                 (f"自检短时变化 {transient_pulses} 次（按光束计数，未计入坏灯），原始运动数据保留。" if transient_pulses else "") +
+                ("自动剔除持续全零段：" + "、".join(str(s + 1) for s in excluded_segments) +
+                 f"；协议 {selection['source_segment_count']} 段，使用 {len(selection['source_segment_indices'])} 段。" if excluded_segments else "") +
                 quality.get("limitation", ""))
             self._reason_label.setWordWrap(True)
         self._reason_label.setToolTip("未记录设备质量信息" if quality is None else

@@ -402,8 +402,8 @@ class GaitEngine(QObject):
             self._export_frames.append(list(raw.contact_bits))
             self._export_timestamps.append(rel_time)
             if not getattr(self, "_quality_uncertain", False):
-                visual = {"timestamp_s": rel_time, "contact_bits": list(raw.contact_bits),
-                          "valid_bits": [0] * len(raw.contact_bits), "feet": [],
+                visual = {"timestamp_s": rel_time, "contact_bits": list(frame.contact_bits),
+                          "valid_bits": [0] * len(frame.contact_bits), "feet": [],
                           "quality_flags": ["unavailable_contact_boundary"]}
                 self.footprint_visual_frame.emit(visual)
                 if not hasattr(self, "_quality_visual_events"):
@@ -616,6 +616,7 @@ class GaitEngine(QObject):
         timeline = []
         for item in report.visual_timeline:
             visual = dict(item.to_dict() if hasattr(item, "to_dict") else item)
+            visual["segment_ids"] = tuple(s.segment_id for s in quality.context.layout.segments)
             valid = list(visual.get("valid_bits", [1] * len(visual.get("contact_bits", ()))))
             for i in quality.context.bad_indices:
                 if i < len(valid):

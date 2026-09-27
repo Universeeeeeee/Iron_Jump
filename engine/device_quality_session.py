@@ -1,8 +1,10 @@
 """One worker-thread gate for all test modes: preflight, frozen mask and audit."""
 import time
+from dataclasses import replace
 from qtpy.QtCore import QObject, QTimer, Signal, Slot
 from hardware.walking_preflight import WalkingPreflight
 from hardware.beam_quality import masked_frame, uncertain_contact
+from hardware.active_segments import ActiveSegments
 
 
 class DeviceQualitySession(QObject):
@@ -16,6 +18,7 @@ class DeviceQualitySession(QObject):
         super().__init__(parent)
         self.config = config
         self.preflight = WalkingPreflight(policy)
+        self._segments = ActiveSegments(policy.samples)
         self.context = None
         self.done = False
         self.last_frame = None
@@ -39,7 +42,25 @@ class DeviceQualitySession(QObject):
 
     def _status(self):
         result = self.preflight.status(time.perf_counter_ns())
-        if (result["segment_count"] not in (None, 1) and
+        selection = self._segments.snapshot()
+        result.update(segment_selection=selection, effective_layout=self._segments.layout)
+        layout = self._segments.layout
+        if layout and self.preflight.last_frame and self.preflight.last_frame.layout != layout:
+            result.update(segment_count=len(layout.segments), nominal_length_m=len(layout.segments),
+                          visual_frame={"positions_m": layout.positions_m,
+                                        "segment_ids": tuple(s.segment_id for s in layout.segments),
+                                        "contact_bits": [0] * layout.bit_count,
+                                        "valid_bits": [0] * layout.bit_count, "feet": []})
+        if selection.get("excluded_segment_indices"):
+            excluded = "、".join(str(i + 1) for i in selection["excluded_segment_indices"])
+            detail = f"已自动剔除持续全零段：{excluded}；协议 {selection['source_segment_count']} 段，使用 {len(self._segments.indices)} 段"
+            result["details"] = detail + ("；" + result["details"] if result["details"] else "")
+            result["message"] += f"；已自动剔除全零段 {excluded}"
+        if self._segments.source_layout and self._segments.layout is None:
+            result.update(ready=False, message="全部段持续全零，无可用段，请检查供电和测量区域",
+                          segment_count=0, nominal_length_m=0, device_key=None,
+                          visual_frame={"positions_m": (), "contact_bits": [], "valid_bits": [], "feet": []})
+        if (result["segment_count"] not in (None, 0, 1) and
                 self.config.test_type not in {"Sprint and Gait Test", "Overground Running Test"}):
             result.update(ready=False, message="当前模式仅支持单段设备，请返回配置核对需求")
         return result
@@ -47,7 +68,7 @@ class DeviceQualitySession(QObject):
     def _publish(self, force=False):
         now = time.perf_counter_ns()
         ready = self.preflight.ready(now)
-        key = (ready, self.preflight.context.key if ready else None)
+        key = (ready, self.preflight.context.key if ready else None, self._segments.indices)
         if force or key != self._last_status or now - self._last_publish >= 100_000_000:
             result = self._status()
             self._last_publish, self._last_status = now, key
@@ -78,10 +99,16 @@ class DeviceQualitySession(QObject):
         previous = self.last_frame
         self.last_frame = frame
         if self.context is None:
-            self.preflight.feed(frame)
+            projected = self._segments.observe(frame)
+            if projected is None:
+                self.preflight.invalidate("全部段持续全零，无可用段")
+            else:
+                self.preflight.feed(projected)
+                if self.preflight.context:
+                    self.preflight.context = replace(self.preflight.context, segment_selection=self._segments.snapshot())
             self._publish()
             return
-        if frame.layout != self.context.layout or frame.stream_id != self.context.stream_id:
+        if frame.layout != self._segments.source_layout or frame.stream_id != self.context.stream_id:
             self._record("device_changed", frame, (), "设备布局或数据流变化，结束本次采集")
             self.finish("device_changed")
             return
@@ -93,12 +120,28 @@ class DeviceQualitySession(QObject):
                    len(frame.valid_bits) != frame.layout.bit_count or not all(frame.valid_bits) or
                    bool(frame.quality_flags) or bool(frame.dropped_frames_before) or
                    (previous is not None and frame.sample_index != previous.sample_index + 1))
+        projected = self._segments.project(frame)
         if invalid:
             self._record("invalid_data", frame, (), "本段原始数据保留，事件与跨段指标不计入统计")
-            self.frame_ready.emit(frame, frame, True)
+            self.frame_ready.emit(frame, projected, True)
             return
-        processed = masked_frame(frame, self.context.bad_indices)
+        restored = tuple(s for s in self._segments.snapshot()["excluded_segment_indices"]
+                         if frame.contact_bits[s * 96:(s + 1) * 96] != b'\x01' * 96)
+        if restored and restored != getattr(self, "_last_restored_segments", ()):
+            self._record("excluded_segment_signal", frame, (),
+                         "已剔除段重新出现信号：" + "、".join(str(s + 1) for s in restored) + "；本次有效布局保持固定，下次准备时重新识别")
+        self._last_restored_segments = restored
+        processed = masked_frame(projected, self.context.bad_indices)
         uncertain = uncertain_contact(processed, self.context.bad_indices)
+        if self._segments.regions and self._segments.regions[-1] > 0:
+            occupied = {self._segments.regions[i // 96] for i, bit in enumerate(processed.contact_bits) if bit}
+            if occupied:
+                previous_regions = getattr(self, "_occupied_regions", occupied)
+                if len(occupied) > 1 or occupied != previous_regions:
+                    uncertain = True
+                    self._record("excluded_segment_boundary", frame, (),
+                                 "运动跨越被剔除段的物理空隙，相关事件不配对、不补造距离指标")
+                self._occupied_regions = occupied
         # Runtime observations are warnings, never new masks. Motion can produce similar signals.
         self._runtime.feed(processed)
         suspicious = ()
@@ -110,7 +153,7 @@ class DeviceQualitySession(QObject):
             self._record("runtime_obstruction", frame, suspicious,
                          "新增持续遮挡或高频变化，可能是停留/传感器异常；未动态屏蔽，该不确定区间不计入统计")
             uncertain = True
-        elif uncertain:
+        elif uncertain and uncertain_contact(processed, self.context.bad_indices):
             self._record("masked_contact_boundary", frame, self.context.bad_indices,
                          "接触邻近不可用光束，当前事件及跨越该区间的指标排除")
         if not uncertain:
@@ -137,6 +180,7 @@ class DeviceQualitySession(QObject):
         if self.done:
             return
         if self.context is None:
+            self._segments.reset()
             self.preflight.invalidate(f"采集异常：{issue.code}，重新自检")
             self._publish(True)
         else:
@@ -153,6 +197,7 @@ class DeviceQualitySession(QObject):
                 self._record("disconnected", self.last_frame, (), message)
                 self.finish("disconnected")
             else:
+                self._segments.reset()
                 self.preflight.invalidate(message)
                 self._publish(True)
 

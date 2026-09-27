@@ -109,7 +109,8 @@ class ReportDataPackageBuilder:
 
         beam_quality = report.report_config_snapshot.get("beam_quality")
         if beam_quality and (beam_quality.get("degraded") or beam_quality.get("events") or
-                             beam_quality.get("preflight", {}).get("stability", {}).get("transient_beam_pulses")):
+                             beam_quality.get("preflight", {}).get("stability", {}).get("transient_beam_pulses") or
+                             beam_quality.get("preflight", {}).get("segment_selection", {}).get("excluded_segment_indices")):
             quality_flags.append(QualityFlag(
                 quality_flag_id=_stable_id(package_id, "beam_quality"), code="beam_quality",
                 severity="warning", scope="report", source_ref="report_config_snapshot:beam_quality",
