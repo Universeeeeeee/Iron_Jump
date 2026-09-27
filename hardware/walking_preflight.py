@@ -40,6 +40,7 @@ class WalkingPreflight:
         self.context = None
         self.healthy_samples = 0
         self.reason = reason
+        self.restart_reason = reason if self.last_frame is not None else ""
         self.data_valid = False
         self._window = deque()
         self._counts = Counter()
@@ -61,7 +62,8 @@ class WalkingPreflight:
         if (len(frame.contact_bits) != frame.layout.bit_count
                 or len(frame.valid_bits) != frame.layout.bit_count
                 or not all(frame.valid_bits) or frame.quality_flags or frame.dropped_frames_before):
-            self.invalidate("采集数据异常，等待连续完整数据")
+            self.invalidate(f"采集丢帧（缺失{frame.dropped_frames_before}帧），等待连续完整数据"
+                            if frame.dropped_frames_before else "采集数据异常，等待连续完整数据")
             self.data_valid = (len(frame.contact_bits) == frame.layout.bit_count
                                and len(frame.valid_bits) == frame.layout.bit_count
                                and not frame.quality_flags and not frame.dropped_frames_before)
@@ -143,7 +145,8 @@ class WalkingPreflight:
     def _details(self, layout):
         if layout is None:
             return ""
-        parts = []
+        parts = (["重新观察原因：" + self.restart_reason]
+                 if self.healthy_samples < self.policy.samples and self.restart_reason else [])
         for s in range(len(layout.segments)):
             bad = [i % 96 + 1 for i in self.bad_indices if i // 96 == s]
             transient = [i % 96 + 1 for i in self.transient_indices if i // 96 == s]
@@ -152,6 +155,6 @@ class WalkingPreflight:
                 parts.append(f"第{s + 1}段：异常束{self._ranges(bad)}（{types}，{len(bad)}/96，{len(bad) / 96:.2%}）")
             if transient:
                 parts.append(f"第{s + 1}段：短暂遮挡束{self._ranges(transient)}（尚未确认为闪烁，等待稳定空场）")
-        if parts:
+        if self.bad_indices or self.transient_indices:
             parts.append(f"全程最大连续{self.consecutive}束异常；允许每段≤{self.policy.max_bad_ratio:.2%}、连续≤{self.policy.max_consecutive}束")
         return "；".join(parts)

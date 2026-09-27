@@ -315,3 +315,18 @@ def test_preflight_explains_whole_track_faults_when_selected_segment_is_clear():
     assert '连续3束' in state['details']
     assert not any(state['visual_frame']['contact_bits'][:96])
     assert state['visual_frame']['preflight_bad_indices'] == (576, 577, 578)
+
+
+def test_observation_retains_frame_gap_reason_until_window_recovers():
+    gate = WalkingPreflight()
+    observe(gate, count=400)
+    gate.feed(sample(402, dropped_frames_before=2, quality_flags=('frame_gap',)))
+    gate.feed(sample(403))
+    state = gate.status(time.perf_counter_ns())
+    assert not state['ready']
+    assert '缺失2帧' in state['details']
+    for i in range(404, 3403):
+        gate.feed(sample(i))
+    state = gate.status(time.perf_counter_ns())
+    assert state['ready']
+    assert '缺失2帧' not in state['details']
