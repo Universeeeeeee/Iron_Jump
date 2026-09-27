@@ -26,7 +26,7 @@ class DeviceQualitySession(QObject):
         self._event_count = 0
         self._last_event_key = None
         self._last_event = None
-        self._runtime = WalkingPreflight(policy)
+        self._runtime = WalkingPreflight(policy, stabilize=False)
         self._timer = QTimer(self)
         self._timer.setInterval(100)
         self._timer.timeout.connect(self.poll)

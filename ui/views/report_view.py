@@ -936,10 +936,12 @@ class ReportView(QWidget):
             self._title.setText(self._title.text() + " · 模拟数据（非实测）")
 
         quality = report.report_config_snapshot.get("beam_quality")
-        if quality and (quality.get("degraded") or quality.get("events")):
+        transient_pulses = (quality or {}).get("preflight", {}).get("stability", {}).get("transient_beam_pulses", 0)
+        if quality and (quality.get("degraded") or quality.get("events") or transient_pulses):
             count = len(quality.get("preflight", {}).get("bad_indices", ()))
             self._reason_label.setText(self._reason_label.text() +
                 f"\n设备质量：冻结 {count} 束不可用，运行中 {quality.get('event_count', 0)} 项记录。" +
+                (f"自检短时变化 {transient_pulses} 次（按光束计数，未计入坏灯），原始运动数据保留。" if transient_pulses else "") +
                 quality.get("limitation", ""))
             self._reason_label.setWordWrap(True)
         self._reason_label.setToolTip("未记录设备质量信息" if quality is None else

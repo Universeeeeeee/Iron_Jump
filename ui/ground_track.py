@@ -225,6 +225,12 @@ class GroundTrackPanel(QWidget):
                 status += "\n观察窗异常束：" + self._indices(bad)
             if transient:
                 status += "\n短暂遮挡束：" + self._indices(transient)
+            pending = [i - start + 1 for i in self._frame.get("preflight_pending_indices", ()) if start <= i < end]
+            filtered = [i - start + 1 for i in self._frame.get("preflight_filtered_indices", ()) if start <= i < end]
+            if pending:
+                status += "\n待稳定确认束：" + self._indices(pending)
+            if filtered:
+                status += "\n短时变化（未计入坏灯）：" + self._indices(filtered)
             status += "\n全程自检请查看上方全部设备段的结果"
         self.detail_status.setText(status)
         self.detail_status.setToolTip(status)

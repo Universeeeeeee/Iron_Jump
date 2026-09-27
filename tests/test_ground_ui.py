@@ -244,12 +244,16 @@ def test_preflight_detail_distinguishes_current_frame_from_window(qtbot):
     state = visual(DeviceLayout.linear(8))
     state['preflight_bad_indices'] = (576,)
     state['preflight_transient_indices'] = (577,)
+    state['preflight_pending_indices'] = (578,)
+    state['preflight_filtered_indices'] = (579,)
     panel.render_state(state)
     assert '本段当前帧' in panel.detail_status.text()
     assert '全程自检' in panel.detail_status.text()
     panel.channel.select_segment(6)
     assert '观察窗异常束：1' in panel.detail_status.text()
     assert '短暂遮挡束：2' in panel.detail_status.text()
+    assert '待稳定确认束：3' in panel.detail_status.text()
+    assert '短时变化（未计入坏灯）：4' in panel.detail_status.text()
     assert '当前帧' in panel.detail_status.text()
 
 

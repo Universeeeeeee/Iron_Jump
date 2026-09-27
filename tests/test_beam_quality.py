@@ -44,7 +44,9 @@ def test_per_segment_not_whole_array_and_cross_seam():
 
 def test_repeated_flicker_but_not_one_glitch():
     assert observe(WalkingPreflight(), lambda i: (10,) if (i // 200) % 2 else ())["requires_acknowledgement"]
-    assert not observe(WalkingPreflight(), lambda i: (10,) if i == 100 else ())["ready"]
+    state = observe(WalkingPreflight(), lambda i: (10,) if i == 100 else ())
+    assert state['ready'] and not state['bad_indices']
+    assert state['stability']['transient_beam_pulses'] == 1
 
 
 @pytest.mark.parametrize("mode", list(MODE_TEST_TYPES.values()))
@@ -294,10 +296,10 @@ def test_runtime_issue_duration_is_recorded(qtbot):
 def test_transient_observations_are_not_reported_as_confirmed_faults():
     gate = WalkingPreflight()
     state = observe(gate, lambda i: (576, 577, 578) if i == 100 else (), n=8)
-    assert not state['ready']
+    assert state['ready']
     assert state['bad_indices'] == ()
-    assert state['transient_indices'] == (576, 577, 578)
-    assert '短暂遮挡' in state['message']
+    assert state['stability']['transient_indices'] == (576, 577, 578)
+    assert '短时变化' in state['message']
     assert '超限' not in state['message']
     for i in range(3000, 3101):
         gate.feed(sample(i, n=8))
@@ -353,3 +355,113 @@ def test_preflight_display_work_is_throttled_but_readiness_changes_are_immediate
     gate.on_frame(sample(3001, (10,)))
     assert status.call_count == 4
     gate.halt()
+
+
+def test_beams_confirm_independently_on_device_clock():
+    gate = WalkingPreflight()
+    received = time.perf_counter_ns()
+    # All frames arrive in one USB burst; a flickering beam cannot reset its neighbour.
+    for i in range(11):
+        gate.feed(replace(sample(i, (40, 41) if i % 2 else (40,)), received_monotonic_ns=received))
+    assert gate._previous_bits == {40}
+    assert gate.pending_indices == ()
+    assert gate._counts[41] == 0
+
+
+def test_short_pulse_does_not_confirm_after_a_long_host_pause():
+    gate = WalkingPreflight()
+    received = time.perf_counter_ns()
+    for i in range(3):
+        gate.feed(replace(sample(i, (40,)), received_monotonic_ns=received + i * 100_000_000))
+    assert not gate._previous_bits
+    assert gate.pending_indices == (40,)
+
+
+def test_frequent_broad_transients_block_without_becoming_bad_beams():
+    gate = WalkingPreflight()
+    state = observe(gate, lambda i: tuple(range(576, 672)) if i % 100 < 3 else (), n=8)
+    assert not state['ready']
+    assert not state['bad_indices']
+    assert '采集不稳定' in state['message']
+    assert state['stability']['broad_change_events'] == 30
+    assert state['stability']['transient_beam_pulses'] == 30 * 96
+    for i in range(3000, 6100):
+        gate.feed(sample(i, n=8))
+    state = gate.status(time.perf_counter_ns())
+    assert state['ready'] and not state['stability']['broad_change_events']
+
+
+def test_single_beam_short_flicker_does_not_hide_other_beam_fault():
+    state = observe(WalkingPreflight(), lambda i: (40, 41) if i % 2 else (40,), count=3001)
+    assert state['ready'] and state['requires_acknowledgement']
+    assert state['bad_indices'] == (40,)
+    assert state['stability']['transient_indices'] == (41,)
+
+
+def test_gap_cannot_complete_pending_confirmation():
+    gate = WalkingPreflight()
+    for i in range(10):
+        gate.feed(sample(i, (40,)))
+    gate.feed(sample(100, (40,), dropped_frames_before=90, quality_flags=('frame_gap',)))
+    gate.feed(sample(101, (40,)))
+    assert not gate._previous_bits and gate.pending_indices == (40,)
+
+
+def test_stability_audit_is_frozen_and_short_runtime_pulses_are_preserved(qtbot):
+    gate = DeviceQualitySession(config_from_dict({'test_type': 'Jump Test'}), BeamQualityPolicy())
+    for i in range(3000):
+        gate.on_frame(sample(i, (40,) if i == 100 else ()))
+    gate.arm_checked((gate.preflight.context.key, False))
+    snapshot = gate.snapshot()
+    assert snapshot['preflight']['stability']['transient_beam_pulses'] == 1
+    frames = []
+    gate.frame_ready.connect(lambda raw, clean, uncertain: frames.append((raw, clean)))
+    pulse = sample(3000, (10,))
+    gate.on_frame(pulse)
+    gate.on_frame(sample(3001))
+    assert frames[0][0] is pulse
+    assert frames[0][1].contact_bits[10] == 1
+    assert frames[1][1].contact_bits[10] == 0
+    assert gate.snapshot()['preflight'] == snapshot['preflight']
+    gate.halt()
+
+
+@pytest.mark.parametrize('segments', [1, 3, 8])
+@pytest.mark.parametrize('episodes,ready', [(2, True), (3, False)])
+def test_broad_change_limit_uses_each_segment_and_current_window(segments, episodes, ready):
+    offset = (segments - 1) * 96
+    pulses = {100 + i * 100 for i in range(episodes)}
+    state = observe(WalkingPreflight(), lambda i: (offset, offset + 10, offset + 20) if i in pulses else (), n=segments)
+    assert state['ready'] is ready
+    assert not state['bad_indices']
+    assert state['stability']['broad_change_events'] == episodes
+
+
+def test_confirmation_requires_full_device_interval():
+    gate = WalkingPreflight()
+    for i in range(10):
+        gate.feed(sample(i, (40,)))
+    assert not gate._previous_bits and gate.pending_indices == (40,)
+    gate.feed(sample(10, (40,)))
+    assert gate._previous_bits == {40} and not gate.pending_indices
+
+
+def test_short_transients_reach_history_ai_and_visible_report(qtbot):
+    import json
+    from reporting.builders import ReportDataPackageBuilder
+    from reporting.models import ReportContextInput
+    from data.subject_store import _report_detail, _report_from_detail
+    from ui.views.report_view import ReportView
+    report = GaitEngine(config=config_from_dict({'test_type': 'Jump Test'})).build_report('manual')
+    state = observe(WalkingPreflight(), lambda i: (40,) if i == 100 else ())
+    quality = {'degraded': False, 'events': [], 'preflight': {'bad_indices': [], 'stability': state['stability']}}
+    report.report_config_snapshot['beam_quality'] = quality
+    restored = _report_from_detail(json.loads(json.dumps(_report_detail(report))))
+    assert restored.report_config_snapshot['beam_quality']['preflight']['stability']['transient_beam_pulses'] == 1
+    package = ReportDataPackageBuilder().build(restored, ReportContextInput(session_id=1, test_type='Jump Test'))
+    assert any(flag.code == 'beam_quality' for flag in package.quality_flags)
+    view = ReportView()
+    qtbot.addWidget(view)
+    view.load_report(restored)
+    assert '自检短时变化 1 次' in view._reason_label.text()
+    assert '未计入坏灯' in view._reason_label.text()
