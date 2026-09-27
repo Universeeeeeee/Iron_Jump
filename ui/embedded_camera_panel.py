@@ -162,6 +162,7 @@ class EmbeddedCameraPanel(QFrame):
         controls.setContentsMargins(4, 4, 4, 4)
         controls.setSpacing(4)
         row = QHBoxLayout()
+        row.setSpacing(2)
         self._play_button = MPushButton("播放")
         self._play_button.clicked.connect(self._toggle_playback)
         self._previous_button = MPushButton("上一帧")
