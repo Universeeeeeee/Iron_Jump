@@ -135,6 +135,7 @@ def evaluate_metadata_gates(retriever, specs) -> dict:
                 and spec.population in item.populations
                 and bool(set(item.support_types).intersection(spec.support_types))
                 and item.recommendation_allowed == spec.recommendation_allowed
+                and (not spec.protocols or item.metadata.get("protocol") in spec.protocols)
             )
             if not valid:
                 row_leakage += 1

@@ -30,12 +30,14 @@ class WalkingPreflight:
         self.context = None
         self.last_frame = None
         self.healthy_samples = 0
+        self.data_valid = False
         self.reason = "等待完整数据帧，识别设备段数"
 
     def invalidate(self, reason):
         self.context = None
         self.healthy_samples = 0
         self.reason = reason
+        self.data_valid = False
 
     def feed(self, frame: SensorFrame):
         previous = self.last_frame
@@ -49,10 +51,15 @@ class WalkingPreflight:
                 or not all(frame.valid_bits) or frame.quality_flags
                 or frame.dropped_frames_before):
             self.invalidate("采集数据异常，等待连续完整数据")
+            self.data_valid = (len(frame.contact_bits) == frame.layout.bit_count
+                               and len(frame.valid_bits) == frame.layout.bit_count
+                               and not frame.quality_flags and not frame.dropped_frames_before)
             return
         if any(frame.contact_bits):
             self.invalidate("检测到遮挡，请保持测量区域空场；持续遮挡需检查传感器")
+            self.data_valid = True
             return
+        self.data_valid = True
         self.healthy_samples += 1
         if self.healthy_samples >= self.REQUIRED_SAMPLES:
             self.context = PreparedDevice(frame.layout, frame.stream_id, frame.sample_index,
@@ -69,7 +76,17 @@ class WalkingPreflight:
     def status(self, now_ns):
         ready = self.ready(now_ns)
         layout = self.last_frame.layout if self.last_frame else None
+        frame = self.last_frame
+        fresh = frame is not None and 0 <= now_ns - frame.received_monotonic_ns <= self.STALE_NS
+        visual = None if frame is None else {
+            "positions_m": layout.positions_m,
+            "contact_bits": list(frame.contact_bits) if len(frame.contact_bits) == layout.bit_count else [0] * layout.bit_count,
+            "valid_bits": list(frame.valid_bits) if fresh and self.data_valid else [0] * layout.bit_count,
+            "feet": [], "timestamp_s": 0,
+        }
         return {"ready": ready, "message": self.reason,
                 "segment_count": len(layout.segments) if layout else None,
                 "nominal_length_m": len(layout.segments) if layout else None,
-                "healthy_samples": self.healthy_samples}
+                "healthy_samples": self.healthy_samples,
+                "device_key": (frame.stream_id, layout) if frame else None,
+                "visual_frame": visual}

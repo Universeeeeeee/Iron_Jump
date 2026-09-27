@@ -144,6 +144,9 @@ class GaitEngine(QObject):
 
         # ---- 处理器 ----
         self._processor = self._select_processor()
+        self._sensor_origin = None
+        self._sensor_last = None
+        self._sensor_offset_s = 0.0
 
         # ---- 步态模式内部状态 (仍直接持有，尚无步态 processor) ----
         self._cluster_tracker: Optional[ClusterTracker] = None
@@ -201,6 +204,9 @@ class GaitEngine(QObject):
     def set_start_time(self, t: float):
         """设置时间基准（由 UI 在点击'开始分析'时调用），并启动倒计时。"""
         self._start_time = t
+        self._sensor_origin = None
+        self._sensor_last = None
+        self._sensor_offset_s = 0.0
         self._pause_started_at = None
         self._stop_timer_remaining_ms = 0
         self._start_timer()
@@ -270,10 +276,13 @@ class GaitEngine(QObject):
             )
             self._stop_timer.stop()
 
-        if self._processor is not None:
+        if self._processor is not None and self._start_time is not None:
             pause_boundary = getattr(self._processor, "pause_boundary", None)
             if callable(pause_boundary):
                 pause_boundary()
+        self._sensor_offset_s = self._export_timestamps[-1] if self._export_timestamps else 0.0
+        self._sensor_origin = None
+        self._sensor_last = None
         self.pause_state_changed.emit(True)
 
     @Slot()
@@ -314,6 +323,9 @@ class GaitEngine(QObject):
         self._paused = False
         self._pause_started_at = None
         self._start_time = None
+        self._sensor_origin = None
+        self._sensor_last = None
+        self._sensor_offset_s = 0.0
 
         # 处理器（重新选择，丢弃旧实例）
         self._processor = self._select_processor()
@@ -360,6 +372,39 @@ class GaitEngine(QObject):
     #  核心入口 (由 UsbWorker.raw_contact_signal → DirectConnection 调用)
     # ---------------------------------------------------------------
 
+    @Slot(object)
+    def process_acquisition_issue(self, issue):
+        if (not self._paused and self._processor is not None
+                and self._processor.name in {"treadmill_gait", "treadmill_running"}):
+            self._processor.break_continuity(issue.code)
+
+    @Slot(object)
+    def process_sensor_frame(self, frame):
+        """Use device samples for treadmill timing; USB delivery time is not gait time."""
+        if (self._paused or self._finished or self._processor is None
+                or self._processor.name not in {"treadmill_gait", "treadmill_running"}):
+            return
+        if len(frame.contact_bits) != 96 or not all(frame.valid_bits) or frame.quality_flags:
+            self._processor.break_continuity("invalid_sensor_frame")
+            return
+        previous = self._sensor_last
+        if previous is not None:
+            if frame.stream_id != previous.stream_id:
+                self._processor.break_continuity("device_stream_changed")
+                self._sensor_offset_s = self._export_timestamps[-1]
+                self._sensor_origin = None
+            elif frame.sample_index <= previous.sample_index:
+                self._processor.break_continuity("non_monotonic_sample")
+                return
+            elif frame.sample_index != previous.sample_index + 1 or frame.dropped_frames_before:
+                self._processor.break_continuity("missing_device_samples")
+        if self._sensor_origin is None:
+            self._sensor_origin = frame.sample_index
+        self._sensor_last = frame
+        rel_time = self._sensor_offset_s + (frame.sample_index - self._sensor_origin) / frame.sample_rate_hz
+        self._processor.time_source = frame.time_source
+        self.process_raw_frame(list(frame.contact_bits), (self._start_time or 0.0) + rel_time)
+
     @Slot(list, float)
     def process_raw_frame(self, contact_bits: list, timestamp: float):
         """
@@ -376,7 +421,7 @@ class GaitEngine(QObject):
             return
 
         # 转换为相对时间
-        rel_time = timestamp - self._start_time if self._start_time else 0.0
+        rel_time = timestamp - self._start_time if self._start_time is not None else timestamp
 
         # 记录到导出缓存
         self._export_frames.append(list(contact_bits))

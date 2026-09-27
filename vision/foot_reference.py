@@ -82,6 +82,8 @@ class FootPoseSample:
     # compatible with existing callers while diagnostics can persist all 33
     # landmarks.
     landmarks_33: tuple[Landmark, ...] | None = None
+    # None means unchecked; an empty string means temporally stable.
+    identity_reject_reason: str | None = None
 
     def landmarks(self) -> tuple[Landmark, ...]:
         return (

@@ -16,12 +16,20 @@ from .models import (
 )
 
 
-PLANNER_VERSION = "deterministic-query-planner/1.0"
+PLANNER_VERSION = "deterministic-query-planner/1.1"
 
 _DOMAIN_BY_TEST_TYPE: dict[str, Domain] = {
     "Jump Test": "jump",
     "Treadmill Gait Test": "walk",
     "Treadmill Running Test": "run",
+    "Sprint and Gait Test": "walk",
+    "Overground Running Test": "run",
+}
+
+# Ground reports must not inherit treadmill or distance-training evidence.
+_GROUND_PROTOCOLS = {
+    "Sprint and Gait Test": ("overground_walk",),
+    "Overground Running Test": ("overground_run", "treadmill_and_overground_run"),
 }
 
 _TERMS_BY_INTENT: dict[RecommendationIntent, str] = {
@@ -53,9 +61,12 @@ class SupportMatrix:
         metric_codes: tuple[str, ...],
         population: str,
         intent: RecommendationIntent,
+        protocols: tuple[str, ...] = (),
     ) -> bool:
         allowed_types = set(_SUPPORT_BY_INTENT[intent])
         for source in self._sources:
+            if protocols and source.metadata.get("protocol") not in protocols:
+                continue
             if not source.recommendation_allowed or domain not in source.domains:
                 continue
             if population not in source.populations:
@@ -77,6 +88,7 @@ class QueryPlanner:
         domain = _DOMAIN_BY_TEST_TYPE.get(context.test_type)
         if domain is None:
             return ()
+        protocols = _GROUND_PROTOCOLS.get(context.test_type, ())
         claim_metrics = {
             metric
             for claim in context.claims
@@ -98,7 +110,7 @@ class QueryPlanner:
         for intent in intents:
             key = (domain, metric_codes, intent)
             if key in seen or not self._support_matrix.supports(
-                domain, metric_codes, context.population, intent
+                domain, metric_codes, context.population, intent, protocols
             ):
                 continue
             seen.add(key)
@@ -107,8 +119,10 @@ class QueryPlanner:
                 for code in metric_codes
             ]
             query = " ".join([domain, *labels, *metric_codes, _TERMS_BY_INTENT[intent]])
+            if protocols:
+                query += " " + " ".join(protocols)
             query_id = hashlib.sha256(
-                f"{PLANNER_VERSION}\x1f{domain}\x1f{','.join(metric_codes)}\x1f{intent}".encode()
+                f"{PLANNER_VERSION}\x1f{context.test_type}\x1f{domain}\x1f{','.join(metric_codes)}\x1f{intent}".encode()
             ).hexdigest()[:24]
             specs.append(
                 KnowledgeQuerySpec(
@@ -121,6 +135,7 @@ class QueryPlanner:
                     recommendation_allowed=True,
                     recommendation_intent=intent,
                     planner_version=PLANNER_VERSION,
+                    protocols=protocols,
                 )
             )
             if len(specs) == 3:

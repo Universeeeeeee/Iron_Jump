@@ -102,7 +102,7 @@ def build_visual_frame(
         feet.append(
             FootprintActiveState(
                 contact_id=contact.contact_id,
-                side=side_from_foot_label(contact.foot_label),
+                side=getattr(contact, "side", side_from_foot_label(contact.foot_label)),
                 centroid_cm=_optional_float(centroid_cm),
                 length_cm=_optional_float(length_cm),
                 status=status,

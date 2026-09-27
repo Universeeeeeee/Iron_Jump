@@ -13,7 +13,8 @@ from voice.settings import VoiceSettings
 
 
 def emit(event):
-    print(json.dumps(event, ensure_ascii=False), flush=True)
+    # JSON escapes keep IPC readable even when Windows pipes default to GBK.
+    print(json.dumps(event, ensure_ascii=True), flush=True)
 
 
 def check_dependencies():
@@ -101,6 +102,10 @@ async def run_worker(settings):
                 value = json.loads(line)
                 if value.get("type") == "stop":
                     stopped.set()
+                elif value.get("type") == "interrupt":
+                    router.turn = max(router.turn + 1, value["turn"])
+                    event({"type": "turn", "turn": router.turn})
+                    await router.broadcast_interruption()
                 elif value.get("type") == "speak" and value.get("text"):
                     await worker.queue_frame(SpeakFrame(value["text"][:1500], value["turn"]))
 

@@ -90,6 +90,9 @@ class GaitEventRecord:
     time_s: float
     side: FootSide
     kind: GaitEventKind
+    contact_id: int | None = None
+    confirmed_time_s: float | None = None
+    foot_label: str | None = None
 
 
 @dataclass(frozen=True)

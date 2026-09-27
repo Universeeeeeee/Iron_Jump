@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import math
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from enum import Enum
 
 from .foot_reference import FootPoseSample, Landmark
@@ -61,6 +61,18 @@ class LegIdentityAnalyzer:
         self._swap_streak = 0
         self._ambiguous = False
         self._recovery_streak = 0
+
+    def annotate(self, sample: FootPoseSample | None) -> FootPoseSample | None:
+        """Attach causal identity quality once per inference, before windowing."""
+        result = self.update(sample)
+        if sample is None:
+            return None
+        return replace(
+            sample,
+            identity_reject_reason=(
+                "" if result.state is LegIdentityState.STABLE else result.reason
+            ),
+        )
 
     def update(self, sample: FootPoseSample | None) -> LegIdentityResult:
         if sample is None:

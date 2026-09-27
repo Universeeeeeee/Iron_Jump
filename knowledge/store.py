@@ -392,6 +392,10 @@ class KnowledgeStore:
             clauses.append("c.domain=?")
             params.append(resolved_domain)
         if spec:
+            if spec.protocols:
+                placeholders = ",".join("?" for _ in spec.protocols)
+                clauses.append(f"json_extract(c.metadata_json, '$.protocol') IN ({placeholders})")
+                params.extend(spec.protocols)
             if spec.metric_codes:
                 placeholders = ",".join("?" for _ in spec.metric_codes)
                 clauses.append(

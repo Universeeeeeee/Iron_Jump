@@ -11,12 +11,13 @@ from tests.test_voice_pipeline import FakeASR, FakeTTS, FakeOutput
 from voice.settings import VoiceSettings
 
 
-@pytest.mark.parametrize("shutdown", ["stop", "eof", "disconnect"])
+@pytest.mark.parametrize("shutdown", ["stop", "eof", "disconnect", "interrupt"])
 def test_worker_shutdown_during_playback_releases_resources(monkeypatch, shutdown):
     import voice.__main__ as module
 
     played = threading.Event()
     released = threading.Event()
+    interrupted = threading.Event()
 
     class DisconnectingASR(FakeASR):
         async def results(self):
@@ -38,6 +39,11 @@ def test_worker_shutdown_during_playback_releases_resources(monkeypatch, shutdow
 
         def callback(self, *args):
             pass
+
+        def clear(self):
+            super().clear()
+            if played.is_set():
+                interrupted.set()
 
         async def write(self, audio):
             await super().write(audio)
@@ -63,7 +69,13 @@ def test_worker_shutdown_during_playback_releases_resources(monkeypatch, shutdow
             return
         if shutdown == "disconnect":
             released.wait(3)
-        if shutdown == "stop":
+        if shutdown == "interrupt":
+            yield '{"type":"interrupt","turn":1}\n'
+            assert interrupted.wait(3)
+            assert not stream.exited
+            assert not asr.closed
+            assert tts.cancelled
+        if shutdown in {"stop", "interrupt"}:
             yield '{"type":"stop"}\n'
 
     monkeypatch.setattr("pipecat.pipeline.worker.warm_deferred_imports", lambda: None)
@@ -74,6 +86,9 @@ def test_worker_shutdown_during_playback_releases_resources(monkeypatch, shutdow
     monkeypatch.setattr(module.sys, "stdin", stdin())
     monkeypatch.setattr(module, "emit", events.append)
     asyncio.run(asyncio.wait_for(module.run_worker(VoiceSettings("fixture", "fixture")), 5))
+    if shutdown == "interrupt":
+        assert interrupted.is_set()
+        assert {"type": "turn", "turn": 1} in events
     assert played.is_set()
     assert any(event["type"] == "ready" for event in events)
     assert any(event["type"] == "error" for event in events) == (shutdown == "disconnect")

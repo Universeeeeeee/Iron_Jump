@@ -105,7 +105,7 @@ class TinySeCameraCaptureRecordingTest(unittest.TestCase):
         finally:
             tinyse_camera.mjpg_to_avi = original_converter
 
-    def test_finalize_falls_back_to_raw_mjpg_when_conversion_fails(self):
+    def test_finalize_does_not_publish_incomplete_recording_when_conversion_fails(self):
         dshow_capture = _SlowDShowCapture()
         capture = self._recording_capture(dshow_capture)
         original_converter = tinyse_camera.mjpg_to_avi
@@ -120,13 +120,27 @@ class TinySeCameraCaptureRecordingTest(unittest.TestCase):
             self.assertTrue(accepted)
             self.assertEqual(len(capture.error.values), 1)
             self.assertIn("MJPEG", capture.error.values[0][0])
-            self.assertEqual(
-                capture.recording_finished.values,
-                [(str(Path("camera/recordings/tinyse_test.mjpg")),)],
-            )
+            self.assertEqual(capture.recording_finished.values, [])
             self.assertFalse(capture.is_record_busy)
         finally:
             tinyse_camera.mjpg_to_avi = original_converter
+
+    def test_completion_observes_finished_saving_state(self):
+        capture = self._recording_capture(_SlowDShowCapture())
+        observed = []
+        capture.recording_finished.emit = lambda path: observed.append(capture.is_record_busy)
+        with patch.object(tinyse_camera, "mjpg_to_avi", return_value=Path("clip.avi")):
+            capture.stop_record(wait=True)
+        self.assertEqual(observed, [False])
+
+    def test_preserve_raw_does_not_convert_or_publish_avi(self):
+        capture = self._recording_capture(_SlowDShowCapture())
+        capture._record_preserve_raw = True
+        with patch.object(tinyse_camera, "mjpg_to_avi") as convert:
+            capture.stop_record(wait=True)
+            convert.assert_not_called()
+        self.assertEqual(capture.recording_finished.values, [])
+        self.assertFalse(capture.is_record_busy)
 
     def test_analysis_frame_timing_preserves_sample_callback_and_decode_times(self):
         capture = TinySeCameraCapture(preview_fps=30)

@@ -240,6 +240,14 @@ def test_schema_v4_recommendations_render_only_validated_http_references(qtbot):
             {"status": "no_evidence"},
             "未检索到满足条件的文献证据",
         ),
+        (
+            {"status": "no_evidence", "error_code": "no_supported_query"},
+            "当前测试场景或已验证指标尚无适用的循证建议",
+        ),
+        (
+            {"status": "degraded", "error_code": "planning_failed"},
+            "循证建议暂时不可用",
+        ),
     ),
 )
 def test_rag_audit_status_is_visible_to_user(qtbot, audit, expected):
@@ -257,6 +265,7 @@ def test_rag_audit_status_is_visible_to_user(qtbot, audit, expected):
     )
 
     assert expected in view._analysis_result.text()
+    assert "可信结论。" in view._analysis_result.text()
 
 
 def test_missing_rag_audit_does_not_show_degradation(qtbot):

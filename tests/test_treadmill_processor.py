@@ -1501,7 +1501,7 @@ def _feed_frames(
         (TreadmillRunningConfig, "treadmill_running"),
     ],
 )
-def test_treadmill_ignores_startup_contact_and_starts_new_steps_from_left(
+def test_treadmill_ignores_startup_boundary_and_preserves_unknown_side(
     config_type, mode_name
 ):
     config = config_type(
@@ -1530,7 +1530,7 @@ def test_treadmill_ignores_startup_contact_and_starts_new_steps_from_left(
     touches = [event for event in events if event.kind == "touch"]
     assert len(touches) == 1
     assert touches[0].contact.foot_label == "A"
-    assert processor._contact_side[touches[0].contact.contact_id] == "left"
+    assert processor._contact_side[touches[0].contact.contact_id] == "unknown"
     assert processor.make_status_snapshot(0.28)["touch_count"] == 1
 
 
@@ -1540,6 +1540,7 @@ def test_treadmill_processor_makes_live_status_snapshot_from_rows():
         test_length=None,
         treadmill_speed=3.6,
         direction="Interface side",
+        starting_foot_override="left",
     )
     processor = TreadmillProcessor(config, mode_name="treadmill_gait")
 

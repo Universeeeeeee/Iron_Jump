@@ -28,6 +28,7 @@ from dayu_widgets import dayu_theme
 from config.test_config import TestConfig
 from ui.embedded_camera_panel import EmbeddedCameraPanel
 from ui.footprint_channel import FootprintChannelWidget
+from ui.ground_track import GroundTrackPanel
 
 # pyqtgraph 可选导入
 try:
@@ -117,6 +118,7 @@ class ExecutionView(QWidget):
     pause_requested = Signal()
     stop_requested = Signal()
     camera_requested = Signal(str)
+    ground_layout_changed = Signal()
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -153,6 +155,7 @@ class ExecutionView(QWidget):
         # 暂停状态
         self._paused = False
         self._device_state = "disconnected"
+        self._detected_segments = None
         self._latest_footprint_frame = None
 
         self._build_ui()
@@ -163,7 +166,12 @@ class ExecutionView(QWidget):
     # ------------------------------------------------------------------
 
     def _build_ui(self):
-        main_layout = QVBoxLayout(self)
+        self._page_layout = QHBoxLayout(self)
+        self._page_layout.setContentsMargins(0, 0, 0, 0)
+        self._page_layout.setSpacing(0)
+        self._body = QWidget()
+        self._page_layout.addWidget(self._body, 1)
+        main_layout = QVBoxLayout(self._body)
         self._main_layout = main_layout
         main_layout.setContentsMargins(15, 10, 15, 10)
         main_layout.setSpacing(10)
@@ -237,6 +245,11 @@ class ExecutionView(QWidget):
             card.hide()
 
         main_layout.addLayout(self._cards_layout)
+        self._ground_status = QLabel("等待完整数据帧，识别设备段数")
+        self._ground_status.setWordWrap(True)
+        self._ground_status.setStyleSheet("color: #aeb7c5; font-size: 11pt; border: none;")
+        self._ground_status.hide()
+        main_layout.addWidget(self._ground_status)
 
         # ===== 图表区 =====
         charts_layout = QHBoxLayout()
@@ -329,6 +342,9 @@ class ExecutionView(QWidget):
         self._cycle_panel.hide()
 
         self._camera_panel = EmbeddedCameraPanel()
+        self._camera_panel.playback_layout_changed.connect(
+            self._update_cycle_panel_visibility
+        )
         self._camera_column = QWidget()
         camera_layout = QVBoxLayout(self._camera_column)
         camera_layout.setContentsMargins(0, 0, 0, 0)
@@ -460,6 +476,14 @@ class ExecutionView(QWidget):
         self._controls_layout.addWidget(self.btn_stop)
 
         main_layout.addWidget(self._controls_container)
+        self._ground_track = GroundTrackPanel()
+        self._page_layout.addWidget(self._ground_track)
+        self._ground_track.hide()
+        lower_layout.addWidget(self._ground_track.detail, 0, 2)
+
+    @property
+    def is_ground(self):
+        return getattr(self._config, "test_type", "") in {"Sprint and Gait Test", "Overground Running Test"}
 
     def _apply_style(self):
         self.setStyleSheet(
@@ -486,17 +510,24 @@ class ExecutionView(QWidget):
             "Treadmill Running Test",
         )
         self._arrange_execution_area(is_jump)
+        self._camera_panel.set_integrated_style(self.is_ground)
+        self._ground_track.setVisible(self.is_ground)
+        self._ground_track.detail.setVisible(self.is_ground)
+        self._ground_status.setVisible(self.is_ground)
+        self._device_label.setVisible(not self.is_ground)
         for c in self._jump_cards:
             c.setVisible(is_jump)
         for c in self._gait_cards:
             c.setVisible(not is_jump)
         self._chart_container.setVisible(is_jump)
         self._lower_split.show()
-        self._footprint_channel.setVisible(not is_jump)
+        self._footprint_channel.setVisible(not is_jump and not self.is_ground)
         self._cycle_panel.hide()
         self._card_imbalance._title.setText(
-            "步态周期不对称率" if is_treadmill else "不平衡指数"
+            "有效周期" if self.is_ground else "步态周期不对称率" if is_treadmill else "不平衡指数"
         )
+        self._card_imbalance._unit.setText("个" if self.is_ground else "%")
+        self._card_steps._title.setText("有效步数" if self.is_ground else "步数")
         self._footprint_channel.set_direction(getattr(config, "direction", None))
         self._camera_start_timer.start(0)
         if is_treadmill:
@@ -527,6 +558,10 @@ class ExecutionView(QWidget):
         self.btn_stop.hide()
         self._device_state = "connecting"
         self._device_label.setText("● 正在连接设备...")
+        self._ground_status.setText("等待完整数据帧，识别设备段数")
+        if self.is_ground:
+            self._mode_label.setText(("地面跑步" if config.test_type == "Overground Running Test" else "地面走路") + " · 准备测试")
+        self.ground_layout_changed.emit()
 
     def _update_cycle_panel_visibility(self):
         is_treadmill = self._config is not None and self._config.test_type in (
@@ -552,6 +587,7 @@ class ExecutionView(QWidget):
         maximum_preview_height = (preview_width // 16) * 9
         camera_outer_height = (
             maximum_preview_height
+            + self._camera_panel.playback_controls_height()
             + frame_height
             + panel_margins.top()
             + panel_margins.bottom()
@@ -590,6 +626,8 @@ class ExecutionView(QWidget):
         self._device_label.setText(text)
         self._device_label.setToolTip(message)
         self._device_label.setStyleSheet(f"font-size: 10pt; color: {color};")
+        if self.is_ground and state in {"connecting", "disconnected", "error"}:
+            self._ground_status.setText(message or text)
         if state == "connected":
             self.btn_start.setText("开始采集")
             self.btn_start.setEnabled(getattr(self._config, "test_type", "") not in {"Sprint and Gait Test", "Overground Running Test"})
@@ -602,19 +640,41 @@ class ExecutionView(QWidget):
         elif state in {"disconnected", "connecting"}:
             self.btn_start.setText("开始采集")
             self.btn_start.setEnabled(False)
+        if not self.is_ground and self._detected_segments and self._detected_segments > 1:
+            self._show_unsupported_layout()
+
+    def on_device_layout(self, layout):
+        self._detected_segments = len(layout.segments) if layout is not None else None
+        if not self.is_ground and self._detected_segments and self._detected_segments > 1:
+            self._show_unsupported_layout()
+        elif not self.is_ground and self._device_state == "connected":
+            self.btn_start.setText("开始采集")
+            self.btn_start.setEnabled(True)
+
+    def _show_unsupported_layout(self):
+        self._device_label.setText(f"已识别 {self._detected_segments} 段；当前模式仅支持单段设备")
+        self.btn_start.setText("请连接单段设备或更换模式")
+        self.btn_start.setEnabled(False)
 
     def on_walking_readiness(self, result):
+        if not self.is_ground:
+            return
         count = result.get("segment_count")
         prefix = f"{count} 段 / 标称 {count} 米 · " if count else ""
         self._device_label.setText(prefix + result["message"])
-        self.btn_start.setText("开始测试" if result["ready"] else "等待自检通过")
+        self._ground_status.setText(prefix + result["message"])
+        self.btn_start.setText(f"确认共 {count} 段并开始" if result["ready"] else "等待自检通过")
         self.btn_start.setEnabled(result["ready"])
+        if result.get("visual_frame"):
+            self._ground_track.render_state(result["visual_frame"])
 
     def on_session_started(self):
         """Enter the running UI only after the device confirms streaming."""
         label = "纵跳测试" if self._mode == "纵跳" else "步态分析"
         if getattr(self._config, "test_type", "") == "Overground Running Test":
             label = "地面跑步"
+        elif self.is_ground:
+            label = "地面走路"
         self._mode_label.setText(f"{label} · 运行中")
         self.btn_start.hide()
         self.btn_return_config.hide()
@@ -655,6 +715,7 @@ class ExecutionView(QWidget):
             self._plot_cadence.setXRange(0, self._initial_range, padding=0)
         if hasattr(self, "_footprint_channel"):
             self._footprint_channel.clear()
+            self._ground_track.clear()
         if hasattr(self, "_cycle_panel"):
             self._current_cycle_state.setText("等待触地事件")
             self._left_cycle_value.setText("左脚  --")
@@ -732,6 +793,15 @@ class ExecutionView(QWidget):
             self._mode_label.setText(("地面跑步" if "running" in snapshot else "地面走路") + " · " + snapshot["status"])
             data = snapshot.get("running", snapshot.get("walking"))
             self._device_label.setText(f"{data['segment_count']} 段 / 标称 {data['nominal_length_m']} 米 · 有效步数 {data['valid_steps']} · 异常 {len(data['issues'])}")
+            self._ground_status.setText(self._device_label.text())
+            if data["issues"]:
+                self._ground_status.setText(self._ground_status.text() + " · 采集存在异常，详见报告")
+            self._ground_track.set_summary(data)
+            self._card_steps.set_value(str(data["valid_steps"]))
+            self._card_imbalance.set_value(str(data["valid_cycles"]))
+            self._card_stride.set_value(f"{snapshot['latest_stride']:.1f}" if snapshot.get("stride_count") else "--")
+            self._card_velocity.set_value(f"{snapshot['velocity_sum'] / snapshot['velocity_count']:.1f}" if snapshot.get("velocity_count") else "--")
+            return
 
         if snapshot.get("stride_count", 0) > 0:
             latest = snapshot.get("latest_stride", 0)
@@ -779,11 +849,17 @@ class ExecutionView(QWidget):
 
     def on_footprint_visual_frame(self, frame: dict):
         self._latest_footprint_frame = frame
+        if self.is_ground:
+            self._ground_track.render_state(frame)
+            return
         if self._mode != "纵跳":
             self._footprint_channel.render_state(frame)
 
     def on_device_message(self, msg: str):
         """显示设备状态。"""
+        if not self.is_ground and self._detected_segments and self._detected_segments > 1:
+            self._show_unsupported_layout()
+            return
         if getattr(self._config, "test_type", "") not in {"Sprint and Gait Test", "Overground Running Test"}:
             self._device_label.setText(msg[:50])
 
@@ -827,6 +903,22 @@ class ExecutionView(QWidget):
     # ------------------------------------------------------------------
 
     def _arrange_execution_area(self, is_jump: bool):
+        if self.is_ground:
+            self._lower_layout.removeWidget(self._controls_container)
+            self._main_layout.addWidget(self._controls_container)
+            self._controls_layout.setDirection(QBoxLayout.LeftToRight)
+            self._controls_layout.setSpacing(12)
+            self._controls_layout.setAlignment(Qt.AlignRight)
+            self.btn_stop.setMinimumWidth(120)
+            self.btn_stop.setMaximumWidth(180)
+            self.btn_start.setMaximumWidth(360)
+            self._controls_container.setMaximumWidth(520)
+            self._main_layout.setAlignment(self._controls_container, Qt.AlignRight)
+            return
+        self._controls_layout.setAlignment(Qt.Alignment())
+        self.btn_stop.setMaximumWidth(16777215)
+        self.btn_start.setMaximumWidth(16777215)
+        self._controls_container.setMaximumWidth(16777215)
         self._main_layout.removeWidget(self._progress_container)
         self._main_layout.removeWidget(self._controls_container)
         self._lower_layout.addWidget(self._progress_container, 0, 1, 2, 1)

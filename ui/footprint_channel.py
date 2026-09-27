@@ -74,13 +74,15 @@ QLabel#ReplayTimeLabel {
 
 
 class FootprintChannelWidget(QFrame):
-    """Render canonical footprint frames between two 96-LED rails."""
+    """Render canonical footprint frames between two LED rails."""
 
     def __init__(self, parent=None):
         super().__init__(parent)
         self._contact_bits = [0] * _LED_COUNT
         self._positions_m = None
         self._feet: list[dict] = []
+        self.history: list[dict] = []
+        self.valid_bits = [1] * _LED_COUNT
         self._direction = "Interface side"
         self._left_foot = self._load_pixmap("left_foot.png")
         self._right_foot = self._load_pixmap("right_foot.png")
@@ -100,6 +102,8 @@ class FootprintChannelWidget(QFrame):
     def clear(self):
         self._contact_bits = [0] * _LED_COUNT
         self._feet = []
+        self.history = []
+        self.valid_bits = [1] * _LED_COUNT
         self._positions_m = None
         self.update()
 
@@ -116,6 +120,7 @@ class FootprintChannelWidget(QFrame):
             bits.extend([0] * (_LED_COUNT - len(bits)))
 
         self._contact_bits = bits
+        self.valid_bits = list(frame.get("valid_bits", [1] * len(bits)))
         self._positions_m = frame.get("positions_m")
         self._feet = []
         for foot in frame.get("feet", []):
@@ -158,6 +163,10 @@ class FootprintChannelWidget(QFrame):
             for index in range(len(self._contact_bits))
         ]
 
+    def lane_rect(self):
+        rect = self.rect().adjusted(14, 14, -14, -14)
+        return QRectF(rect.left() + 34, rect.top() + 20, rect.width() - 69, rect.height() - 40)
+
     def _foot_size_for_lane(
         self, lane_width: int, lane_height: int, length_cm: float | None
     ) -> tuple[int, int]:
@@ -188,13 +197,13 @@ class FootprintChannelWidget(QFrame):
         rect = self.rect().adjusted(14, 14, -14, -14)
         rail_left_x = rect.left() + 12
         rail_right_x = rect.right() - 12
-        lane_left = rail_left_x + 22
-        lane_right = rail_right_x - 22
-        top = rect.top() + 20
-        height = rect.height() - 40
+        lane = self.lane_rect()
+        lane_left, lane_right = int(lane.left()), int(lane.right())
+        top, height = int(lane.top()), int(lane.height())
 
-        painter.setPen(QColor(70, 70, 76))
-        painter.setBrush(QColor(28, 28, 32))
+        integrated = bool(self.property("integrated"))
+        painter.setPen(Qt.NoPen if integrated else QColor(70, 70, 76))
+        painter.setBrush(QColor(255, 255, 255, 5) if integrated else QColor(28, 28, 32))
         painter.drawRoundedRect(lane_left, top, lane_right - lane_left, height, 8, 8)
 
         painter.setPen(Qt.NoPen)
@@ -214,19 +223,30 @@ class FootprintChannelWidget(QFrame):
         right_markers = self._rail_marker_rects(rail_right_x, top, height)
         for idx, active in enumerate(self._contact_bits):
             y = self._y_for_index(idx, top, height)
-            color = QColor(70, 220, 125) if active else QColor(70, 70, 76)
+            valid = idx < len(self.valid_bits) and self.valid_bits[idx]
+            color = QColor("#ddaa57") if not valid else QColor(70, 220, 125) if active else QColor(70, 70, 76)
             painter.setPen(Qt.NoPen)
             painter.setBrush(color)
             painter.drawRoundedRect(left_markers[idx], 2.0, 2.0)
             painter.drawRoundedRect(right_markers[idx], 2.0, 2.0)
-            if active:
+            if active and valid:
                 painter.setPen(QColor(70, 220, 125, 60))
                 painter.drawLine(
                     QLineF(float(lane_left), y, float(lane_right), y)
                 )
 
-        for foot in self._feet:
+        painter.save()
+        if self._positions_m:
+            painter.setClipRect(lane)
+        painter.setOpacity(.32)
+        for foot in self.history:
             self._paint_foot(painter, foot, lane_left, lane_right, top, height)
+        painter.setOpacity(1)
+        if len(self.valid_bits) == len(self._contact_bits) and all(self.valid_bits):
+            for foot in self._feet:
+                self._paint_foot(painter, foot, lane_left, lane_right, top, height)
+        painter.restore()
+        painter.end()
 
     def _paint_foot(
         self,
@@ -301,6 +321,11 @@ class FootprintReplayPanel(QWidget):
 
         self._channel = FootprintChannelWidget()
         layout.addWidget(self._channel, 1)
+        from ui.ground_track import GroundTrackPanel
+        self.ground_track = GroundTrackPanel()
+        self.ground_track.hide()
+        layout.addWidget(self.ground_track, 1)
+        self.is_ground = False
 
         controls = QHBoxLayout()
         self._btn_play = MPushButton("Play")
@@ -321,6 +346,16 @@ class FootprintReplayPanel(QWidget):
 
     def set_direction(self, direction: str | None):
         self._channel.set_direction(direction)
+
+    def set_ground_context(self, device=None, summary=None):
+        self.is_ground = summary is not None
+        self._channel.setVisible(not self.is_ground)
+        self.ground_track.setVisible(self.is_ground)
+        self.ground_track.detail.setVisible(self.is_ground)
+        self.ground_track.clear()
+        if self.is_ground:
+            self.ground_track.set_layout(device)
+            self.ground_track.set_summary(summary)
 
     def set_timeline(self, timeline):
         self._timer.stop()
@@ -346,8 +381,15 @@ class FootprintReplayPanel(QWidget):
             self._timer.stop()
             self._btn_play.setText("Play")
         else:
-            self._timer.start(40)
+            self._timer.start(self._next_interval())
             self._btn_play.setText("Pause")
+
+    def _next_interval(self):
+        if self.is_ground and self._index + 1 < len(self._timeline):
+            current = self._timeline[self._index].get("timestamp_s", 0)
+            following = self._timeline[self._index + 1].get("timestamp_s", current)
+            return max(1, round((following - current) * 1000))
+        return 40
 
     def _advance(self):
         if not self._timeline:
@@ -364,9 +406,13 @@ class FootprintReplayPanel(QWidget):
     def _on_slider_changed(self, value: int):
         if self._timeline:
             self._render_index(value)
+            if self.is_ground and self._timer.isActive():
+                self._timer.start(self._next_interval())
 
     def _render_index(self, index: int):
         self._index = max(0, min(index, len(self._timeline) - 1))
         frame = self._timeline[self._index]
         self._channel.render_state(frame)
+        if self.is_ground:
+            self.ground_track.render_state(frame)
         self._time_label.setText(f"{frame.get('timestamp_s', 0.0):.3f} s")

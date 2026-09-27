@@ -33,6 +33,7 @@ def test_walking_cycle_uses_same_side_boundaries_and_cross_side_events():
 
 def test_running_cycle_reports_zero_overlap_and_total_flight_time():
     builder = GaitCycleBuilder()
+    builder.record_clear(0.0)
 
     builder.record_touch(0.0, "left")
     builder.record_lift(0.2, "left")
@@ -212,7 +213,7 @@ def test_contact_exclusion_reason_and_quality_flags_propagate_to_cycle():
         cycle.statistics_exclusion_reason
         == "Contact time below minimum threshold"
     )
-    assert cycle.quality_flags == ("gap_below_minimum",)
+    assert cycle.quality_flags == ("gap_below_minimum", "opposite_contact_incomplete")
 
 
 def test_repeated_touch_without_lift_has_explicit_cycle_exclusion_reason():

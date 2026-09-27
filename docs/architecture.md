@@ -1,10 +1,10 @@
 # Iron_Jump 系统架构文档
 
-> 最后更新: 2026-08-10
+> 最后更新: 2026-09-26；代码基线: `86ff8ae`（`vae/iron_jump`）
 
 ## 1. 项目概述
 
-OptoJump 兼容的步态/纵跳分析系统。硬件是两根分别放置在两侧的条形装置，每根包含 96 个红外 LED，通过 USB 连接 PC，以 1000Hz 采样率实时上报每个 LED 的遮挡状态。
+OptoJump 兼容的纵跳、跑步机步态/跑步和地面走路/跑步分析系统。红外光栅每段包含 96 个光束，通过 USB 连接 PC，以固定 1000 Hz 采样率上报遮挡状态。采集层支持可变段数和物理布局；目前地面模式消费完整设备帧，纵跳与跑步机保留单段兼容路径。
 
 软件负责：接收原始数据 → 算法检测触地/腾空事件 → UI 实时展示 → 生成测试报告。
 
@@ -13,13 +13,16 @@ OptoJump 兼容的步态/纵跳分析系统。硬件是两根分别放置在两�
 | 层 | 技术 | 说明 |
 |:---|:---|:---|
 | **语言** | Python 3.11 | 统一环境，不再分 dayu / pydantic_ai 两个 conda 环境 |
-| **UI** | PySide6 6.11 + qtpy + dayu_widgets | dayu_widgets 为纯 Python 库，本地源码放在项目根 |
+| **UI** | PySide6 + qtpy + dayu_widgets | 依赖由 requirements.txt 管理，dayu_widgets 固定 1.1.1 |
 | **图表** | pyqtgraph (可选) | 降级为 QLabel 占位（`_PG_AVAILABLE` 检查） |
 | **硬件通信** | ctypes + CyUsbInterface.dll (stdcall) | Windows-only |
-| **AI Agent** | pydantic-ai + DeepSeek v4-flash | 通过 .env 配置 API 地址和密钥 |
+| **AI Agent** | pydantic-ai-slim[openai] + DeepSeek v4-flash | 独立 Worker，通过 .env 配置服务 |
+| **RAG** | SQLite FTS5 + fastembed + RRF | 确定性检索、建议校验及发布指纹 |
+| **语音** | Pipecat + 豆包 ASR/TTS + WebRTC AEC3 | 可选依赖、独立进程、显式开启麦克风 |
+| **RFID** | ctypes + OUR_MIFARE.dll | Windows RC200U 读卡与身份绑定 |
 | **数据导出** | openpyxl (Excel) | |
 | **数据持久化** | SQLite (内置 sqlite3) | 受试者管理 + 测试记录 |
-| **相机** | OpenCV + OBSBOT SDK (ctypes) | DirectShow 后端，独立窗口 |
+| **相机** | OpenCV + OBSBOT SDK (ctypes) + MediaPipe | Tiny SE 预览嵌入主 UI；Windows 数据工具和 Mac 身份验证器独立运行 |
 
 **采样率固定 1000Hz** — 硬件约束，代码中不应出现采样率可配置的逻辑。
 
@@ -31,20 +34,30 @@ Iron_Jump/
 │   ├── CyUsbInterface.dll    # Cypress USB 驱动 DLL
 │   ├── protocol.py           # 协议解析器（帧头帧尾、CRC8、分包重组）
 │   ├── receive.py            # DLL ctypes 封装
-│   └── usb_worker.py         # QObject Worker，管理 USB 读取线程，发射 Qt Signal
+│   ├── usb_worker.py         # USB 读取、完整帧信号与单段兼容信号
+│   ├── sensor_frame.py       # DeviceLayout / SensorFrame、分包组装与采样时钟
+│   ├── walking_preflight.py  # 空场自检与不可变 PreparedDevice
+│   ├── simulated_worker.py   # 演示用原始信号源
+│   └── rc200u.py             # RFID 厂商 DLL 包装与读取线程
 
 ├── engine/                   # L2 层：算法引擎
 │   ├── gait_engine.py        # 核心引擎：接收原始帧 → 检测事件 → 发射高级信号
 │   ├── single_foot_tracker.py  # 纵跳模式：单足触地/腾空状态机
 │   ├── contact_tracker.py    # 步态模式：基于接触区域的步态事件追踪
 │   ├── spatial_clusterer.py  # 空间聚类：将 96 位数据聚类为脚印
-│   └── extra_parameter.py    # 高阶步态参数计算（步长、步速等）
+│   ├── extra_parameter.py    # 高阶步态参数计算（步长、步速等）
+│   ├── overground_session.py # 地面准备、自检、布防、异常与报告生命周期
+│   ├── walking_session.py    # 地面走路兼容入口
+│   └── modes/               # Jump / Treadmill / Walking / Overground Running processors
 
 ├── config/                   # 配置层
 │   ├── Iron_parameters.json  # OptoJump 参数定义（4 层结构，含联动规则）
 │   ├── param_schema.py       # JSON Schema 加载器 + 校验器
 │   ├── test_config.py        # TestConfig dataclass：一次测试的完整运行时参数
-│   └── test_report.py        # TestReport frozen dataclass：不可变测试结果快照
+│   ├── test_report.py        # JumpTestReport / 地面走路 GaitTestReport
+│   ├── treadmill_config.py / treadmill_report.py
+│   ├── walking_config.py    # 地面走路配置
+│   └── overground_running_config.py / overground_running_report.py
 
 ├── data/                     # 数据持久化层
 │   └── subject_store.py      # SQLite 用户、团队、成员关系、Session 与分析运行记录
@@ -57,7 +70,9 @@ Iron_Jump/
 │   ├── rule_engine.py        # 离线模式：规则引擎 → TestConfig
 │   └── gait_agent.py         # 兼容 Facade 和生命周期入口
 
-├── reporting/                # 面向 UI 与 Agent 的确定性报告语义层
+├── reporting/                # 确定性报告语义、本地步态问答和地面跑步导出
+├── knowledge/                # 文献摄取、检索、建议校验、审计与 RAG Release Gate
+├── voice/                    # ASR/TTS 协议、Pipecat pipeline、音频与 AEC3
 
 ├── vision/                   # 可拒识左右脚参考、Session 录制、标注与 Replay
 ├── tools/                    # 诊断、Benchmark、Vision 录制/标注/Replay CLI
@@ -67,6 +82,10 @@ Iron_Jump/
 │   ├── main_window.py        # 入口：多视图路由 (QStackedWidget)
 │   ├── session_controller.py # 会话控制器：管理 QThread + UsbWorker + GaitEngine 生命周期
 │   ├── param_panel.py        # 动态参数配置面板（Schema 驱动）
+│   ├── llm_client.py         # QProcess 管理 Agent Worker，HTTP 业务请求
+│   ├── voice_bridge.py       # QProcess 语音消息与主线程业务路由
+│   ├── voice_panel.py        # 主界面固定语音栏、上下文提示与折叠诊断
+│   ├── demo.py               # 模拟光栅、真实引擎与独立数据库入口
 │   ├── camera.py             # OpenCV 相机（独立线程，独立窗口）
 │   ├── led_con.py            # LED 状态可视化
 │   ├── led_panel.py          # LED 面板组件
@@ -83,9 +102,10 @@ Iron_Jump/
 │   └── tinyse_dshow_capture.py  # DirectShow 采集 DLL 封装
 
 ├── tests/
-│   ├── test_rule_engine.py     # 规则引擎 14 个测试
-│   ├── test_llm_test_config.py # LLMTestConfig 转换 5 个测试
-│   └── test_subject_store.py   # SubjectStore 7 个测试
+│   ├── test_sensor_interface.py
+│   ├── test_overground_walking.py / test_overground_running.py
+│   ├── test_voice_session.py / test_rc200u.py
+│   └── ...                   # 算法、Agent、RAG、UI、生命周期及数据回归
 
 ├── docs/
 │   └── architecture.md       # 本文档
@@ -111,7 +131,7 @@ Iron_Jump/
 │  Config Agent + Report Agent             │
 │  ├── common/ 共享模型连接                 │
 │  ├── config/ Fast Gate + Parallel Clarify│
-│  ├── report/ Plan + Kernel + Validator   │
+│  ├── report/ 序贯决策 + Kernel + 校验      │
 │  └── worker.py 单进程多路由                │
 ├─────────────────────────────────────────┤
 │ 配置层                                   │
@@ -129,48 +149,50 @@ Iron_Jump/
 ```
 
 **关键约束**:
+
 - GaitEngine 不 import 任何 QtWidgets — 在 Worker 线程中运行
 - 所有 UI 更新通过 QueuedConnection 回到主线程
-- UI 层不直接 import agent（AgentConfigPanel 通过 gait_agent Facade 访问）
+- UI 不加载 Agent 业务实现；`AgentWorkerClient` 启动独立 Worker 并通过 HTTP 请求，Qt 请求线程避免阻塞界面。语音由另一独立进程处理，通过 JSON 行消息交回主线程。
 
 ## 5. 核心信号流
 
 ### 5.1 测试生命周期
 
-```
-用户点击"准备就绪"
-  → SetupView.ready_signal.emit(SessionSetup)
-  → MainWindow._on_ready(setup)
-      → ExecutionView.reset() + configure(config)
-      → SessionController.prepare(config)
-          → 创建 QThread + UsbWorker + GaitEngine
-          → moveToThread
-          → 连接信号: L1→L2 (DirectConnection), L2→Controller (QueuedConnection)
-      → 切到 ExecutionView
+```text
+SetupView.ready_signal(SessionSetup)
+  → MainWindow → SessionController.prepare(config)
+  → 创建或复用 UsbWorker + QThread，创建 GaitEngine 并连接信号
+  → 准备阶段启动线程、连接设备，切到 ExecutionView
 
-用户点击"开始"
-  → ExecutionView.start_requested
-  → SessionController.start() → thread.start()
+纵跳 / 跑步机：开始 → 启动正式采集与引擎计时
+地面走路 / 跑步：准备时已连续采集 → 空场自检 → 开始时线程内复核并布防
 ```
+
+地面模式要求连续 1000 个正常空场样本，就绪信息超过 500 ms 失效。开始时冻结 `PreparedDevice`（布局、stream_id、自检样本序号），沿用同一个采集流；首次有效接触回溯到首帧作为测试时间零点。单次通过不接受暂停/继续，物理停步仍参与整趟时长。
 
 ### 5.2 实时数据流
 
-```
-后台线程:
-  UsbWorker.raw_contact_signal
-    →[DirectConnection]→ GaitEngine.process_raw_frame()
-    →[产生事件]→ hop_event / gait_step_event
-    →[QueuedConnection]→ SessionController → ExecutionView
+```text
+USB Python 读取线程 → 协议解析 / 组帧 / 布局映射
+  ├─ 单段 raw_contact_signal(bits, host_time)
+  │    → DirectConnection → GaitEngine.process_raw_frame()
+  │    → 纵跳 / 跑步机 processor
+  └─ sensor_frame_received(SensorFrame) + acquisition_issue
+       → QueuedConnection → OvergroundSession（Qt Worker 线程）
+       → 自检或 WalkingProcessor / OvergroundRunningProcessor
+  → 事件 / 低频快照 / FootprintVisualFrame
+  → SessionController → 主线程 ExecutionView
 
-测试结束 (自动/手动):
-  GaitEngine.test_finished.emit(reason)
-  → SessionController._on_engine_finished()
-      → 200ms 延迟 → stop()
-      → build_report(engine, reason) → TestReport (frozen dataclass)
-      → session_finished.emit(TestReport)
-  → MainWindow → ReportView.load_report(report)
-      → SubjectStore.record_session() 归档
+测试结束 → 停止处理与 USB、退出采集线程
+  → build_report(engine, reason) → 不可变的模式专属报告
+  → session_finished → MainWindow → ReportView + SubjectStore 归档
 ```
+
+`DeviceLayout` 保存每段线序、方向、光束位置和有效位掩码；`SensorFrame` 同时保存原始载荷、物理顺序遮挡、质量标志和设备帧号。地面指标采用设备序号展开后的 `sample_index / 1000`，主机接收时间只用于延迟和超时诊断；单段兼容通道仍使用历史 `perf_counter()` 基准，不能混用这两种时间。
+
+短暂缺帧/协议异常切断地面接触与周期连续性，恢复后不跨缺口拼接。设备断连、布局/流变化、计数回退或持续 1 秒无数据会中止测试。地面原始帧缓存同时受 600000 帧和约 64 MiB 预算限制；历史库保存报告和回放，不永久保存全速原始帧。
+
+地面走路以接触中心为距离参考；地面跑步以稳定脚尖代理计算 Tip-to-Tip。空间信息不足时保留缺失原因，不补零或改用另一种参考。配置未指定首脚或身份失效后仅保留 A/B，不能视作独立视觉识别的左右脚。详见 [采集接口](采集数据接口.md)、[地面走路](地面走路算法.md) 和 [地面跑步](地面跑步算法.md)。
 
 ### 5.3 受试者选择与配置回填
 
@@ -184,7 +206,7 @@ SetupView 受试者搜索/选择
   → param_panel.set_config(session.config)
 
 Agent 生成配置 (AgentConfigPanel)
-  → config_selected(TestConfig)
+  → config_confirmed(模式配置)
   → param_panel.set_config(config)
   → _update_summary()
 ```
@@ -213,47 +235,60 @@ ReportView(session_id)
   → Evidence 状态归约与 Checkpoint
   → 下一轮决策或停止并综合
   → ClaimValidator + Numeric Binding
-  → AnalysisPackage 持久化
+  → Release Gate 校验后的 Deterministic RAG（文献建议，可独立降级）
+  → AnalysisPackage 原子持久化
   → ReportView 展示只读结果
 ```
 
-正式报告先于智能分析生成；模型不可用、超时或 Claim 被拒绝都不会改变已有报告。当前 MVP 默认只分析本次 session，个人历史纵向和团队横向能力尚未开放。
+正式报告先于智能分析生成；模型不可用、超时或 Claim 被拒绝都不会改变已有报告。当前只分析本次 session，支持纵跳、跑步机步态/跑步；地面报告、个人历史纵向和团队横向分析尚未开放。跑步机步态页面另提供 `reporting/gait_insights.py` 本地专项问答，直接引用报告明细，不调用 LLM。
 
-## 6. 线程模型
+### 5.5 语音与 RFID
 
-```
-┌─────────────────────────────────────────────┐
-│ 主线程 (GUI)                                  │
-│  MainWindow, SetupView, ExecutionView,        │
-│  ReportView, SessionController                │
-│  (所有 Qt Widget 操作必须在此线程)              │
-└──────────────┬──────────────────────────────┘
-               │ QueuedConnection (低频 ~2-5Hz)
-┌──────────────▼──────────────────────────────┐
-│ Worker 线程 (QThread)                         │
-│  UsbWorker → GaitEngine                      │
-│  DirectConnection (高频 1000Hz)               │
-│  [USB 读取在 daemon 子线程，回调到此线程]        │
-└─────────────────────────────────────────────┘
-
-Agent LLM 调用线程 (QThread):
-  WarmupWorker → warmup_online()
-  LLMWorker → chat_online_stream()
+```text
+麦克风 → 本地 AEC3 → 豆包 ASR → Pipecat 语音进程
+  → JSON 行 IPC → ui/voice_bridge.py（Qt 主线程）
+      ├─ 控制命令 → SessionController → 执行确认
+      ├─ 配置请求 → AgentConfigPanel → 原有 Config Worker → 用户确认配置
+      └─ 报告请求 → 本地步态问答或 Report Worker → 已验证回复
+  → JSON 行 IPC → 豆包 TTS → 播放队列 → 扬声器
 ```
 
-**关键约束**:
-- `SessionController.prepare()` 中严格遵循: 创建对象 → moveToThread → 连接信号 → start
-- `stop()` 必须在 `build_report()` 之前停线程，否则竞态
+控制命令不经过 LLM，仅处理最终分句并校验当前业务状态；插话取消旧播报、丢弃过期语音回复。语音断连停止语音进程，手动测试入口继续可用。默认关闭麦克风，用户点击后才启动服务。实际播放 PCM 同时作为 AEC3 回声参考，详细协议与验收见 [语音说明](../voice/README.md)。
+
+主界面的主操作区以 `QStackedWidget + VoicePanel` 纵向排列，语音栏独立于页面切换且不可浮动。地面测试和报告额外显示右侧全高跑道栏，跨越主操作区与语音栏两行；其他模式隐藏该栏并恢复原布局。`VoiceBridge` 更新可见识别/回复与诊断；配置请求成功提交时显示现有助手对话，报告问答使用现有证据区域。停止播报发送 `interrupt` 消息、推进语音轮次并取消播放，不关闭采集；关闭语音后忽略迟到识别事件。地面模式的暂停/继续请求在业务路由处拒绝，开始请求提示操作者核对段数并点击确认按钮。
+
+`GroundTrackPanel` 共享地面自检、实时和回放的连续跑道绘制；`positions_m` 决定刻度与落脚位置，96 路对应一个可选设备段。段边界仅在侧边标注，不将跨段接触切成多只脚。旁侧详情按所选段切片显示光束、有效位和段内异常编号。全程与局部均复用 `FootprintChannelWidget` 的双侧灯点、圆角通道、遮挡线和足迹绘制，局部显示所选段 96 路及当前脚印；历史标记只来自已完成且有效的接触，报告按播放时间过滤。左右脚复用 `left_foot.png` / `right_foot.png` 和原有足迹绘制逻辑，历史脚印淡化，总览保留最低可辨尺寸；未知左右脚仍居中匿名显示。图标大小不代表实测足长或足底压力。
+
+准备阶段约 10 Hz 发布带完整光束与有效位的自检状态，不把 1000 Hz 原始帧直接送到 UI。操作者确认后，`ground_start_requested` 携带数据流和设备布局，`arm_checked` 在采集处理线程核对后执行原有新鲜度复查。实时显示直接使用最近传感帧的有效性；时间线对采集缺口保留未知状态。历史报告读取自己的布局快照，与当前接入设备无关。`device_layout_changed` 同步配置页设备概况和旧模式的单段兼容限制。
+
+`hardware/rc200u.py` 在线程中轮询厂商 DLL，`AthletesView` 在主线程处理卡号；`SubjectStore` 保存唯一绑定并支持解绑。读到 UID 后选择对应档案，不替用户选择团队身份或启动采集。Windows 已有单卡及页面/数据库联调记录，完整主窗口和热插拔仍需验收。
+
+## 6. 线程与进程模型
+
+| 执行域 | 职责与边界 |
+| --- | --- |
+| Qt 主线程 | 所有 Widget、SessionController、报告展示、语音业务路由 |
+| USB Python 读取线程 | 协议解包、完整帧输出；旧单段 DirectConnection 回调在该线程同步执行 |
+| 采集 QThread | UsbWorker/GaitEngine 的 Qt 事件循环；地面帧、异常与布防命令串行入队，避免就绪复核竞态 |
+| Agent Worker 进程 | Config/Report 路由、模型调用、分析持久化；UI 请求线程仅做 HTTP 转发 |
+| 语音 Worker 进程 | Pipecat 异步任务、ASR/TTS 连接、音频回调与 AEC3 |
+| 相机 / RFID 工作线程 | 采集或轮询，结果通过信号回到主线程 |
+
+**关键约束**：
+
+- `SessionController.prepare()` 创建或复用设备对象，先设置线程归属，再连接信号。准备阶段已启动线程，不在点击开始时重复启动。
+- DirectConnection 不会自动切到接收对象所属线程，不能把 USB 回调误写成 Qt Worker 事件。
+- 生成报告前停止帧处理、USB 和采集线程；地面模式先在其线程执行 `halt`，再释放资源。
 
 ## 7. 参数配置系统
 
-参数配置有 3 种方式，输出完全一致的 `TestConfig`:
+参数最终转换为 `AnyTestConfig` 对应的模式 dataclass，并通过 `validate_runtime_config()`。手动入口覆盖全部五种模式；离线规则与在线 Config Agent 当前覆盖纵跳、跑步机步态和跑步机跑步：
 
 | 方式 | 入口 | 说明 |
 |:---|:---|:---|
 | **手动配置** | `ParamPanel.get_config()` | Schema 驱动的动态表单 |
-| **规则引擎** (离线) | `GaitAgent.configure_offline()` | 按 AthleteProfile 自动推荐 |
-| **LLM** (在线) | `GaitAgent.chat_online()` | 自然语言对话 → 结构化输出 |
+| **规则引擎** (离线) | AgentConfigPanel 离线建议入口 | 按 AthleteProfile 自动推荐 |
+| **LLM** (在线) | AgentWorkerClient → ConfigService | 自然语言对话 → 模式专属结构化输出 → 确认后应用 |
 
 ### 参数分层 (来自 Iron_parameters.json)
 
@@ -266,7 +301,7 @@ Agent LLM 调用线程 (QThread):
 
 ### 参数联动规则
 
-- `stop_type = "Status change"` → `number_of_jumps` 和 `finish_position` 可见
+- 纵跳 `stop_type = "Status change"` → `number_of_jumps` 和 `finish_position` 可见；地面模式使用自己的出口结束规则
 - `stop_type = "End of Time"` → `test_length` 可见
 - `External impulse` 不属于当前硬件能力，已从活动参数 Schema 移除
 
@@ -310,11 +345,13 @@ Config Agent 与 Report Agent 业务状态隔离，但共用模型提供器和�
 **Fast Gate**：确定性关键词检测（`_is_config_request()`），三级词表（强配置短语 / 动作词 / 约束词）。它只选择调用成本路径，不拥有否决 AI 合法结构化配置的权力。Gate 漏判但首次模型返回配置时，复用首次结果并补两次采样，再按现有一致性规则裁决。
 
 **Parallel Clarify**：命中 gate 后，从同一个 `message_history` 快照并行发起 3 次 `agent.run()`，所有 sample 地位平等。用 `_cluster_configs()` 按关键字段值聚类：
-- 1 组一致 → 随机选代表，转 TestConfig，校验通过后输出
+
+- 1 组一致 → 稳定选择该组首个有效代表，转模式配置并校验后输出
 - 多组分歧 → `_find_disagreements()` + `_generate_clarification()` 追问
 - 有效配置不足 2 个 → 追问，请用户补充信息
 
 **History 更新策略**：
+
 - 非配置路径：使用该次调用的 `result.all_messages()`
 - 配置成功：使用被选中代表 sample 的 `result.all_messages()`
 - 分歧/不足：使用第一个 ChatResponse 的 history，否则用第一个 sample
@@ -331,6 +368,10 @@ LLM 输出 JSON → Pydantic 校验 → LLMTestConfig (BaseModel)
 
 `LLMTestConfig(BaseModel)` 是中间层：通过 `Field(description=..., ge=..., le=...)` 和 `Literal[...]` 将约束编码进 JSON Schema，让 LLM 输出更准确。`@field_validator("test_length")` 归一化 `"2m"`、`"120s"` 等格式为 `"02:00"`。
 
+地面走路与跑步沿用同一链路，分别使用 `LLMWalkingConfig` / `LLMOvergroundRunningConfig` 和独立 Prompt，转换成 `WalkingConfig` / `OvergroundRunningConfig`，再经统一运行时校验。两者仅暴露 `stop_type`、`starting_foot` 与固定类型判别字段，拒绝额外字段；设备段数由硬件识别，检测阈值使用各模式运行时默认值，不套用纵跳档案规则。
+
+`agent/config/modes.py` 统一声明五种配置模式；UI 选定模式后，语音转写与打字共用 ConfigService 和确认流程。模式选择不由自然语言自动切换。地面 Prompt 对跨模式或当前不支持的时长/距离要求进行解释与澄清，代码拒绝未知模式及跨模式结构化输出。切换模式期间到达的旧回复仅归入原对话，不恢复待确认配置或播报为当前建议。
+
 ### 8.4 规则引擎
 
 `PROFILE_RULES` 是 `list[tuple[Callable, dict]]`，数据驱动。多规则命中同一字段时取最保守值（`min_contact→MAX`, `number_of_jumps→MIN`, `max_flight→MIN(非零)`），与规则添加顺序无关。
@@ -339,12 +380,23 @@ LLM 输出 JSON → Pydantic 校验 → LLMTestConfig (BaseModel)
 
 - `TestReport` 是不可变事实源；Builder 只能转换和补充稳定引用，不能改变正式结果。
 - Agent 只能从 `AnalysisToolRegistry` 选择已启用 Tool，并从 `AnalysisMethodRegistry` 选择该 Tool 所属的确定性分析方法；不能访问通用 SQL、任意 Python 或原始 1000Hz 数据。
-- PlanValidator 根据测试类型、数据可用范围、参数和预算校验计划。
+- 生产 `ActionValidator` 按测试类型、数据范围、参数和预算校验每个动作；`PlanValidator` 保留旧 DAG 兼容用途。
 - Kernel 负责所有聚合、分组、趋势、敏感性和跨指标比较；模型不得自由计算正式数值。
 - 每个 Claim 必须绑定 Fact、Evidence Ref、Predicate 和 Numeric Binding。错误数字、无证据结论、越权范围、因果或医学语言由 Validator 拒绝。
-- 生产默认采用 AnalysisSketch + Compact Series，关闭 Screening Cues 和 Replan；两项能力保留为显式实验开关。
+- 生产使用 `AnalysisSketch + Compact Series` 和按需 Skill 加载，最多 5 次 Tool 调用、3 次 Reference 加载、9 个 Agent 决策步骤。旧 DAG 的 Screening Cues/Replan 为实验选项。
+- 服务端默认总预算 90 秒、预留 20 秒综合；客户端默认 105 秒。超时返回结构化错误，保存 Checkpoint/partial metrics 后以 failed 结束，不显示部分 Draft；终止运行不恢复，重试创建新 Run。
 
-### 8.6 用户、团队与分析数据范围
+### 8.6 RAG 发布与降级
+
+`knowledge` 在 Claim 校验后执行确定性 QueryPlanner、元数据硬过滤、FTS5 + Dense 检索与 RRF 合并，再生成文献建议。引用由代码依据 Evidence 构造，文献不能代替本次测试数值的证据。Schema v4 增加建议、文献引用与审计，同时兼容旧报告读取。
+
+Planner/Retriever 1.1 增加地面场景限制：QuerySpec 的 `protocols` 同时约束 Dense 候选和 FTS5 候选；地面走路仅接受 `overground_walk`，地面跑步仅考虑地面/跑台对比或地面跑步协议，仍须满足推荐许可等所有原有过滤条件。目前地面跑步无获准来源，返回 `no_supported_query`；有查询但无命中时返回 `no_matching_evidence`。规划异常返回 `planning_failed` 降级审计。
+
+旧 `v1_release_gate.json` 的启用标志仍为 true，但旧冻结审查工件只覆盖 1.0；2026-09-26 升级后的 `v1_release_status()` 为 `invalid`。需重新完成真实生成与人工审查并 promotion，不能改写旧工件冒充通过。生产建议暂不启用，确定性分析继续保留。验证记录见 [RAG 验证记录](rag_validation.md)。
+
+地面检索规划已具备协议隔离，但 `reporting.models.TestType`、`ReportDataPackageBuilder` 和报告 UI 智能分析入口仍仅支持纵跳与两种跑台模式。地面报告进入完整 RAG 前必须补齐确定性报告适配及其验证，不能将地面模式重命名为跑台模式绕过限制。
+
+### 8.7 用户、团队与分析数据范围
 
 ```text
 subjects ↔ team_memberships ↔ teams
@@ -373,7 +425,7 @@ test_sessions(subject_id, team_id, subject_snapshot, team_snapshot)
 | **Report Agent 默认配置** | Sketch + Compact Series；按需 Skill Reference；最多 5 次 Tool 调用 | 序贯合成 Benchmark 满足既定有效率、Recall 与 P95 门槛 |
 | **视觉输出** | `Left / Right / Unknown` | 允许拒识；双脚落地和纵跳不属于视觉模块目标 |
 | **旧 data_show.py** | 保留不动 | 回退方案 |
-| **dayu_widgets** | 本地源码，.gitignore 排除 | 不提交到 Git |
+| **dayu_widgets** | requirements.txt 固定 1.1.1 | 按项目依赖安装 |
 
 ## 10. 常见陷阱
 
@@ -388,9 +440,8 @@ test_sessions(subject_id, team_id, subject_snapshot, team_snapshot)
 9. **ParamSchema.validate() 会检查 Layer 1 参数** — agent 调用时需补充 test_macro_type
 10. **camera 控制链 stop 后复用** — 只在 closeEvent 释放，Start/Stop 循环保持控制链存活
 
+## 11. 当前验证边界
 
-### 五模式智能配置扩展（2026-09-27）
+2026-09-26 合并基线 `86ff8ae` 已在 macOS / Python 3.11.15 / Qt offscreen 下通过全量自动化回归：1048 项测试、12 项子测试。详细状态与历史实验见 [项目计划](../plan.md)。
 
-地面走路与跑步沿用同一链路，分别使用 `LLMWalkingConfig` / `LLMOvergroundRunningConfig` 和独立 Prompt，转换成 `WalkingConfig` / `OvergroundRunningConfig`，再经统一运行时校验。两者仅暴露 `stop_type`、`starting_foot` 与固定类型判别字段，拒绝额外字段；设备段数由硬件识别，检测阈值使用各模式运行时默认值，不套用纵跳档案规则。
-
-`agent/config/modes.py` 统一声明五种配置模式；UI 选定模式后，语音转写与打字共用 ConfigService 和确认流程。模式选择不由自然语言自动切换。地面 Prompt 对跨模式或当前不支持的时长/距离要求进行解释与澄清，代码拒绝未知模式及跨模式结构化输出。切换模式期间到达的旧回复仅归入原对话，不恢复待确认配置或播报为当前建议。
+多段地面算法仍需真实布局标定和同步真值；语音仍需真人口令、插话及 Windows 声卡验证；RC200U 的实机单卡和页面业务验证不替代完整主程序验收。Mac MediaPipe 验证器只检查解剖左右腿身份连续性，Windows Vision Session 工具用于录制、标注与 Replay，两者均未将视觉标签写回主测试报告。

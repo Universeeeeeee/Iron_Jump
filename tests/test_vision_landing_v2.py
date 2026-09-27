@@ -1,14 +1,18 @@
 from __future__ import annotations
 
 import math
+from dataclasses import replace
 
 import pytest
 
 from vision.foot_reference import FootLabel, FootPoseSample, Landmark
+from vision.event_scheduler import EventWindowScheduler
+from vision.foot_reference import VisionConfig
 from vision.landing_v2 import (
     LandingV2Classifier,
     TreadmillAxisCalibration,
     classify_landing_v2,
+    _identity_anomaly,
 )
 
 
@@ -88,3 +92,96 @@ def test_v2_rejects_low_quality_side_instead_of_single_side_correction():
 
     assert decision.label is FootLabel.UNKNOWN
     assert decision.reason == "landmarks_not_visible"
+
+
+def _persistent_swap_samples():
+    original = _sample(0.0, 0.45, 0.55)
+    swapped = {
+        f"{side}_{joint}": getattr(original, f"{other}_{joint}")
+        for side, other in (("left", "right"), ("right", "left"))
+        for joint in ("hip", "knee", "ankle", "heel", "foot_index")
+    }
+    return [original] + [
+        replace(original, timestamp_s=i * 0.06, **swapped) for i in range(1, 13)
+    ]
+
+
+def test_identity_gate_rejects_one_swap_followed_by_stable_wrong_labels():
+    samples = _persistent_swap_samples()
+    assert _identity_anomaly(samples) is not None
+
+
+def test_online_and_replay_reject_swap_before_overlapping_event_windows(tmp_path):
+    from vision.annotations import save_annotations, set_annotation
+    from vision.replay import replay_session
+    from vision.session import (
+        VisionSessionRecorder, canonical_reject_reason, pose_sample_to_record,
+    )
+
+    samples = _persistent_swap_samples()
+    config = VisionConfig(
+        pre_event_ms=250, post_event_ms=200, inference_interval_ms=60,
+        decision_timeout_ms=500,
+    )
+    scheduler = EventWindowScheduler(config)
+    classifier = LandingV2Classifier((0.1, 0.8), (0.9, 0.8))
+    for sample in samples:
+        scheduler.add_frame(sample, sample.timestamp_s)
+    for event_id, timestamp in ((1, 0.42), (2, 0.48)):
+        scheduler.add_event(event_id, timestamp, submitted_at_s=timestamp)
+    inferred = []
+
+    def infer(sample, timestamp_ms):
+        inferred.append(timestamp_ms)
+        return sample
+
+    decisions = scheduler.process_ready(infer, classifier, now_s=0.72)
+    assert [d.reason for d in decisions] == ["identity_anomaly"] * 2
+    assert all(d.label is FootLabel.UNKNOWN for d in decisions)
+    assert all(
+        d.classifier_diagnostics["identity_reason"]
+        == "media_pipe_identity_swap_detected" for d in decisions
+    )
+    scheduler.process_ready(infer, classifier, now_s=0.72)
+    assert inferred == [round(s.timestamp_s * 1000) for s in samples]
+
+    recorder = VisionSessionRecorder(tmp_path, metadata={
+        "treadmill_axis_calibration": {
+            "rear_normalized": [0.1, 0.8], "front_normalized": [0.9, 0.8],
+        },
+    })
+    for sample in samples:
+        points = [_point(0.5, 0.5)] * 33
+        for side, offset in (("left", 0), ("right", 1)):
+            for joint, index in (("hip", 23), ("knee", 25), ("ankle", 27),
+                                 ("heel", 29), ("foot_index", 31)):
+                points[index + offset] = getattr(sample, f"{side}_{joint}")
+        recorder.record_pose(pose_sample_to_record(
+            replace(sample, landmarks_33=tuple(points)), frame_index=None,
+            camera_sample_timestamp=None, perf_counter_timestamp=sample.timestamp_s,
+            inference_start_timestamp=sample.timestamp_s,
+            inference_end_timestamp=sample.timestamp_s,
+        ))
+    annotations = {}
+    for event_id, timestamp in ((1, 0.42), (2, 0.48)):
+        recorder.record_contact({
+            "event_id": event_id, "contact_timestamp": timestamp,
+            "event_role": "grid_touch", "valid_for_benchmark": "1",
+        })
+        set_annotation(annotations, event_id, "Left")
+    recorder.close()
+    save_annotations(recorder.paths.annotations, annotations)
+    _, rows = replay_session(recorder.session_root, mode="visual-evidence-v2")
+    assert [r["prediction"] for r in rows] == ["Unknown"] * 2
+    assert [r["reason"] for r in rows] == [
+        canonical_reject_reason(d.reason, d.label.value) for d in decisions
+    ]
+
+    # A new session must not retain the prior session's ambiguous tracks.
+    scheduler.reset()
+    for sample in samples:
+        scheduler.add_frame(replace(samples[0], timestamp_s=sample.timestamp_s),
+                            sample.timestamp_s)
+    scheduler.add_event(3, 0.42, submitted_at_s=0.42)
+    decision = scheduler.process_ready(infer, classifier, now_s=0.72)[0]
+    assert decision.reason == "evidence_below_threshold"

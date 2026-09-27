@@ -339,10 +339,11 @@ def test_minimum_contact_duration_includes_first_sample(duration, expected):
 
 
 def test_export_contains_all_modules_and_walking_quality(qtbot, monkeypatch, tmp_path):
+    import json
     from ui.views import report_view
     from openpyxl import load_workbook
     p = processor(8, stop_type="Software command")
-    walk(p, CONTACTS, 2400)
+    walk(p, [(100, 200, .35), (209, 800, .35)] + CONTACTS[1:], 2400)
     raw = bytes([0]) * 767 + bytes([1])
     report = p.build_report("manual", (raw,), (0.0,))
     view = report_view.ReportView()
@@ -361,6 +362,11 @@ def test_export_contains_all_modules_and_walking_quality(qtbot, monkeypatch, tmp
     assert packed[-1] == "80"
     assert "Walking contacts" in book.sheetnames
     assert "Device and Config" in book.sheetnames
+    sheet = book["Walking contacts"]
+    headers = [c.value for c in sheet[1]]
+    corrections = json.loads(sheet.cell(2, headers.index("merged_interruptions") + 1).value)
+    assert corrections == [{"start_sample": 200, "end_sample": 209, "reason": "release_debounce"}]
+    assert sheet.cell(2, headers.index("observed_samples") + 1).value == 691
 
 
 def test_health_capture_handoff_does_not_reset_assembler(qtbot, monkeypatch):

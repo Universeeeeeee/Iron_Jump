@@ -16,6 +16,7 @@ from .foot_reference import (
     VisionDecision,
     unknown_decision,
 )
+from .leg_identity import LegIdentityAnalyzer, LegIdentityState
 
 
 LANDING_V2_VERSION = "landing_v2"
@@ -375,24 +376,17 @@ def _hip_foot_peak_delta(
 
 
 def _identity_anomaly(samples: Sequence[FootPoseSample]) -> str | None:
-    swapped_better = 0
-    for previous, current in zip(samples, samples[1:]):
-        previous_left = _core_points(previous, FootLabel.LEFT)[1:]
-        previous_right = _core_points(previous, FootLabel.RIGHT)[1:]
-        current_left = _core_points(current, FootLabel.LEFT)[1:]
-        current_right = _core_points(current, FootLabel.RIGHT)[1:]
-        original = _pair_cost(previous_left, current_left) + _pair_cost(previous_right, current_right)
-        swapped = _pair_cost(previous_left, current_right) + _pair_cost(previous_right, current_left)
-        swapped_better = swapped_better + 1 if swapped + 0.025 < original else 0
-        if swapped_better >= 2:
-            return "consecutive_swapped_assignment_cost"
-        if min(
-            _distance(current_left[0], current_right[0]),
-            _distance(current_left[1], current_right[1]),
-        ) < 0.015:
-            return "left_right_leg_overlap"
-        if original > 0.65:
-            return "unexplained_landmark_jump"
+    # Online and Replay samples carry session-scoped, causal identity results.
+    # Raw standalone callers still receive a trusted-track check within the window.
+    analyzer = LegIdentityAnalyzer()
+    for sample in samples:
+        if sample.identity_reject_reason is not None:
+            if sample.identity_reject_reason:
+                return sample.identity_reject_reason
+            continue
+        result = analyzer.update(sample)
+        if result.state is LegIdentityState.AMBIGUOUS:
+            return result.reason
     return None
 
 
@@ -499,10 +493,6 @@ def _distance_px(
         (a.x - b.x) * calibration.frame_width,
         (a.y - b.y) * calibration.frame_height,
     )
-
-
-def _pair_cost(a: Sequence[Landmark], b: Sequence[Landmark]) -> float:
-    return sum(_distance(left, right) for left, right in zip(a, b))
 
 
 def _clamp01(value: float) -> float:

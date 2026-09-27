@@ -142,7 +142,7 @@ class TreadmillRunningAccumulator(TreadmillAccumulator):
         elif (
             contact_time_s is not None
             and self._config.min_contact_time > 0
-            and contact_time_s < self._config.min_contact_time / 1000.0
+            and contact_time_s + 1e-9 < self._config.min_contact_time / 1000.0
         ):
             row_status = "tc_not_valid"
             is_event_valid = False

@@ -121,6 +121,37 @@ class TreadmillAccumulator:
 
     # ---- Event recording ----
 
+    def interrupt(self, time_s: float, reason: str) -> None:
+        start = len(self._rows)
+        self.pause_boundary(time_s)
+        if reason != "pause":
+            for i in range(start, len(self._rows)):
+                self._rows[i] = replace(
+                    self._rows[i], event_invalid_reason=f"Contact interrupted: {reason}",
+                    statistics_exclusion_reason=f"Contact interrupted: {reason}",
+                    quality_flags=(*self._rows[i].quality_flags, reason),
+                )
+
+    def record_unknown_contact(self, touch_time_s: float, lift_time_s: float) -> None:
+        """Retain anonymous contacts independently, without guessing cross-foot metrics."""
+        self._rows.append(TreadmillStepResult(
+            index=self._next_index, side="unknown", row_status="valid",
+            is_event_valid=True, is_included_in_statistics=True,
+            correction_source="none", time_s=lift_time_s,
+            contact_time_s=lift_time_s - touch_time_s,
+            stance_phase_s=lift_time_s - touch_time_s,
+            quality_flags=("side_unknown",),
+        ))
+        self._next_index += 1
+
+    def update_last_support(self, double_support_s, single_support_s) -> None:
+        row = self._rows[-1]
+        self._rows[-1] = replace(
+            row, double_support_s=double_support_s, single_support_s=single_support_s,
+            quality_flags=tuple(dict.fromkeys((*row.quality_flags,
+                *(("opposite_contact_incomplete",) if double_support_s is None else ())))),
+        )
+
     def record_touch(
         self, time_s: float, side: str, heel_cm: float, toe_cm: float
     ) -> None:
@@ -342,13 +373,21 @@ class TreadmillAccumulator:
         self._rows.append(result)
         self._next_index += 1
 
-    def apply_automatic_data_filter(self) -> None:
+    def apply_automatic_data_filter(self, cycles=()) -> None:
         """Apply gait automatic data filter to exclude statistical outliers.
 
         For gait mode with automatic_data_filter > 0:
-        Excludes rows from statistics where contact_time_s or step_length_cm
-        deviate beyond the configured percentage from the mean.
+        Evaluate each available manual-defined metric independently. Missing
+        step length must not prevent filtering an observed contact time.
         """
+        cycles_by_start = {(c.side, round(c.start_time_s, 9)): c for c in cycles
+                           if c.is_included_in_statistics}
+        for i, row in enumerate(self._rows):
+            if row.time_s is not None and row.contact_time_s is not None:
+                cycle = cycles_by_start.get((row.side, round(row.time_s - row.contact_time_s, 9)))
+                if cycle is not None:
+                    self._rows[i] = replace(row, gait_cycle_s=cycle.gait_cycle_s,
+                                            swing_phase_s=cycle.swing_phase_s)
         if not isinstance(self._config, TreadmillGaitConfig):
             return
 
@@ -356,7 +395,11 @@ class TreadmillAccumulator:
         if threshold <= 0:
             return
 
-        # Gather valid rows that are currently included in statistics
+        # Rebuilding a report must not iteratively shrink the reference sample.
+        for i, row in enumerate(self._rows):
+            if row.correction_source == "automatic_data_filter":
+                self._rows[i] = replace(row, is_included_in_statistics=True,
+                                       correction_source="none", statistics_exclusion_reason=None)
         included_indices = [
             i for i, r in enumerate(self._rows)
             if r.is_event_valid and r.is_included_in_statistics
@@ -366,22 +409,16 @@ class TreadmillAccumulator:
 
         included = [self._rows[i] for i in included_indices]
 
-        # Filter to rows that have both contact_time_s and step_length_cm
-        valid_rows = [r for r in included if r.contact_time_s is not None and r.step_length_cm is not None]
-        if not valid_rows:
-            return
-
-        ct_mean = sum(r.contact_time_s for r in valid_rows) / len(valid_rows)  # type: ignore[arg-type]
-        sl_mean = sum(r.step_length_cm for r in valid_rows) / len(valid_rows)  # type: ignore[arg-type]
-
-        # Any row beyond threshold from mean in EITHER metric is excluded from statistics
+        means = {}
+        for name in ("contact_time_s", "flight_time_s", "gait_cycle_s", "swing_phase_s", "step_length_cm"):
+            values = [getattr(row, name) for row in included if getattr(row, name) is not None]
+            if values:
+                means[name] = sum(values) / len(values)
         for idx in included_indices:
             row = self._rows[idx]
-            if row.contact_time_s is None or row.step_length_cm is None:
-                continue
-            ct_dev = abs(row.contact_time_s - ct_mean) / ct_mean * 100 if ct_mean != 0 else 0.0
-            sl_dev = abs(row.step_length_cm - sl_mean) / sl_mean * 100 if sl_mean != 0 else 0.0
-            if ct_dev > threshold or sl_dev > threshold:
+            if any(getattr(row, name) is not None and mean > 0
+                   and abs(getattr(row, name) - mean) / mean * 100 > threshold
+                   for name, mean in means.items()):
                 self._rows[idx] = replace(
                     row,
                     is_included_in_statistics=False,

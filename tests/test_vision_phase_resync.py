@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import pytest
+
 from vision.foot_reference import FootLabel
 from vision.phase_resync import (
     DeviceAnomalyDetector,
@@ -119,6 +121,20 @@ def test_pending_contact_hard_limit_expires_without_flip():
     assert len(finalized) == 5
     assert manager.phase_offset is False
     assert manager.state is PhaseState.NORMAL
+
+
+@pytest.mark.parametrize("confirm_contact, expected_flip", [(4, True), (5, False)])
+def test_cross_pair_must_confirm_within_contact_limit(confirm_contact, expected_flip):
+    manager = FootPhaseManager()
+    manager.process(_event(1, FootLabel.LEFT, FootLabel.RIGHT))
+    for event_id in range(2, confirm_contact):
+        manager.process(_event(event_id, FootLabel.LEFT, FootLabel.RIGHT))
+    finalized = manager.process(
+        _event(confirm_contact, FootLabel.RIGHT, FootLabel.LEFT)
+    )
+
+    assert manager.phase_offset is expected_flip
+    assert any(item.phase_action == "auto_flip" for item in finalized) is expected_flip
 
 
 def test_independent_confirmed_slips_increment_phase_epoch():

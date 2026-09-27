@@ -39,6 +39,7 @@ from .phase_resync import (
     FootPhaseManager,
     opposite,
 )
+from .leg_identity import LegIdentityAnalyzer
 
 
 REPLAY_PRE_MS = 250
@@ -81,12 +82,17 @@ def replay_session(
     metadata, paths = load_session(session_root)
     events = load_csv(paths.contact_events)
     annotations = load_annotations(paths.annotations)
-    samples = [
-        sample
-        for record in load_jsonl(paths.pose_frames)
-        if (sample := pose_record_to_sample(record)) is not None
-    ]
-    samples.sort(key=lambda item: item.timestamp_s)
+    identity = LegIdentityAnalyzer()
+    samples = []
+    for record in sorted(
+        load_jsonl(paths.pose_frames),
+        key=lambda item: float(item["perf_counter_timestamp"]),
+    ):
+        sample = pose_record_to_sample(record)
+        if mode == "visual-evidence-v2":
+            sample = identity.annotate(sample)
+        if sample is not None:
+            samples.append(sample)
     config_values = dict(metadata.get("vision_config") or {})
     config_values["pre_event_ms"] = REPLAY_PRE_MS
     config_values["post_event_ms"] = REPLAY_POST_MS

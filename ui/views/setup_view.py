@@ -1085,10 +1085,15 @@ class SetupView(QWidget):
         self._device_state_message = message
         if state not in {"connected", "streaming"}:
             self._led_health_result = None
+            self._device_layout = None
         self._render_device_status()
 
     def on_led_health(self, result: dict) -> None:
         self._led_health_result = dict(result)
+        self._render_device_status()
+
+    def on_device_layout(self, layout) -> None:
+        self._device_layout = layout
         self._render_device_status()
 
     @staticmethod
@@ -1097,6 +1102,15 @@ class SetupView(QWidget):
         if len(indices) > 16:
             values.append(f"等{len(indices)}个")
         return "、".join(values)
+
+    def _format_device_led_indices(self, indices):
+        layout = getattr(self, "_device_layout", None)
+        if layout is None or len(layout.segments) == 1:
+            return self._format_led_indices(indices)
+        groups = {}
+        for value in indices:
+            groups.setdefault((value - 1) // 96 + 1, []).append((value - 1) % 96 + 1)
+        return "；".join(f"第 {segment} 段：{self._format_led_indices(values)}" for segment, values in groups.items())
 
     def _render_device_status(self) -> None:
         state = self._device_state
@@ -1127,11 +1141,11 @@ class SetupView(QWidget):
             if disconnected:
                 health_lines.append(
                     "未联通/持续遮挡 LED："
-                    + self._format_led_indices(disconnected)
+                    + self._format_device_led_indices(disconnected)
                 )
             if flickering:
                 health_lines.append(
-                    "闪烁 LED：" + self._format_led_indices(flickering)
+                    "闪烁 LED：" + self._format_device_led_indices(flickering)
                 )
         elif health_status == "insufficient":
             health_lines.append("LED状态：未获取到足够数据，请刷新")
@@ -1139,6 +1153,10 @@ class SetupView(QWidget):
         self._device_state_label.setToolTip(message)
         self._device_state_label.setStyleSheet(f"color: {color};")
         meta_lines = [f"通信状态：{communication}", "标称采样率：1000 Hz"]
+        layout = getattr(self, "_device_layout", None)
+        if layout is not None:
+            count = len(layout.segments)
+            meta_lines.insert(1, f"已识别：{count} 段 / 标称 {count} 米 · {layout.bit_count} 路光束")
         meta_lines.extend(health_lines)
         self._device_meta_label.setText("\n".join(meta_lines))
 

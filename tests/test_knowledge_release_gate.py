@@ -2,6 +2,9 @@ import json
 
 import pytest
 
+from knowledge.planner import PLANNER_VERSION
+from knowledge.retrieval import RETRIEVER_VERSION
+
 from knowledge.live_benchmark import (
     LIVE_BENCHMARK_VERSION,
     benchmark_contexts,
@@ -30,10 +33,10 @@ def _review(
 ):
     audit = {
         "corpus_version": "fixture-corpus/1",
-        "planner_version": "deterministic-query-planner/1.0",
+        "planner_version": PLANNER_VERSION,
         "chunker_version": "chunker/2.2",
         "embedding_version": "paraphrase-multilingual-MiniLM-L12-v2/fastembed-onnx",
-        "retriever_version": "hybrid-fts5-dense-rrf/1.0",
+        "retriever_version": RETRIEVER_VERSION,
         "prompt_version": "sports-recommendation/1.0",
         "model_name": "deepseek-v4-flash",
     }
@@ -105,6 +108,15 @@ def test_release_gate_requires_frozen_matching_review(tmp_path):
         manifest_path=manifest,
         review_path=review,
     ) is True
+
+    original = review.read_text(encoding="utf-8")
+    stale = json.loads(original)
+    for row in stale["rows"]:
+        row["audit"]["planner_version"] = "deterministic-query-planner/1.0"
+    review.write_text(json.dumps(stale), encoding="utf-8")
+    assert v1_release_status(gate, catalog_path=catalog, manifest_path=manifest,
+                             review_path=review) == RELEASE_GATE_INVALID
+    review.write_text(original, encoding="utf-8")
 
     manifest.write_text(
         json.dumps({"corpus_version": "fixture-corpus/2"}),

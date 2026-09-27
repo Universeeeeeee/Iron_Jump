@@ -82,6 +82,9 @@ class TreadmillBaseConfig:
             raise ValueError("time filters must be non-negative")
         if self.min_foot_length <= 0:
             raise ValueError("min_foot_length must be positive")
+        if any(not isinstance(value, int) or not 0 <= value < 96
+               for value in (self.filter_gaitr_in, self.filter_gaitr_out)):
+            raise ValueError("GaitR filters must be integer LED thresholds from 0 to 95")
 
     def to_dict(self) -> dict[str, Any]:
         return {key: value for key, value in asdict(self).items() if value is not None}

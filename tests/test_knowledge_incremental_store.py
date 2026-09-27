@@ -118,3 +118,26 @@ def test_failed_update_keeps_previous_active_index(tmp_path):
         store.build(_BrokenEmbedder())
 
     assert [item[0].chunk_id for item in store.load_all()] == ["c1"]
+
+
+def test_protocol_filter_applies_before_dense_and_lexical_ranking(tmp_path):
+    chunks = tuple(
+        _chunk(f"c{i}", str(i) * 64, "jump measurement method").model_copy(
+            update={"metadata": {"protocol": protocol} if protocol else {}}
+        )
+        for i, protocol in enumerate(("overground_walk", "treadmill_walk", None), 1)
+    )
+    _write(tmp_path, chunks)
+    store = KnowledgeStore(tmp_path / "knowledge.sqlite3")
+    store.build(_CountingEmbedder())
+    spec = KnowledgeQuerySpec(
+        query_id="ground", query="measurement", domain="jump",
+        metric_codes=("jump_height_m",), population="general", support_types=("method",),
+        recommendation_allowed=True, recommendation_intent="measurement_review",
+        planner_version="test", protocols=("overground_walk",),
+    )
+    assert [c.chunk_id for c, _, _ in store.load_all(spec=spec)] == ["c1"]
+    assert [c.chunk_id for c, _, _ in store.lexical_search("measurement", 20, spec=spec)] == ["c1"]
+    absent = spec.model_copy(update={"protocols": ("overground_run",)})
+    assert store.load_all(spec=absent) == ()
+    assert store.lexical_search("measurement", 20, spec=absent) == ()

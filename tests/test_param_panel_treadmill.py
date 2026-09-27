@@ -77,6 +77,19 @@ class TestParamPanelTreadmill:
         assert "treadmill_speed" in self._panel._widgets
         assert "direction" in self._panel._widgets
 
+    @pytest.mark.parametrize("config_type", [TreadmillGaitConfig, TreadmillRunningConfig])
+    @pytest.mark.parametrize("side", [None, "left", "right"])
+    def test_starting_foot_round_trip(self, config_type, side) -> None:
+        config = config_type(stop_type="Software command", test_length=None,
+                             starting_foot_override=side)
+        self._panel.set_config(config)
+        widget = self._panel._widgets["starting_foot_override"]
+        assert isinstance(widget, QComboBox)
+        assert widget.currentData() == side
+        assert self._panel.get_config().starting_foot_override == side
+        for field in ("filter_gaitr_in", "filter_gaitr_out"):
+            assert self._panel._widgets[field].maximum() == 95
+
     # ------------------------------------------------------------------
     #  Layer 3: Filter / gait params
     # ------------------------------------------------------------------

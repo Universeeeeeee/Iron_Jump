@@ -36,7 +36,7 @@ _ALIASES = {
     "一致性": "agreement validity reliability Bland Altman",
 }
 
-RETRIEVER_VERSION = "hybrid-fts5-dense-rrf/1.0"
+RETRIEVER_VERSION = "hybrid-fts5-dense-rrf/1.1"
 
 
 def expand_query(query: str) -> str:

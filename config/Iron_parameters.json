@@ -368,6 +368,16 @@
             ],
             "source": "4.2.2.5/4.2.2.6",
             "priority": "core"
+          },
+          {
+            "name": "starting_foot_override",
+            "display_name": "起始脚",
+            "description": "确认首个新接触的脚；双脚站立启动时，选择行进方向上的前脚。未确认时仅记录匿名接触，不计算左右脚周期。",
+            "type": "enum",
+            "values": ["Not defined", "left", "right"],
+            "applicable_tests": ["Treadmill Running Test", "Treadmill Gait Test"],
+            "source": "4.3.1.4.1–4.3.1.6",
+            "priority": "optional"
           }
         ]
       }
@@ -553,8 +563,9 @@
           {
             "name": "filter_gaitr_in",
             "display_name": "GaitR进过滤器 Filter GaitR IN",
-            "description": "触发接触事件所需的最小连续中断LED数量（增大可减少与力板测量的偏差）",
+            "description": "连续遮挡超过N个LED时进入接触，例如3要求至少4个LED",
             "type": "integer",
+            "range": "0-95",
             "unit": "LED数",
             "default": 0,
             "applicable_tests": [
@@ -567,8 +578,9 @@
           {
             "name": "filter_gaitr_out",
             "display_name": "GaitR出过滤器 Filter GaitR OUT",
-            "description": "判定离开接触所需的最小连续中断LED数量",
+            "description": "连续遮挡降至N个LED或更少时，开始判定离开接触",
             "type": "integer",
+            "range": "0-95",
             "unit": "LED数",
             "default": 0,
             "applicable_tests": [

@@ -201,6 +201,17 @@ landmarks. Each real grid touch preserves an event image on the right. Press
 event; press `Q` to exit. Older diagnostic files may contain `B`, but two-foot
 landing is no longer part of the formal vision acceptance scope.
 
+V2 now checks anatomical identity on the session's ordered Pose timeline,
+before selecting event windows. Each inference updates the trusted leg tracks
+once; overlapping windows reuse the cached identity result. Suspected swaps
+are not accepted as new reference tracks, so a swap that persists beyond the
+window boundary remains rejectable. Warming-up, ambiguous, and recovering
+samples cause affected V2 windows to return `unknown`. V2 Replay recomputes
+the same causal checks from saved raw Pose, and a new session resets the tracks.
+This detects continuity failures; it does not establish absolute anatomical
+truth if the initial Pose assignment is already wrong. An automatic phase
+confirmation arriving after the four-contact pending limit is rejected.
+
 For TinySE, the validator first collects at least 30 frames over at least 0.8
 seconds and maps the DirectShow sample clock into `time.perf_counter()`. It does
 not start the optical-grid session until the UI shows `sync=ready`. Keep the

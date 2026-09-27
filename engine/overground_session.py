@@ -25,6 +25,8 @@ class OvergroundSession(QObject):
         self.last_received_ns = None
         self._last_update_ns = 0
         self._last_ready = None
+        self._last_frame = None
+        self._visual_issue = None
         self.frames = deque(maxlen=600000)
         self.timestamps = deque(maxlen=600000)
         self.total_frames = 0
@@ -54,10 +56,23 @@ class OvergroundSession(QObject):
         self.armed.emit()
 
     @Slot(object)
+    def arm_checked(self, device_key):
+        context = self.preflight.context
+        if context is None or device_key != (context.stream_id, context.layout):
+            status = self.preflight.status(time.perf_counter_ns())
+            status["start_rejected"] = True
+            status["message"] = "设备布局或数据流已变化，请重新核对段数后开始"
+            self.readiness.emit(status)
+            return
+        self.arm()
+
+    @Slot(object)
     def on_frame(self, frame):
         if self.done:
             return
         self.last_received_ns = frame.received_monotonic_ns
+        self._last_frame = frame
+        self._visual_issue = None
         if self.processor is None:
             self.preflight.feed(frame)
             self._publish_ready()
@@ -80,6 +95,7 @@ class OvergroundSession(QObject):
             self.preflight.invalidate(f"采集异常：{issue.code}；重新自检")
             self._publish_ready(force=True)
         else:
+            self._visual_issue = issue.code
             self.processor.break_continuity(issue.code, issue.frame_index)
             if issue.code in self.FATAL_ISSUES:
                 self.finish(issue.code)
@@ -89,6 +105,7 @@ class OvergroundSession(QObject):
         if state in {"error", "disconnected"}:
             self.preflight.invalidate(message)
             if self.processor and not self.done:
+                self._visual_issue = "disconnected"
                 self.processor.break_continuity("disconnected")
                 self.finish("disconnected")
             else:
@@ -96,8 +113,9 @@ class OvergroundSession(QObject):
 
     def _publish_ready(self, force=False):
         now = time.perf_counter_ns()
-        status = self.preflight.status(now)
-        if force or status["ready"] != self._last_ready or now - self._last_update_ns >= 100_000_000:
+        ready = self.preflight.ready(now)
+        if force or ready != self._last_ready or now - self._last_update_ns >= 100_000_000:
+            status = self.preflight.status(now)
             self._last_update_ns = now
             self._last_ready = status["ready"]
             self.readiness.emit(status)
@@ -112,6 +130,7 @@ class OvergroundSession(QObject):
                 self.preflight.invalidate("未收到完整帧，请检查连接及采集启动设置；可返回配置重新连接")
             self._publish_ready(force=True)
         elif self.last_received_ns is not None and time.perf_counter_ns() - self.last_received_ns > 1_000_000_000:
+            self._visual_issue = "data_timeout"
             self.processor.break_continuity("data_timeout")
             self.finish("data_timeout")
 
@@ -130,8 +149,20 @@ class OvergroundSession(QObject):
                             "latest_stride": lengths[-1] * 100 if lengths else None,
                             "velocity_count": int(speed is not None),
                             "velocity_sum": (speed or 0) * 100})
-        if p.timeline:
-            self.visual.emit(p.timeline[-1])
+        if self._last_frame is not None:
+            frame = self._last_frame
+            invalid = (self._visual_issue or frame.layout != p.device.layout
+                       or len(frame.contact_bits) != len(p.positions) or len(frame.valid_bits) != len(p.positions)
+                       or any(x != "frame_gap" for x in frame.quality_flags))
+            visual = dict(p.timeline[-1]) if p.timeline else {"feet": []}
+            origin = p.origin if p.origin is not None else frame.sample_time_s
+            visual.update({"timestamp_s": max(0, frame.sample_time_s - origin),
+                           "positions_m": p.positions,
+                           "contact_bits": list(frame.contact_bits) if len(frame.contact_bits) == len(p.positions) else [0] * len(p.positions),
+                           "valid_bits": [0] * len(p.positions) if invalid else list(frame.valid_bits)})
+            if invalid:
+                visual["feet"] = []
+            self.visual.emit(visual)
 
     def finish(self, reason):
         if self.done:

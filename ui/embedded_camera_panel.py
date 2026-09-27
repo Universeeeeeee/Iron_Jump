@@ -3,16 +3,19 @@
 from __future__ import annotations
 
 import time
+from pathlib import Path
 from typing import Optional
 
 import numpy as np
-from qtpy.QtCore import QThread, Qt
+from qtpy.QtCore import QEvent, QThread, QTimer, Qt, Signal
 from qtpy.QtGui import QImage, QPixmap
 from qtpy.QtWidgets import (
     QFrame,
+    QFileDialog,
     QHBoxLayout,
     QLabel,
     QMenu,
+    QSlider,
     QVBoxLayout,
     QWidget,
     QWidgetAction,
@@ -22,6 +25,9 @@ from dayu_widgets.check_box import MCheckBox
 from dayu_widgets.combo_box import MComboBox
 from dayu_widgets.label import MLabel
 from dayu_widgets.push_button import MPushButton
+from ui.video_playback import VideoPlayback
+from ui.annotation_canvas import AnnotationCanvas
+from ui.video_annotation_panel import VideoAnnotationPanel
 
 
 FOV_OPTIONS = {0: "86°", 1: "78°", 2: "65°"}
@@ -72,6 +78,8 @@ class _AspectRatioContainer(QWidget):
 class EmbeddedCameraPanel(QFrame):
     """Compact camera preview shell that reuses the existing camera captures."""
 
+    playback_layout_changed = Signal()
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self._camera_type = "tinyse"
@@ -82,8 +90,18 @@ class EmbeddedCameraPanel(QFrame):
         self._preview_start_time: Optional[float] = None
         self._preview_active = False
         self._status_text = "Idle"
+        self._replay_mode = False
+        self._last_recording_path = None
+        self._display_frame = None
+        self._playback = VideoPlayback(self)
 
         self._build_ui()
+        self._playback.opened.connect(self._on_playback_opened)
+        self._playback.frame_ready.connect(self._on_playback_frame)
+        self._playback.playing_changed.connect(
+            lambda playing: self._play_button.setText("暂停" if playing else "播放")
+        )
+        self._playback.error.connect(self._on_playback_error)
         self._set_running(False)
 
     def _build_ui(self):
@@ -93,20 +111,27 @@ class EmbeddedCameraPanel(QFrame):
             "  border: 1px solid rgba(90, 90, 95, 0.7);"
             "  border-radius: 8px;"
             "}"
+            'EmbeddedCameraPanel[integrated="true"] {'
+            "  background: transparent; border: none;"
+            "}"
         )
         layout = QVBoxLayout(self)
         layout.setContentsMargins(4, 4, 4, 4)
         layout.setSpacing(0)
 
-        self._preview = QLabel("未连接相机")
+        self._preview = AnnotationCanvas("未连接相机")
         self._preview.setAlignment(Qt.AlignCenter)
         self._preview.setMinimumSize(320, 180)
+        self._preview.setFocusPolicy(Qt.StrongFocus)
+        self._preview.installEventFilter(self)
         self._preview.setStyleSheet(
-            "background-color: #111; color: #888; border: none;"
+            "QLabel { background-color: #111; color: #888; border: none; }"
+            'QLabel[integrated="true"] { background-color: #0e141d; color: #768394; }'
         )
         self._preview_container = _AspectRatioContainer(self._preview)
         self._preview_container.setMinimumSize(320, 180)
         layout.addWidget(self._preview_container, 1)
+        self._build_playback_controls(layout)
 
         self._btn_settings = MPushButton("⚙")
         self._btn_settings.setFixedSize(30, 28)
@@ -123,9 +148,179 @@ class EmbeddedCameraPanel(QFrame):
         self._restart_action.triggered.connect(self._restart_preview)
         self._record_action = self._menu.addAction("Record")
         self._record_action.triggered.connect(self._on_record)
+        self._replay_action = self._menu.addAction("回放本次录像")
+        self._replay_action.triggered.connect(lambda: self.open_recording(self._last_recording_path))
+        self._open_action = self._menu.addAction("打开录像…")
+        self._open_action.triggered.connect(self._choose_recording)
         self._menu.aboutToShow.connect(self._refresh_menu)
         self._btn_settings.setMenu(self._menu)
         self._preview_container.set_overlay(self._btn_settings)
+
+    def _build_playback_controls(self, layout):
+        self._playback_bar = QWidget()
+        controls = QVBoxLayout(self._playback_bar)
+        controls.setContentsMargins(4, 4, 4, 4)
+        controls.setSpacing(4)
+        row = QHBoxLayout()
+        self._play_button = MPushButton("播放")
+        self._play_button.clicked.connect(self._toggle_playback)
+        self._previous_button = MPushButton("上一帧")
+        self._previous_button.clicked.connect(lambda: self._playback.step(-1))
+        self._next_button = MPushButton("下一帧")
+        self._next_button.clicked.connect(lambda: self._playback.step(1))
+        self._speed = MComboBox()
+        for speed in (0.25, 0.5, 1.0):
+            self._speed.addItem(f"{speed:g}×", speed)
+        self._speed.setCurrentIndex(2)
+        self._speed.currentIndexChanged.connect(lambda: self._playback.set_rate(self._speed.currentData()))
+        for widget in (self._play_button, self._previous_button, self._next_button, self._speed):
+            row.addWidget(widget)
+        controls.addLayout(row)
+        self._position = QSlider(Qt.Horizontal)
+        self._position.sliderPressed.connect(self._playback.pause)
+        self._position.valueChanged.connect(self._playback.seek)
+        controls.addWidget(self._position)
+        row = QHBoxLayout()
+        self._playback_time = QLabel()
+        self._playback_time.setWordWrap(True)
+        row.addWidget(self._playback_time, 1)
+        back = MPushButton("返回实时")
+        back.clicked.connect(self._leave_playback)
+        row.addWidget(back)
+        controls.addLayout(row)
+        self._playback_source = QLabel()
+        self._playback_source.setWordWrap(True)
+        controls.addWidget(self._playback_source)
+        self._annotation_tools = VideoAnnotationPanel(self._playback, self._preview)
+        self._annotation_tools.layout_changed.connect(self.playback_layout_changed.emit)
+        self._annotation_tools.list.installEventFilter(self)
+        controls.addWidget(self._annotation_tools)
+        layout.addWidget(self._playback_bar)
+        self._playback_bar.hide()
+
+    def _choose_recording(self):
+        path, _ = QFileDialog.getOpenFileName(self, "打开录像", "", "AVI 录像 (*.avi)")
+        if path:
+            self.open_recording(path)
+
+    def open_recording(self, path):
+        if not path or (self._capture is not None and self._is_record_busy(self._capture)):
+            return
+        self._replay_mode = True
+        self._annotation_tools.reset(path)
+        self._display_frame = None
+        self._preview.setText("正在打开录像…")
+        self._playback_time.setText("正在读取…")
+        self._playback_source.clear()
+        self._set_playback_controls_enabled(False)
+        self._speed.setCurrentIndex(2)
+        self._playback_bar.show()
+        self._preview.setFocus()
+        self._refresh_menu()
+        self.playback_layout_changed.emit()
+        self._playback.open(path)
+
+    def _set_playback_controls_enabled(self, enabled):
+        for widget in (self._play_button, self._previous_button, self._next_button, self._speed, self._position):
+            widget.setEnabled(enabled)
+
+    def _on_playback_opened(self, info):
+        self._set_playback_controls_enabled(True)
+        self._position.blockSignals(True)
+        self._position.setRange(0, info.frame_count - 1)
+        self._position.setValue(0)
+        self._position.blockSignals(False)
+        self._playback_source.setText(
+            f"{info.time_source} · {info.warning}" if info.warning else info.time_source
+        )
+
+    def _on_playback_frame(self, frame, index, timestamp):
+        if not self._replay_mode:
+            return
+        self._display_frame = frame
+        self._render_frame(frame)
+        self._annotation_tools.on_frame(frame, index)
+        self._position.blockSignals(True)
+        self._position.setValue(index)
+        self._position.blockSignals(False)
+        info = self._playback.info
+        self._playback_time.setText(
+            f"第 {index + 1}/{info.frame_count} 帧  ·  {timestamp:.3f} / {info.times[-1]:.3f} s"
+        )
+
+    def _on_playback_error(self, message):
+        self._annotation_tools.on_error()
+        self._display_frame = None
+        self._preview.setText(f"回放失败：{message}")
+        self._playback_time.setText("画面读取失败")
+        self._playback_source.setText(message)
+        self._set_status(message)
+        if self._playback.info is None:
+            self._set_playback_controls_enabled(False)
+
+    def _toggle_playback(self):
+        if self._playback.playing:
+            self._playback.pause()
+        else:
+            self._playback.play()
+
+    def _leave_playback(self):
+        self._annotation_tools.reset()
+        self._playback.close()
+        self._replay_mode = False
+        self._display_frame = None
+        self._playback_bar.hide()
+        self._preview.setText("等待实时画面…" if self._preview_active else "未连接相机")
+        self._refresh_menu()
+        self.playback_layout_changed.emit()
+
+    def playback_controls_height(self):
+        return self._playback_bar.sizeHint().height() if self._replay_mode else 0
+
+    def eventFilter(self, watched, event):
+        if self._replay_mode and event.type() == QEvent.KeyPress and watched in (self._preview, self._annotation_tools.list):
+            if event.key() == Qt.Key_Delete:
+                self._annotation_tools.delete_selected()
+                return True
+            if event.key() == Qt.Key_Escape:
+                self._annotation_tools.cancel()
+                return True
+        if watched is self._preview:
+            if event.type() == QEvent.Resize and self._display_frame is not None:
+                QTimer.singleShot(0, self._redraw_frame)
+            if self._replay_mode and event.type() == QEvent.KeyPress:
+                if event.key() == Qt.Key_Left:
+                    self._playback.step(-1)
+                    return True
+                if event.key() == Qt.Key_Right:
+                    self._playback.step(1)
+                    return True
+                if event.key() == Qt.Key_Space:
+                    self._toggle_playback()
+                    return True
+        return super().eventFilter(watched, event)
+
+    def _redraw_frame(self):
+        if self._display_frame is not None:
+            self._render_frame(self._display_frame)
+
+    def keyPressEvent(self, event):
+        if self._replay_mode and event.key() == Qt.Key_Escape:
+            self._annotation_tools.cancel()
+            event.accept()
+        elif self._replay_mode and event.key() == Qt.Key_Delete:
+            self._annotation_tools.delete_selected()
+            event.accept()
+        else:
+            super().keyPressEvent(event)
+
+    def set_integrated_style(self, enabled: bool):
+        """Blend the ground-test preview into the continuous workspace."""
+        for widget in (self, self._preview):
+            widget.setProperty("integrated", enabled)
+            widget.style().unpolish(widget)
+            widget.style().polish(widget)
+            widget.update()
 
     def _build_settings_controls(self):
         panel = QWidget(self._menu)
@@ -205,6 +400,9 @@ class EmbeddedCameraPanel(QFrame):
             self.start_preview()
 
     def start_preview(self):
+        if self._replay_mode:
+            return
+        self._display_frame = None
         self._preview.setText("正在连接相机")
         if self._thread is not None:
             if hasattr(self._capture, "set_preview_enabled"):
@@ -241,6 +439,9 @@ class EmbeddedCameraPanel(QFrame):
         self._set_running(True)
 
     def stop_preview(self):
+        if self._replay_mode:
+            self._leave_playback()
+        self._display_frame = None
         capture = self._capture
         if capture is not None:
             if self._is_recording(capture):
@@ -258,6 +459,10 @@ class EmbeddedCameraPanel(QFrame):
         self.start_preview()
 
     def shutdown(self):
+        if self._replay_mode:
+            self._leave_playback()
+        self._playback.shutdown()
+        self._display_frame = None
         capture = self._capture
         thread = self._thread
         if capture is not None:
@@ -290,8 +495,13 @@ class EmbeddedCameraPanel(QFrame):
         raise RuntimeError("基础预览暂未嵌入，请选择 MX Brio 或 Tiny SE。")
 
     def _on_frame(self, frame: np.ndarray):
-        if not self._preview_active:
+        if not self._preview_active or self._replay_mode:
             return
+        self._display_frame = frame
+        self._render_frame(frame)
+        self._preview_start_time = None
+
+    def _render_frame(self, frame: np.ndarray):
         import cv2
 
         rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
@@ -311,11 +521,10 @@ class EmbeddedCameraPanel(QFrame):
             QImage.Format_RGB888,
         ).copy()
         self._preview.setPixmap(QPixmap.fromImage(image))
-        self._preview_start_time = None
 
     def _on_record(self):
         capture = self._capture
-        if capture is None:
+        if capture is None or self._replay_mode:
             return
         if self._is_record_busy(capture) and not self._is_recording(capture):
             return
@@ -323,19 +532,22 @@ class EmbeddedCameraPanel(QFrame):
             path = capture.start_record()
             if path:
                 self._record_path = path
+                self._last_recording_path = None
         else:
             self._stop_record(capture)
         self._refresh_menu()
 
     def _on_recording_finished(self, path: str):
         self._record_path = None
+        if Path(path).suffix.lower() == ".avi":
+            self._last_recording_path = path
         self._set_status(f"Saved: {path}")
         self._refresh_menu()
 
     def _on_error(self, message: str):
-        self._preview.setText("未连接相机")
         self._set_status(f"Error: {message}")
         self.shutdown()
+        self._preview.setText(f"相机错误：{message}")
 
     def _apply_control_settings(self, control):
         control.set_fov(int(self._cmb_fov.currentData() or 0))
@@ -420,10 +632,13 @@ class EmbeddedCameraPanel(QFrame):
     def _refresh_menu(self):
         capture = self._capture
         running = self._preview_active and capture is not None
-        self._controls_action.setEnabled(self._camera_type == "tinyse")
+        self._controls_action.setEnabled(self._camera_type == "tinyse" and not self._replay_mode)
         busy = self._is_record_busy(capture) if capture is not None else False
         recording = self._is_recording(capture) if capture is not None else False
-        self._record_action.setEnabled(running and not (busy and not recording))
+        self._record_action.setEnabled(running and not (busy and not recording) and not self._replay_mode)
+        self._restart_action.setEnabled(not self._replay_mode)
+        self._replay_action.setEnabled(not busy and self._last_recording_path is not None)
+        self._open_action.setEnabled(not busy)
         if busy and not recording:
             self._record_action.setText("Saving...")
         elif recording:

@@ -119,3 +119,35 @@ def test_prepare_connects_but_does_not_start_session(qtbot, monkeypatch):
     qtbot.wait(10)
     assert controller._worker.health_refreshes == health_refreshes
     controller.stop()
+
+
+def test_treadmill_routes_device_samples_once_and_ignores_legacy_duplicate(qtbot, monkeypatch):
+    from config.treadmill_config import TreadmillGaitConfig
+    from hardware.sensor_frame import SensorFrame, DeviceLayout, AcquisitionIssue
+
+    class SensorWorker(_FakeUsbWorker):
+        sensor_frame_received = Signal(object)
+        acquisition_issue = Signal(object)
+
+    monkeypatch.setattr(session_controller, "UsbWorker", SensorWorker)
+    controller = session_controller.SessionController()
+    controller.prepare(TreadmillGaitConfig(stop_type="Software command", test_length=None,
+                                          starting_foot_override="left"))
+    try:
+        qtbot.waitUntil(lambda: controller.device_state == "connected")
+        controller.start()
+        qtbot.waitUntil(lambda: controller.is_running)
+        engine, worker = controller.engine, controller._worker
+        frame = SensorFrame("test", DeviceLayout.linear(), 0, 0, 123,
+                            bytes(96), bytes([1] * 96), bytes(12))
+        worker.sensor_frame_received.emit(frame)
+        worker.raw_contact_signal.emit([0] * 96, 1000.)
+        qtbot.waitUntil(lambda: len(engine.export_timestamps) == 1)
+        assert list(engine.export_timestamps) == [0.0]
+        assert engine._processor._contact_tracker._side_known
+        worker.acquisition_issue.emit(AcquisitionIssue("missing_packet", 1))
+        qtbot.waitUntil(lambda: any(issue["reason"] == "missing_packet"
+                                    for issue in engine._processor._evidence_issues))
+        assert engine._processor._evidence_issues[-1]["reason"] == "missing_packet"
+    finally:
+        controller.stop()

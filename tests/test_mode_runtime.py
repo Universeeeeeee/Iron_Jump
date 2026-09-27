@@ -92,7 +92,8 @@ def test_treadmill_events_route_to_gait_step_event_not_hop_event(qtbot):
     # The key invariant: treadmill events must NOT go to hop_event
 
 
-def test_gait_engine_emits_treadmill_visual_frame(qtbot):
+@pytest.mark.parametrize("start_time,expected_time", [(None, 0.001), (0.0, 0.001), (0.001, 0.0)])
+def test_gait_engine_emits_treadmill_visual_frame(qtbot, start_time, expected_time):
     from qtpy.QtTest import QSignalSpy
 
     config = TreadmillGaitConfig(
@@ -102,13 +103,15 @@ def test_gait_engine_emits_treadmill_visual_frame(qtbot):
         direction="Interface side",
     )
     engine = GaitEngine(config=config)
+    if start_time is not None:
+        engine.set_start_time(start_time)
     spy = QSignalSpy(engine.footprint_visual_frame)
 
     engine.process_raw_frame([0] * 96, 0.001)
 
     assert spy.count() == 1
     payload = spy.at(0)[0]
-    assert payload["timestamp_s"] == 0.0
+    assert payload["timestamp_s"] == expected_time
     assert payload["contact_bits"] == [0] * 96
 
 

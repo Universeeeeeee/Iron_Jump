@@ -2,11 +2,10 @@
 treadmill_processor.py — Treadmill-mode processor (gait / running)
 
 Pipeline per process_raw_frame call:
-  1. extract_clusters(bits) -> List[Cluster]
-  2. ClusterTracker.update() / get_active_tracks_view()
-  3. ContactBasedGaitTracker.process_frame() -> List[GaitStepEvent]
-  4. Delegate touch/lift events to TreadmillAccumulator
-  5. Return event list for Qt signal emission
+  1. Extract all contiguous interrupted beams, including partial foot edges.
+  2. Confirm optical contacts and order events by their sample time.
+  3. Delegate supported touch/lift events to the accumulator and cycle builder.
+  4. Return event list for Qt signal emission.
 
 Step and stride distances combine treadmill travel with tracked contact
 placement. LED clusters provide both event timing and spatial references.
@@ -32,7 +31,8 @@ from config.treadmill_report import (
     TreadmillStepResult,
     summarize,
 )
-from engine.contact_tracker import ContactBasedGaitTracker, GaitStepEvent
+from engine.contact_tracker import GaitStepEvent
+from engine.treadmill_contact_tracker import TreadmillContactTracker
 from engine.gait_cycle import GaitCycleBuilder
 from engine.footprint_visualization import FootprintTimelineRecorder
 from engine.modes.base import ModeProcessor
@@ -41,7 +41,7 @@ from engine.modes.treadmill_accumulator import belt_speed_m_s
 from engine.modes.treadmill_accumulator import step_reference_cm
 from engine.modes.treadmill_gait_accumulator import TreadmillGaitAccumulator
 from engine.modes.treadmill_running_accumulator import TreadmillRunningAccumulator
-from engine.spatial_clusterer import ClusterTracker, extract_clusters
+from engine.spatial_clusterer import extract_clusters
 
 log = logging.getLogger(__name__)
 
@@ -96,8 +96,7 @@ class TreadmillProcessor:
 
     _config: TreadmillBaseConfig
     _direction: Direction
-    _cluster_tracker: ClusterTracker
-    _contact_tracker: ContactBasedGaitTracker
+    _contact_tracker: TreadmillContactTracker
     _accumulator: TreadmillAccumulator
     _heel_offset_cm: float
     _toe_offset_cm: float
@@ -118,11 +117,7 @@ class TreadmillProcessor:
             self._heel_offset_cm = fl * 0.5
             self._toe_offset_cm = fl * 0.5
 
-        self._cluster_tracker = ClusterTracker()
-        self._contact_tracker = ContactBasedGaitTracker(
-            min_step_interval=0.05,
-            ignore_initial_contacts=True,
-        )
+        self._contact_tracker = TreadmillContactTracker(config)
         self._accumulator = self._make_accumulator()
         self._cycle_builder = GaitCycleBuilder()
         self._label_to_side: dict[str, str] = {}
@@ -134,6 +129,8 @@ class TreadmillProcessor:
         self._last_clusters = []
         self._touch_reference_cm: dict[tuple[str, float], float | None] = {}
         self._pause_boundaries: list[float] = []
+        self._evidence_issues: list[dict] = []
+        self.time_source = "caller_timestamp"
 
     # ---- ModeProcessor interface ----
 
@@ -141,7 +138,6 @@ class TreadmillProcessor:
         """Reset all internal state."""
         self.lift_count = 0
         self._pause_boundaries.clear()
-        self._cluster_tracker = ClusterTracker()
         self._contact_tracker.reset()
         self._accumulator = self._make_accumulator()
         self._cycle_builder = GaitCycleBuilder()
@@ -153,11 +149,19 @@ class TreadmillProcessor:
         self._visual_recorder.reset()
         self._last_clusters = []
         self._touch_reference_cm = {}
+        self._evidence_issues.clear()
+        self.time_source = "caller_timestamp"
 
     def pause_boundary(self) -> None:
         self._pause_boundaries.append(self._last_rel_time)
-        self._accumulator.pause_boundary(self._last_rel_time)
+        self.break_continuity("pause")
+
+    def break_continuity(self, reason: str) -> None:
+        self._evidence_issues.append({"time_s": self._last_rel_time, "reason": reason})
+        self._accumulator.interrupt(self._last_rel_time, reason)
         self._cycle_builder.pause_boundary(self._last_rel_time)
+        self._contact_tracker.break_continuity()
+        self._label_to_side.clear()
 
     def process_raw_frame(
         self, contact_bits: List[int], rel_time: float, abs_time: float
@@ -165,26 +169,22 @@ class TreadmillProcessor:
         """
         Process one frame of raw contact data.
 
-        Pipeline:
-          1. Extract spatial clusters from contact bits.
-          2. Update cluster tracker with the new clusters.
-          3. Get active track view and feed into contact-based gait tracker.
-          4. Process touch/lift events -> emit to accumulator.
+        Preserve optical boundaries through confirmation and reject ambiguous
+        merges instead of treating a missing track as a lifted foot.
 
         Returns a list of event objects (currently GaitStepEvent) for
         the caller to re-emit via Qt signals.
         """
         # 1. Extract clusters
         self._last_rel_time = rel_time
-        clusters = extract_clusters(contact_bits)
+        clusters = extract_clusters(contact_bits, min_length=1)
         self._last_clusters = clusters
 
-        # 2. Update cluster tracker
-        self._cluster_tracker.update(rel_time, clusters)
-
-        # 3. Feed active tracks into contact-based gait tracker
-        active_tracks = self._cluster_tracker.get_active_tracks_view()
-        events = self._contact_tracker.process_frame(rel_time, active_tracks)
+        events = self._contact_tracker.process_frame(rel_time, clusters)
+        if self._contact_tracker.boundary_reason:
+            self.break_continuity(self._contact_tracker.boundary_reason)
+        if not any(contact_bits) and not self._contact_tracker.active_contacts:
+            self._cycle_builder.record_clear(rel_time)
         self._visual_recorder.record_if_due(
             rel_time,
             contact_bits,
@@ -195,7 +195,7 @@ class TreadmillProcessor:
         for ev in events:
             self._handle_step_event(ev, rel_time)
 
-        return events
+        return [event for event in events if event.kind != "baseline"]
 
     def pop_visual_frames(self):
         return self._visual_recorder.pop_pending()
@@ -203,7 +203,9 @@ class TreadmillProcessor:
     def make_status_snapshot(self, rel_time: float) -> dict:
         ct = self._contact_tracker
         active_count = len(ct.foot_contact_queue)
-        if active_count == 0:
+        if ct.observation_unknown:
+            status = "接触状态不确定"
+        elif active_count == 0:
             status = "腾空 / 离地"
         elif active_count == 1:
             status = "单脚支撑"
@@ -254,6 +256,8 @@ class TreadmillProcessor:
         gait_cycle_state = self._cycle_builder.make_live_snapshot(
             rel_time, completed_from_index=self._live_cycle_cursor
         )
+        if ct.observation_unknown:
+            gait_cycle_state["support_state"] = "接触状态不确定"
         self._live_cycle_cursor = gait_cycle_state["completed_cycle_count"]
 
         return {
@@ -285,7 +289,7 @@ class TreadmillProcessor:
         Delegates to TreadmillAccumulator for per-step data and metric
         summaries, then wraps everything in the appropriate report type.
         """
-        self._accumulator.apply_automatic_data_filter()
+        self._accumulator.apply_automatic_data_filter(self._cycle_builder.completed_cycles)
         rows = self._accumulator.rows
         gait_cycles = self._cycles_with_stride(
             self._cycles_with_row_inclusion(rows)
@@ -293,6 +297,11 @@ class TreadmillProcessor:
         rows = self._rows_with_cycle_stride(rows, gait_cycles)
         config_snapshot = self._config.to_dict()
         config_snapshot["pause_boundaries_s"] = list(self._pause_boundaries)
+        config_snapshot["evidence_issues"] = list(self._evidence_issues)
+        config_snapshot["rejected_contacts"] = list(self._contact_tracker.rejected_contacts)
+        config_snapshot["pending_evidence"] = self._contact_tracker.pending_evidence
+        config_snapshot["event_algorithm"] = "optical_evidence_v1"
+        config_snapshot["time_source"] = self.time_source
 
         # Build metric summaries from valid, included rows
         valid_included = [
@@ -420,11 +429,32 @@ class TreadmillProcessor:
             return
 
         side = self._resolve_event_side(ev)
+        if ev.kind == "baseline":
+            self._cycle_builder.record_baseline(rel_time, side)
+            return
         event_time = rel_time
         if ev.kind == "touch" and ev.contact.touch_time is not None:
             event_time = ev.contact.touch_time
         elif ev.kind == "lift" and ev.contact.lift_time is not None:
             event_time = ev.contact.lift_time
+        evidence = dict(contact_id=ev.contact.contact_id,
+                        confirmed_time_s=ev.confirmed_time_s,
+                        foot_label=ev.contact.foot_label)
+
+        if side == "unknown":
+            # Unknown anatomical sides must not share one accumulator key:
+            # overlapping anonymous contacts still have distinct contact IDs.
+            if ev.kind == "touch":
+                self._cycle_builder.record_touch(event_time, side, **evidence)
+            else:
+                self._cycle_builder.record_lift(event_time, side, **evidence)
+                if ev.contact.touch_time is not None:
+                    self.lift_count += 1
+                    self._accumulator.record_unknown_contact(ev.contact.touch_time, event_time)
+            return
+        if ev.contact.is_initial_baseline:
+            self._cycle_builder.record_lift(event_time, side, **evidence)
+            return
 
         centroid_cm = ev.contact.centroid_at_touch
         if centroid_cm is None:
@@ -454,7 +484,7 @@ class TreadmillProcessor:
             self._touch_reference_cm[(side, round(event_time, 9))] = (
                 reference_cm
             )
-            self._cycle_builder.record_touch(event_time, side)
+            self._cycle_builder.record_touch(event_time, side, **evidence)
             self._accumulator.record_touch(
                 time_s=event_time, side=side, heel_cm=heel_cm, toe_cm=toe_cm
             )
@@ -467,6 +497,11 @@ class TreadmillProcessor:
             quality_flags: tuple[str, ...] = ()
             if len(self._accumulator.rows) > row_count:
                 row = self._accumulator.rows[-1]
+                if row.contact_time_s is not None:
+                    self._accumulator.update_last_support(*self._cycle_builder.support_durations(
+                        event_time - row.contact_time_s, event_time, side,
+                    ))
+                    row = self._accumulator.rows[-1]
                 included = row.is_included_in_statistics
                 statistics_exclusion_reason = row.statistics_exclusion_reason
                 quality_flags = row.quality_flags
@@ -476,10 +511,15 @@ class TreadmillProcessor:
                 is_included_in_statistics=included,
                 statistics_exclusion_reason=statistics_exclusion_reason,
                 quality_flags=quality_flags,
+                **evidence,
             )
 
     def _resolve_event_side(self, ev: GaitStepEvent) -> str:
         contact_id = ev.contact.contact_id
+        if hasattr(ev.contact, "side"):
+            side = ev.contact.side
+            self._contact_side[contact_id] = side
+            return side
         known = self._contact_side.get(contact_id)
         if known is not None:
             return known
@@ -493,8 +533,7 @@ class TreadmillProcessor:
                 self._label_to_side[label] = side
                 self._label_to_side["B" if label == "A" else "A"] = opposite
             else:
-                side = "left" if label == "A" else "right"
-                self._label_to_side[label] = side
+                side = "unknown"
 
         if side is None:
             if self._last_assigned_side is None:

@@ -16,6 +16,7 @@ from .foot_reference import (
     VisionWindowDiagnostics,
     unknown_decision,
 )
+from .leg_identity import LegIdentityAnalyzer
 
 
 InferPose = Callable[[object, int], FootPoseSample | None]
@@ -52,6 +53,7 @@ class EventWindowScheduler:
         return len(self._inference_attempts)
 
     def reset(self) -> None:
+        self._identity = LegIdentityAnalyzer()
         self._frames: list[FrameSample] = []
         self._events: list[TouchEvent] = []
         self._pose_cache: dict[int, FootPoseSample] = {}
@@ -205,7 +207,7 @@ class EventWindowScheduler:
                 and timestamp_ms - last_ms < self.config.inference_interval_ms
             ):
                 continue
-            pose = infer_pose(sample.frame, timestamp_ms)
+            pose = self._identity.annotate(infer_pose(sample.frame, timestamp_ms))
             self._inference_cursor_ms = timestamp_ms
             last_ms = timestamp_ms
             self._inference_attempts[timestamp_ms] = pose is not None

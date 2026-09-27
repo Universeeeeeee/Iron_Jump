@@ -98,7 +98,8 @@ def mjpg_to_avi(
     """将 DLL 录制的 raw .mjpg + .csv 索引 转换为 Kinovea 可读的 .avi。
 
     DLL 的 .mjpg 是纯 JPEG 帧拼接（无容器），Kinovea 不识别。
-    此函数读 CSV 索引，逐帧解码后写入 AVI 容器（MJPG codec）。
+    此函数读 CSV 索引，逐帧解码后写入 AVI 容器（MJPG codec），
+    并将实际输出帧的相对采样时间保存到同名 .timestamps.npy。
 
     Args:
         mjpg_path: DLL 生成的 .mjpg 文件
@@ -135,42 +136,69 @@ def mjpg_to_avi(
         t1 = frames_index[-1][2]
         if t1 > t0:
             fps = (len(frames_index) - 1) / (t1 - t0)
-    if fps is None or fps <= 0:
+    if fps is None or not np.isfinite(fps) or fps <= 0:
         fps = 100.0
 
     _log.info("mjpg→avi: %d frames, %.2f fps", len(frames_index), fps)
 
+    timestamps = []
+    writer = None
     with open(mjpg_path, "rb") as fh:
-        # 3. 解码首帧获取分辨率
-        first_offset, first_length, _ = frames_index[0]
-        fh.seek(first_offset)
-        first_jpeg = fh.read(first_length)
-        first_frame = cv2.imdecode(
-            np.frombuffer(first_jpeg, dtype=np.uint8), cv2.IMREAD_COLOR
-        )
-        if first_frame is None:
-            raise RuntimeError("无法解码首帧 JPEG")
-        h, w = first_frame.shape[:2]
-
-        # 4. 写入 AVI (MJPG fourcc, 与源格式一致)
-        fourcc = cv2.VideoWriter_fourcc(*"MJPG")
-        writer = cv2.VideoWriter(str(output_path), fourcc, fps, (w, h))
-        if not writer.isOpened():
-            raise RuntimeError(f"VideoWriter 打开失败: {output_path}")
-
-        written = 0
         try:
-            for offset, length, _ in frames_index:
+            for offset, length, sample_time in frames_index:
                 fh.seek(offset)
                 jpeg_bytes = fh.read(length)
-                frame = cv2.imdecode(
-                    np.frombuffer(jpeg_bytes, dtype=np.uint8), cv2.IMREAD_COLOR
+                frame = (
+                    cv2.imdecode(np.frombuffer(jpeg_bytes, dtype=np.uint8), cv2.IMREAD_COLOR)
+                    if jpeg_bytes else None
                 )
-                if frame is not None:
-                    writer.write(frame)
-                    written += 1
+                if frame is None:
+                    continue
+                if not np.isfinite(sample_time) or (timestamps and sample_time <= timestamps[-1]):
+                    raise RuntimeError("录像采样时间无效或未递增")
+                if writer is None:
+                    h, w = frame.shape[:2]
+                    writer = cv2.VideoWriter(
+                        str(output_path), cv2.VideoWriter_fourcc(*"MJPG"), fps, (w, h)
+                    )
+                    if not writer.isOpened():
+                        raise RuntimeError(f"VideoWriter 打开失败: {output_path}")
+                if frame.shape[:2] != (h, w):
+                    raise RuntimeError("录像帧尺寸发生变化")
+                writer.write(frame)
+                timestamps.append(sample_time)
         finally:
-            writer.release()
+            if writer is not None:
+                writer.release()
+    written = len(timestamps)
+    if not written:
+        raise RuntimeError("录像没有可解码的画面")
+
+    # Verify the delivered AVI before removing the only original copy.
+    check = cv2.VideoCapture(str(output_path))
+    try:
+        if not check.isOpened() or int(check.get(cv2.CAP_PROP_FRAME_COUNT)) != written:
+            raise RuntimeError("AVI 写入帧数校验失败")
+        for index in (0, written - 1):
+            check.set(cv2.CAP_PROP_POS_FRAMES, index)
+            ok, frame = check.read()
+            if not ok or frame is None:
+                raise RuntimeError("AVI 首尾画面校验失败")
+    finally:
+        check.release()
+
+    times = np.asarray(timestamps, dtype=np.float64)
+    times -= times[0]
+    time_path = output_path.with_suffix(".timestamps.npy")
+    temporary = time_path.with_suffix(".npy.tmp")
+    try:
+        with temporary.open("wb") as fh:
+            np.save(fh, times, allow_pickle=False)
+        if not np.array_equal(np.load(temporary, allow_pickle=False), times):
+            raise RuntimeError("录像时间文件校验失败")
+        temporary.replace(time_path)
+    finally:
+        temporary.unlink(missing_ok=True)
     _log.info("mjpg→avi: wrote %d frames → %s", written, output_path)
 
     if cleanup:
@@ -474,24 +502,23 @@ class TinySeCameraCapture(QObject):
         csv_path: Path | None,
         preserve_raw: bool = False,
     ) -> None:
+        avi_path = None
+        failure = None
         try:
-            try:
-                self._last_record_stats = capture.stop_record()
-            except Exception as exc:
-                self.error.emit(str(exc))
-
+            self._last_record_stats = capture.stop_record()
             if not preserve_raw and mjpg_path is not None and csv_path is not None:
-                try:
-                    avi_path = mjpg_to_avi(mjpg_path, csv_path)
-                    self.recording_finished.emit(str(avi_path))
-                except Exception as exc:
-                    self.error.emit(f"MJPEG→AVI 转换失败: {exc}")
-                    self.recording_finished.emit(str(mjpg_path))
+                avi_path = mjpg_to_avi(mjpg_path, csv_path)
+        except Exception as exc:
+            failure = f"录像保存失败（保留原始 MJPEG/CSV）: {exc}"
         finally:
             with self._record_lock:
                 self._record_finalizing = False
                 if self._record_finalize_thread is threading.current_thread():
                     self._record_finalize_thread = None
+        if failure is not None:
+            self.error.emit(failure)
+        elif avi_path is not None:
+            self.recording_finished.emit(str(avi_path))
 
     @property
     def last_record_stats(self):

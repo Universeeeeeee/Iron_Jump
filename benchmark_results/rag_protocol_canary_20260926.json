@@ -1,0 +1,593 @@
+{
+  "kind": "offline_retrieval_canary",
+  "date": "2026-09-26",
+  "cloud_generation": false,
+  "release_status": "invalid",
+  "baseline": {
+    "passed": true,
+    "baseline_version": "sports-rag-retrieval/1.4",
+    "regressions": {}
+  },
+  "retrieval": {
+    "question_count": 30,
+    "recall_at_5": 1.0,
+    "recall_at_10": 1.0,
+    "precision_at_5": 0.5333333333333334,
+    "mrr": 0.9,
+    "ndcg_at_10": 0.9282691723824853,
+    "domain_recall_at_10": {
+      "jump": 1.0,
+      "run": 1.0,
+      "walk": 1.0
+    },
+    "rows": [
+      {
+        "question_id": "jump-01",
+        "query": "使用腾空时间计算纵跳高度的基本公式和假设是什么？",
+        "expected_source_ids": [
+          "pmc5377563"
+        ],
+        "retrieved_source_ids": [
+          "pmc10108745",
+          "pmc5377563",
+          "pmc7931718"
+        ],
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "precision_at_5": 0.3333333333333333,
+        "reciprocal_rank": 0.5,
+        "ndcg_at_10": 0.6309297535714575
+      },
+      {
+        "question_id": "jump-02",
+        "query": "flight-time method 为什么会高估 vertical jump height?",
+        "expected_source_ids": [
+          "pmc5377563"
+        ],
+        "retrieved_source_ids": [
+          "pmc5377563",
+          "pmc7931718",
+          "pmc10108745"
+        ],
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "precision_at_5": 0.3333333333333333,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_10": 1.0
+      },
+      {
+        "question_id": "jump-03",
+        "query": "起跳和落地姿势不同如何影响腾空时间法的跳高估计？",
+        "expected_source_ids": [
+          "pmc5377563"
+        ],
+        "retrieved_source_ids": [
+          "pmc10108745",
+          "pmc5377563",
+          "pmc7931718"
+        ],
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "precision_at_5": 0.3333333333333333,
+        "reciprocal_rank": 0.5,
+        "ndcg_at_10": 0.6309297535714575
+      },
+      {
+        "question_id": "jump-04",
+        "query": "视频帧率对 countermovement jump flight time 测量精度有什么影响？",
+        "expected_source_ids": [
+          "pmc10108745"
+        ],
+        "retrieved_source_ids": [
+          "pmc10108745",
+          "pmc7931718",
+          "pmc5377563"
+        ],
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "precision_at_5": 0.3333333333333333,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_10": 1.0
+      },
+      {
+        "question_id": "jump-05",
+        "query": "不同 frame rate 下 CMJ 高度估计误差如何评估？",
+        "expected_source_ids": [
+          "pmc10108745"
+        ],
+        "retrieved_source_ids": [
+          "pmc5377563",
+          "pmc10108745"
+        ],
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "precision_at_5": 0.5,
+        "reciprocal_rank": 0.5,
+        "ndcg_at_10": 0.6309297535714575
+      },
+      {
+        "question_id": "jump-06",
+        "query": "光电系统如何测量跳跃的 flight time 和 contact time？",
+        "expected_source_ids": [
+          "pmc5377563",
+          "pmc10108745"
+        ],
+        "retrieved_source_ids": [
+          "pmc10108745",
+          "pmc5377563",
+          "pmc7931718"
+        ],
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "precision_at_5": 0.6666666666666666,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_10": 1.0
+      },
+      {
+        "question_id": "jump-07",
+        "query": "纵跳测量如何用同步视频核查起跳和落地帧？",
+        "expected_source_ids": [
+          "pmc10108745"
+        ],
+        "retrieved_source_ids": [
+          "pmc10108745",
+          "pmc5377563",
+          "pmc7931718"
+        ],
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "precision_at_5": 0.3333333333333333,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_10": 1.0
+      },
+      {
+        "question_id": "jump-08",
+        "query": "纵跳测试解释结果时应报告哪些测量限制？",
+        "expected_source_ids": [
+          "pmc5377563",
+          "pmc10108745"
+        ],
+        "retrieved_source_ids": [
+          "pmc10108745",
+          "pmc5377563",
+          "pmc7931718"
+        ],
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "precision_at_5": 0.6666666666666666,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_10": 1.0
+      },
+      {
+        "question_id": "jump-09",
+        "query": "腾空时间法与起跳速度法计算垂直跳高度为何会出现系统差异？",
+        "expected_source_ids": [
+          "pmc5377563"
+        ],
+        "retrieved_source_ids": [
+          "pmc10108745",
+          "pmc5377563",
+          "pmc7931718"
+        ],
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "precision_at_5": 0.3333333333333333,
+        "reciprocal_rank": 0.5,
+        "ndcg_at_10": 0.6309297535714575
+      },
+      {
+        "question_id": "jump-10",
+        "query": "低帧率视频测量跳跃腾空时间时如何估计技术误差？",
+        "expected_source_ids": [
+          "pmc10108745"
+        ],
+        "retrieved_source_ids": [
+          "pmc10108745",
+          "pmc5377563"
+        ],
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "precision_at_5": 0.5,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_10": 1.0
+      },
+      {
+        "question_id": "walk-01",
+        "query": "步长 step length 和步幅 stride length 有什么区别？",
+        "expected_source_ids": [
+          "pmc3927048",
+          "pmc4106927",
+          "pmc5540886"
+        ],
+        "retrieved_source_ids": [
+          "pmc3927048",
+          "pmc5540886",
+          "pmc4106927"
+        ],
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "precision_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_10": 1.0
+      },
+      {
+        "question_id": "walk-02",
+        "query": "步态周期 gait cycle 如何定义？",
+        "expected_source_ids": [
+          "pmc5540886"
+        ],
+        "retrieved_source_ids": [
+          "pmc5540886",
+          "pmc4106927",
+          "pmc3927048"
+        ],
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "precision_at_5": 0.3333333333333333,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_10": 1.0
+      },
+      {
+        "question_id": "walk-03",
+        "query": "stance phase 与 swing phase 是什么？",
+        "expected_source_ids": [
+          "pmc3927048",
+          "pmc5540886"
+        ],
+        "retrieved_source_ids": [
+          "pmc4106927",
+          "pmc3927048",
+          "pmc5540886"
+        ],
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "precision_at_5": 0.6666666666666666,
+        "reciprocal_rank": 0.5,
+        "ndcg_at_10": 0.6934264036172708
+      },
+      {
+        "question_id": "walk-04",
+        "query": "OptoGait 测量步态时空参数的 concurrent validity 如何验证？",
+        "expected_source_ids": [
+          "pmc3927048",
+          "pmc4106927"
+        ],
+        "retrieved_source_ids": [
+          "pmc4106927",
+          "pmc3927048"
+        ],
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "precision_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_10": 1.0
+      },
+      {
+        "question_id": "walk-05",
+        "query": "GAITRite 和 OptoGait 测量 step time 与 step length 的一致性",
+        "expected_source_ids": [
+          "pmc3927048",
+          "pmc4106927"
+        ],
+        "retrieved_source_ids": [
+          "pmc3927048",
+          "pmc4106927",
+          "pmc5540886"
+        ],
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "precision_at_5": 0.6666666666666666,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_10": 1.0
+      },
+      {
+        "question_id": "walk-06",
+        "query": "步态评估应如何标准化测试条件和报告方法？",
+        "expected_source_ids": [
+          "pmc3927048",
+          "pmc5540886"
+        ],
+        "retrieved_source_ids": [
+          "pmc3927048",
+          "pmc5540886",
+          "pmc4106927"
+        ],
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "precision_at_5": 0.6666666666666666,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_10": 1.0
+      },
+      {
+        "question_id": "walk-07",
+        "query": "cadence gait speed stride time 是哪些常见时空参数？",
+        "expected_source_ids": [
+          "pmc3927048",
+          "pmc5540886",
+          "pmc4106927"
+        ],
+        "retrieved_source_ids": [
+          "pmc3927048",
+          "pmc4106927",
+          "pmc5540886"
+        ],
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "precision_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_10": 1.0
+      },
+      {
+        "question_id": "walk-08",
+        "query": "双支撑时间 double support time 的定义",
+        "expected_source_ids": [
+          "pmc3927048",
+          "pmc5540886",
+          "pmc4106927"
+        ],
+        "retrieved_source_ids": [
+          "pmc3927048",
+          "pmc5540886",
+          "pmc4106927"
+        ],
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "precision_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_10": 1.0
+      },
+      {
+        "question_id": "walk-09",
+        "query": "步态时空参数评估的可靠性和最小报告要求有哪些？",
+        "expected_source_ids": [
+          "pmc3927048",
+          "pmc5540886",
+          "pmc4106927"
+        ],
+        "retrieved_source_ids": [
+          "pmc3927048",
+          "pmc4106927",
+          "pmc5540886"
+        ],
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "precision_at_5": 1.0,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_10": 1.0
+      },
+      {
+        "question_id": "walk-10",
+        "query": "解释健康人与特定年龄人群的步速参考值时应注意什么？",
+        "expected_source_ids": [
+          "pmc5540886"
+        ],
+        "retrieved_source_ids": [
+          "pmc5540886",
+          "pmc4106927"
+        ],
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "precision_at_5": 0.5,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_10": 1.0
+      },
+      {
+        "question_id": "run-01",
+        "query": "OptoGait 在跑步机跑步中测量 contact time 和 flight time 是否有效？",
+        "expected_source_ids": [
+          "pmc7739620"
+        ],
+        "retrieved_source_ids": [
+          "pmc7739620",
+          "pmc7069922"
+        ],
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "precision_at_5": 0.5,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_10": 1.0
+      },
+      {
+        "question_id": "run-02",
+        "query": "running spatiotemporal parameters 的 validity and reliability 如何检验？",
+        "expected_source_ids": [
+          "pmc7739620"
+        ],
+        "retrieved_source_ids": [
+          "pmc7739620",
+          "pmc7069922",
+          "pmc11052887"
+        ],
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "precision_at_5": 0.3333333333333333,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_10": 1.0
+      },
+      {
+        "question_id": "run-03",
+        "query": "OptoGait 与 instrumented treadmill 跑步测量的比较",
+        "expected_source_ids": [
+          "pmc7739620"
+        ],
+        "retrieved_source_ids": [
+          "pmc7739620",
+          "pmc7069922",
+          "pmc11052887"
+        ],
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "precision_at_5": 0.3333333333333333,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_10": 1.0
+      },
+      {
+        "question_id": "run-04",
+        "query": "跑步机跑和地面跑的生理与表现指标能否直接比较？",
+        "expected_source_ids": [
+          "pmc7069922"
+        ],
+        "retrieved_source_ids": [
+          "pmc7069922",
+          "pmc7739620",
+          "pmc11052887"
+        ],
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "precision_at_5": 0.3333333333333333,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_10": 1.0
+      },
+      {
+        "question_id": "run-05",
+        "query": "treadmill versus overground running systematic review 结论和限制",
+        "expected_source_ids": [
+          "pmc7069922"
+        ],
+        "retrieved_source_ids": [
+          "pmc7069922",
+          "pmc11052887",
+          "pmc7739620"
+        ],
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "precision_at_5": 0.3333333333333333,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_10": 1.0
+      },
+      {
+        "question_id": "run-06",
+        "query": "跑步机速度和坡度是否会影响与地面跑的可比性？",
+        "expected_source_ids": [
+          "pmc7069922"
+        ],
+        "retrieved_source_ids": [
+          "pmc7069922",
+          "pmc7739620",
+          "pmc11052887"
+        ],
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "precision_at_5": 0.3333333333333333,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_10": 1.0
+      },
+      {
+        "question_id": "run-07",
+        "query": "跑步步频 cadence、触地时间和腾空时间如何定义？",
+        "expected_source_ids": [
+          "pmc7739620"
+        ],
+        "retrieved_source_ids": [
+          "pmc7739620",
+          "pmc7069922",
+          "pmc11052887"
+        ],
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "precision_at_5": 0.3333333333333333,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_10": 1.0
+      },
+      {
+        "question_id": "run-08",
+        "query": "解释跑步机测试结果时需要声明哪些方法学局限？",
+        "expected_source_ids": [
+          "pmc7069922",
+          "pmc7739620"
+        ],
+        "retrieved_source_ids": [
+          "pmc7069922",
+          "pmc7739620",
+          "pmc11052887"
+        ],
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "precision_at_5": 0.6666666666666666,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_10": 1.0
+      },
+      {
+        "question_id": "run-09",
+        "query": "光电系统与测力跑台记录跑步触地时间时可能有哪些系统偏差？",
+        "expected_source_ids": [
+          "pmc7739620"
+        ],
+        "retrieved_source_ids": [
+          "pmc7069922",
+          "pmc7739620",
+          "pmc11052887"
+        ],
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "precision_at_5": 0.3333333333333333,
+        "reciprocal_rank": 0.5,
+        "ndcg_at_10": 0.6309297535714575
+      },
+      {
+        "question_id": "run-10",
+        "query": "跑步机与地面跑的时空和运动学差异应如何解释？",
+        "expected_source_ids": [
+          "pmc7069922"
+        ],
+        "retrieved_source_ids": [
+          "pmc7069922",
+          "pmc7739620",
+          "pmc11052887"
+        ],
+        "recall_at_5": 1.0,
+        "recall_at_10": 1.0,
+        "precision_at_5": 0.3333333333333333,
+        "reciprocal_rank": 1.0,
+        "ndcg_at_10": 1.0
+      }
+    ]
+  },
+  "ground_scenarios": [
+    {
+      "test_type": "Sprint and Gait Test",
+      "queries": [
+        {
+          "intent": "measurement_review",
+          "protocols": [
+            "overground_walk"
+          ],
+          "evidence": [
+            {
+              "source_id": "pmc3927048",
+              "protocol": "overground_walk",
+              "locator": "Abstract ¶1"
+            },
+            {
+              "source_id": "pmc3927048",
+              "protocol": "overground_walk",
+              "locator": "RESULTS ¶1"
+            }
+          ]
+        },
+        {
+          "intent": "retest",
+          "protocols": [
+            "overground_walk"
+          ],
+          "evidence": [
+            {
+              "source_id": "pmc3927048",
+              "protocol": "overground_walk",
+              "locator": "RESULTS ¶3"
+            },
+            {
+              "source_id": "pmc3927048",
+              "protocol": "overground_walk",
+              "locator": "DISCUSSION ¶5"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "test_type": "Overground Running Test",
+      "queries": []
+    }
+  ]
+}

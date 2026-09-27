@@ -50,7 +50,9 @@ class SessionController(QObject):
     device_message = Signal(str)            # 设备消息 (节流)
     device_state_changed = Signal(str, str)  # state, user-facing detail
     walking_readiness_changed = Signal(dict)
+    device_layout_changed = Signal(object)
     prepare_walking_requested = Signal()
+    ground_start_requested = Signal(object)
     led_health_changed = Signal(dict)        # LED 通断/闪烁诊断
 
     # ---- queued commands into the worker thread ----
@@ -92,6 +94,8 @@ class SessionController(QObject):
         self._start_pending = False
         self._device_state = "disconnected"
         self._walking_ready = False
+        self._walking_device_key = None
+        self._device_layout = None
 
     # ------------------------------------------------------------------
     #  公共方法
@@ -119,6 +123,8 @@ class SessionController(QObject):
         self._worker.moveToThread(self._thread)
         self._worker.data_received.connect(self._on_device_message)
         self._worker.device_state_changed.connect(self._on_device_state)
+        if hasattr(self._worker, "layout_detected"):
+            self._worker.layout_detected.connect(self._on_device_layout)
         if hasattr(self._worker, "led_health_changed"):
             self._worker.led_health_changed.connect(self._on_led_health)
         if hasattr(self._worker, "refresh_led_health"):
@@ -187,8 +193,17 @@ class SessionController(QObject):
             self._worker.device_state_changed.connect(walking.on_device_state)
             self.prepare_walking_requested.connect(self._worker.prepare_walking_capture)
             self.prepare_walking_requested.connect(walking.monitor)
+            self.ground_start_requested.connect(walking.arm_checked)
             walking.readiness.connect(self._on_walking_readiness)
             walking.armed.connect(self._on_walking_armed)
+        elif (self._engine.processor_name in {"treadmill_gait", "treadmill_running"}
+              and hasattr(self._worker, "sensor_frame_received")):
+            self._worker.sensor_frame_received.connect(
+                self._engine.process_sensor_frame, Qt.QueuedConnection
+            )
+            self._worker.acquisition_issue.connect(
+                self._engine.process_acquisition_issue, Qt.QueuedConnection
+            )
         else:
             self._worker.raw_contact_signal.connect(
                 self._engine.process_raw_frame, Qt.DirectConnection
@@ -208,6 +223,8 @@ class SessionController(QObject):
         if not reuse_device:
             self._worker.data_received.connect(self._on_device_message)
             self._worker.device_state_changed.connect(self._on_device_state)
+            if hasattr(self._worker, "layout_detected"):
+                self._worker.layout_detected.connect(self._on_device_layout)
             if hasattr(self._worker, "led_health_changed"):
                 self._worker.led_health_changed.connect(self._on_led_health)
             if hasattr(self._worker, "refresh_led_health"):
@@ -237,6 +254,7 @@ class SessionController(QObject):
             self.device_state_changed.emit("connecting", "正在连接设备...")
             self._thread.start()
         log.info("Session prepared: %s", config.test_type)
+        self.device_layout_changed.emit(self._device_layout)
 
     def start(self):
         """Start formal acquisition after the device has been prepared."""
@@ -251,7 +269,7 @@ class SessionController(QObject):
                 return
             self._start_pending = True
             self._start_time = time.perf_counter()
-            self.engine_start_requested.emit(self._start_time)
+            self.ground_start_requested.emit(self._walking_device_key)
             return
         if self._device_state != "connected":
             log.warning("start() called while device state is %s", self._device_state)
@@ -259,6 +277,9 @@ class SessionController(QObject):
                 self._device_state,
                 "设备尚未就绪，不能开始采集。",
             )
+            return
+        if self._device_layout is not None and len(self._device_layout.segments) != 1:
+            self.device_message.emit("当前模式仅支持单段设备，请改用地面走路/跑步，或连接单段设备。")
             return
         if self._is_running or self._start_pending:
             return
@@ -400,6 +421,9 @@ class SessionController(QObject):
     @Slot(str, str)
     def _on_device_state(self, state: str, message: str):
         self._device_state = state
+        if state in {"disconnected", "error"}:
+            self._device_layout = None
+            self.device_layout_changed.emit(None)
         if state == "streaming" and self._start_pending:
             self._start_pending = False
             self._is_running = True
@@ -420,7 +444,8 @@ class SessionController(QObject):
     @Slot(dict)
     def _on_walking_readiness(self, result):
         self._walking_ready = result["ready"]
-        if not self._walking_ready:
+        self._walking_device_key = result.get("device_key")
+        if not self._walking_ready or result.get("start_rejected"):
             self._start_pending = False
         self.walking_readiness_changed.emit(result)
 
@@ -433,6 +458,15 @@ class SessionController(QObject):
     @Slot(dict)
     def _on_led_health(self, result: dict):
         self.led_health_changed.emit(result)
+
+    @Slot(object)
+    def _on_device_layout(self, layout):
+        self._device_layout = layout
+        self.device_layout_changed.emit(layout)
+        if (len(layout.segments) > 1 and self._engine is not None
+                and self._engine.overground is None and (self._is_running or self._start_pending)):
+            self.device_message.emit("检测到多段设备，当前模式仅支持单段，已停止采集。")
+            self.stop("unsupported_layout")
 
     @Slot(str)
     def _on_engine_finished(self, reason: str):
@@ -528,6 +562,10 @@ class SessionController(QObject):
         self._start_pending = False
         self._device_state = "disconnected"
         self._pause_pending = False
+        self._device_layout = None
+        self._walking_ready = False
+        self._walking_device_key = None
+        self.device_layout_changed.emit(None)
 
     @staticmethod
     def _parse_int_env(name: str, default: int) -> int:

@@ -707,6 +707,7 @@ class ReportView(QWidget):
         self._replay_panel.hide()
         self._replay_panel.setMinimumHeight(520)
         right_layout.addWidget(self._replay_panel, 1)
+        right_layout.addWidget(self._replay_panel.ground_track.detail, 1)
 
         self._plot_container = QWidget()
         self._plot_container_layout = QVBoxLayout(self._plot_container)
@@ -898,12 +899,17 @@ class ReportView(QWidget):
             "jump_count_reached": "测试已完成 · 跳跃次数已达标",
             "time_up": "测试已完成 · 测试时间到",
             "manual": "测试已完成 · 手动结束",
+            "unsupported_layout": "测试中断 · 当前模式仅支持单段设备",
         }
         self._reason_label.setText(reason_map.get(report.finish_reason, report.finish_reason))
         self._replay_panel.hide()
         self._plot_container.show()
         self._tabs.setCurrentIndex(0)
         is_walking = (isinstance(report, GaitTestReport) and bool(report.walking_summary)) or isinstance(report, OvergroundRunningReport)
+        summary = (getattr(report, "running_summary", None) or getattr(report, "walking_summary", None)) if is_walking else None
+        self._replay_panel.set_ground_context(
+            report.report_config_snapshot.get("device", {}), summary
+        )
         self._tabs.setTabVisible(1, is_walking or isinstance(
             report, (TreadmillGaitReport, TreadmillRunningReport)
         ))
@@ -1061,9 +1067,13 @@ class ReportView(QWidget):
                     f"（{error_code}）</div>"
                 )
             elif rag_status == "no_evidence":
+                message = (
+                    "当前测试场景或已验证指标尚无适用的循证建议，因此未生成建议。"
+                    if rag_audit.get("error_code") == "no_supported_query"
+                    else "未检索到满足条件的文献证据，因此未生成建议。"
+                )
                 sections.append(
-                    "<div style='color:#aeb7c5'>未检索到满足条件的"
-                    "文献证据，因此未生成建议。</div>"
+                    f"<div style='color:#aeb7c5'>{message}</div>"
                 )
 
         limitations = analysis.get("overall_limitations", [])
@@ -1419,10 +1429,13 @@ class ReportView(QWidget):
         reasons_cn = {"boundary_contact": "边缘接触不完整", "incomplete_contact": "接触尚未结束",
                       "frame_gap": "丢帧", "unknown_touch_after_gap": "缺口后触地时间未知",
                       "ambiguous_contacts": "遮挡合并或身份不确定", "simultaneous_contacts": "同时出现，身份不确定",
-                      "short_contact": "接触过短"}
-        content = table("接触记录", ["序号", "脚 / 身份段", "触地(s)", "离地(s)", "位置(m)", "排除原因"],
+                      "short_contact": "接触过短或足迹不足", "pending_touch_order": "较早接触尚未确认"}
+        content = table("接触记录", ["序号", "脚 / 身份段", "触地(s)", "离地(s)", "位置(m)", "短中断合并", "排除原因"],
                         [[c["id"], c["side"] if c["side"] != "unknown" else f"{c['label']} / {c['epoch']}",
-                          c["start"], c["end"], round(c["position_m"], 4), reasons_cn.get(c["exclusion"], c["exclusion"]) or ""]
+                          c["start"], c["end"], round(c["position_m"], 4),
+                          f"{len(c.get('merged_interruptions', []))} 次 / "
+                          f"{sum(x['end_sample'] - x['start_sample'] for x in c.get('merged_interruptions', []))} ms",
+                          reasons_cn.get(c["exclusion"], c["exclusion"]) or ""]
                          for c in s["contacts"]])
         content += table("停步候选区间", ["开始(s)", "结束(s)"], [[x["start_s"], x["end_s"]] for x in s["stops"]])
         content += table("采集异常", ["时间(s)", "原因", "帧标识"],
@@ -1913,7 +1926,8 @@ class ReportView(QWidget):
                         columns = list(records[0])
                         ws.append(columns)
                         for record in records:
-                            ws.append([record.get(column) for column in columns])
+                            ws.append([json.dumps(value, ensure_ascii=False) if isinstance(value, (list, dict)) else value
+                                       for value in (record.get(column) for column in columns)])
 
             if isinstance(self._report, JumpTestReport):
                 ws = wb.create_sheet("Jump Metrics")

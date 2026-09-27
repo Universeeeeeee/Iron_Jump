@@ -24,7 +24,7 @@ if _project_root not in sys.path:
 from qtpy.QtCore import Qt
 from qtpy.QtGui import QIcon
 from qtpy.QtWidgets import (
-    QApplication, QMainWindow, QStackedWidget, QMessageBox, QPushButton,
+    QApplication, QMainWindow, QStackedWidget, QMessageBox, QWidget, QVBoxLayout, QGridLayout,
 )
 from dayu_widgets import dayu_theme
 from dayu_widgets.qt import application
@@ -253,21 +253,39 @@ class MainWindow(QMainWindow):
         self._stack.addWidget(self._history_view)
         self._stack.addWidget(self._settings_view)
 
-        self._shell = ApplicationShell(self._stack)
-        self.setCentralWidget(self._shell)
+        from ui.voice_panel import VoicePanel
         self._voice = None
-        self._voice_button = QPushButton("开启语音")
-        self._voice_button.setObjectName("VoiceToggle")
-        self._voice_button.setToolTip("豆包语音：配置、开始、暂停、继续、结束、分析报告")
+        self._voice_panel = VoicePanel()
+        self._voice_button = self._voice_panel.toggle_button
         self._voice_button.clicked.connect(self._toggle_voice)
+        self._voice_panel.interrupt_button.clicked.connect(self._interrupt_voice)
+        content = QWidget()
+        content_layout = QGridLayout(content)
+        content_layout.setContentsMargins(0, 0, 0, 0)
+        content_layout.setSpacing(0)
+        content_layout.addWidget(self._stack, 0, 0)
+        content_layout.addWidget(self._voice_panel, 1, 0)
+        content_layout.setRowStretch(0, 1)
+        content_layout.setColumnStretch(0, 4)
+        content_layout.setColumnStretch(1, 1)
+        self._ground_rail = QWidget()
+        self._ground_rail.setMinimumWidth(250)
+        self._ground_rail.setMaximumWidth(340)
+        self._ground_rail_layout = QVBoxLayout(self._ground_rail)
+        self._ground_rail_layout.setContentsMargins(0, 0, 0, 0)
+        self._ground_rail_layout.addWidget(self._exec_view._ground_track)
+        self._ground_rail.hide()
+        content_layout.addWidget(self._ground_rail, 0, 1, 2, 1)
+        self._shell = ApplicationShell(content)
+        self.setCentralWidget(self._shell)
         self.statusBar().setStyleSheet(
             "QStatusBar { background: #0c1119; color: #aeb7c5; }"
             "QStatusBar::item { border: none; }"
-            "QPushButton#VoiceToggle { background: #242e3c; color: #f2f5f9;"
-            "border: 1px solid #354151; border-radius: 5px; padding: 5px 14px; }"
-            "QPushButton#VoiceToggle:hover { border-color: #ff8a1f; }"
         )
-        self.statusBar().addPermanentWidget(self._voice_button)
+        self._stack.currentChanged.connect(self._update_voice_context)
+        self._stack.currentChanged.connect(self._sync_ground_rail)
+        self._exec_view.ground_layout_changed.connect(self._sync_ground_rail)
+        self._update_voice_context()
 
         # ===== Camera =====
         self._logi_camera = None
@@ -348,6 +366,9 @@ class MainWindow(QMainWindow):
             self._controller.led_health_changed.connect(
                 self._setup_view.on_led_health
             )
+        if hasattr(self._controller, "device_layout_changed"):
+            self._controller.device_layout_changed.connect(self._setup_view.on_device_layout)
+            self._controller.device_layout_changed.connect(self._exec_view.on_device_layout)
         self._setup_view.on_device_state(
             getattr(self._controller, "device_state", "disconnected"),
             "",
@@ -376,6 +397,22 @@ class MainWindow(QMainWindow):
     # ------------------------------------------------------------------
     #  视图切换
     # ------------------------------------------------------------------
+
+    def _sync_ground_rail(self, *_):
+        page = self._stack.currentWidget()
+        execution = page is self._exec_view and self._exec_view.is_ground
+        replay = self._report_view._replay_panel
+        report = page is self._report_view and replay.is_ground
+        if report:
+            self._ground_rail_layout.addWidget(replay)
+            replay.show()
+        elif replay.parentWidget() is self._ground_rail:
+            self._report_view._right_layout.insertWidget(1, replay, 1)
+            replay.setVisible(self._report_view._plot_container.isHidden())
+        self._exec_view._ground_track.setVisible(execution)
+        self._ground_rail.setVisible(execution or report)
+        if not report:
+            replay._timer.stop()
 
     def _go_to_setup(self):
         self._set_active_module(MODULE_TEST)
@@ -406,6 +443,7 @@ class MainWindow(QMainWindow):
         self._report_view.set_analysis_availability(status == "ready")
         self._set_active_module(MODULE_RESULTS)
         self._stack.setCurrentWidget(self._report_view)
+        self._sync_ground_rail()
 
     def _go_to_history(self):
         self._set_active_module(MODULE_RESULTS)
@@ -520,6 +558,27 @@ class MainWindow(QMainWindow):
             self._controller.retry_device()
             return
         self._controller.start()
+
+    def _update_voice_context(self, *_args):
+        page = self._stack.currentWidget()
+        if page is self._setup_view:
+            hint = "配置 · 描述测试要求，查看建议后说“确认配置”"
+        elif page is self._exec_view:
+            config = self._active_config
+            if config and config.test_type in {"Sprint and Gait Test", "Overground Running Test"}:
+                hint = "地面测试 · 核对段数后点击开始，单次通过可说“结束”"
+            else:
+                hint = "测试 · 开始 / 暂停 / 继续 / 结束"
+        elif page is self._report_view:
+            hint = "报告 · 分析报告，或询问跑步机步态明细"
+        else:
+            hint = "语音 · 前往测试页配置，或打开报告提问"
+        self._voice_panel.context_label.setText(hint)
+        self._voice_panel.context_label.setToolTip(hint)
+
+    def _interrupt_voice(self):
+        if self._voice is not None:
+            self._voice.interrupt_speech()
 
     def _toggle_voice(self):
         if self._voice is None:

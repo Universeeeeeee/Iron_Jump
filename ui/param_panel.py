@@ -131,9 +131,11 @@ class ParamPanel(QWidget):
         "Overground Running Test": ["stop_type", "starting_foot"],
         "Treadmill Gait Test": [
             "stop_type", "test_length", "treadmill_speed", "direction",
+            "starting_foot_override",
         ],
         "Treadmill Running Test": [
             "stop_type", "test_length", "treadmill_speed", "direction",
+            "starting_foot_override",
         ],
     }
 
@@ -242,7 +244,8 @@ class ParamPanel(QWidget):
                 continue
 
             if isinstance(widget, QComboBox):
-                idx = widget.findText(str(val))
+                idx = (widget.findData(val) if name == "starting_foot_override"
+                       else widget.findText(str(val)))
                 if idx >= 0:
                     widget.setCurrentIndex(idx)
             elif isinstance(widget, MSpinBox):
@@ -534,11 +537,17 @@ class ParamPanel(QWidget):
         if param_name == "test_type":
             for value in values:
                 combo.addItem("地面跑步" if value == "Overground Running Test" else value, value)
+        elif param_name == "starting_foot_override":
+            labels = {"Not defined": "未确认", "left": "左脚", "right": "右脚"}
+            for value in values:
+                combo.addItem(labels[value], None if value == "Not defined" else value)
         else:
             combo.addItems(values)
 
         # 设置默认值
         param_def = self._schema.get_param_def(param_name)
+        if param_name == "starting_foot_override" and param_def is not None:
+            combo.setToolTip(param_def.description)
         default = self._default_for_param(param_name, param_def)
         if default is not None:
             idx = combo.findText(str(default))
@@ -758,7 +767,8 @@ class ParamPanel(QWidget):
         result = {}
         for name, widget in self._widgets.items():
             if isinstance(widget, QComboBox):
-                result[name] = (widget.currentData() if name == "test_type" else widget.currentText())
+                result[name] = (widget.currentData() if name in ("test_type", "starting_foot_override")
+                                else widget.currentText())
             elif isinstance(widget, MSpinBox):
                 result[name] = widget.value()
             elif isinstance(widget, QDoubleSpinBox):

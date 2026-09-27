@@ -25,6 +25,11 @@ class Contact:
     end: float | None = None
     confirmed: bool = False
     exclusion: str | None = None
+    confirmed_at: float | None = None
+    lift_confirmed_at: float | None = None
+    observed_samples: int = 0
+    peak_width_m: float = 0.0
+    merged_interruptions: list = field(default_factory=list)
 
     @property
     def position(self):
@@ -53,6 +58,7 @@ class WalkingProcessor:
         self.clear_since = None
         self.finished_reason = None
         self._last_label = "B"
+        self._commit_cursor = 0
         self._identity_known = True
         self._recovering = False
         self._ambiguous_now = False
@@ -64,8 +70,15 @@ class WalkingProcessor:
         self._preserved_stops = self._stop_intervals()
         t = self.last_time
         self.issues.append({"code": code, "time_s": t, "frame_index": frame_index})
+        if self.origin is not None and t is not None:
+            self.timeline.append({"timestamp_s": t - self.origin + .001, "positions_m": self.positions,
+                                  "contact_bits": [0] * len(self.positions),
+                                  "valid_bits": [0] * len(self.positions), "feet": [], "quality_flags": [code]})
         for contact in self.active:
             contact.exclusion = code
+        for contact in self.contacts[self._commit_cursor:]:
+            contact.exclusion = contact.exclusion or code
+        self._commit_cursor = len(self.contacts)
         self.active.clear()
         self.epoch += 1
         self._identity_known = False
@@ -83,7 +96,7 @@ class WalkingProcessor:
             else:
                 groups.append([i])
         # Keep edge fragments so incomplete entry/exit contacts cannot look complete.
-        return [(g[0], g[-1]) for g in groups if len(g) >= 3]
+        return [(g[0], g[-1]) for g in groups]
 
     def process(self, frame):
         if self.finished_reason:
@@ -107,6 +120,21 @@ class WalkingProcessor:
             return
         sample_time = frame.sample_time_s
         self.last_time = sample_time
+        # Expire absence before association, including a return exactly at the
+        # release threshold. The edge remains the first absent device sample.
+        for contact in list(self.active):
+            absent_start = contact.last + .001
+            if (sample_time > absent_start + 1e-9
+                    and sample_time - absent_start + 1e-9 >= self.config.release_ms / 1000):
+                contact.end = absent_start
+                contact.lift_confirmed_at = sample_time
+                if (not contact.confirmed
+                        or contact.end - contact.start + 1e-9 < self.config.min_contact_time / 1000):
+                    contact.exclusion = contact.exclusion or "short_contact"
+                    self._identity_known = False
+                    for later in self.contacts[contact.id + 1:]:
+                        later.side = "unknown"
+                self.active.remove(contact)
         groups = self._clusters(frame.contact_bits)
         matches = []
         used = set()
@@ -136,8 +164,7 @@ class WalkingProcessor:
             return
         self._ambiguous_now = False
 
-        observed = set()
-        new_confirmed = []
+        new_contacts = []
         for low, high, centre, contact in matches:
             if contact is None:
                 contact = Contact(len(self.contacts), self.epoch, "", "unknown", sample_time,
@@ -146,56 +173,33 @@ class WalkingProcessor:
                     contact.exclusion = "unknown_touch_after_gap"
                 self.contacts.append(contact)
                 self.active.append(contact)
-            observed.add(contact.id)
+                new_contacts.append(contact)
+            elif sample_time - contact.last > .001 + 1e-9:
+                contact.merged_interruptions.append({
+                    "start_sample": round(contact.last * 1000) + 1,
+                    "end_sample": frame.sample_index, "reason": "release_debounce",
+                })
             contact.last = sample_time
+            contact.observed_samples += 1
             contact.low, contact.high = low, high
+            contact.peak_width_m = max(contact.peak_width_m, self.positions[high] - self.positions[low])
             # Bounded spatial history, sampled every 20 ms; stance roll is not travel.
             if len(contact.positions) < 100 and frame.sample_index % 20 == 0:
                 contact.positions.append(centre)
             if low == 0 or high == len(self.positions) - 1:
                 contact.exclusion = contact.exclusion or "boundary_contact"
-            wide_enough = self.positions[high] - self.positions[low] >= .08 or contact.exclusion == "boundary_contact"
+            wide_enough = contact.peak_width_m >= .08 or contact.exclusion == "boundary_contact"
             if (not contact.confirmed and wide_enough
-                    and sample_time - contact.start + .001 + 1e-9 >= max(self.config.confirmation_ms, self.config.min_contact_time) / 1000):
+                    and contact.observed_samples >= self.config.confirmation_ms
+                    and sample_time - contact.start + .001 + 1e-9 >= self.config.min_contact_time / 1000):
                 contact.confirmed = True
-                new_confirmed.append(contact)
+                contact.confirmed_at = sample_time
 
-        if len(new_confirmed) > 1:
-            for c in new_confirmed:
+        if len(new_contacts) > 1:
+            for c in new_contacts:
                 c.exclusion = c.exclusion or "simultaneous_contacts"
             self._identity_known = False
-        for contact in new_confirmed:
-            self._last_label = "A" if self._last_label == "B" else "B"
-            contact.label = self._last_label
-            first_side = {"Left": "left", "Right": "right"}.get(self.config.starting_foot)
-            if first_side and self._identity_known and len(new_confirmed) == 1:
-                contact.side = first_side if contact.label == "A" else ("right" if first_side == "left" else "left")
-            if self.origin is None:
-                self.origin = contact.start
-                self.entry_position = contact.position
-            self.exit_position = contact.position
-            if self.entry_position is not None:
-                displacement = contact.position - self.entry_position
-                if abs(displacement) >= .15 and not self.direction:
-                    self.direction = 1 if displacement > 0 else -1
-                previous = [c for c in self.contacts[:contact.id] if c.confirmed and c.epoch == contact.epoch]
-                if previous and self.direction and (contact.position - previous[-1].position) * self.direction < -.15:
-                    contact.exclusion = "turn_detected"
-                    self.finished_reason = "turn_detected"
-
-        for contact in list(self.active):
-            if contact.id not in observed and sample_time - contact.last + 1e-9 >= self.config.release_ms / 1000:
-                # First absent sample, not the end of the release confirmation delay.
-                contact.end = contact.last + .001
-                if not contact.confirmed:
-                    contact.exclusion = contact.exclusion or "short_contact"
-                elif contact.end - contact.start < self.config.min_contact_time / 1000:
-                    contact.exclusion = contact.exclusion or "short_contact"
-                if not contact.confirmed or contact.exclusion == "short_contact":
-                    self._identity_known = False
-                    for later in self.contacts[contact.id + 1:]:
-                        later.side = "unknown"
-                self.active.remove(contact)
+        self._commit_contacts()
         # Existing footprints immediately after a gap have unknown touch times.
         # Later new contacts can be measured, with a new A/B identity epoch.
         self._recovering = False
@@ -209,6 +213,34 @@ class WalkingProcessor:
                 if self._at_exit():
                     self.finished_reason = "passage_complete"
         self._record_visual(frame)
+
+    def _commit_contacts(self):
+        # Creation order is touch order. An unresolved earlier candidate blocks
+        # identity and direction publication, even if a later foot confirms first.
+        while self._commit_cursor < len(self.contacts):
+            contact = self.contacts[self._commit_cursor]
+            if not contact.confirmed and contact.end is None:
+                break
+            self._commit_cursor += 1
+            if not contact.confirmed:
+                continue
+            self._last_label = "A" if self._last_label == "B" else "B"
+            contact.label = self._last_label
+            first_side = {"Left": "left", "Right": "right"}.get(self.config.starting_foot)
+            if first_side and self._identity_known:
+                contact.side = first_side if contact.label == "A" else ("right" if first_side == "left" else "left")
+            if self.origin is None:
+                self.origin = contact.start
+                self.entry_position = contact.position
+            self.exit_position = contact.position
+            if self.entry_position is not None:
+                displacement = contact.position - self.entry_position
+                if abs(displacement) >= .15 and not self.direction:
+                    self.direction = 1 if displacement > 0 else -1
+                previous = [c for c in self.contacts[:contact.id] if c.label and c.epoch == contact.epoch]
+                if previous and self.direction and (contact.position - previous[-1].position) * self.direction < -.15:
+                    contact.exclusion = "turn_detected"
+                    self.finished_reason = "turn_detected"
 
     def _at_exit(self):
         if not self.direction or self.entry_position is None or self.exit_position is None:
@@ -227,15 +259,17 @@ class WalkingProcessor:
             "timestamp_s": frame.sample_time_s - self.origin,
             "contact_bits": list(frame.contact_bits),
             "positions_m": self.positions,
+            "valid_bits": list(frame.valid_bits),
+            "quality_flags": list(frame.quality_flags),
             "feet": [{"contact_id": c.id, "side": c.side, "label": c.label,
                       "centroid_cm": c.position * 100,
                       "length_cm": (self.positions[c.high] - self.positions[c.low]) * 100,
-                      "status": "confirmed" if c.confirmed else "candidate"}
+                      "status": "confirmed" if c.confirmed and not c.exclusion else "candidate"}
                      for c in self.active],
         })
 
     def _stop_intervals(self):
-        confirmed = [c for c in self.contacts if c.confirmed]
+        confirmed = [c for c in self.contacts if c.confirmed and c.label]
         end = self.last_occupied + .001 if self.last_occupied is not None else self.origin
         stops = dict(self._preserved_stops)
         for i, c in enumerate(confirmed):
@@ -253,7 +287,7 @@ class WalkingProcessor:
         end = self.last_occupied + .001 if self.last_occupied is not None else self.origin
         stops = self._stop_intervals()
         def valid(c):
-            return c.confirmed and c.end is not None and not c.exclusion
+            return c.confirmed and bool(c.label) and c.end is not None and not c.exclusion
         def moving(start, end):
             return not any(start < b and end > a for a, b in stops)
         steps, strides, cycles = [], [], []
@@ -322,7 +356,10 @@ class WalkingProcessor:
                               "start": c.start - (self.origin or 0),
                               "end": c.end - (self.origin or 0) if c.end is not None else None,
                               "last": c.last - (self.origin or 0),
-                              "exclusion": c.exclusion or ("incomplete_contact" if c.end is None else None)}
+                              "confirmed_at": c.confirmed_at - (self.origin or 0) if c.confirmed_at is not None else None,
+                              "lift_confirmed_at": c.lift_confirmed_at - (self.origin or 0) if c.lift_confirmed_at is not None else None,
+                              "exclusion": c.exclusion or ("pending_touch_order" if c.confirmed and not c.label
+                                                            else "incomplete_contact" if c.end is None else None)}
                              for c in self.contacts],
                 "excluded_contacts": sum(not valid(c) for c in self.contacts)}
 
@@ -342,5 +379,5 @@ class WalkingProcessor:
             finish_reason=reason, export_frames=export_frames, export_timestamps=export_timestamps,
             visual_timeline=tuple(self.timeline), walking_summary=summary,
             report_config_snapshot={**self.config.to_dict(), "device": self.device.snapshot(),
-                                    "algorithm": "overground_walking_v1.2"},
+                                    "algorithm": "overground_walking_v1.3"},
         )

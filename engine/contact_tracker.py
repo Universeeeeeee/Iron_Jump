@@ -86,6 +86,7 @@ class GaitStepEvent:
 
     kind: str  # "touch" 或 "lift"
     contact: ContactState
+    confirmed_time_s: float | None = None
 
 
 # ===================== 主检测器 =====================
@@ -209,6 +210,8 @@ class ContactBasedGaitTracker:
 
         # Step 3. 用 track_id 匹配 contact
         for track in active_tracks:
+            if track.get("miss_count", 0):
+                continue
             contact = self._find_or_create_contact(track, timestamp)
             self._update_contact_seen(contact, track, timestamp)
 

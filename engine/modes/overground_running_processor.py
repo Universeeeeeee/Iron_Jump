@@ -67,6 +67,10 @@ class OvergroundRunningProcessor:
     def break_continuity(self, code, frame_index=None):
         self._preserved_stops = self._stop_intervals()
         self.issues.append({"code": code, "sample": self.last_sample, "frame_index": frame_index})
+        if self.origin is not None:
+            self.timeline.append({"timestamp_s": (self.last_sample + 1) / 1000 - self.origin,
+                                  "positions_m": self.positions, "contact_bits": [0] * len(self.positions),
+                                  "valid_bits": [0] * len(self.positions), "feet": [], "quality_flags": [code]})
         for c in self.active:
             c.interrupted = code
         self.active.clear()
@@ -221,10 +225,11 @@ class OvergroundRunningProcessor:
             self._last_visual = n
             self.timeline.append({"timestamp_s": n / 1000 - self.origin,
                                   "contact_bits": list(frame.contact_bits), "positions_m": self.positions,
+                                  "valid_bits": list(frame.valid_bits), "quality_flags": list(frame.quality_flags),
                                   "feet": [{"contact_id": c.id, "side": c.side, "label": c.label,
                                             "centroid_cm": (self.positions[c.low] + self.positions[c.high]) * 50,
                                             "length_cm": (self.positions[c.high] - self.positions[c.low]) * 100,
-                                            "status": "confirmed" if c.confirmed else "candidate"}
+                                            "status": "confirmed" if c.confirmed and not c.problem and not c.interrupted else "candidate"}
                                            for c in self.active]})
 
     def _phase(self, n, count):

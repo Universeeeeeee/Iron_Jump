@@ -136,6 +136,7 @@ class KnowledgeQuerySpec(FrozenModel):
     recommendation_allowed: bool
     recommendation_intent: RecommendationIntent
     planner_version: str
+    protocols: tuple[str, ...] = ()
     metadata: dict[str, Any] = Field(default_factory=dict)
 
 

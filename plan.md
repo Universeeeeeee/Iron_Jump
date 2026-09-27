@@ -1,6 +1,6 @@
 # Iron_Jump 统一项目计划
 
-> 最后更新：2026-08-25
+> 最后更新：2026-09-26
 >
 > 本文件是项目唯一的计划类文档。已完成事项、当前实现状态和后续待办都集中在这里；具体参数定义、架构说明和实验诊断仍放在各自的参考文档中。
 
@@ -13,11 +13,12 @@
 
 ### 当前开发基线
 
-- 当前分支为 `vae/iron_jump`。2026-08-12 已将此前工作区改动按 Report Agent、纵跳与 LED 健康检测、UI 和文档拆分为可追溯提交。
+- 当前统一开发分支为 `vae/iron_jump`，合并基线 `86ff8ae` 已推送远端。原语音分支和 Mac MediaPipe 分支的全部提交已纳入；本地与远端仅保留 `main`、`vae/iron_jump`，`main` 未修改。
+- 2026-09-26 在独立、干净的合并工作目录，使用项目 `.venv/bin/python`（Python 3.11.15）、macOS 和 `QT_QPA_PLATFORM=offscreen` 完成全量回归：`1048 passed`、`12 subtests passed`，耗时 49.17 秒，无跳过/排除，保留两项警告（TestConfig 测试收集、audioop 弃用）。
+- 该基线汇总了语音交互、多段采集、地面走路/跑步、RC200U 身份选择、Report Agent 序贯分析与超时控制、RAG 发布门和 Mac 左右腿身份验证工具。
 - `vision.__all__` 保持小型稳定公共 API；`PoseInferenceRecord`、`VisionSessionRecorder` 和 `NullVisionSessionRecorder` 属于内部按需访问类型，不进入稳定导出集合。
-- 2026-08-12 使用 `/Users/vae/miniconda3/envs/Iron_Jump/bin/python` 和 `QT_QPA_PLATFORM=offscreen` 运行全量测试：`659 passed`、`12 subtests passed`。
-- 2026-08-25 完成 Report Agent 工程生产化收尾；全量回归为 `791 passed`、`12 subtests passed`。
-- 提交前审计未发现 `.env`、模型文件、真实受试者数据库或本地日志进入版本控制；本地对话记录和驱动压缩包已加入忽略规则。
+- 仓库已包含 MediaPipe 模型 `models/pose_landmarker_full.task`、硬件驱动与参考采集包；不能沿用早期“模型文件均未入库”的审计结论。采集日志由 `.gitignore` 排除，分支整理时原有 20 个 RAG/采集文件逐字节校验一致。
+- 下文带日期的旧实验保留其历史口径；当前能力和未完成事项以本节及对应更新说明为准。软件回归不替代 Windows 硬件、真人语音或运动测量精度验收。
 
 ## 1. 当前已完成能力
 
@@ -39,6 +40,8 @@
   - `agent/config/prompts/jump.md`
   - `agent/config/prompts/treadmill_gait.md`
   - `agent/config/prompts/treadmill_running.md`
+  - `agent/config/prompts/walking.md`
+  - `agent/config/prompts/overground_running.md`
 
 ### 1.3 受试者和历史记录
 
@@ -54,7 +57,7 @@
 - `Treadmill Gait Test` 和 `Treadmill Running Test` 已实现独立配置模型、processor、累积器和报告模型。
 - `GaitEngine` 已按 `test_type` 分发到 `TreadmillProcessor`。
 - 已实现跑带位移与触地参考点位置变化联合计算步长/步幅、起始脚、逐步结果、有效性和统计过滤。
-- 默认跑步机速度为 `3.0 km/h`，默认方向为 `Opposite side`。
+- 默认跑步机步态速度为 `3.0 km/h`，跑步速度为 `6.0 km/h`，默认方向为 `Opposite side`。
 - 已实现同侧触地到同侧触地的步态周期、边界片段、周期阶段、左右独立统计和实时/报告显示；当前结论只覆盖合成事件和自动化验证，真实准确性仍待原始帧对照。
 - 已接入参数面板、Agent prompt、报告页、历史记录和测试覆盖。
 - 仍需注意：旧方案文档中的 Task 复选框已失真，不能作为当前进度依据。
@@ -62,7 +65,7 @@
 ### 1.5 足迹可视化
 
 - 已实现统一的 `FootprintVisualFrame` 和固定 cadence 记录器。
-- 执行页已使用双 96-LED 通道和足迹绘制。
+- 执行页已使用双侧 LED 通道和足迹绘制；地面模式按完整设备布局显示，单段模式保留 96 光束视图。
 - 步态/跑步机报告已支持 `visual_timeline` 回放。
 - 旧设计中关于“引擎生成 canonical frame、UI 只负责渲染”的所有权边界已落地。
 - 相关实现和测试包括：
@@ -87,10 +90,10 @@
 
 - 已实现独立的 Report Agent 数据层、Observation、三个受控分析 Tool、五种本次记录确定性分析方法、Analysis Kernel、Plan/Claim Validator、Renderer、持久化和报告页入口。
 - `AnalysisToolRegistry` 固定注册 `analyze_current_session`、`compare_longitudinal` 和 `compare_cohort`；当前只启用本次记录 Tool，纵向与团队 Tool 保持注册但禁用，且在查询历史或团队明细前拒绝请求。
-- `PlanValidator` 一次校验完整 DAG，`AnalysisToolGateway` 按稳定拓扑序串行执行节点，不按 Tool 分组；上游失败时终止计划，不返回部分分析。
+- 新运行使用 `SequentialAnalysisLoop`：每轮输出一个决策，由 `ActionValidator` 校验后执行单个确定性动作，更新证据状态并保存 Checkpoint。旧 Plan/DAG 保留兼容与对照测试用途。
 - Tool、确定性分析方法和 Analysis Kernel 使用独立版本，并分别写入 `ToolRunRecord`。Schema v2 只写入新字段；旧 `operator` 数据可兼容读取且不重算既有 `output_digest`。
-- 正式数值和比较结果只由确定性代码生成；Agent 负责提出小型分析计划、选择证据并组织结论，不能访问通用 SQL，也不能修改 `TestReport`。
-- 12 类固定合成案例的 A～D 消融已完成。生产默认采用 B：`AnalysisSketch + Compact Series`，关闭 Screening Cues 和 Replan；Cues 与 Replan 仅保留为实验开关。
+- 正式数值和比较结果只由确定性代码生成；Agent 负责单步假设决策、选择证据并组织结论，不能访问通用 SQL，也不能修改 `TestReport`。
+- 12 类固定合成案例的 A～D 消融已完成。生产沿用 B 的 `AnalysisSketch + Compact Series` 观测，结合按需 Skill Reference 和序贯循环；旧 DAG 的 Cues/Replan 仅保留为实验配置。
 - 初始消融中的 B 组为 `35/36` 有效运行，Expected Predicate Recall 为 `0.879`。三工具边界迁移后使用 Prompt v2.0 重新执行 B 组，结果为 `34/36` 有效运行（`94.44%`）、Expected Predicate Recall `0.879`、P95 `29.004 s`；两次失败均发生在结构化输出或 Claim 占位符校验阶段。这些结果只属于 12 类固定合成案例的工程验收，不代表真实运动员分析准确率、训练效果或医学有效性。
 
 ### 1.8 视觉数据闭环与 Windows 工具
@@ -99,26 +102,54 @@
 - 已实现录制、标注、Replay 三个工具以及统一 QtPy 启动器 `vision_app.py`。
 - 已提供 PyInstaller `onedir` 配置和 `build_vision_app.bat`；Windows EXE 构建、TinySE 和 USB 实机验收仍未完成。
 
+### 1.9 多段采集与地面模式
+
+- `DeviceLayout / SensorFrame` 已支持 1..255 段的软件协议解析、分包重组、线序/反向映射、真实光束坐标、有效位掩码、设备序号计时和异常上报；不以该范围承诺实际硬件级联能力。
+- `Sprint and Gait Test` 当前对应地面走路；`Overground Running Test` 为独立地面跑步模式。两者均支持单人、单向、从任一端进入的一次通过，已接入手动配置、连续空场自检、报告、历史、全宽回放和 Excel。
+- `OvergroundSession` 统一准备与正式采集：连续 1000 个正常空场样本后就绪，开始时在处理帧的同一线程复核并冻结 `PreparedDevice`，不重启采集流。设备序号提供 1000 Hz 时间基准。
+- 2026-09-26 多段 UI 适配：地面测试和报告采用右侧全高竖向跑道，贯穿顶部指标至语音栏底部；无中部硬分隔或段间横线，使用侧边刻度定位。主操作区保留摄像头和所选段光束详情，点击跑道或使用上下键切换段；历史有效落脚淡化显示，未辨明左右时使用居中匿名标记。
+- 段数由完整数据帧自动识别，不保存预期段数；操作者通过“确认共 N 段并开始”核对现场设备。开始命令携带已核对的布局/数据流标识，设备变化后需重新确认。语音开始地面测试时提示点击核对按钮；自检和实时显示传递有效位，超时或缺失数据不视为无遮挡。
+- 报告使用保存的设备坐标与时间线，拖动回放不会显示未来历史落脚；纵跳、跑步机仍限单段，连接多段时阻止开始或终止不兼容采集。本轮重点布局验收为 1～8 段、1920×1080，同时覆盖 1180×720 和 12 段软件回归；8 段 Windows 真机验收待完成。
+- 地面走路使用接触中心参考；地面跑步使用稳定脚尖代理。丢帧、歧义、短接触、边界不完整及停步均保留质量信息，不跨缺口补造步长/周期。起始脚未指定或身份失效后只保留 A/B。
+- 地面模式不支持暂停/继续；实际停步保留在单次通过的时长中。纵跳和跑步机仍走单段兼容通道，Config Agent 已补齐地面走路/跑步；Report Agent 尚未扩展到地面报告。
+- 自动化已覆盖不同段数、跨段几何、正反方向、异常恢复和报告链路。几何标定、算法阈值及真实精度仍待 Windows 设备与同步视频真值验证，详见采集接口和地面算法文档。
+
+### 1.10 语音、模拟演示与本地问答
+
+- 2026-09-27 已在 Windows 真实子进程管道复现并修复 GBK 中文 IPC 丢失：双向 ASCII 转义 JSON、`pythonw.exe` 对应控制台 Worker、UTF-8/无缓冲启动、就绪超时及可见解析错误。撤除静默吞错思路，仅忽略空行；真人麦克风与云端识别仍待现场验收，见语音验收文档。
+
+- 豆包 ASR/TTS、Pipecat、WebRTC AEC3 与 Qt JSON 行消息桥已实现。控制命令复用 `SessionController`，配置和报告复用已有 Agent；配置建议必须确认后应用。
+- 2026-09-26 完成主界面语音栏适配：替换可浮动日志面板，保留固定麦克风开关、页面提示、识别与回复、折叠诊断；停止播报与关闭语音分离，配置对话和报告问答复用原有区域。地面模式暂停/继续立即说明不支持，不再等待确认超时。
+- `python -m ui.demo` 使用模拟原始光栅、真实算法和独立数据库；`--voice --agent` 可启用真实语音与 Agent 联调入口，麦克风仍需手动开启。
+- 跑步机步态专项问答使用本地确定性计算，并支持报告明细证据定位；不依赖在线分析模型。
+- 已有云端合成音频回环、配置/合成报告分析，以及 Mac 物理声卡 AEC 探测记录。真人口令、播报插话、断网恢复和 Windows 完整流程仍待验收，详见 `docs/gait_voice_validation.md`。
+
+### 1.11 RC200U 与 Mac 视觉工具
+
+- RC200U 已接入运动员页面和 SQLite 卡号绑定，支持读卡选人、绑定/解绑、重复绑定拒绝和 F08 四字节接口兼容。
+- 2026-09-25 Windows 实机记录覆盖单卡读取、Qt offscreen 页面与数据库链路，以及用户配合的物理离卡重刷；完整主程序桌面操作、多卡种和热插拔恢复尚未验收，见 `docs/RC200U接入与验证.md`。
+- `tools/mac_mediapipe_validator.py` 与 `vision/leg_identity.py` 已实现独立的左右腿身份连续性验证和相机权限处理；输出稳定、歧义或不可用状态，不纠正主测试事件，也不构成左右脚融合验收。
+
 ## 2. 当前仍需推进的工作
 
 ### 2.1 工作区收敛与可追溯提交（P0）
 
 跑步机长度语义已经在当前实现中收敛：步长结合跑带位移与相邻落点位置修正，步幅由同侧两次触地形成的完整周期计算；不再使用 `step_length × 2` 作为正式结果，缺少可靠空间参考时不生成伪步幅。
 
-本轮工作区收敛已经完成：
+2026-08-12 工作区收敛历史（不代表当前仓库文件构成）：
 
 - [x] 确定 `vision.__all__` 的稳定公共 API，并消除公共 API 边界测试失败。
 - [x] 按“Report Agent / Vision Session 工具 / 纵跳与 LED 健康检测 / UI 与文档”拆分提交。
 - [x] 每个功能组运行聚焦测试；全部拆分完成后再次运行全量测试。
 - [x] 检查 `.env`、模型文件、真实受试者数据和本地日志均未进入版本控制。
 
-完成结果：工作区改动均有明确归属，当前实现可以从提交历史恢复；全量自动化测试为 `659 passed`、`12 subtests passed`。
+当时完成结果：工作区改动均有明确归属，全量自动化测试为 `659 passed`、`12 subtests passed`。2026-09-26 的分支合并和最新回归见“当前开发基线”。
 
 ### 2.2 Report Agent 序贯假设验证迁移（P0）
 
-**目标**：将当前生产使用的“一次性 `SmallAnalysisPlan` + DAG执行 + 默认不Replan”迁移为渐进式领域Skill指导的单步序贯假设验证循环。Agent每轮只决定下一项最值得验证的分析命题；三个受控Analysis Tool继续作为数据权限边界，五种现有确定性分析方法及其Kernel数值逻辑保持不变。
+**当前状态：迁移已完成。** 本节保留从“一次性 `SmallAnalysisPlan` + DAG执行 + 默认不Replan”迁移到渐进式领域Skill指导的单步序贯假设验证循环的设计与实施记录。Agent每轮只决定下一项最值得验证的分析命题；三个受控Analysis Tool继续作为数据权限边界，五种现有确定性分析方法及其Kernel数值逻辑保持不变。
 
-目标数据流：
+当前生产数据流：
 
 ```text
 ReportDataPackage
@@ -162,7 +193,7 @@ ReportDataPackage
 
 **运动表现 RAG V1（Deterministic RAG）**：
 
-RAG 已按独立 `knowledge` 子系统实现。它只在确定性 Claim 校验完成后执行，用文献 Evidence 生成一般行动建议；不得替代 Analysis Tool 证明本次记录中的数值、趋势、侧别差异或跨指标关系。生产启用由版本化 Release Gate 控制，真实 DeepSeek 输出的人工 Groundedness 审查未通过前保持关闭。
+RAG 已按独立 `knowledge` 子系统实现。它只在确定性 Claim 校验完成后执行，用文献 Evidence 生成一般行动建议；不得替代 Analysis Tool 证明本次记录中的数值、趋势、侧别差异或跨指标关系。生产启用由版本化 Release Gate 控制；旧 V1 工件曾验证为 `enabled`。2026-09-26 本轮增加地面场景检索限制并升级 Planner/Retriever 至 1.1 后，旧审查工件与运行版本不匹配，当前 `v1_release_status()` 为 `invalid`，生产建议暂停，确定性分析保留。
 
 ```text
 Analysis Evidence
@@ -179,9 +210,9 @@ Literature Evidence
 - [x] Citation 完全由代码从 Evidence 和来源目录生成；模型 Schema 不接受 URL/DOI/Citation 字段。URL 仅允许 HTTP(S)，UI 对标题与链接做 HTML 转义和协议白名单检查。
 - [x] `analysis-schema/4.0` 增量增加 `literature_evidence / recommendations / references / references_markdown / rag_audit`，旧字段及 v1-v3 读取兼容。
 - [x] RAG 异常只生成 `degraded` 审计和空建议，不影响确定性 Claim、Kernel digest 或报告发布。
-- [ ] 完成真实 DeepSeek 输出的逐条人工 Groundedness 审查，将不受 Evidence 支持的建议数确认到 0 后，才把 `knowledge/v1_release_gate.json` 切换为启用。
+- [x] 仓库已保存旧 V1 冻结审查工件，记录 30 个 case、`review_status=passed`、unsupported 建议数为 0；该工件不覆盖本轮 Planner/Retriever 1.1，当前生产状态见下方发布门。
 
-**2026-08-14 RAG V1 实施进展**：
+**2026-08-14 RAG V1 实施进展（历史记录，当时关闭的 Gate 已由下述当前状态更新）**：
 
 - [x] 核心全文由 6 篇扩展到 9 篇，新增健康青年步态效度、纵跳训练 Meta-analysis 和跑步力量训练 Meta-analysis；当前 508 个结构化 Chunk。
 - [x] 冻结 30 问 Retriever baseline：Recall@5/10 1.000、Precision@5 0.533、MRR 0.900、nDCG@10 0.928。后续改动不得低于 `knowledge/retrieval_baseline.json`。
@@ -190,7 +221,7 @@ Literature Evidence
 - [x] 完成 30 个合成 Fixture 的真实 DeepSeek 导出：30/30 调用成功，Validator 放行 48 条、删除 35 条；67 条 Citation 全部可解析。抽检发现 Introduction 研究动机可能被模型误当成当前结论，故 Groundedness 门继续关闭。
 - [x] `chunker/2.2` 已把 Introduction/Background 从 Recommendation Evidence 中排除；修复后本地 Evidence Coverage 仍为 100%，泄漏仍为 0。第二轮真实模型复测受账户用量上限阻塞，待恢复后重跑。
 - [x] 完整回归通过：717 passed、12 subtests passed。
-- [ ] 唯一未通过的 Release Gate 是真实模型输出的人工 Groundedness 复核；因此代码与 UI 已具备 Schema v4 能力，但 Worker 暂不启用生产 RAG Pipeline。
+- 当时唯一未通过的 Release Gate 是人工 Groundedness 复核，Worker 暂不启用生产 RAG Pipeline；当前状态见“RAG 生产启用门”。
 
 **2026-08-15 证据链与 RAG 可靠性修复**：
 
@@ -261,12 +292,10 @@ Literature Evidence
 - [x] 节拍器暂不属于当前硬件和 Agent 能力范围。Config Agent 不生成
   `metronome_enabled / metronome_bpm`，默认保持关闭；后续若硬件接入，另立
   参数、UI、运行时和验收任务。
-- [x] 离线 RuleEngine 已覆盖三种已支持测试：`Jump Test`、`Treadmill
-  Gait Test`、`Treadmill Running Test`。按测试类型返回对应的
-  `TestConfig / TreadmillGaitConfig / TreadmillRunningConfig`，使用参数 Schema
-  的测试类型默认值；Jump 的年龄/训练水平规则继续保留，跑步机使用明确的
-  3.0/6.0 km/h 模式默认值，三种输出统一通过 `validate_runtime_config()`；未知
-  测试类型不再静默降级为 Jump。规则引擎和服务层回归已覆盖三种模式及档案规则。
+- [x] 2026-09-27 按既有模式接入地面走路、地面跑步：独立 Pydantic 输出、Prompt、意图一致性检查、运行时转换及规则默认值，ConfigService、Worker、UI 文字/语音入口共用相同链路。离线 RuleEngine 现覆盖五种模式。
+- [x] 地面仅开放结束方式和起始脚，禁止模型输出跑台速度、跳跃次数、时长、段数或技术阈值；地面事件阈值使用各模式默认值，不套用原有年龄/入门纵跳规则。未知 Agent 模式和跨模式配置明确拒绝。
+- [x] 智能配置选择器、快捷示例、配置摘要、播报和确认适配五模式；从手动地面模式转入语音配置时保留测试类型。模式切换或修改请求使旧待确认建议失效，迟到回复仅保留到原对话。
+- [x] 地面配置完成后仍需操作者完成空场自检、核对实际段数并点击开始，语音配置不绕过预检，不添加暂停/继续能力。新增自动化验证生成、修改、澄清、查询、JSON 往返、文字/语音确认与应用；本轮相关回归 157 passed。模型调用用固定输出替身，未做本轮云端或 Windows 实机验收。
 - [x] `External impulse` 已从 Agent Jump 结构化输出、活动参数 Schema 和 UI
   生成路径删除，默认停止改为 `Status change`；历史配置若仍携带该值会在统一
   运行时校验中明确拒绝。`config/Opto_parameters.json` 仅作为原始厂商资料保留，
@@ -276,7 +305,7 @@ Literature Evidence
   等意图字段不一致时追问。底层滤波、足长过滤和自动过滤等技术字段不参与追问，
   模型输出会被基于运动档案的 RuleEngine 策略覆盖。已增加“滤波值三份不同仍
   采用规则值”和“用户意图不同必须追问”的回归测试。
-- [ ] 完成 Config Agent 指令矩阵（建议首轮 30 条，三种模式各 10 条）：
+- [ ] 完成 Config Agent 指令矩阵（建议首轮 50 条，五种模式各 10 条）：
   明确需求、缺停止条件、缺速度/方向、模糊自然语言、互相冲突、非法范围、
   时间格式、已移除能力请求、跑步机步态/跑步模式混淆和当前配置查询。每条冻结
   期望测试类型、关键字段、允许追问与禁止输出；统计配置成功率、关键字段
@@ -342,15 +371,21 @@ Literature Evidence
 
 ### RAG 生产启用门
 
-- [ ] RAG 确定性表面校验、Release fingerprint 和人工 Groundedness 审查全部
-  通过后，才允许开启 `knowledge/v1_release_gate.json`。必须先完成冻结 30 个
-  benchmark case 的逐条人工审查，所有 review 行为 `supported`、unsupported 数
-  为0，catalog/manifest/Prompt/case digest 与当前运行一致，再执行 promotion 和
-  fingerprint 校验。
-- [ ] 开启前执行一次 canary：仅对内部或显式启用的报告生成 RAG 建议，确认
-  `degraded/no_evidence` UI、审计、引用协议和确定性 Claim 不受影响；canary
-  回归通过后再将 gate `enabled=true`。任何内容漂移、审查缺失或运行期故障都必须
-  自动回退为 degraded，不得静默生成无来源建议。
+- [x] 旧 V1 冻结工件记录 30 个 case、审查通过及 0 条 unsupported 建议。
+- [ ] 为 Planner/Retriever 1.1 重新完成云端生成、人工 Groundedness 审查及工件 promotion。旧 JSON 的 `enabled=true` 不代表新版本可运行；当前实际发布状态为 `invalid`。不改写旧审查工件或指纹来绕过版本校验。
+- 工件中的运行审计为 27 个 `ok`、3 个 `degraded`。审查通过不表示每个 case 都成功生成建议，也不表示真实训练效果已验证。
+- [ ] 补充当前合并版本的应用内 canary 验收记录，覆盖建议、引用、`degraded/no_evidence` 界面及失败时保留确定性 Claim。本轮已补离线检索和 Qt 展示回归记录（`docs/rag_validation.md`），但尚未通过当前生产门完成云端生成到 UI 的整链验收，因此此项仍未勾选。
+- 持续约束：内容指纹、审查工件缺失或版本不一致时拒绝启用；初始化和运行期故障降级，不得静默生成无来源建议。
+
+### RAG 地面场景适配（2026-09-26）
+
+- [x] QueryPlanner 识别地面走路与地面跑步；QuerySpec 携带 protocol 硬限制，Dense 候选和 FTS5 排序前均过滤，缺失 protocol 的片段不放行。
+- [x] 地面走路仅使用已允许的 `overground_walk` 来源，支持测量复核及质量不足时的复测查询；不推导多段设备的准确性或训练效果。
+- [x] 地面跑步目前没有获准且匹配环境的来源，不生成查询，不调用推荐模型，不借用跑台或中长跑训练证据。
+- [x] 规划异常降级为 `planning_failed`；无适用查询与检索未命中分别审计，UI 保留已验证 Claim 并解释没有建议的原因。
+- [x] 30 问真实本地索引复测未低于冻结基准，104 项 knowledge / 报告 UI / 服务测试通过。记录见 `benchmark_results/rag_protocol_canary_20260926.json` 与 `docs/rag_validation.md`。
+- [ ] 扩展地面报告的确定性分析链：ReportContext/TestType、ReportDataPackageBuilder、指标/单位/质量及左右未知语义、服务入口和 UI 可用性。当前两种地面模式仍不能从应用内发起完整智能分析，不能只增加 UI 白名单或伪装为跑台报告。
+- [ ] 在该报告链完成后，以实际段数及缺失/排除记录构建地面端到端 Fixture，完成云端生成和人工文献支持审查，再恢复生产门并做应用内 canary。
 
 ### 2.3 论文主实验（P0）
 
@@ -367,13 +402,16 @@ Literature Evidence
 - 三组人工标注数据的当前对比为：生产算法 contact MAE `94.4 ms`、air MAE `99.2 ms`；`associated` 为 `57.1 ms` / `42.1 ms`；`touch_associated` 为 `58.1 ms` / `43.2 ms`。
 - `associated` 在第二组数据出现过 1 次事件时间倒退，因此当前只作为离线候选，不修改生产 `SingleFootDetector`。
 - 至少覆盖多个独立 session 后，再决定是否修改 `SingleFootDetector` 的时间戳语义。
-- 当前诊断依据见 `docs/步态参数相关/纵跳计时误差诊断与方案验证.md`，该文档保留。
+- 当前诊断依据见 `docs/参数相关/纵跳计时误差诊断与方案验证.md`，该文档保留。
 
 ### 2.5 硬件和设备扩展
 
 - `External impulse` 已确定不会由当前硬件支持，并已从产品配置能力中永久移除；
   不再规划 `E_STATUS_REPORT` 转发或自动停止链路。
-- 多米段级联：参数化 LED 数量、空间坐标、距离映射和聚类逻辑，替换单段 96 LED 假设。
+- [x] 可变段数采集、`DeviceLayout` 坐标和地面模式全宽显示/导出已落地。
+- [ ] 在 Windows 真实级联设备上验证 FPGA 启停、段序/反向、接缝几何、持续采集与异常恢复；0918 固件使用 `DAYU_CAPTURE_COMMAND=1`。
+- [ ] 为地面走路/跑步采集同步视频真值，核对短接触、停步、边缘和出口阈值。现有协议 CSV 仅验证采集/回放，不充当运动真值。
+- [ ] 完成 RC200U 在完整主程序桌面上的人工操作、多卡种与拔插恢复验收。
 
 ### 2.6 相机路线
 
@@ -580,7 +618,7 @@ Vision: R → L
 - 第一阶段只覆盖 `Treadmill Gait Test` 和 `Treadmill Running Test`。
 - 检测过程和报告中的步态周期相关术语统一使用中文；内部字段继续使用稳定的英文标识。
 - 步态周期采用 OptoJump 的同侧脚语义：同一只脚从一次触地到下一次触地形成一个周期，左、右脚分别生成周期记录；左右脚仅在计算步时间、单支撑和双支撑等跨侧指标时关联。
-- 普通地面 `Sprint and Gait Test` 暂不接入；跑步机模式验证可靠后，再复用已验证的周期计算能力扩展普通地面模式。
+- 本节限于跑步机周期实现；地面 `Sprint and Gait Test` 和 `Overground Running Test` 已有独立接触/步/周期处理器，见 1.9，不直接套用跑带位移语义。
 - 第一阶段以用户的起始脚配置作为真实左右映射锚点，随后沿用当前左右脚交替推断原则；不等待视觉模块，已有的高置信视觉确认或纠正方案作为后续增强接入。
 
 **边界片段与统计规则（已确认）**：
@@ -648,22 +686,23 @@ Vision: R → L
 按风险从低到高推进，不进行一次性大搬家：
 
 - [x] 抽取不依赖 Qt 的步态周期核心层。
-- [ ] 将 USB bytes → bits、分包合并和 `contact_bits` 转换抽为可测试模块。
+- [x] `hardware/protocol.py` 与 `hardware/sensor_frame.py` 已分离协议解包、组帧、布局映射和 `contact_bits` 转换，并有接口回归测试。
 - [ ] 让报告完全由结果快照生成，消除 View 对 engine 私有字段的剩余读取。
 - [ ] 将 Excel 导出移出 `ReportView`。
-- [ ] 引入 `DeviceTopology(segment_count, leds_per_segment, spacing_cm)`。
+- [x] 以 `DeviceLayout / SensorSegment` 实现设备拓扑，支持每段独立起点、间距、线序和反向，替代原拟定的 `DeviceTopology`。
 - [ ] 清理模块启动时的路径 hack，并补充依赖边界检查。
 
 ### 2.9 文档一致性（P1）
 
 - [x] 更新 `README.md` 中仍把 LED 足迹和相机嵌入写成未来工作的旧状态。
 - [x] 更新 `docs/architecture.md` 中已经不存在的 `CLAUDE.md` 引用和过时模块树。
-- [ ] 核对并处理 `docs/步态参数相关/步态周期定义.md` 的未提交修改，保持“不建立左右周期配对”和“无法拆分双支撑子阶段时使用 N/A”的语义一致。
+- [x] 2026-09-26 同步统一开发基线、多段/地面模式、语音、RFID、序贯 Agent、RAG 发布门和对应验证边界。
+- [x] 2026-09-26 分支整理后工作区干净，不再存在待处理的周期定义修改；后续仍保持“不建立左右周期配对”和不可靠阶段使用 `N/A` 的口径。
 - [ ] 跑步机长度算法收敛后，同步 `docs/treadmill_architecture.md`、参数定义和算法说明，避免文档分别描述两套实现。
 
 ### 2.10 未来测试类型
 
-暂未实现：Sprint and Gait、Tapping、Reaction Times、Static Test (Sway) 等。新增模式应沿用配置 → processor → report → UI 的分发模式，不污染 Jump Test 和现有跑步机模式。
+地面走路已使用 `Sprint and Gait Test` 标识，地面跑步已有独立 `Overground Running Test`。暂未实现标准距离冲刺计时、往返地面测试、Tapping、Reaction Times、Static Test (Sway) 等。新增模式应沿用配置 → processor → report → UI 的分发模式，不污染 Jump Test 和现有跑步机模式。
 
 ### 2.11 主 UI 信息架构与组件迁移（P1）
 
@@ -739,13 +778,13 @@ Figma 设计文件：
 ## 3. 已确认的业务和架构决策
 
 - 配置参数、会话元数据、结果参数、汇总统计分层保存。
-- 跑步机累计距离由设定速度和时间反算；单步长度当前还叠加方向修正后的脚位置漂移。最终步长/步幅模型须完成 2.1 的分支收敛后再作为稳定业务规则。
+- 跑步机累计距离由设定速度和时间反算；单步长度当前还叠加方向修正后的脚位置漂移。同脚完整周期用于步幅计算；实现已合并，真实精度仍需原始帧与真值验证。
 - 跑步机报告使用独立 `TreadmillGaitReport` / `TreadmillRunningReport`，不压入普通 `GaitTestReport`。
 - 步态周期按同侧脚相邻触地划分，左右脚分别生成周期记录；跨侧事件关联只用于步时间、单支撑和双支撑等指标。
 - 原始事件与边界不完整片段全部保留，但只有两次同侧触地齐全时才生成步态周期记录；边界不完整片段不进入完整周期及不对称统计，左右有效周期数允许不同且不强制配对。
 - 不建立左右周期一一配对记录，也不引入 `paired_count` 或“有效配对数”概念；步时间、单支撑和双支撑仍按实际跨侧事件关系计算。
 - 不对称率基于左右各自全部有效周期的指标均值计算，不做逐周期配对；公式统一为两侧均值绝对差除以两侧均值的平均值，并同时展示左右样本数。
-- 检测页采用“当前未完成周期状态 + 已完成周期列表”两层显示；临时状态不进入正式输出，只有周期闭合后才转换为不可变步态周期记录并追加到列表。
+- 检测页以自适应摘要显示当前未完成周期，已完成周期在报告页展示；临时状态不进入正式输出，只有周期闭合后才转换为不可变步态周期记录。
 - 跑步机正式报告采用“概览 + 逐周期阶段时间条 + 明细表”三层结构；边界不完整片段仅用于回放或诊断，不进入正式周期图和统计。
 - 首期只生成触地、离地及左右接触重叠事件能够可靠支持的周期指标；着地相、全足支撑期和推进相在独立验证前保持 `N/A`，不得使用质心近似。
 - 跑步机周期功能首期以用户起始脚配置为左右映射锚点，并沿用当前交替推断原则；高置信视觉结果对左右映射的确认或纠正按已有方案后续接入，不作为首期前置条件。
@@ -762,10 +801,14 @@ Figma 设计文件：
 - `docs/treadmill_architecture.md`：跑步机架构和数据契约。
 - `docs/参数相关/跑步机模式参数.md`：跑步机配置参数与结果参数定义。
 - `docs/参数相关/代码步态参数汇总.md`：理论指标到代码实现的映射。
-- `docs/步态参数相关/optojump参数汇总.md`：OptoJump 领域参数参考。
-- `docs/步态参数相关/纵跳计时误差诊断与方案验证.md`：纵跳离线诊断历史和当前准则。
-- `docs/步态参数相关/步态周期定义.md`：面向用户的周期术语、阶段关系和结果解释。
-- `vision/README.md`：视觉参考标签、TinySE 时间同步、Windows 验证命令和验收字段。
+- `docs/参数相关/optojump参数汇总.md`：OptoJump 领域参数参考。
+- `docs/参数相关/纵跳计时误差诊断与方案验证.md`：纵跳离线诊断历史和当前准则。
+- `docs/参数相关/步态周期定义.md`：面向用户的周期术语、阶段关系和结果解释。
+- `docs/采集数据接口.md`：设备布局、完整帧、设备采样时钟、错误与兼容通道。
+- `docs/地面走路算法.md`、`docs/地面跑步算法.md`：地面模式流程、指标和质量边界。
+- `voice/README.md`、`docs/gait_voice_validation.md`：语音使用、模拟演示及各层验收记录。
+- `docs/RC200U接入与验证.md`：读卡器接入及 Windows 实机证据。
+- `vision/README.md`：视觉参考标签、TinySE 时间同步、Windows/Mac 验证命令和验收字段。
 - `camera/obsbot_sdk_wrapper/README.md`：相机 wrapper 编译和设备实测记录。
 - `素材.md`：毕业论文素材库，按第四章设计、第五章实现、第六章测试组织，不承担项目进度管理。
 - `writing.md`：Markdown 文档定位、准确性和论文素材写作规则。
@@ -802,11 +845,3 @@ python -m pytest \
 - `素材.md`
 - `writing.md`
 - `chatgpt.md`
-
-
-## 2026-09-27 五模式智能配置接入
-
-- [x] 2026-09-27 按既有模式接入地面走路、地面跑步：独立 Pydantic 输出、Prompt、意图一致性检查、运行时转换及规则默认值，ConfigService、Worker、UI 文字/语音入口共用相同链路。离线 RuleEngine 现覆盖五种模式。
-- [x] 地面仅开放结束方式和起始脚，禁止模型输出跑台速度、跳跃次数、时长、段数或技术阈值；地面事件阈值使用各模式默认值，不套用原有年龄/入门纵跳规则。未知 Agent 模式和跨模式配置明确拒绝。
-- [x] 智能配置选择器、快捷示例、配置摘要、播报和确认适配五模式；从手动地面模式转入语音配置时保留测试类型。模式切换或修改请求使旧待确认建议失效，迟到回复仅保留到原对话。
-- [x] 地面配置完成后仍需操作者完成空场自检、核对实际段数并点击开始，语音配置不绕过预检，不添加暂停/继续能力。新增自动化验证生成、修改、澄清、查询、JSON 往返、文字/语音确认与应用；本轮相关回归 157 passed。模型调用用固定输出替身，未做本轮云端或 Windows 实机验收。

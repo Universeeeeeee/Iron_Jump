@@ -221,12 +221,12 @@ class LLMTreadmillGaitConfig(BaseModel):
         description="自动数据过滤等级, 0=关闭, 10-90=过滤等级",
     )
     filter_gaitr_in: int = Field(
-        default=0, ge=0, le=100,
-        description="步态进入滤波器参数",
+        default=0, ge=0, le=95,
+        description="连续遮挡超过N个LED时进入接触，3对应至少4个LED",
     )
     filter_gaitr_out: int = Field(
-        default=0, ge=0, le=100,
-        description="步态退出滤波器参数",
+        default=0, ge=0, le=95,
+        description="连续遮挡降至N个LED或更少时，开始判定离开接触",
     )
     foot_length_cm_snapshot: Optional[float] = Field(
         default=None, gt=0,
@@ -238,7 +238,7 @@ class LLMTreadmillGaitConfig(BaseModel):
     )
     starting_foot_override: Optional[Literal["left", "right"]] = Field(
         default=None,
-        description="起始脚覆盖: left=左脚, right=右脚, None=不覆盖",
+        description="操作员确认的起始脚: left=左脚, right=右脚, None=未确认；未确认时不计算左右脚周期，不得自行猜测",
     )
 
     # ---- 格式校验 ----
@@ -353,12 +353,12 @@ class LLMTreadmillRunningConfig(BaseModel):
         description="最小脚间距(cm), 低于此值的双脚间距视为无效",
     )
     filter_gaitr_in: int = Field(
-        default=0, ge=0, le=100,
-        description="步态进入滤波器参数",
+        default=0, ge=0, le=95,
+        description="连续遮挡超过N个LED时进入接触，3对应至少4个LED",
     )
     filter_gaitr_out: int = Field(
-        default=0, ge=0, le=100,
-        description="步态退出滤波器参数",
+        default=0, ge=0, le=95,
+        description="连续遮挡降至N个LED或更少时，开始判定离开接触",
     )
     foot_length_cm_snapshot: Optional[float] = Field(
         default=None, gt=0,
@@ -370,7 +370,7 @@ class LLMTreadmillRunningConfig(BaseModel):
     )
     starting_foot_override: Optional[Literal["left", "right"]] = Field(
         default=None,
-        description="起始脚覆盖: left=左脚, right=右脚, None=不覆盖",
+        description="操作员确认的起始脚: left=左脚, right=右脚, None=未确认；未确认时不计算左右脚周期，不得自行猜测",
     )
 
     # ---- 格式校验 ----

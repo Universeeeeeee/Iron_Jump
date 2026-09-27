@@ -35,6 +35,21 @@ class GaitCycleBuilder:
         self._contact_intervals: list[_ContactInterval] = []
         self._initial_boundary_partials: list[GaitBoundaryPartial] = []
         self._observed_sides: set[FootSide] = set()
+        self._known_from: dict[FootSide, float] = {}
+        self._unknown_active = 0
+
+    def record_clear(self, time_s: float) -> None:
+        """Both feet are observed absent; unlike missing data this is evidence."""
+        for side in ("left", "right"):
+            self._known_from.setdefault(side, time_s)
+
+    def record_baseline(self, time_s: float, side: FootSide) -> None:
+        """Known ongoing support, but no invented initial-contact boundary."""
+        if side in ("left", "right"):
+            self._active_touch[side] = time_s
+            self._known_from.setdefault(side, time_s)
+        else:
+            self._unknown_active += 1
 
     @property
     def raw_events(self) -> tuple[GaitEventRecord, ...]:
@@ -45,10 +60,15 @@ class GaitCycleBuilder:
         return tuple(self._completed_cycles)
 
     def record_touch(
-        self, time_s: float, side: FootSide
+        self, time_s: float, side: FootSide, *, contact_id: int | None = None,
+        confirmed_time_s: float | None = None, foot_label: str | None = None,
     ) -> GaitCycleRecord | None:
-        self._append_event(time_s, side, "touch")
+        self._append_event(time_s, side, "touch", contact_id, confirmed_time_s, foot_label)
         self._record_initial_boundary(time_s, side)
+        if side not in ("left", "right"):
+            self._unknown_active += 1
+            return None
+        self._known_from.setdefault(side, time_s)
         previous_touch = self._last_touch.get(side)
         if previous_touch is not None and time_s <= previous_touch:
             return None
@@ -77,12 +97,20 @@ class GaitCycleBuilder:
         is_included_in_statistics: bool | None = None,
         statistics_exclusion_reason: str | None = None,
         quality_flags: tuple[str, ...] = (),
+        contact_id: int | None = None,
+        confirmed_time_s: float | None = None,
+        foot_label: str | None = None,
     ) -> None:
-        self._append_event(time_s, side, "lift")
+        self._append_event(time_s, side, "lift", contact_id, confirmed_time_s, foot_label)
         self._record_initial_boundary(time_s, side)
-        start_s = self._active_touch.pop(side, None)
+        if side not in ("left", "right"):
+            self._unknown_active = max(self._unknown_active - 1, 0)
+            return
+        self._known_from.setdefault(side, time_s)
+        start_s = self._active_touch.get(side)
         if start_s is None or time_s < start_s:
             return
+        self._active_touch.pop(side)
         self._last_lift_after_touch[side] = time_s
         if is_included_in_statistics is not None:
             self._last_contact_included[side] = is_included_in_statistics
@@ -98,7 +126,9 @@ class GaitCycleBuilder:
         self, time_s: float, completed_from_index: int = 0
     ) -> dict:
         active = set(self._active_touch)
-        if active == {"left", "right"}:
+        if self._unknown_active:
+            support_state = "侧别未知接触"
+        elif active == {"left", "right"}:
             support_state = "双支撑"
         elif active == {"left"}:
             support_state = "左脚单支撑"
@@ -132,6 +162,8 @@ class GaitCycleBuilder:
         self._last_contact_exclusion_reason.clear()
         self._last_contact_quality_flags.clear()
         self._contact_intervals.clear()
+        self._known_from.clear()
+        self._unknown_active = 0
 
     def build_boundary_partials(
         self, time_s: float
@@ -180,7 +212,9 @@ class GaitCycleBuilder:
         }
 
     def _append_event(
-        self, time_s: float, side: FootSide, kind: GaitEventKind
+        self, time_s: float, side: FootSide, kind: GaitEventKind,
+        contact_id: int | None = None, confirmed_time_s: float | None = None,
+        foot_label: str | None = None,
     ) -> None:
         self._raw_events.append(
             GaitEventRecord(
@@ -188,6 +222,9 @@ class GaitCycleBuilder:
                 time_s=time_s,
                 side=side,
                 kind=kind,
+                contact_id=contact_id,
+                confirmed_time_s=confirmed_time_s,
+                foot_label=foot_label,
             )
         )
 
@@ -208,9 +245,9 @@ class GaitCycleBuilder:
 
         opposite = "right" if side == "left" else "left"
         step_time_s = self._first_opposite_touch_after(start_s, end_s, opposite)
-        has_opposite_contact_data = self._has_opposite_contact_data(
-            start_s, end_s, opposite
-        )
+        opposite_complete = self._known_from.get(opposite, float("inf")) <= start_s + 1e-9
+        if not opposite_complete:
+            step_time_s = None
 
         load_response_s = None
         pre_swing_s = None
@@ -219,7 +256,7 @@ class GaitCycleBuilder:
         if (
             stance_s is not None
             and lift_s is not None
-            and has_opposite_contact_data
+            and opposite_complete
         ):
             overlaps = self._overlap_intervals(
                 start_s, lift_s, opposite, end_s
@@ -245,7 +282,7 @@ class GaitCycleBuilder:
 
         total_flight_time_s = (
             self._total_flight_time(start_s, end_s)
-            if stance_s is not None and has_opposite_contact_data
+            if stance_s is not None and opposite_complete
             else None
         )
         percent = lambda value: value / cycle_s * 100.0 if value is not None else None
@@ -281,7 +318,10 @@ class GaitCycleBuilder:
             total_flight_time_s=total_flight_time_s,
             is_included_in_statistics=is_included_in_statistics,
             statistics_exclusion_reason=statistics_exclusion_reason,
-            quality_flags=self._last_contact_quality_flags.get(side, ()),
+            quality_flags=tuple(dict.fromkeys((
+                *self._last_contact_quality_flags.get(side, ()),
+                *(("opposite_contact_incomplete",) if not opposite_complete else ()),
+            ))),
         )
         self._completed_cycles.append(cycle)
         return cycle
@@ -317,18 +357,12 @@ class GaitCycleBuilder:
             intervals.append((max(start_s, active_start), min(end_s, snapshot_s)))
         return _merge_intervals(intervals)
 
-    def _has_opposite_contact_data(
-        self, start_s: float, end_s: float, opposite: FootSide
-    ) -> bool:
-        if any(
-            interval.side == opposite
-            and interval.end_s > start_s
-            and interval.start_s < end_s
-            for interval in self._contact_intervals
-        ):
-            return True
-        active_start = self._active_touch.get(opposite)
-        return active_start is not None and active_start < end_s
+    def support_durations(self, start_s: float, end_s: float, side: FootSide):
+        opposite = "right" if side == "left" else "left"
+        if self._known_from.get(opposite, float("inf")) > start_s + 1e-9:
+            return None, None
+        double = sum(e - s for s, e in self._overlap_intervals(start_s, end_s, opposite, end_s))
+        return double, max(end_s - start_s - double, 0.0)
 
     def _total_flight_time(self, start_s: float, end_s: float) -> float:
         contacts = [

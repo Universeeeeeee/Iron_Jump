@@ -156,3 +156,26 @@ def test_generation_failure_is_not_retried_and_degrades():
     assert result.audit.error_code == "generation_or_validation_failed"
     assert generator.calls == 1
     assert result.package.recommendations == ()
+
+
+def test_planning_failure_degrades_without_retrieving_or_generating():
+    class BrokenPlanner:
+        def plan(self, context):
+            raise RuntimeError("broken catalog")
+
+    retriever, generator = _Retriever(), _Generator()
+    result = DeterministicRAGPipeline(
+        retriever, planner=BrokenPlanner(), generator=generator
+    ).run(_context())
+    assert result.audit.status == "degraded"
+    assert result.audit.error_code == "planning_failed"
+    assert retriever.calls == generator.calls == 0
+
+
+def test_unsupported_ground_running_reports_reason_without_generation():
+    retriever, generator = _Retriever(), _Generator()
+    context = _context().model_copy(update={"test_type": "Overground Running Test"})
+    result = DeterministicRAGPipeline(retriever, generator=generator).run(context)
+    assert result.audit.status == "no_evidence"
+    assert result.audit.error_code == "no_supported_query"
+    assert retriever.calls == generator.calls == 0

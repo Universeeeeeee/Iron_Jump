@@ -59,7 +59,10 @@ class DeterministicRAGPipeline:
     def run(self, context: ReportRAGContext) -> RAGResult:
         started = time.perf_counter()
         input_digest = self._digest(context.model_dump(mode="json"))
-        specs = self._planner.plan(context)
+        try:
+            specs = self._planner.plan(context)
+        except Exception:
+            return self._failure(context, input_digest, (), (), started, "planning_failed")
         retrievals = []
         evidence = []
         try:
@@ -92,6 +95,7 @@ class DeterministicRAGPipeline:
                     specs=specs,
                     retrievals=tuple(retrievals),
                     started=started,
+                    error_code="no_matching_evidence" if specs else "no_supported_query",
                 )
             )
         try:

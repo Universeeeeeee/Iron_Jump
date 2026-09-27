@@ -187,6 +187,8 @@ class FootPhaseManager:
             return (result,)
 
         self._pending.append(replace(result, phase_action="suspect_hold"))
+        if len(self._pending) > self.max_pending_contacts:
+            return self._expire_pending()
         if self._is_agreement(result):
             return self._expire_pending()
         if result.visual_label is FootLabel.UNKNOWN:
@@ -198,7 +200,7 @@ class FootPhaseManager:
                 self._pending[-1], phase_action="same_device_mismatch_not_confirming"
             )
 
-        if self._unknown_count > self.max_unknown or len(self._pending) > self.max_pending_contacts:
+        if self._unknown_count > self.max_unknown:
             return self._expire_pending()
         return ()
 
