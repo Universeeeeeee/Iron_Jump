@@ -92,9 +92,10 @@ def test_valid_proxy_environment_is_not_changed():
     with patch.dict(os.environ, env, clear=True), patch.object(
         model_provider, "getproxies", getproxies_environment
     ), patch("httpx._utils.getproxies", getproxies_environment):
+        before = dict(os.environ)  # Windows normalizes environment keys to uppercase.
         client = model_provider.build_http_client()
         try:
-            assert dict(os.environ) == env
+            assert dict(os.environ) == before
             assert client._transport_for_url(httpx.URL("https://a.example.org")) is client._transport
         finally:
             asyncio.run(client.aclose())
