@@ -670,8 +670,11 @@ class ExecutionView(QWidget):
         count = result.get("segment_count")
         prefix = f"{count} 段 / 标称 {count} 米 · " if count else ""
         self._device_label.setText(prefix + result["message"])
+        details = result.get("details", "")
+        self._device_label.setToolTip(details or result["message"])
         if self.is_ground:
-            self._ground_status.setText(prefix + result["message"])
+            self._ground_status.setText(prefix + result["message"] + ("\n" + details if details else ""))
+            self._ground_status.setToolTip(details or result["message"])
         ready_text = f"确认共 {count} 段并开始" if self.is_ground else "开始采集"
         if result.get("requires_acknowledgement"):
             ready_text = "核对异常并降级开始"

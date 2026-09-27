@@ -47,6 +47,7 @@ class WalkingPreflight:
         self._previous_bits = set()
         self.bad_indices = ()
         self.bad_types = ()
+        self.transient_indices = ()
         self.ratios = []
         self.consecutive = 0
 
@@ -79,17 +80,19 @@ class WalkingPreflight:
         self.healthy_samples = len(self._window)
         # Re-evaluate every sample so a new obstruction immediately invalidates a UI acknowledgement.
         observed = tuple(sorted(i for i, count in self._counts.items() if count > 0))
-        self.bad_indices = observed
+        self.bad_indices = tuple(i for i in observed if self._counts[i] >= self.policy.samples * .95
+                                 or self._transitions[i] >= 4)
+        self.transient_indices = tuple(i for i in observed if i not in self.bad_indices)
         self.bad_types = tuple("持续遮挡" if self._counts[i] >= self.policy.samples * .95 else "闪烁"
-                               for i in observed)
-        self.ratios = [sum(i // 96 == s for i in observed) / 96 for s in range(len(frame.layout.segments))]
-        self.consecutive = longest_run(observed, frame.layout)
+                               for i in self.bad_indices)
+        self.ratios = [sum(i // 96 == s for i in self.bad_indices) / 96 for s in range(len(frame.layout.segments))]
+        self.consecutive = longest_run(self.bad_indices, frame.layout)
         self.context = None
         if len(self._window) < self.policy.samples:
             self.reason = f"空场观察 {len(self._window) / 1000:.1f}/{self.policy.observation_seconds:g} 秒"
         elif any(r > self.policy.max_bad_ratio for r in self.ratios) or self.consecutive > self.policy.max_consecutive:
             self.reason = "异常光束超限，请清空测量区域并检查设备"
-        elif any(self._counts[i] < self.policy.samples * .95 and self._transitions[i] < 4 for i in observed):
+        elif self.transient_indices:
             self.reason = "检测到短暂遮挡，等待稳定空场或重复闪烁证据"
         else:
             self.context = PreparedDevice(frame.layout, frame.stream_id, frame.sample_index,
@@ -114,11 +117,41 @@ class WalkingPreflight:
                            for i, v in enumerate(frame.valid_bits)]
                           if fresh and self.data_valid else [0] * layout.bit_count,
             "feet": [], "timestamp_s": 0,
+            "preflight_bad_indices": self.bad_indices,
+            "preflight_transient_indices": self.transient_indices,
         }
         return {"ready": ready, "requires_acknowledgement": ready and bool(self.bad_indices),
                 "message": self.reason, "bad_indices": self.bad_indices, "bad_types": self.bad_types,
+                "transient_indices": self.transient_indices,
+                "details": self._details(layout),
                 "segment_ratios": self.ratios, "max_consecutive": self.consecutive,
                 "policy": self.policy.snapshot(), "segment_count": len(layout.segments) if layout else None,
                 "nominal_length_m": len(layout.segments) if layout else None,
                 "healthy_samples": self.healthy_samples,
                 "device_key": self.context.key if self.context else None, "visual_frame": visual}
+
+    @staticmethod
+    def _ranges(indices):
+        groups = []
+        for i in indices:
+            if groups and i == groups[-1][-1] + 1:
+                groups[-1].append(i)
+            else:
+                groups.append([i])
+        return "、".join(str(g[0]) if len(g) == 1 else f"{g[0]}–{g[-1]}" for g in groups)
+
+    def _details(self, layout):
+        if layout is None:
+            return ""
+        parts = []
+        for s in range(len(layout.segments)):
+            bad = [i % 96 + 1 for i in self.bad_indices if i // 96 == s]
+            transient = [i % 96 + 1 for i in self.transient_indices if i // 96 == s]
+            if bad:
+                types = "、".join(sorted({kind for i, kind in zip(self.bad_indices, self.bad_types) if i // 96 == s}))
+                parts.append(f"第{s + 1}段：异常束{self._ranges(bad)}（{types}，{len(bad)}/96，{len(bad) / 96:.2%}）")
+            if transient:
+                parts.append(f"第{s + 1}段：短暂遮挡束{self._ranges(transient)}（尚未确认为闪烁，等待稳定空场）")
+        if parts:
+            parts.append(f"全程最大连续{self.consecutive}束异常；允许每段≤{self.policy.max_bad_ratio:.2%}、连续≤{self.policy.max_consecutive}束")
+        return "；".join(parts)

@@ -236,3 +236,31 @@ def test_live_invalid_sample_does_not_reuse_last_valid_footprint():
     assert not any(emitted[-1]["valid_bits"])
     assert not emitted[-1]["feet"]
     assert emitted[-1]["timestamp_s"] == pytest.approx(.501)
+
+
+def test_preflight_detail_distinguishes_current_frame_from_window(qtbot):
+    panel = GroundTrackPanel()
+    qtbot.addWidget(panel)
+    state = visual(DeviceLayout.linear(8))
+    state['preflight_bad_indices'] = (576,)
+    state['preflight_transient_indices'] = (577,)
+    panel.render_state(state)
+    assert '本段当前帧' in panel.detail_status.text()
+    assert '全程自检' in panel.detail_status.text()
+    panel.channel.select_segment(6)
+    assert '观察窗异常束：1' in panel.detail_status.text()
+    assert '短暂遮挡束：2' in panel.detail_status.text()
+    assert '当前帧' in panel.detail_status.text()
+
+
+def test_preflight_view_shows_fault_locations_without_hover(qtbot):
+    from tests.test_beam_quality import observe
+    gate = WalkingPreflight()
+    result = observe(gate, (576, 577, 578), n=8)
+    view = ExecutionView()
+    qtbot.addWidget(view)
+    view.configure(WalkingConfig())
+    view.on_walking_readiness(result)
+    assert '第7段' in view._ground_status.text()
+    assert '1–3' in view._ground_status.text()
+    assert not view.btn_start.isEnabled()

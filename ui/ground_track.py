@@ -217,7 +217,15 @@ class GroundTrackPanel(QWidget):
         elif blocked:
             status = "遮挡光束：" + self._indices(blocked)
         else:
-            status = "96 路数据有效 · 无遮挡"
+            status = "本段当前帧：96 路数据有效 · 无遮挡"
+        if "preflight_bad_indices" in self._frame:
+            bad = [i - start + 1 for i in self._frame["preflight_bad_indices"] if start <= i < end]
+            transient = [i - start + 1 for i in self._frame.get("preflight_transient_indices", ()) if start <= i < end]
+            if bad:
+                status += "\n观察窗异常束：" + self._indices(bad)
+            if transient:
+                status += "\n短暂遮挡束：" + self._indices(transient)
+            status += "\n全程自检请查看上方全部设备段的结果"
         self.detail_status.setText(status)
         self.detail_status.setToolTip(status)
 

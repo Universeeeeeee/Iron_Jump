@@ -289,3 +289,29 @@ def test_runtime_issue_duration_is_recorded(qtbot):
     assert event['end_s'] > event['start_s']
     assert gate.snapshot()['event_count'] == 1
     gate.halt()
+
+
+def test_transient_observations_are_not_reported_as_confirmed_faults():
+    gate = WalkingPreflight()
+    state = observe(gate, lambda i: (576, 577, 578) if i == 100 else (), n=8)
+    assert not state['ready']
+    assert state['bad_indices'] == ()
+    assert state['transient_indices'] == (576, 577, 578)
+    assert '短暂遮挡' in state['message']
+    assert '超限' not in state['message']
+    for i in range(3000, 3101):
+        gate.feed(sample(i, n=8))
+    assert gate.ready(time.perf_counter_ns())
+
+
+def test_preflight_explains_whole_track_faults_when_selected_segment_is_clear():
+    gate = WalkingPreflight()
+    state = observe(gate, (576, 577, 578), n=8)
+    assert not state['ready']
+    assert '第7段' in state['details']
+    assert '1–3' in state['details']
+    assert '3.12%' in state['details']
+    assert '2.50%' in state['details']
+    assert '连续3束' in state['details']
+    assert not any(state['visual_frame']['contact_bits'][:96])
+    assert state['visual_frame']['preflight_bad_indices'] == (576, 577, 578)
