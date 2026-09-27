@@ -64,7 +64,7 @@ def _format_runtime_context(ctx: AthleteProfile, mode: str = "jump") -> str:
         "历史记录：\n"
         f"{history_text}\n"
         "设备能力：\n"
-        f"- 设备通道数: {ctx.device_channels}\n"
+        f"- 设备通道数: {ctx.device_channels or '尚未识别'}\n"
         "- 采样率: 1000Hz (硬件固定)\n"
         f"- 当前支持的测试类型: {MODE_TEST_TYPES[mode]}"
     )

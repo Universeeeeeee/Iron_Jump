@@ -121,3 +121,28 @@ def test_unknown_route_is_not_resolved():
 )
 def test_report_error_codes_have_stable_http_status(error_code, status):
     assert worker._report_error_status(error_code) == status
+
+
+def test_routed_chat_selects_prompt_before_configuration(monkeypatch):
+    from agent.config.intent import ModeIntent
+    from config.walking_config import WalkingConfig
+    calls, responses = [], []
+    class Service:
+        def chat(self, message, profile, mode):
+            calls.append((message, mode))
+            return WalkingConfig(), "已配置地面走路"
+    monkeypatch.setattr(worker, "_get_status", lambda: ("ready", ""))
+    monkeypatch.setattr(worker, "_get_config_service", lambda: Service())
+    monkeypatch.setattr("agent.config.intent.classify", lambda *args: ModeIntent(
+        action="configure", movement="walk", surface="ground"))
+    handler = object.__new__(worker._Handler)
+    handler._send_json = lambda result, status=200: responses.append(result)
+    handler._handle_chat({"message": "地面走路", "agent_mode": "jump", "route_intent": True, "segment_count": 8})
+    assert calls == [("地面走路", "walking")]
+    assert responses[0]["mode"] == "walking"
+    assert responses[0]["config"]["test_type"] == "Sprint and Gait Test"
+    monkeypatch.setattr("agent.config.intent.classify", lambda *args: ModeIntent(
+        action="configure", movement="walk", surface="unknown"))
+    handler._handle_chat({"message": "走路", "route_intent": True, "segment_count": 8})
+    assert len(calls) == 1
+    assert "pending" in responses[-1] and "config" not in responses[-1]

@@ -228,8 +228,21 @@ class _Handler(BaseHTTPRequestHandler):
         profile = _profile_from_dict(data.get("athlete", {}))
         try:
             with _config_lock:
+                routing = {}
+                if data.get("route_intent"):
+                    from agent.config.intent import classify, resolve
+                    pending = data.get("pending_intent")
+                    routing = resolve(classify(message, pending), agent_mode,
+                                      data.get("segment_count"), message, pending)
+                    agent_mode = routing["mode"]
+                    if "message" not in routing:
+                        self._send_json(routing)
+                        return
+                    message = routing["message"]
                 config, reply = service.chat(message, profile, mode=agent_mode)
             result: dict = {"reply": reply}
+            if routing:
+                result["mode"] = agent_mode
             if config is not None:
                 result["config"] = config.to_dict()
             self._send_json(result)

@@ -49,8 +49,13 @@ class OvergroundSession(QObject):
         if not self.preflight.ready(time.perf_counter_ns()):
             self.poll()
             return
-        self.processor = self.processor_factory(self.config, self.preflight.context)
-        limit = min(600000, 64 * 1024 * 1024 // (self.preflight.context.layout.bit_count + 64))
+        if self.preflight.context.bad_indices:
+            return  # Degraded starts require the shared quality gate's explicit acknowledgement.
+        self.start_prepared(self.preflight.context)
+
+    def start_prepared(self, context):
+        self.processor = self.processor_factory(self.config, context)
+        limit = min(600000, 64 * 1024 * 1024 // (context.layout.bit_count + 64))
         self.frames = deque(maxlen=limit)
         self.timestamps = deque(maxlen=limit)
         self.armed.emit()
@@ -58,7 +63,7 @@ class OvergroundSession(QObject):
     @Slot(object)
     def arm_checked(self, device_key):
         context = self.preflight.context
-        if context is None or device_key != (context.stream_id, context.layout):
+        if context is None or device_key != context.key or context.bad_indices:
             status = self.preflight.status(time.perf_counter_ns())
             status["start_rejected"] = True
             status["message"] = "设备布局或数据流已变化，请重新核对段数后开始"
@@ -67,7 +72,7 @@ class OvergroundSession(QObject):
         self.arm()
 
     @Slot(object)
-    def on_frame(self, frame):
+    def on_frame(self, frame, raw_frame=None, uncertain=False):
         if self.done:
             return
         self.last_received_ns = frame.received_monotonic_ns
@@ -78,9 +83,14 @@ class OvergroundSession(QObject):
             self._publish_ready()
             return
         self.total_frames += 1
-        self.frames.append(frame.contact_bits)  # bytes, not N Python integers/sample
+        self.frames.append((raw_frame or frame).contact_bits)  # Preserve unmasked measurements.
         self.timestamps.append(frame.sample_time_s)
-        self.processor.process(frame)
+        if uncertain:
+            if not getattr(self, "_quality_uncertain", False):
+                self.processor.break_continuity("unavailable_contact_boundary", frame.frame_index)
+        else:
+            self.processor.process(frame)
+        self._quality_uncertain = uncertain
         if self.processor.finished_reason:
             self.finish(self.processor.finished_reason)
         if frame.received_monotonic_ns - self._last_update_ns >= 100_000_000:
@@ -160,6 +170,8 @@ class OvergroundSession(QObject):
                            "positions_m": p.positions,
                            "contact_bits": list(frame.contact_bits) if len(frame.contact_bits) == len(p.positions) else [0] * len(p.positions),
                            "valid_bits": [0] * len(p.positions) if invalid else list(frame.valid_bits)})
+            for index in p.device.bad_indices:
+                visual["valid_bits"][index] = 0
             if invalid:
                 visual["feet"] = []
             self.visual.emit(visual)

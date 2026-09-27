@@ -7,6 +7,7 @@ from config.walking_config import WalkingConfig
 from config.test_config import config_from_dict
 from config.config_validation import validate_runtime_config
 from hardware.sensor_frame import DeviceLayout, SensorFrame, AcquisitionIssue
+from hardware.beam_quality import BeamQualityPolicy
 from hardware.walking_preflight import WalkingPreflight, PreparedDevice
 from engine.modes.walking_processor import WalkingProcessor
 from engine.walking_session import WalkingSession
@@ -36,7 +37,7 @@ CONTACTS = [(100, 800, .35), (600, 1300, .95), (1100, 1800, 1.55), (1600, 2300, 
 
 @pytest.mark.parametrize("n", [1, 3, 8, 12])
 def test_preflight_requires_complete_clear_continuous_window(n):
-    gate = WalkingPreflight()
+    gate = WalkingPreflight(BeamQualityPolicy(observation_seconds=1))
     layout = DeviceLayout.linear(n)
     for i in range(999):
         gate.feed(frame(layout, i))
@@ -53,7 +54,7 @@ def test_preflight_requires_complete_clear_continuous_window(n):
 
 
 def test_preflight_gap_mask_layout_and_stream_invalidate():
-    gate = WalkingPreflight()
+    gate = WalkingPreflight(BeamQualityPolicy(observation_seconds=1))
     layout = DeviceLayout.linear(3)
     for i in range(1000):
         gate.feed(frame(layout, i))
@@ -167,6 +168,7 @@ def test_device_change_and_clock_reset_end_passage():
 
 def test_arm_rechecks_freshness_and_issues_gate(qtbot):
     session = WalkingSession(WalkingConfig())
+    session.preflight.policy = BeamQualityPolicy(observation_seconds=1)
     session.arm()
     assert session.processor is None
     layout = DeviceLayout.linear(8)
@@ -277,6 +279,7 @@ def test_session_controller_requires_preflight_and_preserves_stream(qtbot, runni
             pass
 
     controller = SessionController(worker_factory=Worker)
+    controller.quality_policy = BeamQualityPolicy(observation_seconds=1)
     reports = []
     controller.session_finished.connect(reports.append)
     try:
@@ -418,6 +421,7 @@ def test_real_usb_worker_monitor_and_stop_run_on_worker_thread(qtbot, monkeypatc
     from ui.session_controller import SessionController
     monkeypatch.setattr(usb, "CyUsbInterfaceDevice", _FakeDevice)
     controller = SessionController(worker_factory=usb.UsbWorker)
+    controller.quality_policy = BeamQualityPolicy(observation_seconds=1)
     reports = []
     controller.session_finished.connect(reports.append)
     try:

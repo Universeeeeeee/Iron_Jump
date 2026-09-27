@@ -631,6 +631,9 @@ class ExecutionView(QWidget):
         if state == "connected":
             self.btn_start.setText("开始采集")
             self.btn_start.setEnabled(getattr(self._config, "test_type", "") not in {"Sprint and Gait Test", "Overground Running Test"})
+            if getattr(self, "_quality_preflight_required", False):
+                self.btn_start.setText("等待自检通过")
+                self.btn_start.setEnabled(False)
         elif state == "error":
             self.btn_start.setText("重试设备")
             self.btn_start.setEnabled(True)
@@ -648,8 +651,15 @@ class ExecutionView(QWidget):
         if not self.is_ground and self._detected_segments and self._detected_segments > 1:
             self._show_unsupported_layout()
         elif not self.is_ground and self._device_state == "connected":
-            self.btn_start.setText("开始采集")
-            self.btn_start.setEnabled(True)
+            required = getattr(self, "_quality_preflight_required", False)
+            self.btn_start.setText("等待自检通过" if required else "开始采集")
+            self.btn_start.setEnabled(not required)
+
+    def set_quality_preflight_required(self, required):
+        self._quality_preflight_required = required
+        if required:
+            self.btn_start.setText("等待自检通过")
+            self.btn_start.setEnabled(False)
 
     def _show_unsupported_layout(self):
         self._device_label.setText(f"已识别 {self._detected_segments} 段；当前模式仅支持单段设备")
@@ -657,16 +667,24 @@ class ExecutionView(QWidget):
         self.btn_start.setEnabled(False)
 
     def on_walking_readiness(self, result):
-        if not self.is_ground:
-            return
         count = result.get("segment_count")
         prefix = f"{count} 段 / 标称 {count} 米 · " if count else ""
         self._device_label.setText(prefix + result["message"])
-        self._ground_status.setText(prefix + result["message"])
-        self.btn_start.setText(f"确认共 {count} 段并开始" if result["ready"] else "等待自检通过")
+        if self.is_ground:
+            self._ground_status.setText(prefix + result["message"])
+        ready_text = f"确认共 {count} 段并开始" if self.is_ground else "开始采集"
+        if result.get("requires_acknowledgement"):
+            ready_text = "核对异常并降级开始"
+        self.btn_start.setText(ready_text if result["ready"] else "等待自检通过")
         self.btn_start.setEnabled(result["ready"])
-        if result.get("visual_frame"):
+        if self.is_ground and result.get("visual_frame"):
             self._ground_track.render_state(result["visual_frame"])
+
+    def on_beam_quality_notice(self, notice):
+        self._quality_warning = "设备质量提示：" + notice["impact"]
+        self._device_label.setText(self._quality_warning)
+        self._device_label.setStyleSheet("color: #ffb347;")
+        self._device_label.setToolTip(str(notice))
 
     def on_session_started(self):
         """Enter the running UI only after the device confirms streaming."""
@@ -700,6 +718,7 @@ class ExecutionView(QWidget):
 
     def reset(self):
         """重置所有仪表盘和图表到初始状态。"""
+        self._quality_warning = None
         # 仪表盘
         for card in self._jump_cards + self._gait_cards:
             card.set_value("--")
@@ -857,6 +876,9 @@ class ExecutionView(QWidget):
 
     def on_device_message(self, msg: str):
         """显示设备状态。"""
+        if getattr(self, "_quality_warning", None):
+            self._device_label.setText(self._quality_warning)
+            return
         if not self.is_ground and self._detected_segments and self._detected_segments > 1:
             self._show_unsupported_layout()
             return

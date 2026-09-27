@@ -466,6 +466,7 @@ class SetupView(QWidget):
 
         # ===== 连接参数变更 → 更新摘要 =====
         self._agent_panel.config_confirmed.connect(self._on_agent_config_confirmed)
+        self._agent_panel.configuration_invalidated.connect(self._invalidate_agent_config)
         self._agent_panel.profile_changed.connect(self._sync_profile_update_action)
         self.param_panel.config_changed.connect(self._on_param_panel_changed)
         self._update_mode_status()
@@ -923,6 +924,12 @@ class SetupView(QWidget):
         mode = "智能配置" if self._config_mode_index == 0 else "手动配置"
         self._mode_status_chip.setText(f"●  {mode} · 测试准备")
 
+    def _invalidate_agent_config(self, new_request):
+        if self._config_mode_index == 0 and (new_request or self._current_config is None or
+                self._current_config.test_type != self._agent_panel.current_test_type()):
+            self._current_config = None
+            self._update_summary()
+
     def _on_agent_config_confirmed(self, config: AnyTestConfig) -> None:
         self._set_current_config(config, "agent")
 
@@ -1086,6 +1093,7 @@ class SetupView(QWidget):
         if state not in {"connected", "streaming"}:
             self._led_health_result = None
             self._device_layout = None
+            self._agent_panel._segment_count = None
         self._render_device_status()
 
     def on_led_health(self, result: dict) -> None:
@@ -1094,6 +1102,7 @@ class SetupView(QWidget):
 
     def on_device_layout(self, layout) -> None:
         self._device_layout = layout
+        self._agent_panel._segment_count = len(layout.segments) if layout is not None else None
         self._render_device_status()
 
     @staticmethod

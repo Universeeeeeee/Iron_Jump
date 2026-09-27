@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import os
 
-from qtpy.QtCore import Qt
+from qtpy.QtCore import Qt, Signal
 from qtpy.QtWidgets import (
     QFrame,
     QGridLayout,
@@ -13,6 +13,7 @@ from qtpy.QtWidgets import (
     QPushButton,
     QVBoxLayout,
     QWidget,
+    QDoubleSpinBox, QSpinBox, QFormLayout,
 )
 
 from data.subject_store import SubjectStore, default_db_path
@@ -59,6 +60,14 @@ QLabel#FieldValue {
     color: #dce2eb;
     font-size: 13px;
 }
+QDoubleSpinBox, QSpinBox {
+    color: #e7ebf2;
+    background: #1a2230;
+    border: 1px solid #354151;
+    border-radius: 5px;
+    min-height: 30px;
+    padding: 0 8px;
+}
 QPushButton {
     min-height: 32px;
     border: 1px solid #354151;
@@ -74,7 +83,8 @@ QPushButton:hover {
 
 
 class SettingsView(QWidget):
-    """Read-only diagnostics until a persistent settings model exists."""
+    """Device diagnostics and operator-owned preflight settings."""
+    quality_policy_changed = Signal(object)
 
     def __init__(self, subject_store: SubjectStore | None = None, parent=None):
         super().__init__(parent)
@@ -134,6 +144,37 @@ class SettingsView(QWidget):
             1,
         )
         layout.addLayout(cards)
+        from ui.quality_settings import load_policy
+        policy = load_policy()
+        self._quality_card = QFrame()
+        self._quality_card.setObjectName("SettingsCard")
+        form = QFormLayout(self._quality_card)
+        form.setContentsMargins(18, 18, 18, 18)
+        form.setSpacing(10)
+        quality_title = QLabel("设备自检 · 所有测试模式（运行中不可修改）")
+        quality_title.setObjectName("CardTitle")
+        form.addRow(quality_title)
+        self._quality_ratio = QDoubleSpinBox()
+        self._quality_ratio.setRange(0, 10)
+        self._quality_ratio.setSuffix(" % / 段")
+        self._quality_ratio.setValue(policy.max_bad_ratio * 100)
+        self._quality_run = QSpinBox()
+        self._quality_run.setRange(0, 10)
+        self._quality_run.setValue(policy.max_consecutive)
+        self._quality_seconds = QDoubleSpinBox()
+        self._quality_seconds.setRange(1, 30)
+        self._quality_seconds.setSuffix(" 秒")
+        self._quality_seconds.setValue(policy.observation_seconds)
+        form.addRow("允许异常比例", self._quality_ratio)
+        form.addRow("连续异常光束上限（跨相邻段）", self._quality_run)
+        form.addRow("连续空场观察时间", self._quality_seconds)
+        for control in (self._quality_ratio, self._quality_run, self._quality_seconds):
+            control.setMaximumWidth(260)
+            form.labelForField(control).setObjectName("FieldLabel")
+        save = QPushButton("应用自检设置（已有自检失效）")
+        save.clicked.connect(self._save_quality_policy)
+        form.addRow(save)
+        layout.addWidget(self._quality_card)
         layout.addStretch(1)
 
         refresh_row = QHBoxLayout()
@@ -142,6 +183,16 @@ class SettingsView(QWidget):
         refresh.clicked.connect(self.refresh)
         refresh_row.addWidget(refresh)
         layout.addLayout(refresh_row)
+
+    def _save_quality_policy(self):
+        if not self._quality_card.isEnabled():
+            return
+        from hardware.beam_quality import BeamQualityPolicy
+        self.quality_policy_changed.emit(BeamQualityPolicy(
+            self._quality_ratio.value() / 100, self._quality_run.value(), self._quality_seconds.value()))
+
+    def set_test_running(self, running):
+        self._quality_card.setEnabled(not running)
 
     def _card(self, title: str, fields: list[tuple[str, str]]) -> QFrame:
         card = QFrame()

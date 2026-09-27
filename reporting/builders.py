@@ -107,6 +107,14 @@ class ReportDataPackageBuilder:
                 package_id, report
             )
 
+        beam_quality = report.report_config_snapshot.get("beam_quality")
+        if beam_quality and (beam_quality.get("degraded") or beam_quality.get("events")):
+            quality_flags.append(QualityFlag(
+                quality_flag_id=_stable_id(package_id, "beam_quality"), code="beam_quality",
+                severity="warning", scope="report", source_ref="report_config_snapshot:beam_quality",
+                details=beam_quality,
+            ))
+
         used_metric_codes = {
             value.metric_code
             for record_set in record_sets

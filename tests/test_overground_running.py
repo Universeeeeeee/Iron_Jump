@@ -11,6 +11,7 @@ from config.config_validation import validate_runtime_config
 from engine.modes.overground_running_processor import OvergroundRunningProcessor
 from engine.overground_session import OvergroundSession
 from hardware.sensor_frame import DeviceLayout, SensorFrame, AcquisitionIssue
+from hardware.beam_quality import BeamQualityPolicy
 from hardware.walking_preflight import PreparedDevice
 
 
@@ -190,6 +191,7 @@ def test_preflight_config_freeze_and_fatal_changes(qtbot):
     assert isinstance(config, OvergroundRunningConfig)
     assert not validate_runtime_config(config)
     session = OvergroundSession(config, OvergroundRunningProcessor)
+    session.preflight.policy = BeamQualityPolicy(observation_seconds=1)
     session.arm()
     assert session.processor is None
     layout = DeviceLayout.linear(8)
@@ -290,6 +292,7 @@ def test_contact_minimum_and_backdated_origin(duration, valid):
 
 def test_start_rechecks_staleness_obstruction_and_issue(qtbot):
     session = OvergroundSession(OvergroundRunningConfig(), OvergroundRunningProcessor)
+    session.preflight.policy = BeamQualityPolicy(observation_seconds=1)
     layout = DeviceLayout.linear(1)
     for n in range(1000):
         session.on_frame(frame(layout, n, received=time.perf_counter_ns() - 600_000_000))
@@ -310,6 +313,7 @@ def test_start_rechecks_staleness_obstruction_and_issue(qtbot):
 @pytest.mark.parametrize('issue', ['disconnected', 'data_timeout', 'layout_mismatch', 'out_of_order_or_reset'])
 def test_fatal_session_conditions_abort(qtbot, issue):
     session = OvergroundSession(OvergroundRunningConfig(), OvergroundRunningProcessor)
+    session.preflight.policy = BeamQualityPolicy(observation_seconds=1)
     for n in range(1000):
         session.on_frame(frame(DeviceLayout.linear(1), n))
     session.arm()

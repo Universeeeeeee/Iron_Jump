@@ -1,10 +1,12 @@
 # Iron_Jump 系统架构文档
 
-> 最后更新: 2026-09-26；代码基线: `86ff8ae`（`vae/iron_jump`）
+> 最后更新: 2026-09-27；分支: `vae/iron_jump`，含本轮模式路由与设备质量更新
 
 ## 1. 项目概述
 
-OptoJump 兼容的纵跳、跑步机步态/跑步和地面走路/跑步分析系统。红外光栅每段包含 96 个光束，通过 USB 连接 PC，以固定 1000 Hz 采样率上报遮挡状态。采集层支持可变段数和物理布局；目前地面模式消费完整设备帧，纵跳与跑步机保留单段兼容路径。
+模式扩展必须遵守 [模式意图路由与异常光束容忍约定](mode-routing-and-beam-quality.md)：先解析模式再生成配置，统一自检与冻结故障清单，保留原始数据和质量快照；不能在某个新模式中绕过确认或自行放宽阈值。
+
+OptoJump 兼容的纵跳、跑步机步态/跑步和地面走路/跑步分析系统。红外光栅每段包含 96 个光束，通过 USB 连接 PC，以固定 1000 Hz 采样率上报遮挡状态。正式硬件路径的五种模式均消费完整设备帧并经过统一质量门；纵跳与跑步机目前仍只支持单段。显式模拟源保留旧接触信号入口，不代表硬件自检通过。
 
 软件负责：接收原始数据 → 算法检测触地/腾空事件 → UI 实时展示 → 生成测试报告。
 
@@ -37,6 +39,7 @@ Iron_Jump/
 │   ├── usb_worker.py         # USB 读取、完整帧信号与单段兼容信号
 │   ├── sensor_frame.py       # DeviceLayout / SensorFrame、分包组装与采样时钟
 │   ├── walking_preflight.py  # 空场自检与不可变 PreparedDevice
+│   ├── beam_quality.py       # 人工阈值、连续束判定及冻结屏蔽规则
 │   ├── simulated_worker.py   # 演示用原始信号源
 │   └── rc200u.py             # RFID 厂商 DLL 包装与读取线程
 
@@ -47,6 +50,7 @@ Iron_Jump/
 │   ├── spatial_clusterer.py  # 空间聚类：将 96 位数据聚类为脚印
 │   ├── extra_parameter.py    # 高阶步态参数计算（步长、步速等）
 │   ├── overground_session.py # 地面准备、自检、布防、异常与报告生命周期
+│   ├── device_quality_session.py # 五模式正式硬件共用的准备/运行质量门
 │   ├── walking_session.py    # 地面走路兼容入口
 │   └── modes/               # Jump / Treadmill / Walking / Overground Running processors
 
@@ -164,22 +168,21 @@ SetupView.ready_signal(SessionSetup)
   → 创建或复用 UsbWorker + QThread，创建 GaitEngine 并连接信号
   → 准备阶段启动线程、连接设备，切到 ExecutionView
 
-纵跳 / 跑步机：开始 → 启动正式采集与引擎计时
-地面走路 / 跑步：准备时已连续采集 → 空场自检 → 开始时线程内复核并布防
+五种模式：准备时连续采集 → DeviceQualitySession 空场观察
+  → 健康就绪 / 阈值内待人工降级确认 / 超限阻止开始
+  → 开始命令在处理帧的同一线程重新核对，再冻结本次质量快照
 ```
 
-地面模式要求连续 1000 个正常空场样本，就绪信息超过 500 ms 失效。开始时冻结 `PreparedDevice`（布局、stream_id、自检样本序号），沿用同一个采集流；首次有效接触回溯到首帧作为测试时间零点。单次通过不接受暂停/继续，物理停步仍参与整趟时长。
+默认连续观察 3 秒，每段异常比例不超过 2.5%、相邻连续异常不超过 2 束；阈值由设置页人工管理。就绪信息超过 500 ms 失效。开始时冻结 `PreparedDevice`（布局、stream_id、自检样本序号、阈值、疑似坏点及类型），沿用同一个采集流。地面模式首次有效接触回溯到首帧作为测试时间零点；单次通过不接受暂停/继续，物理停步仍参与整趟时长。
 
 ### 5.2 实时数据流
 
 ```text
 USB Python 读取线程 → 协议解析 / 组帧 / 布局映射
-  ├─ 单段 raw_contact_signal(bits, host_time)
-  │    → DirectConnection → GaitEngine.process_raw_frame()
-  │    → 纵跳 / 跑步机 processor
-  └─ sensor_frame_received(SensorFrame) + acquisition_issue
-       → QueuedConnection → OvergroundSession（Qt Worker 线程）
-       → 自检或 WalkingProcessor / OvergroundRunningProcessor
+  → sensor_frame_received(SensorFrame) + acquisition_issue
+  → QueuedConnection → DeviceQualitySession（Qt Worker 线程）
+  → 原始帧保留；冻结屏蔽点生成处理帧，不确定区间切断事件连续性
+  → GaitEngine.process_quality_frame → 单段 processor / OvergroundSession
   → 事件 / 低频快照 / FootprintVisualFrame
   → SessionController → 主线程 ExecutionView
 
@@ -188,9 +191,11 @@ USB Python 读取线程 → 协议解析 / 组帧 / 布局映射
   → session_finished → MainWindow → ReportView + SubjectStore 归档
 ```
 
-`DeviceLayout` 保存每段线序、方向、光束位置和有效位掩码；`SensorFrame` 同时保存原始载荷、物理顺序遮挡、质量标志和设备帧号。地面指标采用设备序号展开后的 `sample_index / 1000`，主机接收时间只用于延迟和超时诊断；单段兼容通道仍使用历史 `perf_counter()` 基准，不能混用这两种时间。
+`DeviceLayout` 保存每段线序、方向、光束位置和有效位掩码；`SensorFrame` 同时保存原始载荷、物理顺序遮挡、质量标志和设备帧号。五种正式硬件模式的接触计时采用设备序号；主机接收时间用于延迟和超时诊断，定时停止仍由会话时钟管理。显式模拟/兼容接触入口保留原有时间基准。
 
-短暂缺帧/协议异常切断地面接触与周期连续性，恢复后不跨缺口拼接。设备断连、布局/流变化、计数回退或持续 1 秒无数据会中止测试。地面原始帧缓存同时受 600000 帧和约 64 MiB 预算限制；历史库保存报告和回放，不永久保存全速原始帧。
+短暂缺帧、无效数据、接触邻近屏蔽点或新增疑似持续遮挡/高频变化会切断事件连续性，不补造指标。运行中不改变屏蔽清单，也不因光学异常程度自动结束；设备断连、布局/流变化、计数回退或持续 1 秒无数据仍结束测试。原始帧保持采集值，地面缓存受 600000 帧及约 64 MiB 预算限制；历史库保存质量快照和回放，不永久保存全速原始帧。完整采样审计应在本次报告页导出，不能把历史回放当成全速原始数据。
+
+`beam_quality` 保存冻结阈值、位置、类型、人工确认和运行中事件，进入报告、历史、Excel 设备质量表以及已支持模式的 Report Agent 质量标记。新增模式必须复用该契约，不能仅使开始按钮可点击。
 
 地面走路以接触中心为距离参考；地面跑步以稳定脚尖代理计算 Tip-to-Tip。空间信息不足时保留缺失原因，不补零或改用另一种参考。配置未指定首脚或身份失效后仅保留 A/B，不能视作独立视觉识别的左右脚。详见 [采集接口](采集数据接口.md)、[地面走路](地面走路算法.md) 和 [地面跑步](地面跑步算法.md)。
 
@@ -259,7 +264,7 @@ ReportView(session_id)
 
 `GroundTrackPanel` 共享地面自检、实时和回放的连续跑道绘制；`positions_m` 决定刻度与落脚位置，96 路对应一个可选设备段。段边界仅在侧边标注，不将跨段接触切成多只脚。旁侧详情按所选段切片显示光束、有效位和段内异常编号。全程与局部均复用 `FootprintChannelWidget` 的双侧灯点、圆角通道、遮挡线和足迹绘制，局部显示所选段 96 路及当前脚印；历史标记只来自已完成且有效的接触，报告按播放时间过滤。左右脚复用 `left_foot.png` / `right_foot.png` 和原有足迹绘制逻辑，历史脚印淡化，总览保留最低可辨尺寸；未知左右脚仍居中匿名显示。图标大小不代表实测足长或足底压力。
 
-准备阶段约 10 Hz 发布带完整光束与有效位的自检状态，不把 1000 Hz 原始帧直接送到 UI。操作者确认后，`ground_start_requested` 携带数据流和设备布局，`arm_checked` 在采集处理线程核对后执行原有新鲜度复查。实时显示直接使用最近传感帧的有效性；时间线对采集缺口保留未知状态。历史报告读取自己的布局快照，与当前接入设备无关。`device_layout_changed` 同步配置页设备概况和旧模式的单段兼容限制。
+准备阶段约 10 Hz 发布光束与有效位状态，不把 1000 Hz 原始帧直接送到 UI。沿用的 `ground_start_requested` 信号现供五种模式携带布局/流、阈值、坏点清单和确认结果；`arm_checked` 在处理线程复核。不可用光束以未知状态显示，接触证据不足时清除旧脚印；有效且远离坏点的脚印继续显示。历史回放使用自己的质量快照，不随当前设置改变。
 
 `hardware/rc200u.py` 在线程中轮询厂商 DLL，`AthletesView` 在主线程处理卡号；`SubjectStore` 保存唯一绑定并支持解绑。读到 UID 后选择对应档案，不替用户选择团队身份或启动采集。Windows 已有单卡及页面/数据库联调记录，完整主窗口和热插拔仍需验收。
 

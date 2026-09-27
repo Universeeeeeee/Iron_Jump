@@ -935,6 +935,16 @@ class ReportView(QWidget):
         if getattr(report, "report_config_snapshot", {}).get("data_source") == "simulation":
             self._title.setText(self._title.text() + " · 模拟数据（非实测）")
 
+        quality = report.report_config_snapshot.get("beam_quality")
+        if quality and (quality.get("degraded") or quality.get("events")):
+            count = len(quality.get("preflight", {}).get("bad_indices", ()))
+            self._reason_label.setText(self._reason_label.text() +
+                f"\n设备质量：冻结 {count} 束不可用，运行中 {quality.get('event_count', 0)} 项记录。" +
+                quality.get("limitation", ""))
+            self._reason_label.setWordWrap(True)
+        self._reason_label.setToolTip("未记录设备质量信息" if quality is None else
+                                      __import__("json").dumps(quality, ensure_ascii=False, indent=2))
+
         self._request_latest_if_available()
 
     def answer_gait_question(self, question: str) -> str:
@@ -1883,6 +1893,22 @@ class ReportView(QWidget):
         try:
             wb = Workbook()
             snapshot = getattr(self._report, "report_config_snapshot", {})
+            import json
+            quality_sheet = wb.create_sheet("设备质量")
+            quality = snapshot.get("beam_quality")
+            if quality is None:
+                quality_sheet.append(["状态", "未记录（不代表无异常）"])
+            else:
+                def append_quality(path, value):
+                    if isinstance(value, dict):
+                        for key, item in value.items():
+                            append_quality(f"{path}.{key}" if path else key, item)
+                    elif isinstance(value, (list, tuple)):
+                        for index, item in enumerate(value):
+                            append_quality(f"{path}[{index}]", item)
+                    else:
+                        quality_sheet.append([path, value])
+                append_quality("", quality)
             if snapshot.get("data_source") == "simulation":
                 provenance = wb.create_sheet("数据来源")
                 provenance.append(["数据来源", "模拟演示数据，非受试者实测"])

@@ -379,6 +379,47 @@ class GaitEngine(QObject):
             self._processor.break_continuity(issue.code)
 
     @Slot(object)
+    def begin_quality_session(self, context):
+        if self.overground is not None:
+            self.overground.start_prepared(context)
+        else:
+            self.begin_session(time.perf_counter())
+
+    @Slot(object, object, bool)
+    def process_quality_frame(self, raw, frame, uncertain):
+        if self._finished:
+            return
+        if self.overground is not None:
+            self.overground.on_frame(frame, raw, uncertain)
+            return
+        if self._paused:
+            return
+        self._processor.time_source = raw.time_source
+        if self._sensor_origin is None:
+            self._sensor_origin = raw.sample_index
+        rel_time = self._sensor_offset_s + (raw.sample_index - self._sensor_origin) / raw.sample_rate_hz
+        if uncertain:
+            self._export_frames.append(list(raw.contact_bits))
+            self._export_timestamps.append(rel_time)
+            if not getattr(self, "_quality_uncertain", False):
+                visual = {"timestamp_s": rel_time, "contact_bits": list(raw.contact_bits),
+                          "valid_bits": [0] * len(raw.contact_bits), "feet": [],
+                          "quality_flags": ["unavailable_contact_boundary"]}
+                self.footprint_visual_frame.emit(visual)
+                if not hasattr(self, "_quality_visual_events"):
+                    self._quality_visual_events = deque(maxlen=10000)
+                self._quality_visual_events.append(visual)
+                if isinstance(self._processor, JumpProcessor):
+                    self._processor.pause_boundary()
+                else:
+                    self._processor.break_continuity("unavailable_contact_boundary")
+        else:
+            self._raw_quality_bits = raw.contact_bits
+            self.process_raw_frame(list(frame.contact_bits), (self._start_time or 0) + rel_time)
+            self._raw_quality_bits = None
+        self._quality_uncertain = uncertain
+
+    @Slot(object)
     def process_sensor_frame(self, frame):
         """Use device samples for treadmill timing; USB delivery time is not gait time."""
         if (self._paused or self._finished or self._processor is None
@@ -424,7 +465,7 @@ class GaitEngine(QObject):
         rel_time = timestamp - self._start_time if self._start_time is not None else timestamp
 
         # 记录到导出缓存
-        self._export_frames.append(list(contact_bits))
+        self._export_frames.append(list(getattr(self, "_raw_quality_bits", None) or contact_bits))
         self._export_timestamps.append(rel_time)
 
         # 分发到对应模式的处理器
@@ -449,7 +490,12 @@ class GaitEngine(QObject):
                     self.gait_step_event.emit(ev)
                 if hasattr(self._processor, "pop_visual_frames"):
                     for frame in self._processor.pop_visual_frames():
-                        self.footprint_visual_frame.emit(frame.to_dict())
+                        visual = frame.to_dict()
+                        quality = getattr(self, "quality", None)
+                        if quality and quality.context:
+                            visual["valid_bits"] = [int(i not in quality.context.bad_indices)
+                                                    for i in range(len(visual["contact_bits"]))]
+                        self.footprint_visual_frame.emit(visual)
                 if (
                     hasattr(self._processor, "make_status_snapshot")
                     and timestamp - self._last_snapshot_ts >= self._snapshot_interval
@@ -546,15 +592,39 @@ class GaitEngine(QObject):
         Must be called after the test has stopped.
         """
         if self.overground is not None:
-            return self.overground.build_report(reason)
+            report = self.overground.build_report(reason)
+            if getattr(self, "quality", None) is not None:
+                report.report_config_snapshot["beam_quality"] = self.quality.snapshot()
+            return self._quality_report(report)
         export_frames = tuple(list(frame) for frame in self._export_frames)
         export_timestamps = tuple(self._export_timestamps)
 
         if self._processor is not None:
-            return self._processor.build_report(reason, export_frames, export_timestamps)
+            report = self._processor.build_report(reason, export_frames, export_timestamps)
+            if getattr(self, "quality", None) is not None:
+                report.report_config_snapshot["beam_quality"] = self.quality.snapshot()
+            return self._quality_report(report)
 
         # 回退到旧步态报告逻辑
         return self._build_gait_report(reason, export_frames, export_timestamps)
+
+    def _quality_report(self, report):
+        quality = getattr(self, "quality", None)
+        if quality is None or quality.context is None or not hasattr(report, "visual_timeline"):
+            return report
+        from dataclasses import replace
+        timeline = []
+        for item in report.visual_timeline:
+            visual = dict(item.to_dict() if hasattr(item, "to_dict") else item)
+            valid = list(visual.get("valid_bits", [1] * len(visual.get("contact_bits", ()))))
+            for i in quality.context.bad_indices:
+                if i < len(valid):
+                    valid[i] = 0
+            visual["valid_bits"] = valid
+            timeline.append(visual)
+        timeline.extend(getattr(self, "_quality_visual_events", ()))
+        timeline.sort(key=lambda visual: visual["timestamp_s"])
+        return replace(report, visual_timeline=tuple(timeline))
 
     def _build_gait_report(self, reason: str, export_frames: tuple, export_timestamps: tuple):
         """构建步态报告 (内联逻辑，尚未提取为 processor)。"""

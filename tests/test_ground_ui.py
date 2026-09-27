@@ -10,6 +10,7 @@ from config.test_config import default_jump_config
 from config.treadmill_report import TreadmillGaitReport
 from config.walking_config import WalkingConfig
 from hardware.sensor_frame import DeviceLayout, SensorSegment
+from hardware.beam_quality import BeamQualityPolicy
 from hardware.walking_preflight import WalkingPreflight
 from engine.walking_session import WalkingSession
 from ui.footprint_channel import FootprintReplayPanel
@@ -81,6 +82,7 @@ def test_preflight_exposes_local_faults_and_stale_data_without_ready():
 
 def test_start_rejects_changed_layout_even_after_new_self_check():
     session = WalkingSession(WalkingConfig())
+    session.preflight.policy = BeamQualityPolicy(observation_seconds=1)
     for i in range(1000):
         session.on_frame(frame(DeviceLayout.linear(3), i))
     old_key = session.preflight.status(time.perf_counter_ns())["device_key"]
@@ -223,6 +225,7 @@ def test_running_history_requires_valid_spatial_reference(qtbot):
 
 def test_live_invalid_sample_does_not_reuse_last_valid_footprint():
     session = WalkingSession(WalkingConfig())
+    session.preflight.policy = BeamQualityPolicy(observation_seconds=1)
     p = processor(3, stop_type="Software command")
     walk(p, [(0, 800, .35)], 500)
     session.processor = p

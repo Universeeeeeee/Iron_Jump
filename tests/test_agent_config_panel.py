@@ -548,3 +548,33 @@ class AgentConfigPanelRequestLifecycleTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def test_routed_reply_updates_selector_but_does_not_confirm(qtbot, monkeypatch):
+    from config.walking_config import WalkingConfig
+    panel = AgentConfigPanel(llm_client=_FakeClient())
+    qtbot.addWidget(panel)
+    monkeypatch.setattr(_LLMHttpWorker, "start", lambda self: None)
+    panel._chat_input.setText("地面走路")
+    panel._on_send_message()
+    worker = panel._llm_worker
+    worker.resolved_mode = "walking"
+    worker.finished.emit(WalkingConfig(), "地面配置")
+    assert panel.current_test_type() == "Sprint and Gait Test"
+    assert panel._pending_config is not None
+    assert "地面配置" in panel._chat_display.toPlainText()
+
+
+def test_late_routed_reply_cannot_override_manual_selection(qtbot, monkeypatch):
+    from config.walking_config import WalkingConfig
+    panel = AgentConfigPanel(llm_client=_FakeClient())
+    qtbot.addWidget(panel)
+    monkeypatch.setattr(_LLMHttpWorker, "start", lambda self: None)
+    panel._chat_input.setText("地面走路")
+    panel._on_send_message()
+    worker = panel._llm_worker
+    panel._test_type_combo.setCurrentText("Treadmill Running Test")
+    worker.resolved_mode = "walking"
+    worker.finished.emit(WalkingConfig(), "迟到结果")
+    assert panel.current_test_type() == "Treadmill Running Test"
+    assert panel._pending_config is None

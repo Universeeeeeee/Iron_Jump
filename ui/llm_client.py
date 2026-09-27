@@ -185,6 +185,16 @@ class AgentWorkerClient:
         }, timeout=120)
         return r.json()
 
+    def chat_routed(self, message, athlete, agent_mode, segment_count=None, pending_intent=None):
+        url = self._base_url()
+        if url is None or not self.health_check(timeout=0.5):
+            return {"error": "worker 未就绪"}
+        return requests.post(f"{url}/config/chat", json={
+            "message": message, "athlete": athlete, "agent_mode": agent_mode,
+            "route_intent": True, "segment_count": segment_count,
+            "pending_intent": pending_intent,
+        }, timeout=120).json()
+
     def reset(self):
         url = self._base_url()
         if url is None:

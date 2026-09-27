@@ -242,9 +242,17 @@ class FootprintChannelWidget(QFrame):
         for foot in self.history:
             self._paint_foot(painter, foot, lane_left, lane_right, top, height)
         painter.setOpacity(1)
-        if len(self.valid_bits) == len(self._contact_bits) and all(self.valid_bits):
+        if len(self.valid_bits) == len(self._contact_bits) and any(self.valid_bits):
             for foot in self._feet:
-                self._paint_foot(painter, foot, lane_left, lane_right, top, height)
+                centre = foot.get("centroid_cm")
+                length = foot.get("length_cm")
+                if centre is None or length is None:
+                    continue
+                positions = self._positions_m or [i * .0104 for i in range(len(self._contact_bits))]
+                overlaps_unknown = any(not valid and abs(position * 100 - centre) <= length / 2 + 1.04
+                                       for position, valid in zip(positions, self.valid_bits))
+                if not overlaps_unknown:
+                    self._paint_foot(painter, foot, lane_left, lane_right, top, height)
         painter.restore()
         painter.end()
 

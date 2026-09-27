@@ -157,6 +157,8 @@ class VoiceBridge(QObject):
                     self.say("请先确认配置并说准备测试。")
                 elif c.device_state != "connected":
                     self.say("设备尚未就绪，不能开始测试。")
+                elif getattr(c, "quality_status", {}).get("requires_acknowledgement"):
+                    self.say("检测到阈值内的异常光束。请查看异常位置，现场确认空场，并在界面点击降级开始。")
                 elif (c.config.test_type in {"Sprint and Gait Test", "Overground Running Test"}
                       and not c._walking_ready):
                     self.say("空场自检尚未通过，请保持测量区域无遮挡，等待界面提示就绪后再开始。")
@@ -219,7 +221,12 @@ class VoiceBridge(QObject):
                 self.say("正在分析报告，请稍候。")
             else:
                 self.say("分析尚未就绪，请查看页面提示。")
-        elif w._stack.currentWidget() is w._setup_view:
+        elif w._stack.currentWidget() in {w._setup_view, w._exec_view}:
+            if c.is_running:
+                self.say("测试正在运行。更改测试模式或配置前，请先结束当前测试。")
+                return
+            if w._stack.currentWidget() is w._exec_view:
+                w._on_return_to_config()
             panel = w._setup_view._agent_panel
             w._setup_view._set_config_mode(0)
             if panel.submit_voice(text):

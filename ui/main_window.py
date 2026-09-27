@@ -245,6 +245,11 @@ class MainWindow(QMainWindow):
         self._report_view = ReportView(llm_client=self._llm_client)
         self._history_view = HistoryView(self._subject_store)
         self._settings_view = SettingsView(self._subject_store)
+        from ui.quality_settings import load_policy
+        self._controller.quality_policy = load_policy()
+        self._settings_view.quality_policy_changed.connect(self._on_quality_policy_changed)
+        if hasattr(self._controller, "beam_quality_notice"):
+            self._controller.beam_quality_notice.connect(self._exec_view.on_beam_quality_notice)
 
         self._stack.addWidget(self._athletes_view)
         self._stack.addWidget(self._setup_view)
@@ -530,6 +535,7 @@ class MainWindow(QMainWindow):
         self._exec_view.reset()
         self._exec_view.configure(config)
         self._controller.prepare(config)
+        self._exec_view.set_quality_preflight_required(getattr(self._controller, "_quality", None) is not None)
         self._go_to_execution()
 
     def _on_history_requested(self, subject_result):
@@ -557,7 +563,30 @@ class MainWindow(QMainWindow):
         if self._controller.device_state == "error":
             self._controller.retry_device()
             return
-        self._controller.start()
+        quality = getattr(self._controller, "quality_status", {})
+        if quality.get("requires_acknowledgement"):
+            locations = "、".join(f"第 {i // 96 + 1} 段第 {i % 96 + 1} 束（{kind}）"
+                                 for i, kind in zip(quality["bad_indices"], quality["bad_types"]))
+            ratios = "，".join(f"第 {i + 1} 段 {r:.2%}" for i, r in enumerate(quality["segment_ratios"]))
+            text = (f"疑似异常共 {len(quality['bad_indices'])} 束：{locations}\n{ratios}\n"
+                    f"最大连续 {quality['max_consecutive']} 束。\n"
+                    "这些光束将冻结为不可用；邻近坏点的事件可能无法测量，精度不作保证。\n"
+                    "请现场确认测量区域确实空场，并确认接受降级测试。")
+            key = quality["device_key"]
+            if QMessageBox.question(self, "确认空场并接受降级测试", text,
+                                    QMessageBox.Yes | QMessageBox.No, QMessageBox.No) == QMessageBox.Yes:
+                self._controller.start(acknowledge_quality=True, quality_key=key)
+        else:
+            self._controller.start()
+
+    def _on_quality_policy_changed(self, policy):
+        if self._controller.is_running or getattr(self._controller, "_start_pending", False):
+            return
+        from ui.quality_settings import save_policy
+        save_policy(policy)
+        self._controller.quality_policy = policy
+        if self._controller.engine is not None:
+            self._discard_prepared_session()
 
     def _update_voice_context(self, *_args):
         page = self._stack.currentWidget()
@@ -601,10 +630,12 @@ class MainWindow(QMainWindow):
         self._controller.stop()
 
     def _on_session_started(self):
+        self._settings_view.set_test_running(True)
         self._session_started_at = _wallclock_now()
 
     def _on_session_finished(self, report: TestReport):
         """Controller 发来 TestReport → 切到 ReportView"""
+        self._settings_view.set_test_running(False)
         self._last_session_id = None
         if (
             self._subject_store is not None

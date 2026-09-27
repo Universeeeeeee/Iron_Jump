@@ -182,6 +182,9 @@ class _LLMHttpWorker(QThread):
         self._athlete = athlete
         self.request_id = request_id
         self._agent_mode = agent_mode
+        self.resolved_mode = agent_mode
+        self.pending_intent = None
+        self.segment_count = None
 
     def run(self):
         try:
@@ -194,9 +197,16 @@ class _LLMHttpWorker(QThread):
                 "device_channels": self._athlete.device_channels,
                 "history": self._athlete.history,
             }
-            result = self._client.chat(
-                self._message, profile_dict, agent_mode=self._agent_mode
-            )
+            if hasattr(self._client, "chat_routed"):
+                result = self._client.chat_routed(
+                    self._message, profile_dict, self._agent_mode,
+                    self.segment_count, self.pending_intent)
+            else:
+                result = self._client.chat(self._message, profile_dict, agent_mode=self._agent_mode)
+            self.resolved_mode = result.get("mode", self._agent_mode)
+            if self.resolved_mode not in MODE_TEST_TYPES:
+                raise ValueError("服务返回了不支持的模式")
+            self.pending_intent = result.get("pending")
             if "error" in result:
                 self.error.emit(result["error"])
                 return
@@ -215,6 +225,7 @@ class AgentConfigPanel(QWidget):
 
     config_confirmed = Signal(object)  # AnyTestConfig
     profile_changed = Signal()
+    configuration_invalidated = Signal(bool)  # True for a new request, False for selector synchronization.
     voice_reply = Signal(str)
 
     def __init__(
@@ -670,6 +681,7 @@ class AgentConfigPanel(QWidget):
             height=float(self._height_spin.value()),
             level=self._level_combo.currentText(),
             focus_side=self._focus_combo.currentData() or "",
+            device_channels=(getattr(self, "_segment_count", None) or 0) * 96,
             history=list(self._history),
         )
 
@@ -746,6 +758,8 @@ class AgentConfigPanel(QWidget):
 
     def _on_test_type_changed(self, *_args) -> None:
         self._mode_revision += 1
+        self._pending_intent = None
+        self.configuration_invalidated.emit(False)
         self._clear_pending_config()
         mode = self._current_agent_mode()
         document = self._chat_documents[mode]
@@ -782,6 +796,7 @@ class AgentConfigPanel(QWidget):
 
         self._clear_pending_config()
         self._append_chat_entry("你", escape(message))
+        self.configuration_invalidated.emit(True)
         self._prompt_chips.hide()
 
         self._chat_input.clear()
@@ -793,6 +808,8 @@ class AgentConfigPanel(QWidget):
             agent_mode=self._current_agent_mode(),
         )
         self._llm_worker.mode_revision = self._mode_revision
+        self._llm_worker.segment_count = getattr(self, "_segment_count", None)
+        self._llm_worker.pending_intent = getattr(self, "_pending_intent", None)
         self._llm_worker.finished.connect(self._on_llm_finished)
         self._llm_worker.error.connect(self._on_llm_error)
         self._chat_input.setEnabled(False)
@@ -829,13 +846,18 @@ class AgentConfigPanel(QWidget):
             if worker is not None:
                 worker.deleteLater()
             return
-        mode = getattr(worker, "_agent_mode", self._current_agent_mode())
+        mode = getattr(worker, "resolved_mode", getattr(worker, "_agent_mode", self._current_agent_mode()))
+        current_selection = (getattr(worker, "mode_revision", self._mode_revision) == self._mode_revision)
+        if current_selection:
+            if mode != self._current_agent_mode():
+                self._test_type_combo.setCurrentIndex(self._test_type_combo.findText(MODE_TEST_TYPES[mode]))
+                self._append_chat_entry("你", escape(worker._message), mode=mode)
+            self._pending_intent = getattr(worker, "pending_intent", None)
         self._append_chat_entry("AI", _md_to_html(reply), mode=mode)
-        current_selection = (mode == self._current_agent_mode() and
-                             getattr(worker, "mode_revision", self._mode_revision) == self._mode_revision)
 
         if config is not None and config.test_type != MODE_TEST_TYPES[mode]:
-            self._clear_pending_config()
+            if current_selection:
+                self._clear_pending_config()
             config = None
             reply = "返回的配置与请求模式不一致，请重新生成。"
             self._append_chat_entry("错误", reply, mode=mode)
@@ -881,10 +903,12 @@ class AgentConfigPanel(QWidget):
         self._append_chat_entry("错误", escape(message), mode=mode)
         self._llm_worker = None
         self._sync_mode_state()
-        self.voice_reply.emit("配置服务暂时不可用，请稍后重试。")
+        if getattr(worker, "mode_revision", self._mode_revision) == self._mode_revision:
+            self.voice_reply.emit("配置服务暂时不可用，请稍后重试。")
 
     def _on_reset_chat(self) -> None:
         self._active_request_id += 1
+        self._pending_intent = None
         if self._llm_client is not None and self._worker_ready:
             self._llm_client.reset()
         self._pending_config = None
