@@ -300,9 +300,8 @@ def test_capture_commands_and_restart_reset_stream(qapp, monkeypatch):
             self.writes = []
 
         def write(self, data, timeout_ms=1000):
-            self.dll.set_timeout(timeout_ms)
             self.writes.append(data)
-            return len(data)
+            return super().write(data, timeout_ms)
 
     monkeypatch.setattr(worker_module, "CyUsbInterfaceDevice", Device)
     worker = UsbWorker(layout=DeviceLayout.linear(8), capture_command_required=True, timeout_ms=1)
@@ -314,7 +313,7 @@ def test_capture_commands_and_restart_reset_stream(qapp, monkeypatch):
     assert device.read_timeout_ms == 1
     assert device.dll.timeout == 1  # The enable command must not reset reads to 1000 ms.
     worker.stop()
-    for enable, wire in zip((1, 0), device.writes, strict=True):
+    for enable, wire in zip((0, 1, 0), device.writes, strict=True):
         assert wire[:4] == b"ZZZZ" and wire[-4:] == b"\xa5" * 4
         assert wire[4:7] == bytes((0, 0x10, enable))
         assert wire[7] == crc8_poly_07(wire[4:7])
@@ -326,7 +325,7 @@ def test_capture_command_failure_stops_reader(qapp, monkeypatch):
 
     class Device(_FakeDevice):
         def write(self, data, timeout_ms=1000):
-            return 0
+            return 0 if data[6] == 1 else super().write(data, timeout_ms)
 
     monkeypatch.setattr(worker_module, "CyUsbInterfaceDevice", Device)
     worker = UsbWorker(capture_command_required=True)

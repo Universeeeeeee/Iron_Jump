@@ -12,7 +12,7 @@ import time
 
 from qtpy.QtCore import QObject, Signal, Slot, QTimer
 
-from hardware.protocol import UploadDataSubPack, crc8_poly_07
+from hardware.protocol import E_ACK, UploadDataSubPack, crc8_poly_07
 from hardware.sensor_frame import AcquisitionIssue, DeviceLayout, SensorFrameAssembler
 
 try:
@@ -28,6 +28,7 @@ except ImportError:
 LED_HEALTH_TARGET_FRAMES = 64
 LED_HEALTH_MIN_FRAMES = 20
 LED_HEALTH_TIMEOUT_S = 0.8
+CAPTURE_START_TIMEOUT_S = 1.0
 
 
 def summarize_led_health(contact_frames: list[list[int]], bit_count: int = 96) -> dict:
@@ -105,6 +106,10 @@ class UsbWorker(QObject):
         self._assembler = SensorFrameAssembler(layout)
         self._layout_announced = False
         self._frame_lock = threading.Lock()
+        self._discard_frames = False
+        self._start_ack_pending = False
+        self._start_ack = threading.Event()
+        self._start_ack_code = None
         self.dev = None
         self._capturing = False
         self._stop = threading.Event()
@@ -231,6 +236,16 @@ class UsbWorker(QObject):
             self._queue_update(hex_text=f"RAW len={len(data)} head={data[:16].hex(' ')}")
 
     def _on_frame(self, frame_type, ack, subpack, status):
+        with self._frame_lock:
+            if frame_type == E_ACK:
+                if self._start_ack_pending and ack is not None:
+                    self._start_ack_code = ack.ACK
+                    self._start_ack_pending = False
+                    self._discard_frames = ack.ACK != 0
+                    self._start_ack.set()
+                return
+            if self._discard_frames:
+                return
         if frame_type != E_DATA_REPORT or subpack is None:
             return
         try:
@@ -270,6 +285,32 @@ class UsbWorker(QObject):
         wire = b"\x5a" * 4 + command + bytes((crc8_poly_07(command),)) + b"\xa5" * 4
         if self.dev.write(wire, timeout_ms=self.timeout_ms) != len(wire):
             raise RuntimeError("FPGA capture command was not fully written")
+
+    def _discard_startup_input(self):
+        """Drain old DATA and ACK bytes while the FPGA is stopped, without a reader."""
+        quiet_since = time.perf_counter()
+        deadline = quiet_since + CAPTURE_START_TIMEOUT_S
+        while time.perf_counter() < deadline:
+            data = self.dev.read(self.chunk_size, timeout_ms=max(1, min(self.timeout_ms, 20)))
+            now = time.perf_counter()
+            if data:
+                quiet_since = now
+            elif now - quiet_since >= 0.020:
+                return
+            else:
+                time.sleep(0.001)
+        raise RuntimeError("清理上一轮采集数据超时，请重新连接设备")
+
+    def _close_frame_gate(self):
+        with self._frame_lock:
+            self._discard_frames = True
+            self._start_ack_pending = False
+
+    def _on_protocol_issue(self, code):
+        with self._frame_lock:
+            if self._discard_frames:
+                return
+        self.acquisition_issue.emit(AcquisitionIssue(code, -1))
 
     # --- 生命周期 ---
     @Slot()
@@ -335,10 +376,15 @@ class UsbWorker(QObject):
     def _start_capture_stream(self) -> bool:
         """Start callbacks without deciding how the UI labels the stream."""
         with self._frame_lock:
+            self._discard_frames = True
+            self._start_ack_pending = False
+            self._start_ack.clear()
+            self._start_ack_code = None
             self._assembler.reset()
             self.layout = self._assembler.layout
             self._layout_announced = False
         self._pending_bits = None
+        self._pending_hex = None
         self._ensure_timer()
         try:
             try:
@@ -346,17 +392,38 @@ class UsbWorker(QObject):
             except Exception:
                 pass
             self.dev.start_capture()
+            if self.capture_command_required:
+                # ACK has no command identifier: remove old stop/start replies
+                # before arming the new start handshake.
+                self._send_capture_command(False)
+                self._discard_startup_input()
             self.dev.set_on_bytes(self._on_bytes)
             self.dev.set_on_frame(self._on_frame)
             if hasattr(self.dev, "set_on_issue"):
-                self.dev.set_on_issue(lambda code: self.acquisition_issue.emit(AcquisitionIssue(code, -1)))
+                self.dev.set_on_issue(self._on_protocol_issue)
+            with self._frame_lock:
+                self._discard_frames = bool(self.capture_command_required)
             ret = self.dev.start_auto_read(self.chunk_size, timeout_ms=self.timeout_ms)
             if ret != 0:
                 raise RuntimeError(f"start_auto_read 失败: {ret}")
-            self._send_capture_command(True)
+            if self.capture_command_required:
+                with self._frame_lock:
+                    self._start_ack_pending = True
+                self._send_capture_command(True)
+                if not self._start_ack.wait(CAPTURE_START_TIMEOUT_S):
+                    raise RuntimeError("等待 FPGA 采集启动应答超时，请重新连接设备")
+                if self._start_ack_code != 0:
+                    raise RuntimeError(f"FPGA 拒绝采集启动，ACK={self._start_ack_code}")
             self._capturing = True
             return True
         except Exception as e:
+            self._close_frame_gate()
+            self.dev.set_on_frame(None)
+            self.dev.set_on_bytes(None)
+            try:
+                self._send_capture_command(False)
+            except Exception:
+                pass
             self.dev.stop_auto_read()
             self.dev.stop_capture()
             self._capturing = False
@@ -431,6 +498,7 @@ class UsbWorker(QObject):
         self._health_frames.clear()
 
         if self._health_owns_capture and self.dev is not None:
+            self._close_frame_gate()
             try:
                 self._send_capture_command(False)
             except Exception as exc:
@@ -454,6 +522,7 @@ class UsbWorker(QObject):
 
     @Slot()
     def stop(self):
+        self._close_frame_gate()
         self._stop.set()
         self._health_check_active = False
         self._health_owns_capture = False

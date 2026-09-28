@@ -3,6 +3,8 @@
 from __future__ import annotations
 
 import hardware.usb_worker as usb_worker
+import pytest
+from hardware.protocol import AckData, E_ACK, E_DATA_REPORT, UploadDataSubPack
 
 
 class _FakeDll:
@@ -45,7 +47,12 @@ class _FakeDevice:
 
     def write(self, data, timeout_ms=1000):
         self.dll.set_timeout(timeout_ms)
+        if data[6] == 1 and self.on_frame and self.auto_read_started:
+            self.on_frame(E_ACK, AckData(0), None, None)
         return len(data)
+
+    def read(self, size, timeout_ms=1000):
+        return b""
 
     def close(self):
         self.opened = False
@@ -72,6 +79,148 @@ def test_connect_does_not_start_capture(monkeypatch):
     assert worker.dev.auto_read_started
     assert worker.dev.read_timeout_ms == worker.timeout_ms
     assert states[-1][0] == "streaming"
+    worker.stop()
+
+
+@pytest.mark.parametrize("segments", [1, 3, 6, 8, 12])
+def test_start_discards_previous_capture_before_ack(qapp, monkeypatch, segments):
+    class BufferedDevice(_FakeDevice):
+        def __init__(self, path):
+            super().__init__(path)
+            self.writes = []
+            self.drained = False
+
+        def read(self, size, timeout_ms=1000):
+            self.drained = True
+            return b""
+
+        def start_auto_read(self, chunk, timeout_ms=None):
+            result = super().start_auto_read(chunk, timeout_ms)
+            # A stale stop ACK must not count as the new start ACK.
+            self.on_frame(E_ACK, AckData(0), None, None)
+            return result
+
+        def write(self, data, timeout_ms=1000):
+            self.writes.append(data[6])
+            if data[6] == 1:
+                for index in range(80062, 80078):
+                    self.on_frame(E_DATA_REPORT, None,
+                                  UploadDataSubPack(frameIdx=index, packNum=1, packIdx=0, buffer=b"\xff" * 96), None)
+                super().write(data, timeout_ms)
+                for index in range(3):
+                    self.on_frame(E_DATA_REPORT, None,
+                                  UploadDataSubPack(frameIdx=index, packNum=1, packIdx=0,
+                                                    buffer=b"\xff" * (12 * segments)), None)
+            return len(data)
+
+    monkeypatch.setattr(usb_worker, "CyUsbInterfaceDevice", BufferedDevice)
+    worker = usb_worker.UsbWorker()
+    frames, issues = [], []
+    worker.sensor_frame_received.connect(frames.append)
+    worker.acquisition_issue.connect(issues.append)
+    worker.connect_device()
+    worker.start_capture()
+    assert [f.frame_index for f in frames] == [0, 1, 2]
+    assert worker.dev.drained and worker.dev.writes == [0, 1]
+    assert len(worker.layout.segments) == segments
+    assert not issues
+    # An unsolicited ACK during a test cannot authorize a device counter reset.
+    worker._on_frame(E_ACK, AckData(0), None, None)
+    worker._on_frame(E_DATA_REPORT, None,
+                     UploadDataSubPack(frameIdx=0, packNum=1, packIdx=0,
+                                       buffer=b"\xff" * (12 * segments)), None)
+    assert issues[-1].code == "out_of_order_or_reset"
+    first_stream = frames[0].stream_id
+    worker.stop()
+    worker.connect_device()
+    worker.start_capture()
+    assert [f.frame_index for f in frames] == [0, 1, 2, 0, 1, 2]
+    assert frames[-1].stream_id != first_stream
+    worker.stop()
+
+
+@pytest.mark.parametrize("ack_code", [None, 1])
+def test_start_ack_failure_cannot_be_revived_by_late_ack(qapp, monkeypatch, ack_code):
+    class Device(_FakeDevice):
+        def write(self, data, timeout_ms=1000):
+            if data[6] == 1 and ack_code is not None:
+                self.on_frame(E_ACK, AckData(ack_code), None, None)
+            return len(data)
+
+        def start_auto_read(self, chunk, timeout_ms=None):
+            result = super().start_auto_read(chunk, timeout_ms)
+            self.on_frame(E_ACK, AckData(0), None, None)  # old reply
+            return result
+
+    monkeypatch.setattr(usb_worker, "CAPTURE_START_TIMEOUT_S", 0.04)
+    monkeypatch.setattr(usb_worker, "CyUsbInterfaceDevice", Device)
+    worker = usb_worker.UsbWorker()
+    states, frames = [], []
+    worker.device_state_changed.connect(lambda state, message: states.append((state, message)))
+    worker.sensor_frame_received.connect(frames.append)
+    worker.connect_device()
+    worker.start_capture()
+    assert states[-1][0] == "error"
+    assert ("应答超时" if ack_code is None else "ACK=1") in states[-1][1]
+    assert not worker._capturing and not worker.dev.auto_read_started
+    assert not worker.dev.capture_started
+    worker._on_frame(E_ACK, AckData(0), None, None)
+    worker._on_frame(E_DATA_REPORT, None,
+                     UploadDataSubPack(frameIdx=0, packNum=1, buffer=b"\xff" * 12), None)
+    assert not frames
+    # Explicit retry is the only way to reopen the gate.
+    ack_code = 0
+    worker.start_capture()
+    assert worker._capturing
+    worker.stop()
+
+
+def test_drain_consumes_old_bytes_and_fails_if_stream_does_not_stop(qapp, monkeypatch):
+    class Device(_FakeDevice):
+        def __init__(self, path):
+            super().__init__(path)
+            self.buffered = [b"old ACK", b"old DATA"]
+            self.continuous = False
+
+        def read(self, size, timeout_ms=1000):
+            if self.continuous:
+                return b"still streaming"
+            return self.buffered.pop(0) if self.buffered else b""
+
+    monkeypatch.setattr(usb_worker, "CAPTURE_START_TIMEOUT_S", 0.04)
+    monkeypatch.setattr(usb_worker, "CyUsbInterfaceDevice", Device)
+    worker = usb_worker.UsbWorker()
+    states = []
+    worker.device_state_changed.connect(lambda state, message: states.append((state, message)))
+    worker.connect_device()
+    worker.start_capture()
+    assert not worker.dev.buffered and worker._capturing
+    worker.stop()
+    worker.connect_device()
+    worker.dev.continuous = True
+    worker.start_capture()
+    assert states[-1][0] == "error" and "清理上一轮" in states[-1][1]
+    assert not worker.dev.auto_read_started and not worker._capturing
+    worker.stop()
+
+
+def test_legacy_firmware_does_not_require_commands_or_ack(qapp, monkeypatch):
+    class Device(_FakeDevice):
+        def read(self, *args, **kwargs):
+            raise AssertionError("Legacy stream must not be drained")
+
+        def write(self, *args, **kwargs):
+            raise AssertionError("Legacy firmware needs no capture commands")
+
+    monkeypatch.setattr(usb_worker, "CyUsbInterfaceDevice", Device)
+    worker = usb_worker.UsbWorker(capture_command_required=False)
+    frames = []
+    worker.sensor_frame_received.connect(frames.append)
+    worker.connect_device()
+    worker.start_capture()
+    worker.dev.on_frame(E_DATA_REPORT, None,
+                        UploadDataSubPack(frameIdx=456, packNum=1, buffer=b"\xff" * 36), None)
+    assert len(frames) == 1 and frames[0].frame_index == 456
     worker.stop()
 
 
