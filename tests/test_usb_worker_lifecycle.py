@@ -27,6 +27,9 @@ class _FakeDevice:
 
     def start_capture(self):
         self.capture_started = True
+        if self.on_frame and self.auto_read_started:
+            self.on_frame(E_ACK, AckData(0), None, None)
+        return 0
 
     def set_on_bytes(self, callback):
         self.on_bytes = callback
@@ -44,12 +47,10 @@ class _FakeDevice:
 
     def stop_capture(self):
         self.capture_started = False
+        return 0
 
     def write(self, data, timeout_ms=1000):
-        self.dll.set_timeout(timeout_ms)
-        if data[6] == 1 and self.on_frame and self.auto_read_started:
-            self.on_frame(E_ACK, AckData(0), None, None)
-        return len(data)
+        raise AssertionError("DLL native capture must not send extra Python commands")
 
     def read(self, size, timeout_ms=1000):
         return b""
@@ -82,12 +83,42 @@ def test_connect_does_not_start_capture(monkeypatch):
     worker.stop()
 
 
+def test_native_capture_must_be_stopped_before_draining(qapp, monkeypatch):
+    class Device(_FakeDevice):
+        def start_capture(self):
+            self.capture_started = True
+            if self.on_frame and self.auto_read_started:
+                self.on_frame(E_ACK, AckData(0), None, None)
+            return 0
+
+        def stop_capture(self):
+            self.capture_started = False
+            return 0
+
+        def read(self, size, timeout_ms=1000):
+            return b"continuous DATA" if self.capture_started else b""
+
+        def write(self, data, timeout_ms=1000):
+            # Observed hardware: the hand-built command does not stop DATA.
+            return len(data)
+
+    monkeypatch.setattr(usb_worker, "CAPTURE_START_TIMEOUT_S", 0.04)
+    monkeypatch.setattr(usb_worker, "CyUsbInterfaceDevice", Device)
+    worker = usb_worker.UsbWorker()
+    states = []
+    worker.device_state_changed.connect(lambda state, message: states.append((state, message)))
+    worker.connect_device()
+    worker.start_capture()
+    assert worker._capturing, states
+    worker.stop()
+
+
 @pytest.mark.parametrize("segments", [1, 3, 6, 8, 12])
 def test_start_discards_previous_capture_before_ack(qapp, monkeypatch, segments):
     class BufferedDevice(_FakeDevice):
         def __init__(self, path):
             super().__init__(path)
-            self.writes = []
+            self.commands = []
             self.drained = False
 
         def read(self, size, timeout_ms=1000):
@@ -100,18 +131,21 @@ def test_start_discards_previous_capture_before_ack(qapp, monkeypatch, segments)
             self.on_frame(E_ACK, AckData(0), None, None)
             return result
 
-        def write(self, data, timeout_ms=1000):
-            self.writes.append(data[6])
-            if data[6] == 1:
-                for index in range(80062, 80078):
-                    self.on_frame(E_DATA_REPORT, None,
-                                  UploadDataSubPack(frameIdx=index, packNum=1, packIdx=0, buffer=b"\xff" * 96), None)
-                super().write(data, timeout_ms)
-                for index in range(3):
-                    self.on_frame(E_DATA_REPORT, None,
-                                  UploadDataSubPack(frameIdx=index, packNum=1, packIdx=0,
-                                                    buffer=b"\xff" * (12 * segments)), None)
-            return len(data)
+        def stop_capture(self):
+            self.commands.append("stop")
+            return super().stop_capture()
+
+        def start_capture(self):
+            self.commands.append("start")
+            for index in range(80062, 80078):
+                self.on_frame(E_DATA_REPORT, None,
+                              UploadDataSubPack(frameIdx=index, packNum=1, packIdx=0, buffer=b"\xff" * 96), None)
+            result = super().start_capture()
+            for index in range(3):
+                self.on_frame(E_DATA_REPORT, None,
+                              UploadDataSubPack(frameIdx=index, packNum=1, packIdx=0,
+                                                buffer=b"\xff" * (12 * segments)), None)
+            return result
 
     monkeypatch.setattr(usb_worker, "CyUsbInterfaceDevice", BufferedDevice)
     worker = usb_worker.UsbWorker()
@@ -121,7 +155,7 @@ def test_start_discards_previous_capture_before_ack(qapp, monkeypatch, segments)
     worker.connect_device()
     worker.start_capture()
     assert [f.frame_index for f in frames] == [0, 1, 2]
-    assert worker.dev.drained and worker.dev.writes == [0, 1]
+    assert worker.dev.drained and worker.dev.commands == ["stop", "start"]
     assert len(worker.layout.segments) == segments
     assert not issues
     # An unsolicited ACK during a test cannot authorize a device counter reset.
@@ -142,10 +176,11 @@ def test_start_discards_previous_capture_before_ack(qapp, monkeypatch, segments)
 @pytest.mark.parametrize("ack_code", [None, 1])
 def test_start_ack_failure_cannot_be_revived_by_late_ack(qapp, monkeypatch, ack_code):
     class Device(_FakeDevice):
-        def write(self, data, timeout_ms=1000):
-            if data[6] == 1 and ack_code is not None:
+        def start_capture(self):
+            self.capture_started = True
+            if ack_code is not None:
                 self.on_frame(E_ACK, AckData(ack_code), None, None)
-            return len(data)
+            return 0
 
         def start_auto_read(self, chunk, timeout_ms=None):
             result = super().start_auto_read(chunk, timeout_ms)

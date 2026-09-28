@@ -12,7 +12,7 @@ import time
 
 from qtpy.QtCore import QObject, Signal, Slot, QTimer
 
-from hardware.protocol import E_ACK, UploadDataSubPack, crc8_poly_07
+from hardware.protocol import E_ACK, UploadDataSubPack
 from hardware.sensor_frame import AcquisitionIssue, DeviceLayout, SensorFrameAssembler
 
 try:
@@ -278,14 +278,6 @@ class UsbWorker(QObject):
             hex_text=frame.wire_payload.hex(" "), bits=[1 - bit for bit in contacts],
         )
 
-    def _send_capture_command(self, enable):
-        if not self.capture_command_required:
-            return
-        command = bytes((0x00, 0x10, int(enable)))
-        wire = b"\x5a" * 4 + command + bytes((crc8_poly_07(command),)) + b"\xa5" * 4
-        if self.dev.write(wire, timeout_ms=self.timeout_ms) != len(wire):
-            raise RuntimeError("FPGA capture command was not fully written")
-
     def _discard_startup_input(self):
         """Drain old DATA and ACK bytes while the FPGA is stopped, without a reader."""
         quiet_since = time.perf_counter()
@@ -391,11 +383,11 @@ class UsbWorker(QObject):
                 self.dev.dll.set_timeout(self.timeout_ms)
             except Exception:
                 pass
-            self.dev.start_capture()
             if self.capture_command_required:
-                # ACK has no command identifier: remove old stop/start replies
-                # before arming the new start handshake.
-                self._send_capture_command(False)
+                # DLL StartCapture already enables the FPGA. Stop it natively
+                # before draining; hand-built extra commands do not stop DATA.
+                if self.dev.stop_capture() != 0:
+                    raise RuntimeError("DLL 无法停止上一轮采集")
                 self._discard_startup_input()
             self.dev.set_on_bytes(self._on_bytes)
             self.dev.set_on_frame(self._on_frame)
@@ -406,10 +398,11 @@ class UsbWorker(QObject):
             ret = self.dev.start_auto_read(self.chunk_size, timeout_ms=self.timeout_ms)
             if ret != 0:
                 raise RuntimeError(f"start_auto_read 失败: {ret}")
+            with self._frame_lock:
+                self._start_ack_pending = bool(self.capture_command_required)
+            if self.dev.start_capture() != 0:
+                raise RuntimeError("DLL 采集启动失败")
             if self.capture_command_required:
-                with self._frame_lock:
-                    self._start_ack_pending = True
-                self._send_capture_command(True)
                 if not self._start_ack.wait(CAPTURE_START_TIMEOUT_S):
                     raise RuntimeError("等待 FPGA 采集启动应答超时，请重新连接设备")
                 if self._start_ack_code != 0:
@@ -420,10 +413,6 @@ class UsbWorker(QObject):
             self._close_frame_gate()
             self.dev.set_on_frame(None)
             self.dev.set_on_bytes(None)
-            try:
-                self._send_capture_command(False)
-            except Exception:
-                pass
             self.dev.stop_auto_read()
             self.dev.stop_capture()
             self._capturing = False
@@ -500,10 +489,6 @@ class UsbWorker(QObject):
         if self._health_owns_capture and self.dev is not None:
             self._close_frame_gate()
             try:
-                self._send_capture_command(False)
-            except Exception as exc:
-                self._emit(f"停止采集命令失败: {exc}")
-            try:
                 self.dev.set_on_bytes(None)
                 self.dev.set_on_frame(None)
                 self.dev.stop_auto_read()
@@ -538,11 +523,6 @@ class UsbWorker(QObject):
         # 尝试最后一次刷新
         self._maybe_flush(force=True)
         if self.dev:
-            if self._capturing:
-                try:
-                    self._send_capture_command(False)
-                except Exception as exc:
-                    self._emit(f"停止采集命令失败: {exc}")
             try:
                 self.dev.set_on_bytes(None)
             except Exception:

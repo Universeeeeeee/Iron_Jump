@@ -290,18 +290,22 @@ def test_replay_uses_sample_clock_across_csv_parts(tmp_path):
     assert replay(paths)["segments"] == 8
 
 
-def test_capture_commands_and_restart_reset_stream(qapp, monkeypatch):
+def test_native_capture_commands_and_restart_reset_stream(qapp, monkeypatch):
     import hardware.usb_worker as worker_module
     from tests.test_usb_worker_lifecycle import _FakeDevice
 
     class Device(_FakeDevice):
         def __init__(self, path):
             super().__init__(path)
-            self.writes = []
+            self.commands = []
 
-        def write(self, data, timeout_ms=1000):
-            self.writes.append(data)
-            return super().write(data, timeout_ms)
+        def start_capture(self):
+            self.commands.append("start")
+            return super().start_capture()
+
+        def stop_capture(self):
+            self.commands.append("stop")
+            return super().stop_capture()
 
     monkeypatch.setattr(worker_module, "CyUsbInterfaceDevice", Device)
     worker = UsbWorker(layout=DeviceLayout.linear(8), capture_command_required=True, timeout_ms=1)
@@ -311,21 +315,18 @@ def test_capture_commands_and_restart_reset_stream(qapp, monkeypatch):
     worker.start_capture()
     assert worker._assembler.stream_id != before
     assert device.read_timeout_ms == 1
-    assert device.dll.timeout == 1  # The enable command must not reset reads to 1000 ms.
+    assert device.dll.timeout == 1
     worker.stop()
-    for enable, wire in zip((0, 1, 0), device.writes, strict=True):
-        assert wire[:4] == b"ZZZZ" and wire[-4:] == b"\xa5" * 4
-        assert wire[4:7] == bytes((0, 0x10, enable))
-        assert wire[7] == crc8_poly_07(wire[4:7])
+    assert device.commands == ["stop", "start", "stop"]
 
 
-def test_capture_command_failure_stops_reader(qapp, monkeypatch):
+def test_native_capture_failure_stops_reader(qapp, monkeypatch):
     import hardware.usb_worker as worker_module
     from tests.test_usb_worker_lifecycle import _FakeDevice
 
     class Device(_FakeDevice):
-        def write(self, data, timeout_ms=1000):
-            return 0 if data[6] == 1 else super().write(data, timeout_ms)
+        def start_capture(self):
+            return -1
 
     monkeypatch.setattr(worker_module, "CyUsbInterfaceDevice", Device)
     worker = UsbWorker(capture_command_required=True)
