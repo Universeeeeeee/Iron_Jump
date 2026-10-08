@@ -10,10 +10,13 @@ OVERRIDES = (
     'camera/control_service.py', 'camera/gimbal_control.py', 'camera/pose_tracking.py',
     'camera/pose_transport.py', 'camera/tracking_runtime.py', 'vision/gimbal_tracking.py',
     'ui/embedded_camera_panel.py', 'tools/tinyse_gimbal_validator.py',
+    'tools/tinyse_shared_tracking_validator.py',
+    'ui/main_window.py',
     'tests/test_pose_tracking.py', 'tests/test_tracking_runtime.py',
     'tests/test_gimbal_tracking.py', 'tests/test_camera_control_service.py',
     'tests/test_sdk_tracking_integration.py',
     'tests/test_body_framing_control.py',
+    'tests/test_main_camera_shutdown.py',
 )
 
 

@@ -176,6 +176,30 @@ for line in sys.stdin:
     assert any('未收到 SDK 停止应答' in message for message in failures)
 
 
+def test_first_stop_request_still_calls_native_zero_before_reply(qtbot, tmp_path):
+    service = CameraControlService(command=fake_native_worker(tmp_path))
+    events, replies = [], []
+    service.tracking_event.connect(events.append)
+    service.completed.connect(lambda *args: replies.append(args))
+    service.request('tracking_stop')
+    try:
+        qtbot.waitUntil(lambda: ('tracking_stop', 0) in replies, timeout=3000)
+        assert any(row.get('fake_speed') == [0, 0] for row in events)
+    finally:
+        service.close()
+        qtbot.waitUntil(lambda: service._process.state() == QProcess.NotRunning)
+
+
+def test_end_tracking_does_not_spawn_another_owner_after_process_death(qtbot, tmp_path):
+    service = CameraControlService(command=fake_native_worker(tmp_path))
+    failures = []
+    service.failed.connect(failures.append)
+    service.end_tracking()
+    assert service._process.state() == QProcess.NotRunning
+    assert any('未发送 SDK 零速' in message for message in failures)
+    service.close()
+
+
 def test_replay_cancels_sdk_subscription_immediately(qtbot, monkeypatch):
     import vision.live_walking as module
     calls=[]

@@ -57,6 +57,9 @@ class CameraControlService(QObject):
         self._pose_timer.stop()
         self._relay = None
         self._generation += 1
+        if self._process.state() == QProcess.NotRunning:
+            self.failed.emit('控制进程已退出，未发送 SDK 零速，无法确认云台已停止')
+            return
         self.request('tracking_stop')
 
     def _send_pose(self):
@@ -197,17 +200,17 @@ def serve():
             try:
                 if method is not None and method not in METHODS:
                     raise ValueError(method)
-                if method == 'tracking_start':
+                if method in {'tracking_start', 'tracking_stop'}:
                     if runtime is None:
                         from camera.gimbal_control import GimbalSdk
                         from camera.tracking_runtime import TrackingRuntime
                         sdk = GimbalSdk.attach(control._dll, control._idx)
                         runtime = TrackingRuntime(sdk, lambda value: reply({'tracking_log': value}))
+                if method == 'tracking_start':
                     runtime.start(*request['args'])
                     result = 0
                 elif method == 'tracking_stop':
-                    if runtime is not None:
-                        runtime.stop()
+                    runtime.stop()
                     result = 0
                 elif method is not None:
                     fn = getattr(control, method)

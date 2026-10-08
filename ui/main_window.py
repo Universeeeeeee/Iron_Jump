@@ -6,7 +6,7 @@ main_window.py — 多视图主窗口
 
 使用方式::
 
-    python ui/main_window.py
+    python -m ui.main_window
 """
 
 from __future__ import annotations
@@ -16,10 +16,7 @@ import os
 import sys
 from datetime import datetime
 
-# Ensure project root is importable when running `python ui/main_window.py`.
 _project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-if _project_root not in sys.path:
-    sys.path.insert(0, _project_root)
 
 from qtpy.QtCore import Qt
 from qtpy.QtGui import QIcon
@@ -568,13 +565,11 @@ class MainWindow(QMainWindow):
             ids = quality.get("segment_ids", tuple(str(i + 1) for i in range(len(quality["segment_ratios"]))))
             locations = "、".join(f"第 {ids[i // 96]} 段第 {i % 96 + 1} 束（{kind}）"
                                  for i, kind in zip(quality["bad_indices"], quality["bad_types"]))
-            ratios = "，".join(f"第 {ids[i]} 段 {r:.2%}" for i, r in enumerate(quality["segment_ratios"]))
-            text = (f"疑似异常共 {len(quality['bad_indices'])} 束：{locations}\n{ratios}\n"
-                    f"最大连续 {quality['max_consecutive']} 束。\n"
-                    "这些光束将冻结为不可用；邻近坏点的事件可能无法测量，精度不作保证。\n"
-                    "请现场确认测量区域确实空场，并确认接受降级测试。")
+            text = (f"检测到 {len(quality['bad_indices'])} 个异常感应点：{locations}\n\n"
+                    "请先确认测量区域无人且无遮挡。继续测试将排除这些感应点，"
+                    "附近的动作可能无法完整测量。\n\n是否继续？")
             key = quality["device_key"]
-            if QMessageBox.question(self, "确认空场并接受降级测试", text,
+            if QMessageBox.question(self, "确认设备状态", text,
                                     QMessageBox.Yes | QMessageBox.No, QMessageBox.No) == QMessageBox.Yes:
                 self._controller.start(acknowledge_quality=True, quality_key=key)
         else:
@@ -773,6 +768,12 @@ class MainWindow(QMainWindow):
 
     def closeEvent(self, event):
         """关闭窗口时清理所有资源。"""
+        if getattr(self, '_close_cleanup_complete', False):
+            if self._exec_view._camera_panel._closing_control is not None:
+                event.ignore()
+            else:
+                event.accept()
+            return
         if self._voice is not None:
             self._voice.close()
         # 停止测试会话
@@ -809,7 +810,21 @@ class MainWindow(QMainWindow):
             self._health_timer.stop()
             self._llm_client.stop()
 
+        self._close_cleanup_complete = True
+        closing = self._exec_view._camera_panel._closing_control
+        if closing is not None:
+            # Keep Qt processing the SDK zero/EOF response before app teardown.
+            closing.closed.connect(self._finish_camera_close)
+            event.ignore()
+            return
         event.accept()
+
+    def _finish_camera_close(self):
+        if self._exec_view._camera_panel._control_stop_failed:
+            QMessageBox.warning(self, '相机停止未确认',
+                                'SDK 未确认停止。请检查相机，再关闭窗口。')
+            return
+        self.close()
 
 
 # ======================================================================
