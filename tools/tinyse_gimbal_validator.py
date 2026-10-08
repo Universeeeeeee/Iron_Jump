@@ -23,7 +23,7 @@ def parser():
     p.add_argument('--pan-max', type=float, default=90)
     p.add_argument('--pitch-max', type=float, default=30)
     p.add_argument('--pan-sign', type=int, choices=(-1, 1), default=1)
-    p.add_argument('--pitch-sign', type=int, choices=(-1, 1), default=-1)
+    p.add_argument('--pitch-sign', type=int, choices=(-1, 1), default=1)
     p.add_argument('--pulse-pan', type=float, default=60, help='higher pan speed; comparison uses half this speed')
     p.add_argument('--no-preview', action='store_true')
     p.add_argument('--output', type=Path)

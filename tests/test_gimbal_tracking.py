@@ -12,10 +12,10 @@ from vision.gimbal_tracking import TrackingSpeeds, lower_body_target, tracking_v
 def test_horizontal_response_is_faster_and_axes_independent():
     pitch, pan = tracking_velocity((.8, .8))
     assert pan == pytest.approx(57.6)
-    assert pitch == pytest.approx(-19.2)
+    assert pitch == pytest.approx(19.2)
     assert tracking_velocity((.8, .5)) == pytest.approx((0, 57.6))
-    assert tracking_velocity((.5, .8)) == pytest.approx((-19.2, 0))
-    assert tracking_velocity((0, 1)) == (-30, -90)
+    assert tracking_velocity((.5, .8)) == pytest.approx((19.2, 0))
+    assert tracking_velocity((0, 1)) == (30, -90)
 
 
 @pytest.mark.parametrize('target', [None, (.5, .5), (.53, .47), (math.nan, .8), (1.1, .5)])
@@ -25,7 +25,7 @@ def test_missing_invalid_and_centered_targets_stop(target):
 
 def test_direction_can_be_corrected_without_changing_gain():
     pitch, pan = tracking_velocity((.8, .8))
-    assert tracking_velocity((.8, .8), TrackingSpeeds(pan_sign=-1, pitch_sign=1)) == (-pitch, -pan)
+    assert tracking_velocity((.8, .8), TrackingSpeeds(pan_sign=-1, pitch_sign=-1)) == (-pitch, -pan)
 
 
 @pytest.mark.parametrize('kwargs', [{'pan_max': 181}, {'pitch_max': 91}, {'pan_gain': math.nan},

@@ -22,7 +22,8 @@ python -m tools.tinyse_gimbal_validator --mode track --duration 60
 跟踪默认 `pan_gain=240`、`pitch_gain=80`，水平响应为俯仰的 3 倍；
 速度上限分别为 90 和 30（SDK 输入值，不代表已测得的实际转速）。
 使用 `--pan-gain` / `--pan-max` 单独提高水平响应或上限；
-方向不正确时使用 `--pan-sign -1` 或 `--pitch-sign 1` 修正。
+本次实机图像验证的默认方向为 `pan_sign=1`、`pitch_sign=1`；
+方向设置或安装朝向改变时，可用 `--pan-sign -1` 或 `--pitch-sign -1` 修正。
 坐标取自未镜像原图。屏幕中央 6% 死区内停止，目标使用髋、膝、踝包围范围的中心，
 任一必要关键点质量不足时停止。独立控制线程在图像结果超过 250 ms 未更新时停止；
 退出时也发送停止指令。SDK 自身阻塞时无法保证及时停止，工具会报告此限制。
@@ -41,10 +42,27 @@ python -m tools.tinyse_gimbal_validator --mode track --duration 60
   7 项 C ABI 非法输入/无设备检查通过（未发送硬件命令）。
 - Windows 独立目录：`C:/Users/86150/TinySE-gimbal-validation-20261008`；
   使用 `D:/conda/envs/pydantic_ai/python.exe`，19 项控制测试通过。
-- Windows 构建未完成：CMake 未检测到 Visual Studio；Qt 自带 clang-cl
-  编译报 `algorithm file not found`，缺少完整 MSVC C++ 标准库/开发环境。
-  尚未生成新的 Windows wrapper DLL，尚未发送实机转动指令，
-  水平速度提升、方向和采集并行稳定性均待实测。
+- 原有 Windows 编译工具为 Qt MinGW 7.3 和 clang-cl；缺少能构建本封装的完整 MSVC 环境。
+  经用户授权安装 Build Tools 2022 17.14.41，位置 `D:/BuildTools/VS2022`，
+  安装退出码 0，无需重启。CMake 实际使用 MSVC 19.44.35229 和 Windows SDK 10.0.26100.0。
+  新 Windows DLL 构建成功，7 项原生 C ABI 检查通过；DLL 已保存到本分支 `camera/bin`。
+- 固件 6.4.3.4 下完成两轴短时脉冲：约 0.306 秒内，水平输入 30 平均转动 7.32°，
+  输入 60 平均转动 13.75°，位移比约 1.88。这个比值包含启动/制动过程，
+  不是稳态角速度或相对内置 AI 跟踪的性能对比。
+- 图像 ORB 特征匹配与 RANSAC 单应变换独立确认了画面位移。
+  正水平指令使画面内容向左移动，正俯仰指令使画面内容向上移动；
+  据此修正工具默认俯仰方向为 +1。前后截图也已人工查看。
+- 同时采集 544 帧，采样与墙钟帧率约 100 fps；录制 556 帧、丢帧 0，退出时发送停止指令。
+  证据位于 Windows 验证目录的 `exports/pulse_20261008_01`。
+  该短时结果确认 SDK 手动控制与采集可并行；完整人体移动下的 MediaPipe 闭环效果待验证。
+- 方向修正后 Windows 19 项控制测试再次通过。随后 `track_20261008_01` 在
+  `IMediaControl::Run` 报 `0x800705AA`，停止指令已发送；不加载 MediaPipe 的独立采集也报相同错误。
+  同期另一 `compare_ui prewarm_old` 相机诊断进程在运行；需释放相机采集后重试，
+  此次失败不能作为 MediaPipe 或 SDK 两轴控制不兼容的结论。
+
+用户另提供了官方固件包 `Obsbot_tinyse_OA_E_PW107_6.4.4.1_release.bin`。
+[官方说明](https://www.obsbot.com/download/obsbot-tiny-se)仅列出新增 Switch 2 模式及修复已知问题，
+未明确描述跟踪速度/云台控制修复。本轮保持固件 6.4.3.4 作为基准，未执行固件更新。
 
 ## 目标
 
@@ -59,12 +77,12 @@ python -m tools.tinyse_gimbal_validator --mode track --duration 60
 | 工具 | 路径 |
 |------|------|
 | cmake 4.3.2 | `C:\Program Files\CMake\bin\cmake.exe` |
-| MSVC 19.44 | `C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\cl.exe` |
+| MSVC 19.44 | `D:\BuildTools\VS2022\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\cl.exe` |
 | Windows SDK | 10.0.26100.0 |
 
 激活环境：
 ```cmd
-"C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
+"D:\BuildTools\VS2022\VC\Auxiliary\Build\vcvars64.bat"
 ```
 
 编译命令：

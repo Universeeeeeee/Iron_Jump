@@ -10,7 +10,7 @@ class TrackingSpeeds:
     pan_max: float = 90.0
     pitch_max: float = 30.0
     pan_sign: int = 1
-    pitch_sign: int = -1
+    pitch_sign: int = 1
     deadzone: float = 0.06
 
     def __post_init__(self):
