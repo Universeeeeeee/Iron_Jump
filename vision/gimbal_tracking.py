@@ -1,5 +1,5 @@
 """Image-error controller for the standalone Tiny SE experiment."""
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 import math
 
 
@@ -26,21 +26,57 @@ class TrackingSpeeds:
             raise ValueError('deadzone must be in [0, .5)')
 
 
-def full_body_target(pose):
+def _visible(p):
+    return (all(math.isfinite(v) for v in (p.x, p.y, p.visibility, p.presence))
+            and .65 <= p.visibility <= 1 and .65 <= p.presence <= 1
+            and 0 <= p.x <= 1 and 0 <= p.y <= 1)
+
+
+@dataclass(frozen=True)
+class BodyFraming:
+    target: tuple
+    bounds: tuple
+    head_landmark_visible: bool
+    foot_tips_visible: bool
+    fits_with_margin: bool
+    points_with_margin: bool
+
+
+def body_framing(pose):
     if pose is None or pose.landmarks_33 is None or len(pose.landmarks_33) != 33:
         return None
-    def visible(p):
-        return (all(math.isfinite(v) for v in (p.x, p.y, p.visibility, p.presence))
-                and .65 <= p.visibility <= 1 and .65 <= p.presence <= 1
-                and 0 <= p.x <= 1 and 0 <= p.y <= 1)
-
     points = pose.landmarks_33
-    if any(not visible(points[i]) for i in (11, 12, 23, 24, 27, 28)):
+    if any(not _visible(points[i]) for i in (11, 12, 23, 24, 27, 28)):
         return None
+    head = _visible(points[0])
+    feet = all(_visible(points[i]) for i in (29, 30, 31, 32))
     # Include visible head, hands and feet; an occluded hand need not stop tracking.
-    points = tuple(p for p in points if visible(p))
-    return ((min(p.x for p in points) + max(p.x for p in points)) / 2,
-            (min(p.y for p in points) + max(p.y for p in points)) / 2)
+    points = tuple(p for p in points if _visible(p))
+    left, top = min(p.x for p in points), min(p.y for p in points)
+    right, bottom = max(p.x for p in points), max(p.y for p in points)
+    return BodyFraming(((left + right) / 2, (top + bottom) / 2),
+                       (left, top, right, bottom), head, feet,
+                       right-left <= .88 and bottom-top <= .88,
+                       head and feet and left >= .06 and top >= .06 and right <= .94 and bottom <= .94)
+
+
+def full_body_target(pose):
+    framing = body_framing(pose)
+    return framing.target if framing else None
+
+
+def framing_velocity(framing, settings=TrackingSpeeds()):
+    """Keep the ordinary deadzone, but correct reliable points near an edge."""
+    if framing is None:
+        return 0.0, 0.0
+    pitch, pan = tracking_velocity(framing.target, settings)
+    edge_pitch, edge_pan = tracking_velocity(framing.target, replace(settings, deadzone=0))
+    left, top, right, bottom = framing.bounds
+    if left < .06 or right > .94:
+        pan = edge_pan
+    if top < .06 or bottom > .94:
+        pitch = edge_pitch
+    return pitch, pan
 
 
 def tracking_velocity(target, settings=TrackingSpeeds()):

@@ -13,6 +13,20 @@ class GimbalSdk:
         self._dll_directory = os.add_dll_directory(str(folder)) if hasattr(os, 'add_dll_directory') else None
         self.dll = ctypes.CDLL(str(folder / 'obsbot_c_api.dll'))
         self.index = index
+        self._bind()
+        count = self.dll.obsbot_refresh_devices(5000)
+        if not 0 <= index < count:
+            raise RuntimeError(f'Tiny SE SDK index {index} unavailable (devices={count})')
+
+    @classmethod
+    def attach(cls, dll, index):
+        """Reuse the settings process's initialized DLL and device cache."""
+        channel = cls.__new__(cls)
+        channel.dll, channel.index = dll, index
+        channel._bind()
+        return channel
+
+    def _bind(self):
         signatures = {
             'obsbot_refresh_devices': [ctypes.c_int32],
             'obsbot_set_ai_mode': [ctypes.c_int32] * 3,
@@ -28,9 +42,6 @@ class GimbalSdk:
             except AttributeError as exc:
                 raise RuntimeError('Rebuild camera/obsbot_sdk_wrapper before running this experiment') from exc
             fn.argtypes, fn.restype = args, ctypes.c_int32
-        count = self.dll.obsbot_refresh_devices(5000)
-        if not 0 <= index < count:
-            raise RuntimeError(f'Tiny SE SDK index {index} unavailable (devices={count})')
 
     def disable_ai(self):
         self._check(self.dll.obsbot_set_ai_mode(self.index, 0, 0))
