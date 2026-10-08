@@ -21,8 +21,8 @@ def main(argv=None):
     args.output.mkdir(parents=True)
 
     import cv2
-    from qtpy.QtCore import QTimer
-    from qtpy.QtWidgets import QApplication
+    from qtpy.QtCore import Qt, QTimer
+    from qtpy.QtWidgets import QApplication, QLabel
     from ui.embedded_camera_panel import EmbeddedCameraPanel
 
     app = QApplication.instance() or QApplication([])
@@ -122,16 +122,22 @@ def main(argv=None):
             if phase != last_phase[0]:
                 last_phase[0] = phase
                 panel.setWindowTitle(f'Tiny SE 联合验证：{phase}')
+                if args.show:
+                    phase_label.setText(f'{phase}（第 {int(elapsed) + 1} / {int(args.duration)} 秒）')
                 emit({'event': 'requested_phase', 'phase': phase, 'elapsed': elapsed})
                 print(f'PHASE {phase}', flush=True)
-                if args.show:
-                    import winsound
-                    winsound.PlaySound('SystemAsterisk', winsound.SND_ALIAS | winsound.SND_ASYNC)
+            elif args.show:
+                phase_label.setText(f'{phase}（第 {int(elapsed) + 1} / {int(args.duration)} 秒）')
 
     panel = Panel()
     panel.set_vision_enabled(True)
     panel._chk_sdk_tracking.setChecked(True)
     if args.show:
+        phase_label = QLabel('准备画面，请让头到脚入镜', panel)
+        phase_label.setAlignment(Qt.AlignCenter)
+        phase_label.setWordWrap(True)
+        phase_label.setStyleSheet('font-size: 32px; font-weight: bold; color: white; background: #17324d; padding: 14px;')
+        panel.layout().insertWidget(0, phase_label)
         panel.resize(1280, 800)
         panel.setWindowTitle('Tiny SE 联合验证：准备画面')
         panel.show()
