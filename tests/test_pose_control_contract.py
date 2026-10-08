@@ -13,7 +13,7 @@ import pytest
 
 from tests.test_leg_identity import _sample
 from tests.test_live_walking_vision import Service
-from vision.foot_reference import Landmark
+from vision.foot_reference import FootPoseSample, Landmark
 from vision.live_walking import LivePoseUpdate, LiveWalkingVision
 from vision.service import PoseFrameMetadata, PoseInferenceRecord
 
@@ -57,6 +57,16 @@ def update(index=1, epoch=1, status='pose', timestamp=10.0):
 
 def packet(relay, generation=1):
     return json.loads(json.dumps(relay.packet(generation)))
+
+
+def restore_pose(raw):
+    if raw is None:
+        return None
+    values = {name: Landmark(**value) if isinstance(value, dict) else value
+              for name, value in raw.items()}
+    if raw.get('landmarks_33') is not None:
+        values['landmarks_33'] = tuple(Landmark(**point) for point in raw['landmarks_33'])
+    return FootPoseSample(**values)
 
 
 def test_real_public_update_survives_json_with_all_fields(control):
@@ -159,7 +169,6 @@ def test_saved_pose_outputs_keep_target_and_quality_through_json(control, run):
     path = root / 'exports/tracking_diagnosis_20261008' / run / 'audit.json'
     if not path.exists():
         pytest.skip('Saved field evidence is not present in this checkout')
-    from exports.tracking_diagnosis_20261008.audit_control_handoff import restore_pose
     data = json.loads(path.read_text())
     live = LiveWalkingVision(service_factory=Service, clock=lambda: now[0])
     live.pose_updates.connect(relay.submit)

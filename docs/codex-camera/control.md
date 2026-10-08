@@ -443,3 +443,19 @@ field_walk_02已完成：7505帧/75.044s，原始MJPEG 1,130,540,577字节保留
 Codex app现已确认archived_worktree（原root身份保留，可恢复），git worktree list仅剩main；ancestor核对后安全 `git branch -d codex/tinyse-mediapipe-gimbal-validation` 已删除88c630e验证分支，git branch列表再次确认不存在。控制实现历史通过ae17a6c双父合并保留。识别侧仅提交detect.md完成收尾后已释放索引，本侧再提交本文件最终状态。
 
 2026-10-08 用户要求直接push：执行 `git push origin vae/iron_jump` 成功，远端由cc0bc7f更新至7ba8f07，包含已验收的相机集成与双方进度记录。`git rev-parse HEAD origin/vae/iron_jump` 两者一致，索引为空；其它未提交改动未纳入推送。此操作未更新Windows正式运行目录，完整主界面现场检查仍待进行。
+
+## 2026-10-08 Windows 正式目录更新
+
+用户随后明确授权通过SSH代为更新。正式 `E:/OptoJump/Iron_Jump` 原HEAD cc0bc7f，分支vae/iron_jump落后15提交；fetch实际目标b401776，与Mac已推送提交一致。Windows origin仍为历史demo.git HTTPS地址，fetch成功取得相同对象，本次未擅改remote配置。未执行git clean或reset，不删除录像、CSV、硬件源码或其它任务改动。
+
+先将103个非exports脏文件及更新范围内既有文件完整备份至 `E:/OptoJump/Iron_Jump-camera-update-backup-20261008-231153`，记录SHA、原status、binary diff、重叠base/working/incoming及三方结果；1077个未跟踪exports文件留原位置。比较资料本地 `exports/control_integration_20261008/windows_production_update/review/`。已读取detect.md6.17并主动请求识别侧只读复核，不另开相机或部署。
+
+实读比较确认：tinyse_camera/service三方结果等于incoming，scheduler/identity/overlay/framing已等于incoming；旧live_walking缺公共出口/来源元数据，旧Panel/control_service缺本轮SDK跟随及停止屏障，采用已验收incoming。保留MainWindow/execution两处其它任务文案增量、Panel额外测试、sync既有硬件测试；live_walking测试采用新stub并追加旧两项实体sensor测试。仅对更新重叠执行专用 `git stash push --include-untracked -- <重叠路径>`，stash保留供恢复，然后 `git merge --ff-only b401776`，恢复五个审阅后的本地增量文件。
+
+正式HEAD已为b401776且索引为空。首次严格字节校验失败来自Windows `core.autocrlf=true`，38个文本文件只存在CRLF转换，进一步归一化比较全部相符，非文本DLL逐字SHA c05b4d...相符。备份内其它非更新文件SHA无变化；更新前后exports所有文件size/mtime均无变化。未修改产品算法或正式现场数据。当前运行18组相机/识别/MainWindow回归，结果待补；未启动实际相机或测量，未知无标题pythonw进程未误停。
+
+正式18组首轮 **247 passed、2 subtests、2 failed，51.32s**。两失败都是test_pose_control_contract已有历史side_audit JSON、却缺未入库exports.audit_control_handoff工具。只在该控制侧测试内加入相同restore_pose逻辑，移除对临时工具的导入；不改产品、断言或skip条件。Mac该文件 **13 passed，0.42s**。Windows完整18组复测 **249 passed、2 subtests，43.46s，无跳过**；命令见本地windows_production_update/test-command.json，日志windows-production-tests.log及windows-production-tests-r2.log。此测试结果基于保留其它任务改动的正式Windows工作树，不冒称全部硬件/engine改动已入Git。
+
+真实MainWindow/默认SessionController、独立临时SQLite、Qt offscreen构造/关闭exit0，SDK开关默认false、水平300/120、原模型SHA5134a3...和四个新增DLL导出均核对。检查未开启相机预览或SDK跟随。其stderr有Qt字体提示、USB设备未找到以及QProcess销毁仍运行提示；构造即经MainWindow._go_to_setup调用ensure_device_connected，Agent配置面板也有启动timer，所以脚本hardware_opened=false字段不能证明没有尝试其它设备/进程，也不能把此结果宣称完整App资源退出验收。随后独立CIM进程清点无本轮python/相机/worker遗留，仅原有无标题pythonw22800仍在，未误停。其它USB/Agent退出问题留给对应模块负责人，未擅改模块。
+
+用户明确本次简单更新不需要继续双方协作，本侧停止追加协作检查，只完成自有测试修复/进度记录及正式目录收尾。检测侧已有文档工作改动保留，未替其提交或修改。本次不刷固件、不启动新现场移动测试；后续用户可在正式主界面的Tiny SE设置勾选“SDK 全身跟随”使用已验收方案。
