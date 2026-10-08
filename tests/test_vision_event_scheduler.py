@@ -87,6 +87,8 @@ class EventWindowSchedulerTests(unittest.TestCase):
         infer = _Infer()
 
         decisions = scheduler.process_ready(infer, _classify, now_s=0.300)
+        # Ready results are returned before inference for the next event.
+        decisions += scheduler.process_ready(infer, _classify, now_s=0.300)
 
         self.assertEqual([item.event_id for item in decisions], [1, 2])
         self.assertEqual(infer.timestamps, sorted(set(infer.timestamps)))
@@ -112,6 +114,7 @@ class EventWindowSchedulerTests(unittest.TestCase):
         scheduler.add_event(1, 0.150, submitted_at_s=0.190)
 
         decisions = scheduler.process_ready(_Infer(), _classify, now_s=0.300)
+        decisions += scheduler.process_ready(_Infer(), _classify, now_s=0.300)
 
         self.assertEqual([item.event_id for item in decisions], [1, 2])
 

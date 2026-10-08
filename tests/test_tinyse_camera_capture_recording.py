@@ -155,6 +155,7 @@ class TinySeCameraCaptureRecordingTest(unittest.TestCase):
             patch.object(tinyse_camera.cv2, "imdecode", return_value=frame),
         ):
             capture._on_mjpg_frame(b"jpeg", 7, 1.25, 100.0)
+            capture._decode_preview_frame(*capture._pending_mjpg)
 
         self.assertEqual(capture.analysis_frame_ready.values, [(frame, 100.012)])
         emitted_frame, timing = capture.analysis_frame_timed_ready.values[0]
@@ -167,3 +168,143 @@ class TinySeCameraCaptureRecordingTest(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def test_stop_leaves_native_cleanup_on_capture_worker():
+    from types import SimpleNamespace
+    entered = threading.Event()
+    release = threading.Event()
+    closed_on = []
+
+    class NativeCapture:
+        def start(self):
+            pass
+        def stats(self):
+            entered.set()
+            assert release.wait(2)
+            return SimpleNamespace(wall_fps=100)
+        def stop(self):
+            raise AssertionError('native stop must not race worker cleanup')
+        def close(self):
+            closed_on.append(threading.get_ident())
+
+    capture = TinySeCameraCapture()
+    capture._capture = NativeCapture()
+    worker = threading.Thread(target=capture.start)
+    worker.start()
+    try:
+        assert entered.wait(2)
+        capture.stop()
+        assert closed_on == []
+    finally:
+        release.set()
+        worker.join(3)
+    assert not worker.is_alive()
+    assert closed_on == [worker.ident]
+    assert capture._capture is None
+
+
+def test_stop_during_native_start_does_not_resume_capture():
+    entered = threading.Event()
+    release = threading.Event()
+    closed = threading.Event()
+
+    class NativeCapture:
+        def start(self):
+            entered.set()
+            assert release.wait(2)
+        def stats(self):
+            raise AssertionError('capture resumed after stop request')
+        def close(self):
+            closed.set()
+
+    capture = TinySeCameraCapture()
+    capture._capture = NativeCapture()
+    capture.started = _Emitter()
+    capture.error = _Emitter()
+    worker = threading.Thread(target=capture.start)
+    worker.start()
+    try:
+        assert entered.wait(2)
+        capture.stop()
+    finally:
+        release.set()
+        worker.join(3)
+    assert not worker.is_alive()
+    assert closed.is_set()
+    assert capture.started.values == []
+    assert capture.error.values == []
+
+
+def test_native_callback_retains_only_latest_compressed_frame_without_decoding():
+    capture = TinySeCameraCapture(preview_fps=30)
+    with patch.object(tinyse_camera.cv2, 'imdecode') as decode:
+        for i in range(100):
+            capture._on_mjpg_frame(b'jpeg', i, i / 20, 100 + i / 20)
+        decode.assert_not_called()
+    assert capture._pending_mjpg == (b'jpeg', 99, 4.95, 104.95)
+    assert capture._preview_wake.is_set()
+
+
+def test_slow_preview_decode_does_not_back_up_native_frames():
+    from types import SimpleNamespace
+    entered, release, latest = threading.Event(), threading.Event(), threading.Event()
+    seen = []
+    class NativeCapture:
+        def start(self):
+            pass
+        def stats(self):
+            return SimpleNamespace(wall_fps=100)
+        def close(self):
+            pass
+    capture = TinySeCameraCapture(preview_fps=30)
+    capture._capture = NativeCapture()
+    def decode(data, index, sample, callback):
+        seen.append((index, threading.get_ident()))
+        if index == 0:
+            entered.set()
+            assert release.wait(2)
+        else:
+            latest.set()
+    capture._decode_preview_frame = decode
+    worker = threading.Thread(target=capture.start)
+    worker.start()
+    try:
+        capture._on_mjpg_frame(b'jpeg', 0, 0, 100)
+        assert entered.wait(1)
+        for i in range(1, 101):
+            capture._on_mjpg_frame(b'jpeg', i, i / 20, 100 + i / 20)
+        release.set()
+        assert latest.wait(1)
+        assert seen == [(0, worker.ident), (100, worker.ident)]
+    finally:
+        release.set()
+        capture.stop()
+        worker.join(2)
+        assert not worker.is_alive()
+
+
+def test_mirror_switch_changes_delivered_preview_pixels_only():
+    import cv2
+    import numpy as np
+
+    pixels = np.zeros((32, 64, 3), dtype=np.uint8)
+    pixels[:, :20] = (20, 80, 230)
+    pixels[:, 20:] = (200, 40, 10)
+    ok, encoded = cv2.imencode('.jpg', pixels)
+    assert ok
+    decoded = cv2.imdecode(encoded, cv2.IMREAD_COLOR)
+    assert not np.array_equal(decoded, decoded[:, ::-1])
+    for mirrored in (False, True):
+        capture = TinySeCameraCapture()
+        capture.set_mirror(mirrored)
+        capture.analysis_frame_timed_ready = _Emitter()
+        capture.analysis_frame_ready = _Emitter()
+        capture.frame_ready = _Emitter()
+        capture._decode_preview_frame(encoded.tobytes(), 7, 1.25, 100.0)
+        analysis, timing = capture.analysis_frame_timed_ready.values[0]
+        preview = capture.frame_ready.values[0][0]
+        np.testing.assert_array_equal(analysis, decoded)
+        np.testing.assert_array_equal(preview, decoded[:, ::-1] if mirrored else decoded)
+        assert timing.sample_time_s == 1.25
+        assert timing.callback_time_s == 100.0

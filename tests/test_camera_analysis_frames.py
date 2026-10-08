@@ -63,7 +63,7 @@ class CameraAnalysisFrameContractTests(unittest.TestCase):
         source = _method_source(
             ROOT / "camera/tinyse_camera.py",
             "TinySeCameraCapture",
-            "_on_mjpg_frame",
+            "_decode_preview_frame",
         )
 
         decode_position = source.index("cv2.imdecode")
@@ -72,7 +72,6 @@ class CameraAnalysisFrameContractTests(unittest.TestCase):
 
         self.assertLess(decode_position, analysis_position)
         self.assertLess(analysis_position, flip_position)
-        self.assertIn("callback_time_s: float", source)
         self.assertIn("decoded_at_s = time.perf_counter()", source)
         self.assertIn("analysis_frame_timed_ready.emit", source)
 

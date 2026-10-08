@@ -50,6 +50,25 @@ class EventHook:
 
 
 @dataclass(frozen=True)
+class PoseFrameMetadata:
+    """Original host callback provenance; independent of the mapped pose time."""
+
+    frame_index: int
+    sample_time_s: float
+    callback_time_s: float
+    decoded_at_s: float | None
+    clock_sync_status: str
+    clock_sync_uncertainty_ms: float | None
+    camera_clock_epoch: int
+
+
+@dataclass(frozen=True)
+class _InferenceInput:
+    frame: object
+    metadata: PoseFrameMetadata
+
+
+@dataclass(frozen=True)
 class PoseInferenceRecord:
     """Timing and result for one actual MediaPipe inference attempt."""
 
@@ -58,6 +77,7 @@ class PoseInferenceRecord:
     inference_end_timestamp_s: float
     pose: object | None
     error: str | None = None
+    frame_metadata: PoseFrameMetadata | None = None
 
 
 class FootVisionService:
@@ -71,6 +91,7 @@ class FootVisionService:
         adapter_factory: Callable[[str | Path], object] = MediaPipePoseAdapter,
         classifier: Callable = classify_event,
         clock: Callable[[], float] = time.perf_counter,
+        latest_frame_only: bool = False,
     ) -> None:
         self.config = config
         self.model_path = Path(model_path)
@@ -82,7 +103,9 @@ class FootVisionService:
         self._adapter_factory = adapter_factory
         self._classifier = classifier
         self._clock = clock
-        self._frames: deque[tuple[object, float]] = deque(maxlen=config.max_frames)
+        self._frames: deque[tuple[object, float]] = deque(
+            maxlen=1 if latest_frame_only else config.max_frames
+        )
         self._events: deque[TouchEvent] = deque()
         self._lock = threading.Lock()
         self._wake = threading.Event()
@@ -116,10 +139,13 @@ class FootVisionService:
         )
         self._thread.start()
 
-    def submit_frame(self, frame: object, captured_at_s: float) -> None:
+    def submit_frame(self, frame: object, captured_at_s: float, *,
+                     metadata: PoseFrameMetadata | None = None) -> None:
         with self._lock:
             if not self._accepting:
                 return
+            if metadata is not None:
+                frame = _InferenceInput(frame, metadata)
             self._frames.append((frame, captured_at_s))
         self._wake.set()
 
@@ -178,6 +204,9 @@ class FootVisionService:
                 self.status_changed.emit("ready")
 
             def infer_pose(frame, timestamp_ms):
+                metadata = None
+                if isinstance(frame, _InferenceInput):
+                    frame, metadata = frame.frame, frame.metadata
                 inference_start_s = self._clock()
                 try:
                     pose = adapter.infer_bgr(frame, timestamp_ms)
@@ -190,6 +219,7 @@ class FootVisionService:
                             inference_end_s,
                             None,
                             str(exc),
+                            metadata,
                         )
                     )
                     raise
@@ -200,6 +230,7 @@ class FootVisionService:
                         inference_start_s,
                         inference_end_s,
                         pose,
+                        frame_metadata=metadata,
                     )
                 )
                 if pose is not None:

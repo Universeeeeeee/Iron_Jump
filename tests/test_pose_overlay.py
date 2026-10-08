@@ -42,3 +42,24 @@ class PoseOverlayTests(unittest.TestCase):
 
 if __name__ == "__main__":
     unittest.main()
+
+
+def test_unreliable_pose_does_not_leave_dots_or_side_labels():
+    import numpy as np
+    from tests.test_leg_identity import _sample
+    from vision.pose_overlay import draw_pose_overlay
+    frame = np.zeros((500, 600, 3), dtype=np.uint8)
+    draw_pose_overlay(frame, _sample(1, quality=.4))
+    assert not frame.any()
+
+
+def test_reliable_pose_draws_connected_leg_bones():
+    import numpy as np
+    from tests.test_leg_identity import _sample
+    from vision.pose_overlay import draw_pose_overlay
+    frame = np.zeros((500, 600, 3), dtype=np.uint8)
+    draw_pose_overlay(frame, _sample(1))
+    # Midpoints between hip/knee and knee/ankle must contain colored lines.
+    for x in (210, 390):
+        assert frame[212, x].any()
+        assert frame[337, x].any()

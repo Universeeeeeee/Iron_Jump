@@ -25,6 +25,7 @@ def build_pose_overlay(
     height: int,
     *,
     min_quality: float = 0.65,
+    mirrored: bool = False,
 ) -> dict:
     landmarks = {
         "left_hip": sample.left_hip,
@@ -42,7 +43,7 @@ def build_pose_overlay(
     for name, landmark in landmarks.items():
         nodes[name] = {
             "point": (
-                round(landmark.x * width),
+                round((1 - landmark.x if mirrored else landmark.x) * width),
                 round(landmark.y * height),
             ),
             "quality": landmark.quality,
@@ -57,6 +58,7 @@ def draw_pose_overlay(
     sample: FootPoseSample | None,
     *,
     min_quality: float = 0.65,
+    mirrored: bool = False,
 ):
     if sample is None:
         return frame
@@ -69,12 +71,12 @@ def draw_pose_overlay(
         width,
         height,
         min_quality=min_quality,
+        mirrored=mirrored,
     )
     nodes = overlay["nodes"]
     colors = {
         "left": (255, 120, 30),
         "right": (20, 165, 255),
-        "invalid": (110, 110, 110),
     }
     for start_name, end_name in overlay["connections"]:
         start = nodes[start_name]
@@ -85,12 +87,16 @@ def draw_pose_overlay(
         cv2.line(frame, start["point"], end["point"], color, 3, cv2.LINE_AA)
 
     for node in nodes.values():
-        color = colors[node["side"]] if node["valid"] else colors["invalid"]
+        if not node["valid"]:
+            continue
+        color = colors[node["side"]]
         cv2.circle(frame, node["point"], 6, color, -1, cv2.LINE_AA)
         cv2.circle(frame, node["point"], 8, (255, 255, 255), 1, cv2.LINE_AA)
 
     for side, ankle_name in (("L", "left_ankle"), ("R", "right_ankle")):
         ankle = nodes[ankle_name]
+        if not ankle["valid"]:
+            continue
         x, y = ankle["point"]
         cv2.putText(
             frame,

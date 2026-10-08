@@ -497,6 +497,7 @@ class ExecutionView(QWidget):
     def configure(self, config: TestConfig):
         """切入本视图前调用，初始化仪表盘标签和图表轴。"""
         self._config = config
+        self._camera_panel.set_vision_enabled(config.test_type == "Sprint and Gait Test")
         self._mode = "纵跳" if config.test_type == "Jump Test" else "步态分析"
 
         # 切换模式标签
@@ -810,6 +811,8 @@ class ExecutionView(QWidget):
 
     def on_gait_snapshot(self, snapshot: dict):
         """接收步态快照 (~10Hz)，更新仪表盘。"""
+        if "walking" in snapshot:
+            self._camera_panel.on_walking_snapshot(snapshot)
         self._card_steps.set_value(str(snapshot['touch_count']))
         if "walking" in snapshot or "running" in snapshot:
             self._mode_label.setText(("地面跑步" if "running" in snapshot else "地面走路") + " · " + snapshot["status"])

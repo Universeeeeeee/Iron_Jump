@@ -136,6 +136,7 @@ def test_online_and_replay_reject_swap_before_overlapping_event_windows(tmp_path
         return sample
 
     decisions = scheduler.process_ready(infer, classifier, now_s=0.72)
+    decisions += scheduler.process_ready(infer, classifier, now_s=0.72)
     assert [d.reason for d in decisions] == ["identity_anomaly"] * 2
     assert all(d.label is FootLabel.UNKNOWN for d in decisions)
     assert all(

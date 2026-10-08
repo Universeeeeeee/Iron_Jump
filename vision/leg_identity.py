@@ -189,6 +189,10 @@ class LegIdentityAnalyzer:
         )
 
     def _unavailable(self, reason: str) -> LegIdentityResult:
+        # Reappearance must reconfirm continuity with the retained trusted tracks.
+        # Otherwise a contact window can silently bridge a missing-person gap.
+        if self._trusted is not None:
+            self._ambiguous = True
         self._swap_streak = 0
         self._recovery_streak = 0
         return LegIdentityResult(

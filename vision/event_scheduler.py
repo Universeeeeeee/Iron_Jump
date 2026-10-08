@@ -59,6 +59,7 @@ class EventWindowScheduler:
         self._pose_cache: dict[int, FootPoseSample] = {}
         self._inference_attempts: dict[int, bool] = {}
         self._inference_cursor_ms: int | None = None
+        self._evidence_cutoff_s = float('-inf')
         self._immediate: deque[VisionDecision] = deque()
 
     def add_frame(self, frame: object, captured_at_s: float) -> None:
@@ -108,10 +109,21 @@ class EventWindowScheduler:
         now_s: float,
         decision_clock: Callable[[], float] | None = None,
     ) -> list[VisionDecision]:
-        self._infer_new_frames(infer_pose)
+        """Return ready results promptly; callers may pump again for later windows."""
         decisions = list(self._immediate)
         self._immediate.clear()
+        decisions.extend(self._decide_ready(classify_event, now_s, decision_clock))
+        if decisions:
+            return decisions
+        # Publish a ready decision before unrelated inference can delay delivery.
+        for _ in self._infer_new_frames(infer_pose):
+            decisions.extend(self._decide_ready(classify_event, now_s, decision_clock))
+            if decisions:
+                return decisions
+        return decisions
 
+    def _decide_ready(self, classify_event, now_s, decision_clock):
+        decisions = []
         while self._events:
             event = self._events[0]
             start_s = event.event_time_s - self.config.pre_event_ms / 1000.0
@@ -122,7 +134,8 @@ class EventWindowScheduler:
                 event.event_time_s + self.config.decision_timeout_ms / 1000.0
             )
 
-            if self._frames and self._frames[0].captured_at_s > start_s + 1e-6:
+            # The image count cap does not evict cached pose evidence.
+            if self._evidence_cutoff_s > start_s + 1e-6:
                 decisions.append(
                     unknown_decision(
                         event.event_id,
@@ -154,6 +167,9 @@ class EventWindowScheduler:
 
             start_ms = round(start_s * 1000.0)
             end_ms = round(end_s * 1000.0)
+            # Infer all retained, cadence-eligible inputs within this window first.
+            if any(timestamp_ms <= end_ms for _, timestamp_ms in self._inference_frames()):
+                break
             samples = [
                 sample
                 for timestamp_ms, sample in sorted(self._pose_cache.items())
@@ -174,12 +190,16 @@ class EventWindowScheduler:
                     samples,
                     self.config,
                 )
-                updates = {"diagnostics": diagnostics}
-                if decision.decided_at_s is None:
-                    updates["decided_at_s"] = decision_time_s
-                decision = replace(decision, **updates)
+                completed_at_s = self._decision_time(now_s, decision_clock)
+                if completed_at_s > deadline_s:
+                    decision = unknown_decision(event.event_id, event.event_time_s,
+                                                "decision_timeout", decided_at_s=completed_at_s,
+                                                diagnostics=diagnostics)
+                else:
+                    decision = replace(decision, diagnostics=diagnostics, decided_at_s=completed_at_s)
             decisions.append(decision)
             self._events.pop(0)
+            break  # Deliver before another classifier can consume this deadline.
 
         return decisions
 
@@ -196,7 +216,7 @@ class EventWindowScheduler:
         self._events.clear()
         return decisions
 
-    def _infer_new_frames(self, infer_pose: InferPose) -> None:
+    def _inference_frames(self):
         last_ms = self._inference_cursor_ms
         for sample in self._frames:
             timestamp_ms = round(sample.captured_at_s * 1000.0)
@@ -207,12 +227,17 @@ class EventWindowScheduler:
                 and timestamp_ms - last_ms < self.config.inference_interval_ms
             ):
                 continue
+            last_ms = timestamp_ms
+            yield sample, timestamp_ms
+
+    def _infer_new_frames(self, infer_pose: InferPose):
+        for sample, timestamp_ms in self._inference_frames():
             pose = self._identity.annotate(infer_pose(sample.frame, timestamp_ms))
             self._inference_cursor_ms = timestamp_ms
-            last_ms = timestamp_ms
             self._inference_attempts[timestamp_ms] = pose is not None
             if pose is not None:
                 self._pose_cache[timestamp_ms] = pose
+            yield timestamp_ms
 
     @staticmethod
     def _decision_time(
@@ -263,6 +288,7 @@ class EventWindowScheduler:
         if not self._frames:
             return
         cutoff_s = self._frames[-1].captured_at_s - self.config.frame_buffer_ms / 1000.0
+        self._evidence_cutoff_s = max(self._evidence_cutoff_s, cutoff_s)
         self._frames = [item for item in self._frames if item.captured_at_s >= cutoff_s]
         if len(self._frames) > self.config.max_frames:
             self._frames = self._frames[-self.config.max_frames :]

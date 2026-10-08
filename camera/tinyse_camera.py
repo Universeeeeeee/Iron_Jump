@@ -6,7 +6,7 @@ tinyse_camera.py — OBSBOT Tiny SE 摄像头独立预览窗口
 
 使用方式::
 
-    python camera/tinyse_camera.py
+    python -m camera.tinyse_camera
 
 设计目标:
 - 独立运行，不与 ui/ 目录现有模块耦合
@@ -23,13 +23,6 @@ import threading
 import time
 from dataclasses import dataclass
 from pathlib import Path
-
-_module_dir = Path(__file__).resolve().parent
-if str(_module_dir) not in sys.path:
-    sys.path.insert(0, str(_module_dir))
-_project_root = _module_dir.parent
-if str(_project_root) not in sys.path:
-    sys.path.insert(0, str(_project_root))
 
 import cv2
 import numpy as np
@@ -51,10 +44,7 @@ from dayu_widgets.label import MLabel
 from dayu_widgets.push_button import MPushButton
 from dayu_widgets.qt import application
 
-try:
-    from .tinyse_dshow_capture import TinySeDShowCapture
-except ImportError:
-    from tinyse_dshow_capture import TinySeDShowCapture
+from .tinyse_dshow_capture import TinySeDShowCapture
 
 BIN_DIR = Path(__file__).resolve().parent / "bin"
 WRAPPER_DLL = BIN_DIR / "obsbot_c_api.dll"
@@ -348,6 +338,7 @@ class TinySeCameraCapture(QObject):
         self._last_preview_time = 0.0
         self._capture: TinySeDShowCapture | None = None
         self._running = False
+        self._stop_requested = threading.Event()
         self._recording = False
         self._record_path: Path | None = None
         self._csv_path: Path | None = None
@@ -357,6 +348,9 @@ class TinySeCameraCapture(QObject):
         self._record_finalize_thread: threading.Thread | None = None
         self._record_preserve_raw = False
         self._last_record_stats = None
+        self._preview_lock = threading.Lock()
+        self._preview_wake = threading.Event()
+        self._pending_mjpg = None
         self._mirror = True  # 软件镜像
         self._preview_enabled = True
 
@@ -391,6 +385,9 @@ class TinySeCameraCapture(QObject):
 
     def start(self):
         total_start = time.perf_counter()
+        if self._stop_requested.is_set():
+            self._cleanup()
+            return
         if not self.open():
             self._running = False
             _log_timing(f"capture.worker.start.failed={time.perf_counter() - total_start:.3f}s")
@@ -407,28 +404,38 @@ class TinySeCameraCapture(QObject):
             start = time.perf_counter()
             capture.start()
             _log_timing(f"dshow.start={time.perf_counter() - start:.3f}s")
-            self._running = True
-            self.started.emit()
+            self._running = not self._stop_requested.is_set()
+            if self._running:
+                self.started.emit()
             _log_timing(f"capture.worker.ready={time.perf_counter() - total_start:.3f}s")
-            while self._running:
+            next_stats = 0.0
+            while self._running and not self._stop_requested.is_set():
+                self._preview_wake.wait(.02)
+                self._preview_wake.clear()
+                with self._preview_lock:
+                    pending, self._pending_mjpg = self._pending_mjpg, None
+                if pending is not None and self._preview_enabled:
+                    self._decode_preview_frame(*pending)
+                if time.perf_counter() < next_stats:
+                    continue
+                next_stats = time.perf_counter() + .2
                 stats = capture.stats()
                 with self._record_lock:
                     recording = self._recording
                     record_start = self._record_start
                 record_sec = time.perf_counter() - record_start if recording else 0.0
                 self.stats_updated.emit(stats.wall_fps, record_sec)
-                time.sleep(0.2)
         except Exception as exc:
             self.error.emit(str(exc))
         finally:
             self._cleanup()
 
     def stop(self):
+        # The capture worker owns native stop/close in its finally block.
+        # Calling stop here can race that cleanup and use an already freed handle.
+        self._stop_requested.set()
         self._running = False
-        if self._capture is not None:
-            start = time.perf_counter()
-            self._capture.stop()
-            _log_timing(f"dshow.stop={time.perf_counter() - start:.3f}s")
+        self._preview_wake.set()
 
     def start_record(
         self,
@@ -546,6 +553,13 @@ class TinySeCameraCapture(QObject):
             return
         self._last_preview_time = callback_time_s
 
+        # Keep the DirectShow callback short: decoding and Python consumers must
+        # not hold up native capture or let old compressed frames accumulate.
+        with self._preview_lock:
+            self._pending_mjpg = (data, frame_index, sample_time, callback_time_s)
+        self._preview_wake.set()
+
+    def _decode_preview_frame(self, data, frame_index, sample_time, callback_time_s):
         encoded = np.frombuffer(data, dtype=np.uint8)
         frame = cv2.imdecode(encoded, cv2.IMREAD_COLOR)
         if frame is None:
@@ -572,6 +586,8 @@ class TinySeCameraCapture(QObject):
             self._capture.close()
             _log_timing(f"dshow.close={time.perf_counter() - start:.3f}s")
             self._capture = None
+        with self._preview_lock:
+            self._pending_mjpg = None
 
 
 class TinySeCameraWidget(QWidget):
