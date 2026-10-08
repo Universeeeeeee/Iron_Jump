@@ -5,7 +5,7 @@ from types import SimpleNamespace
 
 import pytest
 
-from camera.gimbal_control import SpeedWatchdog
+from camera.gimbal_control import GimbalSdk, SpeedWatchdog
 from vision.gimbal_tracking import TrackingSpeeds, full_body_target, tracking_velocity
 
 
@@ -76,6 +76,22 @@ class FakeSdk:
     def set_speed(self, pitch, pan):
         assert self.disabled
         self.commands.append((pitch, pan))
+
+
+def test_widest_view_failure_aborts_startup():
+    sdk = GimbalSdk.__new__(GimbalSdk)
+    sdk.index = 0
+    zoom_calls = []
+    sdk.dll = SimpleNamespace(
+        obsbot_set_ai_mode=lambda *args: 0,
+        obsbot_set_fov=lambda *args: -1,
+        obsbot_set_zoom=lambda *args: zoom_calls.append(args) or 0,
+        obsbot_get_zoom=lambda index, out: setattr(out._obj, 'value', 1.0) or 0,
+    )
+    with pytest.raises(RuntimeError, match='SDK command failed: -1'):
+        sdk.disable_ai()
+    assert not zoom_calls
+    assert not hasattr(sdk, 'view_settings')
 
 
 def wait_for(predicate):

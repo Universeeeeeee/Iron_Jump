@@ -36,6 +36,7 @@ class GimbalSdk:
         self._check(self.dll.obsbot_set_ai_mode(self.index, 0, 0))
         # AI auto-framing is off; the tracker never requests a tighter crop.
         fov_ret = self.dll.obsbot_set_fov(self.index, 0)
+        self._check(fov_ret)
         self._check(self.dll.obsbot_set_zoom(self.index, 1.0))
         zoom = ctypes.c_float()
         self._check(self.dll.obsbot_get_zoom(self.index, ctypes.byref(zoom)))
