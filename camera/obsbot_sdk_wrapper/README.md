@@ -1,5 +1,51 @@
 # OBSBOT C API wrapper — 当前状态
 
+## 独立二维云台验证分支（2026-10-08）
+
+分支：`codex/tinyse-mediapipe-gimbal-validation`，从 `cc0bc7f` 建立。
+本试验不接入正式 UI，也不包含原工作目录中的未提交改动。
+
+新增 `obsbot_set_gimbal_speed(index, pitch, pan)` 和
+`obsbot_get_gimbal_angles(index, angles)`；需先按下方命令重新编译 wrapper。
+Python 验证入口直接复用 DirectShow 原始采集与 MediaPipe 关键点适配器。
+
+在该分支的 Windows 目录中，先关闭其他相机预览和测量，再运行：
+
+```powershell
+# 30 / 60 两档水平速度对比，每次 0.3 秒，正反方向各一次；再验证俯仰。
+python -m tools.tinyse_gimbal_validator --mode pulse --pulse-pan 60
+
+# 根据脉冲测试确认两个轴的正方向后，验证 MediaPipe 跟踪。
+python -m tools.tinyse_gimbal_validator --mode track --duration 60
+```
+
+跟踪默认 `pan_gain=240`、`pitch_gain=80`，水平响应为俯仰的 3 倍；
+速度上限分别为 90 和 30（SDK 输入值，不代表已测得的实际转速）。
+使用 `--pan-gain` / `--pan-max` 单独提高水平响应或上限；
+方向不正确时使用 `--pan-sign -1` 或 `--pitch-sign 1` 修正。
+坐标取自未镜像原图。屏幕中央 6% 死区内停止，目标使用髋、膝、踝包围范围的中心，
+任一必要关键点质量不足时停止。独立控制线程在图像结果超过 250 ms 未更新时停止；
+退出时也发送停止指令。SDK 自身阻塞时无法保证及时停止，工具会报告此限制。
+
+工具启动时关闭相机内置 AI，退出后保持关闭；需要时在正式程序中重新激活 AI 跟随。
+`track` 模式按 Q / Esc 或 Ctrl+C 退出；`--no-preview` 用于无界面记录。
+每次输出到独立 `exports/tinyse_gimbal_*`，保存原始 MJPEG / CSV、命令日志、
+采集帧率、录制丢帧、角度反馈和脉冲前后截图。
+`hardware_motion_verified` 默认保持 false：须结合截图/录像核对运动方向，
+再结合角度变化量与时长比较快慢，不能把 SDK 返回 0 当成实机通过。
+
+离线控制测试：`python -m pytest -q tests/test_gimbal_tracking.py`。
+
+本轮验证记录：
+- macOS：控制与 DirectShow 适配测试共 22 项通过；原生 C++ 动态库编译通过，
+  7 项 C ABI 非法输入/无设备检查通过（未发送硬件命令）。
+- Windows 独立目录：`C:/Users/86150/TinySE-gimbal-validation-20261008`；
+  使用 `D:/conda/envs/pydantic_ai/python.exe`，19 项控制测试通过。
+- Windows 构建未完成：CMake 未检测到 Visual Studio；Qt 自带 clang-cl
+  编译报 `algorithm file not found`，缺少完整 MSVC C++ 标准库/开发环境。
+  尚未生成新的 Windows wrapper DLL，尚未发送实机转动指令，
+  水平速度提升、方向和采集并行稳定性均待实测。
+
 ## 目标
 
 用 C wrapper DLL 桥接 OBSBOT C++ SDK，使 Python ctypes 可调用设备控制 API。

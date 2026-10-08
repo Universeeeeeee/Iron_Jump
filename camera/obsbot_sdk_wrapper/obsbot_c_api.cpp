@@ -8,6 +8,7 @@
 
 #include <algorithm>
 #include <chrono>
+#include <cmath>
 #include <codecvt>
 #include <cstring>
 #include <locale>
@@ -623,6 +624,29 @@ int32_t obsbot_set_wdr(int32_t index, int32_t wdr_mode)
         auto dev = get_device(index);
         if (!dev) return OBSBOT_ERR_NO_DEVICE;
         return dev->cameraSetWdrR(wdr_mode);
+    } catch (...) { return OBSBOT_ERR_EXCEPTION; }
+}
+
+int32_t obsbot_set_gimbal_speed(int32_t index, double pitch, double pan)
+{
+    if (!std::isfinite(pitch) || !std::isfinite(pan) ||
+        std::abs(pitch) > 90.0 || std::abs(pan) > 180.0) {
+        return OBSBOT_ERR_BAD_ARG;
+    }
+    try {
+        auto dev = get_device(index);
+        if (!dev) return OBSBOT_ERR_NO_DEVICE;
+        return dev->aiSetGimbalSpeedCtrlR(pitch, pan, 0.0);
+    } catch (...) { return OBSBOT_ERR_EXCEPTION; }
+}
+
+int32_t obsbot_get_gimbal_angles(int32_t index, float angles[3])
+{
+    if (!angles) return OBSBOT_ERR_BAD_ARG;
+    try {
+        auto dev = get_device(index);
+        if (!dev) return OBSBOT_ERR_NO_DEVICE;
+        return dev->gimbalGetAttitudeInfoR(angles);
     } catch (...) { return OBSBOT_ERR_EXCEPTION; }
 }
 

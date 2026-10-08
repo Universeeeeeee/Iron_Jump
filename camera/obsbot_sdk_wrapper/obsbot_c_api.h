@@ -122,6 +122,10 @@ OBSBOT_C_API int32_t obsbot_set_exposure_compensation(int32_t index, int32_t ev_
 OBSBOT_C_API int32_t obsbot_set_anti_flicker(int32_t index, int32_t freq);
 OBSBOT_C_API int32_t obsbot_set_fov(int32_t index, int32_t fov_type);
 OBSBOT_C_API int32_t obsbot_set_wdr(int32_t index, int32_t wdr_mode);
+/* Manual gimbal control: disable AI tracking first; zero speeds stop motion. */
+OBSBOT_C_API int32_t obsbot_set_gimbal_speed(int32_t index, double pitch, double pan);
+/* Output order: roll, pitch, pan, in degrees. */
+OBSBOT_C_API int32_t obsbot_get_gimbal_angles(int32_t index, float angles[3]);
 
 OBSBOT_C_API void obsbot_close(void);
 
