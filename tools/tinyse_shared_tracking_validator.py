@@ -12,6 +12,7 @@ def main(argv=None):
     parser.add_argument('--output', type=Path, required=True)
     parser.add_argument('--duration', type=float, default=60)
     parser.add_argument('--preview-only', action='store_true', help='Set widest view and record without following')
+    parser.add_argument('--show', action='store_true', help='Show the same live panel in the interactive desktop')
     args = parser.parse_args(argv)
     if not 1 <= args.duration <= 600:
         parser.error('duration must be in [1, 600] seconds')
@@ -29,6 +30,9 @@ def main(argv=None):
     log = (args.output / 'events.jsonl').open('w', encoding='utf-8')
     state = {'started_at': None, 'finishing': False, 'errors': [],
              'sdk_stop_reply': False, 'recording_started': False}
+    phases = ((0, '正面站立'), (10, '转为侧面'), (20, '回正面'),
+              (30, '缓慢横向行走'), (45, '加快横向行走'), (60, '短时离开画面，再返回'))
+    last_phase = [None]
 
     def emit(value):
         log.write(json.dumps({'observed_at': time.perf_counter(), **value}) + '\n')
@@ -56,6 +60,10 @@ def main(argv=None):
         def _on_error(self, message):
             error(message)
             super()._on_error(message)
+
+        def closeEvent(self, event):
+            finish()
+            event.accept()  # The application loop remains alive until SDK closed.
 
     def closed(control):
         state['sdk_stop_reply'] = control._stop_confirmed
@@ -108,10 +116,25 @@ def main(argv=None):
             print('RECORDING_STARTED', flush=True)
         if time.perf_counter() - state['started_at'] >= args.duration:
             finish()
+        elif not args.preview_only:
+            elapsed = time.perf_counter() - state['started_at']
+            phase = next(text for start, text in reversed(phases) if elapsed >= start)
+            if phase != last_phase[0]:
+                last_phase[0] = phase
+                panel.setWindowTitle(f'Tiny SE 联合验证：{phase}')
+                emit({'event': 'requested_phase', 'phase': phase, 'elapsed': elapsed})
+                print(f'PHASE {phase}', flush=True)
+                if args.show:
+                    import winsound
+                    winsound.PlaySound('SystemAsterisk', winsound.SND_ALIAS | winsound.SND_ASYNC)
 
     panel = Panel()
     panel.set_vision_enabled(True)
     panel._chk_sdk_tracking.setChecked(True)
+    if args.show:
+        panel.resize(1280, 800)
+        panel.setWindowTitle('Tiny SE 联合验证：准备画面')
+        panel.show()
     root = Path(__file__).resolve().parents[1]
     emit({'event': 'configuration', 'duration': args.duration,
           'model_sha256': hashlib.sha256((root / 'models/pose_landmarker_full.task').read_bytes()).hexdigest(),
