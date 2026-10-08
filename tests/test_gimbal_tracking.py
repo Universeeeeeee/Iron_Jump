@@ -55,6 +55,16 @@ def test_target_includes_head_hands_and_feet_and_rejects_missing_body():
     assert full_body_target(None) is None
 
 
+@pytest.mark.parametrize('field', ['visibility', 'presence'])
+@pytest.mark.parametrize('value', [math.nan, math.inf, 1.2])
+def test_target_rejects_invalid_individual_confidence(field, value):
+    from vision.foot_reference import Landmark
+    point = Landmark(.7, .4, 0, .9, .9)
+    points = [point] * 33
+    points[11] = replace(point, **{field: value})
+    assert full_body_target(SimpleNamespace(landmarks_33=tuple(points))) is None
+
+
 class FakeSdk:
     def __init__(self):
         self.commands = []

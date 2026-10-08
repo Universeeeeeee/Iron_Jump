@@ -30,8 +30,9 @@ def full_body_target(pose):
     if pose is None or pose.landmarks_33 is None or len(pose.landmarks_33) != 33:
         return None
     def visible(p):
-        return (all(math.isfinite(v) for v in (p.x, p.y, p.quality))
-                and p.quality >= .65 and 0 <= p.x <= 1 and 0 <= p.y <= 1)
+        return (all(math.isfinite(v) for v in (p.x, p.y, p.visibility, p.presence))
+                and .65 <= p.visibility <= 1 and .65 <= p.presence <= 1
+                and 0 <= p.x <= 1 and 0 <= p.y <= 1)
 
     points = pose.landmarks_33
     if any(not visible(points[i]) for i in (11, 12, 23, 24, 27, 28)):
