@@ -11,7 +11,7 @@ import threading
 import time
 
 from camera.gimbal_control import GimbalSdk, SpeedWatchdog
-from vision.gimbal_tracking import TrackingSpeeds, lower_body_target, tracking_velocity
+from vision.gimbal_tracking import TrackingSpeeds, full_body_target, tracking_velocity
 
 
 def parser():
@@ -102,7 +102,7 @@ def track_test(control, frames, adapter, settings, args, emit):
             continue
         previous_timestamp = timestamp
         pose = adapter.infer_bgr(image, timestamp)
-        target = lower_body_target(pose)
+        target = full_body_target(pose)
         pitch, pan = tracking_velocity(target, settings)
         # Keep the original frame time: a slow inference must expire, not
         # become a fresh movement command just because it finished now.
@@ -155,6 +155,7 @@ def main(argv=None):
             sdk = GimbalSdk()
             control = SpeedWatchdog(sdk)
             control.start()
+            report['view_settings'] = getattr(sdk, 'view_settings', None)
             capture = TinySeDShowCapture(on_timed_frame=frames.receive)
             capture.start()
             deadline = time.perf_counter() + 10
@@ -166,12 +167,14 @@ def main(argv=None):
             recording = True
             initial = capture.stats()
             started = time.perf_counter()
+            (output / 'start.jpg').write_bytes(frames.get()[0])
             emit({'event': 'start', 'settings': asdict(settings), 'angles': control.angles()})
             if args.mode == 'pulse':
                 pulse_test(control, frames, emit, output, args.pulse_pan)
             else:
                 track_test(control, frames, adapter, settings, args, emit)
             control.stop_motion()
+            (output / 'end.jpg').write_bytes(frames.get()[0])
             stats = capture.stats()
             report.update(status='commands_completed_hardware_review_required',
                           elapsed_s=time.perf_counter() - started,

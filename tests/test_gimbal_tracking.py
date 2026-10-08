@@ -6,7 +6,7 @@ from types import SimpleNamespace
 import pytest
 
 from camera.gimbal_control import SpeedWatchdog
-from vision.gimbal_tracking import TrackingSpeeds, lower_body_target, tracking_velocity
+from vision.gimbal_tracking import TrackingSpeeds, full_body_target, tracking_velocity
 
 
 def test_horizontal_response_is_faster_and_axes_independent():
@@ -35,15 +35,24 @@ def test_invalid_speed_settings_rejected(kwargs):
         TrackingSpeeds(**kwargs)
 
 
-def test_target_uses_lower_body_bounds_and_rejects_occlusion():
+def test_target_includes_head_hands_and_feet_and_rejects_missing_body():
     from vision.foot_reference import Landmark
     point = Landmark(.7, .4, 0, .9, .9)
-    pose = SimpleNamespace(left_hip=point, right_hip=replace(point, x=.8),
-                           left_knee=replace(point, y=.6), right_knee=replace(point, y=.6),
-                           left_ankle=replace(point, y=.8), right_ankle=replace(point, y=.8))
-    assert lower_body_target(pose) == pytest.approx((.75, .6))
-    pose.left_ankle = replace(point, visibility=.2)
-    assert lower_body_target(pose) is None
+    points = [point] * 33
+    points[0] = replace(point, y=.1)
+    points[16] = replace(point, x=.9, y=.2)
+    points[31] = replace(point, x=.6, y=.9)
+    pose = SimpleNamespace(landmarks_33=tuple(points))
+    assert full_body_target(pose) == pytest.approx((.75, .5))
+    # An occluded hand is ignored; missing core body/ankles stops motion.
+    points[16] = replace(points[16], visibility=.2)
+    pose.landmarks_33 = tuple(points)
+    assert full_body_target(pose) == pytest.approx((.65, .5))
+    points[27] = replace(point, visibility=.2)
+    pose.landmarks_33 = tuple(points)
+    assert full_body_target(pose) is None
+    assert full_body_target(SimpleNamespace(landmarks_33=None)) is None
+    assert full_body_target(None) is None
 
 
 class FakeSdk:

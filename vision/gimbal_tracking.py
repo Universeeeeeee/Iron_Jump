@@ -26,16 +26,18 @@ class TrackingSpeeds:
             raise ValueError('deadzone must be in [0, .5)')
 
 
-def lower_body_target(pose):
-    if pose is None:
+def full_body_target(pose):
+    if pose is None or pose.landmarks_33 is None or len(pose.landmarks_33) != 33:
         return None
-    points = (pose.left_hip, pose.right_hip, pose.left_knee, pose.right_knee,
-              pose.left_ankle, pose.right_ankle)
-    if any(not all(math.isfinite(v) for v in (p.x, p.y, p.quality))
-           or p.quality < .65 or not (0 <= p.x <= 1 and 0 <= p.y <= 1)
-           for p in points):
+    def visible(p):
+        return (all(math.isfinite(v) for v in (p.x, p.y, p.quality))
+                and p.quality >= .65 and 0 <= p.x <= 1 and 0 <= p.y <= 1)
+
+    points = pose.landmarks_33
+    if any(not visible(points[i]) for i in (11, 12, 23, 24, 27, 28)):
         return None
-    # Frame the whole lower body, not a swinging foot.
+    # Include visible head, hands and feet; an occluded hand need not stop tracking.
+    points = tuple(p for p in points if visible(p))
     return ((min(p.x for p in points) + max(p.x for p in points)) / 2,
             (min(p.y for p in points) + max(p.y for p in points)) / 2)
 

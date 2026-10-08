@@ -121,6 +121,9 @@ OBSBOT_C_API int32_t obsbot_set_manual_focus(int32_t index, int32_t focus_val);
 OBSBOT_C_API int32_t obsbot_set_exposure_compensation(int32_t index, int32_t ev_index);
 OBSBOT_C_API int32_t obsbot_set_anti_flicker(int32_t index, int32_t freq);
 OBSBOT_C_API int32_t obsbot_set_fov(int32_t index, int32_t fov_type);
+/* Normalized zoom: 1.0 is the widest view. */
+OBSBOT_C_API int32_t obsbot_set_zoom(int32_t index, float zoom);
+OBSBOT_C_API int32_t obsbot_get_zoom(int32_t index, float *out_zoom);
 OBSBOT_C_API int32_t obsbot_set_wdr(int32_t index, int32_t wdr_mode);
 /* Manual gimbal control: disable AI tracking first; zero speeds stop motion. */
 OBSBOT_C_API int32_t obsbot_set_gimbal_speed(int32_t index, double pitch, double pan);

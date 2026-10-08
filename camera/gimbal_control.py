@@ -16,6 +16,9 @@ class GimbalSdk:
         signatures = {
             'obsbot_refresh_devices': [ctypes.c_int32],
             'obsbot_set_ai_mode': [ctypes.c_int32] * 3,
+            'obsbot_set_fov': [ctypes.c_int32] * 2,
+            'obsbot_set_zoom': [ctypes.c_int32, ctypes.c_float],
+            'obsbot_get_zoom': [ctypes.c_int32, ctypes.POINTER(ctypes.c_float)],
             'obsbot_set_gimbal_speed': [ctypes.c_int32, ctypes.c_double, ctypes.c_double],
             'obsbot_get_gimbal_angles': [ctypes.c_int32, ctypes.POINTER(ctypes.c_float)],
         }
@@ -31,6 +34,14 @@ class GimbalSdk:
 
     def disable_ai(self):
         self._check(self.dll.obsbot_set_ai_mode(self.index, 0, 0))
+        # AI auto-framing is off; the tracker never requests a tighter crop.
+        fov_ret = self.dll.obsbot_set_fov(self.index, 0)
+        self._check(self.dll.obsbot_set_zoom(self.index, 1.0))
+        zoom = ctypes.c_float()
+        self._check(self.dll.obsbot_get_zoom(self.index, ctypes.byref(zoom)))
+        if abs(zoom.value - 1.0) > .01:
+            raise RuntimeError(f'Camera did not accept widest zoom: {zoom.value}')
+        self.view_settings = {'fov_wide_return_code': fov_ret, 'zoom': zoom.value}
 
     def set_speed(self, pitch, pan):
         if not all(math.isfinite(v) for v in (pitch, pan)) or abs(pitch) > 90 or abs(pan) > 180:

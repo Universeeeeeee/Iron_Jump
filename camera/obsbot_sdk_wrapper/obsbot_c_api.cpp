@@ -618,6 +618,26 @@ int32_t obsbot_set_fov(int32_t index, int32_t fov_type)
     } catch (...) { return OBSBOT_ERR_EXCEPTION; }
 }
 
+int32_t obsbot_set_zoom(int32_t index, float zoom)
+{
+    if (!std::isfinite(zoom) || zoom < 1.0f || zoom > 2.0f) return OBSBOT_ERR_BAD_ARG;
+    try {
+        auto dev = get_device(index);
+        if (!dev) return OBSBOT_ERR_NO_DEVICE;
+        return dev->cameraSetZoomAbsoluteR(zoom);
+    } catch (...) { return OBSBOT_ERR_EXCEPTION; }
+}
+
+int32_t obsbot_get_zoom(int32_t index, float *out_zoom)
+{
+    if (!out_zoom) return OBSBOT_ERR_BAD_ARG;
+    try {
+        auto dev = get_device(index);
+        if (!dev) return OBSBOT_ERR_NO_DEVICE;
+        return dev->cameraGetZoomAbsoluteR(*out_zoom);
+    } catch (...) { return OBSBOT_ERR_EXCEPTION; }
+}
+
 int32_t obsbot_set_wdr(int32_t index, int32_t wdr_mode)
 {
     try {
