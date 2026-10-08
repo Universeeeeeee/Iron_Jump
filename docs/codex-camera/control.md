@@ -441,3 +441,5 @@ field_walk_02已完成：7505帧/75.044s，原始MJPEG 1,130,540,577字节保留
 验收结论限定相机SDK二维跟随及共享识别运行链：现有SDK足够，最大视野/zoom1不放大，水平300/120已现场接受，俯仰不改；用户要求极端裁头可以接受、髋以下优先，保留刚才方案，无历史身高/头顶估算等大改。Panel实机停止/回放/重启/关窗通过；完整App实体退出、真正空画面恢复、左右触地准确率和全部侧面识别不扩宣已验收。Windows独立候选及原录像保留，正式E:/OptoJump/Iron_Jump未覆盖；固件未刷入。
 
 Codex app现已确认archived_worktree（原root身份保留，可恢复），git worktree list仅剩main；ancestor核对后安全 `git branch -d codex/tinyse-mediapipe-gimbal-validation` 已删除88c630e验证分支，git branch列表再次确认不存在。控制实现历史通过ae17a6c双父合并保留。识别侧仅提交detect.md完成收尾后已释放索引，本侧再提交本文件最终状态。
+
+2026-10-08 用户要求直接push：执行 `git push origin vae/iron_jump` 成功，远端由cc0bc7f更新至7ba8f07，包含已验收的相机集成与双方进度记录。`git rev-parse HEAD origin/vae/iron_jump` 两者一致，索引为空；其它未提交改动未纳入推送。此操作未更新Windows正式运行目录，完整主界面现场检查仍待进行。
