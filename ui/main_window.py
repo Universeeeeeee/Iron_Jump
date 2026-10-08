@@ -773,6 +773,12 @@ class MainWindow(QMainWindow):
 
     def closeEvent(self, event):
         """关闭窗口时清理所有资源。"""
+        if getattr(self, '_close_cleanup_complete', False):
+            if self._exec_view._camera_panel._closing_control is not None:
+                event.ignore()
+            else:
+                event.accept()
+            return
         if self._voice is not None:
             self._voice.close()
         # 停止测试会话
@@ -809,7 +815,21 @@ class MainWindow(QMainWindow):
             self._health_timer.stop()
             self._llm_client.stop()
 
+        self._close_cleanup_complete = True
+        closing = self._exec_view._camera_panel._closing_control
+        if closing is not None:
+            # Keep Qt processing the SDK zero/EOF response before app teardown.
+            closing.closed.connect(self._finish_camera_close)
+            event.ignore()
+            return
         event.accept()
+
+    def _finish_camera_close(self):
+        if self._exec_view._camera_panel._control_stop_failed:
+            QMessageBox.warning(self, '相机停止未确认',
+                                'SDK 未确认停止。请检查相机，再关闭窗口。')
+            return
+        self.close()
 
 
 # ======================================================================

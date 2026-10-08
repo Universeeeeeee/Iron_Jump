@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import logging
+import threading
 import time
 from pathlib import Path
 from typing import Optional
@@ -86,6 +88,15 @@ class EmbeddedCameraPanel(QFrame):
         self._thread: Optional[QThread] = None
         self._capture = None
         self._control = None
+        self._closing_control = None
+        self._pending_preview_start = False
+        self._control_stop_failed = False
+        self._waiting_for_control = False
+        self._auto_tracking = True
+        self._tracking_requested = False
+        self._sdk_tracking = False
+        self._pose_subscription = None
+        self._tracking_notice = ''
         self._record_path: Optional[str] = None
         self._preview_start_time: Optional[float] = None
         self._preview_active = False
@@ -93,6 +104,14 @@ class EmbeddedCameraPanel(QFrame):
         self._replay_mode = False
         self._last_recording_path = None
         self._display_frame = None
+        self._vision_enabled = False
+        self._vision = None
+        self._overlay_visible = False
+        self._pending_frame = None
+        self._frame_lock = threading.Lock()
+        self._preview_timer = QTimer(self)
+        self._preview_timer.setInterval(33)
+        self._preview_timer.timeout.connect(self._show_latest_frame)
         self._playback = VideoPlayback(self)
 
         self._build_ui()
@@ -131,6 +150,11 @@ class EmbeddedCameraPanel(QFrame):
         self._preview_container = _AspectRatioContainer(self._preview)
         self._preview_container.setMinimumSize(320, 180)
         layout.addWidget(self._preview_container, 1)
+        self._vision_label = QLabel()
+        self._vision_label.setWordWrap(True)
+        self._vision_label.setStyleSheet("color: #aeb7c5; padding: 4px; font-size: 10pt;")
+        self._vision_label.hide()
+        layout.addWidget(self._vision_label)
         self._build_playback_controls(layout)
 
         self._btn_settings = MPushButton("⚙")
@@ -144,9 +168,14 @@ class EmbeddedCameraPanel(QFrame):
         self._menu.setMinimumWidth(340)
         self._build_settings_controls()
         self._menu.addSeparator()
+        self._show_pose_action = self._menu.addAction("显示关节点")
+        self._show_pose_action.setCheckable(True)
+        self._show_pose_action.setChecked(True)
+        self._show_pose_action.setToolTip("仅控制画面标记，左右脚识别继续运行")
+        self._show_pose_action.toggled.connect(self._on_pose_visibility_changed)
         self._restart_action = self._menu.addAction("重新启动预览")
         self._restart_action.triggered.connect(self._restart_preview)
-        self._record_action = self._menu.addAction("Record")
+        self._record_action = self._menu.addAction("开始录像")
         self._record_action.triggered.connect(self._on_record)
         self._replay_action = self._menu.addAction("回放本次录像")
         self._replay_action.triggered.connect(lambda: self.open_recording(self._last_recording_path))
@@ -207,7 +236,9 @@ class EmbeddedCameraPanel(QFrame):
     def open_recording(self, path):
         if not path or (self._capture is not None and self._is_record_busy(self._capture)):
             return
+        self._stop_vision()
         self._replay_mode = True
+        self._vision_label.hide()
         self._annotation_tools.reset(path)
         self._display_frame = None
         self._preview.setText("正在打开录像…")
@@ -269,6 +300,9 @@ class EmbeddedCameraPanel(QFrame):
         self._annotation_tools.reset()
         self._playback.close()
         self._replay_mode = False
+        self._vision_label.setVisible(self._vision_enabled or self._sdk_tracking)
+        if self._preview_active:
+            self._start_vision()
         self._display_frame = None
         self._playback_bar.hide()
         self._preview.setText("等待实时画面…" if self._preview_active else "未连接相机")
@@ -356,6 +390,11 @@ class EmbeddedCameraPanel(QFrame):
         row.addWidget(self._btn_ai_off)
         layout.addLayout(row)
 
+        self._chk_sdk_tracking = MCheckBox("SDK 全身跟随")
+        self._chk_sdk_tracking.setToolTip("使用当前人体识别控制相机，固定最大视野；停止后内置 AI 保持关闭")
+        self._chk_sdk_tracking.toggled.connect(self._on_sdk_tracking)
+        layout.addWidget(self._chk_sdk_tracking)
+
         row = QHBoxLayout()
         self._chk_af = MCheckBox("自动对焦")
         self._chk_af.setChecked(True)
@@ -389,10 +428,82 @@ class EmbeddedCameraPanel(QFrame):
         self._controls_action.setDefaultWidget(panel)
         self._menu.addAction(self._controls_action)
 
+    def set_vision_enabled(self, enabled: bool):
+        self._stop_vision()
+        self._vision_enabled = enabled
+        self._vision_label.setVisible(enabled and not self._replay_mode)
+        self._vision_label.setText("连接 Tiny SE 后显示人体识别")
+        if self._preview_active:
+            self._start_vision()
+
+    def _start_vision(self):
+        if not (self._vision_enabled or self._sdk_tracking) or self._vision is not None:
+            return
+        if self._camera_type != "tinyse":
+            self._vision_label.setText("请选择 Tiny SE 使用左右脚校验")
+            return
+        from vision.live_walking import LiveWalkingVision
+        self._vision = LiveWalkingVision()
+        if self._sdk_tracking:
+            self._connect_sdk_tracking()
+        self._vision.start()
+
+    def _stop_vision(self):
+        self._disconnect_sdk_tracking()
+        vision, self._vision = self._vision, None
+        if vision is not None:
+            vision.stop()
+        self._vision_label.setText("人体识别已停止")
+
+    def _connect_sdk_tracking(self):
+        if self._control is None:
+            return
+        if self._pose_subscription is None:
+            self._pose_subscription = self._control.begin_tracking()
+        if self._vision is not None:
+            self._vision.pose_updates.connect(self._pose_subscription)
+
+    def _disconnect_sdk_tracking(self):
+        if self._pose_subscription is None:
+            return
+        if self._vision is not None:
+            self._vision.pose_updates.disconnect(self._pose_subscription)
+        self._pose_subscription = None
+        if self._control is not None:
+            self._control.end_tracking()
+
+    def _on_sdk_tracking(self, checked):
+        self._sdk_tracking = checked
+        self._tracking_notice = ''
+        self._auto_tracking = False
+        self._tracking_requested = False
+        for widget in (self._cmb_ai, self._btn_ai_go, self._btn_ai_off, self._cmb_fov):
+            widget.setEnabled(not checked)
+        if checked:
+            self._cmb_fov.blockSignals(True)
+            self._cmb_fov.setCurrentIndex(self._cmb_fov.findData(0))
+            self._cmb_fov.blockSignals(False)
+            if self._preview_active and self._ensure_control(apply_settings=False):
+                self._start_vision()
+                self._connect_sdk_tracking()
+        else:
+            self._disconnect_sdk_tracking()
+            if not self._vision_enabled:
+                self._stop_vision()
+
+    def _submit_vision_frame(self, frame, timing):
+        vision = self._vision
+        if vision is not None and not self._replay_mode:
+            vision.submit_camera_frame(frame, timing)
+
+    def on_walking_snapshot(self, snapshot):
+        if self._vision is not None and not self._replay_mode:
+            self._vision.submit_walking_snapshot(snapshot)
+
     def set_camera_type(self, camera_type: str):
         if camera_type == self._camera_type:
             return
-        was_running = self._preview_active
+        was_running = self._preview_active or self._waiting_for_control or self._pending_preview_start
         self.shutdown()
         self._camera_type = camera_type
         self._preview.setText("未连接相机")
@@ -401,7 +512,14 @@ class EmbeddedCameraPanel(QFrame):
             self.start_preview()
 
     def start_preview(self):
-        if self._replay_mode:
+        if self._replay_mode or self._waiting_for_control:
+            return
+        if self._closing_control is not None:
+            self._pending_preview_start = True
+            self._set_status('正在等待上一相机控制进程停止')
+            return
+        if self._control_stop_failed:
+            self._set_status('SDK 停止未确认，请检查相机后重新启动预览')
             return
         self._display_frame = None
         self._preview.setText("正在连接相机")
@@ -410,11 +528,26 @@ class EmbeddedCameraPanel(QFrame):
                 self._capture.set_preview_enabled(True)
             self._preview_active = True
             self._preview_start_time = time.perf_counter()
+            self._preview_timer.start()
+            self._start_vision()
             self._set_running(True)
             return
 
         if self._camera_type == "tinyse":
-            self._ensure_control()
+            self._waiting_for_control = True
+            if not self._ensure_control():
+                self._on_control_error("无法建立控制连接，请重新启动预览")
+            return
+        self._start_capture()
+
+    def _on_control_idle(self):
+        if self.sender() is self._control and self._waiting_for_control:
+            self._waiting_for_control = False
+            self._start_capture()
+
+    def _start_capture(self):
+        # Tiny SE control discovery and initial settings must finish before
+        # DirectShow opens the camera. Waiting is asynchronous in start_preview.
         try:
             capture = self._create_capture()
         except Exception as exc:
@@ -423,7 +556,9 @@ class EmbeddedCameraPanel(QFrame):
 
         thread = QThread(self)
         capture.moveToThread(thread)
-        capture.frame_ready.connect(self._on_frame)
+        capture.frame_ready.connect(self._queue_preview_frame, Qt.DirectConnection)
+        if hasattr(capture, "analysis_frame_timed_ready"):
+            capture.analysis_frame_timed_ready.connect(self._submit_vision_frame, Qt.DirectConnection)
         capture.recording_finished.connect(self._on_recording_finished)
         capture.error.connect(self._on_error)
         thread.started.connect(capture.start)
@@ -432,14 +567,25 @@ class EmbeddedCameraPanel(QFrame):
 
         self._thread = thread
         self._capture = capture
+        self._start_vision()
         if hasattr(capture, "set_mirror"):
             capture.set_mirror(self._chk_mirror.isChecked())
         self._preview_active = True
         self._preview_start_time = time.perf_counter()
+        self._preview_timer.start()
         thread.start()
         self._set_running(True)
 
     def stop_preview(self):
+        self._pending_preview_start = False
+        if self._waiting_for_control:
+            self._waiting_for_control = False
+            self._release_control()
+        self._stop_vision()
+        self._preview_active = False
+        self._preview_timer.stop()
+        with self._frame_lock:
+            self._pending_frame = None
         if self._replay_mode:
             self._leave_playback()
         self._display_frame = None
@@ -457,9 +603,18 @@ class EmbeddedCameraPanel(QFrame):
 
     def _restart_preview(self):
         self.shutdown()
+        if self._closing_control is None:
+            self._control_stop_failed = False  # Explicit retry after checking the camera.
         self.start_preview()
 
     def shutdown(self):
+        self._pending_preview_start = False
+        self._waiting_for_control = False
+        self._stop_vision()
+        self._preview_active = False
+        self._preview_timer.stop()
+        with self._frame_lock:
+            self._pending_frame = None
         if self._replay_mode:
             self._leave_playback()
         self._playback.shutdown()
@@ -495,6 +650,31 @@ class EmbeddedCameraPanel(QFrame):
             return capture
         raise RuntimeError("基础预览暂未嵌入，请选择 MX Brio 或 Tiny SE。")
 
+    def _queue_preview_frame(self, frame: np.ndarray):
+        # Runs on the capture thread: retain one frame and never touch widgets.
+        with self._frame_lock:
+            if self._preview_active and not self._replay_mode:
+                self._pending_frame = frame
+
+    def _show_latest_frame(self):
+        if self._vision is not None and not self._replay_mode:
+            from vision.live_walking import walking_check_text
+            pose, status, check = self._vision.display_state()
+            if (pose is not None and self._preview_active and self._auto_tracking
+                    and not self._tracking_requested and not self._sdk_tracking):
+                self._on_ai_go()
+            check_text = walking_check_text(check)
+            self._vision_label.setText(status + ("\n" + check_text if check_text else ""))
+            if self._sdk_tracking and self._tracking_notice:
+                self._vision_label.setText(self._vision_label.text() + '\n' + self._tracking_notice)
+            if pose is None and self._overlay_visible and self._display_frame is not None:
+                self._render_frame(self._display_frame)
+        with self._frame_lock:
+            frame = self._pending_frame
+            self._pending_frame = None
+        if frame is not None:
+            self._on_frame(frame)
+
     def _on_frame(self, frame: np.ndarray):
         if not self._preview_active or self._replay_mode:
             return
@@ -505,6 +685,13 @@ class EmbeddedCameraPanel(QFrame):
     def _render_frame(self, frame: np.ndarray):
         import cv2
 
+        self._overlay_visible = False
+        if self._vision is not None and not self._replay_mode and self._show_pose_action.isChecked():
+            from vision.pose_overlay import draw_pose_overlay
+            pose, _, _ = self._vision.display_state()
+            if pose is not None:
+                frame = draw_pose_overlay(frame.copy(), pose, mirrored=self._chk_mirror.isChecked())
+                self._overlay_visible = True
         rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         h, w = rgb.shape[:2]
         target = self._preview.size()
@@ -546,31 +733,37 @@ class EmbeddedCameraPanel(QFrame):
         self._refresh_menu()
 
     def _on_error(self, message: str):
-        self._set_status(f"Error: {message}")
+        logging.getLogger(__name__).error("Camera error: %s", message)
         self.shutdown()
-        self._preview.setText(f"相机错误：{message}")
+        notice = "相机预览不可用，请检查连接后重试"
+        self._set_status(notice)
+        self._preview.setText(notice)
 
     def _apply_control_settings(self, control):
-        control.set_fov(int(self._cmb_fov.currentData() or 0))
-        control.set_auto_focus(self._chk_af.isChecked())
-        control.set_exposure_compensation(int(self._cmb_exp.currentData() or 0))
-        control.set_anti_flicker(int(self._cmb_flicker.currentData() or 0))
-        control.set_wdr(int(self._cmb_wdr.currentData() or 0))
-        control.set_ai_off()
+        control.request('set_fov', int(self._cmb_fov.currentData() or 0))
+        control.request('set_auto_focus', self._chk_af.isChecked())
+        control.request('set_exposure_compensation', int(self._cmb_exp.currentData() or 0))
+        control.request('set_anti_flicker', int(self._cmb_flicker.currentData() or 0))
+        control.request('set_wdr', int(self._cmb_wdr.currentData() or 0))
+        if self._sdk_tracking and self._pose_subscription is None:
+            self._pose_subscription = control.begin_tracking()
 
     def _ensure_control(self, apply_settings: bool = True) -> bool:
+        if self._closing_control is not None or self._control_stop_failed:
+            return False
         if self._control is not None:
             if apply_settings:
                 self._apply_control_settings(self._control)
             return True
         try:
-            from camera.tinyse_camera import TinySeCameraControl
+            from camera.control_service import CameraControlService
 
-            control = TinySeCameraControl(0)
-            if not control.init():
-                control.close()
-                self._set_status("SDK 控制不可用: 未检测到 Tiny SE")
-                return False
+            control = CameraControlService(self)
+            control.completed.connect(self._report_control_result)
+            control.failed.connect(self._on_control_error)
+            control.idle.connect(self._on_control_idle)
+            if hasattr(control, 'tracking_event'):
+                control.tracking_event.connect(self._on_tracking_event)
             self._control = control
             if apply_settings:
                 self._apply_control_settings(control)
@@ -583,12 +776,72 @@ class EmbeddedCameraPanel(QFrame):
     def _release_control(self):
         control = self._control
         self._control = None
+        self._tracking_requested = False
         if control is not None:
+            if hasattr(control, 'closed'):
+                self._closing_control = control
+                control.closed.connect(self._on_control_closed)
+                control.closed.connect(control.deleteLater)
             control.close()
+            if not hasattr(control, 'closed'):
+                control.deleteLater()
+
+    def _on_control_closed(self):
+        control = self.sender()
+        if control is not self._closing_control:
+            return
+        self._closing_control = None
+        if not getattr(control, '_stop_confirmed', True):
+            self._control_stop_failed = True
+        restart, self._pending_preview_start = self._pending_preview_start, False
+        if restart and not self._control_stop_failed:
+            self.start_preview()
+
+    def _on_control_error(self, message):
+        sender = self.sender()
+        if sender is not None and sender is not self._control:
+            if sender is self._closing_control:
+                self._control_stop_failed = True
+                self._pending_preview_start = False
+                self._set_status(f'相机停止失败：{message}')
+            return
+        if self._sdk_tracking:
+            self._chk_sdk_tracking.setChecked(False)
+        self._set_status(f"相机设置失败：{message}")
+        if self._waiting_for_control:
+            self._waiting_for_control = False
+            self._release_control()
+            self._preview.setText(f"相机连接失败：{message}")
+
+    def _on_tracking_event(self, event):
+        if self.sender() is not None and self.sender() is not self._control:
+            return
+        if not self._sdk_tracking or event.get('event') != 'tracking_decision':
+            return
+        framing = event.get('framing')
+        if framing is None:
+            self._tracking_notice = 'SDK 跟随已暂停，等待新鲜、可靠的全身目标'
+        elif not framing['fits_with_margin']:
+            self._tracking_notice = '人体占满画面，请调整距离，保持头脚入镜'
+        elif not framing['points_with_margin']:
+            self._tracking_notice = '请保持头脚完整入镜，并留出画面边缘余量'
+        else:
+            self._tracking_notice = ''
 
     def _report_control_result(self, action: str, result: int):
+        if self.sender() is not None and self.sender() is not self._control:
+            return
         if result < 0:
-            self._set_status(f"{action}失败，返回码: {result}")
+            logging.getLogger(__name__).warning("Camera control %s failed: %s", action, result)
+            self._set_status("相机设置失败，请重试")
+        elif action == 'set_ai_mode':
+            self._set_status("跟随指令已发送，请确认相机是否转动")
+        elif action == 'set_ai_off':
+            self._set_status("已发送关闭跟随指令")
+        elif action == 'tracking_start':
+            self._set_status("SDK 全身跟随已启用，请保持全身入镜")
+        elif action == 'tracking_stop':
+            self._set_status("SDK 跟随已停止，内置 AI 保持关闭")
 
     def _set_status(self, text: str):
         self._status_text = text
@@ -597,43 +850,55 @@ class EmbeddedCameraPanel(QFrame):
             tooltip = f"{tooltip}\n{text}"
         self._btn_settings.setToolTip(tooltip)
 
+    def _on_pose_visibility_changed(self, _checked: bool):
+        if self._display_frame is not None:
+            self._render_frame(self._display_frame)
+
     def _on_mirror(self, _state: int):
         if self._capture is not None and hasattr(self._capture, "set_mirror"):
             self._capture.set_mirror(self._chk_mirror.isChecked())
 
     def _on_fov_changed(self, _index: int):
         if self._control is not None:
-            self._control.set_fov(int(self._cmb_fov.currentData()))
+            self._control.request('set_fov', int(self._cmb_fov.currentData()))
 
     def _on_ai_go(self):
+        if self._sdk_tracking:
+            return
         if self._ensure_control(apply_settings=False):
-            result = self._control.set_ai_mode(int(self._cmb_ai.currentData()))
-            self._report_control_result("AI 追踪", result)
+            self._auto_tracking = True
+            self._tracking_requested = True
+            self._control.request('set_ai_mode', int(self._cmb_ai.currentData()))
 
     def _on_ai_off(self):
+        if self._sdk_tracking:
+            return
+        self._auto_tracking = False
+        self._tracking_requested = False
         if self._ensure_control(apply_settings=False):
-            self._report_control_result("关闭 AI 追踪", self._control.set_ai_off())
+            self._control.request('set_ai_off')
 
     def _on_af_changed(self, _state: int):
         if self._control is not None:
-            self._control.set_auto_focus(self._chk_af.isChecked())
+            self._control.request('set_auto_focus', self._chk_af.isChecked())
 
     def _on_exp_changed(self, _index: int):
         if self._control is not None:
-            self._control.set_exposure_compensation(int(self._cmb_exp.currentData()))
+            self._control.request('set_exposure_compensation', int(self._cmb_exp.currentData()))
 
     def _on_flicker_changed(self, _index: int):
         if self._control is not None:
-            self._control.set_anti_flicker(int(self._cmb_flicker.currentData()))
+            self._control.request('set_anti_flicker', int(self._cmb_flicker.currentData()))
 
     def _on_wdr_changed(self, _index: int):
         if self._control is not None:
-            self._control.set_wdr(int(self._cmb_wdr.currentData()))
+            self._control.request('set_wdr', int(self._cmb_wdr.currentData()))
 
     def _refresh_menu(self):
         capture = self._capture
         running = self._preview_active and capture is not None
         self._controls_action.setEnabled(self._camera_type == "tinyse" and not self._replay_mode)
+        self._chk_sdk_tracking.setEnabled(self._camera_type == "tinyse" and not self._replay_mode)
         busy = self._is_record_busy(capture) if capture is not None else False
         recording = self._is_recording(capture) if capture is not None else False
         self._record_action.setEnabled(running and not (busy and not recording) and not self._replay_mode)
@@ -641,11 +906,11 @@ class EmbeddedCameraPanel(QFrame):
         self._replay_action.setEnabled(not busy and self._last_recording_path is not None)
         self._open_action.setEnabled(not busy)
         if busy and not recording:
-            self._record_action.setText("Saving...")
+            self._record_action.setText("正在保存…")
         elif recording:
-            self._record_action.setText("Stop Recording")
+            self._record_action.setText("停止录像")
         else:
-            self._record_action.setText("Record")
+            self._record_action.setText("开始录像")
 
     def _set_running(self, _running: bool):
         self._refresh_menu()

@@ -70,7 +70,7 @@ def test_tinyse_settings_include_existing_camera_controls(qtbot):
     assert panel._cmb_exp.count() == 19
     assert panel._cmb_flicker.count() == 2
     assert panel._cmb_wdr.count() == 3
-    assert panel._record_action.text() == "Record"
+    assert panel._record_action.text() == "开始录像"
 
 
 def test_tinyse_default_settings_are_forwarded_to_control(qtbot):
@@ -81,11 +81,8 @@ def test_tinyse_default_settings_are_forwarded_to_control(qtbot):
         def __init__(self):
             self.calls = []
 
-        def __getattr__(self, name):
-            return lambda value: self.calls.append((name, value))
-
-        def set_ai_off(self):
-            self.calls.append(("set_ai_off",))
+        def request(self, name, *args):
+            self.calls.append((name, *args))
 
     control = Control()
     panel._apply_control_settings(control)
@@ -96,7 +93,6 @@ def test_tinyse_default_settings_are_forwarded_to_control(qtbot):
         ("set_exposure_compensation", 0),
         ("set_anti_flicker", 0),
         ("set_wdr", 0),
-        ("set_ai_off",),
     ]
 
 

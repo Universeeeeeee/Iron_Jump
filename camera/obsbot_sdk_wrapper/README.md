@@ -1,5 +1,86 @@
 # OBSBOT C API wrapper — 当前状态
 
+## 独立二维云台验证分支（2026-10-08）
+
+分支：`codex/tinyse-mediapipe-gimbal-validation`，从 `cc0bc7f` 建立。
+本试验不接入正式 UI，也不包含原工作目录中的未提交改动。
+
+新增 `obsbot_set_gimbal_speed(index, pitch, pan)`、
+`obsbot_get_gimbal_angles(index, angles)` 与归一化缩放读写接口；需先按下方命令重新编译 wrapper。
+Python 验证入口直接复用 DirectShow 原始采集与 MediaPipe 关键点适配器。
+
+在该分支的 Windows 目录中，先关闭其他相机预览和测量，再运行：
+
+```powershell
+# 30 / 60 两档水平速度对比，每次 0.3 秒，正反方向各一次；再验证俯仰。
+python -m tools.tinyse_gimbal_validator --mode pulse --pulse-pan 60
+
+# 根据脉冲测试确认两个轴的正方向后，验证 MediaPipe 跟踪。
+python -m tools.tinyse_gimbal_validator --mode track --duration 60
+```
+
+跟踪默认 `pan_gain=240`、`pitch_gain=80`，水平响应为俯仰的 3 倍；
+速度上限分别为 90 和 30（SDK 输入值，不代表已测得的实际转速）。
+使用 `--pan-gain` / `--pan-max` 单独提高水平响应或上限；
+本次实机图像验证的默认方向为 `pan_sign=1`、`pitch_sign=1`；
+方向设置或安装朝向改变时，可用 `--pan-sign -1` 或 `--pitch-sign -1` 修正。
+启动时设置最宽 FOV（枚举 0）及 1.0 倍缩放，并检查缩放读回；运行中只控制两个转动轴。
+坐标取自未镜像原图。屏幕中央 6% 死区内停止，目标使用全身可见的 33 个关键点范围中心，
+包含头、手和脚；双肩、双髋和双踝为必要关键点，任一质量不足时停止。
+遮挡的非必要手部关键点不参与范围计算。独立控制线程在图像结果超过 250 ms 未更新时停止；
+退出时也发送停止指令。SDK 自身阻塞时无法保证及时停止，工具会报告此限制。
+
+工具启动时关闭相机内置 AI，退出后保持关闭；需要时在正式程序中重新激活 AI 跟随。
+`track` 模式按 Q / Esc 或 Ctrl+C 退出；`--no-preview` 用于无界面记录。
+每次输出到独立 `exports/tinyse_gimbal_*`，保存原始 MJPEG / CSV、命令日志、
+采集帧率、录制丢帧、角度反馈、开始/结束截图和脉冲前后截图。
+`hardware_motion_verified` 默认保持 false：须结合截图/录像核对运动方向，
+再结合角度变化量与时长比较快慢，不能把 SDK 返回 0 当成实机通过。
+
+离线控制测试：`python -m pytest -q tests/test_gimbal_tracking.py`。
+
+本轮验证记录：
+- macOS：控制与 DirectShow 适配测试共 22 项通过；原生 C++ 动态库编译通过，
+  7 项 C ABI 非法输入/无设备检查通过（未发送硬件命令）。
+- Windows 独立目录：`C:/Users/86150/TinySE-gimbal-validation-20261008`；
+  使用 `D:/conda/envs/pydantic_ai/python.exe`，19 项控制测试通过。
+- 原有 Windows 编译工具为 Qt MinGW 7.3 和 clang-cl；缺少能构建本封装的完整 MSVC 环境。
+  经用户授权安装 Build Tools 2022 17.14.41，位置 `D:/BuildTools/VS2022`，
+  安装退出码 0，无需重启。CMake 实际使用 MSVC 19.44.35229 和 Windows SDK 10.0.26100.0。
+  新 Windows DLL 构建成功，7 项原生 C ABI 检查通过；DLL 已保存到本分支 `camera/bin`。
+- 固件 6.4.3.4 下完成两轴短时脉冲：约 0.306 秒内，水平输入 30 平均转动 7.32°，
+  输入 60 平均转动 13.75°，位移比约 1.88。这个比值包含启动/制动过程，
+  不是稳态角速度或相对内置 AI 跟踪的性能对比。
+- 图像 ORB 特征匹配与 RANSAC 单应变换独立确认了画面位移。
+  正水平指令使画面内容向左移动，正俯仰指令使画面内容向上移动；
+  据此修正工具默认俯仰方向为 +1。前后截图也已人工查看。
+- 同时采集 544 帧，采样与墙钟帧率约 100 fps；录制 556 帧、丢帧 0，退出时发送停止指令。
+  证据位于 Windows 验证目录的 `exports/pulse_20261008_01`。
+  该短时结果确认 SDK 手动控制与采集可并行；后续全身闭环结果见下方。
+- 方向修正后 Windows 19 项控制测试再次通过。随后 `track_20261008_01` 在
+  `IMediaControl::Run` 报 `0x800705AA`，停止指令已发送；不加载 MediaPipe 的独立采集也报相同错误。
+  同期另一 `compare_ui prewarm_old` 相机诊断进程在运行；需释放相机采集后重试，
+  此次失败不能作为 MediaPipe 或 SDK 两轴控制不兼容的结论。
+- 用户确认其他相机程序已关闭后，独立采集恢复；改用全身目标和固定 1 倍缩放。
+  `full_body_20261008_01` 完成约 45 秒采集，约 100 fps，录制 4527 帧且丢帧 0；
+  FOV 设置返回 0、缩放读回 1.0，471 次推理未得到有效全身目标，运动命令数为 0。
+  开始/结束截图主要为隔板及相机，没有完整人体；该轮仅证明采集、推理和无目标停止链路运行。
+- 用户就位后，`full_body_20261008_02` 完成 45.12 秒全身移动测试：478 次推理、
+  428 次有效目标、73 次非零运动指令；图像到结果延迟中位数 46.68 ms、最大 65.36 ms，
+  无超过 250 ms 的结果。采集约 100 fps，录制 4521 帧、丢帧 0，退出时发送停止指令。
+  水平反馈从 -3.60° 变为 -61.44°，俯仰从 12.70° 变为 7.42°；
+  原始录像抽帧独立确认静态背景随云台转动，以及人员在行走时的全身取景。
+  启动与结束后的缩放均读回 1.0，未发出自动放大命令。
+  静止/普通移动阶段的目标中心大多处于死区内；最后靠近相机并受到椅子遮挡时出现无效目标，
+  该结果不能证明近距离、遮挡和快速跑跳场景下始终完整跟随。
+  原始视频、命令和抽帧证据保留在 Windows 独立目录的该次 `exports` 中。
+- 全身变更后的 macOS 控制与采集适配测试共 22 项通过；Windows 控制测试 19 项通过。
+  两平台 C++ 编译成功，新增缩放接口 7 项非法输入/无设备 C ABI 检查通过。
+
+用户另提供了官方固件包 `Obsbot_tinyse_OA_E_PW107_6.4.4.1_release.bin`。
+[官方说明](https://www.obsbot.com/download/obsbot-tiny-se)仅列出新增 Switch 2 模式及修复已知问题，
+未明确描述跟踪速度/云台控制修复。本轮保持固件 6.4.3.4 作为基准，未执行固件更新。
+
 ## 目标
 
 用 C wrapper DLL 桥接 OBSBOT C++ SDK，使 Python ctypes 可调用设备控制 API。
@@ -13,12 +94,12 @@
 | 工具 | 路径 |
 |------|------|
 | cmake 4.3.2 | `C:\Program Files\CMake\bin\cmake.exe` |
-| MSVC 19.44 | `C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\cl.exe` |
+| MSVC 19.44 | `D:\BuildTools\VS2022\VC\Tools\MSVC\14.44.35207\bin\Hostx64\x64\cl.exe` |
 | Windows SDK | 10.0.26100.0 |
 
 激活环境：
 ```cmd
-"C:\Program Files (x86)\Microsoft Visual Studio\2022\BuildTools\VC\Auxiliary\Build\vcvars64.bat"
+"D:\BuildTools\VS2022\VC\Auxiliary\Build\vcvars64.bat"
 ```
 
 编译命令：
