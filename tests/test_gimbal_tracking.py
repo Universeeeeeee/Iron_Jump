@@ -11,11 +11,11 @@ from vision.gimbal_tracking import TrackingSpeeds, full_body_target, tracking_ve
 
 def test_horizontal_response_is_faster_and_axes_independent():
     pitch, pan = tracking_velocity((.8, .8))
-    assert pan == pytest.approx(57.6)
+    assert pan == pytest.approx(72)
     assert pitch == pytest.approx(19.2)
-    assert tracking_velocity((.8, .5)) == pytest.approx((0, 57.6))
+    assert tracking_velocity((.8, .5)) == pytest.approx((0, 72))
     assert tracking_velocity((.5, .8)) == pytest.approx((19.2, 0))
-    assert tracking_velocity((0, 1)) == (30, -90)
+    assert tracking_velocity((0, 1)) == (30, -120)
 
 
 @pytest.mark.parametrize('target', [None, (.5, .5), (.53, .47), (math.nan, .8), (1.1, .5)])

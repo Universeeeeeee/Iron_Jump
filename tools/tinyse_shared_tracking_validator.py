@@ -1,5 +1,6 @@
 """Record the actual embedded-panel pose/SDK pipeline in an isolated run."""
 import argparse
+from dataclasses import asdict
 import hashlib
 import json
 from pathlib import Path
@@ -24,6 +25,7 @@ def main(argv=None):
     from qtpy.QtCore import Qt, QTimer
     from qtpy.QtWidgets import QApplication, QLabel
     from ui.embedded_camera_panel import EmbeddedCameraPanel
+    from vision.gimbal_tracking import TrackingSpeeds
 
     app = QApplication.instance() or QApplication([])
     app.setQuitOnLastWindowClosed(False)
@@ -147,6 +149,9 @@ def main(argv=None):
           'preview_only': args.preview_only,
           'input': 'existing embedded panel, unmirrored full image resized to width 640',
           'fov_request': 0, 'zoom_request': 1.0,
+          'tracking_speeds': asdict(TrackingSpeeds()),
+          'source_sha256': {name: hashlib.sha256((root / name).read_bytes()).hexdigest()
+                            for name in ('vision/gimbal_tracking.py', 'tools/tinyse_shared_tracking_validator.py')},
           'manifest': str(root / 'control-manifest.json')})
     timer = QTimer()
     timer.setInterval(50)

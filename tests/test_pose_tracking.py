@@ -19,7 +19,7 @@ def test_shared_pose_drives_speed_without_refreshing_its_age():
     box = PoseTrackingMailbox()
     box.submit(update(callback=10.1))
     command = box.command(10.15)
-    assert (command.pitch, command.pan) == pytest.approx((0, 57.6))
+    assert (command.pitch, command.pan) == pytest.approx((0, 72))
     assert command.captured_at == 10.0
     assert box.command(10.251).reason == 'stale_frame'
     assert box.command(10.251).pan == 0

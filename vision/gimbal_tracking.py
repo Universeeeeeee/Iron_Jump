@@ -5,9 +5,9 @@ import math
 
 @dataclass(frozen=True)
 class TrackingSpeeds:
-    pan_gain: float = 240.0
+    pan_gain: float = 300.0
     pitch_gain: float = 80.0
-    pan_max: float = 90.0
+    pan_max: float = 120.0
     pitch_max: float = 30.0
     pan_sign: int = 1
     pitch_sign: int = 1
