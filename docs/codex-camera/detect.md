@@ -1,8 +1,8 @@
 # 相机关节点识别工作进度
 
-最后更新：2026-10-08（Asia/Shanghai），当前阶段为第 10 轮水平提速增量的独立回归，等待标准动作复测；接口见 6.5 节，固定候选独立回归见 6.10，Windows 准备见 6.11，首轮真人结果见 6.12，精确原帧及提速复核见 6.13。本文件由识别侧 Codex 对话维护；每完成一个重要阶段，更新状态、证据、修改、验证及协作事项。控制相机运动由另一个对话负责，本对话不修改 `control.md`。历史现场、离线复现及尚待验收的结论分别记录。
+最后更新：2026-10-08（Asia/Shanghai），当前阶段为现场验收后已合并到本地 `vae/iron_jump`；最终范围及验证见 6.17，接口见 6.5，原始现场/独立复核见 6.12～6.16。本文件由识别侧 Codex 对话维护；每完成一个重要阶段，更新状态、证据、修改、验证及协作事项。控制相机运动由另一个对话负责，本对话不修改 `control.md`。历史现场、离线复现及尚待验收的结论分别记录。
 
-协作方向：用户要求逐步摆脱内置 AI，使用当前识别结果自行驱动 SDK 速度控制，最终以 `vae/iron_jump` 为主整合。本文件是双方主要交接依据；重大变更通过各自文档及主动互审同步。识别侧保留原模型、640 整图等比缩放及阈值；控制侧负责 SDK 速度、运动、取景和模式互斥。内置 AI 响应慢是用户现场反馈，本阶段没有完成同条件速度 A/B，不提前宣称 SDK 正式方案已更快或已上线。
+协作方向：用户要求逐步摆脱内置 AI，使用当前识别结果自行驱动 SDK 速度控制，以 `vae/iron_jump` 为主整合。本文件是双方主要交接依据；重大变更通过各自文档及主动互审同步。识别侧保留原模型、640 整图等比缩放及阈值；控制侧负责 SDK 速度、运动、取景和模式互斥。新 SDK 跟随及提速已获用户现场认可并完成本地合并；没有完成与内置 AI 的同条件速度 A/B，不宣称严格物理提速比例或正式 Windows 主项目已部署。用户最终取景优先级为髋部以下，再考虑上半身，极端裁头不单独判失败。
 
 ## 1. 当前任务及完成状态
 
@@ -17,17 +17,17 @@
 | 下半身取景下的侧面问题复现 | 已完成 | `side_audit2` 的实际侧面片段中，膝、踝和脚部置信度低，部分预测位置明显错误 |
 | 最大视野、标准跟踪及调整站位后的复测 | 已完成短时对照 | `side_audit5_wide` 的实际侧身片段 75/75 次返回姿态，8～10 个下肢点达到原阈值 |
 | 严格单变量根因验证 | 未完成 | 跟踪模式、机位/朝向和站位同时变化，不能把改善独立归因于 FOV 或某一个设置 |
-| 动态跟随中的完整取景、遮挡恢复 | 待验证 | 需控制侧提供稳定取景，再测沿跑道行走及双腿交叉 |
+| 动态跟随中的取景、遮挡恢复 | 横移跟随已现场认可，完全丢失恢复未现场验证 | 最大视野保持，极端优先髋部以下；原始片段中没有真正空画面，不能宣称空画面恢复已验收 |
 | 左右脚身份连续性及触地同步准确性 | 未验收 | “显示骨架”和“置信度达标”均不等于左右脚触地判断正确 |
-| 跨分支接口与职责复核 | 已完成一轮只读检查 | 已确认坐标约定及数据结构一致；时间戳关联、控制模式切换和不同有效性指标仍需对接 |
+| 跨分支接口与职责复核 | 多轮互审及最终索引核对完成 | 原始姿态/时间/epoch/generation及职责一致，最终共享增量与识别基线独立核对，见6.17 |
 | 原始姿态对控制目标条件的离线检查 | 已完成 | 对 572 次已有输出，控制目标有效 367 次，完整下肢入镜通过 75 次；不能用控制目标有效率代替识别验收 |
-| 公共结果及原始帧元数据出口 | 已实现并通过离线回归 | `pose_updates` 发送姿态、身份、入镜及明确失效状态；保留原始时间/索引与时钟 epoch，见 6.5 |
-| SDK 消费识别结果的协作审阅 | 第 8 轮准备工具复核完成 | 公共对象/JSON/有界交接及已发现生命周期故障在固定 r7 独立复验，见 6.10；现场工具显示/关闭/阶段提示已只读核对 |
-| 正式 UI/SDK 接线与动态实机验收 | 首轮真人转动/识别运行完成，完整验收未通过 | `field_walk_01` 75秒录制和635非零调用可关联原始帧；原始图有头部裁切，慢快横移/离开恢复与正式App生命周期未验收，见 6.12 |
+| 公共结果及原始帧元数据出口 | 已提交、现场运行并合入本地vae | `pose_updates` 发送姿态、身份、入镜及明确失效状态；保留原始时间/索引与时钟 epoch，见 6.5 |
+| SDK 消费识别结果的协作审阅 | 多轮缺陷收敛、现场链核对完成 | 两轮原始帧/33点/时间关联，真实Panel生命周期以及最终干净索引闭包已验证；物理制动时间不由ACK扩宣 |
+| 正式 UI/SDK 接线与动态实机验收 | 已按用户范围合并；完整App现场退出未复测 | 两轮75秒及真实Panel停止/回放/返回/重启/关闭通过，用户认可效果；主窗口guard为真实Qt自动化证据，见6.17 |
 
 当前判断：证据优先指向取景完整性和侧面遮挡；暂没有必须更换模型的证据。本轮没有显示明显的识别结果排队，但不能据此宣布所有同步或端到端延迟问题已经解决。
 
-版本基准：分支 `vae/iron_jump`，HEAD `cc0bc7f9f9bee2bf24867c18fa16e942d4489a96`。工作树存在大量此前未提交修改；现场代码不能仅用干净 HEAD 代表。当前公共出口代码在主工作树仍未提交，已纳入控制侧部署的独立验证候选，尚未合并正式控制增量。
+版本基准：原共同基线 `cc0bc7f9f9bee2bf24867c18fa16e942d4489a96`；识别提交 `e88c3c1`，本地 `vae/iron_jump` 的真实合并提交 `ae17a6c`（父e88c3c1/88c630e）。工作树其它既有未提交修改仍保留；当前正式Windows项目未覆盖，现场使用独立候选。合并提交树已按必要闭包验证，不能把其他dirty工作自动宣称已提交。
 
 ## 2. 已证实的事实及对应代码位置
 
@@ -564,3 +564,23 @@ PYTHONDONTWRITEBYTECODE=1 QT_QPA_PLATFORM=offscreen \
 另建 `/private/tmp/iron-jump-recognition-clean-20261008`：`git archive HEAD` 后仅覆盖上述明确识别内容/所选索引测试/execution两个hunk，以及待控制集成的7个明确文件（camera control_service/gimbal_control/pose_tracking/pose_transport/tracking_runtime、vision/gimbal_tracking、ui/embedded_camera_panel）。没有复制其它dirty主树源码。使用当前venv/offscreen/no-bytecode/no-cache，运行live_pose_updates/live_walking/framing/public_contract/service/scheduler/sync/walking_pipeline/leg_identity/overlay/camera_analysis/camera_recording/landing_v2，共 **162 passed、2 subtests passed、2 skipped in 1.01s**。skip是该干净副本缺历史side_audit输出；此前r10的13契约含这些输出实际通过。这证明选定识别加已审控制依赖的独立闭包，不等于识别提交单独包含控制UI或整个App已实机验收。
 
 控制侧现场生命周期脚本已只读审阅：同一Panel独占SDK/DS，显式stop应答后再恢复、回放确认停速、新Vision、旧ownerclosed后再重启、关闭保持Qt到closed，没有发现新阻断。本侧不运行该硬件脚本。识别提交完成后立即回传hash并释放索引；控制侧再处理共享Panel必要既有基线和自己增量、MainWindow只close guard的三方/索引合并。任何双父合并都必须保留主树其它dirty内容，不能盲git add全部或把控制branch复制外观基线当作本次增量。
+
+### 6.16 识别依赖已提交，真实Panel生命周期独立复核完成
+
+识别提交 **`e88c3c16e992f6d7dafd9c63d9f152e50a38915b`** 已在 `vae/iron_jump` 完成：20文件，2160增/35删，范围严格如6.15。`git diff --cached --check`通过，提交后索引为空并已交还控制侧。完整test_live_walking中的两项sensor测试、test_sync中的硬件测试、execution其它UI文案仍保留工作区dirty；sharedPanel/MainWindow/control_service没有被本侧stage或改动。控制侧后续三方/真实合并进行中，本侧不再并发操作索引。
+
+已实际读取 `exports/control_integration_20261008/panel_lifecycle_01/run.py`、`events.jsonl`及report：8阶段explicit_stop/resumed_live/entering_replay/replay_hold/returned_live/restarting/restarted_live/closing完成；4次tracking_stop result0，errors为空。旧SDK owner24976在72048.1927077 closed，新5380在72048.1984884 started，最大同时owner=1，最终owner集合为空，两closed均stop_confirmed=true；回放持有期无非零SDK速度，末尾3次速度均零。report stop_unconfirmed=false，与逐条日志相符。回放fixture是field02前90原始JPEG组成短AVI，非完整原录像转换验收。物理制动时间仍未独立测量，不把ACK当停转真值。
+
+这次是实际同一Panel、SDK、DirectShow采集的最小生命周期检查；本侧没有开第二相机，正式完整MainWindow没有现场运行，guard仍以已有真实Qt模拟回归为证据。用户在控制侧认可提速和识别效果、极端优先髋部以下；结合独立时龄/接口/生命周期核对，本侧没有相机跟随集成阻断，已主动通知控制侧可以进入合并。严格侧面膝部、触地左右准确率、完整App实体退出和空画面no_pose恢复均不扩宣已通过。
+
+### 6.17 最终真实合并与保留范围
+
+已只读独立核对真实合并 **`ae17a6c0d3af9fa3dfeff70571fdd5bae369e2e3`**，位于本地 `vae/iron_jump`，父提交为本侧 `e88c3c16e992f6d7dafd9c63d9f152e50a38915b` 与控制 `88c630e654153ef0019c8eb76900a9b9afa1aa3a`；不是仅取对方树的假合并。提交树 **`a363001c16098d4088ef338373dc10b6bfa488d9`** 与实际导出的cleanindex-r2相同。相对识别父23个控制/测试/必要共享文件，2670增/41删；MainWindow仅20行退出guard，原外观/异常提示等5增10删仍保留为工作区dirty。
+
+本侧在commit前独立检查8个识别/采集/execution索引文件与e88提交逐字相同、15个控制/Panel/DLL/自有tests与固定r10逐字相同、原模型SHA5134...不变；diffcachedcheck通过、无unmerged。还实际读取 `merge_preservation/other-worktree-before.json` 并重算159项其它工作文件SHA，changed/missing=[]。控制侧对4个共享原文件保留备份和targeted stash；本侧没有用reset/clean覆盖其它工作。test_live_walking、test_sync、test_embedded的其它未提交用例及execution/MainWindow原UI改动仍dirty，不以合并成功宣称这些一并已提交。
+
+**交付闭包验证**：控制侧实际执行工作区相关240项+2子测试通过、无跳过；首次从纯索引树导出时发现2个旧Panel断言仍期望Record及同步SDK接口，不能用工作区通过掩盖干净交付失败。控制侧仅在索引更新这两个既存测试函数为“开始录像”/异步request，并移除旧的启动设置set_ai_off期望；生产算法无新改，本侧实际读两个cached hunk确认范围，其余104行Panel新回归仍留dirty。随后纯索引r2由控制侧执行 **242 passed、2 subtests passed、2 skipped in 13.64s**，跳过仅缺历史side_audit输出；不算作通过。最终merge tree与此r2树完全一致，故无需再无理由重复同一套件。本侧独立162项闭包、r10的13项含历史契约、原始帧/实际生命周期核对结果分别保留，不把双方数字相加。
+
+验收边界：用户两轮认可检测、跟随与提速，大字无声按其要求；极端优先髋部以下，不把头裁单独判失败。原模型、640整图及质量阈值保留。近侧/背侧膝部遮挡仍可能让strict或身份拒绝，左右触地真值准确性未验收；两轮没有真实空画面，不扩宣丢失恢复；完整MainWindow实体退出仍未复测，正式guard以真实Qt测试为证据。实际Panel停止/回放/返回/重启/关闭已运行且独立日志核对，唯一SDK owner和停止应答成立，物理制动时间未独立标定。
+
+合并仅本地；未在本对话push、发布或覆盖正式Windows项目。控制侧负责归档自己附属worktree/已合并分支，保留独立Windows候选和原始证据；本侧仅提交detect.md收尾，不修改control.md。后续识别工作的优先事项是按自然行走的侧面遮挡片段做人工左右脚/触地标注与精度评估，再决定是否需要原模型之外的补偿，不能通过降低阈值换取表面成功率。
