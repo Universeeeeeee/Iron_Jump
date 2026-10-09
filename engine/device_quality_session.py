@@ -1,8 +1,9 @@
 """One worker-thread gate for all test modes: preflight, frozen mask and audit."""
 import time
 from dataclasses import replace
+import numpy as np
 from qtpy.QtCore import QObject, QTimer, Signal, Slot
-from hardware.walking_preflight import WalkingPreflight
+from hardware.walking_preflight import WalkingPreflight, RuntimeBeamEvidence
 from hardware.beam_quality import masked_frame, uncertain_contact
 from hardware.active_segments import ActiveSegments
 
@@ -10,18 +11,23 @@ from hardware.active_segments import ActiveSegments
 class DeviceQualitySession(QObject):
     readiness = Signal(dict)
     armed = Signal(object)
-    frame_ready = Signal(object, object, bool)
+    frame_ready = Signal(object, object, bool)  # raw, processed (None for raw-only tail), uncertain
     notice = Signal(dict)
     finished = Signal(str)
 
     def __init__(self, config, policy, parent=None):
         super().__init__(parent)
         self.config = config
+        self._ground_mode = config.test_type in {'Sprint and Gait Test', 'Overground Running Test'}
         self.preflight = WalkingPreflight(policy)
         self._segments = ActiveSegments(policy.samples)
         self.context = None
         self.done = False
         self.last_frame = None
+        # The ground inbox updates arrival independently of ordered processing.
+        self.latest_received_frame = None
+        # The ground inbox supplies an atomic arrival check / stop boundary.
+        self.freeze_input = None
         self.started_ns = None
         self._last_publish = 0
         self._last_status = None
@@ -29,7 +35,9 @@ class DeviceQualitySession(QObject):
         self._event_count = 0
         self._last_event_key = None
         self._last_event = None
-        self._runtime = WalkingPreflight(policy, stabilize=False)
+        self._runtime = RuntimeBeamEvidence(policy)
+        self._runtime_suspicious_mask = None
+        self._runtime_suspicious_indices = ()
         self._timer = QTimer(self)
         self._timer.setInterval(100)
         self._timer.timeout.connect(self.poll)
@@ -95,6 +103,9 @@ class DeviceQualitySession(QObject):
     @Slot(object)
     def on_frame(self, frame):
         if self.done:
+            if self._ground_mode and self.context is not None:
+                # None means archive accepted raw evidence only, never measure it.
+                self.frame_ready.emit(frame, None, True)
             return
         previous = self.last_frame
         self.last_frame = frame
@@ -117,8 +128,9 @@ class DeviceQualitySession(QObject):
             self.finish("counter_reset")
             return
         invalid = (len(frame.contact_bits) != frame.layout.bit_count or
-                   len(frame.valid_bits) != frame.layout.bit_count or not all(frame.valid_bits) or
-                   bool(frame.quality_flags) or bool(frame.dropped_frames_before) or
+                   len(frame.valid_bits) != frame.layout.bit_count or b'\x00' in frame.valid_bits or
+                   any(flag != 'all_beams_blocked' or not self._ground_mode for flag in frame.quality_flags)
+                   or bool(frame.dropped_frames_before) or
                    (previous is not None and frame.sample_index != previous.sample_index + 1))
         projected = self._segments.project(frame)
         if invalid:
@@ -132,7 +144,8 @@ class DeviceQualitySession(QObject):
                          "已剔除段重新出现信号：" + "、".join(str(s + 1) for s in restored) + "；本次有效布局保持固定，下次准备时重新识别")
         self._last_restored_segments = restored
         processed = masked_frame(projected, self.context.bad_indices)
-        uncertain = uncertain_contact(processed, self.context.bad_indices)
+        # Ground mode checks fixed-mask boundaries after its 10 ms optical filter.
+        uncertain = not self._ground_mode and uncertain_contact(processed, self.context.bad_indices)
         if self._segments.regions and self._segments.regions[-1] > 0:
             occupied = {self._segments.regions[i // 96] for i, bit in enumerate(processed.contact_bits) if bit}
             if occupied:
@@ -143,20 +156,29 @@ class DeviceQualitySession(QObject):
                                  "运动跨越被剔除段的物理空隙，相关事件不配对、不补造距离指标")
                 self._occupied_regions = occupied
         # Runtime observations are warnings, never new masks. Motion can produce similar signals.
-        self._runtime.feed(processed)
-        suspicious = ()
-        if self._runtime.healthy_samples >= self._runtime.policy.samples:
-            suspicious = tuple(sorted(i for i, count in self._runtime._counts.items()
-                                      if count >= self._runtime.policy.samples * .95 or
-                                      self._runtime._transitions[i] >= 20))
+        self._runtime.observe(processed)
+        samples = self._runtime.policy.samples
+        if self._runtime.healthy_samples < samples:
+            self._runtime_suspicious_mask = None
+            self._runtime_suspicious_indices = ()
+        else:
+            persistent_threshold = samples * .95
+            flagged = ((self._runtime._counts >= persistent_threshold)
+                       | (self._runtime._transitions >= 20))
+            if not np.array_equal(flagged, self._runtime_suspicious_mask):
+                self._runtime_suspicious_mask = flagged
+                self._runtime_suspicious_indices = tuple(np.flatnonzero(flagged).tolist())
+        suspicious = self._runtime_suspicious_indices
         if suspicious:
             self._record("runtime_obstruction", frame, suspicious,
+                         "运行中存在持续遮挡或高频变化，已保留原始记录供复核" if self._ground_mode else
                          "新增持续遮挡或高频变化，可能是停留/传感器异常；未动态屏蔽，该不确定区间不计入统计")
-            uncertain = True
+            if not self._ground_mode:
+                uncertain = True
         elif uncertain and uncertain_contact(processed, self.context.bad_indices):
             self._record("masked_contact_boundary", frame, self.context.bad_indices,
                          "接触邻近不可用光束，当前事件及跨越该区间的指标排除")
-        if not uncertain:
+        if not uncertain and not suspicious:
             self._last_event_key = None
         self.frame_ready.emit(frame, processed, uncertain)
 
@@ -206,17 +228,21 @@ class DeviceQualitySession(QObject):
         if self.done:
             return
         now = time.perf_counter_ns()
+        received = self.latest_received_frame or self.last_frame
         if self.context is None:
             if self.last_frame is None and self.started_ns and now - self.started_ns > 5_000_000_000:
                 self.preflight.invalidate("未收到完整帧，请检查设备连接")
             self._publish(True)
-        elif self.last_frame and now - self.last_frame.received_monotonic_ns > 1_000_000_000:
-            self._record("data_timeout", self.last_frame, (), "持续无数据，结束采集，保留已有结果")
-            self.finish("data_timeout")
+        elif received and now - received.received_monotonic_ns > 1_000_000_000:
+            self.finish("data_timeout", stale_before_ns=now - 1_000_000_000)
 
-    def finish(self, reason):
+    def finish(self, reason, *, stale_before_ns=None):
         if self.done:
             return
+        if self.freeze_input is not None and not self.freeze_input(stale_before_ns):
+            return  # A new arrival won the race with the watchdog.
+        if reason == "data_timeout":
+            self._record("data_timeout", self.last_frame, (), "持续无数据，结束采集，保留已有结果")
         self.halt()
         self.finished.emit(reason)
 

@@ -1,8 +1,55 @@
 """Shared empty-field observation on the device sample clock (legacy import name)."""
 from collections import Counter, deque
 from dataclasses import asdict, dataclass, field
-from hardware.sensor_frame import DeviceLayout, SensorFrame
+import numpy as np
+from hardware.sensor_frame import DeviceLayout, SensorFrame, blocked_indices
 from hardware.beam_quality import BeamQualityPolicy, longest_run
+
+
+class RuntimeBeamEvidence:
+    """Exact rolling raw counts, without per-beam Python counter updates."""
+
+    def __init__(self, policy):
+        self.policy = policy
+        self.last_frame = None
+        self._reset()
+
+    def _reset(self):
+        self.healthy_samples = 0
+        self._window = deque()
+        self._counts = np.zeros(0, dtype=np.int32)
+        self._transitions = np.zeros(0, dtype=np.int32)
+        self._previous = None
+
+    def observe(self, frame):
+        previous = self.last_frame
+        self.last_frame = frame
+        if previous and (frame.stream_id != previous.stream_id or frame.layout != previous.layout
+                         or frame.sample_index != previous.sample_index + 1):
+            self._reset()
+        if (len(frame.contact_bits) != frame.layout.bit_count
+                or len(frame.valid_bits) != frame.layout.bit_count or b'\x00' in frame.valid_bits
+                or frame.dropped_frames_before
+                or any(flag != 'all_beams_blocked' for flag in frame.quality_flags)):
+            self._reset()
+            return False
+        bits = np.frombuffer(frame.contact_bits, dtype=np.uint8)
+        if self._previous is None:
+            self._counts = np.zeros(len(bits), dtype=np.int32)
+            self._transitions = np.zeros(len(bits), dtype=np.int32)
+            changes = np.zeros(len(bits), dtype=np.uint8)
+        else:
+            changes = bits ^ self._previous
+        self._counts += bits
+        self._transitions += changes
+        self._window.append((bits, changes))
+        if len(self._window) > self.policy.samples:
+            old_bits, old_changes = self._window.popleft()
+            self._counts -= old_bits
+            self._transitions -= old_changes
+        self._previous = bits
+        self.healthy_samples = len(self._window)
+        return True
 
 
 @dataclass(frozen=True)
@@ -36,7 +83,6 @@ class WalkingPreflight:
     STALE_NS = 500_000_000
     STABILITY_SAMPLES = 10  # 10 ms on the 1000 Hz device clock, not USB arrival time.
     STABILITY_REPEATS = 3
-    BROAD_CHANGE_LIMIT = 3
 
     def __init__(self, policy=None, *, stabilize=True):
         self.policy = policy or BeamQualityPolicy()
@@ -54,6 +100,7 @@ class WalkingPreflight:
         self._counts = Counter()
         self._transitions = Counter()
         self._previous_bits = set()
+        self.updated_indices = set()
         self.bad_indices = ()
         self.bad_types = ()
         self.transient_indices = ()
@@ -67,7 +114,6 @@ class WalkingPreflight:
         self._filtered_pulses = 0
         self._broad_events = deque()
         self._broad_active = False
-        self.acquisition_unstable = False
 
     def _confirm_bits(self, raw, frame):
         if not self.stabilize:
@@ -102,7 +148,6 @@ class WalkingPreflight:
             else:
                 self._pending[i] = (start, count)
         self.pending_indices = tuple(sorted(self._pending))
-        self.acquisition_unstable = len(self._broad_events) >= self.BROAD_CHANGE_LIMIT
         return frozenset(self._stable_bits)
 
     def _stability_snapshot(self):
@@ -112,39 +157,56 @@ class WalkingPreflight:
                 "time_source": "device_frame_counter", "scope": "preflight_only",
                 "transient_beam_pulses": self._filtered_pulses,
                 "transient_indices": tuple(sorted(i for i, count in self._filtered_counts.items() if count > 0)),
-                "broad_change_events": len(self._broad_events), "broad_change_limit": self.BROAD_CHANGE_LIMIT,
-                "acquisition_unstable": self.acquisition_unstable}
+                "broad_change_events": len(self._broad_events)}
 
-    def feed(self, frame: SensorFrame):
+    def observe(self, frame: SensorFrame):
+        """Update the rolling evidence without running empty-field classification."""
         previous = self.last_frame
         self.last_frame = frame
         if previous and (frame.stream_id != previous.stream_id or frame.layout != previous.layout):
             self.invalidate("设备布局或数据流变化，重新自检")
         elif previous and frame.sample_index != previous.sample_index + 1:
             self.invalidate("帧序号不连续，重新自检")
+        # A complete dark payload is an optical state, not a broken packet.
+        # Confirm it and count broad changes just like a dark individual segment.
+        invalid_flags = any(flag != "all_beams_blocked" for flag in frame.quality_flags)
         if (len(frame.contact_bits) != frame.layout.bit_count
                 or len(frame.valid_bits) != frame.layout.bit_count
-                or not all(frame.valid_bits) or frame.quality_flags or frame.dropped_frames_before):
+                or b'\x00' in frame.valid_bits or invalid_flags or frame.dropped_frames_before):
             self.invalidate(f"采集丢帧（缺失{frame.dropped_frames_before}帧），等待连续完整数据"
                             if frame.dropped_frames_before else "采集数据异常，等待连续完整数据")
             self.data_valid = (len(frame.contact_bits) == frame.layout.bit_count
                                and len(frame.valid_bits) == frame.layout.bit_count
-                               and not frame.quality_flags and not frame.dropped_frames_before)
-            return
+                               and not invalid_flags and not frame.dropped_frames_before)
+            return False
         self.data_valid = True
-        raw_bits = {i for i, bit in enumerate(frame.contact_bits) if bit}
+        raw_bits = blocked_indices(frame.contact_bits)
         bits = self._confirm_bits(raw_bits, frame)
         changes = bits ^ self._previous_bits if self._window else set()
         self._previous_bits = bits
         self._window.append((bits, changes))
-        self._counts.update(bits)
-        self._transitions.update(changes)
+        old_bits, old_changes = set(), set()
         if len(self._window) > self.policy.samples:
             old_bits, old_changes = self._window.popleft()
-            self._counts.subtract(old_bits)
-            self._transitions.subtract(old_changes)
+        # Shared members cancel exactly; update only evidence that actually changes.
+        added, removed = bits - old_bits, old_bits - bits
+        changed_added, changed_removed = changes - old_changes, old_changes - changes
+        if added:
+            self._counts.update(added)
+        if removed:
+            self._counts.subtract(removed)
+        if changed_added:
+            self._transitions.update(changed_added)
+        if changed_removed:
+            self._transitions.subtract(changed_removed)
+        self.updated_indices = added | removed | changed_added | changed_removed
         self.healthy_samples = len(self._window)
-        # Re-evaluate every sample so a new obstruction immediately invalidates a UI acknowledgement.
+        return True
+
+    def feed(self, frame: SensorFrame):
+        if not self.observe(frame):
+            return
+        # Re-evaluate every sample; confirmed changes invalidate a UI acknowledgement.
         observed = tuple(sorted(i for i, count in self._counts.items() if count > 0))
         persistent_threshold = self.policy.samples * .95
         self.bad_indices = tuple(i for i in observed if self._counts[i] >= persistent_threshold
@@ -157,24 +219,18 @@ class WalkingPreflight:
         self.ratios = [segment_counts[s] / 96 for s in range(len(frame.layout.segments))]
         self.consecutive = longest_run(self.bad_indices, frame.layout)
         self.context = None
-        if self.acquisition_unstable:
-            self.reason = "采集不稳定：观察窗内反复出现大范围变化，请检查采集链路与测量区域"
-        elif len(self._window) < self.policy.samples:
+        if len(self._window) < self.policy.samples:
             self.reason = f"空场观察 {len(self._window) / 1000:.1f}/{self.policy.observation_seconds:g} 秒"
         elif any(r > self.policy.max_bad_ratio for r in self.ratios) or self.consecutive > self.policy.max_consecutive:
             self.reason = "异常光束超限，请清空测量区域并检查设备"
         elif self.transient_indices:
             self.reason = "检测到短暂遮挡，等待稳定空场或重复闪烁证据"
-        elif self.pending_indices:
-            self.reason = "光束变化待稳定确认，暂不能开始"
         else:
             self.context = PreparedDevice(frame.layout, frame.stream_id, frame.sample_index,
                                           frame.received_monotonic_ns, len(self._window),
                                           policy=self.policy, bad_indices=observed, bad_types=self.bad_types,
                                           stability=self._stability_snapshot())
             self.reason = ("异常在阈值内：需确认现场空场并接受降级" if observed else "自检通过，可以开始")
-            if self._filtered_pulses:
-                self.reason += f"；观察窗有{self._filtered_pulses}次光束短时变化，未计入坏灯"
 
     def ready(self, now_ns):
         if self.context and not 0 <= now_ns - self.context.checked_monotonic_ns <= self.STALE_NS:
@@ -190,7 +246,13 @@ class WalkingPreflight:
         visual = None if frame is None else {
             "positions_m": layout.positions_m,
             "segment_ids": tuple(s.segment_id for s in layout.segments),
-            "contact_bits": list(frame.contact_bits) if len(frame.contact_bits) == layout.bit_count else [0] * layout.bit_count,
+            # Show the existing confirmed state; retain raw data and instability
+            # evidence separately. This never modifies a measurement frame.
+            "contact_bits": [int(i in self._stable_bits) for i in range(layout.bit_count)]
+                            if self.stabilize else (list(frame.contact_bits)
+                            if len(frame.contact_bits) == layout.bit_count else [0] * layout.bit_count),
+            "raw_contact_bits": list(frame.contact_bits),
+            "preflight_display_confirmation_ms": self.STABILITY_SAMPLES if self.stabilize else 0,
             "valid_bits": [int(bool(v) and not (self.context and i in self.context.bad_indices))
                            for i, v in enumerate(frame.valid_bits)]
                           if fresh and self.data_valid else [0] * layout.bit_count,
@@ -231,19 +293,11 @@ class WalkingPreflight:
             segment_id = layout.segments[s].segment_id
             bad = [i % 96 + 1 for i in self.bad_indices if i // 96 == s]
             transient = [i % 96 + 1 for i in self.transient_indices if i // 96 == s]
-            pending = [i % 96 + 1 for i in self.pending_indices if i // 96 == s]
-            filtered = [i % 96 + 1 for i, count in sorted(self._filtered_counts.items()) if count > 0 and i // 96 == s]
             if bad:
                 types = "、".join(sorted({kind for i, kind in zip(self.bad_indices, self.bad_types) if i // 96 == s}))
                 parts.append(f"第{segment_id}段：异常束{self._ranges(bad)}（{types}，{len(bad)}/96，{len(bad) / 96:.2%}）")
             if transient:
                 parts.append(f"第{segment_id}段：短暂遮挡束{self._ranges(transient)}（尚未确认为闪烁，等待稳定空场）")
-            if pending:
-                parts.append(f"第{segment_id}段：待稳定确认束{self._ranges(pending)}")
-            if filtered:
-                parts.append(f"第{segment_id}段：短时变化束{self._ranges(filtered)}（已回落，未计入坏灯）")
-        if self._broad_events:
-            parts.append(f"观察窗内大范围变化{len(self._broad_events)}次，达到{self.BROAD_CHANGE_LIMIT}次判为采集不稳定")
         if self.bad_indices or self.transient_indices:
             parts.append(f"全程最大连续{self.consecutive}束异常；允许每段≤{self.policy.max_bad_ratio:.2%}、连续≤{self.policy.max_consecutive}束")
         return "；".join(parts)

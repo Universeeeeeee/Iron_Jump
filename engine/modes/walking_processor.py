@@ -1,13 +1,14 @@
 """Single-pass overground walking on calibrated beam coordinates.
 
 Beam interruption is an optical contact proxy, not force-plate contact. Ambiguous
-merges and missing samples break identity and metric continuity; never interpolate.
+merges and acquisition gaps break continuity. Bounded local unknowns carry evidence.
 """
-from dataclasses import asdict, dataclass, field
+from dataclasses import dataclass, field
 from statistics import median
 
 from config.test_report import GaitTestReport
 from config.walking_config import WalkingConfig
+from hardware.sensor_frame import blocked_indices
 from hardware.walking_preflight import PreparedDevice
 
 
@@ -30,6 +31,12 @@ class Contact:
     observed_samples: int = 0
     peak_width_m: float = 0.0
     merged_interruptions: list = field(default_factory=list)
+    has_unknown: bool = False
+    edge_estimates: dict = field(default_factory=dict)
+    absent_samples: int = 0
+    release_start: float | None = None
+    candidate_since: int | None = None
+    last_reliable_sample: int | None = None
 
     @property
     def position(self):
@@ -61,10 +68,13 @@ class WalkingProcessor:
         self._commit_cursor = 0
         self._identity_known = True
         self._recovering = False
+        self._masked_contact_uncertain = False
         self._ambiguous_now = False
         self._last_visual = -1.0
         self.timeline = []
         self._preserved_stops = []
+        self._duration_censored = False
+        self._duration_clear_upper = None
 
     def break_continuity(self, code, frame_index=None):
         self._preserved_stops = self._stop_intervals()
@@ -87,20 +97,22 @@ class WalkingProcessor:
         self.clear_since = None
 
     def _clusters(self, bits):
+        if b'\x01' not in bits:
+            return []
         groups = []
-        for i, blocked in enumerate(bits):
-            if not blocked:
-                continue
-            if groups and i - groups[-1][-1] <= 2 and self.positions[i] - self.positions[groups[-1][-1]] <= .04:
+        for i in sorted(blocked_indices(bits)):
+            if groups and self.positions[i] - self.positions[groups[-1][-1]] <= .04:
                 groups[-1].append(i)
             else:
                 groups.append([i])
         # Keep edge fragments so incomplete entry/exit contacts cannot look complete.
         return [(g[0], g[-1]) for g in groups]
 
-    def process(self, frame):
+    def process(self, frame, observation=None, *, masked_contact=False):
         if self.finished_reason:
             return
+        if observation is not None:
+            frame = observation.measurement_frame()
         if frame.stream_id != self.device.stream_id or frame.layout != self.device.layout:
             self.break_continuity("device_changed", frame.frame_index)
             self.finished_reason = "device_changed"
@@ -114,18 +126,53 @@ class WalkingProcessor:
         self.last_sample = frame.sample_index
         if (len(frame.contact_bits) != len(self.positions)
                 or len(frame.valid_bits) != len(self.positions)
-                or not all(frame.valid_bits)
+                or (observation is None and not all(frame.valid_bits))
                 or any(flag != "frame_gap" for flag in frame.quality_flags)):
             self.break_continuity("invalid_sample", frame.frame_index)
             return
         sample_time = frame.sample_time_s
         self.last_time = sample_time
+        if masked_contact:
+            if not self._masked_contact_uncertain:
+                self.break_continuity("masked_contact_boundary", frame.frame_index)
+            self._masked_contact_uncertain = True
+            return
+        self._masked_contact_uncertain = False
+        if observation is not None:
+            if observation.unresolved_segments:
+                self._duration_censored = True
+                self._duration_clear_upper = None
+            if (self._duration_censored and self._duration_clear_upper is None
+                    and b'\x01' not in frame.contact_bits and b'\x00' not in frame.valid_bits):
+                self._duration_clear_upper = frame.sample_index
+            for contact in list(self.active):
+                if observation.affected(contact.low, contact.high):
+                    self._preserved_stops = self._stop_intervals()
+                    contact.exclusion = 'local_unknown_timeout'
+                    self.active.remove(contact)
+                    self._identity_known = False
+            for contact in list(self.active):
+                if (contact.exclusion != 'local_unknown_timeout' and not contact.confirmed and contact.has_unknown
+                        and frame.sample_index - contact.start * 1000 >=
+                        max(self.config.min_contact_time, self.config.confirmation_ms) + 10):
+                    contact.exclusion = 'local_unknown_timeout'
+                    self._identity_known = False
+                elif (contact.exclusion != 'local_unknown_timeout' and contact.candidate_since is not None
+                      and frame.sample_index - contact.candidate_since >= self.config.release_ms + 10):
+                    self._preserved_stops = self._stop_intervals()
+                    contact.exclusion = 'local_unknown_timeout'
+                    self._identity_known = False
         # Expire absence before association, including a return exactly at the
         # release threshold. The edge remains the first absent device sample.
         for contact in list(self.active):
-            absent_start = contact.last + .001
-            if (sample_time > absent_start + 1e-9
-                    and sample_time - absent_start + 1e-9 >= self.config.release_ms / 1000):
+            absent_start = contact.release_start if contact.release_start is not None else contact.last + .001
+            released = (sample_time > absent_start + 1e-9
+                        and sample_time - absent_start + 1e-9 >= self.config.release_ms / 1000)
+            if observation is not None:
+                released = (contact.absent_samples >= self.config.release_ms
+                            and observation.release_reliable(contact.low, contact.high,
+                                                            3 * self.device.layout.segments[contact.high // 96].pitch_m))
+            if released:
                 contact.end = absent_start
                 contact.lift_confirmed_at = sample_time
                 if (not contact.confirmed
@@ -136,6 +183,8 @@ class WalkingProcessor:
                         later.side = "unknown"
                 self.active.remove(contact)
         groups = self._clusters(frame.contact_bits)
+        if observation is not None:
+            groups = observation.associate_fragments(groups, self.active)
         matches = []
         used = set()
         ambiguous = len(groups) > 2
@@ -143,7 +192,7 @@ class WalkingProcessor:
             centre = (self.positions[low] + self.positions[high]) / 2
             candidates = [c for c in self.active
                           if low <= c.high + 3 and high >= c.low - 3
-                          and abs(c.position - centre) <= .18]
+                          and abs((self.positions[c.low] + self.positions[c.high]) / 2 - centre) <= .18]
             if len(candidates) > 1 or (candidates and candidates[0].id in used):
                 ambiguous = True
             if self.positions[high] - self.positions[low] > .45:
@@ -171,29 +220,83 @@ class WalkingProcessor:
                                   sample_time, low, high, [centre])
                 if self._recovering:
                     contact.exclusion = "unknown_touch_after_gap"
+                if observation is not None:
+                    edge = observation.edge(low, high, 1)
+                    if edge:
+                        contact.start = edge.sample / 1000
+                        contact.edge_estimates['touch'] = [edge.left_sample, edge.right_sample]
+                    if observation.affected(low, high, observation.recovery_segments):
+                        contact.exclusion = 'unknown_touch_after_gap'
                 self.contacts.append(contact)
                 self.active.append(contact)
                 new_contacts.append(contact)
-            elif sample_time - contact.last > .001 + 1e-9:
+            elif sample_time - contact.last > .001 + 1e-9 and contact.release_start is not None:
                 contact.merged_interruptions.append({
                     "start_sample": round(contact.last * 1000) + 1,
                     "end_sample": frame.sample_index, "reason": "release_debounce",
                 })
             contact.last = sample_time
-            contact.observed_samples += 1
+            reliable = observation is None or observation.reliable(low, high)
+            contact.observed_samples += int(reliable and contact.exclusion != 'local_unknown_timeout')
+            if reliable:
+                contact.last_reliable_sample = frame.sample_index
+            if reliable:
+                contact.absent_samples = 0
+                contact.release_start = None
+                contact.candidate_since = None
             contact.low, contact.high = low, high
-            contact.peak_width_m = max(contact.peak_width_m, self.positions[high] - self.positions[low])
+            if reliable:
+                contact.peak_width_m = max(contact.peak_width_m, self.positions[high] - self.positions[low])
+            if observation is not None:
+                contact.has_unknown |= observation.affected(low, high, observation.unknown_segments) or bool(observation.edge(low, high, 1))
             # Bounded spatial history, sampled every 20 ms; stance roll is not travel.
-            if len(contact.positions) < 100 and frame.sample_index % 20 == 0:
+            if reliable and len(contact.positions) < 100 and frame.sample_index % 20 == 0:
                 contact.positions.append(centre)
             if low == 0 or high == len(self.positions) - 1:
                 contact.exclusion = contact.exclusion or "boundary_contact"
             wide_enough = contact.peak_width_m >= .08 or contact.exclusion == "boundary_contact"
-            if (not contact.confirmed and wide_enough
+            if (contact.exclusion != 'local_unknown_timeout' and not contact.confirmed and wide_enough
                     and contact.observed_samples >= self.config.confirmation_ms
                     and sample_time - contact.start + .001 + 1e-9 >= self.config.min_contact_time / 1000):
                 contact.confirmed = True
                 contact.confirmed_at = sample_time
+
+        matched = {c.id for _, _, _, c in matches if c is not None}
+        matched.update(c.id for c in new_contacts)
+        for contact in list(self.active):
+            if contact.id in matched:
+                continue
+            if contact.exclusion == 'local_unknown_timeout':
+                if observation.reliable(contact.low, contact.high):
+                    self.active.remove(contact)
+                continue
+            reliable = observation is None or observation.release_reliable(
+                contact.low, contact.high, 3 * self.device.layout.segments[contact.high // 96].pitch_m)
+            edge = observation.edge(contact.low, contact.high, 0) if observation is not None else None
+            if (observation is not None and observation.neighbour_unknown(
+                    contact.low, contact.high, 3 * self.device.layout.segments[contact.high // 96].pitch_m)):
+                edge = None
+            if observation is not None and contact.candidate_since is None:
+                contact.candidate_since = frame.sample_index
+            if contact.release_start is None and (reliable or edge):
+                contact.release_start = contact.last + .001
+                if (observation is not None and not edge
+                        and frame.sample_index > contact.candidate_since):
+                    left = contact.last_reliable_sample
+                    if left is None or frame.sample_index - left > 11:
+                        self._preserved_stops = self._stop_intervals()
+                        contact.release_start = None
+                        contact.exclusion = 'local_unknown_timeout'
+                        self.active.remove(contact)
+                        self._identity_known = False
+                        continue
+                    contact.release_start = (left + frame.sample_index) / 2000
+                    contact.edge_estimates['lift'] = [left, frame.sample_index]
+            if edge:
+                contact.release_start = edge.sample / 1000
+                contact.edge_estimates['lift'] = [edge.left_sample, edge.right_sample]
+            if observation is not None and reliable:
+                contact.absent_samples += 1
 
         if len(new_contacts) > 1:
             for c in new_contacts:
@@ -203,8 +306,10 @@ class WalkingProcessor:
         # Existing footprints immediately after a gap have unknown touch times.
         # Later new contacts can be measured, with a new A/B identity epoch.
         self._recovering = False
-        if any(frame.contact_bits):
+        if b'\x01' in frame.contact_bits:
             self.last_occupied = sample_time
+            self.clear_since = None
+        elif observation is not None and observation.unresolved_segments:
             self.clear_since = None
         elif self.origin is not None:
             if self.clear_since is None:
@@ -219,7 +324,7 @@ class WalkingProcessor:
         # identity and direction publication, even if a later foot confirms first.
         while self._commit_cursor < len(self.contacts):
             contact = self.contacts[self._commit_cursor]
-            if not contact.confirmed and contact.end is None:
+            if not contact.confirmed and contact.end is None and not contact.exclusion:
                 break
             self._commit_cursor += 1
             if not contact.confirmed:
@@ -269,15 +374,24 @@ class WalkingProcessor:
                      for c in self.active],
         })
 
+    def _movement_end(self):
+        end = self.last_occupied + .001 if self.last_occupied is not None else self.origin
+        if (self.last_occupied is not None and any(c.end is not None and 'lift' in c.edge_estimates
+                                                 and c.end >= self.last_occupied for c in self.contacts)):
+            end = max(c.end for c in self.contacts if c.end is not None and c.end >= self.last_occupied)
+        return end
+
     def _stop_intervals(self):
         confirmed = [c for c in self.contacts if c.confirmed and c.label]
-        end = self.last_occupied + .001 if self.last_occupied is not None else self.origin
+        end = self._movement_end()
         stops = dict(self._preserved_stops)
         for i, c in enumerate(confirmed):
             nxt = confirmed[i + 1] if i + 1 < len(confirmed) else None
             until = nxt.start if nxt else end
             # Only a continuously observed stationary contact supports a stop claim.
             observed_end = c.end if c.end is not None else c.last + .001
+            if c.end is None and c.last_reliable_sample is not None:
+                observed_end = (c.last_reliable_sample + 1) / 1000
             until = min(until, observed_end) if until is not None else c.start
             if not c.exclusion and until - c.start >= self.config.stop_threshold_s:
                 stops[c.start] = max(stops.get(c.start, until), until)
@@ -285,7 +399,7 @@ class WalkingProcessor:
 
     def summary(self):
         confirmed = [c for c in self.contacts if c.confirmed]
-        end = self.last_occupied + .001 if self.last_occupied is not None else self.origin
+        end = self._movement_end()
         stops = self._stop_intervals()
         def valid(c):
             return c.confirmed and bool(c.label) and c.end is not None and not c.exclusion
@@ -329,6 +443,9 @@ class WalkingProcessor:
                            "duration_s": c.start - a.start,
                            "single_support_s": single, "double_support_s": double})
         duration = max(0, end - self.origin) if end is not None and self.origin is not None else None
+        if (self._duration_censored and (self._duration_clear_upper is None
+                                        or end is None or end * 1000 + 1e-9 < self._duration_clear_upper)):
+            duration = None
         speed = None
         if (len(confirmed) >= 2 and not self.issues and duration and self.direction
                 and valid(confirmed[0]) and valid(confirmed[-1])):
@@ -352,7 +469,9 @@ class WalkingProcessor:
                 "issues": [{**issue, "time_s": issue["time_s"] - self.origin
                             if issue["time_s"] is not None and self.origin is not None else None}
                            for issue in self.issues],
-                "contacts": [{**{k: v for k, v in asdict(c).items() if k != "positions"},
+                "contacts": [{**{k: v for k, v in vars(c).items()
+                                 if k not in {"positions", "merged_interruptions", "has_unknown", "edge_estimates", "absent_samples", "release_start", "candidate_since", "last_reliable_sample"}},
+                              "merged_interruptions": [dict(item) for item in c.merged_interruptions],
                               "position_m": c.position,
                               "start": c.start - (self.origin or 0),
                               "end": c.end - (self.origin or 0) if c.end is not None else None,

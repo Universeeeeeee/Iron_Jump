@@ -322,8 +322,13 @@ def test_led_health_refresh_uses_short_capture_without_streaming_state(
     worker.connect_device()
 
     worker.refresh_led_health()
-    for _ in range(usb_worker.LED_HEALTH_TARGET_FRAMES):
-        worker._record_led_health_frame([0] * 96)
+    from hardware.sensor_frame import DeviceLayout, SensorFrame
+    import time
+    layout = DeviceLayout.linear(1)
+    for index in range(usb_worker.LED_HEALTH_TARGET_FRAMES + 10):
+        frame = SensorFrame('test', layout, index, index, time.perf_counter_ns(),
+                            bytes(96), b'\x01' * 96, b'\xff' * 12)
+        worker._record_led_health_frame(frame)
     worker._poll_led_health()
 
     assert [state for state, _message in states] == ["connecting", "connected"]

@@ -13,6 +13,18 @@ _CONTACT_BYTE_BITS = tuple(bytes(1 - ((value >> bit) & 1) for bit in range(8))
                            for value in range(256))
 
 
+def blocked_indices(bits):
+    """Indices in binary contact bytes, scanning contiguous runs in native code."""
+    result = set()
+    start = bits.find(b'\x01')
+    while start != -1:
+        end = bits.find(b'\x00', start)
+        end = len(bits) if end == -1 else end
+        result.update(range(start, end))
+        start = bits.find(b'\x01', end)
+    return result
+
+
 @dataclass(frozen=True)
 class SensorSegment:
     segment_id: str

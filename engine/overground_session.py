@@ -4,6 +4,8 @@ import time
 
 from qtpy.QtCore import QObject, QTimer, Signal, Slot
 from hardware.walking_preflight import WalkingPreflight
+from hardware.beam_filter import GroundStabilityFilter
+from hardware.beam_quality import uncertain_contact
 
 
 
@@ -27,9 +29,12 @@ class OvergroundSession(QObject):
         self._last_ready = None
         self._last_frame = None
         self._visual_issue = None
+        self._summary = None
+        self._frame_filter = None
         self.frames = deque(maxlen=600000)
         self.timestamps = deque(maxlen=600000)
         self.total_frames = 0
+        self.raw_only_tail_frames = 0
         self._monitor_started_ns = None
         self._timer = QTimer(self)
         self._timer.setInterval(100)
@@ -55,6 +60,8 @@ class OvergroundSession(QObject):
 
     def start_prepared(self, context):
         self.processor = self.processor_factory(self.config, context)
+        self._frame_filter = GroundStabilityFilter(context.layout, context.bad_indices)
+        self._summary = None
         raw_bit_count = context.segment_selection.get("source_segment_count", len(context.layout.segments)) * 96
         limit = min(600000, 64 * 1024 * 1024 // (raw_bit_count + 64))
         self.frames = deque(maxlen=limit)
@@ -74,29 +81,46 @@ class OvergroundSession(QObject):
 
     @Slot(object)
     def on_frame(self, frame, raw_frame=None, uncertain=False):
+        if self.processor is not None:
+            self.archive_raw_frame(raw_frame or frame, raw_only=self.done)
         if self.done:
             return
         self.last_received_ns = frame.received_monotonic_ns
-        self._last_frame = frame
         self._visual_issue = None
         if self.processor is None:
+            self._last_frame = frame
             self.preflight.feed(frame)
             self._publish_ready()
             return
-        self.total_frames += 1
-        self.frames.append((raw_frame or frame).contact_bits)  # Preserve unmasked measurements.
-        self.timestamps.append(frame.sample_time_s)
         if uncertain:
+            self._consume_frames(self._frame_filter.reset())
             if not getattr(self, "_quality_uncertain", False):
                 self.processor.break_continuity("unavailable_contact_boundary", frame.frame_index)
+                self._summary = None
         else:
-            self.processor.process(frame)
+            self._consume_frames(self._frame_filter.feed(frame))
         self._quality_uncertain = uncertain
         if self.processor.finished_reason:
             self.finish(self.processor.finished_reason)
         if frame.received_monotonic_ns - self._last_update_ns >= 100_000_000:
             self._last_update_ns = frame.received_monotonic_ns
             self.publish_snapshot()
+
+    def archive_raw_frame(self, frame, *, raw_only=False):
+        """Retain accepted evidence even after the measurement has stopped."""
+        if self.processor is not None:
+            self.total_frames += 1
+            self.raw_only_tail_frames += int(raw_only)
+            self.frames.append(frame.contact_bits)
+            self.timestamps.append(frame.sample_time_s)
+
+    def _consume_frames(self, frames):
+        for frame in frames:
+            masked_contact = uncertain_contact(frame, self.processor.device.bad_indices)
+            self.processor.process(frame, masked_contact=masked_contact)
+            self._last_frame = frame
+        if frames:
+            self._summary = None
 
     @Slot(object)
     def on_issue(self, issue):
@@ -107,7 +131,9 @@ class OvergroundSession(QObject):
             self._publish_ready(force=True)
         else:
             self._visual_issue = issue.code
+            self._consume_frames(self._frame_filter.reset())
             self.processor.break_continuity(issue.code, issue.frame_index)
+            self._summary = None
             if issue.code in self.FATAL_ISSUES:
                 self.finish(issue.code)
 
@@ -117,7 +143,9 @@ class OvergroundSession(QObject):
             self.preflight.invalidate(message)
             if self.processor and not self.done:
                 self._visual_issue = "disconnected"
+                self._consume_frames(self._frame_filter.flush())
                 self.processor.break_continuity("disconnected")
+                self._summary = None
                 self.finish("disconnected")
             else:
                 self._publish_ready(force=True)
@@ -142,18 +170,29 @@ class OvergroundSession(QObject):
             self._publish_ready(force=True)
         elif self.last_received_ns is not None and time.perf_counter_ns() - self.last_received_ns > 1_000_000_000:
             self._visual_issue = "data_timeout"
+            self._consume_frames(self._frame_filter.flush())
             self.processor.break_continuity("data_timeout")
+            self._summary = None
             self.finish("data_timeout")
 
     def publish_snapshot(self):
         p = self.processor
         if p is None:
             return
-        s = p.summary()
+        if self._summary is None:
+            self._summary = p.summary()
+        s = self._summary
         running = p.name == "overground_running"
         lengths = s["step_lengths_m"]
         speed = s["running_speed_m_s" if running else "walking_speed_m_s"]
         self.snapshot.emit({"touch_count": sum(c.confirmed for c in p.contacts),
+                            "device_timing": ({
+                                "stream_id": self._last_frame.stream_id,
+                                "sample_time_s": self._last_frame.sample_time_s,
+                                "received_time_s": self._last_frame.received_monotonic_ns / 1e9,
+                                "frame_index": self._last_frame.sample_index,
+                                "origin_sample_time_s": p.origin,
+                            } if self._last_frame is not None else None),
                             "running" if running else "walking": s,
                             "status": "等待进入" if p.origin is None else s.get("status", "行走中"),
                             "stride_count": len(lengths),
@@ -181,6 +220,8 @@ class OvergroundSession(QObject):
     def finish(self, reason):
         if self.done:
             return
+        if self._frame_filter is not None:
+            self._consume_frames(self._frame_filter.flush())
         self.done = True
         self._timer.stop()
         self.publish_snapshot()
@@ -188,18 +229,27 @@ class OvergroundSession(QObject):
 
     @Slot()
     def halt(self):
+        if self.done:
+            return
+        if self._frame_filter is not None:
+            self._consume_frames(self._frame_filter.flush())
         self.done = True
         self._timer.stop()
+        self.publish_snapshot()
 
     def build_report(self, reason):
         if self.processor is None:
             raise RuntimeError("Overground session has not passed preflight and armed")
+        self._consume_frames(self._frame_filter.flush())
         origin = self.processor.origin
-        pairs = [(bits, t - origin) for bits, t in zip(self.frames, self.timestamps)
-                 if origin is not None and t >= origin]
+        # Keep pre-entry and unknown-edge samples as well; negative relative times
+        # locate them before the first estimated touchdown without deleting frames.
+        origin = origin if origin is not None else (self.timestamps[0] if self.timestamps else 0)
+        pairs = [(bits, t - origin) for bits, t in zip(self.frames, self.timestamps)]
         report = self.processor.build_report(reason, tuple(x[0] for x in pairs), tuple(x[1] for x in pairs))
         report.report_config_snapshot["raw_buffer"] = {
             "total_received_frames": self.total_frames, "retained_frames": len(self.frames),
             "truncated": self.total_frames > len(self.frames), "budget_bytes": 64 * 1024 * 1024,
+            "raw_only_tail_frames": self.raw_only_tail_frames,
         }
         return report

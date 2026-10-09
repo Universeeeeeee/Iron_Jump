@@ -936,20 +936,21 @@ class ReportView(QWidget):
             self._title.setText(self._title.text() + " · 模拟数据（非实测）")
 
         quality = report.report_config_snapshot.get("beam_quality")
-        transient_pulses = (quality or {}).get("preflight", {}).get("stability", {}).get("transient_beam_pulses", 0)
         selection = (quality or {}).get("preflight", {}).get("segment_selection", {})
         excluded_segments = selection.get("excluded_segment_indices", ())
-        if quality and (quality.get("degraded") or quality.get("events") or transient_pulses or excluded_segments):
+        if quality:
+            notes = []
             count = len(quality.get("preflight", {}).get("bad_indices", ()))
-            self._reason_label.setText(self._reason_label.text() +
-                f"\n设备质量：冻结 {count} 束不可用，运行中 {quality.get('event_count', 0)} 项记录。" +
-                (f"自检短时变化 {transient_pulses} 次（按光束计数，未计入坏灯），原始运动数据保留。" if transient_pulses else "") +
-                ("自动剔除持续全零段：" + "、".join(str(s + 1) for s in excluded_segments) +
-                 f"；协议 {selection['source_segment_count']} 段，使用 {len(selection['source_segment_indices'])} 段。" if excluded_segments else "") +
-                quality.get("limitation", ""))
+            if count:
+                notes.append(f"{count} 束不可用，相关事件已排除")
+            if excluded_segments:
+                notes.append("未使用段：" + "、".join(str(s + 1) for s in excluded_segments))
+            if any(event.get("code") != "degraded_start" for event in quality.get("events", ())):
+                notes.append("部分采集区间需复核")
+            if notes:
+                self._reason_label.setText(self._reason_label.text() + "\n设备质量：" + "；".join(notes))
             self._reason_label.setWordWrap(True)
-        self._reason_label.setToolTip("未记录设备质量信息" if quality is None else
-                                      __import__("json").dumps(quality, ensure_ascii=False, indent=2))
+        self._reason_label.setToolTip("未记录设备质量信息" if quality is None else "")
 
         self._request_latest_if_available()
 

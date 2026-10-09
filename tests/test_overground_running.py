@@ -305,7 +305,8 @@ def test_start_rechecks_staleness_obstruction_and_issue(qtbot):
     assert session.processor is None
     for n in range(2000, 3000):
         session.on_frame(frame(layout, n))
-    session.on_frame(frame(layout, 3000, [(.2, .4)]))
+    for n in range(3000, 3012):
+        session.on_frame(frame(layout, n, [(.2, .4)]))
     session.arm()
     assert session.processor is None
 

@@ -16,9 +16,11 @@ from __future__ import annotations
 import logging
 import os
 import time
+import threading
+from collections import deque
 from typing import Optional
 
-from qtpy.QtCore import QObject, Signal, Slot, QThread, Qt, QMetaObject
+from qtpy.QtCore import QObject, Signal, Slot, QThread, Qt, QMetaObject, QTimer
 
 from config.test_config import AnyTestConfig, TestConfig
 from config.test_report import TestReport, build_report
@@ -29,6 +31,86 @@ from hardware.beam_quality import BeamQualityPolicy
 from path_utils import find_dll as _find_dll
 
 log = logging.getLogger(__name__)
+
+
+class _GroundFrameInbox(QObject):
+    """Drain ordered reader callbacks on the measurement thread without 1000 Qt posts/s."""
+
+    def __init__(self, quality):
+        super().__init__(quality)
+        self.quality = quality
+        self._pending = deque()
+        self._lock = threading.Lock()
+        self._accepting = True
+        self._timer = QTimer(self)
+        self._timer.setInterval(5)
+        self._timer.timeout.connect(self.drain)
+        quality.freeze_input = self.freeze
+
+    @Slot(object)
+    def on_frame(self, frame):
+        with self._lock:
+            if self._accepting:
+                self._pending.append((False, frame))
+                self.quality.latest_received_frame = frame
+
+    @Slot(object)
+    def on_issue(self, issue):
+        with self._lock:
+            if self._accepting:
+                self._pending.append((True, issue))
+
+    @Slot()
+    def monitor(self):
+        self._timer.start()
+
+    def _consume(self, items):
+        for issue, value in items:
+            (self.quality.on_issue if issue else self.quality.on_frame)(value)
+
+    @Slot()
+    def drain(self):
+        deadline = time.perf_counter() + .004
+        while True:
+            with self._lock:
+                items = [self._pending.popleft() for _ in range(min(20, len(self._pending)))]
+            self._consume(items)
+            if not items or time.perf_counter() >= deadline:
+                break
+        with self._lock:
+            pending = bool(self._pending)
+        # Windows timer wakeups can be delayed. Catch up without dropping frames,
+        # but yield between bounded batches so stop and fault slots still run.
+        interval = 0 if pending else 5
+        if self._timer.interval() != interval:
+            self._timer.setInterval(interval)
+
+    @Slot(object)
+    def arm_checked(self, request):
+        # Frames already received before this command remain preflight evidence.
+        with self._lock:
+            items = list(self._pending)
+            self._pending.clear()
+        self._consume(items)
+        self.quality.arm_checked(request)
+
+    @Slot()
+    def finish(self):
+        self.freeze()
+        with self._lock:
+            items = list(self._pending)
+            self._pending.clear()
+        self._consume(items)
+
+    def freeze(self, stale_before_ns=None):
+        with self._lock:
+            latest = getattr(self.quality, 'latest_received_frame', None)
+            if (stale_before_ns is not None and latest is not None
+                    and latest.received_monotonic_ns >= stale_before_ns):
+                return False
+            self._accepting = False
+        self._timer.stop()
+        return True
 
 
 class SessionController(QObject):
@@ -102,6 +184,7 @@ class SessionController(QObject):
         self.quality_policy = BeamQualityPolicy()
         self.quality_status = {}
         self._quality = None
+        self._frame_inbox = None
 
     # ------------------------------------------------------------------
     #  公共方法
@@ -125,6 +208,7 @@ class SessionController(QObject):
             pid=self._pid,
             timeout_ms=self._timeout_ms,
             chunk_size=self._chunk_size,
+            legacy_frame_signals=False,
         )
         self._worker.moveToThread(self._thread)
         self._worker.data_received.connect(self._on_device_message)
@@ -180,6 +264,7 @@ class SessionController(QObject):
                 pid=self._pid,
                 timeout_ms=self._timeout_ms,
                 chunk_size=self._chunk_size,
+                legacy_frame_signals=False,
             )
             self._worker.moveToThread(self._thread)
 
@@ -193,12 +278,19 @@ class SessionController(QObject):
             self._quality = DeviceQualitySession(config, self.quality_policy, self._engine)
             self._engine.quality = self._quality
             self._walking_ready = False
-            self._worker.sensor_frame_received.connect(self._quality.on_frame, Qt.QueuedConnection)
-            self._worker.acquisition_issue.connect(self._quality.on_issue, Qt.QueuedConnection)
+            if self._engine.overground is not None:
+                self._frame_inbox = _GroundFrameInbox(self._quality)
+                self._worker.sensor_frame_received.connect(self._frame_inbox.on_frame, Qt.DirectConnection)
+                self._worker.acquisition_issue.connect(self._frame_inbox.on_issue, Qt.DirectConnection)
+                self.prepare_walking_requested.connect(self._frame_inbox.monitor)
+                self.ground_start_requested.connect(self._frame_inbox.arm_checked)
+            else:
+                self._worker.sensor_frame_received.connect(self._quality.on_frame, Qt.QueuedConnection)
+                self._worker.acquisition_issue.connect(self._quality.on_issue, Qt.QueuedConnection)
+                self.ground_start_requested.connect(self._quality.arm_checked)
             self._worker.device_state_changed.connect(self._quality.on_device_state)
             self.prepare_walking_requested.connect(self._worker.prepare_walking_capture)
             self.prepare_walking_requested.connect(self._quality.monitor)
-            self.ground_start_requested.connect(self._quality.arm_checked)
             self._quality.armed.connect(self._engine.begin_quality_session)
             self._quality.armed.connect(self._on_walking_armed)
             self._quality.frame_ready.connect(self._engine.process_quality_frame)
@@ -442,10 +534,12 @@ class SessionController(QObject):
 
     @Slot(str)
     def _on_device_message(self, msg):
-        self.device_message.emit(msg)
+        log.debug("USB: %s", msg)
 
     @Slot(str, str)
     def _on_device_state(self, state: str, message: str):
+        if state == "error":
+            log.error("USB: %s", message)
         self._device_state = state
         if state in {"disconnected", "error"}:
             self._device_layout = None
@@ -514,6 +608,8 @@ class SessionController(QObject):
         engine = self._engine
         report = None
 
+        if self._frame_inbox is not None and self._thread and self._thread.isRunning():
+            QMetaObject.invokeMethod(self._frame_inbox, "finish", Qt.BlockingQueuedConnection)
         if self._quality is not None and self._thread and self._thread.isRunning():
             QMetaObject.invokeMethod(self._quality, "halt", Qt.BlockingQueuedConnection)
 
@@ -554,6 +650,7 @@ class SessionController(QObject):
         self._worker = None
         self._engine = None
         self._quality = None
+        self._frame_inbox = None
         self.quality_status = {}
 
         log.info("Session stopped: %s", reason)
@@ -561,8 +658,7 @@ class SessionController(QObject):
 
     def _stop_worker(self):
         # Continuous capture owns Qt timers; stop them on their owning thread.
-        if (self._engine is not None
-                and self._thread and self._thread.isRunning()
+        if (self._thread and self._thread.isRunning()
                 and self._worker.metaObject().indexOfMethod("stop()") >= 0):
             QMetaObject.invokeMethod(self._worker, "stop", Qt.BlockingQueuedConnection)
         else:
@@ -575,6 +671,8 @@ class SessionController(QObject):
             self._do_stop("cleanup")
             return
 
+        if self._frame_inbox is not None and self._thread and self._thread.isRunning():
+            QMetaObject.invokeMethod(self._frame_inbox, "finish", Qt.BlockingQueuedConnection)
         if self._quality is not None and self._thread and self._thread.isRunning():
             QMetaObject.invokeMethod(self._quality, "halt", Qt.BlockingQueuedConnection)
         if (self._engine is not None and self._engine.overground is not None
@@ -596,6 +694,7 @@ class SessionController(QObject):
         self._worker = None
         self._engine = None
         self._quality = None
+        self._frame_inbox = None
         self.quality_status = {}
         self._is_paused = False
         self._start_pending = False

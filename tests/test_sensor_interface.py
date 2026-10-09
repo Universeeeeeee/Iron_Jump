@@ -19,6 +19,27 @@ def packet(index, body, count=1, part=0):
     return UploadDataSubPack(len(body), index, count, part, body)
 
 
+@pytest.mark.parametrize("captured_hex", [
+    "5a5a5a5a800100005aa5a5a5a5",
+    "5a5a5a5a826600010000000100ffffffffffffffffffffffffffffffffffffffffffffff"
+    "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+    "ffffffffffffffffffffffff7fffffffffffffffffffffffff0000000000000000000000"
+    "001ca5a5a5a5",
+])
+def test_native_20260929_packets_use_crc8_not_documented_additive_checksum(captured_hex):
+    # Fixed native ReadDevice bytes, independent of the synthetic packet builder.
+    captured = bytes.fromhex(captured_hex)
+    assert crc8_poly_07(captured[4:-5]) == captured[-5]
+    assert sum(captured[4:-5]) & 0xff != captured[-5]
+    ret, frame_type, ack, data, _ = protocol_parser(bytearray(captured))
+    assert ret == 0
+    if frame_type == E_DATA_REPORT:
+        assert (data.frameIdx, data.packNum, data.packIdx, len(data.buffer)) == (1, 1, 0, 96)
+        assert data.buffer[-12:] == bytes(12)
+    else:
+        assert frame_type == 0x80 and ack.ACK == 0
+
+
 @pytest.mark.parametrize("count", [*range(1, 9), 12, 255])
 def test_variable_length_frames_and_little_endian_counter(count):
     layout = DeviceLayout.linear(count)
@@ -63,6 +84,21 @@ def test_every_usb_split_and_corrupt_packet_recovery():
     buf = bytearray(b"garbage" * 1000 + b"ZZ")
     protocol_parser(buf)
     assert buf == b"ZZ"
+
+
+@pytest.mark.parametrize('offset', [0, 5, 20, -5, -1])
+def test_header_length_payload_crc_or_tail_corruption_never_becomes_data(offset):
+    corrupt = bytearray(wire_packet(1, bytes(96)))
+    corrupt[offset] ^= 1
+    buf = corrupt + wire_packet(2, b'\xff' * 96)
+    assert protocol_parser(buf)[3].frameIdx == 2
+    assert not buf
+
+
+def test_valid_crc_dark_payload_is_not_a_packet_read_error():
+    buf = bytearray(wire_packet(3, bytes(96)))
+    result = protocol_parser(buf)
+    assert result[0] == 0 and result[3].buffer == bytes(96)
 
 
 def test_wire_order_reversal_and_invalid_beams():

@@ -14,6 +14,7 @@ from qtpy.QtCore import QObject, Signal, Slot, QTimer
 
 from hardware.protocol import E_ACK, UploadDataSubPack
 from hardware.sensor_frame import AcquisitionIssue, DeviceLayout, SensorFrameAssembler
+from hardware.beam_filter import BeamDisplayFilter
 
 try:
     from .receive import CyUsbInterfaceDevice, E_DATA_REPORT
@@ -82,13 +83,15 @@ class UsbWorker(QObject):
     led_health_changed = Signal(dict)  # 轻量 LED 通断/闪烁检查结果
 
     def __init__(self, dll_path=None, vid=0x04B4, pid=0x1004, timeout_ms=10, chunk_size=2048,
-                 *, layout: DeviceLayout | None = None, capture_command_required=None):
+                 *, layout: DeviceLayout | None = None, capture_command_required=None,
+                 legacy_frame_signals=True):
         super().__init__()
         self.dll_path = dll_path
         self.vid = int(vid)
         self.pid = int(pid)
         self.timeout_ms = int(timeout_ms)
         self.chunk_size = int(chunk_size)
+        self.legacy_frame_signals = legacy_frame_signals
         if layout is None:
             count_spec = os.getenv("DAYU_SEGMENT_COUNT")
             order_spec = os.getenv("DAYU_SEGMENT_ORDER", "")
@@ -129,6 +132,8 @@ class UsbWorker(QObject):
         self._pending_bits = None
         self._flush_timer = None
         self._health_frames: list[list[int]] = []
+        self._health_filter = BeamDisplayFilter(10)
+        self._health_first_sample = None
         self._health_check_active = False
         self._health_owns_capture = False
         self._health_deadline = 0.0
@@ -267,9 +272,17 @@ class UsbWorker(QObject):
             self.layout = frame.layout
             self._layout_announced = True
             self.layout_detected.emit(frame.layout)
+        self._publish_frame(frame)
+
+    def _publish_frame(self, frame):
+        """Deliver a complete sample; monitors can avoid unused legacy signals."""
         self.sensor_frame_received.emit(frame)
+        self._record_led_health_frame(frame)
+        # The main controller consumes SensorFrame only. Avoid building duplicate
+        # lists and HEX text for the single-meter viewer's compatibility signals.
+        if not self.legacy_frame_signals:
+            return
         contacts = list(frame.contact_bits)
-        self._record_led_health_frame(contacts)
         # Old algorithms expect a single 96-beam module and host clock. Never
         # silently truncate a multi-module frame into that compatibility path.
         if len(self.layout.segments) == 1:
@@ -437,6 +450,8 @@ class UsbWorker(QObject):
             self._health_check_active and self._health_owns_capture
         )
         self._health_frames.clear()
+        self._health_filter = BeamDisplayFilter(10)
+        self._health_first_sample = None
         self._health_check_active = True
         self._health_deadline = time.perf_counter() + LED_HEALTH_TIMEOUT_S
         self.led_health_changed.emit(
@@ -456,14 +471,24 @@ class UsbWorker(QObject):
             self._health_owns_capture = owns_existing_stream
         self._health_timer.start()
 
-    def _record_led_health_frame(self, contact_bits: list[int]) -> None:
+    def _record_led_health_frame(self, frame) -> None:
         if not self._health_check_active:
             return
-        if (
-            len(contact_bits) == (self.layout.bit_count if self.layout else 96)
-            and len(self._health_frames) < LED_HEALTH_TARGET_FRAMES
-        ):
-            self._health_frames.append(list(contact_bits))
+        previous = self._health_filter.last_frame
+        invalid = (not all(frame.valid_bits) or frame.dropped_frames_before
+                   or any(flag != "all_beams_blocked" for flag in frame.quality_flags))
+        if (previous is None or frame.stream_id != previous.stream_id or frame.layout != previous.layout
+                or frame.sample_index != previous.sample_index + 1 or invalid):
+            self._health_frames.clear()
+            self._health_filter = BeamDisplayFilter(10)
+            self._health_first_sample = frame.sample_index
+        if invalid:
+            return
+        payload = self._health_filter.feed(frame)
+        # Let the initial state settle before classifying its confirmed changes.
+        if (frame.sample_index - self._health_first_sample >= self._health_filter.samples
+                and len(self._health_frames) < LED_HEALTH_TARGET_FRAMES):
+            self._health_frames.append(list(frame.layout.contact_bits(payload)))
 
     def _poll_led_health(self) -> None:
         if not self._health_check_active:
@@ -484,6 +509,7 @@ class UsbWorker(QObject):
             self._health_frames,
             self.layout.bit_count if self.layout else 96,
         )
+        result["confirmation_ms"] = self._health_filter.samples
         self._health_frames.clear()
 
         if self._health_owns_capture and self.dev is not None:

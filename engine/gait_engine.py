@@ -390,7 +390,10 @@ class GaitEngine(QObject):
         if self._finished:
             return
         if self.overground is not None:
-            self.overground.on_frame(frame, raw, uncertain)
+            if frame is None:
+                self.overground.archive_raw_frame(raw, raw_only=True)
+            else:
+                self.overground.on_frame(frame, raw, uncertain)
             return
         if self._paused:
             return

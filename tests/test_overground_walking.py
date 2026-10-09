@@ -35,6 +35,17 @@ def walk(p, contacts, end_ms, *, skip=(), host_batch=False):
 CONTACTS = [(100, 800, .35), (600, 1300, .95), (1100, 1800, 1.55), (1600, 2300, 2.15)]
 
 
+def test_summary_contact_evidence_remains_an_independent_snapshot():
+    p = processor(3, stop_type="Software command")
+    walk(p, [(0, 200, .35), (205, 400, .35)], 450)
+    row = p.summary()['contacts'][0]
+    assert 'positions' not in row
+    assert row['merged_interruptions']
+    original = dict(p.contacts[0].merged_interruptions[0])
+    row['merged_interruptions'][0]['reason'] = 'changed by consumer'
+    assert p.contacts[0].merged_interruptions[0] == original
+
+
 @pytest.mark.parametrize("n", [1, 3, 8, 12])
 def test_preflight_requires_complete_clear_continuous_window(n):
     gate = WalkingPreflight(BeamQualityPolicy(observation_seconds=1))
@@ -46,8 +57,11 @@ def test_preflight_requires_complete_clear_continuous_window(n):
     assert gate.ready(time.perf_counter_ns())
     assert gate.context.snapshot()["nominal_length_m"] == n
     gate.feed(frame(layout, 1000, [(.2, .3)]))
+    assert gate.ready(time.perf_counter_ns())  # The raw change is not yet confirmed.
+    for i in range(1001, 1011):
+        gate.feed(frame(layout, i, [(.2, .3)]))
     assert not gate.ready(time.perf_counter_ns())
-    for i in range(1001, 2001):
+    for i in range(1011, 2022):
         gate.feed(frame(layout, i))
     assert gate.ready(time.perf_counter_ns())
     assert not gate.ready(gate.context.checked_monotonic_ns + gate.STALE_NS + 1)
@@ -248,9 +262,13 @@ def test_parser_reports_corruption_instead_of_silent_healthy_stream():
 
 
 @pytest.mark.parametrize("running", [False, True])
-def test_session_controller_requires_preflight_and_preserves_stream(qtbot, running):
+def test_session_controller_requires_preflight_and_preserves_stream(qtbot, monkeypatch, running):
     from qtpy.QtCore import QObject, Signal, Slot
     from ui.session_controller import SessionController
+    # This finite, immediate burst tests routing, not a live receiver heartbeat.
+    # Keep freshness deterministic while the queued frames drain on slower hosts.
+    received_ns = time.perf_counter_ns()
+    monkeypatch.setattr(time, "perf_counter_ns", lambda: received_ns)
 
     class Worker(QObject):
         raw_contact_signal = Signal(list, float)
@@ -302,7 +320,7 @@ def test_session_controller_requires_preflight_and_preserves_stream(qtbot, runni
         for i in range(1000, 3400):
             ranges = [(x - .1, x + .1) for start, end, x in CONTACTS if start <= i - 1000 < end]
             worker.sensor_frame_received.emit(frame(layout, i, ranges))
-        qtbot.waitUntil(lambda: controller.engine.overground.processor.last_sample == 3399)
+        qtbot.waitUntil(lambda: controller.engine.overground.processor.last_sample == 3389)
         worker.acquisition_issue.emit(AcquisitionIssue("layout_mismatch", 3400))
         qtbot.waitUntil(lambda: len(reports) == 1)
         assert reports[0].finish_reason == "layout_mismatch"

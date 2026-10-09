@@ -6,6 +6,7 @@ Unobserved events never become zeros, and short candidates remain sequence barri
 from dataclasses import dataclass, field
 
 from config.overground_running_report import OvergroundRunningReport
+from hardware.sensor_frame import blocked_indices
 
 
 def metric(value=None, reason=None):
@@ -19,12 +20,12 @@ class Contact:
     epoch: int
     label: str
     side: str
-    start: int
+    start: float
     last: int
     low: int
     high: int
     touch_known: bool
-    end: int | None = None
+    end: float | None = None
     lift_known: bool = False
     confirmed: bool = False
     problem: str | None = None
@@ -33,6 +34,13 @@ class Contact:
     # Run-length encoded leading edges; unchanged stances take constant space.
     edges: list = field(default_factory=list)
     endpoint_run: int = 0
+    observed_samples: int = 0
+    absent_samples: int = 0
+    release_start: float | None = None
+    edge_estimates: dict = field(default_factory=dict)
+    has_unknown: bool = False
+    candidate_since: int | None = None
+    last_reliable_sample: int | None = None
 
 
 class OvergroundRunningProcessor:
@@ -58,11 +66,15 @@ class OvergroundRunningProcessor:
         self.finished_reason = None
         self._identity_known = True
         self._recovering = False
+        self._masked_contact_uncertain = False
         self._last_label = "B"
         self._clear_since = None
         self._exit_evidence = False
         self._ambiguous = False
         self._last_visual = -100
+        self._phase_adjustments = []
+        self._duration_censored = False
+        self._duration_clear_upper = None
 
     def break_continuity(self, code, frame_index=None):
         self._preserved_stops = self._stop_intervals()
@@ -82,18 +94,22 @@ class OvergroundRunningProcessor:
         self._exit_evidence = False
 
     def _groups(self, bits):
+        if b'\x01' not in bits:
+            return []
         groups = []
         # Sort by actual geometry, including reversed segments and custom wire order.
-        for i in sorted((i for i, b in enumerate(bits) if b), key=self.positions.__getitem__):
+        for i in sorted(blocked_indices(bits), key=self.positions.__getitem__):
             if groups and self.positions[i] - self.positions[groups[-1][-1]] <= self.CLUSTER_GAP_M:
                 groups[-1].append(i)
             else:
                 groups.append([i])
         return [(g[0], g[-1]) for g in groups]
 
-    def process(self, frame):
+    def process(self, frame, observation=None, *, masked_contact=False):
         if self.finished_reason:
             return
+        if observation is not None:
+            frame = observation.measurement_frame()
         if frame.stream_id != self.device.stream_id or frame.layout != self.device.layout:
             self.break_continuity("device_changed", frame.frame_index)
             self.finished_reason = "device_changed"
@@ -107,12 +123,42 @@ class OvergroundRunningProcessor:
             self.break_continuity("frame_gap", frame.frame_index)
         self.last_sample, self.last_time = n, frame.sample_time_s
         if (len(frame.contact_bits) != len(self.positions) or len(frame.valid_bits) != len(self.positions)
-                or not all(frame.valid_bits) or any(x != "frame_gap" for x in frame.quality_flags)):
+                or (observation is None and not all(frame.valid_bits))
+                or any(x != "frame_gap" for x in frame.quality_flags)):
             self.break_continuity("invalid_sample", frame.frame_index)
             return
-        if any(frame.contact_bits):
+        if masked_contact:
+            if not self._masked_contact_uncertain:
+                self.break_continuity("masked_contact_boundary", frame.frame_index)
+            self._masked_contact_uncertain = True
+            return
+        self._masked_contact_uncertain = False
+        if observation is not None:
+            if observation.unresolved_segments:
+                self._duration_censored = True
+                self._duration_clear_upper = None
+            if (self._duration_censored and self._duration_clear_upper is None
+                    and b'\x01' not in frame.contact_bits and b'\x00' not in frame.valid_bits):
+                self._duration_clear_upper = n
+            for c in list(self.active):
+                if observation.affected(c.low, c.high):
+                    self._preserved_stops = self._stop_intervals()
+                    c.interrupted = 'local_unknown_timeout'
+                    self.active.remove(c)
+                    self._identity_known = False
+            for c in list(self.active):
+                if (c.interrupted != 'local_unknown_timeout' and ((not c.confirmed and c.has_unknown
+                     and n - c.start >= max(self.config.min_contact_time, self.config.confirmation_ms) + 10)
+                        or (c.candidate_since is not None
+                            and n - c.candidate_since >= self.config.release_ms + 10))):
+                    self._preserved_stops = self._stop_intervals()
+                    c.interrupted = 'local_unknown_timeout'
+                    self._identity_known = False
+        if b'\x01' in frame.contact_bits:
             self.last_occupied = n
         groups = self._groups(frame.contact_bits)
+        if observation is not None:
+            groups = observation.associate_fragments(groups, self.active)
         matches, used = [], set()
         ambiguous = len(groups) > 2
         for low, high in groups:
@@ -132,7 +178,7 @@ class OvergroundRunningProcessor:
             self._phase(n, -1)
             return
         self._ambiguous = False
-        low_edge, high_edge = min(self.positions), max(self.positions)
+        low_edge, high_edge = self.positions[0], self.positions[-1]
         observed = set()
         new = []
         for low, high, c in matches:
@@ -146,12 +192,21 @@ class OvergroundRunningProcessor:
                 boundary = self.positions[low] == low_edge or self.positions[high] == high_edge
                 c = Contact(len(self.contacts), self.epoch, self._last_label, side, n, n, low, high,
                             not self._recovering and not boundary)
+                if observation is not None:
+                    edge = observation.edge(low, high, 1)
+                    if edge:
+                        c.start = edge.sample
+                        c.edge_estimates['touch'] = [edge.left_sample, edge.right_sample]
+                        if c.start < n:
+                            self._phase_adjustments.append((c.start, n, 1, c.epoch))
+                    if observation.affected(low, high, observation.recovery_segments):
+                        c.touch_known = False
                 self._exit_evidence = False
                 self.contacts.append(c)
                 self.active.append(c)
                 new.append(c)
             observed.add(c.id)
-            if c.last < n - 1:
+            if c.last < n - 1 and c.release_start is not None:
                 # A sub-confirmation clear interval cannot silently count as continuous support.
                 self._preserved_stops = self._stop_intervals()
                 c.problem = c.problem or "uncertain_short_clear"
@@ -161,11 +216,22 @@ class OvergroundRunningProcessor:
                 for affected in self.contacts[c.id:]:
                     affected.side = "unknown"
             c.last, c.low, c.high = n, low, high
-            if c.edges and c.edges[-1][1] == n and c.edges[-1][2:] == [low, high]:
-                c.edges[-1][1] = n + 1
-            else:
-                c.edges.append([n, n + 1, low, high])
-            if n - c.start + 1 >= max(self.config.confirmation_ms, self.config.min_contact_time):
+            reliable = observation is None or observation.reliable(low, high)
+            c.observed_samples += int(reliable and c.interrupted != 'local_unknown_timeout')
+            if reliable:
+                c.last_reliable_sample = n
+            if reliable:
+                c.absent_samples = 0
+                c.release_start = None
+                c.candidate_since = None
+                if c.edges and c.edges[-1][1] == n and c.edges[-1][2:] == [low, high]:
+                    c.edges[-1][1] = n + 1
+                else:
+                    c.edges.append([n, n + 1, low, high])
+            if observation is not None:
+                c.has_unknown |= observation.affected(low, high, observation.unknown_segments) or bool(observation.edge(low, high, 1))
+            if (not c.interrupted and n - c.start + 1 >= max(self.config.confirmation_ms, self.config.min_contact_time)
+                    and c.observed_samples >= self.config.confirmation_ms):
                 if not c.confirmed:
                     c.confirmed = True
                     if self.origin is None and not c.problem:
@@ -187,7 +253,8 @@ class OvergroundRunningProcessor:
                                 self.direction = 1 if delta > 0 else -1
             endpoint = high_edge if self.direction > 0 else low_edge
             at_exit = self.direction and (self.positions[high] == endpoint or self.positions[low] == endpoint)
-            c.endpoint_run = c.endpoint_run + 1 if at_exit else 0
+            if reliable:
+                c.endpoint_run = c.endpoint_run + 1 if at_exit else 0
             if c.confirmed and c.endpoint_run >= self.config.confirmation_ms:
                 self._exit_evidence = True
         if groups and not any(c.id in observed and c.confirmed
@@ -199,9 +266,42 @@ class OvergroundRunningProcessor:
                 c.side, c.problem = "unknown", "simultaneous_contacts"
         for c in list(self.active):
             if c.id not in observed:
+                if c.interrupted == 'local_unknown_timeout':
+                    if observation.reliable(c.low, c.high):
+                        self.active.remove(c)
+                    continue
                 c.endpoint_run = 0
-                if n - c.last >= self.config.release_ms:
-                    c.end = c.last + 1
+                reliable = observation is None or observation.release_reliable(c.low, c.high, self.MATCH_MARGIN_M)
+                edge = observation.edge(c.low, c.high, 0) if observation is not None else None
+                if (observation is not None and observation.neighbour_unknown(
+                        c.low, c.high, self.MATCH_MARGIN_M)):
+                    edge = None
+                if observation is not None and c.candidate_since is None:
+                    c.candidate_since = n
+                if c.release_start is None and (reliable or edge):
+                    c.release_start = c.last + 1
+                    if observation is not None and not edge and n > c.candidate_since:
+                        left = c.last_reliable_sample
+                        if left is None or n - left > 11:
+                            self._preserved_stops = self._stop_intervals()
+                            c.release_start = None
+                            c.interrupted = 'local_unknown_timeout'
+                            self.active.remove(c)
+                            self._identity_known = False
+                            continue
+                        c.release_start = (left + n) / 2
+                        c.edge_estimates['lift'] = [left, n]
+                    if not edge and c.release_start < n:
+                        self._phase_adjustments.append((c.release_start, n, -1, c.epoch))
+                if edge:
+                    c.release_start = edge.sample
+                    c.edge_estimates['lift'] = [edge.left_sample, edge.right_sample]
+                    if edge.sample < n:
+                        self._phase_adjustments.append((edge.sample, n, -1, c.epoch))
+                if reliable:
+                    c.absent_samples += 1
+                if c.absent_samples >= self.config.release_ms:
+                    c.end = c.release_start
                     c.lift_known = self.positions[c.low] != low_edge and self.positions[c.high] != high_edge
                     if not c.confirmed:
                         c.problem = c.problem or "short_contact"
@@ -211,9 +311,13 @@ class OvergroundRunningProcessor:
                             later.side = "unknown"
                     self.active.remove(c)
         self._recovering = False
-        self._phase(n, len(groups))
+        held = sum(c.id not in observed and c.release_start is None
+                   and c.candidate_since is not None and not c.interrupted for c in self.active)
+        self._phase(n, -1 if observation is not None and observation.unresolved_segments else len(groups) + held)
         if groups:
             self.last_occupied = n
+            self._clear_since = None
+        elif observation is not None and observation.unresolved_segments:
             self._clear_since = None
         elif self.origin is not None:
             if self._clear_since is None:
@@ -245,7 +349,7 @@ class OvergroundRunningProcessor:
         if c.problem or c.interrupted or not c.confirmed:
             return metric(reason=c.problem or c.interrupted or "short_contact")
         edge = 3 if self.direction > 0 else 2
-        boundary = max(self.positions) if self.direction > 0 else min(self.positions)
+        boundary = self.positions[-1] if self.direction > 0 else self.positions[0]
         if any(self.positions[r[edge]] == boundary for r in c.edges):
             return metric(reason="toe_clipped")
         # Weighted sliding platforms; adjacent pitch is read from the physical segment.
@@ -253,11 +357,14 @@ class OvergroundRunningProcessor:
         for i, row in enumerate(c.edges):
             values, duration = [], 0
             for r in c.edges[i:]:
+                if values and r[0] != previous_end:
+                    break
                 pos = self.positions[r[edge]]
                 pitch = self.device.layout.segments[r[edge] // 96].pitch_m
                 if values and max(max(v for v, _ in values), pos) - min(min(v for v, _ in values), pos) > pitch + 1e-9:
                     break
                 values.append((pos, r[1] - r[0]))
+                previous_end = r[1]
                 duration += r[1] - r[0]
                 if duration >= self.config.toe_platform_ms:
                     ordered = sorted(values)
@@ -284,7 +391,15 @@ class OvergroundRunningProcessor:
                 return None, "incomplete_observation"
             if count == 0 and b - a < self.config.release_ms:
                 return None, "uncertain_short_clear"
-            totals[count] += hi - lo
+            boundaries = sorted({lo, hi, *[x for left, right, _, ep in self._phase_adjustments
+                                          if ep == epoch for x in (left, right) if lo < x < hi]})
+            for left, right in zip(boundaries, boundaries[1:]):
+                midpoint = (left + right) / 2
+                inferred = count + sum(delta for a, b, delta, ep in self._phase_adjustments
+                                       if ep == epoch and a <= midpoint < b)
+                if not 0 <= inferred <= 2:
+                    return None, 'incomplete_observation'
+                totals[inferred] += right - left
             cursor = hi
         if cursor != end:
             return None, "incomplete_observation"
@@ -296,7 +411,16 @@ class OvergroundRunningProcessor:
         for a, b, count, e in self.phases:
             if count != 0 or e != epoch or b <= start or a >= end:
                 continue
-            departures = [c for c in self.contacts if c.epoch == epoch and c.end == a]
+            lo, hi = max(start, a), min(end, b)
+            boundaries = sorted({lo, hi, *[x for left, right, _, ep in self._phase_adjustments
+                                          if ep == epoch for x in (left, right) if lo < x < hi]})
+            if not any(sum(delta for left, right, delta, ep in self._phase_adjustments
+                           if ep == epoch and left <= (u + v) / 2 < right) == 0
+                       for u, v in zip(boundaries, boundaries[1:])):
+                continue
+            departures = [c for c in self.contacts if c.epoch == epoch and c.end is not None
+                          and (c.end == a or any(left == c.end and right == a and delta == -1 and ep == epoch
+                                                for left, right, delta, ep in self._phase_adjustments))]
             if not departures or any(not rows[c.id]["lift_s"]["valid"] for c in departures):
                 return "lift_not_observed"
         return None
@@ -313,6 +437,8 @@ class OvergroundRunningProcessor:
         stops = dict(self._preserved_stops)
         for c in self.contacts:
             end = c.end if c.end is not None else c.last + 1
+            if c.end is None and c.last_reliable_sample is not None:
+                end = c.last_reliable_sample + 1
             if not c.problem and not c.interrupted and end - c.start >= self.config.stop_threshold_s * 1000:
                 stops[c.start] = max(stops.get(c.start, end), end)
         return sorted(stops.items())
@@ -415,7 +541,14 @@ class OvergroundRunningProcessor:
         lengths = values(steps, "length_m")
         timed = [s for s in steps if s["speed_m_s"]["valid"]]
         speed = sum(s["length_m"]["value"] for s in timed) / sum(s["time_s"]["value"] for s in timed) if timed else None
-        duration = max(0, (self.last_occupied + 1) / 1000 - origin) if self.origin is not None and self.last_occupied is not None else None
+        end = self.last_occupied + 1 if self.last_occupied is not None else None
+        if (self.last_occupied is not None and any(c.end is not None and 'lift' in c.edge_estimates
+                                                 and c.end >= self.last_occupied for c in self.contacts)):
+            end = max(c.end for c in self.contacts if c.end is not None and c.end >= self.last_occupied)
+        duration = max(0, end / 1000 - origin) if self.origin is not None and end is not None else None
+        if (self._duration_censored and (self._duration_clear_upper is None
+                                        or end is None or end < self._duration_clear_upper)):
+            duration = None
         return {"segment_count": len(self.device.layout.segments), "nominal_length_m": len(self.device.layout.segments),
                 "direction": self.direction, "duration_s": duration, "valid_steps": sum(s["time_s"]["valid"] for s in steps),
                 "valid_cycles": sum(c["duration_s"]["valid"] for c in cycles), "step_lengths_m": lengths,
