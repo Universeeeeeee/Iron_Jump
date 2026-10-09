@@ -389,8 +389,10 @@ def test_exit_evidence_cannot_survive_returning_interior():
             bounds = [(.2, .35)]
         elif 400 <= n < 550:
             bounds = [(.55, .7)]
-        elif 700 <= n < 850:
-            bounds = [(.82, 1)] if n < 800 else [(.78, .93)]
+        elif 700 <= n < 800:
+            bounds = [(.82, 1)]
+        elif 850 <= n < 1000:
+            bounds = [(.78, .93)]
         p.process(frame(p.device.layout, n, bounds))
     assert p.finished_reason is None
 

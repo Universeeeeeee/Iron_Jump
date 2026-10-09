@@ -46,7 +46,7 @@ def test_existing_foot_can_split_into_heel_and_forefoot(filtered):
     assert c.end == pytest.approx(.4)
     assert p.summary()['mean_contact_s'] == pytest.approx(.3)
     snapshot = p.build_report('manual').report_config_snapshot
-    assert snapshot['algorithm'] == 'overground_walking_v1.4'
+    assert snapshot['algorithm'] == 'overground_walking_v1.6'
     assert snapshot['fragment_association'] == 'unique_existing_envelope_with_match_margin'
 
 

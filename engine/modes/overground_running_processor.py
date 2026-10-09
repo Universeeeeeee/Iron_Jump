@@ -50,6 +50,7 @@ class OvergroundRunningProcessor:
     CLUSTER_GAP_M = .04
     MATCH_MARGIN_M = .035
     MAX_CLUSTER_WIDTH_M = .45
+    NARROW_CANDIDATE_WIDTH_M = .03
 
     def __init__(self, config, device):
         self.config, self.device = config, device
@@ -70,11 +71,17 @@ class OvergroundRunningProcessor:
         self._last_label = "B"
         self._clear_since = None
         self._exit_evidence = False
+        self._exit_contact_id = None
         self._ambiguous = False
         self._last_visual = -100
         self._phase_adjustments = []
         self._duration_censored = False
+        self._duration_start_censored = False
         self._duration_clear_upper = None
+        self._narrow_candidates = []
+        self._narrow_unknown = []
+        self._narrow_barriers = []
+        self._exit_blocked_through_id = -1
 
     def break_continuity(self, code, frame_index=None):
         self._preserved_stops = self._stop_intervals()
@@ -92,6 +99,76 @@ class OvergroundRunningProcessor:
         self._last_label = "B"
         self._clear_since = None
         self._exit_evidence = False
+        self._exit_contact_id = None
+        for p in self._narrow_candidates:
+            self._narrow_unknown.append((p['start'], p['last'] + 1, self.epoch - 1))
+        self._narrow_candidates.clear()
+
+    def _defer_narrow_candidates(self, groups, n):
+        # Only defer new islands beside a reliably tracked confirmed footprint.
+        # This is a pending-island gate, not a minimum width for a running foot.
+        def matches(low, high, candidates):
+            return [c for c in candidates
+                    if self.positions[low] <= self.positions[c['high']] + self.MATCH_MARGIN_M
+                    and self.positions[high] >= self.positions[c['low']] - self.MATCH_MARGIN_M]
+        pending = []
+        for p in self._narrow_candidates:
+            if p['last'] == n - 1 and any(matches(low, high, [p]) for low, high in groups):
+                pending.append(p)
+            else:
+                self._narrow_unknown.append((p['start'], p['last'] + 1, self.epoch))
+                self._narrow_barriers.append((p['start'], p['last'] + 1, self.epoch))
+                self._identity_known = False
+        owners = [[c for c in self.active
+                   if self.positions[low] <= self.positions[c.high] + self.MATCH_MARGIN_M
+                   and self.positions[high] >= self.positions[c.low] - self.MATCH_MARGIN_M]
+                  for low, high in groups]
+        anchored = any(len(cs) == 1 and cs[0].confirmed and not cs[0].problem
+                       and not cs[0].interrupted for cs in owners)
+        # A later wide contact cannot overtake an earlier pending touch in the
+        # contact sequence. Promote the earlier candidates with their own times.
+        force = any(not cs and (self.positions[high] - self.positions[low] >= self.NARROW_CANDIDATE_WIDTH_M
+                                or self.positions[low] == self.positions[0]
+                                or self.positions[high] == self.positions[-1])
+                    for (low, high), cs in zip(groups, owners))
+        kept, seeds, consumed, ambiguous = [], {}, set(), False
+        for (low, high), cs in zip(groups, owners):
+            ps = matches(low, high, pending)
+            if len(ps) > 1:
+                ambiguous = True
+                kept.append((low, high))
+                continue
+            p = ps[0] if ps else None
+            if cs:
+                kept.append((low, high))
+                if p is not None:
+                    self._narrow_unknown.append((p['start'], p['last'] + 1, self.epoch))
+                    consumed.add(id(p))
+                continue
+            boundary = self.positions[low] == self.positions[0] or self.positions[high] == self.positions[-1]
+            width = self.positions[high] - self.positions[low]
+            if p is None and anchored and not force and not boundary and width < self.NARROW_CANDIDATE_WIDTH_M:
+                p = {'start': n, 'last': n - 1, 'low': low, 'high': high,
+                     'samples': 0, 'edges': [], 'touch_known': not self._recovering}
+                pending.append(p)
+                self._exit_evidence = False
+                self._exit_blocked_through_id = len(self.contacts) - 1
+            if p is None:
+                kept.append((low, high))
+                continue
+            if (force or not anchored or boundary or width >= self.NARROW_CANDIDATE_WIDTH_M
+                    or n - p['start'] + 1 >= max(self.config.min_contact_time, self.config.confirmation_ms)):
+                kept.append((low, high))
+                seeds[(low, high)] = p
+                consumed.add(id(p))
+            else:
+                p.update(last=n, low=low, high=high, samples=p['samples'] + 1)
+                if p['edges'] and p['edges'][-1][1:] == [n, low, high]:
+                    p['edges'][-1][1] = n + 1
+                else:
+                    p['edges'].append([n, n + 1, low, high])
+        self._narrow_candidates = [p for p in pending if id(p) not in consumed]
+        return kept, seeds, ambiguous
 
     def _groups(self, bits):
         if b'\x01' not in bits:
@@ -154,18 +231,22 @@ class OvergroundRunningProcessor:
             self.break_continuity("invalid_sample", frame.frame_index)
             return
         if masked_contact:
+            self._duration_censored = True
+            self._duration_start_censored |= self.origin is None
+            self._duration_clear_upper = None
             if not self._masked_contact_uncertain:
                 self.break_continuity("masked_contact_boundary", frame.frame_index)
             self._masked_contact_uncertain = True
             return
         self._masked_contact_uncertain = False
+        if (self._duration_censored and self._duration_clear_upper is None
+                and b'\x01' not in frame.contact_bits and b'\x00' not in frame.valid_bits
+                and (observation is None or not observation.unresolved_segments)):
+            self._duration_clear_upper = n
         if observation is not None:
             if observation.unresolved_segments:
                 self._duration_censored = True
                 self._duration_clear_upper = None
-            if (self._duration_censored and self._duration_clear_upper is None
-                    and b'\x01' not in frame.contact_bits and b'\x00' not in frame.valid_bits):
-                self._duration_clear_upper = n
             for c in list(self.active):
                 if observation.affected(c.low, c.high):
                     self._preserved_stops = self._stop_intervals()
@@ -187,8 +268,12 @@ class OvergroundRunningProcessor:
             groups = observation.associate_fragments(groups, self.active)
         else:
             groups = self._associate_inner_fragments(groups)
+        occupancy = len(groups)
+        seeds, pending_ambiguous = {}, False
+        if observation is None:
+            groups, seeds, pending_ambiguous = self._defer_narrow_candidates(groups, n)
         matches, used = [], set()
-        ambiguous = len(groups) > 2
+        ambiguous = len(groups) > 2 or pending_ambiguous
         for low, high in groups:
             lo, hi = self.positions[low], self.positions[high]
             candidates = [c for c in self.active
@@ -209,6 +294,7 @@ class OvergroundRunningProcessor:
         low_edge, high_edge = self.positions[0], self.positions[-1]
         observed = set()
         new = []
+        matches.sort(key=lambda x: seeds.get((x[0], x[1]), {}).get('start', n))
         for low, high, c in matches:
             if c is None:
                 self._last_label = "A" if self._last_label == "B" else "B"
@@ -220,6 +306,10 @@ class OvergroundRunningProcessor:
                 boundary = self.positions[low] == low_edge or self.positions[high] == high_edge
                 c = Contact(len(self.contacts), self.epoch, self._last_label, side, n, n, low, high,
                             not self._recovering and not boundary)
+                seed = seeds.get((low, high))
+                if seed is not None:
+                    c.start, c.touch_known = seed['start'], seed['touch_known']
+                    c.observed_samples, c.edges = seed['samples'], list(seed['edges'])
                 if observation is not None:
                     edge = observation.edge(low, high, 1)
                     if edge:
@@ -283,10 +373,18 @@ class OvergroundRunningProcessor:
             at_exit = self.direction and (self.positions[high] == endpoint or self.positions[low] == endpoint)
             if reliable:
                 c.endpoint_run = c.endpoint_run + 1 if at_exit else 0
-            if c.confirmed and c.endpoint_run >= self.config.confirmation_ms:
+            if (reliable and c.confirmed and not c.problem and not c.interrupted
+                    and c.id > self._exit_blocked_through_id
+                    and c.endpoint_run >= self.config.confirmation_ms):
                 self._exit_evidence = True
-        if groups and not any(c.id in observed and c.confirmed
-                              and c.endpoint_run >= self.config.confirmation_ms for c in self.active):
+                self._exit_contact_id = c.id
+        # Rolling within the same tracked contact does not revoke its confirmed
+        # terminal-beam evidence. Earlier support may overlap, but a later
+        # contact cannot inherit or reestablish the older contact's proof.
+        if (new or (self._exit_contact_id is not None
+                    and self._exit_contact_id != len(self.contacts) - 1)
+                or any(c.id == self._exit_contact_id and (c.problem or c.interrupted)
+                       for c in self.active)):
             self._exit_evidence = False
         if len(new) > 1:
             self._identity_known = False
@@ -341,8 +439,8 @@ class OvergroundRunningProcessor:
         self._recovering = False
         held = sum(c.id not in observed and c.release_start is None
                    and c.candidate_since is not None and not c.interrupted for c in self.active)
-        self._phase(n, -1 if observation is not None and observation.unresolved_segments else len(groups) + held)
-        if groups:
+        self._phase(n, -1 if observation is not None and observation.unresolved_segments else occupancy + held)
+        if occupancy:
             self.last_occupied = n
             self._clear_since = None
         elif observation is not None and observation.unresolved_segments:
@@ -409,6 +507,10 @@ class OvergroundRunningProcessor:
         return metric(max(candidates) if self.direction > 0 else min(candidates))
 
     def _support(self, start, end, epoch):
+        uncertain = self._narrow_unknown + [(p['start'], p['last'] + 1, self.epoch)
+                                           for p in self._narrow_candidates]
+        if any(e == epoch and a < end and b > start for a, b, e in uncertain):
+            return None, "unconfirmed_narrow_fragment"
         totals = {0: 0, 1: 0, 2: 0}
         cursor = start
         for a, b, count, e in self.phases:
@@ -475,6 +577,11 @@ class OvergroundRunningProcessor:
         origin = self.origin or 0
         stops = self._stop_intervals()
         def barrier(cs, temporal=False):
+            uncertain = self._narrow_barriers + [(p['start'], p['last'] + 1, self.epoch)
+                                                for p in self._narrow_candidates]
+            if any(e == cs[0].epoch and a < cs[-1].start and b > cs[0].start
+                   for a, b, e in uncertain):
+                return "unconfirmed_narrow_fragment"
             for c in cs:
                 problem = self._temporal_problem(c, cs[-1].start) if temporal else c.problem
                 if problem or not c.confirmed:
@@ -574,8 +681,9 @@ class OvergroundRunningProcessor:
                                                  and c.end >= self.last_occupied for c in self.contacts)):
             end = max(c.end for c in self.contacts if c.end is not None and c.end >= self.last_occupied)
         duration = max(0, end / 1000 - origin) if self.origin is not None and end is not None else None
-        if (self._duration_censored and (self._duration_clear_upper is None
-                                        or end is None or end < self._duration_clear_upper)):
+        if (self._duration_start_censored or
+                (self._duration_censored and (self._duration_clear_upper is None
+                                             or end is None or end < self._duration_clear_upper))):
             duration = None
         return {"segment_count": len(self.device.layout.segments), "nominal_length_m": len(self.device.layout.segments),
                 "direction": self.direction, "duration_s": duration, "valid_steps": sum(s["time_s"]["valid"] for s in steps),
@@ -597,12 +705,14 @@ class OvergroundRunningProcessor:
             finish_reason=reason, running_summary=self.summary(), visual_timeline=tuple(self.timeline),
             export_frames=export_frames, export_timestamps=export_timestamps,
             report_config_snapshot={**self.config.to_dict(), "device": self.device.snapshot(),
-                                    "algorithm": "overground_running_v1.4", "spatial_reference": "toe_to_toe",
+                                    "algorithm": "overground_running_v1.6", "spatial_reference": "toe_to_toe",
                                     "toe_method": "furthest_stable_leading_edge_platform_median",
                                     "readiness_stale_ms": 500, "data_timeout_ms": 1000,
                                     "tracking": {"direction_displacement_m": self.DIRECTION_DISPLACEMENT_M,
                                                  "cluster_gap_m": self.CLUSTER_GAP_M,
                                                  "match_margin_m": self.MATCH_MARGIN_M,
                                                  "max_cluster_width_m": self.MAX_CLUSTER_WIDTH_M,
+                                                 "narrow_candidate_width_m": self.NARROW_CANDIDATE_WIDTH_M,
+                                                 "narrow_candidate_scope": "known_anchor_without_local_observation",
                                                  "fragment_association": "unique_existing_envelope_with_match_margin"},
                                     "real_world_validation": "pending"})
