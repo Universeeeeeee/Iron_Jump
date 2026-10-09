@@ -105,6 +105,32 @@ class OvergroundRunningProcessor:
                 groups.append([i])
         return [(g[0], g[-1]) for g in groups]
 
+    def _associate_inner_fragments(self, groups):
+        # A known footprint may separate into heel/toe islands. Associate only
+        # islands supported by one existing envelope, never two tracked feet.
+        # An inner island anchors association while a rolling edge may move
+        # within the same margin already used for ordinary contact matching.
+        owners, anchored = {}, set()
+        for index, (low, high) in enumerate(groups):
+            lo, hi = self.positions[low], self.positions[high]
+            candidates = [c for c in self.active
+                          if lo <= self.positions[c.high] + self.MATCH_MARGIN_M
+                          and hi >= self.positions[c.low] - self.MATCH_MARGIN_M]
+            if (len(candidates) == 1
+                    and self.positions[candidates[0].low] - self.MATCH_MARGIN_M <= lo
+                    and hi <= self.positions[candidates[0].high] + self.MATCH_MARGIN_M):
+                c = candidates[0]
+                owners.setdefault(c.id, []).append(index)
+                if self.positions[c.low] <= lo and hi <= self.positions[c.high]:
+                    anchored.add(c.id)
+        merged, consumed = [], set()
+        for owner, indices in owners.items():
+            if len(indices) > 1 and owner in anchored:
+                merged.append((groups[indices[0]][0], groups[indices[-1]][1]))
+                consumed.update(indices)
+        return sorted(merged + [g for i, g in enumerate(groups) if i not in consumed],
+                      key=lambda g: self.positions[g[0]])
+
     def process(self, frame, observation=None, *, masked_contact=False):
         if self.finished_reason:
             return
@@ -159,6 +185,8 @@ class OvergroundRunningProcessor:
         groups = self._groups(frame.contact_bits)
         if observation is not None:
             groups = observation.associate_fragments(groups, self.active)
+        else:
+            groups = self._associate_inner_fragments(groups)
         matches, used = [], set()
         ambiguous = len(groups) > 2
         for low, high in groups:
@@ -569,11 +597,12 @@ class OvergroundRunningProcessor:
             finish_reason=reason, running_summary=self.summary(), visual_timeline=tuple(self.timeline),
             export_frames=export_frames, export_timestamps=export_timestamps,
             report_config_snapshot={**self.config.to_dict(), "device": self.device.snapshot(),
-                                    "algorithm": "overground_running_v1.3", "spatial_reference": "toe_to_toe",
+                                    "algorithm": "overground_running_v1.4", "spatial_reference": "toe_to_toe",
                                     "toe_method": "furthest_stable_leading_edge_platform_median",
                                     "readiness_stale_ms": 500, "data_timeout_ms": 1000,
                                     "tracking": {"direction_displacement_m": self.DIRECTION_DISPLACEMENT_M,
                                                  "cluster_gap_m": self.CLUSTER_GAP_M,
                                                  "match_margin_m": self.MATCH_MARGIN_M,
-                                                 "max_cluster_width_m": self.MAX_CLUSTER_WIDTH_M},
+                                                 "max_cluster_width_m": self.MAX_CLUSTER_WIDTH_M,
+                                                 "fragment_association": "unique_existing_envelope_with_match_margin"},
                                     "real_world_validation": "pending"})

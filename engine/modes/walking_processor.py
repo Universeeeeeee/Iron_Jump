@@ -108,6 +108,32 @@ class WalkingProcessor:
         # Keep edge fragments so incomplete entry/exit contacts cannot look complete.
         return [(g[0], g[-1]) for g in groups]
 
+    def _associate_inner_fragments(self, groups):
+        # A heel/forefoot gap can split one already observed footprint. Join
+        # only fragments uniquely contained in its preceding spatial envelope
+        # plus a bounded margin for stance roll. An inner island must still
+        # anchor the group to the preceding footprint.
+        owners, anchored = {}, set()
+        for index, (low, high) in enumerate(groups):
+            candidates = [c for c in self.active
+                          if self.positions[low] <= self.positions[c.high] + .035
+                          and self.positions[high] >= self.positions[c.low] - .035]
+            if len(candidates) != 1:
+                continue
+            contact = candidates[0]
+            if (self.positions[low] >= self.positions[contact.low] - .035
+                    and self.positions[high] <= self.positions[contact.high] + .035):
+                owners.setdefault(contact.id, []).append(index)
+                if self.positions[contact.low] <= self.positions[low] and self.positions[high] <= self.positions[contact.high]:
+                    anchored.add(contact.id)
+        merged, consumed = {}, set()
+        for owner, indices in owners.items():
+            if len(indices) > 1 and owner in anchored:
+                merged[indices[0]] = (groups[indices[0]][0], groups[indices[-1]][1])
+                consumed.update(indices[1:])
+        return [merged.get(index, group) for index, group in enumerate(groups)
+                if index not in consumed]
+
     def process(self, frame, observation=None, *, masked_contact=False):
         if self.finished_reason:
             return
@@ -185,6 +211,8 @@ class WalkingProcessor:
         groups = self._clusters(frame.contact_bits)
         if observation is not None:
             groups = observation.associate_fragments(groups, self.active)
+        else:
+            groups = self._associate_inner_fragments(groups)
         matches = []
         used = set()
         ambiguous = len(groups) > 2
@@ -499,5 +527,6 @@ class WalkingProcessor:
             finish_reason=reason, export_frames=export_frames, export_timestamps=export_timestamps,
             visual_timeline=tuple(self.timeline), walking_summary=summary,
             report_config_snapshot={**self.config.to_dict(), "device": self.device.snapshot(),
-                                    "algorithm": "overground_walking_v1.3"},
+                                    "algorithm": "overground_walking_v1.4",
+                                    "fragment_association": "unique_existing_envelope_with_match_margin"},
         )
