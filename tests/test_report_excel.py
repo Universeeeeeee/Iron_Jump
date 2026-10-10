@@ -19,7 +19,7 @@ def reports():
 
 @pytest.mark.parametrize("name", ["jump", "treadmill_gait", "treadmill_running", "walking", "overground_running", "legacy_jump"])
 def test_workbook_matches_pre_extraction_file(name, reports):
-    baseline = json.loads((Path(__file__).parent / "fixtures/report_export_v1.json").read_text())
+    baseline = json.loads((Path(__file__).parent / "fixtures/report_export_v1.json").read_text(encoding="utf-8"))
     report = reports[name]
     assert has_export_data(report)
     book = build_report_workbook(report)
