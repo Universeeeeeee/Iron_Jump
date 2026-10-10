@@ -1,6 +1,6 @@
 ---
 name: report-analysis
-description: Use when the Report Agent must choose the next evidence-producing analysis action for a Jump Test, Treadmill Gait Test, or Treadmill Running Test from AgentObservation and AnalysisState.
+description: Use when the Report Agent must choose the next evidence-producing analysis action for a Jump Test, treadmill gait/running, or overground walking/running report from AgentObservation and AnalysisState.
 ---
 
 # Report Analysis
@@ -72,6 +72,8 @@ first hypothesis:
 - `Jump Test` → `references/jump.md`
 - `Treadmill Gait Test` → `references/gait.md`
 - `Treadmill Running Test` → `references/running.md`
+- `Sprint and Gait Test` → `references/overground-walk.md`
+- `Overground Running Test` → `references/overground-run.md`
 
 Do not load unrelated domain references. The system, not the model, resolves this
 mapping. Do not request a domain reference that is already present in

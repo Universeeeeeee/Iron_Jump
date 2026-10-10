@@ -119,7 +119,7 @@ def test_debounce_wait_does_not_count_as_observed_samples():
     assert p.summary()["mean_contact_s"] is None
 
 
-def test_pending_earlier_candidate_blocks_report_until_rejected():
+def test_pending_earlier_candidate_blocks_identity_but_not_own_contact_span():
     p = processor(stop_type="Software command", starting_foot="Left")
     for n in range(420):
         ranges = [(.33, .37)] if 100 <= n < 400 else []
@@ -130,7 +130,8 @@ def test_pending_earlier_candidate_blocks_report_until_rejected():
             s = p.summary()
             assert p.origin is None
             assert s["contacts"][1]["exclusion"] == "pending_touch_order"
-            assert s["mean_contact_s"] is None
+            assert s["mean_contact_s"] == pytest.approx(.1)
+            assert s['steps'] == [] and s['cycles'] == []
     assert p.contacts[0].exclusion == "short_contact"
     assert p.origin == .2
     assert p.contacts[1].side == "unknown"

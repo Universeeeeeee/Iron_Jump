@@ -14,6 +14,8 @@ TestType = Literal[
     "Jump Test",
     "Treadmill Gait Test",
     "Treadmill Running Test",
+    "Sprint and Gait Test",
+    "Overground Running Test",
 ]
 DataScope = Literal["current_session", "longitudinal", "cohort"]
 AnalysisToolName = Literal[
@@ -129,7 +131,7 @@ class SemanticRecord(FrozenModel):
 
 class RecordSet(FrozenModel):
     record_set_id: str
-    record_type: Literal["jump", "step", "gait_cycle"]
+    record_type: Literal["jump", "step", "gait_cycle", "ground_contact", "ground_step", "ground_cycle"]
     metric_codes: tuple[str, ...]
     records: tuple[SemanticRecord, ...]
 
@@ -248,7 +250,16 @@ class TreadmillRunningPayload(FrozenModel):
     gait_cycle_record_set_id: str
 
 
-ReportPayload = JumpPayload | TreadmillGaitPayload | TreadmillRunningPayload
+class GroundPayload(FrozenModel):
+    kind: Literal["overground_walk", "overground_run"]
+    contact_record_set_id: str
+    step_record_set_id: str
+    gait_cycle_record_set_id: str
+    spatial_reference: Literal["contact_center", "stable_toe_proxy"]
+    record_sources: dict[str, dict[str, Any]]
+
+
+ReportPayload = JumpPayload | TreadmillGaitPayload | TreadmillRunningPayload | GroundPayload
 
 
 class ReportDataPackage(FrozenModel):

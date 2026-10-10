@@ -9,12 +9,14 @@ from pathlib import Path
 from reporting.models import TestType
 
 
-REPORT_ANALYSIS_SKILL_VERSION = "report-analysis-skill/0.5"
+REPORT_ANALYSIS_SKILL_VERSION = "report-analysis-skill/0.6"
 _DEFAULT_SKILL_PATH = Path(__file__).resolve().parent / "skills" / "report-analysis"
 _DOMAIN_REFERENCE_BY_TEST_TYPE: dict[TestType, str] = {
     "Jump Test": "references/jump.md",
     "Treadmill Gait Test": "references/gait.md",
     "Treadmill Running Test": "references/running.md",
+    "Sprint and Gait Test": "references/overground-walk.md",
+    "Overground Running Test": "references/overground-run.md",
 }
 _ON_DEMAND_REFERENCES = frozenset(("references/evidence-guidelines.md",))
 

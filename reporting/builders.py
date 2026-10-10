@@ -9,6 +9,7 @@ from dataclasses import fields
 from typing import Iterable
 
 from config.test_report import GaitTestReport, JumpTestReport
+from config.overground_running_report import OvergroundRunningReport
 from config.treadmill_report import (
     GaitCycleRecord,
     MetricSummary,
@@ -84,21 +85,34 @@ def _normalize_side(side: str | None) -> str | None:
 class ReportDataPackageBuilder:
     def build(
         self,
-        report: JumpTestReport | TreadmillGaitReport | TreadmillRunningReport,
+        report: JumpTestReport | TreadmillGaitReport | TreadmillRunningReport | GaitTestReport | OvergroundRunningReport,
         context: ReportContextInput,
     ) -> ReportDataPackage:
         expected_type = getattr(report, "test_type", None)
         if isinstance(report, JumpTestReport):
             expected_type = "Jump Test"
-        if isinstance(report, GaitTestReport) or expected_type is None:
+        is_ground = isinstance(report, (GaitTestReport, OvergroundRunningReport))
+        if isinstance(report, GaitTestReport) and report.walking_summary:
+            expected_type = "Sprint and Gait Test"
+        elif isinstance(report, OvergroundRunningReport) and report.running_summary:
+            expected_type = "Overground Running Test"
+        if expected_type is None:
             raise UnsupportedReportTypeError(type(report).__name__)
         if context.test_type != expected_type:
             raise ValueError(
                 f"context test_type {context.test_type!r} does not match {expected_type!r}"
             )
 
-        package_id = _stable_id("package", context.session_id, expected_type, SCHEMA_VERSION)
-        if isinstance(report, JumpTestReport):
+        schema_version = "1.1" if is_ground else SCHEMA_VERSION
+        builder_version = "report-package-builder/1.1-ground" if is_ground else BUILDER_VERSION
+        package_id = _stable_id("package", context.session_id, expected_type, schema_version)
+        if is_ground:
+            from .ground import build_ground_data
+            record_sets, facts, quality_flags, payload = build_ground_data(self, package_id, report)
+            context = context.model_copy(update={"config_snapshot": json.loads(json.dumps({
+                **context.config_snapshot, **report.report_config_snapshot,
+            }, ensure_ascii=False))})
+        elif isinstance(report, JumpTestReport):
             record_sets, facts, quality_flags, payload = self._build_jump(
                 package_id, report
             )
@@ -128,20 +142,27 @@ class ReportDataPackageBuilder:
             for code in sorted(used_metric_codes)
             if code in METRIC_CATALOG
         )
+        if is_ground:
+            # Extend record domains only in the new ground package; the existing
+            # three modes keep their exact definitions and package digests.
+            definitions = tuple(definition.model_copy(update={"record_types": tuple(
+                record_set.record_type for record_set in record_sets
+                if definition.metric_code in record_set.metric_codes
+            ) or ("report",)}) for definition in definitions)
         provenance = (
             ProvenanceRecord(
                 provenance_id=_stable_id(package_id, "provenance", "snapshot"),
                 source_type="report_snapshot",
                 source_ref=f"session:{context.session_id}:report_detail_json",
                 operation="semantic_structure_conversion",
-                implementation_version=BUILDER_VERSION,
+                implementation_version=builder_version,
             ),
         )
         package = ReportDataPackage(
             metadata=ReportMetadata(
                 package_id=package_id,
-                schema_version=SCHEMA_VERSION,
-                builder_version=BUILDER_VERSION,
+                schema_version=schema_version,
+                builder_version=builder_version,
                 session_id=context.session_id,
                 test_type=context.test_type,
                 started_at=context.started_at,

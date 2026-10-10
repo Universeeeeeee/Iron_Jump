@@ -37,6 +37,10 @@ _METRICS = (
     MetricDefinition(metric_code="total_flight_time_s", unit="s", label="总腾空时间", record_types=("gait_cycle",), numeric_tolerance=0.001),
     MetricDefinition(metric_code="imbalance_percent", unit="%", label="不平衡率", record_types=("step",), numeric_tolerance=0.1),
     MetricDefinition(metric_code="gap_between_feet_cm", unit="cm", label="双足间距", record_types=("step",), numeric_tolerance=0.1),
+    MetricDefinition(metric_code="step_length_m", unit="m", label="地面步长", record_types=("ground_step",), numeric_tolerance=0.001),
+    MetricDefinition(metric_code="stride_length_m", unit="m", label="地面步幅", record_types=("ground_cycle",), numeric_tolerance=0.001),
+    MetricDefinition(metric_code="duration_s", unit="s", label="单次通过时长", record_types=("report",), numeric_tolerance=0.001),
+    MetricDefinition(metric_code="passage_speed_m_s", unit="m/s", label="落点推进距离与通过时长之比", record_types=("report",), numeric_tolerance=0.01),
 )
 
 METRIC_CATALOG = {metric.metric_code: metric for metric in _METRICS}

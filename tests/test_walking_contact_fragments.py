@@ -46,7 +46,7 @@ def test_existing_foot_can_split_into_heel_and_forefoot(filtered):
     assert c.end == pytest.approx(.4)
     assert p.summary()['mean_contact_s'] == pytest.approx(.3)
     snapshot = p.build_report('manual').report_config_snapshot
-    assert snapshot['algorithm'] == 'overground_walking_v1.6'
+    assert snapshot['algorithm'] == 'overground_walking_v1.10'
     assert snapshot['fragment_association'] == 'unique_existing_envelope_with_match_margin'
 
 
@@ -95,12 +95,16 @@ def test_fragment_with_multiple_possible_owners_still_breaks_continuity():
         return []
     p = replay(trajectory)
     assert any(i['code'] == 'ambiguous_contacts' for i in p.issues)
-    assert not p.summary()['steps']
+    steps = p.summary()['steps']
+    assert len(steps) == 1  # the two touches preceded the later identity loss
+    assert steps[0]['time_s'] == pytest.approx(.1)
+    assert steps[0]['length_m'] is None
 
 
 def test_new_simultaneous_fragments_without_a_prior_foot_remain_uncertain():
     p = replay(lambda n: [(20, 23), (29, 40)] if 100 <= n < 400 else [])
     assert p.summary()['valid_steps'] == 0
+    assert p.summary()['valid_step_lengths'] == 0
     assert all(c.exclusion for c in p.contacts)
 
 
@@ -114,7 +118,8 @@ def test_third_distant_foot_is_not_joined_to_an_existing_foot():
         return feet
     p = replay(trajectory)
     assert any(i['code'] == 'ambiguous_contacts' for i in p.issues)
-    assert p.summary()['valid_steps'] == 0
+    assert p.summary()['valid_steps'] == 1  # retain only the pre-ambiguity interval
+    assert p.summary()['valid_step_lengths'] == 0
 
 
 def test_two_shifted_islands_without_an_inner_anchor_remain_uncertain():

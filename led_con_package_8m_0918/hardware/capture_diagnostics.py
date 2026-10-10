@@ -5,6 +5,7 @@
 from __future__ import annotations
 
 import csv
+import logging
 import os
 import queue
 import threading
@@ -54,7 +55,8 @@ class CaptureDiagnostics:
     FRAME_BIT_COUNT = 768  # <<<8M-1>> 8节点×96bit
 
     def __init__(self, directory, *, max_csv_bytes=256 * 1024 * 1024,
-                 queue_capacity=8192, heartbeat_seconds=1.0, frame_sink=None):
+                 queue_capacity=8192, heartbeat_seconds=1.0, frame_sink=None,
+                 frame_batch_sink=None, frame_bit_count=768):
         self.directory = Path(directory)
         self.max_csv_bytes = max(1, int(max_csv_bytes))
         self.heartbeat_seconds = max(0.01, float(heartbeat_seconds))
@@ -62,6 +64,9 @@ class CaptureDiagnostics:
         self._raw_queue = queue.Queue(maxsize=capacity)
         self._frame_queue = queue.Queue(maxsize=capacity)
         self._frame_sink = frame_sink
+        self._frame_batch_sink = frame_batch_sink
+        self.frame_bit_count = frame_bit_count
+        self._last_error = ""
         self._status_queue = queue.SimpleQueue()
         self._metrics_lock = threading.Lock()
         self._metrics = {}
@@ -115,8 +120,9 @@ class CaptureDiagnostics:
             return False
 
     def record_frame(self, bits: bytes, timestamp=None) -> bool:
-        if len(bits) != self.FRAME_BIT_COUNT:
-            raise ValueError(f"Capture frame must have {self.FRAME_BIT_COUNT} bits")
+        if (not bits or len(bits) % 96 or len(bits) > 255 * 96
+                or (self.frame_bit_count is not None and len(bits) != self.frame_bit_count)):
+            raise ValueError("Capture frame size does not match the segment layout")
         if timestamp is None:
             timestamp = time.perf_counter() - self._started_at
         try:
@@ -135,23 +141,29 @@ class CaptureDiagnostics:
         self._status_queue.put((datetime.now().isoformat(timespec="milliseconds"),
                                 str(event), dict(fields)))
 
+    @property
+    def is_running(self):
+        return self._thread is not None and self._thread.is_alive()
+
+    def request_stop(self):
+        if not self._stop.is_set():
+            self.log_status("logger_stopping")
+            self._stop.set()
+
     def stop(self, timeout=5.0):
-        thread = self._thread
-        if thread is None:
-            return
-        self.log_status("logger_stopping")
-        self._stop.set()
-        thread.join(timeout)
-        if thread.is_alive():
-            self.log_status("logger_stop_timeout")
-        else:
-            self._thread = None
+        self.request_stop()
+        if self._thread is not None:
+            self._thread.join(timeout)
+        return not self.is_running
+
+    def snapshot(self):
+        return {**self._heartbeat_fields(), "last_error": self._last_error}
 
     def _open_csv(self, part):
         path = self.directory / f"raw_{self._session_id}_part{part:03d}.csv"
         stream = path.open("w", encoding="utf-8", newline="", buffering=1024 * 1024)
         writer = csv.DictWriter(stream, fieldnames=self.CSV_FIELDS)
-        writer.writeheader()
+        self._csv_bytes = writer.writeheader()
         stream.flush()
         self._csv_paths.append(path)
         return stream, writer
@@ -180,15 +192,14 @@ class CaptureDiagnostics:
         return fields
 
     def _writer_loop(self):
-        status_stream = self._status_path.open(
-            "a", encoding="utf-8", buffering=1)
-        csv_stream, csv_writer = self._open_csv(1)
-        part = 1
-        next_heartbeat = time.monotonic() + self.heartbeat_seconds
+        status_stream = csv_stream = None
         try:
+            status_stream = self._status_path.open("a", encoding="utf-8", buffering=1)
+            csv_stream, csv_writer = self._open_csv(1)
+            part = 1
+            next_heartbeat = time.monotonic() + self.heartbeat_seconds
             status_stream.write(self._status_line(
-                datetime.now().isoformat(timespec="milliseconds"),
-                "logger_started", {}))
+                datetime.now().isoformat(timespec="milliseconds"), "logger_started", {}))
             while (not self._stop.is_set() or not self._raw_queue.empty()
                    or not self._frame_queue.empty()):
                 self._write_status_pending(status_stream)
@@ -198,40 +209,55 @@ class CaptureDiagnostics:
                         datetime.now().isoformat(timespec="milliseconds"),
                         "heartbeat", self._heartbeat_fields()))
                     next_heartbeat = now + self.heartbeat_seconds
-                frame_processed = False
-                try:
-                    timestamp, bits = self._frame_queue.get_nowait()
-                except queue.Empty:
-                    pass
-                else:
-                    if self._frame_sink is not None:
-                        try:
-                            self._frame_sink(timestamp, bits)
-                        except Exception as exc:
-                            self.log_status("frame_sink_error", error=repr(exc))
-                    self.increment("accepted_frames")
-                    frame_processed = True
-                try:
-                    wall_time, monotonic_ns, data = self._raw_queue.get(
-                        timeout=0.0 if frame_processed else 0.01)
-                except queue.Empty:
-                    continue
-                csv_writer.writerow({
-                    "wall_time": wall_time,
-                    "monotonic_ns": monotonic_ns,
-                    "byte_count": len(data),
-                    "raw_hex": data.hex(" "),
-                })
-                self.increment("raw_chunks")
-                self.increment("raw_bytes", len(data))
-                if csv_stream.tell() >= self.max_csv_bytes:
-                    csv_stream.close()
-                    part += 1
-                    csv_stream, csv_writer = self._open_csv(part)
+                batch = []
+                for _ in range(128):
+                    try:
+                        batch.append(self._frame_queue.get_nowait())
+                    except queue.Empty:
+                        break
+                if batch:
+                    try:
+                        if self._frame_batch_sink is not None:
+                            self._frame_batch_sink(batch)
+                        elif self._frame_sink is not None:
+                            for timestamp, bits in batch:
+                                self._frame_sink(timestamp, bits)
+                        self.increment("accepted_frames", len(batch))
+                    except Exception as exc:
+                        self._last_error = repr(exc)
+                        self.increment("frame_sink_errors", len(batch))
+                        self.log_status("frame_sink_error", error=repr(exc))
+                for index in range(128):
+                    try:
+                        wall_time, monotonic_ns, data = self._raw_queue.get(
+                            timeout=0.01 if not batch and index == 0 else 0.0)
+                    except queue.Empty:
+                        break
+                    self._csv_bytes += csv_writer.writerow({
+                        "wall_time": wall_time, "monotonic_ns": monotonic_ns,
+                        "byte_count": len(data), "raw_hex": data.hex(" "),
+                    })
+                    self.increment("raw_chunks")
+                    self.increment("raw_bytes", len(data))
+                    # All CSV fields are ASCII; counting written chars avoids tell()
+                    # flushing the text buffer on every USB chunk.
+                    if self._csv_bytes >= self.max_csv_bytes:
+                        csv_stream.close()
+                        part += 1
+                        csv_stream, csv_writer = self._open_csv(part)
             self._write_status_pending(status_stream)
             status_stream.write(self._status_line(
                 datetime.now().isoformat(timespec="milliseconds"),
                 "logger_stopped", self._heartbeat_fields()))
+        except Exception as exc:
+            logging.exception("Capture recorder failed")
+            self._last_error = repr(exc)
+            self.increment("writer_errors")
         finally:
-            csv_stream.close()
-            status_stream.close()
+            for stream in (csv_stream, status_stream):
+                if stream is not None:
+                    try:
+                        stream.close()
+                    except Exception as exc:
+                        self._last_error = repr(exc)
+                        self.increment("writer_errors")

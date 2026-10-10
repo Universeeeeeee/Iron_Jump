@@ -1,7 +1,7 @@
 """Optical overground running, device-clock timing and toe-to-toe geometry.
 
 A blocked beam is an optical proxy, not a measurement of ground reaction force.
-Unobserved events never become zeros, and short candidates remain sequence barriers.
+Unobserved events never become zeros; only unresolved candidates block gait relationships.
 """
 from dataclasses import dataclass, field
 
@@ -31,6 +31,7 @@ class Contact:
     problem: str | None = None
     interrupted: str | None = None
     first_uncertain_sample: int | None = None
+    first_masked_sample: int | None = None
     # Run-length encoded leading edges; unchanged stances take constant space.
     edges: list = field(default_factory=list)
     endpoint_run: int = 0
@@ -41,6 +42,12 @@ class Contact:
     has_unknown: bool = False
     candidate_since: int | None = None
     last_reliable_sample: int | None = None
+    first_seen_sample: int | None = None
+    confirmed_sample: int | None = None
+    candidate_outcome: str = "pending"
+    isolated_clear: bool = False
+    clear_before_candidate: int | None = None
+    peak_width_m: float = 0.0
 
 
 class OvergroundRunningProcessor:
@@ -77,11 +84,16 @@ class OvergroundRunningProcessor:
         self._phase_adjustments = []
         self._duration_censored = False
         self._duration_start_censored = False
+        self._duration_start_unknown_from = None
         self._duration_clear_upper = None
         self._narrow_candidates = []
         self._narrow_unknown = []
         self._narrow_barriers = []
         self._exit_blocked_through_id = -1
+        self._previous_frame = None
+        self._candidate_decisions = []
+        self._commit_cursor = 0
+        self._suspended_exit = None
 
     def break_continuity(self, code, frame_index=None):
         self._preserved_stops = self._stop_intervals()
@@ -91,6 +103,10 @@ class OvergroundRunningProcessor:
                                   "positions_m": self.positions, "contact_bits": [0] * len(self.positions),
                                   "valid_bits": [0] * len(self.positions), "feet": [], "quality_flags": [code]})
         for c in self.active:
+            self._mark_unknown_start(c.start, c.edge_estimates.get('touch'))
+            if not c.confirmed and c.candidate_outcome == "pending":
+                c.candidate_outcome = "unresolved"
+                self._record_candidate(c, "unresolved", code)
             c.interrupted = code
         self.active.clear()
         self.epoch += 1
@@ -101,33 +117,169 @@ class OvergroundRunningProcessor:
         self._exit_evidence = False
         self._exit_contact_id = None
         for p in self._narrow_candidates:
+            self._mark_unknown_start(p['start'])
             self._narrow_unknown.append((p['start'], p['last'] + 1, self.epoch - 1))
+            self._record_candidate(p, 'unresolved', code)
         self._narrow_candidates.clear()
+        self._previous_frame = None
+        self._suspended_exit = None
 
-    def _defer_narrow_candidates(self, groups, n):
-        # Only defer new islands beside a reliably tracked confirmed footprint.
-        # This is a pending-island gate, not a minimum width for a running foot.
+    def _mark_unknown_start(self, sample, touch_bounds=None):
+        if self.origin is None:
+            if touch_bounds is not None:
+                sample = touch_bounds[0]
+            self._duration_start_censored = True
+            if self._duration_start_unknown_from is None or sample < self._duration_start_unknown_from:
+                self._duration_start_unknown_from = sample
+
+    def _local_clear(self, frame, low, high):
+        if frame is None:
+            return False
+        left = self.positions[low] - self.MATCH_MARGIN_M
+        right = self.positions[high] + self.MATCH_MARGIN_M
+        if left < self.positions[0] or right > self.positions[-1]:
+            return False
+        indices = [i for i, pos in enumerate(self.positions) if left <= pos <= right]
+        return (not any(i in self.device.bad_indices for i in indices)
+                and all(frame.valid_bits[i] and not frame.contact_bits[i] for i in indices))
+
+    def _candidate_row(self, candidate, outcome, reason, closed_sample=None, owner_id=None):
+        if isinstance(candidate, Contact):
+            row = {"source": "contact", "contact_id": candidate.id, "epoch": candidate.epoch,
+                   "first_sample": candidate.first_seen_sample,
+                   "last_sample": candidate.last, "observed_samples": candidate.observed_samples,
+                   "low": candidate.low, "high": candidate.high, "peak_width_m": candidate.peak_width_m}
+        else:
+            row = {"source": "narrow", "epoch": self.epoch, "first_sample": candidate['start'],
+                   "last_sample": candidate['last'], "observed_samples": candidate['samples'],
+                   "low": candidate['low'], "high": candidate['high'], "peak_width_m": candidate.get('peak_width_m', 0)}
+        row.update(outcome=outcome, reason=reason, closed_sample=closed_sample)
+        if owner_id is not None:
+            row['owner_id'] = owner_id
+        return row
+
+    def _record_candidate(self, candidate, outcome, reason, closed_sample=None, owner_id=None):
+        self._candidate_decisions.append(self._candidate_row(candidate, outcome, reason, closed_sample, owner_id))
+
+    def _unresolve_candidate(self, c, reason):
+        if not c.confirmed and c.candidate_outcome == 'pending':
+            self._mark_unknown_start(c.start, c.edge_estimates.get('touch'))
+            c.candidate_outcome = 'unresolved'
+            self._record_candidate(c, 'unresolved', reason)
+
+    def _exclude_nonstep(self, start, end, epoch, clear_before):
+        # The declared non-step observation never represented support. Correct
+        # only its own occupancy interval; do not fill neighbouring unknowns.
+        phases = []
+        for a, b, count, ep in self.phases:
+            points = sorted({a, b, *[x for x in (start, end) if a < x < b]})
+            for left, right in zip(points, points[1:]):
+                value = count - int(ep == epoch and start <= left < end and count > 0)
+                if phases and phases[-1][1:] == [left, value, ep]:
+                    phases[-1][1] = right
+                else:
+                    phases.append([left, right, value, ep])
+        self.phases = phases
+        if self.last_occupied == end - 1:
+            occupied = [c.last for c in self.contacts if c.candidate_outcome not in {'excluded_nonstep', 'associated_fragment'}
+                        and c.interrupted != 'masked_contact_boundary']
+            occupied += [q['last'] for q in self._narrow_candidates if q['start'] != start]
+            self.last_occupied = max(occupied, default=None)
+        if (clear_before is not None and epoch == self.epoch
+                and not any(x['sample'] >= clear_before for x in self.issues)):
+            self._clear_since = max(clear_before, (self.last_occupied + 1) if self.last_occupied is not None else clear_before)
+
+    def _suspend_exit(self):
+        if self._exit_evidence and self._suspended_exit is None:
+            self._suspended_exit = (self._exit_contact_id, self._exit_blocked_through_id, self._clear_since)
+        self._exit_evidence = False
+
+    def _commit_contacts(self):
+        # Confirmation publishes own event evidence. Identity waits for earlier
+        # candidates to close and never advances for an excluded non-step.
+        while self._commit_cursor < len(self.contacts):
+            c = self.contacts[self._commit_cursor]
+            if any(q['start'] < c.start for q in self._narrow_candidates):
+                break
+            if not c.confirmed and c.end is None and not c.problem and not c.interrupted:
+                break
+            self._commit_cursor += 1
+            if not c.confirmed or c.problem == 'unresolved_coalescence':
+                continue
+            self._last_label = 'A' if self._last_label == 'B' else 'B'
+            c.label = self._last_label
+            side = {"Left": "left", "Right": "right"}.get(self.config.starting_foot, "unknown")
+            if not self._identity_known:
+                side = 'unknown'
+            elif c.label == 'B' and side != 'unknown':
+                side = 'right' if side == 'left' else 'left'
+            c.side = side
+            prior = [x for x in self.contacts[:c.id] if x.confirmed and x.label and x.epoch == c.epoch and not x.problem]
+            if any(x.label == c.label and x.last >= c.start for x in prior):
+                c.problem, c.side = 'identity_uncertain', 'unknown'
+                self._identity_known = False
+            if prior and c.touch_known and not c.problem:
+                prev = prior[-1]
+                delta = (self.positions[c.low] + self.positions[c.high]
+                         - self.positions[prev.low] - self.positions[prev.high]) / 2
+                if abs(delta) >= self.DIRECTION_DISPLACEMENT_M:
+                    if self.direction and delta * self.direction < 0:
+                        c.problem = self.finished_reason = 'turn_detected'
+                    elif prev.touch_known:
+                        self.direction = 1 if delta > 0 else -1
+        if self._suspended_exit is not None and not self._narrow_candidates:
+            owner, blocked, clear = self._suspended_exit
+            sequence = [c for c in self.contacts if c.candidate_outcome not in {'excluded_nonstep', 'associated_fragment'}]
+            if (sequence and sequence[-1].id == owner and not sequence[-1].problem
+                    and not sequence[-1].interrupted and all(c.candidate_outcome == 'excluded_nonstep'
+                                                            for c in self.contacts[owner + 1:])):
+                self._exit_evidence, self._exit_contact_id = True, owner
+                self._exit_blocked_through_id = blocked
+                if clear is not None:
+                    self._clear_since = clear
+                self._suspended_exit = None
+            elif any(c.id > owner and (c.confirmed or c.problem or c.interrupted) for c in self.contacts):
+                self._suspended_exit = None
+
+    def _defer_narrow_candidates(self, groups, n, masked_groups=()):
+        # Known optical owners can retain an isolated new island pending local
+        # evidence. This gate never imposes a minimum width for a running foot.
         def matches(low, high, candidates):
             return [c for c in candidates
                     if self.positions[low] <= self.positions[c['high']] + self.MATCH_MARGIN_M
                     and self.positions[high] >= self.positions[c['low']] - self.MATCH_MARGIN_M]
         pending = []
         for p in self._narrow_candidates:
-            if p['last'] == n - 1 and any(matches(low, high, [p]) for low, high in groups):
+            visible = any(matches(low, high, [p]) for low, high in groups)
+            if not visible:
+                p['isolated_clear'] &= self._local_clear(self._current_frame, p['low'], p['high'])
+            if n - p['last'] < self.config.release_ms or (visible and n - p['last'] <= self.config.release_ms):
                 pending.append(p)
             else:
-                self._narrow_unknown.append((p['start'], p['last'] + 1, self.epoch))
-                self._narrow_barriers.append((p['start'], p['last'] + 1, self.epoch))
-                self._identity_known = False
+                excluded = p['samples'] == 1 and p['low'] == p['high'] and p['isolated_clear'] and not p.get('clear_gaps')
+                self._record_candidate(p, 'excluded_nonstep' if excluded else 'unresolved',
+                                       'closed_isolated_single_sample' if excluded else 'short_narrow_contact', n)
+                if excluded:
+                    self._exclude_nonstep(p['start'], p['last'] + 1, self.epoch, p.get('clear_before_candidate'))
+                else:
+                    self._mark_unknown_start(p['start'])
+                    self._narrow_unknown.append((p['start'], p['last'] + 1, self.epoch))
+                    self._narrow_barriers.append((p['start'], p['last'] + 1, self.epoch))
+                    self._identity_known = False
+                    self._suspended_exit = None
         owners = [[c for c in self.active
                    if self.positions[low] <= self.positions[c.high] + self.MATCH_MARGIN_M
                    and self.positions[high] >= self.positions[c.low] - self.MATCH_MARGIN_M]
                   for low, high in groups]
         anchored = any(len(cs) == 1 and cs[0].confirmed and not cs[0].problem
                        and not cs[0].interrupted for cs in owners)
+        immature_owner = any(len(cs) == 1 and not cs[0].interrupted
+                             and cs[0].problem in {None, 'simultaneous_contacts', 'unresolved_coalescence'} for cs in owners)
         # A later wide contact cannot overtake an earlier pending touch in the
         # contact sequence. Promote the earlier candidates with their own times.
-        force = any(not cs and (self.positions[high] - self.positions[low] >= self.NARROW_CANDIDATE_WIDTH_M
+        force = any(not cs and (any(self.positions[low] <= self.positions[h] and self.positions[high] >= self.positions[l]
+                                   for l, h in masked_groups)
+                                or self.positions[high] - self.positions[low] >= self.NARROW_CANDIDATE_WIDTH_M
                                 or self.positions[low] == self.positions[0]
                                 or self.positions[high] == self.positions[-1])
                     for (low, high), cs in zip(groups, owners))
@@ -142,21 +294,35 @@ class OvergroundRunningProcessor:
             if cs:
                 kept.append((low, high))
                 if p is not None:
+                    if len(cs) != 1 or not cs[0].confirmed:
+                        ambiguous = True
+                        continue
                     self._narrow_unknown.append((p['start'], p['last'] + 1, self.epoch))
+                    self._record_candidate(p, 'associated_fragment', 'joined_existing_footprint', n, cs[0].id if len(cs) == 1 else None)
                     consumed.add(id(p))
+                    self._suspended_exit = None
                 continue
             boundary = self.positions[low] == self.positions[0] or self.positions[high] == self.positions[-1]
             width = self.positions[high] - self.positions[low]
-            if p is None and anchored and not force and not boundary and width < self.NARROW_CANDIDATE_WIDTH_M:
+            if (p is None and not force and not boundary and width < self.NARROW_CANDIDATE_WIDTH_M
+                    and (anchored or (immature_owner and low == high
+                                      and self._local_clear(self._previous_frame, low, high)))):
                 p = {'start': n, 'last': n - 1, 'low': low, 'high': high,
-                     'samples': 0, 'edges': [], 'touch_known': not self._recovering}
+                     'samples': 0, 'edges': [], 'touch_known': not self._recovering,
+                     'isolated_clear': (not self._recovering and self._previous_frame is not None
+                                        and self._previous_frame.sample_index == n - 1
+                                        and self._local_clear(self._previous_frame, low, high)),
+                     'clear_before_candidate': self._clear_since, 'clear_gaps': [], 'peak_width_m': width}
                 pending.append(p)
-                self._exit_evidence = False
+                self._suspend_exit()
                 self._exit_blocked_through_id = len(self.contacts) - 1
             if p is None:
                 kept.append((low, high))
                 continue
-            if (force or not anchored or boundary or width >= self.NARROW_CANDIDATE_WIDTH_M
+            p['peak_width_m'] = max(p.get('peak_width_m', 0), width)
+            if p['samples'] and n > p['last'] + 1:
+                p['clear_gaps'].append((p['last'] + 1, n))
+            if (force or (not anchored and not immature_owner) or boundary or width >= self.NARROW_CANDIDATE_WIDTH_M
                     or n - p['start'] + 1 >= max(self.config.min_contact_time, self.config.confirmation_ms)):
                 kept.append((low, high))
                 seeds[(low, high)] = p
@@ -169,6 +335,66 @@ class OvergroundRunningProcessor:
                     p['edges'].append([n, n + 1, low, high])
         self._narrow_candidates = [p for p in pending if id(p) not in consumed]
         return kept, seeds, ambiguous
+
+    def _coalesce_immature_islands(self, groups, n, affected):
+        # A briefly coalescing optical group retains evidence but cannot establish
+        # a foot identity or per-foot event/position. Mature fusion stays ambiguous.
+        for low, high in groups:
+            if (self.positions[high] - self.positions[low] > self.MAX_CLUSTER_WIDTH_M
+                    or any(self.positions[low] <= self.positions[h] and self.positions[high] >= self.positions[l]
+                           for l, h in affected)):
+                continue
+            cs = [c for c in self.active if self.positions[low] <= self.positions[c.high] + self.MATCH_MARGIN_M
+                  and self.positions[high] >= self.positions[c.low] - self.MATCH_MARGIN_M]
+            ps = [q for q in self._narrow_candidates if self.positions[low] <= self.positions[q['high']] + self.MATCH_MARGIN_M
+                  and self.positions[high] >= self.positions[q['low']] - self.MATCH_MARGIN_M]
+            if len(cs) + len(ps) != 2:
+                continue
+            evidence = []
+            for c in cs:
+                if (c.confirmed or c.problem or c.interrupted or not c.touch_known
+                        or c.last != n - 1 or c.epoch != self.epoch):
+                    break
+                evidence.append((c.start, c.last, c.peak_width_m, c.observed_samples, c.edges, c))
+            else:
+                for q in ps:
+                    if not q['touch_known'] or q.get('clear_gaps') or q['last'] != n - 1:
+                        break
+                    evidence.append((q['start'], q['last'], q.get('peak_width_m', 0), q['samples'], q['edges'], q))
+                else:
+                    if len(evidence) == 2:
+                        evidence.sort(key=lambda r: r[0])
+                        first, second = evidence
+                        if (0 < second[0] - first[0] <= self.config.confirmation_ms
+                                and n - first[0] <= self.config.confirmation_ms
+                                and all(r[2] < self.NARROW_CANDIDATE_WIDTH_M for r in evidence)):
+                            parent = first[5] if isinstance(first[5], Contact) else None
+                            # Preserve the two original islands before modifying their owner.
+                            source_rows = [self._candidate_row(r[5], 'associated_fragment', 'immature_islands_coalesced', n)
+                                           for r in evidence]
+                            if parent is None:
+                                parent = Contact(len(self.contacts), self.epoch, '', 'unknown', first[0], first[1],
+                                                 low, high, False, observed_samples=first[3], edges=list(first[4]),
+                                                 first_seen_sample=first[0])
+                                self.contacts.append(parent)
+                                self.active.append(parent)
+                            for row, r in zip(source_rows, evidence):
+                                row.pop('contact_id', None)
+                                row.update(source='immature_island', source_id=f"{self.epoch}:{r[0]}:{row['low']}:{row['high']}",
+                                           owner_id=parent.id)
+                                self._candidate_decisions.append(row)
+                            for c in cs:
+                                if c is not parent:
+                                    c.candidate_outcome, c.problem = 'associated_fragment', 'associated_fragment'
+                                    self.active.remove(c)
+                            self._narrow_candidates = [q for q in self._narrow_candidates if all(q is not r[5] for r in evidence)]
+                            parent.problem, parent.touch_known, parent.side = 'unresolved_coalescence', False, 'unknown'
+                            parent.candidate_outcome = 'unresolved_group'
+                            parent.peak_width_m = self.positions[high] - self.positions[low]
+                            self._identity_known = False
+                            self._suspended_exit = None
+                            self._exit_evidence = False
+                            self._mark_unknown_start(first[0])
 
     def _groups(self, bits):
         if b'\x01' not in bits:
@@ -225,20 +451,35 @@ class OvergroundRunningProcessor:
         if n != self.last_sample + 1 or frame.dropped_frames_before:
             self.break_continuity("frame_gap", frame.frame_index)
         self.last_sample, self.last_time = n, frame.sample_time_s
+        self._current_frame = frame
         if (len(frame.contact_bits) != len(self.positions) or len(frame.valid_bits) != len(self.positions)
                 or (observation is None and not all(frame.valid_bits))
                 or any(x != "frame_gap" for x in frame.quality_flags)):
             self.break_continuity("invalid_sample", frame.frame_index)
             return
+        raw_groups = self._groups(frame.contact_bits)
+        affected = [(low, high) for low, high in raw_groups if any(
+            0 <= j < len(self.positions) and frame.contact_bits[j]
+            and abs(self.positions[j] - self.positions[i]) <= .04
+            and self.positions[low] <= self.positions[j] <= self.positions[high]
+            for i in self.device.bad_indices for j in (i - 1, i + 1))] if masked_contact else []
         if masked_contact:
             self._duration_censored = True
-            self._duration_start_censored |= self.origin is None
+            self._mark_unknown_start(n)
             self._duration_clear_upper = None
+            if not affected:
+                if not self._masked_contact_uncertain or self.active or self._narrow_candidates:
+                    self.break_continuity("masked_contact_boundary", frame.frame_index)
+                self._masked_contact_uncertain = True
+                return
             if not self._masked_contact_uncertain:
-                self.break_continuity("masked_contact_boundary", frame.frame_index)
-            self._masked_contact_uncertain = True
-            return
-        self._masked_contact_uncertain = False
+                self.issues.append({"code": "masked_contact_boundary", "sample": n,
+                                    "frame_index": frame.frame_index})
+            self._identity_known = False
+            self._exit_evidence = False
+            self._exit_contact_id = None
+            self._suspended_exit = None
+        self._masked_contact_uncertain = masked_contact
         if (self._duration_censored and self._duration_clear_upper is None
                 and b'\x01' not in frame.contact_bits and b'\x00' not in frame.valid_bits
                 and (observation is None or not observation.unresolved_segments)):
@@ -250,6 +491,7 @@ class OvergroundRunningProcessor:
             for c in list(self.active):
                 if observation.affected(c.low, c.high):
                     self._preserved_stops = self._stop_intervals()
+                    self._unresolve_candidate(c, 'local_unknown_timeout')
                     c.interrupted = 'local_unknown_timeout'
                     self.active.remove(c)
                     self._identity_known = False
@@ -259,19 +501,21 @@ class OvergroundRunningProcessor:
                         or (c.candidate_since is not None
                             and n - c.candidate_since >= self.config.release_ms + 10))):
                     self._preserved_stops = self._stop_intervals()
+                    self._unresolve_candidate(c, 'local_unknown_timeout')
                     c.interrupted = 'local_unknown_timeout'
                     self._identity_known = False
-        if b'\x01' in frame.contact_bits:
+        if not masked_contact and raw_groups:
             self.last_occupied = n
-        groups = self._groups(frame.contact_bits)
+        groups = raw_groups
         if observation is not None:
             groups = observation.associate_fragments(groups, self.active)
         else:
             groups = self._associate_inner_fragments(groups)
+        self._coalesce_immature_islands(groups, n, affected)
         occupancy = len(groups)
         seeds, pending_ambiguous = {}, False
         if observation is None:
-            groups, seeds, pending_ambiguous = self._defer_narrow_candidates(groups, n)
+            groups, seeds, pending_ambiguous = self._defer_narrow_candidates(groups, n, affected)
         matches, used = [], set()
         ambiguous = len(groups) > 2 or pending_ambiguous
         for low, high in groups:
@@ -285,6 +529,10 @@ class OvergroundRunningProcessor:
                 used.add(c.id)
             matches.append((low, high, c))
         if ambiguous:
+            self._mark_unknown_start(n)
+            for q in seeds.values():
+                self._mark_unknown_start(q['start'])
+                self._record_candidate(q, 'unresolved', 'ambiguous_contacts')
             if not self._ambiguous:
                 self.break_continuity("ambiguous_contacts", frame.frame_index)
             self._ambiguous = True
@@ -297,19 +545,26 @@ class OvergroundRunningProcessor:
         matches.sort(key=lambda x: seeds.get((x[0], x[1]), {}).get('start', n))
         for low, high, c in matches:
             if c is None:
-                self._last_label = "A" if self._last_label == "B" else "B"
-                side = {"Left": "left", "Right": "right"}.get(self.config.starting_foot, "unknown")
-                if not self._identity_known:
-                    side = "unknown"
-                elif self._last_label == "B" and side != "unknown":
-                    side = "right" if side == "left" else "left"
                 boundary = self.positions[low] == low_edge or self.positions[high] == high_edge
-                c = Contact(len(self.contacts), self.epoch, self._last_label, side, n, n, low, high,
+                c = Contact(len(self.contacts), self.epoch, "", "unknown", n, n, low, high,
                             not self._recovering and not boundary)
+                c.first_seen_sample = n
+                c.clear_before_candidate = self._clear_since
+                c.isolated_clear = (observation is None and not self._recovering and self._previous_frame is not None
+                                    and self._previous_frame.sample_index == n - 1
+                                    and self._local_clear(self._previous_frame, low, high))
                 seed = seeds.get((low, high))
                 if seed is not None:
                     c.start, c.touch_known = seed['start'], seed['touch_known']
+                    c.first_seen_sample = seed['start']
                     c.observed_samples, c.edges = seed['samples'], list(seed['edges'])
+                    c.peak_width_m = seed.get('peak_width_m', 0)
+                    c.isolated_clear = seed.get('isolated_clear', False)
+                    c.clear_before_candidate = seed.get('clear_before_candidate')
+                    if seed.get('clear_gaps'):
+                        c.problem = 'uncertain_short_clear'
+                        c.first_uncertain_sample = seed['clear_gaps'][0][0]
+                        self._identity_known = False
                 if observation is not None:
                     edge = observation.edge(low, high, 1)
                     if edge:
@@ -319,23 +574,37 @@ class OvergroundRunningProcessor:
                             self._phase_adjustments.append((c.start, n, 1, c.epoch))
                     if observation.affected(low, high, observation.recovery_segments):
                         c.touch_known = False
-                self._exit_evidence = False
+                if not c.touch_known or c.problem:
+                    self._mark_unknown_start(c.start, c.edge_estimates.get('touch'))
+                self._suspend_exit()
                 self.contacts.append(c)
                 self.active.append(c)
                 new.append(c)
+            if any(self.positions[low] <= self.positions[h] and self.positions[high] >= self.positions[l]
+                   for l, h in affected):
+                if c.first_masked_sample is None:
+                    c.first_masked_sample = n
+                    self._unresolve_candidate(c, 'masked_contact_boundary')
+                    self._preserved_stops = self._stop_intervals()
+                if c in new:
+                    c.touch_known = False
+                c.interrupted = 'masked_contact_boundary'
+                c.side = 'unknown'
             observed.add(c.id)
             if c.last < n - 1 and c.release_start is not None:
                 # A sub-confirmation clear interval cannot silently count as continuous support.
                 self._preserved_stops = self._stop_intervals()
                 c.problem = c.problem or "uncertain_short_clear"
+                self._mark_unknown_start(c.start, c.edge_estimates.get('touch'))
                 if c.first_uncertain_sample is None:
                     c.first_uncertain_sample = c.last + 1
                 self._identity_known = False
-                for affected in self.contacts[c.id:]:
-                    affected.side = "unknown"
+                for contact in self.contacts[c.id:]:
+                    contact.side = "unknown"
             c.last, c.low, c.high = n, low, high
+            c.peak_width_m = max(c.peak_width_m, self.positions[high] - self.positions[low])
             reliable = observation is None or observation.reliable(low, high)
-            c.observed_samples += int(reliable and c.interrupted != 'local_unknown_timeout')
+            c.observed_samples += int(reliable and not c.interrupted)
             if reliable:
                 c.last_reliable_sample = n
             if reliable:
@@ -352,23 +621,15 @@ class OvergroundRunningProcessor:
                     and c.observed_samples >= self.config.confirmation_ms):
                 if not c.confirmed:
                     c.confirmed = True
-                    if self.origin is None and not c.problem:
+                    c.confirmed_sample = n
+                    c.candidate_outcome = "unresolved_group" if c.problem == "unresolved_coalescence" else "confirmed_contact"
+                    if self.origin is None and c.touch_known and not c.problem:
                         self.origin = c.start / 1000
-                    prior = [x for x in self.contacts[:c.id] if x.confirmed and x.epoch == c.epoch and not x.problem]
-                    if any(x.label == c.label and x.last >= c.start for x in prior):
-                        c.problem = "identity_uncertain"
-                        c.side = "unknown"
-                        self._identity_known = False
-                    if prior and c.touch_known and not c.problem:
-                        prev = prior[-1]
-                        delta = (self.positions[low] + self.positions[high]
-                                 - self.positions[prev.low] - self.positions[prev.high]) / 2
-                        if abs(delta) >= self.DIRECTION_DISPLACEMENT_M:
-                            if self.direction and delta * self.direction < 0:
-                                c.problem = "turn_detected"
-                                self.finished_reason = "turn_detected"
-                            elif prev.touch_known:
-                                self.direction = 1 if delta > 0 else -1
+                        upper = c.edge_estimates.get('touch', [c.start, c.start])[1]
+                        if (c.touch_known and self._duration_start_unknown_from is not None
+                                and upper < self._duration_start_unknown_from):
+                            self._duration_start_censored = False
+            self._commit_contacts()
             endpoint = high_edge if self.direction > 0 else low_edge
             at_exit = self.direction and (self.positions[high] == endpoint or self.positions[low] == endpoint)
             if reliable:
@@ -382,16 +643,20 @@ class OvergroundRunningProcessor:
         # terminal-beam evidence. Earlier support may overlap, but a later
         # contact cannot inherit or reestablish the older contact's proof.
         if (new or (self._exit_contact_id is not None
-                    and self._exit_contact_id != len(self.contacts) - 1)
+                    and self._exit_contact_id != next((c.id for c in reversed(self.contacts)
+                                                      if c.candidate_outcome not in {'excluded_nonstep', 'associated_fragment'}), None))
                 or any(c.id == self._exit_contact_id and (c.problem or c.interrupted)
                        for c in self.active)):
             self._exit_evidence = False
         if len(new) > 1:
             self._identity_known = False
             for c in new:
+                self._mark_unknown_start(c.start, c.edge_estimates.get('touch'))
                 c.side, c.problem = "unknown", "simultaneous_contacts"
         for c in list(self.active):
             if c.id not in observed:
+                if not c.confirmed:
+                    c.isolated_clear &= observation is None and self._local_clear(frame, c.low, c.high)
                 if c.interrupted == 'local_unknown_timeout':
                     if observation.reliable(c.low, c.high):
                         self.active.remove(c)
@@ -411,6 +676,7 @@ class OvergroundRunningProcessor:
                         if left is None or n - left > 11:
                             self._preserved_stops = self._stop_intervals()
                             c.release_start = None
+                            self._unresolve_candidate(c, 'local_unknown_timeout')
                             c.interrupted = 'local_unknown_timeout'
                             self.active.remove(c)
                             self._identity_known = False
@@ -427,21 +693,33 @@ class OvergroundRunningProcessor:
                 if reliable:
                     c.absent_samples += 1
                 if c.absent_samples >= self.config.release_ms:
-                    c.end = c.release_start
-                    c.lift_known = self.positions[c.low] != low_edge and self.positions[c.high] != high_edge
+                    c.end = c.release_start if c.interrupted != 'masked_contact_boundary' else None
+                    c.lift_known = not c.interrupted and self.positions[c.low] != low_edge and self.positions[c.high] != high_edge
                     if not c.confirmed:
-                        c.problem = c.problem or "short_contact"
-                        self._identity_known = False
-                        # Already observed overlapping contacts also lose the manual anchor.
-                        for later in self.contacts[c.id + 1:]:
-                            later.side = "unknown"
+                        excluded = (c.observed_samples == 1 and c.low == c.high and c.isolated_clear
+                                    and not c.problem and not c.interrupted and not c.has_unknown)
+                        previous_outcome = c.candidate_outcome
+                        c.candidate_outcome = 'excluded_nonstep' if excluded else 'unresolved'
+                        c.problem = c.problem or c.interrupted or ('excluded_nonstep' if excluded else 'short_contact')
+                        if previous_outcome != 'unresolved':
+                            self._record_candidate(c, c.candidate_outcome, c.problem, n)
+                        if excluded:
+                            self._exclude_nonstep(c.start, c.last + 1, c.epoch, c.clear_before_candidate)
+                        else:
+                            self._mark_unknown_start(c.start, c.edge_estimates.get('touch'))
+                            self._identity_known = False
+                            for later in self.contacts[c.id + 1:]:
+                                later.side = 'unknown'
                     self.active.remove(c)
+        self._commit_contacts()
         self._recovering = False
         held = sum(c.id not in observed and c.release_start is None
                    and c.candidate_since is not None and not c.interrupted for c in self.active)
-        self._phase(n, -1 if observation is not None and observation.unresolved_segments else occupancy + held)
+        self._phase(n, -1 if masked_contact or any(c.id in observed and c.problem == 'unresolved_coalescence' for c in self.active)
+                    or (observation is not None and observation.unresolved_segments) else occupancy + held)
         if occupancy:
-            self.last_occupied = n
+            if not masked_contact:
+                self.last_occupied = n
             self._clear_since = None
         elif observation is not None and observation.unresolved_segments:
             self._clear_since = None
@@ -451,6 +729,7 @@ class OvergroundRunningProcessor:
             if (self.config.has_auto_stop and self._exit_evidence
                     and n - self._clear_since + 1 >= self.config.exit_clear_ms):
                 self.finished_reason = "passage_complete"
+        self._previous_frame = frame
         if self.origin is not None and n - self._last_visual >= 40:
             self._last_visual = n
             self.timeline.append({"timestamp_s": n / 1000 - self.origin,
@@ -585,7 +864,9 @@ class OvergroundRunningProcessor:
             for c in cs:
                 problem = self._temporal_problem(c, cs[-1].start) if temporal else c.problem
                 if problem or not c.confirmed:
-                    return problem or "short_contact"
+                    return problem or c.interrupted or "short_contact"
+                if (c.first_masked_sample is not None and c.first_masked_sample <= cs[-1].start):
+                    return "masked_contact_boundary"
             if len({c.epoch for c in cs}) != 1:
                 return "continuity_break"
             if any(cs[0].start < b and cs[-1].start >= a for a, b in stops):
@@ -593,9 +874,9 @@ class OvergroundRunningProcessor:
             return None
         rows = []
         for c in self.contacts:
-            problem = c.problem or (None if c.confirmed else "short_contact")
+            problem = c.problem or (None if c.confirmed else c.interrupted or "short_contact")
             touch = metric(c.start / 1000 - origin if c.touch_known else None,
-                           self._temporal_problem(c, c.start) or (None if c.confirmed else "short_contact")
+                           self._temporal_problem(c, c.start) or (None if c.confirmed else c.interrupted or "short_contact")
                            or (None if c.touch_known else "touch_not_observed"))
             lift = metric(c.end / 1000 - origin if c.end is not None and c.lift_known else None,
                           problem or c.interrupted or (None if c.lift_known else "lift_not_observed"))
@@ -605,11 +886,17 @@ class OvergroundRunningProcessor:
             rows.append({"id": c.id, "epoch": c.epoch, "label": c.label, "side": c.side,
                          "identity_source": "manual_first_foot_and_alternation" if c.side != "unknown" else "alternation_only",
                          "touch_s": touch, "lift_s": lift, "toe_m": self._toe(c),
-                         "contact_s": metric((c.end - c.start) / 1000 if c.end is not None else None, reason)})
+                         "contact_s": metric((c.end - c.start) / 1000 if c.end is not None else None, reason),
+                         "candidate_outcome": c.candidate_outcome,
+                         "first_seen_sample": c.first_seen_sample,
+                         "touch_sample": c.start if touch['valid'] and 'touch' not in c.edge_estimates else None,
+                         "lift_sample": c.end if lift['valid'] and 'lift' not in c.edge_estimates else None,
+                         "confirmed_sample": c.confirmed_sample})
         steps, cycles = [], []
-        for i in range(1, len(self.contacts)):
-            a, b = self.contacts[i - 1:i + 1]
-            ar, br = rows[i - 1:i + 1]
+        sequence = [c for c in self.contacts if c.candidate_outcome not in {'excluded_nonstep', 'associated_fragment'}]
+        for i in range(1, len(sequence)):
+            a, b = sequence[i - 1:i + 1]
+            ar, br = rows[a.id], rows[b.id]
             reason = barrier([a, b])
             time_barrier = barrier([a, b], temporal=True)
             temporal = time_barrier or (None if ar["touch_s"]["valid"] and br["touch_s"]["valid"] else "touch_not_observed")
@@ -631,22 +918,21 @@ class OvergroundRunningProcessor:
                           "length_m": length, "time_s": dt, "speed_m_s": speed, "flight_s": flight})
             if i < 2:
                 continue
-            x, y, z = self.contacts[i - 2:i + 1]
-            xr, zr = rows[i - 2], rows[i]
+            x, y, z = sequence[i - 2:i + 1]
+            xr, zr = rows[x.id], rows[z.id]
             why = barrier([x, y, z], temporal=True)
             if x.label != z.label or x.label == y.label:
                 why = why or "identity_uncertain"
             time_reason = why or (None if xr["touch_s"]["valid"] and zr["touch_s"]["valid"] else "touch_not_observed")
             support, phase_reason = self._support(x.start, z.start, x.epoch)
             phase_reason = time_reason or phase_reason
-            if any(self.contacts[k].last + 1 <= z.start and not rows[k]["lift_s"]["valid"]
-                   for k in (i - 2, i - 1)):
+            if any(c.last + 1 <= z.start and not rows[c.id]['lift_s']['valid'] for c in (x, y)):
                 phase_reason = phase_reason or "lift_not_observed"
             spatial_reason = barrier([x, y, z]) or why or (None if xr["toe_m"]["valid"] and zr["toe_m"]["valid"] else "toe_unavailable")
             cycles.append({"from_id": x.id, "to_id": z.id, "label": x.label, "side": x.side,
                            "duration_s": metric((z.start - x.start) / 1000, time_reason),
                            "length_m": metric(abs(zr["toe_m"]["value"] - xr["toe_m"]["value"]) if not spatial_reason else None, spatial_reason),
-                           "contact_s": metric(xr["contact_s"]["value"], why or xr["contact_s"]["missing_reason"]),
+                           "contact_s": metric(xr["contact_s"]["value"], xr["contact_s"]["missing_reason"]),
                            "swing_s": metric((z.start - x.end) / 1000 if x.end is not None else None,
                                              time_reason or (None if xr["lift_s"]["valid"] else "lift_not_observed")),
                            **{name: metric(support[count] if support else None,
@@ -689,6 +975,17 @@ class OvergroundRunningProcessor:
                 "direction": self.direction, "duration_s": duration, "valid_steps": sum(s["time_s"]["valid"] for s in steps),
                 "valid_cycles": sum(c["duration_s"]["valid"] for c in cycles), "step_lengths_m": lengths,
                 "running_speed_m_s": speed, "contacts": rows, "steps": steps, "cycles": cycles,
+                "record_count": len(rows), "confirmed_contacts": sum(c.confirmed for c in self.contacts),
+                "valid_touches": sum(r['touch_s']['valid'] for r in rows),
+                "valid_contact_durations": sum(r['contact_s']['valid'] for r in rows),
+                "valid_step_lengths": sum(r['length_m']['valid'] for r in steps),
+                "valid_step_speeds": len(timed),
+                "valid_stride_lengths": sum(r['length_m']['valid'] for r in cycles),
+                "valid_support_cycles": sum(all(r[k]['valid'] for k in ('flight_s', 'single_support_s', 'double_support_s')) for r in cycles),
+                "candidate_decisions": list(self._candidate_decisions)
+                    + [self._candidate_row(q, 'pending', 'awaiting_release_or_confirmation') for q in self._narrow_candidates]
+                    + [self._candidate_row(c, 'pending', 'awaiting_release_or_confirmation') for c in self.active
+                       if not c.confirmed and c.candidate_outcome == 'pending'],
                 "groups": grouped, "sides": sides,
                 "step_statistics": stats(steps, ("length_m", "time_s", "speed_m_s", "flight_s")),
                 "flight_cycle_count": len(flight_cycles),
@@ -699,13 +996,14 @@ class OvergroundRunningProcessor:
                 "status": "出口证据不足，可手动结束" if self._clear_since is not None and not self._exit_evidence else "跑步中"}
 
     def build_report(self, reason, export_frames=(), export_timestamps=()):
+        summary = self.summary()
         return OvergroundRunningReport(
-            touch_count=sum(c.confirmed for c in self.contacts),
-            lift_count=sum(c.confirmed and c.end is not None for c in self.contacts),
-            finish_reason=reason, running_summary=self.summary(), visual_timeline=tuple(self.timeline),
+            touch_count=summary['valid_touches'],
+            lift_count=sum(r['lift_s']['valid'] for r in summary['contacts']),
+            finish_reason=reason, running_summary=summary, visual_timeline=tuple(self.timeline),
             export_frames=export_frames, export_timestamps=export_timestamps,
             report_config_snapshot={**self.config.to_dict(), "device": self.device.snapshot(),
-                                    "algorithm": "overground_running_v1.6", "spatial_reference": "toe_to_toe",
+                                    "algorithm": "overground_running_v1.9", "spatial_reference": "toe_to_toe",
                                     "toe_method": "furthest_stable_leading_edge_platform_median",
                                     "readiness_stale_ms": 500, "data_timeout_ms": 1000,
                                     "tracking": {"direction_displacement_m": self.DIRECTION_DISPLACEMENT_M,
@@ -713,6 +1011,6 @@ class OvergroundRunningProcessor:
                                                  "match_margin_m": self.MATCH_MARGIN_M,
                                                  "max_cluster_width_m": self.MAX_CLUSTER_WIDTH_M,
                                                  "narrow_candidate_width_m": self.NARROW_CANDIDATE_WIDTH_M,
-                                                 "narrow_candidate_scope": "known_anchor_without_local_observation",
+                                                 "narrow_candidate_scope": "local_candidate_evidence_before_identity",
                                                  "fragment_association": "unique_existing_envelope_with_match_margin"},
                                     "real_world_validation": "pending"})
