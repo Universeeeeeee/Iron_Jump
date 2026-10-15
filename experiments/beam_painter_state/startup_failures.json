@@ -1,0 +1,87 @@
+{
+  "failures": [
+    {
+      "name": "smoke_walk",
+      "excluded_before_calibration": true,
+      "performance_measurement_present": false,
+      "reason": "SDK initialization completed after the frozen optical preflight point lost freshness; original data and production algorithms unchanged.",
+      "artifacts": {
+        "pid.json": {
+          "bytes": 13,
+          "sha256": "cf18301c2244adf0bee0c5477bc49a68392b7f120a55412993758086f63bf732"
+        },
+        "preview.png": {
+          "bytes": 561905,
+          "sha256": "0538923958f019259ce87adfc61e6c668d5dd4dd05225e165f231cd3fe168421"
+        }
+      }
+    },
+    {
+      "name": "smoke_walk_retry1",
+      "excluded_before_calibration": true,
+      "performance_measurement_present": false,
+      "reason": "SDK initialization completed after the frozen optical preflight point lost freshness; original data and production algorithms unchanged.",
+      "sdk": {
+        "start_success": true,
+        "tracking_decisions": 146,
+        "nonzero_speeds": 95,
+        "stop_success": true
+      },
+      "sdk_errors": [],
+      "delivered_frames": 3501,
+      "checked_sample": 48903,
+      "artifacts": {
+        "complete.json": {
+          "bytes": 59,
+          "sha256": "11c835c362f9e327faf6385fdf6ed60cf5bd591d62ae3ab6677b8bce014be9e2"
+        },
+        "failure_state.json": {
+          "bytes": 16953,
+          "sha256": "1ac904b9f600be11e7f4e8e04dd3cd816acddc335846f7b61f746675130db8bb"
+        },
+        "pid.json": {
+          "bytes": 14,
+          "sha256": "3a2ce40b78f1b3a4449dff00beac62c94ca0139ad617d193eb44186e2be84275"
+        },
+        "preview.png": {
+          "bytes": 616010,
+          "sha256": "27693ccd0e6a62c303509c8d38791337600759a6dedf0321bbabaf81f68eb845"
+        }
+      }
+    },
+    {
+      "name": "smoke_walk_v2",
+      "excluded_before_calibration": true,
+      "performance_measurement_present": false,
+      "reason": "SDK initialization completed after the frozen optical preflight point lost freshness; original data and production algorithms unchanged.",
+      "sdk": {
+        "start_success": true,
+        "tracking_decisions": 146,
+        "nonzero_speeds": 94,
+        "stop_success": false
+      },
+      "sdk_errors": [],
+      "delivered_frames": 3501,
+      "checked_sample": 48903,
+      "artifacts": {
+        "complete.json": {
+          "bytes": 59,
+          "sha256": "11c835c362f9e327faf6385fdf6ed60cf5bd591d62ae3ab6677b8bce014be9e2"
+        },
+        "failure_state.json": {
+          "bytes": 74431,
+          "sha256": "308e466c1e284fc2c6f7d05d3d19d66010a5bd02891afd542713afa0a5aecebd"
+        },
+        "pid.json": {
+          "bytes": 14,
+          "sha256": "3c1af36bf04f3eca2506f93c6fddf0bda90188793f1a15cb803c76b1d24f2d31"
+        },
+        "preview.png": {
+          "bytes": 616010,
+          "sha256": "27693ccd0e6a62c303509c8d38791337600759a6dedf0321bbabaf81f68eb845"
+        }
+      }
+    }
+  ],
+  "resolution": "Wait for successful real SDK start before initiating optical replay; do not pause at a stale preflight point waiting for SDK. Successful smoke_walk_v3 and smoke_run_v3 precede the frozen A/A sources."
+}

@@ -1,0 +1,91 @@
+{
+  "name": "smoke_walk_v3",
+  "mode": "walk",
+  "variant": "A",
+  "probe": "P",
+  "observation": "full_P",
+  "footprint_count": 9,
+  "footprint_p95_ms": 838.8289199999999,
+  "footprint_max_ms": 863.5458,
+  "phases": [
+    {
+      "phase": "empty",
+      "start": 48904,
+      "end": 59904,
+      "consumer_fps": 1000.4141244934118,
+      "age_slope_ms_per_device_second": -1.1780260083543004,
+      "completion_age_ms": {
+        "p50": 2.5101500000000003,
+        "p95": 10.502599999999996,
+        "max": 362.5522
+      },
+      "observations": 2334
+    },
+    {
+      "phase": "dense",
+      "start": 59904,
+      "end": 65904,
+      "consumer_fps": 979.4042659136194,
+      "age_slope_ms_per_device_second": 27.530709737830577,
+      "completion_age_ms": {
+        "p50": 384.8161,
+        "p95": 762.2762749999999,
+        "max": 861.8532
+      },
+      "observations": 358
+    },
+    {
+      "phase": "mixed",
+      "start": 65904,
+      "end": 66904,
+      "consumer_fps": 1114.4966019917779,
+      "age_slope_ms_per_device_second": -88.97116044651222,
+      "completion_age_ms": {
+        "p50": 2.5167,
+        "p95": 83.49035,
+        "max": 122.6244
+      },
+      "observations": 131
+    },
+    {
+      "phase": "empty",
+      "start": 66904,
+      "end": 78591,
+      "consumer_fps": 1000.3639002430577,
+      "age_slope_ms_per_device_second": 0.016290131270060765,
+      "completion_age_ms": {
+        "p50": 1.7742,
+        "p95": 7.4330999999999925,
+        "max": 86.0112
+      },
+      "observations": 2695
+    }
+  ],
+  "full_raw_report_quality_evidence_exact": true,
+  "sdk": {
+    "start_success": true,
+    "tracking_decisions": 471,
+    "nonzero_speeds": 396,
+    "stop_success": true
+  },
+  "pose_draws": {
+    "all": 624,
+    "valid": 624,
+    "disabled_calls": 0,
+    "smoke_screenshot": true
+  },
+  "camera": {
+    "decoded_frames": 732,
+    "stale_frames_skipped": 9
+  },
+  "canonical_report_sha256": "1b0d8dc6f769a4028df4df0650c36bbf22590e1b68bad0c909f9b2bbbc3b2f78",
+  "recovery_s": 3.2004895,
+  "last_raw_usable_contact_sample": 71470,
+  "reader_scheduled_lag_ms": {
+    "p50": 1.0026,
+    "p95": 6.664519999999986,
+    "max": 334.3335
+  },
+  "dense_fps": 979.4042659136194,
+  "age_slope_ms_per_device_second": 27.530709737830577
+}

@@ -1,0 +1,2312 @@
+{
+  "modes": {
+    "walk": {
+      "pass": false,
+      "paired_medians_P_minus_L": {
+        "fps_fraction": 0.0009422914247925185,
+        "age_slope_ms_per_device_second": -1.4412727065585367,
+        "footprint_p95_ms": 1.0852499999999878,
+        "footprint_max_ms": 6.1083500000000015,
+        "recovery_s": 0.1827185
+      },
+      "noise90_absolute": {
+        "fps_fraction": 0.003918316735399552,
+        "age_slope_ms_per_device_second": 1.8416207105634559,
+        "footprint_p95_ms": 20.518299999999996,
+        "footprint_max_ms": 35.240700000000004,
+        "recovery_s": 0.57234855
+      },
+      "pairs": [
+        {
+          "fps_fraction": -0.0009091813823105532,
+          "age_slope_ms_per_device_second": -1.3735861347034661,
+          "footprint_p95_ms": -1.8925800000000095,
+          "footprint_max_ms": 1.8701000000000079,
+          "recovery_s": 0.003268
+        },
+        {
+          "fps_fraction": -0.003987207972568907,
+          "age_slope_ms_per_device_second": 1.6565914209189079,
+          "footprint_p95_ms": 1.9157799999999838,
+          "footprint_max_ms": -2.852100000000007,
+          "recovery_s": 0.25216
+        },
+        {
+          "fps_fraction": 0.0032557921632825337,
+          "age_slope_ms_per_device_second": -1.9018810854904908,
+          "footprint_p95_ms": -6.576560000000001,
+          "footprint_max_ms": -2.2988,
+          "recovery_s": 0.8925371
+        },
+        {
+          "fps_fraction": 0.0016208772368944135,
+          "age_slope_ms_per_device_second": -1.7813603356364207,
+          "footprint_p95_ms": 31.31966,
+          "footprint_max_ms": 58.4179,
+          "recovery_s": 0.1719334
+        },
+        {
+          "fps_fraction": 0.0002637056126906234,
+          "age_slope_ms_per_device_second": -1.5089592784136074,
+          "footprint_p95_ms": 9.716939999999994,
+          "footprint_max_ms": 12.063500000000005,
+          "recovery_s": 0.09834079999999999
+        },
+        {
+          "fps_fraction": 0.0038494254982301968,
+          "age_slope_ms_per_device_second": -0.7368198548149177,
+          "footprint_p95_ms": 0.25471999999999184,
+          "footprint_max_ms": 10.346599999999995,
+          "recovery_s": 0.19350360000000003
+        }
+      ],
+      "runs": [
+        {
+          "name": "aa_walk_01_L",
+          "mode": "walk",
+          "variant": "A",
+          "probe": "L",
+          "observation": "common",
+          "footprint_count": 9,
+          "footprint_p95_ms": 142.25054,
+          "footprint_max_ms": 143.7617,
+          "phases": [
+            {
+              "phase": "empty",
+              "start": 48904,
+              "end": 59904,
+              "consumer_fps": 999.9912133125007,
+              "age_slope_ms_per_device_second": -0.02372757916860584,
+              "completion_age_ms": {
+                "p50": 1.573,
+                "p95": 5.198600000000001,
+                "max": 72.5686
+              },
+              "observations": 171
+            },
+            {
+              "phase": "dense",
+              "start": 59904,
+              "end": 65904,
+              "consumer_fps": 1000.033407266235,
+              "age_slope_ms_per_device_second": 1.6601157196348661,
+              "completion_age_ms": {
+                "p50": 10.03325,
+                "p95": 50.09295499999999,
+                "max": 71.7013
+              },
+              "observations": 94
+            },
+            {
+              "phase": "mixed",
+              "start": 65904,
+              "end": 66904,
+              "consumer_fps": 1008.6545714274007,
+              "age_slope_ms_per_device_second": -14.504998526835584,
+              "completion_age_ms": {
+                "p50": 3.55965,
+                "p95": 24.045625,
+                "max": 25.3459
+              },
+              "observations": 16
+            },
+            {
+              "phase": "empty",
+              "start": 66904,
+              "end": 78591,
+              "consumer_fps": 999.8737755342474,
+              "age_slope_ms_per_device_second": 0.025191842128974438,
+              "completion_age_ms": {
+                "p50": 2.117,
+                "p95": 10.791399999999998,
+                "max": 39.2133
+              },
+              "observations": 182
+            }
+          ],
+          "full_raw_report_quality_evidence_exact": true,
+          "sdk": {
+            "start_success": true,
+            "tracking_decisions": 477,
+            "nonzero_speeds": 393,
+            "stop_success": true
+          },
+          "pose_draws": {
+            "all": 639,
+            "valid": 639,
+            "disabled_calls": 0,
+            "smoke_screenshot": false
+          },
+          "camera": {
+            "decoded_frames": 740,
+            "stale_frames_skipped": 1
+          },
+          "canonical_report_sha256": "1b0d8dc6f769a4028df4df0650c36bbf22590e1b68bad0c909f9b2bbbc3b2f78",
+          "recovery_s": 0.01633,
+          "last_raw_usable_contact_sample": 71470,
+          "reader_scheduled_lag_ms": {
+            "p50": 0.9029,
+            "p95": 3.6810699999999996,
+            "max": 92.1605
+          },
+          "dense_fps": 1000.033407266235,
+          "age_slope_ms_per_device_second": 1.6601157196348661
+        },
+        {
+          "name": "aa_walk_01_P",
+          "mode": "walk",
+          "variant": "A",
+          "probe": "P",
+          "observation": "common",
+          "footprint_count": 9,
+          "footprint_p95_ms": 140.35796,
+          "footprint_max_ms": 145.6318,
+          "phases": [
+            {
+              "phase": "empty",
+              "start": 48904,
+              "end": 59904,
+              "consumer_fps": 999.8924373453971,
+              "age_slope_ms_per_device_second": -0.0013828640662556704,
+              "completion_age_ms": {
+                "p50": 1.3503,
+                "p95": 4.02165,
+                "max": 26.2444
+              },
+              "observations": 171
+            },
+            {
+              "phase": "dense",
+              "start": 59904,
+              "end": 65904,
+              "consumer_fps": 999.12419551066,
+              "age_slope_ms_per_device_second": 0.2865295849314,
+              "completion_age_ms": {
+                "p50": 8.40105,
+                "p95": 34.26323999999999,
+                "max": 53.0889
+              },
+              "observations": 94
+            },
+            {
+              "phase": "mixed",
+              "start": 65904,
+              "end": 66904,
+              "consumer_fps": 1018.5554560423409,
+              "age_slope_ms_per_device_second": -10.440588586670225,
+              "completion_age_ms": {
+                "p50": 3.29735,
+                "p95": 23.96985,
+                "max": 40.1694
+              },
+              "observations": 16
+            },
+            {
+              "phase": "empty",
+              "start": 66904,
+              "end": 78591,
+              "consumer_fps": 999.9195851963425,
+              "age_slope_ms_per_device_second": -0.01735290909961926,
+              "completion_age_ms": {
+                "p50": 1.9891999999999999,
+                "p95": 11.428844999999988,
+                "max": 51.4605
+              },
+              "observations": 182
+            }
+          ],
+          "full_raw_report_quality_evidence_exact": true,
+          "sdk": {
+            "start_success": true,
+            "tracking_decisions": 477,
+            "nonzero_speeds": 396,
+            "stop_success": true
+          },
+          "pose_draws": {
+            "all": 643,
+            "valid": 643,
+            "disabled_calls": 0,
+            "smoke_screenshot": false
+          },
+          "camera": {
+            "decoded_frames": 740,
+            "stale_frames_skipped": 1
+          },
+          "canonical_report_sha256": "1b0d8dc6f769a4028df4df0650c36bbf22590e1b68bad0c909f9b2bbbc3b2f78",
+          "recovery_s": 0.019598,
+          "last_raw_usable_contact_sample": 71470,
+          "reader_scheduled_lag_ms": {
+            "p50": 0.9035,
+            "p95": 3.6707399999999994,
+            "max": 89.9178
+          },
+          "dense_fps": 999.12419551066,
+          "age_slope_ms_per_device_second": 0.2865295849314
+        },
+        {
+          "name": "aa_walk_02_L",
+          "mode": "walk",
+          "variant": "A",
+          "probe": "L",
+          "observation": "common",
+          "footprint_count": 9,
+          "footprint_p95_ms": 146.47574,
+          "footprint_max_ms": 152.4385,
+          "phases": [
+            {
+              "phase": "empty",
+              "start": 48904,
+              "end": 59904,
+              "consumer_fps": 1000.0009283950158,
+              "age_slope_ms_per_device_second": -0.03695293266836511,
+              "completion_age_ms": {
+                "p50": 1.4586,
+                "p95": 4.4764,
+                "max": 6.3419
+              },
+              "observations": 171
+            },
+            {
+              "phase": "dense",
+              "start": 59904,
+              "end": 65904,
+              "consumer_fps": 999.999781622759,
+              "age_slope_ms_per_device_second": -0.5672928243723546,
+              "completion_age_ms": {
+                "p50": 9.1726,
+                "p95": 42.50766499999998,
+                "max": 75.7076
+              },
+              "observations": 94
+            },
+            {
+              "phase": "mixed",
+              "start": 65904,
+              "end": 66904,
+              "consumer_fps": 1010.179435369989,
+              "age_slope_ms_per_device_second": -9.48116793016407,
+              "completion_age_ms": {
+                "p50": 2.9698,
+                "p95": 19.7011,
+                "max": 33.235
+              },
+              "observations": 16
+            },
+            {
+              "phase": "empty",
+              "start": 66904,
+              "end": 78591,
+              "consumer_fps": 999.8333438544893,
+              "age_slope_ms_per_device_second": -0.04191860792101101,
+              "completion_age_ms": {
+                "p50": 2.1788499999999997,
+                "p95": 11.042229999999996,
+                "max": 48.4625
+              },
+              "observations": 182
+            }
+          ],
+          "full_raw_report_quality_evidence_exact": true,
+          "sdk": {
+            "start_success": true,
+            "tracking_decisions": 478,
+            "nonzero_speeds": 397,
+            "stop_success": true
+          },
+          "pose_draws": {
+            "all": 641,
+            "valid": 641,
+            "disabled_calls": 0,
+            "smoke_screenshot": false
+          },
+          "camera": {
+            "decoded_frames": 740,
+            "stale_frames_skipped": 1
+          },
+          "canonical_report_sha256": "1b0d8dc6f769a4028df4df0650c36bbf22590e1b68bad0c909f9b2bbbc3b2f78",
+          "recovery_s": 0.052977,
+          "last_raw_usable_contact_sample": 71470,
+          "reader_scheduled_lag_ms": {
+            "p50": 0.9083,
+            "p95": 3.6400799999999958,
+            "max": 96.0438
+          },
+          "dense_fps": 999.999781622759,
+          "age_slope_ms_per_device_second": -0.5672928243723546
+        },
+        {
+          "name": "aa_walk_02_P",
+          "mode": "walk",
+          "variant": "A",
+          "probe": "P",
+          "observation": "common",
+          "footprint_count": 9,
+          "footprint_p95_ms": 148.39151999999999,
+          "footprint_max_ms": 149.5864,
+          "phases": [
+            {
+              "phase": "empty",
+              "start": 48904,
+              "end": 59904,
+              "consumer_fps": 999.9293405321262,
+              "age_slope_ms_per_device_second": -0.001444977706681459,
+              "completion_age_ms": {
+                "p50": 1.5349,
+                "p95": 4.406,
+                "max": 28.5962
+              },
+              "observations": 171
+            },
+            {
+              "phase": "dense",
+              "start": 59904,
+              "end": 65904,
+              "consumer_fps": 996.0125745209056,
+              "age_slope_ms_per_device_second": 1.0892985965465531,
+              "completion_age_ms": {
+                "p50": 10.006499999999999,
+                "p95": 49.07242,
+                "max": 73.5121
+              },
+              "observations": 94
+            },
+            {
+              "phase": "mixed",
+              "start": 65904,
+              "end": 66904,
+              "consumer_fps": 1026.0646479360466,
+              "age_slope_ms_per_device_second": -18.323349044661676,
+              "completion_age_ms": {
+                "p50": 6.66705,
+                "p95": 30.07355,
+                "max": 30.4505
+              },
+              "observations": 16
+            },
+            {
+              "phase": "empty",
+              "start": 66904,
+              "end": 78591,
+              "consumer_fps": 999.8303532584936,
+              "age_slope_ms_per_device_second": 0.08303204479272366,
+              "completion_age_ms": {
+                "p50": 1.98625,
+                "p95": 9.791164999999998,
+                "max": 87.6961
+              },
+              "observations": 182
+            }
+          ],
+          "full_raw_report_quality_evidence_exact": true,
+          "sdk": {
+            "start_success": true,
+            "tracking_decisions": 478,
+            "nonzero_speeds": 396,
+            "stop_success": true
+          },
+          "pose_draws": {
+            "all": 642,
+            "valid": 642,
+            "disabled_calls": 0,
+            "smoke_screenshot": false
+          },
+          "camera": {
+            "decoded_frames": 740,
+            "stale_frames_skipped": 1
+          },
+          "canonical_report_sha256": "1b0d8dc6f769a4028df4df0650c36bbf22590e1b68bad0c909f9b2bbbc3b2f78",
+          "recovery_s": 0.305137,
+          "last_raw_usable_contact_sample": 71470,
+          "reader_scheduled_lag_ms": {
+            "p50": 0.89,
+            "p95": 3.47267,
+            "max": 82.3397
+          },
+          "dense_fps": 996.0125745209056,
+          "age_slope_ms_per_device_second": 1.0892985965465531
+        },
+        {
+          "name": "aa_walk_03_L",
+          "mode": "walk",
+          "variant": "A",
+          "probe": "L",
+          "observation": "common",
+          "footprint_count": 9,
+          "footprint_p95_ms": 154.33813999999998,
+          "footprint_max_ms": 165.0973,
+          "phases": [
+            {
+              "phase": "empty",
+              "start": 48904,
+              "end": 59904,
+              "consumer_fps": 999.9766500581896,
+              "age_slope_ms_per_device_second": 0.008940827550860833,
+              "completion_age_ms": {
+                "p50": 1.4152,
+                "p95": 4.6637,
+                "max": 12.6351
+              },
+              "observations": 171
+            },
+            {
+              "phase": "dense",
+              "start": 59904,
+              "end": 65904,
+              "consumer_fps": 996.0733704032284,
+              "age_slope_ms_per_device_second": 0.4816091064098127,
+              "completion_age_ms": {
+                "p50": 11.182500000000001,
+                "p95": 42.371009999999984,
+                "max": 60.5387
+              },
+              "observations": 94
+            },
+            {
+              "phase": "mixed",
+              "start": 65904,
+              "end": 66904,
+              "consumer_fps": 1017.075495969141,
+              "age_slope_ms_per_device_second": -8.197467083211794,
+              "completion_age_ms": {
+                "p50": 3.52165,
+                "p95": 12.94835,
+                "max": 16.4945
+              },
+              "observations": 16
+            },
+            {
+              "phase": "empty",
+              "start": 66904,
+              "end": 78591,
+              "consumer_fps": 1000.2634533148598,
+              "age_slope_ms_per_device_second": 0.11519662966487826,
+              "completion_age_ms": {
+                "p50": 2.4212499999999997,
+                "p95": 11.66129,
+                "max": 21.7918
+              },
+              "observations": 182
+            }
+          ],
+          "full_raw_report_quality_evidence_exact": true,
+          "sdk": {
+            "start_success": true,
+            "tracking_decisions": 477,
+            "nonzero_speeds": 396,
+            "stop_success": true
+          },
+          "pose_draws": {
+            "all": 640,
+            "valid": 640,
+            "disabled_calls": 0,
+            "smoke_screenshot": false
+          },
+          "camera": {
+            "decoded_frames": 740,
+            "stale_frames_skipped": 1
+          },
+          "canonical_report_sha256": "1b0d8dc6f769a4028df4df0650c36bbf22590e1b68bad0c909f9b2bbbc3b2f78",
+          "recovery_s": 0.1172591,
+          "last_raw_usable_contact_sample": 71470,
+          "reader_scheduled_lag_ms": {
+            "p50": 0.8964,
+            "p95": 3.5908299999999915,
+            "max": 75.2714
+          },
+          "dense_fps": 996.0733704032284,
+          "age_slope_ms_per_device_second": 0.4816091064098127
+        },
+        {
+          "name": "aa_walk_03_P",
+          "mode": "walk",
+          "variant": "A",
+          "probe": "P",
+          "observation": "common",
+          "footprint_count": 9,
+          "footprint_p95_ms": 147.76157999999998,
+          "footprint_max_ms": 162.7985,
+          "phases": [
+            {
+              "phase": "empty",
+              "start": 48904,
+              "end": 59904,
+              "consumer_fps": 1000.0825235850191,
+              "age_slope_ms_per_device_second": -0.08700914939978448,
+              "completion_age_ms": {
+                "p50": 1.5571,
+                "p95": 5.1389499999999995,
+                "max": 80.3667
+              },
+              "observations": 171
+            },
+            {
+              "phase": "dense",
+              "start": 59904,
+              "end": 65904,
+              "consumer_fps": 999.3163782766417,
+              "age_slope_ms_per_device_second": -1.4202719790806781,
+              "completion_age_ms": {
+                "p50": 9.8702,
+                "p95": 43.22099999999996,
+                "max": 61.7218
+              },
+              "observations": 94
+            },
+            {
+              "phase": "mixed",
+              "start": 65904,
+              "end": 66904,
+              "consumer_fps": 1018.9613881349685,
+              "age_slope_ms_per_device_second": -23.452080073501676,
+              "completion_age_ms": {
+                "p50": 4.90925,
+                "p95": 37.5418,
+                "max": 47.6944
+              },
+              "observations": 16
+            },
+            {
+              "phase": "empty",
+              "start": 66904,
+              "end": 78591,
+              "consumer_fps": 999.9189119625433,
+              "age_slope_ms_per_device_second": -0.0039043168516291866,
+              "completion_age_ms": {
+                "p50": 2.2746500000000003,
+                "p95": 12.51191999999999,
+                "max": 25.8704
+              },
+              "observations": 182
+            }
+          ],
+          "full_raw_report_quality_evidence_exact": true,
+          "sdk": {
+            "start_success": true,
+            "tracking_decisions": 476,
+            "nonzero_speeds": 393,
+            "stop_success": true
+          },
+          "pose_draws": {
+            "all": 638,
+            "valid": 638,
+            "disabled_calls": 0,
+            "smoke_screenshot": false
+          },
+          "camera": {
+            "decoded_frames": 740,
+            "stale_frames_skipped": 1
+          },
+          "canonical_report_sha256": "1b0d8dc6f769a4028df4df0650c36bbf22590e1b68bad0c909f9b2bbbc3b2f78",
+          "recovery_s": 1.0097962,
+          "last_raw_usable_contact_sample": 71470,
+          "reader_scheduled_lag_ms": {
+            "p50": 0.9042,
+            "p95": 3.8456699999999997,
+            "max": 81.6591
+          },
+          "dense_fps": 999.3163782766417,
+          "age_slope_ms_per_device_second": -1.4202719790806781
+        },
+        {
+          "name": "aa_walk_04_L",
+          "mode": "walk",
+          "variant": "A",
+          "probe": "L",
+          "observation": "common",
+          "footprint_count": 9,
+          "footprint_p95_ms": 131.65117999999998,
+          "footprint_max_ms": 132.3611,
+          "phases": [
+            {
+              "phase": "empty",
+              "start": 48904,
+              "end": 59904,
+              "consumer_fps": 999.8836547472406,
+              "age_slope_ms_per_device_second": 0.00508020918640552,
+              "completion_age_ms": {
+                "p50": 1.4536,
+                "p95": 4.1291,
+                "max": 19.6652
+              },
+              "observations": 171
+            },
+            {
+              "phase": "dense",
+              "start": 59904,
+              "end": 65904,
+              "consumer_fps": 998.2284044500935,
+              "age_slope_ms_per_device_second": 0.5256460451890447,
+              "completion_age_ms": {
+                "p50": 9.16245,
+                "p95": 43.345694999999985,
+                "max": 56.6044
+              },
+              "observations": 94
+            },
+            {
+              "phase": "mixed",
+              "start": 65904,
+              "end": 66904,
+              "consumer_fps": 996.372889684828,
+              "age_slope_ms_per_device_second": -9.934263847894979,
+              "completion_age_ms": {
+                "p50": 4.2486,
+                "p95": 18.731575,
+                "max": 18.769
+              },
+              "observations": 16
+            },
+            {
+              "phase": "empty",
+              "start": 66904,
+              "end": 78591,
+              "consumer_fps": 999.7948561404421,
+              "age_slope_ms_per_device_second": 0.02325479100771518,
+              "completion_age_ms": {
+                "p50": 2.028,
+                "p95": 9.375859999999998,
+                "max": 36.047
+              },
+              "observations": 182
+            }
+          ],
+          "full_raw_report_quality_evidence_exact": true,
+          "sdk": {
+            "start_success": true,
+            "tracking_decisions": 476,
+            "nonzero_speeds": 394,
+            "stop_success": true
+          },
+          "pose_draws": {
+            "all": 642,
+            "valid": 642,
+            "disabled_calls": 0,
+            "smoke_screenshot": false
+          },
+          "camera": {
+            "decoded_frames": 740,
+            "stale_frames_skipped": 1
+          },
+          "canonical_report_sha256": "1b0d8dc6f769a4028df4df0650c36bbf22590e1b68bad0c909f9b2bbbc3b2f78",
+          "recovery_s": 0.0077616,
+          "last_raw_usable_contact_sample": 71470,
+          "reader_scheduled_lag_ms": {
+            "p50": 0.8862,
+            "p95": 3.4711799999999986,
+            "max": 76.2434
+          },
+          "dense_fps": 998.2284044500935,
+          "age_slope_ms_per_device_second": 0.5256460451890447
+        },
+        {
+          "name": "aa_walk_04_P",
+          "mode": "walk",
+          "variant": "A",
+          "probe": "P",
+          "observation": "common",
+          "footprint_count": 9,
+          "footprint_p95_ms": 162.97083999999998,
+          "footprint_max_ms": 190.779,
+          "phases": [
+            {
+              "phase": "empty",
+              "start": 48904,
+              "end": 59904,
+              "consumer_fps": 999.7648682423122,
+              "age_slope_ms_per_device_second": 0.004206669065805708,
+              "completion_age_ms": {
+                "p50": 1.4127,
+                "p95": 4.1472999999999995,
+                "max": 30.3631
+              },
+              "observations": 171
+            },
+            {
+              "phase": "dense",
+              "start": 59904,
+              "end": 65904,
+              "consumer_fps": 999.8464101480881,
+              "age_slope_ms_per_device_second": -1.2557142904473761,
+              "completion_age_ms": {
+                "p50": 7.94475,
+                "p95": 49.64448499999997,
+                "max": 91.2736
+              },
+              "observations": 94
+            },
+            {
+              "phase": "mixed",
+              "start": 65904,
+              "end": 66904,
+              "consumer_fps": 1011.372379367368,
+              "age_slope_ms_per_device_second": -7.187805709465294,
+              "completion_age_ms": {
+                "p50": 4.7737,
+                "p95": 20.421125,
+                "max": 28.0829
+              },
+              "observations": 16
+            },
+            {
+              "phase": "empty",
+              "start": 66904,
+              "end": 78591,
+              "consumer_fps": 999.8411854470629,
+              "age_slope_ms_per_device_second": 0.03507489482677733,
+              "completion_age_ms": {
+                "p50": 2.1617,
+                "p95": 10.617799999999995,
+                "max": 42.0435
+              },
+              "observations": 182
+            }
+          ],
+          "full_raw_report_quality_evidence_exact": true,
+          "sdk": {
+            "start_success": true,
+            "tracking_decisions": 478,
+            "nonzero_speeds": 395,
+            "stop_success": true
+          },
+          "pose_draws": {
+            "all": 640,
+            "valid": 640,
+            "disabled_calls": 0,
+            "smoke_screenshot": false
+          },
+          "camera": {
+            "decoded_frames": 740,
+            "stale_frames_skipped": 1
+          },
+          "canonical_report_sha256": "1b0d8dc6f769a4028df4df0650c36bbf22590e1b68bad0c909f9b2bbbc3b2f78",
+          "recovery_s": 0.179695,
+          "last_raw_usable_contact_sample": 71470,
+          "reader_scheduled_lag_ms": {
+            "p50": 0.9032,
+            "p95": 3.6888699999999996,
+            "max": 86.9316
+          },
+          "dense_fps": 999.8464101480881,
+          "age_slope_ms_per_device_second": -1.2557142904473761
+        },
+        {
+          "name": "aa_walk_05_L",
+          "mode": "walk",
+          "variant": "A",
+          "probe": "L",
+          "observation": "common",
+          "footprint_count": 9,
+          "footprint_p95_ms": 146.41412,
+          "footprint_max_ms": 148.1428,
+          "phases": [
+            {
+              "phase": "empty",
+              "start": 48904,
+              "end": 59904,
+              "consumer_fps": 1000.0618582647305,
+              "age_slope_ms_per_device_second": 0.02510725757345544,
+              "completion_age_ms": {
+                "p50": 1.6546,
+                "p95": 4.18735,
+                "max": 30.4869
+              },
+              "observations": 171
+            },
+            {
+              "phase": "dense",
+              "start": 59904,
+              "end": 65904,
+              "consumer_fps": 999.6106205042194,
+              "age_slope_ms_per_device_second": 1.6674100871961897,
+              "completion_age_ms": {
+                "p50": 10.7009,
+                "p95": 50.074104999999996,
+                "max": 73.2974
+              },
+              "observations": 94
+            },
+            {
+              "phase": "mixed",
+              "start": 65904,
+              "end": 66904,
+              "consumer_fps": 1004.698455074872,
+              "age_slope_ms_per_device_second": -14.816965046795373,
+              "completion_age_ms": {
+                "p50": 3.77815,
+                "p95": 20.461375,
+                "max": 22.5037
+              },
+              "observations": 16
+            },
+            {
+              "phase": "empty",
+              "start": 66904,
+              "end": 78591,
+              "consumer_fps": 999.9507103025222,
+              "age_slope_ms_per_device_second": 0.035186454029871125,
+              "completion_age_ms": {
+                "p50": 2.0287499999999996,
+                "p95": 8.842334999999993,
+                "max": 39.03
+              },
+              "observations": 182
+            }
+          ],
+          "full_raw_report_quality_evidence_exact": true,
+          "sdk": {
+            "start_success": true,
+            "tracking_decisions": 478,
+            "nonzero_speeds": 396,
+            "stop_success": true
+          },
+          "pose_draws": {
+            "all": 638,
+            "valid": 638,
+            "disabled_calls": 0,
+            "smoke_screenshot": false
+          },
+          "camera": {
+            "decoded_frames": 740,
+            "stale_frames_skipped": 1
+          },
+          "canonical_report_sha256": "1b0d8dc6f769a4028df4df0650c36bbf22590e1b68bad0c909f9b2bbbc3b2f78",
+          "recovery_s": 0.0159808,
+          "last_raw_usable_contact_sample": 71470,
+          "reader_scheduled_lag_ms": {
+            "p50": 0.8945,
+            "p95": 3.7628399999999966,
+            "max": 84.6307
+          },
+          "dense_fps": 999.6106205042194,
+          "age_slope_ms_per_device_second": 1.6674100871961897
+        },
+        {
+          "name": "aa_walk_05_P",
+          "mode": "walk",
+          "variant": "A",
+          "probe": "P",
+          "observation": "common",
+          "footprint_count": 9,
+          "footprint_p95_ms": 156.13106,
+          "footprint_max_ms": 160.2063,
+          "phases": [
+            {
+              "phase": "empty",
+              "start": 48904,
+              "end": 59904,
+              "consumer_fps": 999.9977118229164,
+              "age_slope_ms_per_device_second": -0.004294858801874849,
+              "completion_age_ms": {
+                "p50": 1.4456,
+                "p95": 4.81945,
+                "max": 43.4462
+              },
+              "observations": 171
+            },
+            {
+              "phase": "dense",
+              "start": 59904,
+              "end": 65904,
+              "consumer_fps": 999.8742234353515,
+              "age_slope_ms_per_device_second": 0.15845080878258222,
+              "completion_age_ms": {
+                "p50": 7.6354,
+                "p95": 43.084365,
+                "max": 66.4538
+              },
+              "observations": 94
+            },
+            {
+              "phase": "mixed",
+              "start": 65904,
+              "end": 66904,
+              "consumer_fps": 1016.3847832495526,
+              "age_slope_ms_per_device_second": -11.424058331326682,
+              "completion_age_ms": {
+                "p50": 4.5249500000000005,
+                "p95": 26.5502,
+                "max": 35.9129
+              },
+              "observations": 16
+            },
+            {
+              "phase": "empty",
+              "start": 66904,
+              "end": 78591,
+              "consumer_fps": 999.4215119218964,
+              "age_slope_ms_per_device_second": 0.06172669958113594,
+              "completion_age_ms": {
+                "p50": 2.186,
+                "p95": 10.745699999999998,
+                "max": 34.2528
+              },
+              "observations": 182
+            }
+          ],
+          "full_raw_report_quality_evidence_exact": true,
+          "sdk": {
+            "start_success": true,
+            "tracking_decisions": 477,
+            "nonzero_speeds": 396,
+            "stop_success": true
+          },
+          "pose_draws": {
+            "all": 640,
+            "valid": 640,
+            "disabled_calls": 0,
+            "smoke_screenshot": false
+          },
+          "camera": {
+            "decoded_frames": 741
+          },
+          "canonical_report_sha256": "1b0d8dc6f769a4028df4df0650c36bbf22590e1b68bad0c909f9b2bbbc3b2f78",
+          "recovery_s": 0.1143216,
+          "last_raw_usable_contact_sample": 71470,
+          "reader_scheduled_lag_ms": {
+            "p50": 0.9023,
+            "p95": 3.664109999999999,
+            "max": 75.314
+          },
+          "dense_fps": 999.8742234353515,
+          "age_slope_ms_per_device_second": 0.15845080878258222
+        },
+        {
+          "name": "aa_walk_06_L",
+          "mode": "walk",
+          "variant": "A",
+          "probe": "L",
+          "observation": "common",
+          "footprint_count": 9,
+          "footprint_p95_ms": 148.58682,
+          "footprint_max_ms": 150.3211,
+          "phases": [
+            {
+              "phase": "empty",
+              "start": 48904,
+              "end": 59904,
+              "consumer_fps": 999.9409351316432,
+              "age_slope_ms_per_device_second": 0.010124002985676863,
+              "completion_age_ms": {
+                "p50": 1.4948,
+                "p95": 4.45305,
+                "max": 24.0623
+              },
+              "observations": 171
+            },
+            {
+              "phase": "dense",
+              "start": 59904,
+              "end": 65904,
+              "consumer_fps": 995.7191586630413,
+              "age_slope_ms_per_device_second": 0.6142489818222884,
+              "completion_age_ms": {
+                "p50": 7.2516,
+                "p95": 39.27424,
+                "max": 66.1504
+              },
+              "observations": 94
+            },
+            {
+              "phase": "mixed",
+              "start": 65904,
+              "end": 66904,
+              "consumer_fps": 1041.3001963563106,
+              "age_slope_ms_per_device_second": -24.280720566381778,
+              "completion_age_ms": {
+                "p50": 8.56345,
+                "p95": 29.78755,
+                "max": 42.2026
+              },
+              "observations": 16
+            },
+            {
+              "phase": "empty",
+              "start": 66904,
+              "end": 78591,
+              "consumer_fps": 999.6328984933101,
+              "age_slope_ms_per_device_second": 0.12098280387682663,
+              "completion_age_ms": {
+                "p50": 2.09765,
+                "p95": 9.310215,
+                "max": 51.6063
+              },
+              "observations": 182
+            }
+          ],
+          "full_raw_report_quality_evidence_exact": true,
+          "sdk": {
+            "start_success": true,
+            "tracking_decisions": 477,
+            "nonzero_speeds": 396,
+            "stop_success": true
+          },
+          "pose_draws": {
+            "all": 641,
+            "valid": 641,
+            "disabled_calls": 0,
+            "smoke_screenshot": false
+          },
+          "camera": {
+            "decoded_frames": 741
+          },
+          "canonical_report_sha256": "1b0d8dc6f769a4028df4df0650c36bbf22590e1b68bad0c909f9b2bbbc3b2f78",
+          "recovery_s": 0.1150976,
+          "last_raw_usable_contact_sample": 71470,
+          "reader_scheduled_lag_ms": {
+            "p50": 0.9085,
+            "p95": 3.654369999999991,
+            "max": 85.3743
+          },
+          "dense_fps": 995.7191586630413,
+          "age_slope_ms_per_device_second": 0.6142489818222884
+        },
+        {
+          "name": "aa_walk_06_P",
+          "mode": "walk",
+          "variant": "A",
+          "probe": "P",
+          "observation": "common",
+          "footprint_count": 9,
+          "footprint_p95_ms": 148.84153999999998,
+          "footprint_max_ms": 160.6677,
+          "phases": [
+            {
+              "phase": "empty",
+              "start": 48904,
+              "end": 59904,
+              "consumer_fps": 1000.0262226648243,
+              "age_slope_ms_per_device_second": 0.013655520991515365,
+              "completion_age_ms": {
+                "p50": 1.6057,
+                "p95": 4.5961,
+                "max": 37.7264
+              },
+              "observations": 171
+            },
+            {
+              "phase": "dense",
+              "start": 59904,
+              "end": 65904,
+              "consumer_fps": 999.5521053814751,
+              "age_slope_ms_per_device_second": -0.12257087299262935,
+              "completion_age_ms": {
+                "p50": 10.13645,
+                "p95": 33.71910499999998,
+                "max": 58.5296
+              },
+              "observations": 94
+            },
+            {
+              "phase": "mixed",
+              "start": 65904,
+              "end": 66904,
+              "consumer_fps": 1016.0116992940815,
+              "age_slope_ms_per_device_second": -19.359099170856954,
+              "completion_age_ms": {
+                "p50": 5.986800000000001,
+                "p95": 47.855875,
+                "max": 63.2254
+              },
+              "observations": 16
+            },
+            {
+              "phase": "empty",
+              "start": 66904,
+              "end": 78591,
+              "consumer_fps": 999.3055757921261,
+              "age_slope_ms_per_device_second": 0.2995161739185516,
+              "completion_age_ms": {
+                "p50": 2.18555,
+                "p95": 14.269139999999988,
+                "max": 34.5634
+              },
+              "observations": 182
+            }
+          ],
+          "full_raw_report_quality_evidence_exact": true,
+          "sdk": {
+            "start_success": true,
+            "tracking_decisions": 478,
+            "nonzero_speeds": 396,
+            "stop_success": true
+          },
+          "pose_draws": {
+            "all": 639,
+            "valid": 639,
+            "disabled_calls": 0,
+            "smoke_screenshot": false
+          },
+          "camera": {
+            "decoded_frames": 740,
+            "stale_frames_skipped": 1
+          },
+          "canonical_report_sha256": "1b0d8dc6f769a4028df4df0650c36bbf22590e1b68bad0c909f9b2bbbc3b2f78",
+          "recovery_s": 0.3086012,
+          "last_raw_usable_contact_sample": 71470,
+          "reader_scheduled_lag_ms": {
+            "p50": 0.9063,
+            "p95": 3.8374399999999995,
+            "max": 78.8101
+          },
+          "dense_fps": 999.5521053814751,
+          "age_slope_ms_per_device_second": -0.12257087299262935
+        }
+      ]
+    },
+    "run": {
+      "pass": true,
+      "paired_medians_P_minus_L": {
+        "fps_fraction": 0.0014839282674451448,
+        "age_slope_ms_per_device_second": 3.886907412152076,
+        "footprint_p95_ms": -4.46202499999999,
+        "footprint_max_ms": -3.9483999999999995,
+        "recovery_s": -0.12064795
+      },
+      "noise90_absolute": {
+        "fps_fraction": 0.007541288041130412,
+        "age_slope_ms_per_device_second": 8.642157451936452,
+        "footprint_p95_ms": 33.80823249999999,
+        "footprint_max_ms": 38.82795000000001,
+        "recovery_s": 2.9672941
+      },
+      "pairs": [
+        {
+          "fps_fraction": 0.003945956961184605,
+          "age_slope_ms_per_device_second": 3.7334589789253596,
+          "footprint_p95_ms": 35.70798999999998,
+          "footprint_max_ms": 45.96180000000001,
+          "recovery_s": -3.7105769
+        },
+        {
+          "fps_fraction": 0.00030372644387433034,
+          "age_slope_ms_per_device_second": 6.369042528055305,
+          "footprint_p95_ms": -31.908474999999996,
+          "footprint_max_ms": -31.694100000000006,
+          "recovery_s": 0.059704799999999995
+        },
+        {
+          "fps_fraction": 0.0006540519746995876,
+          "age_slope_ms_per_device_second": -8.750187968502125,
+          "footprint_p95_ms": -2.242884999999987,
+          "footprint_max_ms": -2.6484999999999985,
+          "recovery_s": 2.2240113
+        },
+        {
+          "fps_fraction": -0.011136619121076219,
+          "age_slope_ms_per_device_second": 8.53412693537078,
+          "footprint_p95_ms": 0.05564499999999839,
+          "footprint_max_ms": -2.4694999999999965,
+          "recovery_s": -1.5998180999999998
+        },
+        {
+          "fps_fraction": 0.002313804560190702,
+          "age_slope_ms_per_device_second": 4.040355845378792,
+          "footprint_p95_ms": -6.681164999999993,
+          "footprint_max_ms": -5.2483,
+          "recovery_s": 0.06116880000000001
+        },
+        {
+          "fps_fraction": 0.0029694506930071363,
+          "age_slope_ms_per_device_second": -0.5933638143843085,
+          "footprint_p95_ms": -23.282275000000013,
+          "footprint_max_ms": -25.212000000000003,
+          "recovery_s": -0.3010007
+        }
+      ],
+      "runs": [
+        {
+          "name": "aa_run_01_L",
+          "mode": "run",
+          "variant": "A",
+          "probe": "L",
+          "observation": "common",
+          "footprint_count": 8,
+          "footprint_p95_ms": 80.7556,
+          "footprint_max_ms": 83.7551,
+          "phases": [
+            {
+              "phase": "empty",
+              "start": 132039,
+              "end": 139039,
+              "consumer_fps": 999.8589430435975,
+              "age_slope_ms_per_device_second": 0.06001203801830541,
+              "completion_age_ms": {
+                "p50": 1.5256,
+                "p95": 4.239739999999997,
+                "max": 6.5424
+              },
+              "observations": 109
+            },
+            {
+              "phase": "mixed",
+              "start": 139039,
+              "end": 140039,
+              "consumer_fps": 995.9427289267408,
+              "age_slope_ms_per_device_second": 19.52682356221238,
+              "completion_age_ms": {
+                "p50": 1.66075,
+                "p95": 30.1345,
+                "max": 44.449
+              },
+              "observations": 16
+            },
+            {
+              "phase": "dense",
+              "start": 140039,
+              "end": 143039,
+              "consumer_fps": 1000.0691152699886,
+              "age_slope_ms_per_device_second": 1.0588170218526405,
+              "completion_age_ms": {
+                "p50": 19.7521,
+                "p95": 50.117225,
+                "max": 61.3116
+              },
+              "observations": 46
+            },
+            {
+              "phase": "empty",
+              "start": 143039,
+              "end": 155571,
+              "consumer_fps": 1000.0181974465256,
+              "age_slope_ms_per_device_second": -0.14522169738385537,
+              "completion_age_ms": {
+                "p50": 3.06215,
+                "p95": 16.998175,
+                "max": 85.4548
+              },
+              "observations": 196
+            }
+          ],
+          "full_raw_report_quality_evidence_exact": true,
+          "sdk": {
+            "start_success": true,
+            "tracking_decisions": 372,
+            "nonzero_speeds": 283,
+            "stop_success": true
+          },
+          "pose_draws": {
+            "all": 495,
+            "valid": 495,
+            "disabled_calls": 0,
+            "smoke_screenshot": false
+          },
+          "camera": {
+            "decoded_frames": 579,
+            "stale_frames_skipped": 1
+          },
+          "canonical_report_sha256": "16c1c1e53cde1e7f34e327bd34c54eee8c4dbdd95e90be249cccc8d578971693",
+          "recovery_s": 3.7373165,
+          "last_raw_usable_contact_sample": 144220,
+          "reader_scheduled_lag_ms": {
+            "p50": 0.94435,
+            "p95": 4.971050000000001,
+            "max": 72.5808
+          },
+          "dense_fps": 1000.0691152699886,
+          "age_slope_ms_per_device_second": 1.0588170218526405
+        },
+        {
+          "name": "aa_run_01_P",
+          "mode": "run",
+          "variant": "A",
+          "probe": "P",
+          "observation": "common",
+          "footprint_count": 8,
+          "footprint_p95_ms": 116.46358999999998,
+          "footprint_max_ms": 129.7169,
+          "phases": [
+            {
+              "phase": "empty",
+              "start": 132039,
+              "end": 139039,
+              "consumer_fps": 999.9025120362921,
+              "age_slope_ms_per_device_second": 0.04111950792789814,
+              "completion_age_ms": {
+                "p50": 1.4801,
+                "p95": 2.92558,
+                "max": 5.62
+              },
+              "observations": 109
+            },
+            {
+              "phase": "mixed",
+              "start": 139039,
+              "end": 140039,
+              "consumer_fps": 984.4033056785697,
+              "age_slope_ms_per_device_second": 22.381070152693773,
+              "completion_age_ms": {
+                "p50": 1.5107,
+                "p95": 26.628849999999982,
+                "max": 38.6811
+              },
+              "observations": 15
+            },
+            {
+              "phase": "dense",
+              "start": 140039,
+              "end": 143039,
+              "consumer_fps": 1004.015344957054,
+              "age_slope_ms_per_device_second": 4.792276000778,
+              "completion_age_ms": {
+                "p50": 25.8931,
+                "p95": 60.62300999999999,
+                "max": 68.5137
+              },
+              "observations": 47
+            },
+            {
+              "phase": "empty",
+              "start": 143039,
+              "end": 155571,
+              "consumer_fps": 1000.0428921705094,
+              "age_slope_ms_per_device_second": -0.023190794233354614,
+              "completion_age_ms": {
+                "p50": 3.5254000000000003,
+                "p95": 13.89755,
+                "max": 41.8952
+              },
+              "observations": 196
+            }
+          ],
+          "full_raw_report_quality_evidence_exact": true,
+          "sdk": {
+            "start_success": true,
+            "tracking_decisions": 372,
+            "nonzero_speeds": 283,
+            "stop_success": true
+          },
+          "pose_draws": {
+            "all": 494,
+            "valid": 494,
+            "disabled_calls": 0,
+            "smoke_screenshot": false
+          },
+          "camera": {
+            "decoded_frames": 579,
+            "stale_frames_skipped": 1
+          },
+          "canonical_report_sha256": "16c1c1e53cde1e7f34e327bd34c54eee8c4dbdd95e90be249cccc8d578971693",
+          "recovery_s": 0.0267396,
+          "last_raw_usable_contact_sample": 144220,
+          "reader_scheduled_lag_ms": {
+            "p50": 0.938,
+            "p95": 4.770400000000001,
+            "max": 76.277
+          },
+          "dense_fps": 1004.015344957054,
+          "age_slope_ms_per_device_second": 4.792276000778
+        },
+        {
+          "name": "aa_run_02_L",
+          "mode": "run",
+          "variant": "A",
+          "probe": "L",
+          "observation": "common",
+          "footprint_count": 8,
+          "footprint_p95_ms": 134.809205,
+          "footprint_max_ms": 137.0029,
+          "phases": [
+            {
+              "phase": "empty",
+              "start": 132039,
+              "end": 139039,
+              "consumer_fps": 999.9140947393296,
+              "age_slope_ms_per_device_second": 0.04366706754204068,
+              "completion_age_ms": {
+                "p50": 1.3465,
+                "p95": 3.521679999999997,
+                "max": 5.0387
+              },
+              "observations": 109
+            },
+            {
+              "phase": "mixed",
+              "start": 139039,
+              "end": 140039,
+              "consumer_fps": 979.3203902530802,
+              "age_slope_ms_per_device_second": 26.970628730521355,
+              "completion_age_ms": {
+                "p50": 2.0361000000000002,
+                "p95": 31.95935,
+                "max": 49.0718
+              },
+              "observations": 16
+            },
+            {
+              "phase": "dense",
+              "start": 140039,
+              "end": 143039,
+              "consumer_fps": 997.4112989188366,
+              "age_slope_ms_per_device_second": -6.586192209635901,
+              "completion_age_ms": {
+                "p50": 29.03835,
+                "p95": 83.71115,
+                "max": 108.0064
+              },
+              "observations": 46
+            },
+            {
+              "phase": "empty",
+              "start": 143039,
+              "end": 155571,
+              "consumer_fps": 1000.01066176058,
+              "age_slope_ms_per_device_second": -0.031533763525023205,
+              "completion_age_ms": {
+                "p50": 3.0855,
+                "p95": 14.553525,
+                "max": 23.2758
+              },
+              "observations": 196
+            }
+          ],
+          "full_raw_report_quality_evidence_exact": true,
+          "sdk": {
+            "start_success": true,
+            "tracking_decisions": 372,
+            "nonzero_speeds": 282,
+            "stop_success": true
+          },
+          "pose_draws": {
+            "all": 494,
+            "valid": 494,
+            "disabled_calls": 0,
+            "smoke_screenshot": false
+          },
+          "camera": {
+            "decoded_frames": 579,
+            "stale_frames_skipped": 1
+          },
+          "canonical_report_sha256": "16c1c1e53cde1e7f34e327bd34c54eee8c4dbdd95e90be249cccc8d578971693",
+          "recovery_s": 0.0296277,
+          "last_raw_usable_contact_sample": 144220,
+          "reader_scheduled_lag_ms": {
+            "p50": 0.94395,
+            "p95": 5.158540000000001,
+            "max": 82.3745
+          },
+          "dense_fps": 997.4112989188366,
+          "age_slope_ms_per_device_second": -6.586192209635901
+        },
+        {
+          "name": "aa_run_02_P",
+          "mode": "run",
+          "variant": "A",
+          "probe": "P",
+          "observation": "common",
+          "footprint_count": 8,
+          "footprint_p95_ms": 102.90073,
+          "footprint_max_ms": 105.3088,
+          "phases": [
+            {
+              "phase": "empty",
+              "start": 132039,
+              "end": 139039,
+              "consumer_fps": 999.3116206433365,
+              "age_slope_ms_per_device_second": 0.048167641667304285,
+              "completion_age_ms": {
+                "p50": 1.2699,
+                "p95": 2.9720999999999997,
+                "max": 6.0378
+              },
+              "observations": 109
+            },
+            {
+              "phase": "mixed",
+              "start": 139039,
+              "end": 140039,
+              "consumer_fps": 967.4828317006851,
+              "age_slope_ms_per_device_second": 33.87079109128708,
+              "completion_age_ms": {
+                "p50": 2.4016,
+                "p95": 34.261025000000004,
+                "max": 40.6274
+              },
+              "observations": 16
+            },
+            {
+              "phase": "dense",
+              "start": 140039,
+              "end": 143039,
+              "consumer_fps": 997.7142391057373,
+              "age_slope_ms_per_device_second": -0.21714968158059678,
+              "completion_age_ms": {
+                "p50": 10.577649999999998,
+                "p95": 43.464225,
+                "max": 61.5223
+              },
+              "observations": 46
+            },
+            {
+              "phase": "empty",
+              "start": 143039,
+              "end": 155571,
+              "consumer_fps": 999.8477475433148,
+              "age_slope_ms_per_device_second": -0.11424206174566705,
+              "completion_age_ms": {
+                "p50": 3.00635,
+                "p95": 14.9879,
+                "max": 38.6101
+              },
+              "observations": 196
+            }
+          ],
+          "full_raw_report_quality_evidence_exact": true,
+          "sdk": {
+            "start_success": true,
+            "tracking_decisions": 372,
+            "nonzero_speeds": 281,
+            "stop_success": true
+          },
+          "pose_draws": {
+            "all": 494,
+            "valid": 494,
+            "disabled_calls": 0,
+            "smoke_screenshot": false
+          },
+          "camera": {
+            "decoded_frames": 579,
+            "stale_frames_skipped": 1
+          },
+          "canonical_report_sha256": "16c1c1e53cde1e7f34e327bd34c54eee8c4dbdd95e90be249cccc8d578971693",
+          "recovery_s": 0.0893325,
+          "last_raw_usable_contact_sample": 144220,
+          "reader_scheduled_lag_ms": {
+            "p50": 0.93945,
+            "p95": 4.929655000000001,
+            "max": 84.3116
+          },
+          "dense_fps": 997.7142391057373,
+          "age_slope_ms_per_device_second": -0.21714968158059678
+        },
+        {
+          "name": "aa_run_03_L",
+          "mode": "run",
+          "variant": "A",
+          "probe": "L",
+          "observation": "common",
+          "footprint_count": 8,
+          "footprint_p95_ms": 99.23324999999998,
+          "footprint_max_ms": 102.749,
+          "phases": [
+            {
+              "phase": "empty",
+              "start": 132039,
+              "end": 139039,
+              "consumer_fps": 999.6271278040778,
+              "age_slope_ms_per_device_second": 0.17644719318317664,
+              "completion_age_ms": {
+                "p50": 1.4445,
+                "p95": 3.839239999999999,
+                "max": 11.3359
+              },
+              "observations": 109
+            },
+            {
+              "phase": "mixed",
+              "start": 139039,
+              "end": 140039,
+              "consumer_fps": 973.4039970078595,
+              "age_slope_ms_per_device_second": 32.89890181918487,
+              "completion_age_ms": {
+                "p50": 1.5406,
+                "p95": 37.733179999999976,
+                "max": 57.6178
+              },
+              "observations": 15
+            },
+            {
+              "phase": "dense",
+              "start": 140039,
+              "end": 143039,
+              "consumer_fps": 1003.2541712162382,
+              "age_slope_ms_per_device_second": 10.271005587038953,
+              "completion_age_ms": {
+                "p50": 13.0204,
+                "p95": 56.92959,
+                "max": 89.2659
+              },
+              "observations": 47
+            },
+            {
+              "phase": "empty",
+              "start": 143039,
+              "end": 155571,
+              "consumer_fps": 999.754241764088,
+              "age_slope_ms_per_device_second": -0.14382703468480218,
+              "completion_age_ms": {
+                "p50": 3.5235000000000003,
+                "p95": 16.581325,
+                "max": 36.0534
+              },
+              "observations": 196
+            }
+          ],
+          "full_raw_report_quality_evidence_exact": true,
+          "sdk": {
+            "start_success": true,
+            "tracking_decisions": 373,
+            "nonzero_speeds": 278,
+            "stop_success": true
+          },
+          "pose_draws": {
+            "all": 495,
+            "valid": 495,
+            "disabled_calls": 0,
+            "smoke_screenshot": false
+          },
+          "camera": {
+            "decoded_frames": 579,
+            "stale_frames_skipped": 1
+          },
+          "canonical_report_sha256": "16c1c1e53cde1e7f34e327bd34c54eee8c4dbdd95e90be249cccc8d578971693",
+          "recovery_s": 0.6155431,
+          "last_raw_usable_contact_sample": 144220,
+          "reader_scheduled_lag_ms": {
+            "p50": 0.93035,
+            "p95": 4.653655000000001,
+            "max": 84.7878
+          },
+          "dense_fps": 1003.2541712162382,
+          "age_slope_ms_per_device_second": 10.271005587038953
+        },
+        {
+          "name": "aa_run_03_P",
+          "mode": "run",
+          "variant": "A",
+          "probe": "P",
+          "observation": "common",
+          "footprint_count": 8,
+          "footprint_p95_ms": 96.990365,
+          "footprint_max_ms": 100.1005,
+          "phases": [
+            {
+              "phase": "empty",
+              "start": 132039,
+              "end": 139039,
+              "consumer_fps": 999.5196925338005,
+              "age_slope_ms_per_device_second": 0.09736979863283514,
+              "completion_age_ms": {
+                "p50": 1.5887,
+                "p95": 4.199139999999997,
+                "max": 5.1927
+              },
+              "observations": 109
+            },
+            {
+              "phase": "mixed",
+              "start": 139039,
+              "end": 140039,
+              "consumer_fps": 986.2314229713941,
+              "age_slope_ms_per_device_second": 21.03007953815733,
+              "completion_age_ms": {
+                "p50": 1.9234,
+                "p95": 24.572359999999975,
+                "max": 41.6511
+              },
+              "observations": 15
+            },
+            {
+              "phase": "dense",
+              "start": 140039,
+              "end": 143039,
+              "consumer_fps": 1003.9103515880478,
+              "age_slope_ms_per_device_second": 1.5208176185368287,
+              "completion_age_ms": {
+                "p50": 8.9907,
+                "p95": 34.22647999999997,
+                "max": 49.5449
+              },
+              "observations": 47
+            },
+            {
+              "phase": "empty",
+              "start": 143039,
+              "end": 155571,
+              "consumer_fps": 999.9373777400914,
+              "age_slope_ms_per_device_second": -0.1385898533670696,
+              "completion_age_ms": {
+                "p50": 3.01065,
+                "p95": 17.362875000000003,
+                "max": 57.1364
+              },
+              "observations": 196
+            }
+          ],
+          "full_raw_report_quality_evidence_exact": true,
+          "sdk": {
+            "start_success": true,
+            "tracking_decisions": 372,
+            "nonzero_speeds": 282,
+            "stop_success": true
+          },
+          "pose_draws": {
+            "all": 499,
+            "valid": 499,
+            "disabled_calls": 0,
+            "smoke_screenshot": false
+          },
+          "camera": {
+            "decoded_frames": 579,
+            "stale_frames_skipped": 1
+          },
+          "canonical_report_sha256": "16c1c1e53cde1e7f34e327bd34c54eee8c4dbdd95e90be249cccc8d578971693",
+          "recovery_s": 2.8395544,
+          "last_raw_usable_contact_sample": 144220,
+          "reader_scheduled_lag_ms": {
+            "p50": 0.92905,
+            "p95": 4.849210000000007,
+            "max": 96.4453
+          },
+          "dense_fps": 1003.9103515880478,
+          "age_slope_ms_per_device_second": 1.5208176185368287
+        },
+        {
+          "name": "aa_run_04_L",
+          "mode": "run",
+          "variant": "A",
+          "probe": "L",
+          "observation": "common",
+          "footprint_count": 8,
+          "footprint_p95_ms": 97.819065,
+          "footprint_max_ms": 101.5137,
+          "phases": [
+            {
+              "phase": "empty",
+              "start": 132039,
+              "end": 139039,
+              "consumer_fps": 999.616926781075,
+              "age_slope_ms_per_device_second": 0.02753553910595752,
+              "completion_age_ms": {
+                "p50": 1.4291,
+                "p95": 3.7128599999999987,
+                "max": 7.4411
+              },
+              "observations": 109
+            },
+            {
+              "phase": "mixed",
+              "start": 139039,
+              "end": 140039,
+              "consumer_fps": 959.2115512184298,
+              "age_slope_ms_per_device_second": 43.77402219742141,
+              "completion_age_ms": {
+                "p50": 1.8249,
+                "p95": 46.215089999999975,
+                "max": 60.9146
+              },
+              "observations": 15
+            },
+            {
+              "phase": "dense",
+              "start": 140039,
+              "end": 143039,
+              "consumer_fps": 1010.5778757963255,
+              "age_slope_ms_per_device_second": -0.18153800335982895,
+              "completion_age_ms": {
+                "p50": 12.3688,
+                "p95": 41.43599,
+                "max": 48.4064
+              },
+              "observations": 47
+            },
+            {
+              "phase": "empty",
+              "start": 143039,
+              "end": 155571,
+              "consumer_fps": 999.5352501337163,
+              "age_slope_ms_per_device_second": -0.12293556805409754,
+              "completion_age_ms": {
+                "p50": 3.2112999999999996,
+                "p95": 18.29015,
+                "max": 88.55
+              },
+              "observations": 196
+            }
+          ],
+          "full_raw_report_quality_evidence_exact": true,
+          "sdk": {
+            "start_success": true,
+            "tracking_decisions": 371,
+            "nonzero_speeds": 286,
+            "stop_success": true
+          },
+          "pose_draws": {
+            "all": 496,
+            "valid": 496,
+            "disabled_calls": 0,
+            "smoke_screenshot": false
+          },
+          "camera": {
+            "decoded_frames": 580
+          },
+          "canonical_report_sha256": "16c1c1e53cde1e7f34e327bd34c54eee8c4dbdd95e90be249cccc8d578971693",
+          "recovery_s": 1.8177723,
+          "last_raw_usable_contact_sample": 144220,
+          "reader_scheduled_lag_ms": {
+            "p50": 0.94195,
+            "p95": 4.617595000000001,
+            "max": 75.4102
+          },
+          "dense_fps": 1010.5778757963255,
+          "age_slope_ms_per_device_second": -0.18153800335982895
+        },
+        {
+          "name": "aa_run_04_P",
+          "mode": "run",
+          "variant": "A",
+          "probe": "P",
+          "observation": "common",
+          "footprint_count": 8,
+          "footprint_p95_ms": 97.87471,
+          "footprint_max_ms": 99.0442,
+          "phases": [
+            {
+              "phase": "empty",
+              "start": 132039,
+              "end": 139039,
+              "consumer_fps": 999.9565494209534,
+              "age_slope_ms_per_device_second": 0.09652508289457624,
+              "completion_age_ms": {
+                "p50": 1.1601,
+                "p95": 4.035259999999999,
+                "max": 5.748
+              },
+              "observations": 109
+            },
+            {
+              "phase": "mixed",
+              "start": 139039,
+              "end": 140039,
+              "consumer_fps": 968.0924965082755,
+              "age_slope_ms_per_device_second": 36.6809637233529,
+              "completion_age_ms": {
+                "p50": 2.4621500000000003,
+                "p95": 39.729,
+                "max": 45.7116
+              },
+              "observations": 16
+            },
+            {
+              "phase": "dense",
+              "start": 140039,
+              "end": 143039,
+              "consumer_fps": 999.3234549013956,
+              "age_slope_ms_per_device_second": 8.352588932010951,
+              "completion_age_ms": {
+                "p50": 15.065100000000001,
+                "p95": 66.5649,
+                "max": 83.2858
+              },
+              "observations": 46
+            },
+            {
+              "phase": "empty",
+              "start": 143039,
+              "end": 155571,
+              "consumer_fps": 999.9642881343573,
+              "age_slope_ms_per_device_second": -0.06285475056854674,
+              "completion_age_ms": {
+                "p50": 3.302,
+                "p95": 14.801224999999999,
+                "max": 23.2078
+              },
+              "observations": 196
+            }
+          ],
+          "full_raw_report_quality_evidence_exact": true,
+          "sdk": {
+            "start_success": true,
+            "tracking_decisions": 373,
+            "nonzero_speeds": 282,
+            "stop_success": true
+          },
+          "pose_draws": {
+            "all": 495,
+            "valid": 495,
+            "disabled_calls": 0,
+            "smoke_screenshot": false
+          },
+          "camera": {
+            "decoded_frames": 579,
+            "stale_frames_skipped": 1
+          },
+          "canonical_report_sha256": "16c1c1e53cde1e7f34e327bd34c54eee8c4dbdd95e90be249cccc8d578971693",
+          "recovery_s": 0.2179542,
+          "last_raw_usable_contact_sample": 144220,
+          "reader_scheduled_lag_ms": {
+            "p50": 0.9480500000000001,
+            "p95": 5.631845000000001,
+            "max": 79.0125
+          },
+          "dense_fps": 999.3234549013956,
+          "age_slope_ms_per_device_second": 8.352588932010951
+        },
+        {
+          "name": "aa_run_05_L",
+          "mode": "run",
+          "variant": "A",
+          "probe": "L",
+          "observation": "common",
+          "footprint_count": 8,
+          "footprint_p95_ms": 96.348255,
+          "footprint_max_ms": 97.6925,
+          "phases": [
+            {
+              "phase": "empty",
+              "start": 132039,
+              "end": 139039,
+              "consumer_fps": 1000.0853763188843,
+              "age_slope_ms_per_device_second": 0.037988890900847005,
+              "completion_age_ms": {
+                "p50": 1.4499,
+                "p95": 3.561899999999999,
+                "max": 13.3139
+              },
+              "observations": 109
+            },
+            {
+              "phase": "mixed",
+              "start": 139039,
+              "end": 140039,
+              "consumer_fps": 979.3589609502873,
+              "age_slope_ms_per_device_second": 16.355317010475662,
+              "completion_age_ms": {
+                "p50": 1.74855,
+                "p95": 18.728625,
+                "max": 19.4103
+              },
+              "observations": 16
+            },
+            {
+              "phase": "dense",
+              "start": 140039,
+              "end": 143039,
+              "consumer_fps": 999.7880393851269,
+              "age_slope_ms_per_device_second": 5.282983494517029,
+              "completion_age_ms": {
+                "p50": 22.95215,
+                "p95": 73.90842500000001,
+                "max": 85.3738
+              },
+              "observations": 46
+            },
+            {
+              "phase": "empty",
+              "start": 143039,
+              "end": 155571,
+              "consumer_fps": 999.9525174741783,
+              "age_slope_ms_per_device_second": 0.039002456647998465,
+              "completion_age_ms": {
+                "p50": 3.45275,
+                "p95": 15.953025,
+                "max": 44.3341
+              },
+              "observations": 196
+            }
+          ],
+          "full_raw_report_quality_evidence_exact": true,
+          "sdk": {
+            "start_success": true,
+            "tracking_decisions": 372,
+            "nonzero_speeds": 279,
+            "stop_success": true
+          },
+          "pose_draws": {
+            "all": 496,
+            "valid": 496,
+            "disabled_calls": 0,
+            "smoke_screenshot": false
+          },
+          "camera": {
+            "decoded_frames": 579,
+            "stale_frames_skipped": 1
+          },
+          "canonical_report_sha256": "16c1c1e53cde1e7f34e327bd34c54eee8c4dbdd95e90be249cccc8d578971693",
+          "recovery_s": 0.0315887,
+          "last_raw_usable_contact_sample": 144220,
+          "reader_scheduled_lag_ms": {
+            "p50": 0.9373,
+            "p95": 4.805830000000002,
+            "max": 85.1455
+          },
+          "dense_fps": 999.7880393851269,
+          "age_slope_ms_per_device_second": 5.282983494517029
+        },
+        {
+          "name": "aa_run_05_P",
+          "mode": "run",
+          "variant": "A",
+          "probe": "P",
+          "observation": "common",
+          "footprint_count": 8,
+          "footprint_p95_ms": 89.66709,
+          "footprint_max_ms": 92.4442,
+          "phases": [
+            {
+              "phase": "empty",
+              "start": 132039,
+              "end": 139039,
+              "consumer_fps": 999.9801392632546,
+              "age_slope_ms_per_device_second": 0.06359136992499417,
+              "completion_age_ms": {
+                "p50": 1.4557,
+                "p95": 3.9187399999999957,
+                "max": 6.262
+              },
+              "observations": 109
+            },
+            {
+              "phase": "mixed",
+              "start": 139039,
+              "end": 140039,
+              "consumer_fps": 988.2868158347372,
+              "age_slope_ms_per_device_second": 13.861876717043563,
+              "completion_age_ms": {
+                "p50": 1.693,
+                "p95": 17.346289999999982,
+                "max": 29.957
+              },
+              "observations": 15
+            },
+            {
+              "phase": "dense",
+              "start": 140039,
+              "end": 143039,
+              "consumer_fps": 1002.1013535098804,
+              "age_slope_ms_per_device_second": 9.32333933989582,
+              "completion_age_ms": {
+                "p50": 12.0276,
+                "p95": 63.101749999999974,
+                "max": 81.0743
+              },
+              "observations": 47
+            },
+            {
+              "phase": "empty",
+              "start": 143039,
+              "end": 155571,
+              "consumer_fps": 999.9848195847704,
+              "age_slope_ms_per_device_second": 0.0076085397886612475,
+              "completion_age_ms": {
+                "p50": 2.89905,
+                "p95": 16.657,
+                "max": 60.6172
+              },
+              "observations": 196
+            }
+          ],
+          "full_raw_report_quality_evidence_exact": true,
+          "sdk": {
+            "start_success": true,
+            "tracking_decisions": 372,
+            "nonzero_speeds": 281,
+            "stop_success": true
+          },
+          "pose_draws": {
+            "all": 498,
+            "valid": 498,
+            "disabled_calls": 0,
+            "smoke_screenshot": false
+          },
+          "camera": {
+            "decoded_frames": 579,
+            "stale_frames_skipped": 1
+          },
+          "canonical_report_sha256": "16c1c1e53cde1e7f34e327bd34c54eee8c4dbdd95e90be249cccc8d578971693",
+          "recovery_s": 0.0927575,
+          "last_raw_usable_contact_sample": 144220,
+          "reader_scheduled_lag_ms": {
+            "p50": 0.94415,
+            "p95": 4.9827900000000085,
+            "max": 89.5226
+          },
+          "dense_fps": 1002.1013535098804,
+          "age_slope_ms_per_device_second": 9.32333933989582
+        },
+        {
+          "name": "aa_run_06_L",
+          "mode": "run",
+          "variant": "A",
+          "probe": "L",
+          "observation": "common",
+          "footprint_count": 8,
+          "footprint_p95_ms": 108.79737,
+          "footprint_max_ms": 113.2976,
+          "phases": [
+            {
+              "phase": "empty",
+              "start": 132039,
+              "end": 139039,
+              "consumer_fps": 999.501621535728,
+              "age_slope_ms_per_device_second": 0.025227990526693632,
+              "completion_age_ms": {
+                "p50": 1.603,
+                "p95": 4.1748199999999995,
+                "max": 7.6678
+              },
+              "observations": 109
+            },
+            {
+              "phase": "mixed",
+              "start": 139039,
+              "end": 140039,
+              "consumer_fps": 992.9456291787542,
+              "age_slope_ms_per_device_second": 16.53509439590017,
+              "completion_age_ms": {
+                "p50": 1.60835,
+                "p95": 22.4601,
+                "max": 24.1464
+              },
+              "observations": 16
+            },
+            {
+              "phase": "dense",
+              "start": 140039,
+              "end": 143039,
+              "consumer_fps": 999.6893487081267,
+              "age_slope_ms_per_device_second": 8.465290412798499,
+              "completion_age_ms": {
+                "p50": 18.52335,
+                "p95": 53.698375,
+                "max": 73.2154
+              },
+              "observations": 46
+            },
+            {
+              "phase": "empty",
+              "start": 143039,
+              "end": 155571,
+              "consumer_fps": 999.7529329629979,
+              "age_slope_ms_per_device_second": -0.07440406206731887,
+              "completion_age_ms": {
+                "p50": 3.1349,
+                "p95": 16.17485,
+                "max": 43.5207
+              },
+              "observations": 196
+            }
+          ],
+          "full_raw_report_quality_evidence_exact": true,
+          "sdk": {
+            "start_success": true,
+            "tracking_decisions": 373,
+            "nonzero_speeds": 282,
+            "stop_success": true
+          },
+          "pose_draws": {
+            "all": 496,
+            "valid": 496,
+            "disabled_calls": 0,
+            "smoke_screenshot": false
+          },
+          "camera": {
+            "decoded_frames": 579,
+            "stale_frames_skipped": 1
+          },
+          "canonical_report_sha256": "16c1c1e53cde1e7f34e327bd34c54eee8c4dbdd95e90be249cccc8d578971693",
+          "recovery_s": 1.2406754,
+          "last_raw_usable_contact_sample": 144220,
+          "reader_scheduled_lag_ms": {
+            "p50": 0.9514,
+            "p95": 5.0927500000000006,
+            "max": 80.9099
+          },
+          "dense_fps": 999.6893487081267,
+          "age_slope_ms_per_device_second": 8.465290412798499
+        },
+        {
+          "name": "aa_run_06_P",
+          "mode": "run",
+          "variant": "A",
+          "probe": "P",
+          "observation": "common",
+          "footprint_count": 8,
+          "footprint_p95_ms": 85.51509499999999,
+          "footprint_max_ms": 88.0856,
+          "phases": [
+            {
+              "phase": "empty",
+              "start": 132039,
+              "end": 139039,
+              "consumer_fps": 999.9478332103791,
+              "age_slope_ms_per_device_second": 0.07434517706377076,
+              "completion_age_ms": {
+                "p50": 1.6173,
+                "p95": 4.180579999999999,
+                "max": 7.1101
+              },
+              "observations": 109
+            },
+            {
+              "phase": "mixed",
+              "start": 139039,
+              "end": 140039,
+              "consumer_fps": 991.9703660503801,
+              "age_slope_ms_per_device_second": 7.197019617884304,
+              "completion_age_ms": {
+                "p50": 1.8558,
+                "p95": 10.540509999999998,
+                "max": 12.0796
+              },
+              "observations": 15
+            },
+            {
+              "phase": "dense",
+              "start": 140039,
+              "end": 143039,
+              "consumer_fps": 1002.6578769374398,
+              "age_slope_ms_per_device_second": 7.87192659841419,
+              "completion_age_ms": {
+                "p50": 15.2743,
+                "p95": 54.85731999999996,
+                "max": 72.9606
+              },
+              "observations": 47
+            },
+            {
+              "phase": "empty",
+              "start": 143039,
+              "end": 155571,
+              "consumer_fps": 999.9199599288427,
+              "age_slope_ms_per_device_second": -0.06468994269054093,
+              "completion_age_ms": {
+                "p50": 3.5445,
+                "p95": 14.38385,
+                "max": 24.101
+              },
+              "observations": 196
+            }
+          ],
+          "full_raw_report_quality_evidence_exact": true,
+          "sdk": {
+            "start_success": true,
+            "tracking_decisions": 372,
+            "nonzero_speeds": 281,
+            "stop_success": true
+          },
+          "pose_draws": {
+            "all": 497,
+            "valid": 497,
+            "disabled_calls": 0,
+            "smoke_screenshot": false
+          },
+          "camera": {
+            "decoded_frames": 579,
+            "stale_frames_skipped": 1
+          },
+          "canonical_report_sha256": "16c1c1e53cde1e7f34e327bd34c54eee8c4dbdd95e90be249cccc8d578971693",
+          "recovery_s": 0.9396747,
+          "last_raw_usable_contact_sample": 144220,
+          "reader_scheduled_lag_ms": {
+            "p50": 0.9401,
+            "p95": 5.119615000000002,
+            "max": 79.2993
+          },
+          "dense_fps": 1002.6578769374398,
+          "age_slope_ms_per_device_second": 7.87192659841419
+        }
+      ]
+    }
+  },
+  "scope": "Incremental P vs shared L, not proof of zero observer cost; intrinsic run variability can also make calibration fail."
+}

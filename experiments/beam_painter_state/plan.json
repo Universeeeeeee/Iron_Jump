@@ -1,0 +1,70 @@
+{
+  "base_commit": "e9be8a5f8f8b531d4ccc1e06bacef176190873ed",
+  "scope": "Only beam_layer brush/pen state optimization; production hardware/engine/ui unchanged; original NumPy",
+  "source": "New isolated Windows root; copies of completed live_walk_07 and live_run_02, original recorded optical arrival cadence and original MJPEG index. Replay includes 3500 preflight samples before frozen checked point and all originally accepted post-arm frames. Independent clip oracle must match full A/B reports and original movement summary; preflight observer history may differ from long original preparation and is explicitly not substituted. No original evidence overwritten.",
+  "GUI": "enabled native Qt windows; recorded JPEG preview selected at >=1/30s spacing (~25fps for 100fps archive), real SDK full-body service active on recorded inference poses; lower-limb joint/line paint active. No actual USB or DirectShow capture during controlled replay. Physical gimbal moves. Same conditions A/B.",
+  "pixel_cases": 1152,
+  "DPR": [
+    1,
+    1.25,
+    1.5,
+    2
+  ],
+  "smoke": "One baseline P functional trial per mode before calibration; excluded prospectively from performance conclusions; smoke saves a single actual preview screenshot, calibration/A/B do not.",
+  "calibration": {
+    "pairs_per_mode": 6,
+    "orders": [
+      "LP",
+      "PL",
+      "LP",
+      "PL",
+      "LP",
+      "PL"
+    ],
+    "renderer": "A only",
+    "L": "common end-of-batch observation when last sample crosses a 64-device-sample bucket; same raw/footprint/SDK evidence observer",
+    "P": "L plus one lightweight completion record per inbox batch, no entry timestamps, call trees, per-frame clocks, Qt dispatcher/tick hooks, thread_time or cycles",
+    "comparison": "Use common 64-sample-bucket observations for both L/P, same footprint measurement. P full records only for accepted A/B after calibration.",
+    "limits": {
+      "median_fps_fraction": 0.03,
+      "median_age_slope_ms_per_device_second": 5,
+      "median_footprint_p95_ms": 25,
+      "median_footprint_max_ms": 25,
+      "median_recovery_s": 0.15
+    },
+    "stop": "If either mode fails any limit, preserve every round and do not start A/B or claim success."
+  },
+  "AB": {
+    "pairs_per_mode": 6,
+    "orders": [
+      "AB",
+      "BA",
+      "AB",
+      "BA",
+      "AB",
+      "BA"
+    ],
+    "probe": "P only after both modes pass A/A",
+    "decision": "Per-mode paired medians and full individual ranges; improvement must exceed 90th percentile absolute A/A paired noise in the same metric AND minimum material improvement. At least one primary metric must have all six paired gains positive (one-sided exact sign p=1/64), with no material regression in other acceptance metrics. This conservative criterion is frozen before runs. No missing-data success.",
+    "minimum_improvement": {
+      "dense_fps_fraction": 0.05,
+      "age_slope_ms_per_device_second": 10,
+      "footprint_p95_ms": 25
+    },
+    "regression_limits": {
+      "dense_fps_fraction": 0.03,
+      "age_slope_ms_per_device_second": 5,
+      "footprint_p95_ms": 25,
+      "footprint_max_ms": 25,
+      "recovery_s": 0.15
+    }
+  },
+  "phases": "Frozen original one-second device-window dense/mixed/empty labels from previous field summaries, no raw changes; source arrival lag and delivered camera/SDK/pose evidence retained. Empty-before/after separate.",
+  "recovery": "From original last usable-contact scheduled host arrival to first consumed sample afterward with completion age <=10ms for a following 500-device-ms window (>=450ms covered), including reader lateness. Use common observations in A/A and P observations in A/B; no recovery is censored, never zero.",
+  "semantics": "Every round raw bits/wire/validity/counters/order exactly selected source, all accepted raw archived; full report/quality/audit/runtime/window equal independent oracle after verifying and normalizing only two checked receipt clocks. Physical walking last-foot/count issue unchanged and out of optimization scope.",
+  "cleanup": "May terminate child only after SystemExit(0), serialized measurement, closed raw/report, and confirmed SDK shutdown; outside all active measurement. Retain failure logs.",
+  "renderer_sha256": {
+    "A": "d12f0f671b75013918d2c0700d10de128106384a936716a68e1cf1ceff495554",
+    "B": "68f6f59c27378a8af71e5f6590b09c19b4422f6ced368d8733da76c6be5559e1"
+  }
+}

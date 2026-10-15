@@ -1,7 +1,7 @@
 """Isolated candidate: geometry and one beam-state pixmap per ground widget."""
 import math
 from qtpy.QtCore import QLineF,QRectF,Qt
-from qtpy.QtGui import QColor,QPainter,QPixmap
+from qtpy.QtGui import QBrush,QColor,QPainter,QPixmap
 from qtpy.QtWidgets import QFrame
 from ui.footprint_channel import FootprintChannelWidget
 from ui.ground_track import GroundChannelWidget
@@ -39,13 +39,19 @@ def beam_layer(widget,g):
     p.setPen(Qt.NoPen);p.setBrush(QColor(42,42,48))
     p.drawRoundedRect(QRectF(left-3.,top-2.,6.,height+4.),3.,3.)
     p.drawRoundedRect(QRectF(right-3.,top-2.,6.,height+4.),3.,3.)
+    brushes=(QBrush(QColor('#ddaa57')),QBrush(QColor(70,220,125)),QBrush(QColor(70,70,76)))
+    line_colour=QColor(70,220,125,60)
+    brush_state=None
     # Preserve original per-beam ordering: markers may overlap at 768-beam density.
     for i,active in enumerate(widget._contact_bits):
         valid=i<len(widget.valid_bits) and widget.valid_bits[i]
-        p.setPen(Qt.NoPen);p.setBrush(QColor('#ddaa57') if not valid else QColor(70,220,125) if active else QColor(70,70,76))
+        state=0 if not valid else 1 if active else 2
+        if state!=brush_state:
+            p.setBrush(brushes[state]);brush_state=state
         p.drawRoundedRect(left_rects[i],2.,2.);p.drawRoundedRect(right_rects[i],2.,2.)
         if active and valid:
-            p.setPen(QColor(70,220,125,60));p.drawLine(QLineF(float(lane_left),ys[i],float(lane_right),ys[i]))
+            p.setPen(line_colour);p.drawLine(QLineF(float(lane_left),ys[i],float(lane_right),ys[i]))
+            p.setPen(Qt.NoPen)
     p.end();widget._isolated_beams=(key,pixmap)
     widget._isolated_beam_builds=getattr(widget,'_isolated_beam_builds',0)+1
     return pixmap
