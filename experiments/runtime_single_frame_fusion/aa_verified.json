@@ -1,0 +1,140 @@
+{
+  "runs": {
+    "aa_01_A": {
+      "variant": "A",
+      "raw_report_events_source_order_exact": true,
+      "canonical_report_sha256": "14eeffde0cd5beaf48ca4a58edb3efba22923f5fd53593bbcea835688b5988ee",
+      "receipt_to_paint_ms": {
+        "count": 7,
+        "p95": 127.58198999999999,
+        "max": 130.9839
+      },
+      "scheduled_to_paint_ms": {
+        "p50": 81.0807,
+        "p95": 128.80873999999997,
+        "p99": 131.784788,
+        "max": 132.5288
+      },
+      "gui_ms_per_second": 233.79355262745545,
+      "active_age_slope_ms_per_device_second": 16.379593156558247,
+      "active_processed_fps": 976.9951335535502,
+      "active_age_ms": {
+        "p50": 3.8514,
+        "p95": 79.77673999999995,
+        "p99": 120.97198799999988,
+        "max": 128.2741
+      },
+      "peak_pending": 209,
+      "rendered_frames": 223,
+      "inference_frames": 135,
+      "camera": {
+        "decoded_frames": 286
+      },
+      "preheat_seconds": 2.9662599000002956,
+      "environment": {
+        "python": "3.11.5 | packaged by Anaconda, Inc. | (main, Sep 11 2023, 13:26:23) [MSC v.1916 64 bit (AMD64)]",
+        "platform": "Windows-10-10.0.26200-SP0",
+        "numpy": "2.4.6",
+        "numba": "0.67.0",
+        "qt": "6.11.1"
+      },
+      "compilation": {
+        "B": {
+          "nopython_signatures": [
+            "(Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(bool, 1, 'C', False, aligned=True), bool, float64) -> Tuple(array(uint8, 1d, C), array(bool, 1d, C), bool)",
+            "(Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(bool, 1, 'C', False, aligned=True), bool, float64) -> Tuple(array(uint8, 1d, C), array(bool, 1d, C), bool)",
+            "(Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(bool, 1, 'C', False, aligned=True), bool, float64) -> Tuple(array(uint8, 1d, C), array(bool, 1d, C), bool)"
+          ],
+          "targetoptions": {
+            "nogil": false,
+            "nopython": true,
+            "boundscheck": null
+          },
+          "generated_wrapper_releases_gil": false
+        },
+        "C": {
+          "nopython_signatures": [
+            "(Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(bool, 1, 'C', False, aligned=True), bool, float64) -> Tuple(array(uint8, 1d, C), array(bool, 1d, C), bool)",
+            "(Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(bool, 1, 'C', False, aligned=True), bool, float64) -> Tuple(array(uint8, 1d, C), array(bool, 1d, C), bool)",
+            "(Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(bool, 1, 'C', False, aligned=True), bool, float64) -> Tuple(array(uint8, 1d, C), array(bool, 1d, C), bool)"
+          ],
+          "targetoptions": {
+            "nogil": true,
+            "nopython": true,
+            "boundscheck": null
+          },
+          "generated_wrapper_releases_gil": true
+        }
+      }
+    },
+    "aa_02_A": {
+      "variant": "A",
+      "raw_report_events_source_order_exact": true,
+      "canonical_report_sha256": "14eeffde0cd5beaf48ca4a58edb3efba22923f5fd53593bbcea835688b5988ee",
+      "receipt_to_paint_ms": {
+        "count": 7,
+        "p95": 133.81239999999997,
+        "max": 140.7601
+      },
+      "scheduled_to_paint_ms": {
+        "p50": 96.9116,
+        "p95": 134.81007,
+        "p99": 140.235534,
+        "max": 141.5919
+      },
+      "gui_ms_per_second": 229.7479202764889,
+      "active_age_slope_ms_per_device_second": 16.512282779278056,
+      "active_processed_fps": 985.2252978022375,
+      "active_age_ms": {
+        "p50": 3.6727,
+        "p95": 85.0703,
+        "p99": 121.1028,
+        "max": 127.5603
+      },
+      "peak_pending": 208,
+      "rendered_frames": 225,
+      "inference_frames": 135,
+      "camera": {
+        "decoded_frames": 286
+      },
+      "preheat_seconds": 2.9746349999986705,
+      "environment": {
+        "python": "3.11.5 | packaged by Anaconda, Inc. | (main, Sep 11 2023, 13:26:23) [MSC v.1916 64 bit (AMD64)]",
+        "platform": "Windows-10-10.0.26200-SP0",
+        "numpy": "2.4.6",
+        "numba": "0.67.0",
+        "qt": "6.11.1"
+      },
+      "compilation": {
+        "B": {
+          "nopython_signatures": [
+            "(Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(bool, 1, 'C', False, aligned=True), bool, float64) -> Tuple(array(uint8, 1d, C), array(bool, 1d, C), bool)",
+            "(Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(bool, 1, 'C', False, aligned=True), bool, float64) -> Tuple(array(uint8, 1d, C), array(bool, 1d, C), bool)",
+            "(Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(bool, 1, 'C', False, aligned=True), bool, float64) -> Tuple(array(uint8, 1d, C), array(bool, 1d, C), bool)"
+          ],
+          "targetoptions": {
+            "nogil": false,
+            "nopython": true,
+            "boundscheck": null
+          },
+          "generated_wrapper_releases_gil": false
+        },
+        "C": {
+          "nopython_signatures": [
+            "(Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(bool, 1, 'C', False, aligned=True), bool, float64) -> Tuple(array(uint8, 1d, C), array(bool, 1d, C), bool)",
+            "(Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(bool, 1, 'C', False, aligned=True), bool, float64) -> Tuple(array(uint8, 1d, C), array(bool, 1d, C), bool)",
+            "(Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(bool, 1, 'C', False, aligned=True), bool, float64) -> Tuple(array(uint8, 1d, C), array(bool, 1d, C), bool)"
+          ],
+          "targetoptions": {
+            "nogil": true,
+            "nopython": true,
+            "boundscheck": null
+          },
+          "generated_wrapper_releases_gil": true
+        }
+      }
+    }
+  },
+  "all_evidence_equal_to_independent_original_oracle": true,
+  "scope": "Two identical instrumented A runs; observer overhead is not independently measured by this pair."
+}

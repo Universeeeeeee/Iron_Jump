@@ -1,0 +1,145 @@
+{
+  "results": [
+    {
+      "name": "synthetic_1",
+      "frames": 6500,
+      "exact": true,
+      "independent_integer_oracle": true,
+      "window_samples": 1000,
+      "retained_ownership_snapshots": 26
+    },
+    {
+      "name": "synthetic_2",
+      "frames": 6500,
+      "exact": true,
+      "independent_integer_oracle": true,
+      "window_samples": 1000,
+      "retained_ownership_snapshots": 26
+    },
+    {
+      "name": "synthetic_4",
+      "frames": 6500,
+      "exact": true,
+      "independent_integer_oracle": true,
+      "window_samples": 1000,
+      "retained_ownership_snapshots": 26
+    },
+    {
+      "name": "synthetic_8",
+      "frames": 6500,
+      "exact": true,
+      "independent_integer_oracle": true,
+      "window_samples": 1000,
+      "retained_ownership_snapshots": 26
+    },
+    {
+      "name": "exports\\ground_boundary_latency_20261014\\field_run_20261015_02",
+      "frames": 122169,
+      "exact": true,
+      "independent_integer_oracle": false,
+      "window_samples": 3000,
+      "retained_ownership_snapshots": 609
+    },
+    {
+      "name": "exports\\ground_boundary_latency_20261014\\field_walk_full_02",
+      "frames": 190200,
+      "exact": true,
+      "independent_integer_oracle": false,
+      "window_samples": 3000,
+      "retained_ownership_snapshots": 949
+    },
+    {
+      "name": "exports\\ground_field_20261009\\run",
+      "frames": 23436,
+      "exact": true,
+      "independent_integer_oracle": false,
+      "window_samples": 3000,
+      "retained_ownership_snapshots": 114
+    },
+    {
+      "name": "exports\\ground_field_20261009\\walk",
+      "frames": 27405,
+      "exact": true,
+      "independent_integer_oracle": false,
+      "window_samples": 3000,
+      "retained_ownership_snapshots": 134
+    },
+    {
+      "name": "exports\\walking_field_v16_20261009\\run",
+      "frames": 21405,
+      "exact": true,
+      "independent_integer_oracle": false,
+      "window_samples": 3000,
+      "retained_ownership_snapshots": 104
+    },
+    {
+      "name": "exports\\walking_field_v16_20261009\\walk",
+      "frames": 22644,
+      "exact": true,
+      "independent_integer_oracle": false,
+      "window_samples": 3000,
+      "retained_ownership_snapshots": 109
+    },
+    {
+      "name": "exports\\ground_field_20261010_audit\\run",
+      "frames": 24802,
+      "exact": true,
+      "independent_integer_oracle": false,
+      "window_samples": 3000,
+      "retained_ownership_snapshots": 119
+    },
+    {
+      "name": "exports\\ground_field_20261010_audit\\walk",
+      "frames": 25936,
+      "exact": true,
+      "independent_integer_oracle": false,
+      "window_samples": 3000,
+      "retained_ownership_snapshots": 124
+    }
+  ],
+  "total_frames": 483997,
+  "quality": [
+    {
+      "frames": 6500,
+      "window_samples": 1000,
+      "audit_events": 4,
+      "all_intermediate_quality_audits_exact": true
+    },
+    {
+      "frames": 6500,
+      "window_samples": 3000,
+      "audit_events": 2,
+      "all_intermediate_quality_audits_exact": true
+    }
+  ],
+  "compilation": {
+    "B": {
+      "nopython_signatures": [
+        "(Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(bool, 1, 'C', False, aligned=True), bool, float64) -> Tuple(array(uint8, 1d, C), array(bool, 1d, C), bool)",
+        "(Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(bool, 1, 'C', False, aligned=True), bool, float64) -> Tuple(array(uint8, 1d, C), array(bool, 1d, C), bool)",
+        "(Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(bool, 1, 'C', False, aligned=True), bool, float64) -> Tuple(array(uint8, 1d, C), array(bool, 1d, C), bool)"
+      ],
+      "targetoptions": {
+        "nogil": false,
+        "nopython": true,
+        "boundscheck": null
+      },
+      "generated_wrapper_releases_gil": false
+    },
+    "C": {
+      "nopython_signatures": [
+        "(Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(bool, 1, 'C', False, aligned=True), bool, float64) -> Tuple(array(uint8, 1d, C), array(bool, 1d, C), bool)",
+        "(Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(bool, 1, 'C', False, aligned=True), bool, float64) -> Tuple(array(uint8, 1d, C), array(bool, 1d, C), bool)",
+        "(Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', True, aligned=True), Array(uint8, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(int32, 1, 'C', False, aligned=True), Array(bool, 1, 'C', False, aligned=True), bool, float64) -> Tuple(array(uint8, 1d, C), array(bool, 1d, C), bool)"
+      ],
+      "targetoptions": {
+        "nogil": true,
+        "nopython": true,
+        "boundscheck": null
+      },
+      "generated_wrapper_releases_gil": true
+    }
+  },
+  "elapsed_seconds": 112.65045849999296,
+  "all_checks_passed": true
+}

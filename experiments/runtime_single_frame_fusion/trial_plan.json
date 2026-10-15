@@ -1,0 +1,50 @@
+{
+  "blocks": [
+    "ABC",
+    "ACB",
+    "BAC",
+    "BCA",
+    "CAB",
+    "CBA"
+  ],
+  "factor": "single-frame fused arithmetic; B/C only nogil differs",
+  "input": "field_run_20261015_02",
+  "arm_sample": 97705,
+  "source_frames": 14404,
+  "archive_frames": 10903,
+  "correctness": "all per-frame counts/transitions/windows/quality audits and complete report equal; only two independently checked replay host clocks normalized",
+  "stable_improvement": {
+    "p95_improved_blocks_min": 5,
+    "blocks": 6,
+    "median_p95_reduction_min": 0.1,
+    "median_active_fps_not_lower": true,
+    "median_age_slope_not_higher": true,
+    "median_gui_ratio_max": 1.05
+  },
+  "short_realtime": {
+    "all_candidate_p95_ms_max": 150,
+    "all_candidate_max_ms_max": 250,
+    "all_candidate_age_slope_max_ms_per_device_second": 10,
+    "median_age_slope_max_ms_per_device_second": 5
+  },
+  "long_stability": {
+    "durations_seconds": [
+      60,
+      300
+    ],
+    "repetitions": 3,
+    "age_slope_max_ms_per_device_second": 1,
+    "no_drops": true,
+    "no_window_or_session_resets_at_loop_seams": true
+  },
+  "catchup_fps_goal": 1200,
+  "exclusions": [
+    "startup failure",
+    "source identity mismatch",
+    "corrupt observation",
+    "external interruption"
+  ],
+  "normal_slow_runs_never_excluded": true,
+  "full_gui_required": true,
+  "hardware_acceptance_pending": true
+}
