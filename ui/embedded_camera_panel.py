@@ -449,6 +449,8 @@ class EmbeddedCameraPanel(QFrame):
         self._vision.start()
 
     def _stop_vision(self):
+        self._preview.set_live_pose(None)
+        self._overlay_visible = False
         self._disconnect_sdk_tracking()
         vision, self._vision = self._vision, None
         if vision is not None:
@@ -668,7 +670,8 @@ class EmbeddedCameraPanel(QFrame):
             if self._sdk_tracking and self._tracking_notice:
                 self._vision_label.setText(self._vision_label.text() + '\n' + self._tracking_notice)
             if pose is None and self._overlay_visible and self._display_frame is not None:
-                self._render_frame(self._display_frame)
+                self._preview.set_live_pose(None)
+                self._overlay_visible = False
         with self._frame_lock:
             frame = self._pending_frame
             self._pending_frame = None
@@ -686,20 +689,19 @@ class EmbeddedCameraPanel(QFrame):
         import cv2
 
         self._overlay_visible = False
+        pose = None
         if self._vision is not None and not self._replay_mode and self._show_pose_action.isChecked():
-            from vision.pose_overlay import draw_pose_overlay
             pose, _, _ = self._vision.display_state()
-            if pose is not None:
-                frame = draw_pose_overlay(frame.copy(), pose, mirrored=self._chk_mirror.isChecked())
-                self._overlay_visible = True
-        rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        h, w = rgb.shape[:2]
+        h, w = frame.shape[:2]
+        self._preview.set_live_pose(pose, (w, h), mirrored=self._chk_mirror.isChecked())
+        self._overlay_visible = pose is not None
         target = self._preview.size()
         scale = min(target.width() / w, target.height() / h)
         disp_w = max(1, int(w * scale))
         disp_h = max(1, int(h * scale))
         if disp_w != w or disp_h != h:
-            rgb = cv2.resize(rgb, (disp_w, disp_h), interpolation=cv2.INTER_AREA)
+            frame = cv2.resize(frame, (disp_w, disp_h), interpolation=cv2.INTER_AREA)
+        rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         bytes_per_line = rgb.strides[0]
         image = QImage(
             rgb.data,

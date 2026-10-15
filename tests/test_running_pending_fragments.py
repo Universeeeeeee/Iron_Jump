@@ -10,7 +10,7 @@ from tests.test_overground_running import frame,processor
 @pytest.mark.parametrize('reverse',[False,True])
 @pytest.mark.parametrize('filtered',[False,True])
 @pytest.mark.parametrize('wire_order',[None,(3,1,2)])
-def test_known_forefoot_with_brief_returning_heel_keeps_contact(qtbot,reverse,filtered,wire_order):
+def test_disjoint_return_after_clear_cannot_prove_same_heel(qtbot,reverse,filtered,wire_order):
     p=processor(3,starting_foot='Left')
     if wire_order is not None:
         layout=DeviceLayout.linear(3,wire_order=wire_order)
@@ -30,10 +30,13 @@ def test_known_forefoot_with_brief_returning_heel_keeps_contact(qtbot,reverse,fi
         session.halt();p=session.processor
         assert session.build_report('manual').export_frames[300]==frame(p.device.layout,300,[(2.32,2.47),(2.51,2.53)] if reverse else[(.53,.68),(.47,.49)]).contact_bits
     assert len(p.contacts)==1
-    assert not p.issues
+    assert any(i.get('scope')=='local_projection_overlap' for i in p.issues)
     assert p.contacts[0].start==100 and p.contacts[0].end==450
-    assert p.contacts[0].confirmed and p.contacts[0].side=='left'
-    assert p.summary()['contacts'][0]['contact_s']['value']==pytest.approx(.35)
+    assert p.contacts[0].confirmed and p.contacts[0].side=='unknown'
+    row=p.summary()['contacts'][0]
+    assert row['touch_sample']==100
+    assert not row['contact_s']['valid'] and not row['lift_s']['valid']
+    assert p.epoch==0
     assert p._support(290,310,p.contacts[0].epoch)[0] is None
 
 
@@ -105,8 +108,8 @@ def test_pending_new_interior_touch_revokes_terminal_proof_even_if_it_merges_bac
         if 850<=n<855:bounds +=[(.75,.76)]
         if 855<=n<865:bounds=[(.75,.96)]
         p.process(frame(p.device.layout,n,bounds))
-    assert len(p.contacts)==3
-    assert not p.issues
+    assert len(p.contacts)==3 and p.epoch==0
+    assert all(i.get('scope')=='local_projection_overlap' for i in p.issues)
     assert p.finished_reason is None
     assert not p._exit_evidence
 
@@ -175,7 +178,9 @@ def test_same_returning_heel_trajectory_across_device_lengths(segments,reverse):
         if 300<=n<305:bounds +=[(.47,.49)]
         if reverse:bounds=[(segments-b,segments-a) for a,b in bounds]
         p.process(frame(p.device.layout,n,bounds))
-    assert len(p.contacts)==1 and not p.issues
+    assert len(p.contacts)==1 and p.epoch==0
+    assert any(i.get("scope")=="local_projection_overlap" for i in p.issues)
+    assert not p.summary()["contacts"][0]["contact_s"]["valid"]
     assert p.contacts[0].start==100 and p.contacts[0].end==450
     assert p.summary()['duration_s']==pytest.approx(.35)
 
@@ -202,6 +207,7 @@ def test_fresh_terminal_contact_can_establish_proof_after_pending_barrier():
         if 855<=n<865:bounds=[(.75,.96)]
         if 1100<=n<1200:bounds=[(.82,.99)]
         p.process(frame(p.device.layout,n,bounds))
-    assert not p.issues and len(p.contacts)==4
+    assert len(p.contacts)==4
+    assert all(i.get("scope")=="local_projection_overlap" for i in p.issues)
     assert p.finished_reason=='passage_complete' and p.last_sample==1699
     assert p._exit_contact_id==3

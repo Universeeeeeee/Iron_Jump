@@ -818,8 +818,4 @@ def main() -> int:
 
 
 if __name__ == "__main__":
-    # 独立运行时确保项目根目录在 sys.path 中
-    _project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    if _project_root not in sys.path:
-        sys.path.insert(0, _project_root)
     sys.exit(main())

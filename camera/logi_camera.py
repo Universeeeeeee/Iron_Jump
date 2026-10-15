@@ -6,7 +6,7 @@ logi_camera.py — Logitech MX Brio 摄像头独立预览窗口
 
 使用方式::
 
-    python camera/logi_camera.py
+    python -m camera.logi_camera
 
 设计目标:
 - 独立运行，不与 ui/ 目录现有模块耦合
@@ -15,19 +15,11 @@ logi_camera.py — Logitech MX Brio 摄像头独立预览窗口
 
 from __future__ import annotations
 
-import os
 import sys
 import time
 from pathlib import Path
 
 import threading
-
-_module_dir = Path(__file__).resolve().parent
-if str(_module_dir) not in sys.path:
-    sys.path.insert(0, str(_module_dir))
-_project_root = _module_dir.parent
-if str(_project_root) not in sys.path:
-    sys.path.insert(0, str(_project_root))
 
 import cv2
 import numpy as np
@@ -402,11 +394,6 @@ class LogiCameraWidget(QWidget):
 
 
 if __name__ == "__main__":
-    # 确保项目根目录在 sys.path 中
-    _root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    if _root not in sys.path:
-        sys.path.insert(0, _root)
-
     with application() as app:
         w = LogiCameraWidget()
         dayu_theme.apply(w)

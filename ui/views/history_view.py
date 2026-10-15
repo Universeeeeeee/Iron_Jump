@@ -27,97 +27,11 @@ from data.subject_store import (
     TeamProfile,
 )
 
+from ui.styles import HISTORY_QSS
+from ui.theme import PALETTE, SPACE
+
 
 log = logging.getLogger(__name__)
-
-HISTORY_QSS = """
-QWidget#HistoryViewRoot {
-    background: #0c1119;
-    color: #e7ebf2;
-    font-size: 14px;
-}
-QLabel#HistoryTitle {
-    color: #f5f7fb;
-    font-size: 22px;
-    font-weight: 700;
-}
-QLabel#HistoryContext {
-    color: #aeb7c5;
-    font-size: 13px;
-}
-QLabel#DetailTitle {
-    color: #f2f5fa;
-    font-size: 18px;
-    font-weight: 700;
-}
-QFrame#HistoryDetailCard {
-    background: #121923;
-    border: 1px solid #293442;
-    border-radius: 8px;
-}
-QLabel#HistoryDetailText {
-    color: #dfe5ee;
-    font-size: 14px;
-    background: transparent;
-}
-QComboBox#HistoryFilter {
-    min-width: 150px;
-    min-height: 34px;
-    padding: 0 10px;
-    border: 1px solid #354151;
-    border-radius: 6px;
-    background: #1a2230;
-    color: #e7ebf2;
-}
-QTableWidget {
-    background: #121923;
-    alternate-background-color: #151d28;
-    color: #dfe5ee;
-    border: 1px solid #293442;
-    border-radius: 8px;
-    gridline-color: #26313f;
-    selection-background-color: #273446;
-    selection-color: white;
-    font-size: 14px;
-}
-QTableWidget::item {
-    padding: 8px 10px;
-}
-QTableWidget::item:selected {
-    background: #26364a;
-    color: white;
-}
-QHeaderView::section {
-    background: #171f2b;
-    color: #9da8b8;
-    border: none;
-    border-bottom: 1px solid #2b3543;
-    padding: 8px;
-    font-size: 13px;
-    font-weight: 600;
-}
-QPushButton {
-    min-height: 34px;
-    border: 1px solid #354151;
-    border-radius: 6px;
-    background: #1a2230;
-    color: #d9dee8;
-    padding: 0 14px;
-}
-QPushButton:hover {
-    background: #232d3c;
-}
-QPushButton:disabled {
-    color: #677386;
-    background: #151c26;
-}
-QPushButton#PrimaryHistoryAction {
-    background: #ff7a00;
-    border-color: #ff7a00;
-    color: white;
-    font-weight: 650;
-}
-"""
 
 
 class HistoryView(QWidget):
@@ -139,11 +53,11 @@ class HistoryView(QWidget):
         self.setObjectName("HistoryViewRoot")
         self.setStyleSheet(HISTORY_QSS)
         main_layout = QVBoxLayout(self)
-        main_layout.setContentsMargins(24, 18, 24, 20)
-        main_layout.setSpacing(12)
+        main_layout.setContentsMargins(SPACE["xl"], SPACE["card"], SPACE["xl"], SPACE["dialog"])
+        main_layout.setSpacing(SPACE["md"])
 
         header_layout = QHBoxLayout()
-        header_layout.setSpacing(12)
+        header_layout.setSpacing(SPACE["md"])
 
         title = MLabel("历史记录")
         title.setObjectName("HistoryTitle")
@@ -163,7 +77,7 @@ class HistoryView(QWidget):
         main_layout.addLayout(header_layout)
 
         filter_layout = QHBoxLayout()
-        filter_layout.setSpacing(8)
+        filter_layout.setSpacing(SPACE["sm"])
         filter_layout.addStretch(1)
         filter_layout.addWidget(QLabel("运动员"))
         self._athlete_filter = QComboBox()
@@ -178,7 +92,7 @@ class HistoryView(QWidget):
         main_layout.addLayout(filter_layout)
 
         content_layout = QHBoxLayout()
-        content_layout.setSpacing(12)
+        content_layout.setSpacing(SPACE["md"])
 
         self._session_table = QTableWidget(0, 5)
         self._session_table.setHorizontalHeaderLabels(
@@ -209,8 +123,8 @@ class HistoryView(QWidget):
         detail_frame = QFrame()
         detail_frame.setObjectName("HistoryDetailCard")
         detail_layout = QVBoxLayout(detail_frame)
-        detail_layout.setContentsMargins(18, 16, 18, 16)
-        detail_layout.setSpacing(12)
+        detail_layout.setContentsMargins(SPACE["card"], SPACE["lg"], SPACE["card"], SPACE["lg"])
+        detail_layout.setSpacing(SPACE["md"])
         detail_title = QLabel("记录摘要")
         detail_title.setObjectName("DetailTitle")
         detail_layout.addWidget(detail_title)
@@ -552,7 +466,7 @@ def _detail_section_html(title: str, lines: list[str]) -> str:
     )
     return (
         "<div style='margin-bottom:16px;'>"
-        f"<div style='color:#ff9a3d;font-weight:700;margin-bottom:8px;'>{escape(title)}</div>"
+        f"<div style='color:{PALETTE['accent_text']};font-weight:700;margin-bottom:8px;'>{escape(title)}</div>"
         f"{rows}</div>"
     )
 
@@ -576,9 +490,13 @@ def _config_detail_lines(config: Any) -> list[str]:
     if hasattr(config, "direction"):
         lines.append(f"行进方向: {config.direction}")
 
-    lines.append(
-        f"接触/腾空阈值: >{config.min_contact_time}ms / >{config.min_flight_time}ms"
-    )
+    min_flight_time = getattr(config, "min_flight_time", None)
+    if min_flight_time is None:
+        lines.append(f"接触阈值: >{config.min_contact_time}ms")
+    else:
+        lines.append(
+            f"接触/腾空阈值: >{config.min_contact_time}ms / >{min_flight_time}ms"
+        )
 
     max_flight_time = getattr(config, "max_flight_time", None)
     if max_flight_time:

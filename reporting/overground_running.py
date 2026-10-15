@@ -47,6 +47,8 @@ REASONS = {
     "closed_isolated_single_sample": "可靠释放的孤立单采样非步候选",
     "joined_existing_footprint": "归属已有光学组",
     "unresolved_coalescence": "光学合组的脚身份未决",
+    "unresolved_fragment_join": "遮挡来源归属未决，单脚边界未知",
+    "unresolved_multiple_islands": "多处遮挡来源未决，脚印身份未知",
     "immature_islands_coalesced": "未成熟光学岛汇合，脚身份未决",
     "associated_fragment": "已有光学组片段",
 }
@@ -71,6 +73,8 @@ def detail_html(report):
     def show(v):
         if isinstance(v, dict) and 'valid' in v:
             return show(v['value']) if v['valid'] else '数据不足：' + REASONS.get(v['missing_reason'], str(v['missing_reason']))
+        if isinstance(v, (dict, list, tuple)):
+            return json.dumps(v, ensure_ascii=False)
         if v is None:
             return '数据不足'
         if isinstance(v, float):

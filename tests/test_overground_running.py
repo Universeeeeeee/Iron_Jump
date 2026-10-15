@@ -279,7 +279,9 @@ def test_merged_contacts_and_noise_cannot_make_flight_or_bridge_identity():
     assert any(i['code'] == 'ambiguous_contacts' for i in s['issues'])
     assert all(c['side'] == 'unknown' for c in s['contacts'][1:])
     assert any(c['duration_s']['valid'] for c in s['cycles'])
-    assert all(c['epoch'] > 0 for c in s['contacts'] if c['id'] >= 3)
+    assert all(c['epoch'] == 0 for c in s['contacts'])
+    assert any(i.get('scope') == 'local_projection_overlap' for i in s['issues'])
+    assert all(not c['contact_s']['valid'] for c in s['contacts'] if c['first_seen_sample'] in (400,))
 
 
 @pytest.mark.parametrize('duration,valid', [(2, False), (3, False), (19, False), (20, True)])

@@ -132,8 +132,9 @@ def test_fullscreen_summary_is_narrower_larger_and_flat(qtbot):
     assert view._status_bar.width() == 320
     assert status_title.font().pixelSize() >= 18
     assert view._device_state_label.font().pixelSize() >= 14
-    assert "QFrame#ConfigWorkArea {\n  background: transparent;\n  border: none;" in view.styleSheet()
-    assert "QFrame#DeviceStatusCard {\n  background: transparent;\n  border: none;" in view.styleSheet()
+    style = " ".join(view.styleSheet().split())
+    assert "QFrame#ConfigWorkArea { background: transparent; border: none;" in style
+    assert "QFrame#DeviceStatusCard { background: transparent; border: none;" in style
     assert device_card is not None
 
 

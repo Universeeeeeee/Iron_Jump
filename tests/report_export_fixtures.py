@@ -45,13 +45,13 @@ def export_reports():
     walking_snapshot.pop('candidate_exclusion_policy', None)
     walking_snapshot.pop('immature_coalescence_policy', None)
     walking_summary = dict(walking.walking_summary)
-    for key in ('record_count', 'confirmed_contacts', 'valid_touches', 'valid_step_times',
+    for key in ('event_publications', 'event_audit', 'ownership_recoveries', 'record_count', 'confirmed_contacts', 'valid_touches', 'valid_step_times',
                 'valid_step_lengths', 'valid_cycle_times', 'valid_stride_lengths',
-                'valid_support_cycles', 'valid_contact_durations', 'candidate_decisions'):
+                'valid_support_cycles', 'valid_contact_durations', 'candidate_decisions', 'metric_policy', 'valid_step_speeds'):
         walking_summary.pop(key, None)
     walking_summary['contacts'] = [
         {key: value for key, value in c.items() if key not in {
-            'touch_known', 'position_known', 'candidate_outcome', 'touch_sample', 'lift_sample', 'confirmed_sample'}}
+            'touch_s', 'lift_s', 'contact_s', 'centre_m', 'metric_evidence', 'touch_known', 'position_known', 'candidate_outcome', 'touch_sample', 'lift_sample', 'confirmed_sample'}}
         for c in walking_summary['contacts']]
     walking = replace(walking, walking_summary=walking_summary,
                       report_config_snapshot={**walking_snapshot, **snapshot})
@@ -60,6 +60,7 @@ def export_reports():
     ground_running = rp.build_report("manual", raw, (.125,))
     running_snapshot = dict(ground_running.report_config_snapshot)
     running_snapshot['algorithm'] = 'overground_running_v1.3'
+    running_snapshot.pop('metric_policy', None)
     running_snapshot['tracking'] = dict(running_snapshot['tracking'])
     running_snapshot['tracking'].pop('fragment_association', None)
     running_snapshot['tracking'].pop('narrow_candidate_width_m', None)
@@ -67,12 +68,12 @@ def export_reports():
     # Freeze the saved v1.3 running schema; current candidate diagnostics are
     # separately covered by the current-report roundtrip tests.
     running_summary = dict(ground_running.running_summary)
-    for key in ('candidate_decisions', 'record_count', 'confirmed_contacts', 'valid_touches',
+    for key in ('event_publications', 'event_audit', 'ownership_recoveries', 'candidate_decisions', 'record_count', 'confirmed_contacts', 'valid_touches',
                 'valid_contact_durations', 'valid_step_lengths', 'valid_step_speeds',
-                'valid_stride_lengths', 'valid_support_cycles'):
+                'valid_stride_lengths', 'valid_support_cycles', 'metric_policy'):
         running_summary.pop(key, None)
     running_summary['contacts'] = [{k: v for k, v in row.items() if k not in {
-        'candidate_outcome', 'first_seen_sample', 'touch_sample', 'lift_sample', 'confirmed_sample'}}
+        'metric_evidence', 'candidate_outcome', 'first_seen_sample', 'touch_sample', 'lift_sample', 'confirmed_sample'}}
         for row in running_summary['contacts']]
     ground_running = replace(ground_running, running_summary=running_summary,
                              report_config_snapshot={**running_snapshot, **snapshot})

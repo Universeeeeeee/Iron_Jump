@@ -1,10 +1,11 @@
 """Independent evidence checks for the offline frontend comparison entry."""
 from dataclasses import asdict
+import gzip
 import json
 import numpy as np
 import pytest
 from hardware.sensor_frame import DeviceLayout, SensorSegment
-from tools.compare_ground_frontends import compare, decode_wire
+from tools.compare_ground_frontends import compare, decode_wire, raw_groups
 
 
 def capture(folder, layout=None):
@@ -45,6 +46,26 @@ def test_comparison_retains_raw_clear_unavailable_and_all_samples(tmp_path, mode
     assert all(bytes.fromhex(r['raw_contact_bytes_hex']) == b.tobytes() for r, b in zip(rows, bits))
     assert not any(bytes.fromhex(rows[240]['raw_contact_bytes_hex'])[85:106])
     assert rows[240]['unavailable_beams'] == [270] and bits[240, 270] == 1
+
+
+@pytest.mark.parametrize('mode', ['walk', 'run'])
+def test_filtered_trace_records_delivered_measurements_not_raw_frames(tmp_path, mode):
+    source, output = tmp_path / 'input', tmp_path / 'output'
+    capture(source)
+    result = compare(source, output, mode, trace_filtered=True)
+    with gzip.open(output / 'filtered_trace.jsonl.gz', 'rt') as handle:
+        rows = [json.loads(line) for line in handle]
+    assert [r['sample'] for r in rows] == list(range(450))
+    assert rows[240]['groups'] == [[85, 105], [181, 201]]
+    assert rows[240]['fed_sample'] == 250
+    assert all('pending' in r and 'ownership_groups' in r for r in rows)
+    evidence = json.loads((output / 'ownership_groups.json').read_text())
+    assert evidence['observation_budget_ms'] == 2000
+    events = json.loads((output / 'event_publications.json').read_text())
+    assert [change for row in rows for change in row['event_changes']] == events['audit']
+    assert rows[-1]['touch_events'] == events['events']
+    assert rows[-1]['reliable_touch_count'] == sum(e['active'] for e in events['events'])
+    assert result['input_unchanged']
 
 
 def test_independent_decode_respects_wire_order_reverse_and_calibration(tmp_path):
@@ -121,3 +142,12 @@ def test_compressed_sample_clock_cannot_hide_a_device_counter_gap(tmp_path):
     np.savez(source / 'matched_usb.npz', **arrays)
     with pytest.raises(ValueError, match='clock deltas disagree'):
         compare(source, tmp_path / 'output', 'walk')
+
+
+def test_raw_islands_preserve_clear_beams_and_a_large_calibrated_seam():
+    layout = DeviceLayout((SensorSegment('1', 0, 0), SensorSegment('2', 1, 1.08)))
+    bits = bytearray(layout.bit_count)
+    bits[20:31] = b'\x01' * 11
+    bits[33:41] = b'\x01' * 8
+    bits[90:106] = b'\x01' * 16
+    assert raw_groups(bits, layout) == [[20, 30], [33, 40], [90, 95], [96, 105]]

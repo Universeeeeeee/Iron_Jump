@@ -150,6 +150,21 @@ def test_live_service_discards_pending_frames_during_slow_initialisation():
     finally:release.set();service.stop()
 
 
+def test_walking_snapshot_carries_sensor_time_without_using_ui_arrival(qtbot):
+    from config.walking_config import WalkingConfig
+    from engine.walking_session import WalkingSession
+    from tests.test_overground_walking import processor,walk,frame
+    session=WalkingSession(WalkingConfig())
+    session.processor=processor(3)
+    walk(session.processor,[(100,400,.3)],450)
+    session._last_frame=frame(session.processor.device.layout,450,received=20_450_000_000)
+    snapshots=[];session.snapshot.connect(snapshots.append)
+    session.publish_snapshot()
+    timing=snapshots[0]['device_timing']
+    assert timing['sample_time_s']==.45
+    assert timing['received_time_s']==20.45
+    assert timing['origin_sample_time_s']==.1
+    assert snapshots[0]['walking']['contacts'][0]['start']==0
 
 
 def test_model_ready_recalibrates_clocks_after_startup_stall():
@@ -199,6 +214,32 @@ def test_later_grid_exclusion_invalidates_visual_check(already_decided):
     assert not check.get('confidence')
 
 
+def test_real_walking_snapshot_checks_confirmed_touch_before_foot_lift(qtbot):
+    from config.walking_config import WalkingConfig
+    from engine.walking_session import WalkingSession
+    from tests.test_overground_walking import processor, walk, frame
+
+    v = ready_vision()
+    # Warm the real session's stream rather than substituting a contact dict.
+    for i in range(12):
+        v.submit_walking_snapshot(snapshot(i, stream='test'))
+    session = WalkingSession(WalkingConfig())
+    session.processor = processor(3, stop_type='Software command')
+    walk(session.processor, [(1000, 1800, .35)], 1201)
+    session._last_frame = frame(session.processor.device.layout, 1200, received=101_200_000_000)
+    actual = []
+    session.snapshot.connect(actual.append)
+    session.snapshot.connect(v.submit_walking_snapshot)
+    session.publish_snapshot()
+    row = actual[0]['walking']['contacts'][0]
+    assert row['confirmed'] and row['end'] is None
+    assert row['exclusion'] == 'incomplete_contact'  # Normal ongoing stance.
+    assert len(v._service.events) == 1
+    event_id, timestamp = v._service.events[0]
+    assert timestamp == pytest.approx(101.0)
+    v._service.decision_ready.emit(VisionDecision(event_id, FootLabel.LEFT, .99, 'landing', timestamp))
+    session.publish_snapshot()
+    assert v.display_state()[2]['label'] == 'left'
 
 
 def test_pending_touch_order_can_be_checked_when_order_resolves():
@@ -217,3 +258,9 @@ def test_displayed_optical_side_tracks_later_identity_uncertainty():
     v.submit_walking_snapshot(snapshot(13, [contact(side='unknown')]))
     assert v.display_state()[2]['device_side'] == 'unknown'
     assert '一致' not in walking_check_text(v.display_state()[2])
+
+
+def test_contact_record_id_is_not_presented_as_actual_step_count():
+    text=walking_check_text({'contact_id':13,'label':'unknown','reason':'identity_ambiguous'})
+    assert text.startswith('接触记录 14：')
+    assert '次触地' not in text

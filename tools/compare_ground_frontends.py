@@ -6,7 +6,9 @@ sample, including reliable clear bits and unavailable beams, for later review.
 """
 import argparse
 from collections import Counter
-from dataclasses import fields
+from contextlib import nullcontext
+from dataclasses import asdict, fields
+import gzip
 import hashlib
 import json
 from pathlib import Path
@@ -38,12 +40,16 @@ def decode_wire(payload, layout):
     return bytes(decoded)
 
 
-def raw_groups(bits, positions):
+def raw_groups(bits, layout):
+    positions = layout.positions_m
     groups = []
     for i, blocked in enumerate(bits):
         if not blocked:
             continue
-        if groups and positions[i] - positions[groups[-1][1]] <= .04:
+        previous = groups[-1][1] if groups else None
+        if (previous is not None and i == previous + 1
+                and positions[i] - positions[previous] <= 1.5 * max(
+                    layout.segments[i // 96].pitch_m, layout.segments[previous // 96].pitch_m)):
             groups[-1][1] = i
         else:
             groups.append([i, i])
@@ -59,6 +65,7 @@ def contact_evidence(processor, mode):
              'touch_known': c.touch_known,
              'position_known': getattr(c, 'position_known', None),
              'side': c.side, 'outcome': c.candidate_outcome,
+             'source_islands': list(getattr(c, 'source_islands', ())),
              'reason': getattr(c, 'exclusion', None) or getattr(c, 'problem', None)
                        or getattr(c, 'interrupted', None)} for c in processor.active]
 
@@ -93,7 +100,7 @@ def pending_evidence(processor, mode):
             for p in processor._narrow_candidates]
 
 
-def compare(input_dir, output_dir, mode):
+def compare(input_dir, output_dir, mode, *, trace_filtered=False):
     input_dir, output_dir = Path(input_dir), Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
     inputs = [input_dir / 'matched_usb.npz', input_dir / 'metadata.json']
@@ -123,7 +130,9 @@ def compare(input_dir, output_dir, mode):
     optical = GroundStabilityFilter(layout, bad)
     changed, clear_removed, blocked_removed, delays, runtimes, raw_runtimes = [], 0, 0, [], [], []
     delivered = []
-    with np.load(inputs[0]) as data, outputs[0].open('w', encoding='utf-8') as handle:
+    trace_path = output_dir / 'filtered_trace.jsonl.gz'
+    trace_context = gzip.open(trace_path, 'wt', encoding='utf-8') if trace_filtered else nullcontext()
+    with np.load(inputs[0]) as data, outputs[0].open('w', encoding='utf-8') as handle, trace_context as trace:
         counters, bits, wire, arrivals = (data[k] for k in ('frame_indices', 'bits', 'wire', 'received_ns'))
         indices = data['sample_indices'] if 'sample_indices' in data else counters
         if (bits.shape != (len(indices), layout.bit_count)
@@ -144,12 +153,35 @@ def compare(input_dir, output_dir, mode):
         if not np.array_equal(np.diff(indices), np.diff(counters)):
             raise ValueError('Device/sample clock deltas disagree; correct the stream origin mapping')
 
+        audit_cursor = 0
+
         def consume(measured, fed_sample):
-            nonlocal clear_removed, blocked_removed
+            nonlocal clear_removed, blocked_removed, audit_cursor
             started = time.perf_counter_ns()
             filtered.process(measured, masked_contact=uncertain_contact(measured, bad))
             runtimes.append((time.perf_counter_ns() - started) / 1e6)
             delivered.append(measured.sample_index)
+            if trace is not None:
+                trace.write(json.dumps({
+                    'sample': measured.sample_index, 'fed_sample': fed_sample,
+                    'groups': raw_groups(measured.contact_bits, layout),
+                    'contacts': [asdict(c) for c in filtered.contacts],
+                    'active_ids': [c.id for c in filtered.active],
+                    'pending': filtered._narrow_candidates,
+                    'regions': getattr(filtered, '_local_regions', []),
+                    # Full source snapshots and shape history are written once
+                    # below; per-sample rows retain the evolving lifecycle.
+                    'ownership_groups': [{**{k: v for k, v in g.items()
+                        if k not in {'sources', 'observation_runs'}},
+                        'source_ids': [s['source_id'] for s in g['sources']],
+                        'observation_run_count': len(g['observation_runs'])}
+                        for g in getattr(filtered, '_ownership_groups', [])],
+                    'commit_cursor': filtered._commit_cursor,
+                    'reliable_touch_count': getattr(filtered, 'reliable_touch_count', None),
+                    'touch_events': getattr(filtered, 'touch_events', []),
+                    'event_changes': getattr(filtered, 'event_audit', [])[audit_cursor:],
+                }, default=asdict, ensure_ascii=False) + '\n')
+                audit_cursor = len(getattr(filtered, 'event_audit', []))
             delays.append(fed_sample - measured.sample_index)
             offset = by_sample[measured.sample_index]
             source = bits[offset].copy()
@@ -180,8 +212,8 @@ def compare(input_dir, output_dir, mode):
                                      'dropped_frames_before': frame.dropped_frames_before,
                                      'quality_flags': list(frame.quality_flags),
                                      'unavailable_beams': unavailable,
-                                     'raw_groups': raw_groups(frame.contact_bits, layout.positions_m),
-                                     'available_spatial_groups': raw_groups(masked_frame(frame, unavailable).contact_bits, layout.positions_m),
+                                     'raw_groups': raw_groups(frame.contact_bits, layout),
+                                     'available_spatial_groups': raw_groups(masked_frame(frame, unavailable).contact_bits, layout),
                                      'owners': contact_evidence(raw, mode),
                                      'pending_candidates': pending_evidence(raw, mode),
                                      'finished_reason': raw.finished_reason, 'processor_ms': raw_ms},
@@ -206,6 +238,16 @@ def compare(input_dir, output_dir, mode):
                     'valid_bits_source': 'layout_snapshot_only; NPZ omits runtime validity and quality flags',
                     'live_acquisition_backlog_verified': False, 'packet_crc_verified_by_this_tool': False}
     summaries = [raw.summary(), filtered.summary()]
+    if trace_filtered:
+        (output_dir / 'ownership_groups.json').write_text(json.dumps({
+            'observation_budget_ms': getattr(filtered, 'OWNERSHIP_OBSERVATION_BUDGET_MS', None),
+            'groups': getattr(filtered, '_ownership_groups', []),
+        }, ensure_ascii=False, indent=2), encoding='utf-8')
+    if trace_filtered:
+        (output_dir / 'event_publications.json').write_text(json.dumps({
+            'events': getattr(filtered, 'touch_events', []),
+            'audit': getattr(filtered, 'event_audit', []),
+        }, ensure_ascii=False, indent=2), encoding='utf-8')
     for path, summary in zip(outputs[2:], summaries):
         path.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding='utf-8')
     assert hashes == {str(p.resolve()): digest(p) for p in inputs}, 'Source changed during replay'
@@ -223,8 +265,9 @@ def main():
     parser.add_argument('input_dir', type=Path)
     parser.add_argument('--mode', choices=('walk', 'run'), required=True)
     parser.add_argument('--output-dir', type=Path, required=True)
+    parser.add_argument('--trace-filtered', action='store_true')
     args = parser.parse_args()
-    result = compare(args.input_dir, args.output_dir, args.mode)
+    result = compare(args.input_dir, args.output_dir, args.mode, trace_filtered=args.trace_filtered)
     print(json.dumps({k: result[k] for k in ('mode', 'frame_count', 'filter_changed_frames',
                      'healthy_clear_bits_filled', 'healthy_blocked_bits_removed', 'input_unchanged')}, indent=2))
 

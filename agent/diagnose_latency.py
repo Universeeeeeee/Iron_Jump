@@ -8,7 +8,7 @@ diagnose_latency.py — Agent 延迟诊断工具
   4. 检查是否存在额外的 tool call 轮次
 
 用法:
-    conda run -n pydantic_ai python agent/diagnose_latency.py
+    conda run -n pydantic_ai python -m agent.diagnose_latency
 """
 
 from __future__ import annotations
@@ -16,11 +16,9 @@ from __future__ import annotations
 import asyncio
 import time
 import os
-import sys
 from pathlib import Path
 
 _project_root = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(_project_root))
 
 from dotenv import load_dotenv
 from typing import Union

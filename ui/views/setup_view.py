@@ -33,232 +33,14 @@ from ui.views.agent_config_panel import AgentConfigPanel
 from ui.views.athletes_view import _DuplicateSubjectDialog, _SubjectDialog
 from ui.param_panel import ParamPanel
 
+from ui.styles import SETUP_QSS, NEW_SUBJECT_DIALOG_QSS
+from ui.theme import PALETTE, SPACE, qss
+
 
 log = logging.getLogger(__name__)
 
 _TEAM_IDENTITY_PLACEHOLDER = "team_identity_placeholder"
 _TEAM_IDENTITY_PERSONAL = "team_identity_personal"
-
-
-SETUP_QSS = """
-QWidget#SetupViewRoot {
-  background-color: #0c1119;
-  color: #e8edf5;
-}
-QFrame#TopSubjectBar,
-QFrame#ModeBar {
-  background-color: #121923;
-  border: none;
-  border-radius: 7px;
-}
-QFrame#ConfigWorkArea {
-  background: transparent;
-  border: none;
-}
-QFrame#ConfigSummaryCard {
-  background-color: #121923;
-  border: none;
-  border-radius: 8px;
-}
-QLabel#PageTitle {
-  color: #f5f7fb;
-  font-size: 20px;
-  font-weight: 700;
-}
-QLabel#PageSubtitle {
-  color: #8f9bad;
-  font-size: 13px;
-}
-QLabel#SummaryTitle {
-  color: #f2f5f9;
-  font-size: 18px;
-  font-weight: 700;
-}
-QLabel#SummaryState {
-  color: #ff9a3d;
-  font-size: 14px;
-  font-weight: 600;
-}
-QLabel#SummaryText {
-  color: #c7cfdb;
-  font-size: 14px;
-}
-QLabel#SummaryHint {
-  color: #7f8a9a;
-  font-size: 13px;
-}
-QLabel#SummarySectionLabel {
-  color: #dfe5ee;
-  font-size: 14px;
-  font-weight: 700;
-  margin-top: 2px;
-}
-QFrame#SummaryFilterRow {
-  background: transparent;
-  border: none;
-  border-bottom: 1px solid #2b3746;
-}
-QLabel#SummaryRowLabel {
-  color: #aeb8c7;
-  font-size: 13px;
-}
-QLabel#FilterState {
-  color: #c7cfdb;
-  font-size: 13px;
-  font-weight: 600;
-}
-QLabel#FilterDetails {
-  color: #9eabba;
-  font-size: 13px;
-  padding: 0 0 5px 10px;
-}
-QFrame#DeviceStatusCard {
-  background: transparent;
-  border: none;
-}
-QLabel#DeviceState {
-  font-size: 14px;
-  font-weight: 700;
-}
-QLabel#DeviceMeta {
-  color: #aeb8c7;
-  font-size: 13px;
-}
-QLineEdit, QComboBox {
-  min-height: 32px;
-  border-radius: 6px;
-  border: 1px solid #354151;
-  background-color: #1a2230;
-  color: #e7ebf2;
-  padding: 0 10px;
-}
-QPushButton {
-  min-height: 32px;
-  border-radius: 6px;
-  border: 1px solid #354151;
-  background-color: #1a2230;
-  color: #d9dee8;
-  padding: 0 16px;
-}
-QPushButton:hover {
-  background-color: #232d3c;
-}
-QPushButton#SubjectPrimaryButton,
-QPushButton#PrimaryStartButton,
-QPushButton#SegmentButton:checked {
-  background-color: #ff7a00;
-  border-color: #ff7a00;
-  color: white;
-}
-QPushButton#PrimaryStartButton {
-  min-height: 46px;
-  font-size: 14px;
-  font-weight: 700;
-  border-radius: 7px;
-}
-QPushButton#PrimaryStartButton:disabled {
-  background-color: #242c37;
-  border-color: #303946;
-  color: #6f7a89;
-}
-QPushButton#SegmentButton {
-  min-width: 112px;
-  border: none;
-  background-color: transparent;
-  font-weight: 600;
-}
-QPushButton#SegmentButton:hover {
-  background-color: rgba(255, 255, 255, 0.05);
-}
-QMenu {
-  background-color: #242936;
-  color: #e7ebf2;
-  border: 1px solid rgba(105, 115, 135, 0.38);
-  padding: 6px;
-}
-QMenu::item {
-  padding: 8px 22px;
-  border-radius: 5px;
-}
-QMenu::item:selected {
-  background-color: rgba(255, 133, 15, 0.22);
-}
-QScrollArea#ManualConfigScroll,
-QScrollArea#ManualConfigScroll QWidget#qt_scrollarea_viewport {
-  background: #121923;
-  border: none;
-}
-QScrollArea#ManualConfigScroll QScrollBar:vertical {
-  width: 10px;
-  margin: 0;
-  border: none;
-  background-color: #0c131d;
-}
-QScrollArea#ManualConfigScroll QScrollBar::handle:vertical {
-  min-height: 32px;
-  border-radius: 5px;
-  background-color: #3a485a;
-}
-QScrollArea#ManualConfigScroll QScrollBar::handle:vertical:hover {
-  background-color: #4b5b6f;
-}
-QScrollArea#ManualConfigScroll QScrollBar::add-line:vertical,
-QScrollArea#ManualConfigScroll QScrollBar::sub-line:vertical {
-  height: 0;
-  border: none;
-  background: transparent;
-}
-QScrollArea#ManualConfigScroll QScrollBar::add-page:vertical,
-QScrollArea#ManualConfigScroll QScrollBar::sub-page:vertical {
-  background: transparent;
-}
-"""
-
-NEW_SUBJECT_DIALOG_QSS = """
-QDialog#NewSubjectDialog {
-  background-color: #121923;
-  color: #e8edf5;
-}
-QDialog#NewSubjectDialog QLabel {
-  color: #dfe5ee;
-  font-size: 13px;
-}
-QDialog#NewSubjectDialog QLineEdit,
-QDialog#NewSubjectDialog QComboBox,
-QDialog#NewSubjectDialog QSpinBox {
-  min-height: 34px;
-  border-radius: 6px;
-  border: 1px solid #354151;
-  background-color: #1a2230;
-  color: #e7ebf2;
-  padding: 0 10px;
-  selection-background-color: #ff7a00;
-}
-QDialog#NewSubjectDialog QComboBox::drop-down,
-QDialog#NewSubjectDialog QSpinBox::up-button,
-QDialog#NewSubjectDialog QSpinBox::down-button {
-  border: none;
-  background-color: #242e3c;
-  width: 24px;
-}
-QDialog#NewSubjectDialog QPushButton {
-  min-width: 80px;
-  min-height: 34px;
-  border-radius: 6px;
-  border: 1px solid #354151;
-  background-color: #1a2230;
-  color: #e7ebf2;
-  padding: 0 14px;
-}
-QDialog#NewSubjectDialog QPushButton:hover {
-  background-color: #232d3c;
-}
-QDialog#NewSubjectDialog QPushButton:default {
-  background-color: #ff7a00;
-  border-color: #ff7a00;
-  color: white;
-}
-"""
 
 
 @dataclass(frozen=True)
@@ -306,12 +88,12 @@ class SetupView(QWidget):
         self.setStyleSheet(SETUP_QSS)
 
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(24, 18, 24, 22)
-        layout.setSpacing(16)
+        layout.setContentsMargins(SPACE["xl"], SPACE["card"], SPACE["xl"], SPACE["page_bottom"])
+        layout.setSpacing(SPACE["lg"])
 
         # ===== 页面标题 =====
         header = QHBoxLayout()
-        header.setSpacing(12)
+        header.setSpacing(SPACE["md"])
         title_column = QVBoxLayout()
         title_column.setSpacing(3)
         title = QLabel("测试")
@@ -325,14 +107,14 @@ class SetupView(QWidget):
         layout.addLayout(header)
 
         workspace = QHBoxLayout()
-        workspace.setSpacing(16)
+        workspace.setSpacing(SPACE["lg"])
 
         # ===== 左侧配置工作区 =====
         config_area = QFrame()
         config_area.setObjectName("ConfigWorkArea")
         config_layout = QVBoxLayout(config_area)
         config_layout.setContentsMargins(0, 0, 0, 0)
-        config_layout.setSpacing(12)
+        config_layout.setSpacing(SPACE["md"])
 
         if self._subject_store is not None:
             config_layout.addWidget(self._create_subject_bar())
@@ -341,10 +123,10 @@ class SetupView(QWidget):
         mode_bar = QFrame()
         mode_bar.setObjectName("ModeBar")
         mode_layout = QHBoxLayout(mode_bar)
-        mode_layout.setContentsMargins(12, 6, 12, 6)
-        mode_layout.setSpacing(8)
+        mode_layout.setContentsMargins(SPACE["md"], 6, SPACE["md"], 6)
+        mode_layout.setSpacing(SPACE["sm"])
         mode_label = QLabel("配置方式")
-        mode_label.setStyleSheet("font-size: 11pt; font-weight: 700; color: #e7ebf2;")
+        mode_label.setStyleSheet(qss('font-size: 11pt; font-weight: 700; color: ${text};'))
         mode_layout.addWidget(mode_label)
 
         self._btn_mode_agent = QPushButton("智能配置")
@@ -360,7 +142,7 @@ class SetupView(QWidget):
         mode_layout.addWidget(self._btn_mode_manual)
         mode_layout.addStretch()
         self._mode_status_chip = QLabel("")
-        self._mode_status_chip.setStyleSheet("color: #8f9bad; font-size: 12px;")
+        self._mode_status_chip.setStyleSheet(qss('color: ${text_muted}; font-size: 12px;'))
         mode_layout.addWidget(self._mode_status_chip)
         config_layout.addWidget(mode_bar)
 
@@ -385,8 +167,8 @@ class SetupView(QWidget):
         self._status_bar.setFixedWidth(320)
         self._status_bar.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Preferred)
         status_layout = QVBoxLayout(self._status_bar)
-        status_layout.setContentsMargins(18, 18, 18, 18)
-        status_layout.setSpacing(10)
+        status_layout.setContentsMargins(SPACE["card"], SPACE["card"], SPACE["card"], SPACE["card"])
+        status_layout.setSpacing(SPACE["control"])
         status_title = QLabel("当前配置")
         status_title.setObjectName("SummaryTitle")
         status_layout.addWidget(status_title)
@@ -405,8 +187,8 @@ class SetupView(QWidget):
         filter_row = QFrame()
         filter_row.setObjectName("SummaryFilterRow")
         filter_layout = QHBoxLayout(filter_row)
-        filter_layout.setContentsMargins(0, 7, 0, 8)
-        filter_layout.setSpacing(8)
+        filter_layout.setContentsMargins(0, 7, 0, SPACE["sm"])
+        filter_layout.setSpacing(SPACE["sm"])
         filter_label = QLabel("滤波参数")
         filter_label.setObjectName("SummaryRowLabel")
         filter_layout.addWidget(filter_label)
@@ -429,7 +211,7 @@ class SetupView(QWidget):
         device_card = QFrame()
         device_card.setObjectName("DeviceStatusCard")
         device_layout = QVBoxLayout(device_card)
-        device_layout.setContentsMargins(0, 2, 0, 0)
+        device_layout.setContentsMargins(0, SPACE["xxs"], 0, 0)
         device_layout.setSpacing(7)
         device_state_row = QHBoxLayout()
         device_state_row.setContentsMargins(0, 0, 0, 0)
@@ -478,12 +260,12 @@ class SetupView(QWidget):
         frame.setObjectName("TopSubjectBar")
 
         layout = QHBoxLayout(frame)
-        layout.setContentsMargins(16, 8, 16, 8)
-        layout.setSpacing(10)
+        layout.setContentsMargins(SPACE["lg"], SPACE["sm"], SPACE["lg"], SPACE["sm"])
+        layout.setSpacing(SPACE["control"])
 
         label = QLabel("测试对象")
         label.setMinimumWidth(64)
-        label.setStyleSheet("font-size: 13px; font-weight: 700; color: #eef2f8;")
+        label.setStyleSheet(qss('font-size: 13px; font-weight: 700; color: ${text_subject};'))
 
         self._subject_search = QLineEdit()
         self._subject_search.setPlaceholderText("搜索姓名")
@@ -496,7 +278,7 @@ class SetupView(QWidget):
         identity_label = QLabel("测试身份")
         identity_label.setMinimumWidth(64)
         identity_label.setStyleSheet(
-            "font-size: 13px; font-weight: 700; color: #eef2f8;"
+            qss('font-size: 13px; font-weight: 700; color: ${text_subject};')
         )
         self._team_identity_combo = QComboBox()
         self._team_identity_combo.setMinimumWidth(180)
@@ -668,7 +450,7 @@ class SetupView(QWidget):
         dialog.setMinimumWidth(380)
         dialog.setStyleSheet(NEW_SUBJECT_DIALOG_QSS)
         form = QFormLayout(dialog)
-        form.setContentsMargins(20, 20, 20, 20)
+        form.setContentsMargins(SPACE["dialog"], SPACE["dialog"], SPACE["dialog"], SPACE["dialog"])
         form.setHorizontalSpacing(14)
         form.setVerticalSpacing(12)
         form.setFieldGrowthPolicy(QFormLayout.AllNonFixedFieldsGrow)
@@ -1029,7 +811,7 @@ class SetupView(QWidget):
             return
 
         self._filter_state_label.setText("已修改")
-        self._filter_state_label.setStyleSheet("color: #ff9a3d;")
+        self._filter_state_label.setStyleSheet(qss('color: ${accent_text};'))
         self._filter_details_label.setText(
             "\n".join(
                 f"{self._filter_display_name(name)}："
@@ -1123,16 +905,15 @@ class SetupView(QWidget):
 
     def _render_device_status(self) -> None:
         state = self._device_state
-        message = self._device_state_message
         labels = {
-            "disconnected": ("● 设备未连接", "#8f9bad", "未连接"),
-            "connecting": ("● 正在连接设备", "#f0a24a", "连接中"),
-            "connected": ("● 设备已连接", "#67c98b", "正常"),
-            "streaming": ("● 正在采集", "#67c98b", "正常"),
-            "error": ("● 设备异常", "#f06a6a", "异常"),
+            "disconnected": ("● 设备未连接", PALETTE["text_muted"], "未连接"),
+            "connecting": ("● 正在连接设备", PALETTE["warning"], "连接中"),
+            "connected": ("● 设备已连接", PALETTE["success"], "正常"),
+            "streaming": ("● 正在采集", PALETTE["success"], "正常"),
+            "error": ("● 设备异常", PALETTE["danger"], "异常"),
         }
         text, color, communication = labels.get(
-            state, (message or state, "#8f9bad", message or state)
+            state, ("● 设备状态未知", PALETTE["text_muted"], "未知")
         )
         health_lines: list[str] = []
         health_status = (self._led_health_result or {}).get("status")
@@ -1143,7 +924,7 @@ class SetupView(QWidget):
         if health_status == "checking":
             health_lines.append("LED状态：检测中…")
         elif health_status == "warning":
-            color = "#f06a6a"
+            color = PALETTE["danger"]
             text = "● 设备已连接 · LED异常"
             disconnected = self._led_health_result.get("disconnected_leds", [])
             flickering = self._led_health_result.get("flickering_leds", [])
@@ -1159,7 +940,7 @@ class SetupView(QWidget):
         elif health_status == "insufficient":
             health_lines.append("LED状态：未获取到足够数据，请刷新")
         self._device_state_label.setText(text)
-        self._device_state_label.setToolTip(message)
+        self._device_state_label.setToolTip(text)
         self._device_state_label.setStyleSheet(f"color: {color};")
         meta_lines = [f"通信状态：{communication}", "标称采样率：1000 Hz"]
         layout = getattr(self, "_device_layout", None)

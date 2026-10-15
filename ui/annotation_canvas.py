@@ -28,7 +28,48 @@ class AnnotationCanvas(QLabel):
         self.selected_id = ""
         self.draft = []
         self._drag = None
+        self._live_pose = None
         self.setMouseTracking(True)
+
+    def set_live_pose(self, sample, image_size=None, *, mirrored=False):
+        if sample is None:
+            self._live_pose = None
+        else:
+            from vision.pose_overlay import build_pose_overlay
+            self._live_pose = (build_pose_overlay(sample, *image_size, mirrored=mirrored), image_size)
+        self.update()
+
+    def _draw_live_pose(self, painter, rect):
+        overlay, (width, height) = self._live_pose
+        painter.save()
+        painter.setClipRect(rect)
+        painter.translate(rect.topLeft())
+        painter.scale(rect.width() / width, rect.height() / height)
+        nodes = overlay["nodes"]
+        colors = {"left": QColor(30, 120, 255), "right": QColor(255, 165, 20)}
+        for start_name, end_name in overlay["connections"]:
+            start, end = nodes[start_name], nodes[end_name]
+            if start["valid"] and end["valid"]:
+                painter.setPen(QPen(colors[start["side"]], 3))
+                painter.drawLine(QPointF(*start["point"]), QPointF(*end["point"]))
+        for node in nodes.values():
+            if node["valid"]:
+                point = QPointF(*node["point"])
+                painter.setPen(Qt.NoPen)
+                painter.setBrush(colors[node["side"]])
+                painter.drawEllipse(point, 6, 6)
+                painter.setBrush(Qt.NoBrush)
+                painter.setPen(QPen(Qt.white, 1))
+                painter.drawEllipse(point, 8, 8)
+        font = painter.font()
+        font.setPixelSize(24)
+        painter.setFont(font)
+        for side, name in (("L", "left_ankle"), ("R", "right_ankle")):
+            node = nodes[name]
+            if node["valid"]:
+                painter.setPen(colors[node["side"]])
+                painter.drawText(QPointF(*node["point"]) + QPointF(10, -10), side)
+        painter.restore()
 
     def reset_annotations(self):
         self.records = []
@@ -180,11 +221,17 @@ class AnnotationCanvas(QLabel):
 
     def paintEvent(self, event):
         super().paintEvent(event)
-        if not self.annotations_visible or self.image_rect().isEmpty():
+        rect = self.image_rect()
+        if rect.isEmpty() or (not self.annotations_visible and self._live_pose is None):
             return
         painter = QPainter(self)
         painter.setRenderHint(QPainter.Antialiasing)
-        painter.setClipRect(self.image_rect())
+        if self._live_pose is not None:
+            self._draw_live_pose(painter, rect)
+        if not self.annotations_visible:
+            painter.end()
+            return
+        painter.setClipRect(rect)
         for record in self.visible_angles():
             source = self._drag[2] if self._drag and self._drag[0] == record["id"] else record["points"]
             self._draw_angle(painter, source, record["id"] == self.selected_id)

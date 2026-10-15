@@ -31,6 +31,7 @@ class OvergroundSession(QObject):
         self._visual_issue = None
         self._summary = None
         self._frame_filter = None
+        self._publication_changed = False
         self.frames = deque(maxlen=600000)
         self.timestamps = deque(maxlen=600000)
         self.total_frames = 0
@@ -87,6 +88,7 @@ class OvergroundSession(QObject):
             return
         self.last_received_ns = frame.received_monotonic_ns
         self._visual_issue = None
+        self._publication_changed = False
         if self.processor is None:
             self._last_frame = frame
             self.preflight.feed(frame)
@@ -105,6 +107,8 @@ class OvergroundSession(QObject):
         if frame.received_monotonic_ns - self._last_update_ns >= 100_000_000:
             self._last_update_ns = frame.received_monotonic_ns
             self.publish_snapshot()
+        elif self._publication_changed:
+            self.publish_visual()
 
     def archive_raw_frame(self, frame, *, raw_only=False):
         """Retain accepted evidence even after the measurement has stopped."""
@@ -117,7 +121,12 @@ class OvergroundSession(QObject):
     def _consume_frames(self, frames):
         for frame in frames:
             masked_contact = uncertain_contact(frame, self.processor.device.bad_indices)
+            audit_start = len(self.processor.event_audit)
             self.processor.process(frame, masked_contact=masked_contact)
+            if any(e['action'] in {'publish', 'retract', 'sequence_retracted'}
+                   for e in self.processor.event_audit[audit_start:]):
+                self._publication_changed = True
+                self.processor._record_visual(frame, force=True)
             self._last_frame = frame
         if frames:
             self._summary = None
@@ -185,7 +194,7 @@ class OvergroundSession(QObject):
         running = p.name == "overground_running"
         lengths = s["step_lengths_m"]
         speed = s["running_speed_m_s" if running else "walking_speed_m_s"]
-        self.snapshot.emit({"touch_count": sum(c.confirmed for c in p.contacts),
+        self.snapshot.emit({"touch_count": p.reliable_touch_count,
                             "device_timing": ({
                                 "stream_id": self._last_frame.stream_id,
                                 "sample_time_s": self._last_frame.sample_time_s,
@@ -199,7 +208,11 @@ class OvergroundSession(QObject):
                             "latest_stride": lengths[-1] * 100 if lengths else None,
                             "velocity_count": int(speed is not None),
                             "velocity_sum": (speed or 0) * 100})
-        if self._last_frame is not None:
+        self.publish_visual()
+
+    def publish_visual(self):
+        p = self.processor
+        if p is not None and self._last_frame is not None:
             frame = self._last_frame
             invalid = (self._visual_issue or frame.layout != p.device.layout
                        or len(frame.contact_bits) != len(p.positions) or len(frame.valid_bits) != len(p.positions)
@@ -247,9 +260,18 @@ class OvergroundSession(QObject):
         origin = origin if origin is not None else (self.timestamps[0] if self.timestamps else 0)
         pairs = [(bits, t - origin) for bits, t in zip(self.frames, self.timestamps)]
         report = self.processor.build_report(reason, tuple(x[0] for x in pairs), tuple(x[1] for x in pairs))
+        self._summary = report.running_summary if self.processor.name == 'overground_running' else report.walking_summary
+        self.publish_snapshot()
         report.report_config_snapshot["raw_buffer"] = {
             "total_received_frames": self.total_frames, "retained_frames": len(self.frames),
             "truncated": self.total_frames > len(self.frames), "budget_bytes": 64 * 1024 * 1024,
             "raw_only_tail_frames": self.raw_only_tail_frames,
         }
+        if self._frame_filter.mirror_guard.events or self._frame_filter.mirror_guard.tail_events:
+            report.report_config_snapshot['payload_mirror_guard'] = {
+                'rule_version': self._frame_filter.mirror_guard.rule_version,
+                'events': [dict(e) for e in self._frame_filter.mirror_guard.events],
+                'unconfirmed_tails': [dict(e) for e in self._frame_filter.mirror_guard.tail_events],
+                'raw_reconstructed': False,
+            }
         return report

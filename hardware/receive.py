@@ -375,10 +375,6 @@ if __name__ == "__main__":
     DLL_PATH = os.getenv("DAYU_DLL", "")
     if not DLL_PATH:
         try:
-            # path_utils 位于项目根目录，需要将父目录加入 sys.path
-            _project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-            if _project_root not in sys.path:
-                sys.path.insert(0, _project_root)
             from path_utils import find_dll
             DLL_PATH = find_dll()
         except ImportError:

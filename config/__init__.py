@@ -4,9 +4,7 @@ Provides test/parameter configuration schemas (``test_config``,
 ``treadmill_config``, ``param_schema``) and validation helpers used across the
 application.
 
-The ``__init__.py`` is required so this directory is treated as a regular
-package rather than a namespace package. Without it, running ``agent/worker.py``
-directly puts ``agent/`` on ``sys.path``, which lets the ``agent.config``
-subpackage shadow this top-level ``config`` package and breaks
-``from config.test_config import ...`` inside the agent modules.
+This is a regular package, distinct from ``agent.config``. Start application
+modules from the project root with ``python -m`` (including ``agent.worker``)
+so their imports use the same package hierarchy.
 """

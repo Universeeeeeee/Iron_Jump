@@ -6,17 +6,12 @@ import argparse
 import json
 import math
 import sqlite3
-import sys
 import tempfile
 import time
 from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Any, Literal
 
-
-ROOT = Path(__file__).resolve().parent.parent
-if str(ROOT) not in sys.path:
-    sys.path.insert(0, str(ROOT))
 
 from agent.report.service import ReportAnalysisService  # noqa: E402
 from agent.report.agent import ReportAgent  # noqa: E402

@@ -2,14 +2,13 @@
 worker.py — Agent 独立 Worker 进程
 
 常驻后台，按业务路由复用独立 Service，通过 HTTP 与主进程通信。
-启动: python agent/worker.py
+启动: python -m agent.worker
 """
 
 from __future__ import annotations
 
 import json
 import os
-import sys
 import tempfile
 import threading
 import time
@@ -17,9 +16,6 @@ import traceback
 from http.server import HTTPServer, BaseHTTPRequestHandler
 from pathlib import Path
 from socketserver import ThreadingMixIn
-
-_project_root = Path(__file__).resolve().parent.parent
-sys.path.insert(0, str(_project_root))
 
 from agent import ConfigService, AthleteProfile
 

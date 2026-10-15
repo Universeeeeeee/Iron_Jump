@@ -2,13 +2,6 @@
 import os
 import sys
 
-# Ensure project root is importable when running `python ui/led_con.py`.
-_module_dir = os.path.dirname(os.path.abspath(__file__))
-if _module_dir not in sys.path:
-    sys.path.insert(0, _module_dir)
-_project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-if _project_root not in sys.path:
-    sys.path.insert(0, _project_root)
 
 from qtpy import QtWidgets
 from qtpy.QtCore import QThread, QObject, Signal, Qt, QTimer
@@ -25,10 +18,7 @@ from openpyxl import Workbook
 
 from hardware.receive import CyUsbInterfaceDevice, E_DATA_REPORT
 from hardware.usb_worker import UsbWorker
-try:
-    from .led_panel import LEDPanel
-except ImportError:
-    from led_panel import LEDPanel
+from .led_panel import LEDPanel
 from path_utils import find_dll as _find_dll, get_base_dir as _get_base_dir
 
 

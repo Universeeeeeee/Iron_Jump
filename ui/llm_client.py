@@ -95,7 +95,9 @@ class AgentWorkerClient:
         self._port_file.unlink(missing_ok=True)
         self._process = QProcess()
         self._process.setProgram(self._python_exe)
-        self._process.setArguments([self._worker_script])
+        # Launch as a package so agent.config cannot shadow top-level config.
+        self._process.setWorkingDirectory(str(Path(self._worker_script).resolve().parents[1]))
+        self._process.setArguments(["-m", "agent.worker"])
         self._process.start()
         started = self._process.waitForStarted(3000)
         self._started_at = time.monotonic() if started else None

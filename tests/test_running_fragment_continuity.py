@@ -39,8 +39,8 @@ def test_inner_split_of_established_stance_retains_events_and_side(reverse, wire
     assert s['contacts'][1]['contact_s']['value'] == pytest.approx(.25)
     assert s['contacts'][1]['toe_m']['valid']
     report = p.build_report('manual')
-    assert report.report_config_snapshot['algorithm'] == 'overground_running_v1.9'
-    assert report.report_config_snapshot['tracking']['fragment_association'] == 'unique_existing_envelope_with_match_margin'
+    assert report.report_config_snapshot['algorithm'] == 'overground_running_v1.12'
+    assert report.report_config_snapshot['tracking']['fragment_association'] == 'unique_actual_previous_coverage_and_shape_history'
 
 
 def test_merge_of_two_established_feet_still_breaks_identity():

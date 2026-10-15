@@ -6,20 +6,13 @@ agent_test_ui.py — Agent 参数配置独立测试工具
 
 使用方式::
 
-    python agent_test_ui.py
+    python -m agent.agent_test_ui
 """
 
 from __future__ import annotations
 
-import os
-import sys
 import time
 import traceback
-
-# 确保项目根目录在 sys.path 中（dayu_widgets 是项目本地包，必须先于其 import）
-_project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-if _project_root not in sys.path:
-    sys.path.insert(0, _project_root)
 
 from qtpy.QtCore import Qt, Signal, QThread
 from qtpy.QtGui import QTextCursor

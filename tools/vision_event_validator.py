@@ -11,10 +11,6 @@ from dataclasses import replace
 from pathlib import Path
 
 
-PROJECT_ROOT = Path(__file__).resolve().parents[1]
-if str(PROJECT_ROOT) not in sys.path:
-    sys.path.insert(0, str(PROJECT_ROOT))
-
 
 CSV_FIELDS = (
     "event_id",
@@ -288,6 +284,7 @@ def run(args: argparse.Namespace) -> int:
         FootPhaseManager,
     )
     from vision.pose_overlay import draw_pose_overlay
+    from vision.framing import check_framing
     from vision.session import (
         NullVisionSessionRecorder,
         VisionSessionRecorder,
@@ -331,6 +328,7 @@ def run(args: argparse.Namespace) -> int:
             self._last_frame_timing = None
             self._analysis_times = deque(maxlen=180)
             self._pose_samples = deque(maxlen=64)
+            self._framing_pose = None
             self._pose_ready_times = deque(maxlen=64)
             self._frame_timings = deque(maxlen=2048)
             self._event_frames = {}
@@ -414,6 +412,8 @@ def run(args: argparse.Namespace) -> int:
             self._result = QLabel("等待光栅 touch……")
             self._result.setStyleSheet("font-size:20px; font-weight:700;")
             self._reason = QLabel("视觉模型正在初始化……")
+            self._framing = QLabel(check_framing(None, now_s=time.perf_counter()).message)
+            self._framing.setWordWrap(True)
             self._device = QLabel("光栅会话正在初始化……")
             self._queue = QLabel("队列：frames=0 events=0")
             self._metrics = QLabel("已标注 0 | 正确 0 | 错误 0 | 视觉覆盖率 0.0%")
@@ -433,6 +433,7 @@ def run(args: argparse.Namespace) -> int:
             layout.addLayout(previews, 1)
             layout.addWidget(self._result)
             layout.addWidget(self._reason)
+            layout.addWidget(self._framing)
             layout.addWidget(self._device)
             layout.addWidget(self._queue)
             layout.addWidget(self._metrics)
@@ -666,6 +667,7 @@ def run(args: argparse.Namespace) -> int:
 
         @Slot(object)
         def _on_pose_inference(self, inference) -> None:
+            self._framing_pose = inference.pose
             timing = self._nearest_frame_timing(inference.frame_timestamp_s)
             self._recorder.record_pose(
                 pose_sample_to_record(
@@ -1341,6 +1343,10 @@ def run(args: argparse.Namespace) -> int:
         def _refresh_queue(self) -> None:
             depth = self._service.queue_depth
             now_s = time.perf_counter()
+            self._framing.setText(check_framing(
+                self._framing_pose, now_s=now_s,
+                min_quality=self._service.config.min_landmark_quality,
+            ).message)
             analysis_fps = _stream_fps(self._analysis_times, now_s=now_s)
             pose_fps = _stream_fps(self._pose_ready_times, now_s=now_s)
             snapshot = self._sync_snapshot

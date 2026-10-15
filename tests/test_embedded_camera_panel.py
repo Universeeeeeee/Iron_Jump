@@ -216,3 +216,104 @@ def test_camera_switch_and_close_stop_playback_worker(qtbot, tmp_path):
     qtbot.waitUntil(lambda: panel._playback.info is not None)
     panel.close()
     assert panel._playback._worker is None
+
+
+def test_live_preview_discards_backlog_after_gui_stall(qtbot, monkeypatch):
+    import threading
+    from qtpy.QtCore import QObject, Signal
+
+    class Capture(QObject):
+        frame_ready = Signal(np.ndarray)
+        recording_finished = Signal(str)
+        error = Signal(str)
+        def start(self):
+            pass
+        def stop(self):
+            pass
+
+    panel = EmbeddedCameraPanel()
+    qtbot.addWidget(panel)
+    panel._camera_type = 'logi'
+    capture = Capture()
+    monkeypatch.setattr(panel, '_create_capture', lambda: capture)
+    rendered = []
+    monkeypatch.setattr(panel, '_render_frame', lambda frame: rendered.append(int(frame[0, 0, 0])))
+    panel.start_preview()
+    try:
+        def send():
+            for value in range(100):
+                capture.frame_ready.emit(np.full((2, 2, 3), value, dtype=np.uint8))
+        sender = threading.Thread(target=send)
+        sender.start()
+        sender.join()  # GUI is busy while the camera keeps producing frames.
+        qtbot.waitUntil(lambda: bool(rendered))
+        assert rendered == [99]
+        panel.stop_preview()
+        capture.frame_ready.emit(np.zeros((2, 2, 3), dtype=np.uint8))
+        qtbot.wait(80)
+        assert rendered == [99]
+    finally:
+        panel.shutdown()
+
+
+def test_walking_vision_receives_unmirrored_frames_and_stops_with_preview(qtbot, monkeypatch):
+    import vision.live_walking as live
+    from qtpy.QtCore import QObject, Signal
+    class Vision:
+        def __init__(self):self.started=False;self.stopped=False;self.frames=[];self.snapshots=[]
+        def start(self):self.started=True
+        def stop(self):self.stopped=True
+        def submit_camera_frame(self, *args):self.frames.append(args)
+        def submit_walking_snapshot(self, value):self.snapshots.append(value)
+        def display_state(self):return None, '左腿蓝色 · 右腿橙色', None
+    class Capture(QObject):
+        frame_ready=Signal(np.ndarray)
+        analysis_frame_timed_ready=Signal(object,object)
+        recording_finished=Signal(str)
+        error=Signal(str)
+        def start(self):pass
+        def stop(self):pass
+    monkeypatch.setattr(live,'LiveWalkingVision',Vision)
+    panel=EmbeddedCameraPanel();qtbot.addWidget(panel)
+    panel.set_vision_enabled(True)
+    monkeypatch.setattr(panel,'_ensure_control',lambda:True)
+    capture=Capture();monkeypatch.setattr(panel,'_create_capture',lambda:capture)
+    panel.start_preview()
+    panel._waiting_for_control=False
+    panel._start_capture()
+    vision=panel._vision
+    try:
+        raw=np.zeros((2,2,3),dtype=np.uint8);raw[:,0]=255
+        timing=object();capture.analysis_frame_timed_ready.emit(raw,timing)
+        assert vision.frames[0][0] is raw
+        panel.on_walking_snapshot({'walking':{}})
+        assert vision.snapshots==[{'walking':{}}]
+        panel._show_latest_frame()
+        assert '左腿' in panel._vision_label.text()
+        panel._replay_mode=True
+        capture.analysis_frame_timed_ready.emit(raw,timing)
+        assert len(vision.frames)==1
+        panel._replay_mode=False
+        panel.stop_preview()
+        assert vision.stopped and panel._vision is None
+    finally:panel.shutdown()
+
+
+def test_expired_pose_clears_overlay_even_without_new_camera_frame(qtbot):
+    from tests.test_leg_identity import _sample
+    class Vision:
+        pose = _sample(1)
+        def display_state(self):
+            return self.pose, '人体识别', None
+        def stop(self):
+            pass
+    panel = EmbeddedCameraPanel()
+    qtbot.addWidget(panel)
+    panel._vision = Vision()
+    panel._preview_active = True
+    panel._on_frame(np.zeros((80, 120, 3), dtype=np.uint8))
+    assert panel._overlay_visible
+    panel._vision.pose = None
+    panel._show_latest_frame()
+    assert not panel._overlay_visible
+    panel.shutdown()

@@ -3,8 +3,11 @@ import pytest
 pytest.importorskip("qtpy")
 
 from qtpy.QtWidgets import QApplication
+from qtpy.QtCore import Qt
+from qtpy.QtGui import QPainter, QPixmap
 
 from ui.footprint_channel import FootprintChannelWidget, FootprintReplayPanel
+from ui.ground_track import GroundChannelWidget
 
 
 def _app():
@@ -127,6 +130,47 @@ def test_channel_widget_skips_candidate_foot_glyphs():
     assert len(widget._feet) == 1
     assert widget._feet[0]["contact_id"] == 2
     assert widget._feet[0]["side"] == "right"
+
+
+@pytest.mark.parametrize("channel_type", ["treadmill", "overview", "detail"])
+@pytest.mark.parametrize("side, rgb", [
+    ("left", (82, 220, 130)),
+    ("right", (82, 170, 255)),
+    ("unknown", (174, 183, 197)),
+])
+def test_contact_renders_footprint_with_separate_toes(qtbot, channel_type, side, rgb):
+    widget = (FootprintChannelWidget() if channel_type == "treadmill"
+              else GroundChannelWidget(overview=channel_type == "overview"))
+    qtbot.addWidget(widget)
+    count = 768 if channel_type == "overview" else 96
+    widget.render_state({
+        "contact_bits": [0] * count,
+        "positions_m": [i * .0104 for i in range(count)],
+        "feet": [],
+    })
+    foot = {"centroid_cm": (count - 1) * 1.04 / 2,
+            "length_cm": 28, "status": "confirmed", "side": side}
+    canvas = QPixmap(300, 600)
+    canvas.fill(Qt.transparent)
+    painter = QPainter(canvas)
+    widget._paint_foot(painter, foot, 0, 300, 0, 600)
+    painter.end()
+    image = canvas.toImage()
+    pixels = [(x, y) for y in range(image.height()) for x in range(image.width())
+              if image.pixelColor(x, y).alpha() > 128]
+
+    assert pixels
+    # An ellipse has one filled span per row; toes leave several separate spans.
+    assert any(sum(image.pixelColor(x, y).alpha() > 128
+                   and image.pixelColor(x - 1, y).alpha() <= 128
+                   for x in range(1, image.width())) > 1
+               for y in range(image.height()))
+    assert all(image.pixelColor(x, y).getRgb()[:3] == rgb for x, y in pixels)
+    expected_center = 300 * {"left": .36, "right": .64, "unknown": .5}[side]
+    assert (min(x for x, _ in pixels) + max(x for x, _ in pixels)) / 2 == pytest.approx(
+        expected_center, abs=3,
+    )
+    assert foot["side"] == side
 
 
 def test_channel_widget_accepts_short_frame_without_resizing(qtbot):

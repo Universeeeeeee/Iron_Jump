@@ -621,14 +621,14 @@ class ExecutionView(QWidget):
             "connecting": ("● 正在连接设备...", "#f0a24a"),
             "connected": ("● 设备已连接", "#7ecf68"),
             "streaming": ("● 正在采集", "#7ecf68"),
-            "error": (f"● {message}", "#f06a6a"),
+            "error": ("● 设备连接或采集失败，请检查后重试", "#f06a6a"),
         }
-        text, color = labels.get(state, (message or state, "#8f9bad"))
+        text, color = labels.get(state, ("● 设备状态未知", "#8f9bad"))
         self._device_label.setText(text)
-        self._device_label.setToolTip(message)
+        self._device_label.setToolTip(text)
         self._device_label.setStyleSheet(f"font-size: 10pt; color: {color};")
         if self.is_ground and state in {"connecting", "disconnected", "error"}:
-            self._ground_status.setText(message or text)
+            self._ground_status.setText(text)
         if state == "connected":
             self.btn_start.setText("开始采集")
             self.btn_start.setEnabled(getattr(self._config, "test_type", "") not in {"Sprint and Gait Test", "Overground Running Test"})
@@ -670,15 +670,25 @@ class ExecutionView(QWidget):
     def on_walking_readiness(self, result):
         count = result.get("segment_count")
         prefix = f"{count} 段 / 标称 {count} 米 · " if count else ""
-        self._device_label.setText(prefix + result["message"])
+        if result.get("requires_acknowledgement"):
+            message = "部分感应点异常，请检查场地后确认"
+        elif result["ready"]:
+            message = "设备就绪，可以开始"
+        elif result.get("bad_indices"):
+            message = "请清空测量区域并检查设备"
+        elif result.get("transient_indices") or result.get("pending_indices"):
+            message = "请保持测量区域无人，等待设备就绪"
+        else:
+            message = "正在检查设备，请保持测量区域无人"
+        self._device_label.setText(prefix + message)
         details = result.get("details", "")
         self._device_label.setToolTip(details or result["message"])
         if self.is_ground:
-            self._ground_status.setText(prefix + result["message"] + ("\n" + details if details else ""))
+            self._ground_status.setText(message)
             self._ground_status.setToolTip(details or result["message"])
         ready_text = f"确认共 {count} 段并开始" if self.is_ground else "开始采集"
         if result.get("requires_acknowledgement"):
-            ready_text = "核对异常并降级开始"
+            ready_text = "确认并开始"
         self.btn_start.setText(ready_text if result["ready"] else "等待自检通过")
         self.btn_start.setEnabled(result["ready"])
         if self.is_ground and result.get("visual_frame"):
@@ -818,9 +828,9 @@ class ExecutionView(QWidget):
             self._mode_label.setText(("地面跑步" if "running" in snapshot else "地面走路") + " · " + snapshot["status"])
             data = snapshot.get("running", snapshot.get("walking"))
             self._device_label.setText(f"{data['segment_count']} 段 / 标称 {data['nominal_length_m']} 米 · 有效步数 {data['valid_steps']} · 异常 {len(data['issues'])}")
-            self._ground_status.setText(self._device_label.text())
+            self._ground_status.setText("测试进行中")
             if data["issues"]:
-                self._ground_status.setText(self._ground_status.text() + " · 采集存在异常，详见报告")
+                self._ground_status.setText("测试进行中 · 部分数据异常，请在结束后查看报告")
             self._ground_track.set_summary(data)
             self._card_steps.set_value(str(data["valid_steps"]))
             self._card_imbalance.set_value(str(data["valid_cycles"]))

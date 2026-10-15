@@ -15,8 +15,7 @@ def test_settings_view_is_local_and_read_only(qtbot, tmp_path):
     assert str(store.db_path) in text
     assert "0x04B4" in text
     assert "0x1004" in text
-    assert "本地存储" in view._mode_label.text()
-    assert "无需登录" in view._mode_label.text()
+    assert view._mode_label.text() == "数据保存在本机"
 
 
 def test_main_acquisition_defaults_match_settings(qtbot, monkeypatch):

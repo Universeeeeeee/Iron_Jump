@@ -69,7 +69,9 @@ def test_preflight_exposes_local_faults_and_stale_data_without_ready():
     gate.feed(sample)
     status = gate.status(sample.received_monotonic_ns)
     assert not status["ready"]
-    assert any(status["visual_frame"]["contact_bits"][384:480])
+    assert any(status["visual_frame"]["raw_contact_bits"][384:480])
+    assert not any(status["visual_frame"]["contact_bits"][384:480])
+    assert status["pending_indices"]
     assert all(status["visual_frame"]["valid_bits"])
     valid = bytearray([1] * layout.bit_count)
     valid[401] = 0
@@ -95,6 +97,25 @@ def test_start_rejects_changed_layout_even_after_new_self_check():
     assert rejected[-1]["start_rejected"]
     session.arm_checked(session.preflight.status(time.perf_counter_ns())["device_key"])
     assert len(session.processor.device.layout.segments) == 8
+
+
+def test_preflight_panel_labels_confirmed_display_without_claiming_raw_clear(qtbot):
+    from tests.test_led_monitor import frame as raw_frame
+    panel = GroundTrackPanel()
+    qtbot.addWidget(panel)
+    gate = WalkingPreflight()
+    gate.feed(raw_frame(0, b'\xff' * 24))
+    pulse = raw_frame(1, b'\xff' * 12 + bytes(12))
+    gate.feed(pulse)
+    state = gate.status(pulse.received_monotonic_ns)
+    panel.render_state(state['visual_frame'])
+    panel.channel.select_segment(1)
+    assert not any(panel.detail_channel._contact_bits)
+    assert '稳定显示' in panel.detail_status.text()
+    assert '10ms' in panel.detail_status.text()
+    assert '待稳定确认' not in panel.detail_status.text()
+    assert '本段当前帧' not in panel.detail_status.text()
+    assert not state['ready']
 
 
 def test_replay_history_rewinds_and_excludes_invalid_contacts(qtbot):
@@ -252,12 +273,12 @@ def test_preflight_detail_distinguishes_current_frame_from_window(qtbot):
     panel.channel.select_segment(6)
     assert '观察窗异常束：1' in panel.detail_status.text()
     assert '短暂遮挡束：2' in panel.detail_status.text()
-    assert '待稳定确认束：3' in panel.detail_status.text()
-    assert '短时变化（未计入坏灯）：4' in panel.detail_status.text()
+    assert '待稳定确认束' not in panel.detail_status.text()
+    assert '短时变化（未计入坏灯）' not in panel.detail_status.text()
     assert '当前帧' in panel.detail_status.text()
 
 
-def test_preflight_view_shows_fault_locations_without_hover(qtbot):
+def test_preflight_view_keeps_fault_details_in_tooltip(qtbot):
     from tests.test_beam_quality import observe
     gate = WalkingPreflight()
     result = observe(gate, (576, 577, 578), n=8)
@@ -265,6 +286,25 @@ def test_preflight_view_shows_fault_locations_without_hover(qtbot):
     qtbot.addWidget(view)
     view.configure(WalkingConfig())
     view.on_walking_readiness(result)
-    assert '第7段' in view._ground_status.text()
-    assert '1–3' in view._ground_status.text()
+    assert '第7段' in view._ground_status.toolTip()
+    assert '第7段' not in view._ground_status.text()
+    assert '1–3' in view._ground_status.toolTip()
     assert not view.btn_start.isEnabled()
+
+
+@pytest.mark.parametrize('unknown_index, visible', [(700, True), (28, False)])
+def test_ground_paints_reliable_foot_despite_remote_unknown(qtbot, monkeypatch, unknown_index, visible):
+    from ui.ground_track import GroundChannelWidget
+    layout = DeviceLayout.linear(8)
+    channel = GroundChannelWidget()
+    qtbot.addWidget(channel)
+    channel.resize(260, 700)
+    valid = [1] * layout.bit_count
+    valid[unknown_index] = 0
+    painted = []
+    monkeypatch.setattr(channel, '_paint_foot', lambda painter, foot, *args: painted.append(foot))
+    channel.render_state({'positions_m': layout.positions_m, 'contact_bits': [0] * layout.bit_count,
+                          'valid_bits': valid, 'feet': [{'status': 'confirmed', 'centroid_cm': 29,
+                                                      'length_cm': 18, 'side': 'unknown'}]})
+    channel.grab()
+    assert bool(painted) == visible

@@ -4,6 +4,7 @@ from collections import deque
 from dataclasses import replace
 
 import numpy as np
+from hardware.payload_mirror import PeriodicPayloadMirrorGuard
 
 
 class BeamDisplayFilter:
@@ -56,8 +57,8 @@ class BeamDisplayFilter:
 class GroundStabilityFilter:
     """10 ms per-beam confirmation with a bounded, backdated output stream.
 
-    Prepared ground sessions start from a verified clear field. Eleven adjacent
-    samples span 10 ms, matching BeamDisplayFilter's device-clock threshold.
+    Prepared ground sessions start from a verified clear field. Eleven reliable
+    samples span at least 10 ms; quarantined mirror samples never vote.
     Held frames keep their original timestamps and unmodified wire payloads.
     Flushing marks unresolved tail beams invalid without confirming an event.
     """
@@ -66,12 +67,15 @@ class GroundStabilityFilter:
         self.layout = layout
         self._stable = np.zeros(layout.bit_count, dtype=np.uint8)
         self._counts = np.zeros(layout.bit_count, dtype=np.uint8)
+        self._missing_votes = np.zeros(layout.bit_count, dtype=np.uint8)
         self._bad = np.zeros(layout.bit_count, dtype=np.uint8)
         self._bad[list(bad_indices)] = 1
         self._last_partial = self._stable.copy()
         self._zero_counts = np.zeros(len(layout.segments), dtype=np.uint8)
         self._previous = None
+        self._settled_bits = None
         self._queue = deque()
+        self.mirror_guard = PeriodicPayloadMirrorGuard(layout)
 
     @staticmethod
     def _render(item):
@@ -80,6 +84,10 @@ class GroundStabilityFilter:
         return replace(frame, contact_bits=bits.tobytes(), quality_flags=flags)
 
     def feed(self, frame):
+        return [out for raw, affected in self.mirror_guard.feed(frame)
+                for out in self._feed(raw, affected)]
+
+    def _feed(self, frame, quarantined=()):
         previous = self._previous
         fatal = (frame.layout != self.layout or (previous is not None and
                  (frame.stream_id != previous.stream_id or frame.sample_index <= previous.sample_index)))
@@ -94,19 +102,35 @@ class GroundStabilityFilter:
         if frame.dropped_frames_before or (previous is not None and frame.sample_index != previous.sample_index + 1):
             ready = self.reset()
         self._previous = frame
+        # Only a fully settled, reliable observation can reuse the stable state.
+        # Keep every frame and the same ten-sample backdating queue.
+        if not quarantined and frame.contact_bits == self._settled_bits:
+            self._queue.append((frame, self._stable.copy()))
+            while len(self._queue) > 10:
+                ready.append(self._render(self._queue.popleft()))
+            return ready
+        self._settled_bits = None
         raw = np.frombuffer(frame.contact_bits, dtype=np.uint8).copy()
+        available = np.ones(self.layout.bit_count, dtype=bool)
+        available[list(quarantined)] = False
+        # An alias contributes neither a touch nor a release vote. Stable
+        # display values remain derived; raw payload and archive stay intact.
+        raw[~available] = self._last_partial[~available]
         # A brief whole-module dropout must not repeatedly cancel release
         # confirmation. Hold the last partial observation for at most 10 ms.
         whole_zero = np.all((raw | self._bad).reshape(-1, 96), axis=1)
+        whole_zero &= np.all(available.reshape(-1,96),axis=1)
         self._zero_counts[~whole_zero] = 0
         self._zero_counts[whole_zero] = np.minimum(self._zero_counts[whole_zero] + 1, 11)
         held = np.repeat(whole_zero & (self._zero_counts <= 10), 96)
         reliable = np.repeat(~whole_zero, 96)
         raw[held] = self._last_partial[held]
-        self._last_partial[reliable] = raw[reliable]
+        self._last_partial[reliable & available] = raw[reliable & available]
         changed = raw != self._stable
-        self._counts[changed] += 1
-        self._counts[~changed] = 0
+        self._missing_votes[changed & ~available & (self._counts > 0)] += 1
+        self._counts[changed & available] += 1
+        self._counts[~changed & available] = 0
+        self._missing_votes[~changed & available] = 0
         sustained = np.repeat(self._zero_counts > 10, 96)
         self._counts[sustained & changed] = 11
         confirmed = self._counts > 10
@@ -114,18 +138,26 @@ class GroundStabilityFilter:
         if np.any(confirmed):
             self._stable[confirmed] = raw[confirmed]
             self._counts[confirmed] = 0
+            self._missing_votes[confirmed] = 0
             # All queued samples belong to this confirmed 10 ms candidate.
             for _, bits in self._queue:
                 bits[confirmed] = raw[confirmed]
-        if len(self._queue) > 10:
+        if (not quarantined and not np.any(whole_zero)
+                and not np.any(self._counts) and not np.any(self._missing_votes)):
+            self._settled_bits = frame.contact_bits
+        # Retain the first candidate sample through one missing mirror vote.
+        # Its next healthy observation can confirm without moving the edge.
+        limit = 11 if np.any(self._missing_votes) else 10
+        while len(self._queue) > limit:
             ready.append(self._render(self._queue.popleft()))
         return ready
 
     def flush(self):
+        ready = [out for frame, affected in self.mirror_guard.flush()
+                 for out in self._feed(frame, affected)]
         # Stopping cannot confirm an unfinished touch or release candidate.
         held_counts = np.where(self._zero_counts <= 10, self._zero_counts, 0)
-        pending = np.maximum(self._counts, np.repeat(held_counts, 96))
-        ready = []
+        pending = np.maximum(self._counts + self._missing_votes, np.repeat(held_counts, 96))
         for index, item in enumerate(self._queue):
             frame = self._render(item)
             # Candidate counts locate only their suffix within the held queue.
@@ -141,10 +173,14 @@ class GroundStabilityFilter:
         return ready
 
     def reset(self):
-        ready = self.flush()
+        pending = self.mirror_guard.reset()
+        ready = [out for frame, affected in pending for out in self._feed(frame, affected)]
+        ready.extend(self.flush())
         self._stable.fill(0)
         self._counts.fill(0)
+        self._missing_votes.fill(0)
         self._last_partial.fill(0)
         self._zero_counts.fill(0)
         self._previous = None
+        self._settled_bits = None
         return ready

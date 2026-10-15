@@ -56,8 +56,12 @@ def test_cross_seam_first_flattening_and_returning_heel_keep_one_contact(filtere
     assert not p.issues
     assert len(p.contacts) == 1
     c = p.contacts[0]
-    assert c.confirmed and not c.exclusion and c.side == 'left'
+    # The first separate island is outside the established footprint. Its
+    # later connection preserves occupancy, but does not prove foot identity.
+    assert c.confirmed and c.touch_known and c.has_unknown
+    assert c.exclusion == 'unresolved_fragment_join' and c.side == 'unknown'
     assert c.start == pytest.approx(.1) and c.end == pytest.approx(.5)
+    assert p.summary()['mean_contact_s'] is None
 
 
 def test_tiny_third_island_does_not_erase_two_uniquely_observed_feet():
@@ -194,7 +198,7 @@ def test_released_earlier_pending_touch_cannot_publish_later_foot_side(later_tou
     assert p.summary()['valid_steps'] == 0
 
 
-def test_island_joining_known_foot_keeps_cycle_timing_but_support_unknown():
+def test_unresolved_island_join_cannot_be_skipped_in_cycle_identity():
     def trajectory(n):
         a = [(20, 40)] if 100 <= n < 285 else [(20, 46)] if 285 <= n < 300 else []
         return a + ([(85, 105)] if 220 <= n < 500 else []) + (
@@ -202,6 +206,6 @@ def test_island_joining_known_foot_keeps_cycle_timing_but_support_unknown():
             [(46, 46)] if 280 <= n < 285 else [])
     p = replay(trajectory, end=750)
     s = p.summary()
-    assert not p.issues and s['valid_steps'] == 2 and s['valid_cycles'] == 1
-    assert s['cycles'][0]['duration_s'] == pytest.approx(.32)
+    assert not p.issues and s['valid_steps'] == 1 and s['valid_cycles'] == 0
+    assert s['steps'][0]['from_id'] == 0 and s['steps'][0]['to_id'] == 1
     assert s['single_support_s'] is None and s['double_support_s'] is None

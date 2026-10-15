@@ -39,72 +39,11 @@ from data.subject_store import (
 )
 from hardware.rc200u import STATUS_NO_CARD, Rc200uReader, Rc200uUnavailable
 
+from ui.styles import ATHLETES_QSS
+from ui.theme import SPACE
+
 
 log = logging.getLogger(__name__)
-
-
-ATHLETES_QSS = """
-QWidget#AthletesViewRoot {
-    background: #0c1119;
-    color: #e7ebf2;
-}
-QLabel#PageTitle {
-    color: #f5f7fb;
-    font-size: 20px;
-    font-weight: 700;
-}
-QLabel#PageSubtitle {
-    color: #8f9bad;
-    font-size: 13px;
-}
-QFrame#AthleteToolbar,
-QFrame#AthleteTableCard {
-    background: #121923;
-    border: 1px solid #293442;
-    border-radius: 8px;
-}
-QLineEdit, QComboBox, QSpinBox, QDoubleSpinBox {
-    min-height: 32px;
-    border: 1px solid #354151;
-    border-radius: 6px;
-    background: #1a2230;
-    color: #e7ebf2;
-    padding: 0 9px;
-}
-QPushButton {
-    min-height: 32px;
-    border: 1px solid #354151;
-    border-radius: 6px;
-    background: #1a2230;
-    color: #d9dee8;
-    padding: 0 14px;
-}
-QPushButton:hover {
-    background: #232d3c;
-}
-QPushButton#PrimaryButton {
-    background: #ff7a00;
-    border-color: #ff7a00;
-    color: white;
-    font-weight: 650;
-}
-QTableWidget {
-    background: #121923;
-    alternate-background-color: #151d28;
-    color: #dfe5ee;
-    border: none;
-    gridline-color: #26313f;
-    selection-background-color: #273446;
-    selection-color: white;
-}
-QHeaderView::section {
-    background: #171f2b;
-    color: #9da8b8;
-    border: none;
-    border-bottom: 1px solid #2b3543;
-    padding: 8px;
-}
-"""
 
 
 class AthletesView(QWidget):
@@ -149,8 +88,8 @@ class AthletesView(QWidget):
         self.setObjectName("AthletesViewRoot")
         self.setStyleSheet(ATHLETES_QSS)
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(24, 18, 24, 22)
-        layout.setSpacing(16)
+        layout.setContentsMargins(SPACE["xl"], SPACE["card"], SPACE["xl"], SPACE["page_bottom"])
+        layout.setSpacing(SPACE["lg"])
 
         title = QLabel("运动员")
         title.setObjectName("PageTitle")
@@ -162,8 +101,8 @@ class AthletesView(QWidget):
         rfid_bar = QFrame()
         rfid_bar.setObjectName("AthleteToolbar")
         rfid_layout = QHBoxLayout(rfid_bar)
-        rfid_layout.setContentsMargins(12, 8, 12, 8)
-        rfid_layout.setSpacing(8)
+        rfid_layout.setContentsMargins(SPACE["md"], SPACE["sm"], SPACE["md"], SPACE["sm"])
+        rfid_layout.setSpacing(SPACE["sm"])
         self._rfid_status = QLabel()
         self._btn_bind_card = QPushButton("绑定当前卡")
         self._btn_bind_card.clicked.connect(self._bind_current_card)
@@ -177,8 +116,8 @@ class AthletesView(QWidget):
         toolbar = QFrame()
         toolbar.setObjectName("AthleteToolbar")
         toolbar_layout = QHBoxLayout(toolbar)
-        toolbar_layout.setContentsMargins(12, 10, 12, 10)
-        toolbar_layout.setSpacing(8)
+        toolbar_layout.setContentsMargins(SPACE["md"], SPACE["control"], SPACE["md"], SPACE["control"])
+        toolbar_layout.setSpacing(SPACE["sm"])
 
         self._search = QLineEdit()
         self._search.setPlaceholderText("搜索运动员姓名")
@@ -210,8 +149,8 @@ class AthletesView(QWidget):
         table_card = QFrame()
         table_card.setObjectName("AthleteTableCard")
         card_layout = QVBoxLayout(table_card)
-        card_layout.setContentsMargins(1, 1, 1, 12)
-        card_layout.setSpacing(10)
+        card_layout.setContentsMargins(1, 1, 1, SPACE["md"])
+        card_layout.setSpacing(SPACE["control"])
 
         self._table = QTableWidget(0, 8)
         self._table.setHorizontalHeaderLabels(
@@ -237,7 +176,7 @@ class AthletesView(QWidget):
         card_layout.addWidget(self._table, 1)
 
         actions = QHBoxLayout()
-        actions.setContentsMargins(12, 0, 12, 0)
+        actions.setContentsMargins(SPACE["md"], 0, SPACE["md"], 0)
         actions.addStretch(1)
         self._btn_results = QPushButton("查看结果")
         self._btn_results.clicked.connect(self._show_selected_results)

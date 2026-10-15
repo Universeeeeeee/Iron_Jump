@@ -10,13 +10,8 @@ from __future__ import annotations
 
 import importlib
 import os
-import sys
 import time
 
-# Ensure project root is importable when running `python ui/data_show.py`.
-_project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-if _project_root not in sys.path:
-    sys.path.insert(0, _project_root)
 
 from openpyxl import Workbook
 
@@ -34,10 +29,7 @@ from hardware.usb_worker import UsbWorker
 from engine.gait_engine import GaitEngine
 from config.test_config import TestConfig, default_jump_config
 from ui.param_panel import ParamPanel
-try:
-    from .camera import Camera
-except ImportError:
-    from ui.camera import Camera
+from .camera import Camera
 
 # pyqtgraph 可选导入
 try:
