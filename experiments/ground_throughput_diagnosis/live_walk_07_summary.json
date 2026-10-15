@@ -1,0 +1,438 @@
+{
+  "name": "live_walk_07",
+  "mode": "walk",
+  "raw_frames": 78597,
+  "accepted_after_arm": {
+    "total_received_frames": 29687,
+    "retained_frames": 29687,
+    "truncated": false,
+    "budget_bytes": 67108864,
+    "raw_only_tail_frames": 0
+  },
+  "raw_wire_counter_validity_issue_sidecars_verified": true,
+  "full_report_and_runtime_quality_audit_exact": true,
+  "canonical_report_sha256": "d1334b0e2b6db53e56a514bfffb6277c5cf0267d0c010c79cbeba8d54534b198",
+  "physical_scanout_measured": false,
+  "count_evidence": {
+    "physical_count_from_user_filename": 10,
+    "first_foot_from_user": "Right",
+    "confirmed_contacts": 10,
+    "valid_touches": 9,
+    "valid_steps": 5,
+    "semantics": "valid_steps counts admitted step-time intervals; valid_touches counts reliable touch events, neither is automatically physical footfalls.",
+    "omitted_adjacent_confirmed_pairs": [
+      {
+        "from_id": 2,
+        "to_id": 4,
+        "endpoint_touch_known": [
+          true,
+          true
+        ],
+        "endpoint_labels": [
+          "B",
+          "A"
+        ],
+        "intervening_unresolved_contact_ids": [],
+        "overlapping_barriers": [
+          {
+            "start_sample": 60969,
+            "end_sample": 60970,
+            "source": {
+              "kind": "ownership",
+              "epoch": 0
+            }
+          }
+        ]
+      },
+      {
+        "from_id": 4,
+        "to_id": 5,
+        "endpoint_touch_known": [
+          true,
+          true
+        ],
+        "endpoint_labels": [
+          "A",
+          "B"
+        ],
+        "intervening_unresolved_contact_ids": [],
+        "overlapping_barriers": [
+          {
+            "start_sample": 61977,
+            "end_sample": 61978,
+            "source": {
+              "kind": "ownership",
+              "epoch": 0
+            }
+          }
+        ]
+      },
+      {
+        "from_id": 8,
+        "to_id": 10,
+        "endpoint_touch_known": [
+          true,
+          true
+        ],
+        "endpoint_labels": [
+          "A",
+          "B"
+        ],
+        "intervening_unresolved_contact_ids": [
+          9
+        ],
+        "overlapping_barriers": [
+          {
+            "start_sample": 63812,
+            "end_sample": 63813,
+            "source": {
+              "kind": "ownership",
+              "epoch": 0
+            }
+          },
+          {
+            "start_sample": 63834,
+            "end_sample": 63835,
+            "source": {
+              "kind": "ownership",
+              "epoch": 0
+            }
+          },
+          {
+            "start_sample": 63834,
+            "end_sample": 63835,
+            "source": {
+              "kind": "ownership",
+              "epoch": 0
+            }
+          },
+          {
+            "start_sample": 63847,
+            "end_sample": 63848,
+            "source": {
+              "kind": "ownership",
+              "epoch": 0
+            }
+          },
+          {
+            "start_sample": 64025,
+            "end_sample": 64026,
+            "source": {
+              "kind": "ownership",
+              "epoch": 0
+            }
+          }
+        ]
+      },
+      {
+        "from_id": 11,
+        "to_id": 12,
+        "endpoint_touch_known": [
+          true,
+          false
+        ],
+        "endpoint_labels": [
+          "A",
+          ""
+        ],
+        "intervening_unresolved_contact_ids": [],
+        "overlapping_barriers": []
+      }
+    ],
+    "confirmed_without_reliable_touch": [
+      {
+        "id": 12,
+        "confirmed_sample": 65557,
+        "exclusion": "unresolved_coalescence",
+        "touch_known": false,
+        "candidate_outcome": "confirmed_contact"
+      }
+    ]
+  },
+  "sdk_start_success": true,
+  "sdk_success_and_preview_enabled_during_active_status_samples": 147,
+  "sdk_events": 3551,
+  "sdk_proof": {
+    "tracking_decisions": 1198,
+    "decision_reasons": {
+      "no_pose": 78,
+      "loading": 38,
+      "ready": 1,
+      "clock_reset": 1,
+      "stale_frame": 50,
+      "invalid_target": 197,
+      "tracking": 833
+    },
+    "set_speed_calls": 1201,
+    "nonzero_set_speed_calls": 525,
+    "errors": []
+  },
+  "pose_draws": {
+    "calls": 1393,
+    "with_valid_links": 1149,
+    "max_valid_nodes": 10,
+    "max_valid_links": 10,
+    "first_valid_host_ns": 69868000929500
+  },
+  "camera_record_end": {
+    "host_ns": 69926371088400,
+    "path": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\ground_throughput_diagnosis\\runs\\live_walk_07\\camera.mjpg",
+    "raw_video_preserved": true
+  },
+  "receipt_to_paint_ms": {
+    "count": 9,
+    "p95": 319.1774199999999,
+    "max": 365.0053
+  },
+  "phases": [
+    {
+      "start": 48904,
+      "end": 49904,
+      "occupancy_fraction": 0.0,
+      "phase": "empty"
+    },
+    {
+      "start": 49904,
+      "end": 50904,
+      "occupancy_fraction": 0.0,
+      "phase": "empty"
+    },
+    {
+      "start": 50904,
+      "end": 51904,
+      "occupancy_fraction": 0.0,
+      "phase": "empty"
+    },
+    {
+      "start": 51904,
+      "end": 52904,
+      "occupancy_fraction": 0.0,
+      "phase": "empty"
+    },
+    {
+      "start": 52904,
+      "end": 53904,
+      "occupancy_fraction": 0.004,
+      "phase": "empty"
+    },
+    {
+      "start": 53904,
+      "end": 54904,
+      "occupancy_fraction": 0.0,
+      "phase": "empty"
+    },
+    {
+      "start": 54904,
+      "end": 55904,
+      "occupancy_fraction": 0.0,
+      "phase": "empty"
+    },
+    {
+      "start": 55904,
+      "end": 56904,
+      "occupancy_fraction": 0.0,
+      "phase": "empty"
+    },
+    {
+      "start": 56904,
+      "end": 57904,
+      "occupancy_fraction": 0.0,
+      "phase": "empty"
+    },
+    {
+      "start": 57904,
+      "end": 58904,
+      "occupancy_fraction": 0.0,
+      "phase": "empty"
+    },
+    {
+      "start": 58904,
+      "end": 59904,
+      "occupancy_fraction": 0.0,
+      "phase": "empty"
+    },
+    {
+      "start": 59904,
+      "end": 60904,
+      "occupancy_fraction": 0.716,
+      "phase": "dense"
+    },
+    {
+      "start": 60904,
+      "end": 61904,
+      "occupancy_fraction": 1.0,
+      "phase": "dense"
+    },
+    {
+      "start": 61904,
+      "end": 62904,
+      "occupancy_fraction": 1.0,
+      "phase": "dense"
+    },
+    {
+      "start": 62904,
+      "end": 63904,
+      "occupancy_fraction": 1.0,
+      "phase": "dense"
+    },
+    {
+      "start": 63904,
+      "end": 64904,
+      "occupancy_fraction": 1.0,
+      "phase": "dense"
+    },
+    {
+      "start": 64904,
+      "end": 65904,
+      "occupancy_fraction": 1.0,
+      "phase": "dense"
+    },
+    {
+      "start": 65904,
+      "end": 66904,
+      "occupancy_fraction": 0.4,
+      "phase": "mixed"
+    },
+    {
+      "start": 66904,
+      "end": 67904,
+      "occupancy_fraction": 0.0,
+      "phase": "empty"
+    },
+    {
+      "start": 67904,
+      "end": 68904,
+      "occupancy_fraction": 0.0,
+      "phase": "empty"
+    },
+    {
+      "start": 68904,
+      "end": 69904,
+      "occupancy_fraction": 0.0,
+      "phase": "empty"
+    },
+    {
+      "start": 69904,
+      "end": 70904,
+      "occupancy_fraction": 0.0,
+      "phase": "empty"
+    },
+    {
+      "start": 70904,
+      "end": 71904,
+      "occupancy_fraction": 0.005,
+      "phase": "empty"
+    },
+    {
+      "start": 71904,
+      "end": 72904,
+      "occupancy_fraction": 0.0,
+      "phase": "empty"
+    },
+    {
+      "start": 72904,
+      "end": 73904,
+      "occupancy_fraction": 0.0,
+      "phase": "empty"
+    },
+    {
+      "start": 73904,
+      "end": 74904,
+      "occupancy_fraction": 0.0,
+      "phase": "empty"
+    },
+    {
+      "start": 74904,
+      "end": 75904,
+      "occupancy_fraction": 0.0,
+      "phase": "empty"
+    },
+    {
+      "start": 75904,
+      "end": 76904,
+      "occupancy_fraction": 0.0,
+      "phase": "empty"
+    },
+    {
+      "start": 76904,
+      "end": 77904,
+      "occupancy_fraction": 0.0,
+      "phase": "empty"
+    },
+    {
+      "start": 77904,
+      "end": 78591,
+      "occupancy_fraction": 0.0,
+      "phase": "empty"
+    }
+  ],
+  "phase_groups": [
+    {
+      "start": 48904,
+      "end": 59904,
+      "phase": "empty",
+      "frames_received": 11000,
+      "consumer_fps": 1000.0942260080915,
+      "age_slope_ms_per_device_second": -0.016761890746813564,
+      "completion_age_ms": {
+        "count": 3677,
+        "mean": 1.6694550720696222,
+        "p50": 1.2281,
+        "p95": 3.98292,
+        "max": 97.4121
+      },
+      "source_arrival_fps": 1000.0229389751344
+    },
+    {
+      "start": 59904,
+      "end": 65904,
+      "phase": "dense",
+      "frames_received": 6000,
+      "consumer_fps": 935.9002496806336,
+      "age_slope_ms_per_device_second": 37.839913457034385,
+      "completion_age_ms": {
+        "count": 417,
+        "mean": 91.23705011990408,
+        "p50": 57.0881,
+        "p95": 329.08329999999995,
+        "max": 407.5912
+      },
+      "source_arrival_fps": 999.7834774639238
+    },
+    {
+      "start": 65904,
+      "end": 66904,
+      "phase": "mixed",
+      "frames_received": 1000,
+      "consumer_fps": 1150.148750615711,
+      "age_slope_ms_per_device_second": -133.78957454981975,
+      "completion_age_ms": {
+        "count": 50,
+        "mean": 406.18505600000003,
+        "p50": 417.0022,
+        "p95": 474.232435,
+        "max": 486.6684
+      },
+      "source_arrival_fps": 1000.0551581974141
+    },
+    {
+      "start": 66904,
+      "end": 78591,
+      "phase": "empty",
+      "frames_received": 11687,
+      "consumer_fps": 1023.279745719542,
+      "age_slope_ms_per_device_second": -0.6052698195929842,
+      "completion_age_ms": {
+        "count": 3323,
+        "mean": 3.6377309659945833,
+        "p50": 1.5478,
+        "p95": 8.727359999999997,
+        "max": 267.9891
+      },
+      "source_arrival_fps": 999.8891616960414
+    }
+  ],
+  "source_limits": "One physical pass; M plus SDK/draw evidence observers not separately calibrated; no causal partition or statistical 1000Hz guarantee. Latency ends at Qt paint completion and starts at host USB receipt.",
+  "actual_armed_to_stop_request_s": 29.6755586,
+  "planned_maximum_seconds": 30
+}

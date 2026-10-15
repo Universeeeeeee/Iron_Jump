@@ -1,0 +1,59 @@
+{
+  "results": [
+    {
+      "direct_noop_children": 0,
+      "root_exclusive_wall_ns_median": 2900.0,
+      "root_exclusive_cycles_median": 6960.0,
+      "root_inclusive_wall_ns_median": 2900.0,
+      "root_inclusive_cycles_median": 6960.0,
+      "leaf_wall_ns_median": null,
+      "leaf_cycles_median": null
+    },
+    {
+      "direct_noop_children": 1,
+      "root_exclusive_wall_ns_median": 6500.0,
+      "root_exclusive_cycles_median": 15840.0,
+      "root_inclusive_wall_ns_median": 9300.0,
+      "root_inclusive_cycles_median": 22080.0,
+      "leaf_wall_ns_median": 2800.0,
+      "leaf_cycles_median": 6240.0
+    },
+    {
+      "direct_noop_children": 2,
+      "root_exclusive_wall_ns_median": 9900.0,
+      "root_exclusive_cycles_median": 24000.0,
+      "root_inclusive_wall_ns_median": 15300.0,
+      "root_inclusive_cycles_median": 36240.0,
+      "leaf_wall_ns_median": 2700.0,
+      "leaf_cycles_median": 6240.0
+    },
+    {
+      "direct_noop_children": 4,
+      "root_exclusive_wall_ns_median": 16600.0,
+      "root_exclusive_cycles_median": 40320.0,
+      "root_inclusive_wall_ns_median": 27300.0,
+      "root_inclusive_cycles_median": 64800.0,
+      "leaf_wall_ns_median": 2700.0,
+      "leaf_cycles_median": 6240.0
+    },
+    {
+      "direct_noop_children": 8,
+      "root_exclusive_wall_ns_median": 29700.0,
+      "root_exclusive_cycles_median": 71760.0,
+      "root_inclusive_wall_ns_median": 50650.0,
+      "root_inclusive_cycles_median": 120240.0,
+      "leaf_wall_ns_median": 2600.0,
+      "leaf_cycles_median": 6000.0
+    },
+    {
+      "direct_noop_children": 16,
+      "root_exclusive_wall_ns_median": 57600.0,
+      "root_exclusive_cycles_median": 139680.0,
+      "root_inclusive_wall_ns_median": 100000.0,
+      "root_inclusive_cycles_median": 237120.0,
+      "leaf_wall_ns_median": 2600.0,
+      "leaf_cycles_median": 6000.0
+    }
+  ],
+  "scope": "Noop observer floor only, no GUI/GIL competition. Do not mechanically subtract from GUI durations or call this an algorithm microbenchmark. Both selected-frame perturbation and parent bookkeeping exist even when average A/A perturbation is small."
+}

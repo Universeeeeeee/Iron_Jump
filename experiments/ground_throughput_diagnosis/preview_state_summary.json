@@ -1,0 +1,806 @@
+{
+  "runs": [
+    {
+      "name": "preview_run_01_enabled",
+      "mode": "run",
+      "level": "M",
+      "raw_report_runtime_quality_audit_exact": true,
+      "canonical_report_sha256": "14eeffde0cd5beaf48ca4a58edb3efba22923f5fd53593bbcea835688b5988ee",
+      "canonical_evidence_sha256": "9bd10ac4db0fe4fd7fe59c006420cc4f7f3e0ebb468319a1dab33667aa722a25",
+      "receipt_to_paint_ms": {
+        "count": 7,
+        "p95": 1361.48525,
+        "max": 1424.663
+      },
+      "scheduled_to_paint_ms": {
+        "count": 7,
+        "mean": 780.6333142857142,
+        "p50": 817.8331,
+        "p95": 1362.3258899999998,
+        "max": 1425.3987
+      },
+      "camera": {
+        "decoded_frames": 321,
+        "stale_frames_skipped": 11
+      },
+      "phases": {
+        "empty_before": {
+          "consumer_fps": 1005.3235012043476,
+          "age_slope_ms_per_device_second": -4.642584604491034,
+          "completion_age_ms": {
+            "count": 1227,
+            "mean": 9.798449062754687,
+            "p50": 2.7032,
+            "p95": 32.630480000000055,
+            "max": 391.7034
+          },
+          "batch_observations": 1227,
+          "reader_scheduled_lag_ms": {
+            "count": 7000,
+            "mean": 15.89152257142857,
+            "p50": 1.2042,
+            "p95": 124.73933499999937,
+            "max": 363.2595
+          },
+          "original_receipt_fps": 1005.6101523435443
+        },
+        "dense": {
+          "consumer_fps": 660.4132968421314,
+          "age_slope_ms_per_device_second": 556.6473920452908,
+          "completion_age_ms": {
+            "count": 210,
+            "mean": 523.8446428571428,
+            "p50": 392.6157,
+            "p95": 1444.6334999999997,
+            "max": 1542.6486
+          },
+          "batch_observations": 210,
+          "reader_scheduled_lag_ms": {
+            "count": 3000,
+            "mean": 4.348793933333333,
+            "p50": 1.61815,
+            "p95": 20.42418999999998,
+            "max": 48.5055
+          },
+          "original_receipt_fps": 998.4908106050711
+        },
+        "empty_after": {
+          "consumer_fps": 1229.1057206308985,
+          "age_slope_ms_per_device_second": -220.93381275605955,
+          "completion_age_ms": {
+            "count": 46,
+            "mean": 1448.508945652174,
+            "p50": 1451.8358,
+            "p95": 1531.22855,
+            "max": 1534.1356
+          },
+          "batch_observations": 46,
+          "reader_scheduled_lag_ms": {
+            "count": 903,
+            "mean": 6.545863898117386,
+            "p50": 2.0517,
+            "p95": 26.271379999999997,
+            "max": 30.4506
+          },
+          "original_receipt_fps": 1001.940231710342
+        },
+        "all": {
+          "consumer_fps": 891.4182116143573,
+          "age_slope_ms_per_device_second": 95.8670383035503,
+          "completion_age_ms": {
+            "count": 1483,
+            "mean": 127.21610485502359,
+            "p50": 3.1498,
+            "p95": 1272.1368399999997,
+            "max": 1542.6486
+          },
+          "batch_observations": 1483,
+          "reader_scheduled_lag_ms": {
+            "count": 10903,
+            "mean": 11.941479858754471,
+            "p50": 1.3452,
+            "p95": 33.25151999999998,
+            "max": 363.2595
+          },
+          "original_receipt_fps": 1003.3972848927264
+        }
+      },
+      "environment": {
+        "python": "3.11.5 | packaged by Anaconda, Inc. | (main, Sep 11 2023, 13:26:23) [MSC v.1916 64 bit (AMD64)]",
+        "platform": "Windows-10-10.0.26200-SP0",
+        "numpy": "2.4.6",
+        "qt": "6.11.1",
+        "thread_clock": "namespace(implementation='GetThreadTimes()', monotonic=True, adjustable=False, resolution=1e-07)",
+        "cycle_clock": "QueryThreadCycleTime via PyDLL; raw cycles, not converted to time",
+        "cpu_clock_limitation": "GetThreadTimes observed increments 15.625ms despite declared 100ns; per-call CPU attribution unusable"
+      },
+      "tree_conservation_exact": true,
+      "preview_state": "enabled",
+      "actual_canvas_enabled": true,
+      "delivered_video_roi": [
+        50,
+        350,
+        1000,
+        900
+      ],
+      "delivered_video_fraction_chroma_above_5": 0.7264574162679426,
+      "process_cleanup": {
+        "preview_state": "enabled",
+        "evidence_complete_host_ns": 67379209055900,
+        "process_exitcode": 1,
+        "terminated_after_complete_evidence": true,
+        "scope": "E/O/E diagnostic pilot, not optimization adoption or a new successful M/D calibration. Termination, if needed, occurs only after successful GUI SystemExit, raw/report/camera teardown and all evidence files are closed."
+      },
+      "scope": "E/O/E diagnostic pilot only; not a successful new M/D calibration or optimization adoption"
+    },
+    {
+      "name": "preview_run_02_disabled",
+      "mode": "run",
+      "level": "M",
+      "raw_report_runtime_quality_audit_exact": true,
+      "canonical_report_sha256": "14eeffde0cd5beaf48ca4a58edb3efba22923f5fd53593bbcea835688b5988ee",
+      "canonical_evidence_sha256": "9bd10ac4db0fe4fd7fe59c006420cc4f7f3e0ebb468319a1dab33667aa722a25",
+      "receipt_to_paint_ms": {
+        "count": 7,
+        "p95": 1816.2811599999998,
+        "max": 1887.1597
+      },
+      "scheduled_to_paint_ms": {
+        "count": 7,
+        "mean": 1023.0771714285713,
+        "p50": 1074.5178,
+        "p95": 1817.0764199999999,
+        "max": 1887.5538
+      },
+      "camera": {
+        "decoded_frames": 336,
+        "stale_frames_skipped": 8
+      },
+      "phases": {
+        "empty_before": {
+          "consumer_fps": 1004.0160354061916,
+          "age_slope_ms_per_device_second": -3.9049173604607392,
+          "completion_age_ms": {
+            "count": 1083,
+            "mean": 9.840949492151431,
+            "p50": 3.1545,
+            "p95": 32.62965999999998,
+            "max": 303.0368
+          },
+          "batch_observations": 1083,
+          "reader_scheduled_lag_ms": {
+            "count": 7000,
+            "mean": 10.884505057142857,
+            "p50": 1.3705,
+            "p95": 61.57061499999987,
+            "max": 269.6482
+          },
+          "original_receipt_fps": 1005.6101523435443
+        },
+        "dense": {
+          "consumer_fps": 601.998696051905,
+          "age_slope_ms_per_device_second": 737.9555117519321,
+          "completion_age_ms": {
+            "count": 187,
+            "mean": 769.9333743315509,
+            "p50": 669.0666,
+            "p95": 1918.3808099999999,
+            "max": 1981.8032
+          },
+          "batch_observations": 187,
+          "reader_scheduled_lag_ms": {
+            "count": 3000,
+            "mean": 4.323025033333334,
+            "p50": 1.9276499999999999,
+            "p95": 19.597964999999913,
+            "max": 32.8835
+          },
+          "original_receipt_fps": 998.4908106050711
+        },
+        "empty_after": {
+          "consumer_fps": 1157.2044561414268,
+          "age_slope_ms_per_device_second": -169.17928340761756,
+          "completion_age_ms": {
+            "count": 46,
+            "mean": 1963.7816717391302,
+            "p50": 1965.2577,
+            "p95": 2031.5266000000001,
+            "max": 2050.1585
+          },
+          "batch_observations": 46,
+          "reader_scheduled_lag_ms": {
+            "count": 903,
+            "mean": 5.88669169435216,
+            "p50": 2.2759,
+            "p95": 23.224809999999998,
+            "max": 40.4203
+          },
+          "original_receipt_fps": 1001.940231710342
+        },
+        "all": {
+          "consumer_fps": 854.2764758902243,
+          "age_slope_ms_per_device_second": 136.75079364554477,
+          "completion_age_ms": {
+            "count": 1316,
+            "mean": 186.14684361702126,
+            "p50": 3.9606500000000002,
+            "p95": 1786.389075,
+            "max": 2050.1585
+          },
+          "batch_observations": 1316,
+          "reader_scheduled_lag_ms": {
+            "count": 10903,
+            "mean": 8.6651649179125,
+            "p50": 1.529,
+            "p95": 24.06304999999998,
+            "max": 269.6482
+          },
+          "original_receipt_fps": 1003.3972848927264
+        }
+      },
+      "environment": {
+        "python": "3.11.5 | packaged by Anaconda, Inc. | (main, Sep 11 2023, 13:26:23) [MSC v.1916 64 bit (AMD64)]",
+        "platform": "Windows-10-10.0.26200-SP0",
+        "numpy": "2.4.6",
+        "qt": "6.11.1",
+        "thread_clock": "namespace(implementation='GetThreadTimes()', monotonic=True, adjustable=False, resolution=1e-07)",
+        "cycle_clock": "QueryThreadCycleTime via PyDLL; raw cycles, not converted to time",
+        "cpu_clock_limitation": "GetThreadTimes observed increments 15.625ms despite declared 100ns; per-call CPU attribution unusable"
+      },
+      "tree_conservation_exact": true,
+      "preview_state": "disabled",
+      "actual_canvas_enabled": false,
+      "delivered_video_roi": [
+        50,
+        350,
+        1000,
+        900
+      ],
+      "delivered_video_fraction_chroma_above_5": 0.0028976076555023923,
+      "process_cleanup": {
+        "preview_state": "disabled",
+        "evidence_complete_host_ns": 67416230891400,
+        "process_exitcode": 1,
+        "terminated_after_complete_evidence": true,
+        "scope": "E/O/E diagnostic pilot, not optimization adoption or a new successful M/D calibration. Termination, if needed, occurs only after successful GUI SystemExit, raw/report/camera teardown and all evidence files are closed."
+      },
+      "scope": "E/O/E diagnostic pilot only; not a successful new M/D calibration or optimization adoption"
+    },
+    {
+      "name": "preview_run_03_enabled",
+      "mode": "run",
+      "level": "M",
+      "raw_report_runtime_quality_audit_exact": true,
+      "canonical_report_sha256": "14eeffde0cd5beaf48ca4a58edb3efba22923f5fd53593bbcea835688b5988ee",
+      "canonical_evidence_sha256": "9bd10ac4db0fe4fd7fe59c006420cc4f7f3e0ebb468319a1dab33667aa722a25",
+      "receipt_to_paint_ms": {
+        "count": 7,
+        "p95": 116.25599,
+        "max": 120.3707
+      },
+      "scheduled_to_paint_ms": {
+        "count": 7,
+        "mean": 82.55625714285713,
+        "p50": 80.1647,
+        "p95": 118.90458999999998,
+        "max": 123.7999
+      },
+      "camera": {
+        "decoded_frames": 283,
+        "stale_frames_skipped": 4
+      },
+      "phases": {
+        "empty_before": {
+          "consumer_fps": 1005.6370085704859,
+          "age_slope_ms_per_device_second": -0.33939510552384505,
+          "completion_age_ms": {
+            "count": 1622,
+            "mean": 2.2019059802712704,
+            "p50": 1.48975,
+            "p95": 4.777664999999994,
+            "max": 230.4789
+          },
+          "batch_observations": 1622,
+          "reader_scheduled_lag_ms": {
+            "count": 7000,
+            "mean": 5.6657708,
+            "p50": 0.87485,
+            "p95": 6.587244999999931,
+            "max": 225.391
+          },
+          "original_receipt_fps": 1005.6101523435443
+        },
+        "dense": {
+          "consumer_fps": 993.0113302493248,
+          "age_slope_ms_per_device_second": -1.8211163667928403,
+          "completion_age_ms": {
+            "count": 364,
+            "mean": 12.75649010989011,
+            "p50": 3.7184999999999997,
+            "p95": 59.481889999999964,
+            "max": 111.9861
+          },
+          "batch_observations": 364,
+          "reader_scheduled_lag_ms": {
+            "count": 3000,
+            "mean": 2.2930136666666665,
+            "p50": 1.1506500000000002,
+            "p95": 9.723164999999996,
+            "max": 22.9817
+          },
+          "original_receipt_fps": 998.4908106050711
+        },
+        "empty_after": {
+          "consumer_fps": 1000.5684894758541,
+          "age_slope_ms_per_device_second": 0.8191721745193504,
+          "completion_age_ms": {
+            "count": 172,
+            "mean": 3.2455808139534885,
+            "p50": 2.1012,
+            "p95": 11.47974499999999,
+            "max": 19.4084
+          },
+          "batch_observations": 172,
+          "reader_scheduled_lag_ms": {
+            "count": 903,
+            "mean": 1.2555445182724254,
+            "p50": 0.8412,
+            "p95": 4.220569999999999,
+            "max": 10.618
+          },
+          "original_receipt_fps": 1001.940231710342
+        },
+        "all": {
+          "consumer_fps": 1002.6889919197716,
+          "age_slope_ms_per_device_second": 0.6183286971021826,
+          "completion_age_ms": {
+            "count": 2158,
+            "mean": 4.065381742354032,
+            "p50": 1.6391,
+            "p95": 13.61206500000003,
+            "max": 230.4789
+          },
+          "batch_observations": 2158,
+          "reader_scheduled_lag_ms": {
+            "count": 10903,
+            "mean": 4.3724840227460335,
+            "p50": 0.93,
+            "p95": 8.370069999999984,
+            "max": 225.391
+          },
+          "original_receipt_fps": 1003.3972848927264
+        }
+      },
+      "environment": {
+        "python": "3.11.5 | packaged by Anaconda, Inc. | (main, Sep 11 2023, 13:26:23) [MSC v.1916 64 bit (AMD64)]",
+        "platform": "Windows-10-10.0.26200-SP0",
+        "numpy": "2.4.6",
+        "qt": "6.11.1",
+        "thread_clock": "namespace(implementation='GetThreadTimes()', monotonic=True, adjustable=False, resolution=1e-07)",
+        "cycle_clock": "QueryThreadCycleTime via PyDLL; raw cycles, not converted to time",
+        "cpu_clock_limitation": "GetThreadTimes observed increments 15.625ms despite declared 100ns; per-call CPU attribution unusable"
+      },
+      "tree_conservation_exact": true,
+      "preview_state": "enabled",
+      "actual_canvas_enabled": true,
+      "delivered_video_roi": [
+        50,
+        350,
+        1000,
+        900
+      ],
+      "delivered_video_fraction_chroma_above_5": 0.7242870813397129,
+      "process_cleanup": {
+        "preview_state": "enabled",
+        "evidence_complete_host_ns": 67446614716500,
+        "process_exitcode": 1,
+        "terminated_after_complete_evidence": true,
+        "scope": "E/O/E diagnostic pilot, not optimization adoption or a new successful M/D calibration. Termination, if needed, occurs only after successful GUI SystemExit, raw/report/camera teardown and all evidence files are closed."
+      },
+      "scope": "E/O/E diagnostic pilot only; not a successful new M/D calibration or optimization adoption"
+    },
+    {
+      "name": "preview_walk_01_enabled",
+      "mode": "walk",
+      "level": "M",
+      "raw_report_runtime_quality_audit_exact": true,
+      "canonical_report_sha256": "b96045d8459efa385876adbf8866c1348c8240dd6ca5803cdd81b0b958a2a49d",
+      "canonical_evidence_sha256": "cc080a0a409ae271c7c940e52d9407513da52115c7915e3c7893a81db37f5cc9",
+      "receipt_to_paint_ms": {
+        "count": 10,
+        "p95": 131.50087,
+        "max": 133.2664
+      },
+      "scheduled_to_paint_ms": {
+        "count": 10,
+        "mean": 111.90029,
+        "p50": 113.55995,
+        "p95": 132.392975,
+        "max": 133.9646
+      },
+      "camera": {
+        "decoded_frames": 343,
+        "stale_frames_skipped": 20
+      },
+      "phases": {
+        "empty_before": {
+          "consumer_fps": 997.8647651015959,
+          "age_slope_ms_per_device_second": -0.285931367781792,
+          "completion_age_ms": {
+            "count": 967,
+            "mean": 2.560710134436401,
+            "p50": 1.6604,
+            "p95": 5.716429999999998,
+            "max": 60.3415
+          },
+          "batch_observations": 967,
+          "reader_scheduled_lag_ms": {
+            "count": 5000,
+            "mean": 8.4919233,
+            "p50": 0.9088,
+            "p95": 47.97776500000007,
+            "max": 229.0897
+          },
+          "original_receipt_fps": 1000.7743539109678
+        },
+        "dense": {
+          "consumer_fps": 999.9647719752093,
+          "age_slope_ms_per_device_second": -0.005325455752201846,
+          "completion_age_ms": {
+            "count": 1002,
+            "mean": 9.235868762475048,
+            "p50": 3.9216,
+            "p95": 36.12432999999998,
+            "max": 78.2159
+          },
+          "batch_observations": 1002,
+          "reader_scheduled_lag_ms": {
+            "count": 8000,
+            "mean": 2.1068008375,
+            "p50": 1.1274,
+            "p95": 8.698869999999998,
+            "max": 18.9026
+          },
+          "original_receipt_fps": 1000.0358432649411
+        },
+        "empty_after": {
+          "consumer_fps": 1023.3104091736768,
+          "age_slope_ms_per_device_second": -4.243972673496586,
+          "completion_age_ms": {
+            "count": 37,
+            "mean": 2.553772972972973,
+            "p50": 1.8481,
+            "p95": 5.95997999999999,
+            "max": 10.0425
+          },
+          "batch_observations": 37,
+          "reader_scheduled_lag_ms": {
+            "count": 173,
+            "mean": 0.9633248554913294,
+            "p50": 0.8256,
+            "p95": 2.285120000000002,
+            "max": 4.4627
+          },
+          "original_receipt_fps": 997.5189615595629
+        },
+        "all": {
+          "consumer_fps": 1000.244972677249,
+          "age_slope_ms_per_device_second": 0.6687134549743707,
+          "completion_age_ms": {
+            "count": 2006,
+            "mean": 5.894833898305084,
+            "p50": 2.46155,
+            "p95": 25.855075,
+            "max": 78.2159
+          },
+          "batch_observations": 2006,
+          "reader_scheduled_lag_ms": {
+            "count": 13173,
+            "mean": 4.515347938966067,
+            "p50": 1.018,
+            "p95": 9.120739999999998,
+            "max": 229.0897
+          },
+          "original_receipt_fps": 1000.3199018793408
+        }
+      },
+      "environment": {
+        "python": "3.11.5 | packaged by Anaconda, Inc. | (main, Sep 11 2023, 13:26:23) [MSC v.1916 64 bit (AMD64)]",
+        "platform": "Windows-10-10.0.26200-SP0",
+        "numpy": "2.4.6",
+        "qt": "6.11.1",
+        "thread_clock": "namespace(implementation='GetThreadTimes()', monotonic=True, adjustable=False, resolution=1e-07)",
+        "cycle_clock": "QueryThreadCycleTime via PyDLL; raw cycles, not converted to time",
+        "cpu_clock_limitation": "GetThreadTimes observed increments 15.625ms despite declared 100ns; per-call CPU attribution unusable"
+      },
+      "tree_conservation_exact": true,
+      "preview_state": "enabled",
+      "actual_canvas_enabled": true,
+      "delivered_video_roi": [
+        50,
+        350,
+        1000,
+        900
+      ],
+      "delivered_video_fraction_chroma_above_5": 0.9284267942583732,
+      "process_cleanup": {
+        "preview_state": "enabled",
+        "evidence_complete_host_ns": 67480006939300,
+        "process_exitcode": 1,
+        "terminated_after_complete_evidence": true,
+        "scope": "E/O/E diagnostic pilot, not optimization adoption or a new successful M/D calibration. Termination, if needed, occurs only after successful GUI SystemExit, raw/report/camera teardown and all evidence files are closed."
+      },
+      "scope": "E/O/E diagnostic pilot only; not a successful new M/D calibration or optimization adoption"
+    },
+    {
+      "name": "preview_walk_02_disabled",
+      "mode": "walk",
+      "level": "M",
+      "raw_report_runtime_quality_audit_exact": true,
+      "canonical_report_sha256": "b96045d8459efa385876adbf8866c1348c8240dd6ca5803cdd81b0b958a2a49d",
+      "canonical_evidence_sha256": "cc080a0a409ae271c7c940e52d9407513da52115c7915e3c7893a81db37f5cc9",
+      "receipt_to_paint_ms": {
+        "count": 10,
+        "p95": 130.50323999999998,
+        "max": 133.677
+      },
+      "scheduled_to_paint_ms": {
+        "count": 10,
+        "mean": 107.72034999999998,
+        "p50": 109.81405000000001,
+        "p95": 131.925185,
+        "max": 135.1691
+      },
+      "camera": {
+        "decoded_frames": 347,
+        "stale_frames_skipped": 16
+      },
+      "phases": {
+        "empty_before": {
+          "consumer_fps": 1001.0881846612117,
+          "age_slope_ms_per_device_second": -0.5655468096808474,
+          "completion_age_ms": {
+            "count": 918,
+            "mean": 3.1091811546840957,
+            "p50": 1.7915,
+            "p95": 7.833314999999999,
+            "max": 157.9294
+          },
+          "batch_observations": 918,
+          "reader_scheduled_lag_ms": {
+            "count": 5000,
+            "mean": 5.4970365999999995,
+            "p50": 0.98285,
+            "p95": 24.975635000000022,
+            "max": 159.1659
+          },
+          "original_receipt_fps": 1000.7743539109678
+        },
+        "dense": {
+          "consumer_fps": 999.9966716827494,
+          "age_slope_ms_per_device_second": 0.3624765807894406,
+          "completion_age_ms": {
+            "count": 923,
+            "mean": 10.316938894907908,
+            "p50": 4.9113,
+            "p95": 37.592929999999996,
+            "max": 85.2863
+          },
+          "batch_observations": 923,
+          "reader_scheduled_lag_ms": {
+            "count": 8000,
+            "mean": 2.277945325,
+            "p50": 1.1693,
+            "p95": 9.082284999999978,
+            "max": 21.7365
+          },
+          "original_receipt_fps": 1000.0358432649411
+        },
+        "empty_after": {
+          "consumer_fps": 1025.7555141901207,
+          "age_slope_ms_per_device_second": -3.194974629551176,
+          "completion_age_ms": {
+            "count": 31,
+            "mean": 3.772370967741935,
+            "p50": 2.1336,
+            "p95": 11.59645,
+            "max": 12.6167
+          },
+          "batch_observations": 31,
+          "reader_scheduled_lag_ms": {
+            "count": 173,
+            "mean": 1.5542248554913294,
+            "p50": 1.0276,
+            "p95": 5.192160000000004,
+            "max": 6.9075
+          },
+          "original_receipt_fps": 997.5189615595629
+        },
+        "all": {
+          "consumer_fps": 1000.3438539580006,
+          "age_slope_ms_per_device_second": 0.7959655768333276,
+          "completion_age_ms": {
+            "count": 1872,
+            "mean": 6.673988461538461,
+            "p50": 2.60025,
+            "p95": 28.044299999999986,
+            "max": 157.9294
+          },
+          "batch_observations": 1872,
+          "reader_scheduled_lag_ms": {
+            "count": 13173,
+            "mean": 3.490292757913915,
+            "p50": 1.0867,
+            "p95": 9.58601999999998,
+            "max": 159.1659
+          },
+          "original_receipt_fps": 1000.3199018793408
+        }
+      },
+      "environment": {
+        "python": "3.11.5 | packaged by Anaconda, Inc. | (main, Sep 11 2023, 13:26:23) [MSC v.1916 64 bit (AMD64)]",
+        "platform": "Windows-10-10.0.26200-SP0",
+        "numpy": "2.4.6",
+        "qt": "6.11.1",
+        "thread_clock": "namespace(implementation='GetThreadTimes()', monotonic=True, adjustable=False, resolution=1e-07)",
+        "cycle_clock": "QueryThreadCycleTime via PyDLL; raw cycles, not converted to time",
+        "cpu_clock_limitation": "GetThreadTimes observed increments 15.625ms despite declared 100ns; per-call CPU attribution unusable"
+      },
+      "tree_conservation_exact": true,
+      "preview_state": "disabled",
+      "actual_canvas_enabled": false,
+      "delivered_video_roi": [
+        50,
+        350,
+        1000,
+        900
+      ],
+      "delivered_video_fraction_chroma_above_5": 0.001630622009569378,
+      "process_cleanup": {
+        "preview_state": "disabled",
+        "evidence_complete_host_ns": 67513392201000,
+        "process_exitcode": 1,
+        "terminated_after_complete_evidence": true,
+        "scope": "E/O/E diagnostic pilot, not optimization adoption or a new successful M/D calibration. Termination, if needed, occurs only after successful GUI SystemExit, raw/report/camera teardown and all evidence files are closed."
+      },
+      "scope": "E/O/E diagnostic pilot only; not a successful new M/D calibration or optimization adoption"
+    },
+    {
+      "name": "preview_walk_03_enabled",
+      "mode": "walk",
+      "level": "M",
+      "raw_report_runtime_quality_audit_exact": true,
+      "canonical_report_sha256": "b96045d8459efa385876adbf8866c1348c8240dd6ca5803cdd81b0b958a2a49d",
+      "canonical_evidence_sha256": "cc080a0a409ae271c7c940e52d9407513da52115c7915e3c7893a81db37f5cc9",
+      "receipt_to_paint_ms": {
+        "count": 10,
+        "p95": 136.05106499999997,
+        "max": 147.8808
+      },
+      "scheduled_to_paint_ms": {
+        "count": 10,
+        "mean": 109.72903000000001,
+        "p50": 105.36064999999999,
+        "p95": 138.47071499999998,
+        "max": 150.2064
+      },
+      "camera": {
+        "decoded_frames": 357,
+        "stale_frames_skipped": 9
+      },
+      "phases": {
+        "empty_before": {
+          "consumer_fps": 1000.5661398246428,
+          "age_slope_ms_per_device_second": -0.625574708791806,
+          "completion_age_ms": {
+            "count": 954,
+            "mean": 2.8147040880503145,
+            "p50": 1.7840500000000001,
+            "p95": 6.499629999999988,
+            "max": 50.7595
+          },
+          "batch_observations": 954,
+          "reader_scheduled_lag_ms": {
+            "count": 5000,
+            "mean": 9.12774458,
+            "p50": 0.946,
+            "p95": 52.616505000000025,
+            "max": 229.7481
+          },
+          "original_receipt_fps": 1000.7743539109678
+        },
+        "dense": {
+          "consumer_fps": 999.8980584411889,
+          "age_slope_ms_per_device_second": -0.3637630502434967,
+          "completion_age_ms": {
+            "count": 993,
+            "mean": 8.240001510574018,
+            "p50": 4.2057,
+            "p95": 29.451359999999998,
+            "max": 71.2129
+          },
+          "batch_observations": 993,
+          "reader_scheduled_lag_ms": {
+            "count": 8000,
+            "mean": 2.1129394375,
+            "p50": 1.0869499999999999,
+            "p95": 9.04723499999999,
+            "max": 18.8281
+          },
+          "original_receipt_fps": 1000.0358432649411
+        },
+        "empty_after": {
+          "consumer_fps": 986.8067970790519,
+          "age_slope_ms_per_device_second": 1.2799425327927336,
+          "completion_age_ms": {
+            "count": 35,
+            "mean": 2.6592485714285714,
+            "p50": 1.6844,
+            "p95": 8.18716999999997,
+            "max": 15.896
+          },
+          "batch_observations": 35,
+          "reader_scheduled_lag_ms": {
+            "count": 173,
+            "mean": 0.9158121387283237,
+            "p50": 0.7733,
+            "p95": 2.6611600000000006,
+            "max": 3.8613
+          },
+          "original_receipt_fps": 997.5189615595629
+        },
+        "all": {
+          "consumer_fps": 1000.0984303405776,
+          "age_slope_ms_per_device_second": 0.45472578132351676,
+          "completion_age_ms": {
+            "count": 1982,
+            "mean": 5.530082189707366,
+            "p50": 2.4971,
+            "p95": 23.27966499999999,
+            "max": 71.2129
+          },
+          "batch_observations": 1982,
+          "reader_scheduled_lag_ms": {
+            "count": 13173,
+            "mean": 4.759786980945874,
+            "p50": 1.0181,
+            "p95": 9.590159999999996,
+            "max": 229.7481
+          },
+          "original_receipt_fps": 1000.3199018793408
+        }
+      },
+      "environment": {
+        "python": "3.11.5 | packaged by Anaconda, Inc. | (main, Sep 11 2023, 13:26:23) [MSC v.1916 64 bit (AMD64)]",
+        "platform": "Windows-10-10.0.26200-SP0",
+        "numpy": "2.4.6",
+        "qt": "6.11.1",
+        "thread_clock": "namespace(implementation='GetThreadTimes()', monotonic=True, adjustable=False, resolution=1e-07)",
+        "cycle_clock": "QueryThreadCycleTime via PyDLL; raw cycles, not converted to time",
+        "cpu_clock_limitation": "GetThreadTimes observed increments 15.625ms despite declared 100ns; per-call CPU attribution unusable"
+      },
+      "tree_conservation_exact": true,
+      "preview_state": "enabled",
+      "actual_canvas_enabled": true,
+      "delivered_video_roi": [
+        50,
+        350,
+        1000,
+        900
+      ],
+      "delivered_video_fraction_chroma_above_5": 0.9287196172248804,
+      "process_cleanup": {
+        "preview_state": "enabled",
+        "evidence_complete_host_ns": 67546675469500,
+        "process_exitcode": 1,
+        "terminated_after_complete_evidence": true,
+        "scope": "E/O/E diagnostic pilot, not optimization adoption or a new successful M/D calibration. Termination, if needed, occurs only after successful GUI SystemExit, raw/report/camera teardown and all evidence files are closed."
+      },
+      "scope": "E/O/E diagnostic pilot only; not a successful new M/D calibration or optimization adoption"
+    }
+  ],
+  "factor": "offline preview QWidget enabled state",
+  "all_raw_reports_quality_runtime_events_exact": true,
+  "new_stage_calibration_completed": false,
+  "all_rounds_retained": true
+}

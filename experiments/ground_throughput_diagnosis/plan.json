@@ -1,0 +1,45 @@
+{
+  "purpose": "Diagnose the accepted NumPy baseline; no performance implementation or production edits",
+  "parent_commit": "5e1686469e789e5bae0e3c2fd47a5a1d191fd60d",
+  "algorithm": "A: original hardware.walking_preflight.RuntimeBeamEvidence; no Numba import or replacement",
+  "calibration": {
+    "design": "Six balanced paired A/A runs for EACH mode; M=minimal common replay observer, D=diagnostic observer; identical algorithm, input, GUI and camera",
+    "orders": [
+      "MD",
+      "DM",
+      "MD",
+      "DM",
+      "MD",
+      "DM"
+    ],
+    "sample_offsets": [
+      0,
+      11,
+      23,
+      37,
+      49,
+      61
+    ],
+    "sample_modulus": 64,
+    "limits": {
+      "median_paired_fps_absolute_change_max_fraction": 0.03,
+      "median_paired_age_slope_absolute_change_max_ms_per_device_second": 5,
+      "median_paired_p95_absolute_change_max_ms": 25
+    },
+    "failure_rule": "If observer calibration fails, do not use D for quantitative baseline inference; retain all failed rounds and reduce probe or report uncertainty. Individual slow rounds never removed."
+  },
+  "phases": "Freeze from source before timing: classify copied contact bits after applying only existing preflight frozen bad_indices (both recordings have always-blocked beam 576). Original frames remain intact. Armed one-second device windows: dense>=50% frames with any usable contact; empty<=1%; mixed otherwise. Empty-before and empty-after separate; retain whole armed results.",
+  "exclusive_accounting": "Sample a full synchronous quality root every 64 frames. Subtract direct measured child inclusive times; do not add nested inclusive totals. Batch metrics separate from sampled stage extrapolation. Diagnostic overhead and residual uninstrumented helpers explicitly retained.",
+  "scheduling": "Record drain boundaries, pending backlog, zero/5ms timer state, Qt dispatcher awake/aboutToBlock, CPU vs wall, queue age and reader scheduled-arrival lag; gaps with pending input are scheduling/GIL/OS combined, not pure Qt delay.",
+  "gil": "Independent external py-spy sampling on separate native GUI runs; GIL-owner stacks are evidence of contention opportunity, not proof of the full non-CPU duration. Do not assign every wall-minus-thread-CPU nanosecond to GIL.",
+  "correctness": "All delivered raw bits/wire/counters/order equal source; full report equal independent synchronous baseline oracle and A/A; only two independently verified receipt clocks normalized. Runtime counts/transitions/final windows, quality events and processor audit preserved.",
+  "latency_scope": "Qt paint completion, not physical scanout; run has 7 touches, walk has 10. Report P95/max and sample size, without significance claims.",
+  "inputs": {
+    "run": "field_run_20261015_02",
+    "walk": "field_walk_full_02"
+  },
+  "same_source_gui": "Frozen replay source from parent experiment, same recorded cadence and recorded camera decode/pose/overlay; physical USB/camera drivers absent. No synthesized 1000Hz or scene changes in timing trials.",
+  "output": "Reviewable exclusive-cost attribution with evidence-ranked causes and exactly one minimal NEXT experiment; no optimization implementation",
+  "cpu_clock_update_before_gui_trials": "Windows GetThreadTimes 2000 x ~50us busy observations: 1998 zero increments, 2 increments of15.625ms. Do not use per-call thread_time as compute time or subtract it to infer GIL. Add QueryThreadCycleTime via PyDLL for raw non-overlapping CPU-cycle costs; never convert cycles to elapsed time.",
+  "media_scope": "Run retains previous raw JPEG+CSV. Walk losslessly demuxes existing tinyse_20261014_231141.avi MJPEG packets, using archived relative timestamps; original raw JPEGs and precise first-frame offset unavailable. Same byte-identical archive in every walking A/A."
+}

@@ -1,0 +1,211 @@
+Iron_Jump 地面走跑 1000 Hz 消费吞吐诊断
+分支：codex/ground-throughput-diagnosis
+基线：5e1686469e789e5bae0e3c2fd47a5a1d191fd60d（codex/runtime-single-frame-fusion）。
+状态：诊断完成。回放及现场复现、完整语义核验完成；阶段/GIL/Qt 定量拆分未达到证据门槛。
+
+结论的有效范围
+
+目前证据足以确认：GUI 与光束消费线程存在双向 GIL 竞争，接触密集时会出现消费不足；
+还不足以给 DeviceQualitySession、GroundStabilityFilter、两种 Processor 分配可信的基线 CPU 百分比，
+也不足以把 Qt/Windows 调度与 GIL 等待分别量化。原 NumPy 保留，本轮没有实施性能重构。
+
+必须先说明的测量问题
+
+1. 原有同源完整 GUI 回放在 offline 分支把整个相机 panel 设为 disabled。
+   这与正式预览的 enabled 状态不同。Qt QLabel 在 disabled 状态用 QIcon::Disabled 生成图像。
+   原生快照抓到 GUI 的 QCommonStyle::generatedIconPixmap，实际截图预览也为灰度；
+   因此旧完整回放包含额外的禁用图像生成负载，不能直接外推正式现场成本。
+   新 enabled_replay.py 只在实验入口改一行，原回放、正式源码及原 NumPy 均不改。
+
+2. 两个模式的低扰动探针 A/A 均未通过预先冻结的阈值。
+   六对/模式，MD、DM 交错，抽样偏移 0/11/23/37/49/61；所有慢轮均保留。
+   D−M 的配对中位数：
+     跑步：消费 fps −0.195%；队列年龄斜率 +18.284 ms/设备秒；脚印 P95 +48.682 ms。
+     走路：消费 fps −0.0273%；队列年龄斜率 +5.633 ms/设备秒；脚印 P95 −7.340 ms。
+   阈值分别为 3%、5 ms/设备秒、25 ms，任一超限即失败。
+   上述配对差异也可能含快慢状态与噪声，不把它全部解释为探针造成的净开销。
+   不能只看 fps 平均变化小，就接受阶段计时。stages.csv / grouped_stages.csv 仅是 D 条件下
+   的探索记录，不是原程序各阶段占比，也不是优化收益。修正 panel 状态的 E/O/E 不是新的 D/M 校准。
+
+3. Windows thread_time 声明 100 ns，但 2000 次约 50 us 忙循环里，1998 次增量为零，
+   另外两次各 15.625 ms。该时钟无法支持逐调用 CPU 归因；墙钟减它不能算 GIL 等待。
+   QueryThreadCycleTime 使用 PyDLL 获取原始周期，不能转换成 CPU 毫秒。
+   抽样树对直接子调用相减，逐树验证墙钟、粗 CPU 计数和周期的加法守恒，避免嵌套重复计算；
+   观察成本仍包含在抽中帧，不能机械扣除空调用下限。
+
+可复核的证据排序
+
+第一：GUI 和消费线程争夺 GIL，机制已独立证实，持续时长和吞吐损失比例尚未测定。
+
+跑步单次原生快照：GUI 持有 GIL，原生路径 generatedIconPixmap/QLabel::paintEvent，
+对应 AnnotationCanvas.paintEvent 的 super 调用；消费线程停在 NumPy 返回 Python 的
+PyEval_RestoreThread / WaitForSingleObjectEx，Python 顶层为 RuntimeBeamEvidence.observe。
+走路单次快照相反：消费线程在 WalkingProcessor._observe_ownership_groups 的 list comprehension
+持有 GIL；GUI 从 Qt 回调进入 Shiboken::GilState / PyGILState_Ensure 等待。
+这是双向竞争证据；快照命令用时不是等待时长。原生导出符号有近邻名称，不能据此编造具体内部函数。
+
+改为 enabled 预览后的独立 py-spy GIL 持有者采样仍有大量 GUI beam_layer Python 循环样本：
+  跑步实际捕获 220 栈，GUI 108、消费 80；beam_layer 45/46 行分别 25/20；采样错误 37。
+  走路实际捕获 595 栈，GUI 271、消费 211；上述两行分别 67/49；采样错误 121。
+这些是实际捕获的栈数。nonblocking 采样有竞争和缺失，不能转换为时间占比或持锁百分比。
+回放骨架有真实有效节点、连线绘制和截图证据；不能把 QLabel super paint 全部归到骨架。
+
+第二：接触密集场景确实更容易进入消费不足，但存在未解释的快慢状态。
+
+旧 disabled 回放 M 的六轮：
+  跑步空场消费 1003.24–1005.39 fps；密集 629.64–992.27 fps，年龄斜率最高 616.124 ms/设备秒。
+  走路空场消费 998.28–1000.41 fps；密集 683.55–1000.24 fps，年龄斜率最高 502.334 ms/设备秒。
+  跑步脚印 P95 中位数 147.568 ms，最差轮 P95 1530.041、max 1603.147 ms。
+  走路 P95 中位数 166.424 ms，最差轮 P95 3348.680、max 3497.714 ms。
+供给的原录制到达率约 1000 Hz；慢轮 reader 计划迟到约几十 ms，不能单独解释秒级脚印积压。
+每轮跑步仅 7 次触地，走路 10 次，P95 为小样本描述，不作显著性或稳定性承诺。
+
+修正预览状态后的 E/O/E pilot（M + 外部交付证据观察，非随机化优化验收）：
+                       密集 fps   年龄斜率 ms/设备秒   脚印 P95/max ms
+  跑步 enabled 1         660.413       556.647          1361.485 / 1424.663
+  跑步 disabled          601.999       737.956          1816.281 / 1887.160
+  跑步 enabled 2         993.011        −1.821           116.256 / 120.371
+  走路 enabled 1         999.965        −0.005           131.501 / 133.266
+  走路 disabled          999.997         0.363           130.503 / 133.677
+  走路 enabled 2         999.898        −0.364           136.051 / 147.881
+实际预览像素彩色比例：enabled 跑步约 .72、走路 .93；disabled 约 .002，并非仅验证 getter。
+特别是 enabled 跑步第一轮仍慢，不能声称修正 disabled 状态解决了吞吐问题。
+冷启动、Windows 调度/电源/后台负载、GIL 交接状态的相对作用仍未分清。
+
+第三：下游质量与滤波逐帧工作、接触归属维护均有实在计算，但尚不能可靠排序其基线独占成本。
+
+DeviceQualitySession.on_frame 包含运行时证据窗口与每帧判断；RuntimeBeamEvidence 与 quality 不能
+分别计算 inclusive 后相加。GroundStabilityFilter 包含 mirror guard、滤波及渲染输出；
+Walking/RunningProcessor 包含 clusters/groups、ownership/commit/publications，summary 又嵌在
+session 发布路径里。原生快照确实抓到 NumPy GIL 恢复等待和走路 ownership 的 Python 持锁；
+不能把一个 NumPy 栈的墙钟全部叫 NumPy 运算慢，也不能将 summary 的嵌套成本重复算给 processor。
+查看 grouped_stages.csv 时只读互斥 exclusive 分组，且仍限 D 条件，不按它宣称正式阶段占比。
+
+第四：Qt 调度仍是候选因素，当前不能独立定量归因。
+
+inbox 每次取至多 20 帧，4 ms 预算仅在一块处理完后检查；pending 时 timer=0，否则 5 ms。
+一次块可以超过 4 ms。D 的慢轮墙钟多数落在 drain 内，有积压时 drain 之外间隙通常较小，
+提示关注回调内部的计算/GIL；但 D 已校准失败，不能拿该覆盖率当基线 CPU 占用或排除调度。
+M 只有批次完成点，无法分离进入回调前的 Qt 延迟和回调内部等待。
+
+正确性及原件
+
+24 次 A/A、6 次 E/O/E、6 次成功外部 Python 采样、2 次单次原生快照，均先核对：
+原始位/线包/计数器/顺序、算法触地/确认/发布采样号、完整报告、质量证据、运行时计数/转移/窗口
+及 processor audit 与独立同步 oracle 一致。Mac/Windows 同步 oracle 一致，跑步再与上轮独立报告一致。
+仅对回放报告中两个已由真实接收时间核对的 checked_monotonic_ns 做归一化，不删其他报告字段。
+基线 458 个源码条目逐轮 SHA 校验。大型原件保留在本目录 runs/、oracles/ 和 Windows 隔离目录，
+不把原始媒体及逐轮大文件加入 Git；清单和汇总入分支。
+
+两次连续原生 py-spy 49 Hz 采样造成严重扰动/超时并有恢复线程错误，均不进入成功时延统计；
+保留失败日志。后续只使用单次 native dump 作机制证据。完整失败与准备记录见 README.txt。
+步行旧原 JPEG 已不存在，只能从既有 MJPEG AVI 无损解封装；精确首帧偏移不可恢复，作用域已收窄。
+
+下一轮只尝试一个最小优化（本轮未实施）
+
+在已验收实验渲染器 fixed_geometry_cache.py 的 beam_layer 中，减少每束重复的 QPainter
+setPen(Qt.NoPen)、QColor/brush 构造和 setBrush：预建完全相同的三种刷子，仅在状态改变时设置，
+活动线条之后按原顺序恢复。保持每束左右标记与活动线的绘制顺序、几何、颜色、透明度完全一致；
+768 束时标记重叠，禁止按颜色分组重排。原始帧、质量、滤波和 Processor 完全不动。
+
+依据：enabled 预览后，两个模式仍独立采样到此循环持有 GIL；改动小且可用像素复核。
+先覆盖相邻活动/坏点/空场、不同视图和 DPR 1/1.25/1.5/2 做像素等价验证。
+再在 enabled 完整 GUI 上降低观察强度（去掉 Python dispatcher/heartbeat，稀疏顶层边界），
+重新通过 A/A 后做交错完整 GUI A/B。验收同时看密集 fps、年龄斜率、P95/max、空场恢复，
+及完整原始数据/事件/质量/报告等价。未通过全链路验收则拒绝候选，不从微基准推收益。
+
+剩余验证方法
+
+- 校准成功的轻量批次起止边界，结合 Windows 上下文切换/线程 ready-time、频率和负载对齐记录，
+  区分回调内 GIL/计算与 Qt/OS 等待；必要时独立短时外部栈采样，避免连续 native profiler。
+- 重复 corrected enabled 基线至同时覆盖冷/热、快/慢状态，冻结相机、预览、SDK、录制及电源条件。
+- 现场真实 USB + 相机 + SDK 跟随 + 关节点绘制的单次复现已完成；后续增加重复轮次，继续独立同步复核全报告。
+  现场动作开始前必须确认画面中全身可见，开关勾选不等于实际跟随或有效骨架。
+
+已完成的现场走路（live_walk_07）
+
+Windows 真实 USB、Tiny SE 预览/原始录像、SDK 全身追踪、有效关节点连线实际绘制同时开启。
+现场先调整了机位，开关勾选和 SDK 应答以外，再核对实际入镜与绘制；没有以准备失败轮冒充测量。
+计划 30 秒；实际开始到停止请求 29.676 秒、接受 29687 帧。单次通过，9 次脚印 receipt-to-paint P95 319.177 ms、max 365.005 ms；不包含屏幕扫描输出。
+实际 SDK 成功、活动期间预览与绘制开关均开；1149 次绘制含有效连线，最大 10 节点/10 连线。
+独立同步重算的完整报告逐字段相等，质量历史、运行时 counts/transitions/window、算法 audit 相等。
+真实光束 wire→bits 逐帧核对，设备计数差与 dropped_frames_before 一致，issue 顺序和有效性侧车保留。
+按冻结坏点 576 仅对分类副本做掩码，一秒设备窗口：
+  11 秒空场：消费 1000.094 fps，年龄斜率 −0.017 ms/设备秒；输入 1000.023 fps。
+   6 秒密集：消费 935.900 fps，年龄斜率 +37.840 ms/设备秒；输入 999.783 fps；
+             批次完成年龄 P95 329.083、max 407.591 ms。
+   1 秒 mixed：消费 1150.149 fps，正在排积压，批次完成年龄最高 486.668 ms。
+  11.687 秒后空场：消费 1023.280 fps，年龄斜率 −0.605 ms/设备秒；P95 8.727 ms。
+上述 fps 是阶段首末消费采样号/墙钟跨度，恢复阶段超过 1000 fps 表示排历史队列，不是设备提频。
+本轮把消费不足从回放带到真实现场，缩小了“完全由离线 disabled panel 引起”的假设范围；
+仍只有一轮，M+交付证据观察尚未独立 A/A，不能据此给质量/滤波/processor/GIL/Qt 分配精确比例。
+
+现场跑步重测（live_run_02，原 live_run_01 按用户要求删除）
+
+用户因未开始外部录屏，明确要求删除第一次跑步并重测；该轮原始光束、报告、相机录像、
+实验日志和任务脚本已删除，验收结果完全排除该轮。只保留不含性能数值的删除回执。
+本次跑步计划上限 30 秒；实际开始到停止请求 23.512 秒，接受 23532 帧、不截断，
+不把实际 23.532 设备秒写成完整 30 秒稳态试验。finish_reason=manual，不推断具体点击原因。
+8 次可靠触地/脚印 receipt-to-paint P95 465.008 ms、max 502.557 ms。
+   7 秒初始空场：消费 1001.225 fps，年龄斜率 +0.030 ms/设备秒；输入 1000.016 fps。
+   1 秒 mixed：消费 949.528 fps，年龄斜率 +12.660 ms/设备秒。
+   3 秒密集：消费 829.417 fps，年龄斜率 +253.995 ms/设备秒；输入 999.693 fps；
+             批次完成年龄 P95 690.423、max 710.664 ms。
+  12.532 秒后空场：消费 1055.435 fps，年龄斜率 −10.275 ms/设备秒；P95 17.437 ms。
+完整报告、质量事件、运行时窗口/计数/转移、算法 audit 与独立同步原 NumPy 重算逐字段相等；
+valid_bits、drop/flags 和 issue 顺序均保留重放。SDK 无错误，整段准备+测量记录含 850 个 tracking
+决策、524 次非零 set_speed 调用；1357 次实际绘制含有效连线。这些计数覆盖整段进程，
+不充当去程步数证据或只在密集阶段的占比。走路相同口径为 833/525/1149。
+
+录屏与人工事实（只看去程）
+
+原件在 /Users/vae/Projects/Iron_Jump/现场测试/10.15晚：
+  走路共10步-右脚迈入.mp4：1280×688、30 fps、864 帧；
+  跑步共8步右脚迈入.mp4：1280×688、30 fps、764 帧。
+文件 SHA、边界和抽帧索引见 screen_sources.json；只复核去程走路约 8.4–14.8 秒、
+跑步约 7.4–11.6 秒。来程在跑道外，完全不作为脚印、漏检或步数判断依据。
+去程画面有真实左右腿节点/骨架、相机跟随移动、脚印逐步出现；末段 UI 计数分别为 5/6，
+与报告一致。用户独立确认：走路物理 10 步，只有末步未显示；跑步物理 8 步、脚印均正确。
+录屏内嵌的相机预览也经过传输/推理/显示，未与实际触地建立同步时钟；30 fps 抽帧不能
+替代物理触地到屏幕扫描的测量，当前 P95/max 仍严格是主机接收到 Qt paint 完成。
+
+计步问题的额外诊断（本轮没有改变算法或显示口径）
+
+“有效步数”当前是有效相邻步间隔，不是已检测脚印数；这会造成明显的使用歧义，
+还有现存的可靠性排除，不能仅改标签就宣称真实识别问题已解决。
+  走路：物理 10、confirmed_contacts=10、valid_touches=9、valid_steps=5。
+    最后 contact 12 在 sample 65557 已确认接触，但 touch_known=False、label 为空、
+    exclusion=unresolved_coalescence，因此没有可靠 touch_sample，也没有发布脚印。
+    不是某个已发布脚印晚画：原同步算法也不发布这一事件。P95 只覆盖另外 9 个已发布事件，
+    未发布的末步不能记为零延迟，亦不能据此声称 10 步均在 365 ms 内显示。
+    10 个确认接触原本有 9 个相邻区间，实际只保留 0→2、5→6、6→7、7→8、10→11 五个。
+    2→4 跨 sample 60969 的未归属来源起点，4→5 跨 61977；8→10 还夹着未解决 candidate 9；
+    11→12 的末端触地未知。具体原始区间和 barrier epoch 见 live_walk_07_summary.json。
+  跑步：物理 8、confirmed_contacts=8、valid_touches=8，7 个相邻区间中 2→5 的时间指标因
+    unconfirmed_narrow_fragment 排除，故 valid_steps=6；其他脚印发布并未因此减少为 6。
+WalkingProcessor.summary 的 valid_steps=len(steps)，OvergroundRunningProcessor.summary
+则为 step.time_s.valid 的数量。现场计数偏差与 GUI 吞吐是两个证据链，后续应独立审查；
+本轮完整报告一致只保证诊断没有改语义，不保证基线符合物理计步正确性。
+
+最终审计与限制
+
+Windows 新目录、上轮实验、旧归档及正式目录相对先前备份均无源码变化；458 个基线条目一致。
+现场原始录像不转码：走路 3433 个连续索引 JPEG 包、517199618 字节，跑步 2737 包、
+412448058 字节，逐包偏移连续、SOI/EOI 边界与文件长度一致，SHA 已保存。
+windows_evidence_inventory.json 记录 593 个远程逐轮原件；大型录像保留 Windows 原目录，
+本地已取 metadata 和用户给定录屏，未假装整包下载成功。正式/旧实验目录只读使用。
+本实验的所有计划任务清理完毕，无残留实验 Python/py-spy 进程；硬件相机控制正常关闭。
+空调用观察成本下限：无子节点根墙钟中位 2.9 us；1/2 子节点根独占分别 6.5/9.9 us，
+包含子调用前后 bookkeeping。不能按此机械扣除真实计算/GIL竞争成本。
+
+最终证据排序不变：GIL 双向竞争机制最强；真实密集场景消费不足已复现；
+质量/滤波/归属维护都有计算证据但阶段占比仍待成功校准；Qt/Windows 份额未独立测定。
+下一轮只保留上文的一个最小性能候选：减少原顺序 beam_layer 的重复 pen/brush 设置，
+先像素等价，再成功 A/A 与完整 GUI A/B，不做 C++、多进程、微批量或算法放宽。
+计步边界问题另记为后续正确性问题，不混入该性能候选的收益或验收。
+
+参考定义（具体数据来自随分支记录及原件）
+https://docs.python.org/3.11/library/time.html#time.thread_time
+https://learn.microsoft.com/en-us/windows/win32/api/realtimeapiset/nf-realtimeapiset-querythreadcycletime
+https://github.com/benfred/py-spy
+https://raw.githubusercontent.com/qt/qtbase/v6.11.1/src/widgets/widgets/qlabel.cpp

@@ -1,0 +1,2236 @@
+{
+  "statuses": [
+    {
+      "mode": "run",
+      "kind": "gil",
+      "returncode": 0
+    },
+    {
+      "mode": "walk",
+      "kind": "gil",
+      "returncode": 0
+    },
+    {
+      "mode": "run",
+      "kind": "all",
+      "returncode": 0
+    },
+    {
+      "mode": "walk",
+      "kind": "all",
+      "returncode": 0
+    },
+    {
+      "mode": "run",
+      "kind": "native",
+      "returncode": 1
+    },
+    {
+      "mode": "walk",
+      "kind": "native",
+      "returncode": 1
+    }
+  ],
+  "runs": {
+    "external_run_gil_01": {
+      "name": "external_run_gil_01",
+      "mode": "run",
+      "kind": "gil",
+      "raw_report_runtime_quality_audit_exact": true,
+      "canonical_report_sha256": "14eeffde0cd5beaf48ca4a58edb3efba22923f5fd53593bbcea835688b5988ee",
+      "canonical_evidence_sha256": "9bd10ac4db0fe4fd7fe59c006420cc4f7f3e0ebb468319a1dab33667aa722a25",
+      "live_pose_draws_with_valid_connections": 137,
+      "switch_initial_seconds": 0.005,
+      "switch_final_seconds": 0.005,
+      "switch_changes": [],
+      "preview_state": "inherited_disabled",
+      "low_frequency": {
+        "empty_before": {
+          "summary": {
+            "calls": 66,
+            "exclusive_wall_ms_per_call": {
+              "count": 66,
+              "mean": 0.12847424242424244,
+              "p50": 0.09285,
+              "p95": 0.207725,
+              "max": 1.062
+            },
+            "exclusive_cycles_per_call": {
+              "count": 66,
+              "mean": 272429.0909090909,
+              "p50": 225480.0,
+              "p95": 459000.0,
+              "max": 619440.0
+            },
+            "exclusive_wall_total_ms": 8.4793
+          },
+          "visual_emit": {
+            "calls": 66,
+            "exclusive_wall_ms_per_call": {
+              "count": 66,
+              "mean": 1.5508560606060606,
+              "p50": 1.12885,
+              "p95": 3.994775,
+              "max": 8.0397
+            },
+            "exclusive_cycles_per_call": {
+              "count": 66,
+              "mean": 1834403.6363636365,
+              "p50": 1571280.0,
+              "p95": 3232200.0,
+              "max": 4534800.0
+            },
+            "exclusive_wall_total_ms": 102.3565
+          },
+          "snapshot": {
+            "calls": 66,
+            "exclusive_wall_ms_per_call": {
+              "count": 66,
+              "mean": 0.707030303030303,
+              "p50": 0.3519,
+              "p95": 1.925175,
+              "max": 9.5249
+            },
+            "exclusive_cycles_per_call": {
+              "count": 66,
+              "mean": 709261.8181818182,
+              "p50": 639120.0,
+              "p95": 1266300.0,
+              "max": 1501200.0
+            },
+            "exclusive_wall_total_ms": 46.66400000000001
+          }
+        },
+        "dense": {
+          "summary": {
+            "calls": 28,
+            "exclusive_wall_ms_per_call": {
+              "count": 28,
+              "mean": 7.1367785714285725,
+              "p50": 7.8993,
+              "p95": 14.937614999999997,
+              "max": 19.5021
+            },
+            "exclusive_cycles_per_call": {
+              "count": 28,
+              "mean": 15697465.714285715,
+              "p50": 18212520.0,
+              "p95": 29766143.999999996,
+              "max": 33109920.0
+            },
+            "exclusive_wall_total_ms": 199.82980000000003
+          },
+          "visual_emit": {
+            "calls": 35,
+            "exclusive_wall_ms_per_call": {
+              "count": 35,
+              "mean": 1.5186285714285714,
+              "p50": 0.8541,
+              "p95": 3.6695899999999972,
+              "max": 8.6314
+            },
+            "exclusive_cycles_per_call": {
+              "count": 35,
+              "mean": 1727917.7142857143,
+              "p50": 1729680.0,
+              "p95": 2796551.999999997,
+              "max": 3924240.0
+            },
+            "exclusive_wall_total_ms": 53.15200000000001
+          },
+          "snapshot": {
+            "calls": 28,
+            "exclusive_wall_ms_per_call": {
+              "count": 28,
+              "mean": 1.4550178571428571,
+              "p50": 1.1238000000000001,
+              "p95": 2.963474999999999,
+              "max": 7.3037
+            },
+            "exclusive_cycles_per_call": {
+              "count": 28,
+              "mean": 1897157.142857143,
+              "p50": 1921320.0,
+              "p95": 2959103.9999999995,
+              "max": 4161360.0
+            },
+            "exclusive_wall_total_ms": 40.7405
+          }
+        },
+        "empty_after": {
+          "summary": {
+            "calls": 8,
+            "exclusive_wall_ms_per_call": {
+              "count": 8,
+              "mean": 12.1355375,
+              "p50": 12.117750000000001,
+              "p95": 14.212724999999999,
+              "max": 14.7785
+            },
+            "exclusive_cycles_per_call": {
+              "count": 8,
+              "mean": 27568260.0,
+              "p50": 27543840.0,
+              "p95": 31559616.0,
+              "max": 31918800.0
+            },
+            "exclusive_wall_total_ms": 97.08430000000001
+          },
+          "visual_emit": {
+            "calls": 8,
+            "exclusive_wall_ms_per_call": {
+              "count": 8,
+              "mean": 0.7988124999999999,
+              "p50": 0.6491,
+              "p95": 1.5770649999999995,
+              "max": 1.9831
+            },
+            "exclusive_cycles_per_call": {
+              "count": 8,
+              "mean": 1354680.0,
+              "p50": 1243560.0,
+              "p95": 1774056.0,
+              "max": 1855200.0
+            },
+            "exclusive_wall_total_ms": 6.3905
+          },
+          "snapshot": {
+            "calls": 8,
+            "exclusive_wall_ms_per_call": {
+              "count": 8,
+              "mean": 1.7020875,
+              "p50": 1.438,
+              "p95": 2.956035,
+              "max": 3.1534
+            },
+            "exclusive_cycles_per_call": {
+              "count": 8,
+              "mean": 2840520.0,
+              "p50": 2793600.0,
+              "p95": 3225192.0,
+              "max": 3230400.0
+            },
+            "exclusive_wall_total_ms": 13.6167
+          }
+        },
+        "all": {
+          "summary": {
+            "calls": 102,
+            "exclusive_wall_ms_per_call": {
+              "count": 102,
+              "mean": 2.994052941176471,
+              "p50": 0.13674999999999998,
+              "p95": 12.962325,
+              "max": 19.5021
+            },
+            "exclusive_cycles_per_call": {
+              "count": 102,
+              "mean": 6647602.352941177,
+              "p50": 329160.0,
+              "p95": 28250339.999999993,
+              "max": 33109920.0
+            },
+            "exclusive_wall_total_ms": 305.39340000000004
+          },
+          "visual_emit": {
+            "calls": 109,
+            "exclusive_wall_ms_per_call": {
+              "count": 109,
+              "mean": 1.4853119266055048,
+              "p50": 0.9483,
+              "p95": 3.989,
+              "max": 8.6314
+            },
+            "exclusive_cycles_per_call": {
+              "count": 109,
+              "mean": 1765001.8348623854,
+              "p50": 1507920.0,
+              "p95": 3223631.9999999995,
+              "max": 4534800.0
+            },
+            "exclusive_wall_total_ms": 161.89900000000003
+          },
+          "snapshot": {
+            "calls": 102,
+            "exclusive_wall_ms_per_call": {
+              "count": 102,
+              "mean": 0.9904039215686276,
+              "p50": 0.49155000000000004,
+              "p95": 2.584749999999999,
+              "max": 9.5249
+            },
+            "exclusive_cycles_per_call": {
+              "count": 102,
+              "mean": 1202508.2352941176,
+              "p50": 824640.0,
+              "p95": 2847707.9999999995,
+              "max": 4161360.0
+            },
+            "exclusive_wall_total_ms": 101.02120000000002
+          }
+        }
+      },
+      "performance_not_a_baseline_trial": true,
+      "sampler_messages": [
+        "py-spy> Sampling process 99 times a second for 3 seconds. Press Control-C to exit.",
+        "",
+        "py-spy> Wrote speedscope file to 'E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\ground_throughput_diagnosis\\runs\\external_run_gil_01\\profile.json'. Samples: 223 Errors: 41",
+        "py-spy> Visit https://www.speedscope.app/ to view"
+      ],
+      "captured_gil_stacks": 223,
+      "gil_stacks_by_thread": {
+        "Thread 12892 \"\"": 78,
+        "Thread 15600 \"MainThread\"": 99,
+        "Thread 15860 \"Thread-1 (read)\"": 26,
+        "Thread 18576 \"Thread-2 (replay_camera)\"": 7,
+        "Thread 18612 \"FootVisionService\"": 13
+      },
+      "gil_stacks_by_category": {
+        "quality_gate": 16,
+        "processor": 21,
+        "stability_filter": 24,
+        "other": 36,
+        "quality_runtime": 10,
+        "session": 3,
+        "gui_video_surface": 34,
+        "gui_other": 51,
+        "gui_preview": 11,
+        "vision_python": 17
+      },
+      "gil_stacks_by_role": {
+        "consumer": 78,
+        "gui": 99,
+        "other_threads": 46
+      },
+      "gil_leaf_samples": [
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\ui\\annotation_canvas.py",
+          "function": "paintEvent",
+          "line": 223,
+          "samples": 34
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\runtime_single_frame_fusion\\fixed_geometry_cache.py",
+          "function": "beam_layer",
+          "line": 46,
+          "samples": 19
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\runtime_single_frame_fusion\\fixed_geometry_cache.py",
+          "function": "beam_layer",
+          "line": 45,
+          "samples": 15
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\runtime_single_frame_fusion\\fixed_replay.py",
+          "function": "read",
+          "line": 76,
+          "samples": 13
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\engine\\device_quality_session.py",
+          "function": "on_frame",
+          "line": 183,
+          "samples": 8
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\hardware\\walking_preflight.py",
+          "function": "observe",
+          "line": 42,
+          "samples": 4
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\ui\\embedded_camera_panel.py",
+          "function": "_render_frame",
+          "line": 713,
+          "samples": 4
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\runtime_single_frame_fusion\\fixed_replay.py",
+          "function": "replay_camera",
+          "line": 110,
+          "samples": 4
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\vision\\event_scheduler.py",
+          "function": "_prune_frames",
+          "line": 294,
+          "samples": 4
+        },
+        {
+          "file": "D:\\conda\\Lib\\site-packages\\numpy\\_core\\fromnumeric.py",
+          "function": "_wrapfunc",
+          "line": 54,
+          "samples": 3
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\hardware\\beam_filter.py",
+          "function": "_feed",
+          "line": 113,
+          "samples": 3
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\hardware\\beam_quality.py",
+          "function": "masked_frame",
+          "line": 46,
+          "samples": 3
+        },
+        {
+          "file": "D:\\conda\\Lib\\site-packages\\numpy\\_core\\fromnumeric.py",
+          "function": "_wrapreduction_any_all",
+          "line": 99,
+          "samples": 3
+        },
+        {
+          "file": "D:\\conda\\Lib\\site-packages\\dayu_widgets\\label.py",
+          "function": "event",
+          "line": 234,
+          "samples": 3
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\ui\\embedded_camera_panel.py",
+          "function": "_on_frame",
+          "line": 685,
+          "samples": 3
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\ui\\embedded_camera_panel.py",
+          "function": "_render_frame",
+          "line": 712,
+          "samples": 3
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\engine\\modes\\overground_running_processor.py",
+          "function": "process",
+          "line": 1248,
+          "samples": 2
+        },
+        {
+          "file": "D:\\conda\\Lib\\site-packages\\numpy\\_core\\numeric.py",
+          "function": "ones",
+          "line": 233,
+          "samples": 2
+        },
+        {
+          "file": "",
+          "function": "thread (12892)",
+          "line": 0,
+          "samples": 2
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\hardware\\beam_filter.py",
+          "function": "_feed",
+          "line": 118,
+          "samples": 2
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\hardware\\beam_filter.py",
+          "function": "_feed",
+          "line": 130,
+          "samples": 2
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\hardware\\walking_preflight.py",
+          "function": "observe",
+          "line": 43,
+          "samples": 2
+        },
+        {
+          "file": "D:\\conda\\Lib\\dataclasses.py",
+          "function": "replace",
+          "line": 1501,
+          "samples": 2
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\ui\\ground_track.py",
+          "function": "paintEvent",
+          "line": 87,
+          "samples": 2
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\ui\\session_controller.py",
+          "function": "_on_footprint_visual_frame",
+          "line": 533,
+          "samples": 2
+        }
+      ],
+      "scope": "Scheduled dense phase; actual captured GIL-owner samples only. No percentage of elapsed time or waiting-thread GIL duration inferred."
+    },
+    "external_walk_gil_01": {
+      "name": "external_walk_gil_01",
+      "mode": "walk",
+      "kind": "gil",
+      "raw_report_runtime_quality_audit_exact": true,
+      "canonical_report_sha256": "b96045d8459efa385876adbf8866c1348c8240dd6ca5803cdd81b0b958a2a49d",
+      "canonical_evidence_sha256": "cc080a0a409ae271c7c940e52d9407513da52115c7915e3c7893a81db37f5cc9",
+      "live_pose_draws_with_valid_connections": 236,
+      "switch_initial_seconds": 0.005,
+      "switch_final_seconds": 0.005,
+      "switch_changes": [],
+      "preview_state": "inherited_disabled",
+      "low_frequency": {
+        "empty_before": {
+          "summary": {
+            "calls": 46,
+            "exclusive_wall_ms_per_call": {
+              "count": 46,
+              "mean": 0.0804108695652174,
+              "p50": 0.07615,
+              "p95": 0.13,
+              "max": 0.1568
+            },
+            "exclusive_cycles_per_call": {
+              "count": 46,
+              "mean": 195099.13043478262,
+              "p50": 183480.0,
+              "p95": 304800.0,
+              "max": 394080.0
+            },
+            "exclusive_wall_total_ms": 3.6989
+          },
+          "visual_emit": {
+            "calls": 46,
+            "exclusive_wall_ms_per_call": {
+              "count": 46,
+              "mean": 1.7402739130434786,
+              "p50": 1.5417,
+              "p95": 3.693825,
+              "max": 6.3724
+            },
+            "exclusive_cycles_per_call": {
+              "count": 46,
+              "mean": 2206956.5217391304,
+              "p50": 2176920.0,
+              "p95": 3768300.0,
+              "max": 4589760.0
+            },
+            "exclusive_wall_total_ms": 80.05259999999998
+          },
+          "snapshot": {
+            "calls": 46,
+            "exclusive_wall_ms_per_call": {
+              "count": 46,
+              "mean": 0.8454630434782611,
+              "p50": 0.34485,
+              "p95": 3.580525,
+              "max": 6.7035
+            },
+            "exclusive_cycles_per_call": {
+              "count": 46,
+              "mean": 561020.8695652174,
+              "p50": 561120.0,
+              "p95": 959460.0,
+              "max": 1129440.0
+            },
+            "exclusive_wall_total_ms": 38.891300000000015
+          }
+        },
+        "dense": {
+          "summary": {
+            "calls": 77,
+            "exclusive_wall_ms_per_call": {
+              "count": 77,
+              "mean": 1.2310402597402597,
+              "p50": 1.3335,
+              "p95": 2.24156,
+              "max": 2.6826
+            },
+            "exclusive_cycles_per_call": {
+              "count": 77,
+              "mean": 2942456.103896104,
+              "p50": 3208080.0,
+              "p95": 5278080.0,
+              "max": 6439200.0
+            },
+            "exclusive_wall_total_ms": 94.7901
+          },
+          "visual_emit": {
+            "calls": 87,
+            "exclusive_wall_ms_per_call": {
+              "count": 87,
+              "mean": 1.0767287356321837,
+              "p50": 0.5487,
+              "p95": 3.851780000000001,
+              "max": 5.2396
+            },
+            "exclusive_cycles_per_call": {
+              "count": 87,
+              "mean": 1048422.0689655172,
+              "p50": 834720.0,
+              "p95": 2033544.0000000005,
+              "max": 2406000.0
+            },
+            "exclusive_wall_total_ms": 93.67539999999998
+          },
+          "snapshot": {
+            "calls": 77,
+            "exclusive_wall_ms_per_call": {
+              "count": 77,
+              "mean": 2.162874025974026,
+              "p50": 1.3344,
+              "p95": 6.760840000000002,
+              "max": 7.9736
+            },
+            "exclusive_cycles_per_call": {
+              "count": 77,
+              "mean": 2484289.8701298703,
+              "p50": 2472240.0,
+              "p95": 4731456.000000002,
+              "max": 7716240.0
+            },
+            "exclusive_wall_total_ms": 166.5413
+          }
+        },
+        "empty_after": {
+          "summary": {
+            "calls": 2,
+            "exclusive_wall_ms_per_call": {
+              "count": 2,
+              "mean": 1.87705,
+              "p50": 1.87705,
+              "p95": 2.060065,
+              "max": 2.0804
+            },
+            "exclusive_cycles_per_call": {
+              "count": 2,
+              "mean": 4516560.0,
+              "p50": 4516560.0,
+              "p95": 4953096.0,
+              "max": 5001600.0
+            },
+            "exclusive_wall_total_ms": 3.7541
+          },
+          "visual_emit": {
+            "calls": 2,
+            "exclusive_wall_ms_per_call": {
+              "count": 2,
+              "mean": 4.9444,
+              "p50": 4.9444,
+              "p95": 6.30349,
+              "max": 6.4545
+            },
+            "exclusive_cycles_per_call": {
+              "count": 2,
+              "mean": 1852560.0,
+              "p50": 1852560.0,
+              "p95": 1972656.0,
+              "max": 1986000.0
+            },
+            "exclusive_wall_total_ms": 9.8888
+          },
+          "snapshot": {
+            "calls": 2,
+            "exclusive_wall_ms_per_call": {
+              "count": 2,
+              "mean": 1.39635,
+              "p50": 1.39635,
+              "p95": 1.402335,
+              "max": 1.403
+            },
+            "exclusive_cycles_per_call": {
+              "count": 2,
+              "mean": 3294240.0,
+              "p50": 3294240.0,
+              "p95": 3313248.0,
+              "max": 3315360.0
+            },
+            "exclusive_wall_total_ms": 2.7927
+          }
+        },
+        "all": {
+          "summary": {
+            "calls": 125,
+            "exclusive_wall_ms_per_call": {
+              "count": 125,
+              "mean": 0.8179447999999999,
+              "p50": 0.679,
+              "p95": 2.0976,
+              "max": 2.6826
+            },
+            "exclusive_cycles_per_call": {
+              "count": 125,
+              "mean": 1956614.4,
+              "p50": 1634880.0,
+              "p95": 4960800.0,
+              "max": 6439200.0
+            },
+            "exclusive_wall_total_ms": 102.24310000000001
+          },
+          "visual_emit": {
+            "calls": 135,
+            "exclusive_wall_ms_per_call": {
+              "count": 135,
+              "mean": 1.360124444444444,
+              "p50": 0.803,
+              "p95": 4.087369999999999,
+              "max": 6.4545
+            },
+            "exclusive_cycles_per_call": {
+              "count": 135,
+              "mean": 1455095.111111111,
+              "p50": 1092240.0,
+              "p95": 3472824.0,
+              "max": 4589760.0
+            },
+            "exclusive_wall_total_ms": 183.61679999999993
+          },
+          "snapshot": {
+            "calls": 125,
+            "exclusive_wall_ms_per_call": {
+              "count": 125,
+              "mean": 1.6658023999999998,
+              "p50": 1.0822,
+              "p95": 6.178279999999999,
+              "max": 7.9736
+            },
+            "exclusive_cycles_per_call": {
+              "count": 125,
+              "mean": 1789486.08,
+              "p50": 1401600.0,
+              "p95": 4293983.999999999,
+              "max": 7716240.0
+            },
+            "exclusive_wall_total_ms": 208.22529999999998
+          }
+        }
+      },
+      "performance_not_a_baseline_trial": true,
+      "sampler_messages": [
+        "py-spy> Sampling process 99 times a second for 8 seconds. Press Control-C to exit.",
+        "",
+        "py-spy> Wrote speedscope file to 'E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\ground_throughput_diagnosis\\runs\\external_walk_gil_01\\profile.json'. Samples: 578 Errors: 113",
+        "py-spy> Visit https://www.speedscope.app/ to view"
+      ],
+      "captured_gil_stacks": 578,
+      "gil_stacks_by_thread": {
+        "Thread 11784 \"FootVisionService\"": 19,
+        "Thread 13192 \"Thread-1 (read)\"": 53,
+        "Thread 13644 \"Thread-2 (replay_camera)\"": 11,
+        "Thread 16348 \"ThreadPoolExecutor-1_0\"": 2,
+        "Thread 19260 \"MainThread\"": 280,
+        "Thread 5664 \"\"": 213
+      },
+      "gil_stacks_by_category": {
+        "vision_python": 23,
+        "other": 77,
+        "gui_other": 177,
+        "gui_video_surface": 77,
+        "gui_preview": 10,
+        "gui_pose_overlay": 9,
+        "processor": 75,
+        "stability_filter": 52,
+        "quality_gate": 42,
+        "session": 19,
+        "quality_runtime": 17
+      },
+      "gil_stacks_by_role": {
+        "other_threads": 85,
+        "gui": 280,
+        "consumer": 213
+      },
+      "gil_leaf_samples": [
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\ui\\annotation_canvas.py",
+          "function": "paintEvent",
+          "line": 223,
+          "samples": 75
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\runtime_single_frame_fusion\\fixed_geometry_cache.py",
+          "function": "beam_layer",
+          "line": 46,
+          "samples": 51
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\runtime_single_frame_fusion\\fixed_geometry_cache.py",
+          "function": "beam_layer",
+          "line": 45,
+          "samples": 51
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\runtime_single_frame_fusion\\fixed_replay.py",
+          "function": "read",
+          "line": 76,
+          "samples": 30
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\ui\\session_controller.py",
+          "function": "_on_gait_snapshot",
+          "line": 529,
+          "samples": 19
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\engine\\device_quality_session.py",
+          "function": "on_frame",
+          "line": 183,
+          "samples": 10
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\engine\\overground_session.py",
+          "function": "publish_snapshot",
+          "line": 197,
+          "samples": 10
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\runtime_single_frame_fusion\\fixed_replay.py",
+          "function": "main",
+          "line": 356,
+          "samples": 8
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\runtime_single_frame_fusion\\fixed_geometry_cache.py",
+          "function": "cached_paint",
+          "line": 59,
+          "samples": 7
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\ui\\embedded_camera_panel.py",
+          "function": "_render_frame",
+          "line": 713,
+          "samples": 7
+        },
+        {
+          "file": "D:\\conda\\Lib\\threading.py",
+          "function": "wait",
+          "line": 324,
+          "samples": 6
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\runtime_single_frame_fusion\\fixed_replay.py",
+          "function": "replay_camera",
+          "line": 110,
+          "samples": 6
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\ui\\session_controller.py",
+          "function": "_on_footprint_visual_frame",
+          "line": 533,
+          "samples": 6
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\engine\\modes\\walking_processor.py",
+          "function": "_clusters",
+          "line": 593,
+          "samples": 6
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\hardware\\payload_mirror.py",
+          "function": "_usable",
+          "line": 35,
+          "samples": 5
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\runtime_single_frame_fusion\\fixed_replay.py",
+          "function": "read",
+          "line": 74,
+          "samples": 4
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\ui\\footprint_channel.py",
+          "function": "<listcomp>",
+          "line": 122,
+          "samples": 4
+        },
+        {
+          "file": "D:\\conda\\Lib\\site-packages\\dayu_widgets\\label.py",
+          "function": "event",
+          "line": 234,
+          "samples": 4
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\engine\\modes\\walking_processor.py",
+          "function": "_clusters",
+          "line": 592,
+          "samples": 4
+        },
+        {
+          "file": "D:\\conda\\Lib\\dataclasses.py",
+          "function": "replace",
+          "line": 1501,
+          "samples": 4
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\hardware\\beam_filter.py",
+          "function": "_feed",
+          "line": 113,
+          "samples": 4
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\hardware\\beam_quality.py",
+          "function": "masked_frame",
+          "line": 46,
+          "samples": 4
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\engine\\device_quality_session.py",
+          "function": "on_frame",
+          "line": 146,
+          "samples": 4
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\hardware\\walking_preflight.py",
+          "function": "observe",
+          "line": 43,
+          "samples": 4
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\engine\\device_quality_session.py",
+          "function": "on_frame",
+          "line": 166,
+          "samples": 4
+        }
+      ],
+      "scope": "Scheduled dense phase; actual captured GIL-owner samples only. No percentage of elapsed time or waiting-thread GIL duration inferred."
+    },
+    "external_run_all_01": {
+      "name": "external_run_all_01",
+      "mode": "run",
+      "kind": "all",
+      "raw_report_runtime_quality_audit_exact": true,
+      "canonical_report_sha256": "14eeffde0cd5beaf48ca4a58edb3efba22923f5fd53593bbcea835688b5988ee",
+      "canonical_evidence_sha256": "9bd10ac4db0fe4fd7fe59c006420cc4f7f3e0ebb468319a1dab33667aa722a25",
+      "live_pose_draws_with_valid_connections": 148,
+      "switch_initial_seconds": 0.005,
+      "switch_final_seconds": 0.005,
+      "switch_changes": [],
+      "preview_state": "inherited_disabled",
+      "low_frequency": {
+        "empty_before": {
+          "summary": {
+            "calls": 67,
+            "exclusive_wall_ms_per_call": {
+              "count": 67,
+              "mean": 0.07266716417910447,
+              "p50": 0.0583,
+              "p95": 0.11613999999999998,
+              "max": 0.1253
+            },
+            "exclusive_cycles_per_call": {
+              "count": 67,
+              "mean": 176808.35820895524,
+              "p50": 141360.0,
+              "p95": 282144.0,
+              "max": 308160.0
+            },
+            "exclusive_wall_total_ms": 4.868699999999999
+          },
+          "visual_emit": {
+            "calls": 67,
+            "exclusive_wall_ms_per_call": {
+              "count": 67,
+              "mean": 0.9817507462686569,
+              "p50": 0.7155,
+              "p95": 2.5399099999999994,
+              "max": 3.5739
+            },
+            "exclusive_cycles_per_call": {
+              "count": 67,
+              "mean": 1206995.8208955224,
+              "p50": 1043040.0,
+              "p95": 2649791.9999999995,
+              "max": 3683280.0
+            },
+            "exclusive_wall_total_ms": 65.7773
+          },
+          "snapshot": {
+            "calls": 67,
+            "exclusive_wall_ms_per_call": {
+              "count": 67,
+              "mean": 0.3044358208955224,
+              "p50": 0.1771,
+              "p95": 1.1591799999999994,
+              "max": 1.3282
+            },
+            "exclusive_cycles_per_call": {
+              "count": 67,
+              "mean": 426924.17910447763,
+              "p50": 369360.0,
+              "p95": 681480.0,
+              "max": 1000560.0
+            },
+            "exclusive_wall_total_ms": 20.3972
+          }
+        },
+        "dense": {
+          "summary": {
+            "calls": 27,
+            "exclusive_wall_ms_per_call": {
+              "count": 27,
+              "mean": 3.431566666666667,
+              "p50": 3.8411,
+              "p95": 5.84011,
+              "max": 6.9014
+            },
+            "exclusive_cycles_per_call": {
+              "count": 27,
+              "mean": 8197137.777777778,
+              "p50": 9185520.0,
+              "p95": 13591152.0,
+              "max": 16548720.0
+            },
+            "exclusive_wall_total_ms": 92.6523
+          },
+          "visual_emit": {
+            "calls": 33,
+            "exclusive_wall_ms_per_call": {
+              "count": 33,
+              "mean": 1.1061757575757576,
+              "p50": 0.5932,
+              "p95": 2.9684199999999996,
+              "max": 3.5248
+            },
+            "exclusive_cycles_per_call": {
+              "count": 33,
+              "mean": 1027098.1818181818,
+              "p50": 795120.0,
+              "p95": 1857071.9999999995,
+              "max": 2270400.0
+            },
+            "exclusive_wall_total_ms": 36.5038
+          },
+          "snapshot": {
+            "calls": 27,
+            "exclusive_wall_ms_per_call": {
+              "count": 27,
+              "mean": 0.701462962962963,
+              "p50": 0.5913,
+              "p95": 1.4908299999999999,
+              "max": 2.4371
+            },
+            "exclusive_cycles_per_call": {
+              "count": 27,
+              "mean": 1124400.0,
+              "p50": 1107840.0,
+              "p95": 1731384.0,
+              "max": 1941840.0
+            },
+            "exclusive_wall_total_ms": 18.939500000000002
+          }
+        },
+        "empty_after": {
+          "summary": {
+            "calls": 8,
+            "exclusive_wall_ms_per_call": {
+              "count": 8,
+              "mean": 6.586837500000001,
+              "p50": 5.78205,
+              "p95": 9.703305,
+              "max": 10.1729
+            },
+            "exclusive_cycles_per_call": {
+              "count": 8,
+              "mean": 15477450.0,
+              "p50": 13758480.0,
+              "p95": 22409327.999999996,
+              "max": 23750640.0
+            },
+            "exclusive_wall_total_ms": 52.6947
+          },
+          "visual_emit": {
+            "calls": 8,
+            "exclusive_wall_ms_per_call": {
+              "count": 8,
+              "mean": 1.2195624999999999,
+              "p50": 0.9291,
+              "p95": 2.343515,
+              "max": 2.3852
+            },
+            "exclusive_cycles_per_call": {
+              "count": 8,
+              "mean": 783570.0,
+              "p50": 744840.0,
+              "p95": 1006031.9999999999,
+              "max": 1094400.0
+            },
+            "exclusive_wall_total_ms": 9.7565
+          },
+          "snapshot": {
+            "calls": 8,
+            "exclusive_wall_ms_per_call": {
+              "count": 8,
+              "mean": 1.3542125,
+              "p50": 1.0087000000000002,
+              "p95": 2.68429,
+              "max": 3.003
+            },
+            "exclusive_cycles_per_call": {
+              "count": 8,
+              "mean": 2023230.0,
+              "p50": 1788120.0,
+              "p95": 2787132.0,
+              "max": 2854080.0
+            },
+            "exclusive_wall_total_ms": 10.8337
+          }
+        },
+        "all": {
+          "summary": {
+            "calls": 102,
+            "exclusive_wall_ms_per_call": {
+              "count": 102,
+              "mean": 1.4727029411764705,
+              "p50": 0.08645,
+              "p95": 5.8884349999999985,
+              "max": 10.1729
+            },
+            "exclusive_cycles_per_call": {
+              "count": 102,
+              "mean": 3499887.0588235296,
+              "p50": 214200.0,
+              "p95": 13648991.999999998,
+              "max": 23750640.0
+            },
+            "exclusive_wall_total_ms": 150.2157
+          },
+          "visual_emit": {
+            "calls": 108,
+            "exclusive_wall_ms_per_call": {
+              "count": 108,
+              "mean": 1.0373851851851854,
+              "p50": 0.6700999999999999,
+              "p95": 2.8317049999999986,
+              "max": 3.5739
+            },
+            "exclusive_cycles_per_call": {
+              "count": 108,
+              "mean": 1120662.2222222222,
+              "p50": 884760.0,
+              "p95": 2270148.0,
+              "max": 3683280.0
+            },
+            "exclusive_wall_total_ms": 112.03760000000001
+          },
+          "snapshot": {
+            "calls": 102,
+            "exclusive_wall_ms_per_call": {
+              "count": 102,
+              "mean": 0.4918666666666666,
+              "p50": 0.25234999999999996,
+              "p95": 1.3956499999999992,
+              "max": 3.003
+            },
+            "exclusive_cycles_per_call": {
+              "count": 102,
+              "mean": 736750.5882352941,
+              "p50": 506400.0,
+              "p95": 1741763.9999999995,
+              "max": 2854080.0
+            },
+            "exclusive_wall_total_ms": 50.17040000000001
+          }
+        }
+      },
+      "performance_not_a_baseline_trial": true,
+      "sampler_messages": [
+        "py-spy> Sampling process 99 times a second for 35 seconds. Press Control-C to exit.",
+        "",
+        "py-spy> Wrote chrome trace to 'E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\ground_throughput_diagnosis\\runs\\external_run_all_01\\profile.json'. Samples: 12821 Errors: 161",
+        "py-spy> Visit chrome://tracing or https://ui.perfetto.dev/ to view"
+      ],
+      "trace_events": 14408,
+      "consumer_wait_frame_entries": {},
+      "consumer_wait_examples": [],
+      "scope": "Frame-entry/existence evidence only. Chrome traces bridge missed/filtered/dead-thread intervals; no hold-time or wait-time totals calculated."
+    },
+    "external_walk_all_01": {
+      "name": "external_walk_all_01",
+      "mode": "walk",
+      "kind": "all",
+      "raw_report_runtime_quality_audit_exact": true,
+      "canonical_report_sha256": "b96045d8459efa385876adbf8866c1348c8240dd6ca5803cdd81b0b958a2a49d",
+      "canonical_evidence_sha256": "cc080a0a409ae271c7c940e52d9407513da52115c7915e3c7893a81db37f5cc9",
+      "live_pose_draws_with_valid_connections": 252,
+      "switch_initial_seconds": 0.005,
+      "switch_final_seconds": 0.005,
+      "switch_changes": [],
+      "preview_state": "inherited_disabled",
+      "low_frequency": {
+        "empty_before": {
+          "summary": {
+            "calls": 47,
+            "exclusive_wall_ms_per_call": {
+              "count": 47,
+              "mean": 0.04939574468085105,
+              "p50": 0.0437,
+              "p95": 0.07160999999999997,
+              "max": 0.0768
+            },
+            "exclusive_cycles_per_call": {
+              "count": 47,
+              "mean": 119484.25531914894,
+              "p50": 107760.0,
+              "p95": 170927.99999999994,
+              "max": 192480.0
+            },
+            "exclusive_wall_total_ms": 2.321599999999999
+          },
+          "visual_emit": {
+            "calls": 47,
+            "exclusive_wall_ms_per_call": {
+              "count": 47,
+              "mean": 1.0847170212765957,
+              "p50": 0.9035,
+              "p95": 2.6131599999999997,
+              "max": 3.3235
+            },
+            "exclusive_cycles_per_call": {
+              "count": 47,
+              "mean": 1195894.4680851065,
+              "p50": 1043520.0,
+              "p95": 2085407.9999999998,
+              "max": 2901120.0
+            },
+            "exclusive_wall_total_ms": 50.98170000000002
+          },
+          "snapshot": {
+            "calls": 47,
+            "exclusive_wall_ms_per_call": {
+              "count": 47,
+              "mean": 0.377195744680851,
+              "p50": 0.1539,
+              "p95": 1.2171899999999987,
+              "max": 4.3199
+            },
+            "exclusive_cycles_per_call": {
+              "count": 47,
+              "mean": 320675.74468085106,
+              "p50": 298320.0,
+              "p95": 471671.99999999994,
+              "max": 634080.0
+            },
+            "exclusive_wall_total_ms": 17.728199999999998
+          }
+        },
+        "dense": {
+          "summary": {
+            "calls": 77,
+            "exclusive_wall_ms_per_call": {
+              "count": 77,
+              "mean": 1.5074363636363637,
+              "p50": 1.3328,
+              "p95": 3.6237400000000006,
+              "max": 5.2869
+            },
+            "exclusive_cycles_per_call": {
+              "count": 77,
+              "mean": 3555225.974025974,
+              "p50": 3199440.0,
+              "p95": 8616672.0,
+              "max": 10579920.0
+            },
+            "exclusive_wall_total_ms": 116.07260000000002
+          },
+          "visual_emit": {
+            "calls": 86,
+            "exclusive_wall_ms_per_call": {
+              "count": 86,
+              "mean": 1.8758837209302328,
+              "p50": 0.7911,
+              "p95": 6.09385,
+              "max": 11.3586
+            },
+            "exclusive_cycles_per_call": {
+              "count": 86,
+              "mean": 1207830.6976744186,
+              "p50": 968280.0,
+              "p95": 2322000.0,
+              "max": 3030240.0
+            },
+            "exclusive_wall_total_ms": 161.32599999999996
+          },
+          "snapshot": {
+            "calls": 77,
+            "exclusive_wall_ms_per_call": {
+              "count": 77,
+              "mean": 2.228309090909091,
+              "p50": 1.6129,
+              "p95": 5.29842,
+              "max": 9.8882
+            },
+            "exclusive_cycles_per_call": {
+              "count": 77,
+              "mean": 2826782.337662338,
+              "p50": 2637360.0,
+              "p95": 6276336.000000002,
+              "max": 7215360.0
+            },
+            "exclusive_wall_total_ms": 171.57979999999992
+          }
+        },
+        "empty_after": {
+          "summary": {
+            "calls": 2,
+            "exclusive_wall_ms_per_call": {
+              "count": 2,
+              "mean": 2.9724500000000003,
+              "p50": 2.9724500000000003,
+              "p95": 4.102895,
+              "max": 4.2285
+            },
+            "exclusive_cycles_per_call": {
+              "count": 2,
+              "mean": 7115280.0,
+              "p50": 7115280.0,
+              "p95": 9805128.0,
+              "max": 10104000.0
+            },
+            "exclusive_wall_total_ms": 5.9449000000000005
+          },
+          "visual_emit": {
+            "calls": 2,
+            "exclusive_wall_ms_per_call": {
+              "count": 2,
+              "mean": 2.4387000000000003,
+              "p50": 2.4387000000000003,
+              "p95": 4.32843,
+              "max": 4.5384
+            },
+            "exclusive_cycles_per_call": {
+              "count": 2,
+              "mean": 840480.0,
+              "p50": 840480.0,
+              "p95": 895992.0,
+              "max": 902160.0
+            },
+            "exclusive_wall_total_ms": 4.877400000000001
+          },
+          "snapshot": {
+            "calls": 2,
+            "exclusive_wall_ms_per_call": {
+              "count": 2,
+              "mean": 1.77875,
+              "p50": 1.77875,
+              "p95": 2.1815450000000003,
+              "max": 2.2263
+            },
+            "exclusive_cycles_per_call": {
+              "count": 2,
+              "mean": 4197000.0,
+              "p50": 4197000.0,
+              "p95": 5160684.0,
+              "max": 5267760.0
+            },
+            "exclusive_wall_total_ms": 3.5575
+          }
+        },
+        "all": {
+          "summary": {
+            "calls": 126,
+            "exclusive_wall_ms_per_call": {
+              "count": 126,
+              "mean": 0.986818253968254,
+              "p50": 0.688,
+              "p95": 3.433075,
+              "max": 5.2869
+            },
+            "exclusive_cycles_per_call": {
+              "count": 126,
+              "mean": 2330148.5714285714,
+              "p50": 1658640.0,
+              "p95": 8184780.0,
+              "max": 10579920.0
+            },
+            "exclusive_wall_total_ms": 124.33910000000002
+          },
+          "visual_emit": {
+            "calls": 135,
+            "exclusive_wall_ms_per_call": {
+              "count": 135,
+              "mean": 1.6087785185185184,
+              "p50": 0.8376,
+              "p95": 5.770989999999999,
+              "max": 11.3586
+            },
+            "exclusive_cycles_per_call": {
+              "count": 135,
+              "mean": 1198232.888888889,
+              "p50": 1001280.0,
+              "p95": 2301240.0,
+              "max": 3030240.0
+            },
+            "exclusive_wall_total_ms": 217.18509999999992
+          },
+          "snapshot": {
+            "calls": 126,
+            "exclusive_wall_ms_per_call": {
+              "count": 126,
+              "mean": 1.5306785714285718,
+              "p50": 0.9409000000000001,
+              "p95": 4.86215,
+              "max": 9.8882
+            },
+            "exclusive_cycles_per_call": {
+              "count": 126,
+              "mean": 1913714.2857142857,
+              "p50": 1378080.0,
+              "p95": 5208360.0,
+              "max": 7215360.0
+            },
+            "exclusive_wall_total_ms": 192.86549999999994
+          }
+        }
+      },
+      "performance_not_a_baseline_trial": true,
+      "sampler_messages": [
+        "py-spy> Sampling process 99 times a second for 35 seconds. Press Control-C to exit.",
+        "",
+        "py-spy> Wrote chrome trace to 'E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\ground_throughput_diagnosis\\runs\\external_walk_all_01\\profile.json'. Samples: 13620 Errors: 197",
+        "py-spy> Visit chrome://tracing or https://ui.perfetto.dev/ to view"
+      ],
+      "trace_events": 20216,
+      "consumer_wait_frame_entries": {},
+      "consumer_wait_examples": [],
+      "scope": "Frame-entry/existence evidence only. Chrome traces bridge missed/filtered/dead-thread intervals; no hold-time or wait-time totals calculated."
+    },
+    "enabled_external_run_gil_01": {
+      "name": "enabled_external_run_gil_01",
+      "mode": "run",
+      "kind": "gil",
+      "raw_report_runtime_quality_audit_exact": true,
+      "canonical_report_sha256": "14eeffde0cd5beaf48ca4a58edb3efba22923f5fd53593bbcea835688b5988ee",
+      "canonical_evidence_sha256": "9bd10ac4db0fe4fd7fe59c006420cc4f7f3e0ebb468319a1dab33667aa722a25",
+      "live_pose_draws_with_valid_connections": 144,
+      "switch_initial_seconds": 0.005,
+      "switch_final_seconds": 0.005,
+      "switch_changes": [],
+      "preview_state": "enabled",
+      "low_frequency": {
+        "empty_before": {
+          "summary": {
+            "calls": 65,
+            "exclusive_wall_ms_per_call": {
+              "count": 65,
+              "mean": 0.10708461538461538,
+              "p50": 0.0912,
+              "p95": 0.16934,
+              "max": 0.1915
+            },
+            "exclusive_cycles_per_call": {
+              "count": 65,
+              "mean": 260433.23076923078,
+              "p50": 219360.0,
+              "p95": 412127.99999999994,
+              "max": 466560.0
+            },
+            "exclusive_wall_total_ms": 6.960499999999998
+          },
+          "visual_emit": {
+            "calls": 65,
+            "exclusive_wall_ms_per_call": {
+              "count": 65,
+              "mean": 1.4129753846153845,
+              "p50": 0.8031,
+              "p95": 4.2600799999999985,
+              "max": 5.2504
+            },
+            "exclusive_cycles_per_call": {
+              "count": 65,
+              "mean": 1624755.6923076923,
+              "p50": 1404000.0,
+              "p95": 3269711.9999999995,
+              "max": 3499440.0
+            },
+            "exclusive_wall_total_ms": 91.84339999999999
+          },
+          "snapshot": {
+            "calls": 65,
+            "exclusive_wall_ms_per_call": {
+              "count": 65,
+              "mean": 0.5560569230769231,
+              "p50": 0.292,
+              "p95": 1.7152,
+              "max": 4.2695
+            },
+            "exclusive_cycles_per_call": {
+              "count": 65,
+              "mean": 667188.9230769231,
+              "p50": 581280.0,
+              "p95": 1106304.0,
+              "max": 1635120.0
+            },
+            "exclusive_wall_total_ms": 36.143699999999995
+          }
+        },
+        "dense": {
+          "summary": {
+            "calls": 28,
+            "exclusive_wall_ms_per_call": {
+              "count": 28,
+              "mean": 6.4040857142857135,
+              "p50": 7.3009,
+              "p95": 11.849734999999999,
+              "max": 14.0239
+            },
+            "exclusive_cycles_per_call": {
+              "count": 28,
+              "mean": 14688822.857142856,
+              "p50": 17129760.0,
+              "p95": 27276923.999999996,
+              "max": 30276480.0
+            },
+            "exclusive_wall_total_ms": 179.31439999999998
+          },
+          "visual_emit": {
+            "calls": 35,
+            "exclusive_wall_ms_per_call": {
+              "count": 35,
+              "mean": 0.9880228571428571,
+              "p50": 0.5883,
+              "p95": 2.6343799999999957,
+              "max": 4.6456
+            },
+            "exclusive_cycles_per_call": {
+              "count": 35,
+              "mean": 1472146.2857142857,
+              "p50": 1183920.0,
+              "p95": 3246983.9999999995,
+              "max": 3348720.0
+            },
+            "exclusive_wall_total_ms": 34.580799999999996
+          },
+          "snapshot": {
+            "calls": 28,
+            "exclusive_wall_ms_per_call": {
+              "count": 28,
+              "mean": 1.2136178571428569,
+              "p50": 0.92945,
+              "p95": 2.899845,
+              "max": 3.6528
+            },
+            "exclusive_cycles_per_call": {
+              "count": 28,
+              "mean": 1857000.0,
+              "p50": 1912920.0,
+              "p95": 3406103.9999999995,
+              "max": 4388880.0
+            },
+            "exclusive_wall_total_ms": 33.98129999999999
+          }
+        },
+        "empty_after": {
+          "summary": {
+            "calls": 8,
+            "exclusive_wall_ms_per_call": {
+              "count": 8,
+              "mean": 10.333375,
+              "p50": 9.3167,
+              "p95": 13.995624999999997,
+              "max": 15.729
+            },
+            "exclusive_cycles_per_call": {
+              "count": 8,
+              "mean": 23326530.0,
+              "p50": 21942840.0,
+              "p95": 28781159.999999996,
+              "max": 30515760.0
+            },
+            "exclusive_wall_total_ms": 82.667
+          },
+          "visual_emit": {
+            "calls": 8,
+            "exclusive_wall_ms_per_call": {
+              "count": 8,
+              "mean": 1.1618625,
+              "p50": 0.8203,
+              "p95": 2.9203699999999984,
+              "max": 3.7596
+            },
+            "exclusive_cycles_per_call": {
+              "count": 8,
+              "mean": 1629120.0,
+              "p50": 1241760.0,
+              "p95": 2829911.9999999995,
+              "max": 3218160.0
+            },
+            "exclusive_wall_total_ms": 9.2949
+          },
+          "snapshot": {
+            "calls": 8,
+            "exclusive_wall_ms_per_call": {
+              "count": 8,
+              "mean": 1.5995,
+              "p50": 1.3845999999999998,
+              "p95": 2.5537049999999994,
+              "max": 2.912
+            },
+            "exclusive_cycles_per_call": {
+              "count": 8,
+              "mean": 2704290.0,
+              "p50": 2567280.0,
+              "p95": 3305447.9999999995,
+              "max": 3674880.0
+            },
+            "exclusive_wall_total_ms": 12.796000000000001
+          }
+        },
+        "all": {
+          "summary": {
+            "calls": 101,
+            "exclusive_wall_ms_per_call": {
+              "count": 101,
+              "mean": 2.6627910891089113,
+              "p50": 0.1226,
+              "p95": 10.7765,
+              "max": 15.729
+            },
+            "exclusive_cycles_per_call": {
+              "count": 101,
+              "mean": 6087400.396039604,
+              "p50": 297360.0,
+              "p95": 24616800.0,
+              "max": 30515760.0
+            },
+            "exclusive_wall_total_ms": 268.94190000000003
+          },
+          "visual_emit": {
+            "calls": 108,
+            "exclusive_wall_ms_per_call": {
+              "count": 108,
+              "mean": 1.2566583333333337,
+              "p50": 0.7503500000000001,
+              "p95": 3.8882999999999983,
+              "max": 5.2504
+            },
+            "exclusive_cycles_per_call": {
+              "count": 108,
+              "mean": 1575622.2222222222,
+              "p50": 1284960.0,
+              "p95": 3270263.9999999995,
+              "max": 3499440.0
+            },
+            "exclusive_wall_total_ms": 135.71910000000003
+          },
+          "snapshot": {
+            "calls": 101,
+            "exclusive_wall_ms_per_call": {
+              "count": 101,
+              "mean": 0.8210000000000001,
+              "p50": 0.4136,
+              "p95": 2.7423,
+              "max": 4.2695
+            },
+            "exclusive_cycles_per_call": {
+              "count": 101,
+              "mean": 1158392.0792079207,
+              "p50": 786000.0,
+              "p95": 2610720.0,
+              "max": 4388880.0
+            },
+            "exclusive_wall_total_ms": 82.921
+          }
+        }
+      },
+      "performance_not_a_baseline_trial": true,
+      "sampler_messages": [
+        "py-spy> Sampling process 99 times a second for 3 seconds. Press Control-C to exit.",
+        "",
+        "py-spy> Wrote speedscope file to 'E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\ground_throughput_diagnosis\\runs\\enabled_external_run_gil_01\\profile.json'. Samples: 220 Errors: 37",
+        "py-spy> Visit https://www.speedscope.app/ to view"
+      ],
+      "captured_gil_stacks": 220,
+      "gil_stacks_by_thread": {
+        "Thread 10812 \"MainThread\"": 108,
+        "Thread 11948 \"Thread-2 (replay_camera)\"": 6,
+        "Thread 12212 \"Thread-1 (read)\"": 21,
+        "Thread 18916 \"ThreadPoolExecutor-1_0\"": 1,
+        "Thread 4568 \"\"": 80,
+        "Thread 8292 \"FootVisionService\"": 4
+      },
+      "gil_stacks_by_category": {
+        "gui_other": 60,
+        "other": 44,
+        "gui_video_surface": 18,
+        "gui_preview": 15,
+        "vision_python": 6,
+        "quality_gate": 17,
+        "stability_filter": 30,
+        "processor": 23,
+        "quality_runtime": 4,
+        "session": 3
+      },
+      "gil_stacks_by_role": {
+        "gui": 108,
+        "other_threads": 32,
+        "consumer": 80
+      },
+      "gil_leaf_samples": [
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\runtime_single_frame_fusion\\fixed_geometry_cache.py",
+          "function": "beam_layer",
+          "line": 45,
+          "samples": 25
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\runtime_single_frame_fusion\\fixed_geometry_cache.py",
+          "function": "beam_layer",
+          "line": 46,
+          "samples": 20
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\ui\\annotation_canvas.py",
+          "function": "paintEvent",
+          "line": 223,
+          "samples": 18
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\ground_throughput_diagnosis\\enabled_replay.py",
+          "function": "read",
+          "line": 76,
+          "samples": 13
+        },
+        {
+          "file": "D:\\conda\\Lib\\site-packages\\dayu_widgets\\label.py",
+          "function": "event",
+          "line": 234,
+          "samples": 9
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\ui\\embedded_camera_panel.py",
+          "function": "_render_frame",
+          "line": 713,
+          "samples": 7
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\ground_throughput_diagnosis\\enabled_replay.py",
+          "function": "main",
+          "line": 356,
+          "samples": 5
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\ground_throughput_diagnosis\\enabled_replay.py",
+          "function": "replay_camera",
+          "line": 110,
+          "samples": 5
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\engine\\device_quality_session.py",
+          "function": "on_frame",
+          "line": 183,
+          "samples": 5
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\ui\\session_controller.py",
+          "function": "_on_footprint_visual_frame",
+          "line": 533,
+          "samples": 4
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\ui\\embedded_camera_panel.py",
+          "function": "_render_frame",
+          "line": 712,
+          "samples": 4
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\hardware\\beam_filter.py",
+          "function": "_feed",
+          "line": 130,
+          "samples": 4
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\ui\\embedded_camera_panel.py",
+          "function": "_on_frame",
+          "line": 685,
+          "samples": 3
+        },
+        {
+          "file": "D:\\conda\\Lib\\site-packages\\numpy\\_core\\fromnumeric.py",
+          "function": "repeat",
+          "line": 481,
+          "samples": 3
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\hardware\\beam_filter.py",
+          "function": "_feed",
+          "line": 121,
+          "samples": 3
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\runtime_single_frame_fusion\\fixed_geometry_cache.py",
+          "function": "beam_layer",
+          "line": 31,
+          "samples": 2
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\runtime_single_frame_fusion\\fixed_geometry_cache.py",
+          "function": "beam_layer",
+          "line": 48,
+          "samples": 2
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\ground_throughput_diagnosis\\enabled_replay.py",
+          "function": "receive",
+          "line": 289,
+          "samples": 2
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\engine\\device_quality_session.py",
+          "function": "on_frame",
+          "line": 168,
+          "samples": 2
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\engine\\modes\\overground_running_processor.py",
+          "function": "process",
+          "line": 1248,
+          "samples": 2
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\engine\\ground_source_review.py",
+          "function": "<listcomp>",
+          "line": 33,
+          "samples": 2
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\engine\\modes\\overground_running_processor.py",
+          "function": "_groups",
+          "line": 1054,
+          "samples": 2
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\engine\\modes\\overground_running_processor.py",
+          "function": "process",
+          "line": 1252,
+          "samples": 2
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\engine\\device_quality_session.py",
+          "function": "on_frame",
+          "line": 166,
+          "samples": 2
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\hardware\\beam_filter.py",
+          "function": "_feed",
+          "line": 131,
+          "samples": 2
+        }
+      ],
+      "scope": "Scheduled dense phase; actual captured GIL-owner samples only. No percentage of elapsed time or waiting-thread GIL duration inferred."
+    },
+    "enabled_external_walk_gil_01": {
+      "name": "enabled_external_walk_gil_01",
+      "mode": "walk",
+      "kind": "gil",
+      "raw_report_runtime_quality_audit_exact": true,
+      "canonical_report_sha256": "b96045d8459efa385876adbf8866c1348c8240dd6ca5803cdd81b0b958a2a49d",
+      "canonical_evidence_sha256": "cc080a0a409ae271c7c940e52d9407513da52115c7915e3c7893a81db37f5cc9",
+      "live_pose_draws_with_valid_connections": 303,
+      "switch_initial_seconds": 0.005,
+      "switch_final_seconds": 0.005,
+      "switch_changes": [],
+      "preview_state": "enabled",
+      "low_frequency": {
+        "empty_before": {
+          "summary": {
+            "calls": 45,
+            "exclusive_wall_ms_per_call": {
+              "count": 45,
+              "mean": 0.07226444444444445,
+              "p50": 0.0619,
+              "p95": 0.10579999999999999,
+              "max": 0.1188
+            },
+            "exclusive_cycles_per_call": {
+              "count": 45,
+              "mean": 176336.0,
+              "p50": 150240.0,
+              "p95": 257712.0,
+              "max": 289680.0
+            },
+            "exclusive_wall_total_ms": 3.2519
+          },
+          "visual_emit": {
+            "calls": 45,
+            "exclusive_wall_ms_per_call": {
+              "count": 45,
+              "mean": 1.4004177777777778,
+              "p50": 0.6955,
+              "p95": 4.589499999999998,
+              "max": 7.1744
+            },
+            "exclusive_cycles_per_call": {
+              "count": 45,
+              "mean": 1608586.6666666667,
+              "p50": 1160880.0,
+              "p95": 3359951.999999998,
+              "max": 3824880.0
+            },
+            "exclusive_wall_total_ms": 63.0188
+          },
+          "snapshot": {
+            "calls": 45,
+            "exclusive_wall_ms_per_call": {
+              "count": 45,
+              "mean": 0.44731111111111116,
+              "p50": 0.1826,
+              "p95": 1.8029599999999997,
+              "max": 2.0679
+            },
+            "exclusive_cycles_per_call": {
+              "count": 45,
+              "mean": 441925.3333333333,
+              "p50": 394080.0,
+              "p95": 678719.9999999999,
+              "max": 791280.0
+            },
+            "exclusive_wall_total_ms": 20.128999999999998
+          }
+        },
+        "dense": {
+          "summary": {
+            "calls": 77,
+            "exclusive_wall_ms_per_call": {
+              "count": 77,
+              "mean": 2.033842857142857,
+              "p50": 2.0851,
+              "p95": 4.1580200000000005,
+              "max": 4.6852
+            },
+            "exclusive_cycles_per_call": {
+              "count": 77,
+              "mean": 4827070.12987013,
+              "p50": 4993920.0,
+              "p95": 9874944.000000002,
+              "max": 11124000.0
+            },
+            "exclusive_wall_total_ms": 156.60590000000002
+          },
+          "visual_emit": {
+            "calls": 87,
+            "exclusive_wall_ms_per_call": {
+              "count": 87,
+              "mean": 1.4549540229885056,
+              "p50": 0.7144,
+              "p95": 5.905480000000001,
+              "max": 7.1317
+            },
+            "exclusive_cycles_per_call": {
+              "count": 87,
+              "mean": 1550620.6896551724,
+              "p50": 1241760.0,
+              "p95": 3240504.0,
+              "max": 3651840.0
+            },
+            "exclusive_wall_total_ms": 126.58099999999999
+          },
+          "snapshot": {
+            "calls": 77,
+            "exclusive_wall_ms_per_call": {
+              "count": 77,
+              "mean": 2.5753337662337663,
+              "p50": 1.99,
+              "p95": 7.3463,
+              "max": 8.3856
+            },
+            "exclusive_cycles_per_call": {
+              "count": 77,
+              "mean": 3627091.948051948,
+              "p50": 3917040.0,
+              "p95": 5733264.0,
+              "max": 7452240.0
+            },
+            "exclusive_wall_total_ms": 198.30070000000003
+          }
+        },
+        "empty_after": {
+          "summary": {
+            "calls": 1,
+            "exclusive_wall_ms_per_call": {
+              "count": 1,
+              "mean": 3.0366,
+              "p50": 3.0366,
+              "p95": 3.0366,
+              "max": 3.0366
+            },
+            "exclusive_cycles_per_call": {
+              "count": 1,
+              "mean": 7257360.0,
+              "p50": 7257360.0,
+              "p95": 7257360.0,
+              "max": 7257360.0
+            },
+            "exclusive_wall_total_ms": 3.0366
+          },
+          "visual_emit": {
+            "calls": 1,
+            "exclusive_wall_ms_per_call": {
+              "count": 1,
+              "mean": 8.0043,
+              "p50": 8.0043,
+              "p95": 8.0043,
+              "max": 8.0043
+            },
+            "exclusive_cycles_per_call": {
+              "count": 1,
+              "mean": 3108960.0,
+              "p50": 3108960.0,
+              "p95": 3108960.0,
+              "max": 3108960.0
+            },
+            "exclusive_wall_total_ms": 8.0043
+          },
+          "snapshot": {
+            "calls": 1,
+            "exclusive_wall_ms_per_call": {
+              "count": 1,
+              "mean": 3.1927,
+              "p50": 3.1927,
+              "p95": 3.1927,
+              "max": 3.1927
+            },
+            "exclusive_cycles_per_call": {
+              "count": 1,
+              "mean": 7570800.0,
+              "p50": 7570800.0,
+              "p95": 7570800.0,
+              "max": 7570800.0
+            },
+            "exclusive_wall_total_ms": 3.1927
+          }
+        },
+        "all": {
+          "summary": {
+            "calls": 123,
+            "exclusive_wall_ms_per_call": {
+              "count": 123,
+              "mean": 1.3243447154471544,
+              "p50": 1.1307,
+              "p95": 3.973599999999998,
+              "max": 4.6852
+            },
+            "exclusive_cycles_per_call": {
+              "count": 123,
+              "mean": 3145340.487804878,
+              "p50": 2728800.0,
+              "p95": 9500375.999999993,
+              "max": 11124000.0
+            },
+            "exclusive_wall_total_ms": 162.89440000000002
+          },
+          "visual_emit": {
+            "calls": 133,
+            "exclusive_wall_ms_per_call": {
+              "count": 133,
+              "mean": 1.4857451127819545,
+              "p50": 0.7144,
+              "p95": 5.834259999999998,
+              "max": 8.0043
+            },
+            "exclusive_cycles_per_call": {
+              "count": 133,
+              "mean": 1581950.07518797,
+              "p50": 1205040.0,
+              "p95": 3256560.0,
+              "max": 3824880.0
+            },
+            "exclusive_wall_total_ms": 197.60409999999996
+          },
+          "snapshot": {
+            "calls": 123,
+            "exclusive_wall_ms_per_call": {
+              "count": 123,
+              "mean": 1.8018081300813011,
+              "p50": 1.5787,
+              "p95": 6.763269999999992,
+              "max": 8.3856
+            },
+            "exclusive_cycles_per_call": {
+              "count": 123,
+              "mean": 2493849.7560975607,
+              "p50": 2350080.0,
+              "p95": 5448743.999999998,
+              "max": 7570800.0
+            },
+            "exclusive_wall_total_ms": 221.62240000000008
+          }
+        }
+      },
+      "performance_not_a_baseline_trial": true,
+      "sampler_messages": [
+        "py-spy> Sampling process 99 times a second for 8 seconds. Press Control-C to exit.",
+        "",
+        "py-spy> Wrote speedscope file to 'E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\ground_throughput_diagnosis\\runs\\enabled_external_walk_gil_01\\profile.json'. Samples: 595 Errors: 121",
+        "py-spy> Visit https://www.speedscope.app/ to view"
+      ],
+      "captured_gil_stacks": 595,
+      "gil_stacks_by_thread": {
+        "Thread 13812 \"FootVisionService\"": 25,
+        "Thread 14268 \"Thread-2 (replay_camera)\"": 16,
+        "Thread 15932 \"MainThread\"": 271,
+        "Thread 16660 \"\"": 211,
+        "Thread 18916 \"Thread-1 (read)\"": 72
+      },
+      "gil_stacks_by_category": {
+        "vision_python": 33,
+        "other": 112,
+        "gui_other": 187,
+        "gui_preview": 8,
+        "gui_pose_overlay": 7,
+        "gui_video_surface": 46,
+        "quality_gate": 39,
+        "quality_runtime": 17,
+        "session": 21,
+        "processor": 60,
+        "stability_filter": 65
+      },
+      "gil_stacks_by_role": {
+        "other_threads": 113,
+        "gui": 271,
+        "consumer": 211
+      },
+      "gil_leaf_samples": [
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\runtime_single_frame_fusion\\fixed_geometry_cache.py",
+          "function": "beam_layer",
+          "line": 45,
+          "samples": 67
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\runtime_single_frame_fusion\\fixed_geometry_cache.py",
+          "function": "beam_layer",
+          "line": 46,
+          "samples": 49
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\ui\\annotation_canvas.py",
+          "function": "paintEvent",
+          "line": 223,
+          "samples": 43
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\ground_throughput_diagnosis\\enabled_replay.py",
+          "function": "read",
+          "line": 76,
+          "samples": 41
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\ground_throughput_diagnosis\\enabled_replay.py",
+          "function": "main",
+          "line": 356,
+          "samples": 18
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\ui\\session_controller.py",
+          "function": "_on_gait_snapshot",
+          "line": 529,
+          "samples": 15
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\engine\\device_quality_session.py",
+          "function": "on_frame",
+          "line": 183,
+          "samples": 15
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\vision\\event_scheduler.py",
+          "function": "_prune_frames",
+          "line": 294,
+          "samples": 10
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\ground_throughput_diagnosis\\enabled_replay.py",
+          "function": "replay_camera",
+          "line": 110,
+          "samples": 9
+        },
+        {
+          "file": "D:\\conda\\Lib\\site-packages\\numpy\\_core\\fromnumeric.py",
+          "function": "_wrapreduction_any_all",
+          "line": 99,
+          "samples": 9
+        },
+        {
+          "file": "<string>",
+          "function": "__init__",
+          "line": 12,
+          "samples": 9
+        },
+        {
+          "file": "D:\\conda\\Lib\\threading.py",
+          "function": "wait",
+          "line": 324,
+          "samples": 8
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\vision\\mediapipe_pose.py",
+          "function": "_landmark",
+          "line": 142,
+          "samples": 6
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\runtime_single_frame_fusion\\fixed_geometry_cache.py",
+          "function": "beam_layer",
+          "line": 38,
+          "samples": 6
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\engine\\modes\\walking_processor.py",
+          "function": "_clusters",
+          "line": 593,
+          "samples": 6
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\ui\\embedded_camera_panel.py",
+          "function": "_render_frame",
+          "line": 713,
+          "samples": 5
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\runtime_single_frame_fusion\\fixed_geometry_cache.py",
+          "function": "cached_paint",
+          "line": 59,
+          "samples": 5
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\ground_throughput_diagnosis\\enabled_replay.py",
+          "function": "measured_process",
+          "line": 143,
+          "samples": 5
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\engine\\modes\\walking_processor.py",
+          "function": "process",
+          "line": 1014,
+          "samples": 5
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\engine\\device_quality_session.py",
+          "function": "on_frame",
+          "line": 168,
+          "samples": 5
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\engine\\device_quality_session.py",
+          "function": "on_frame",
+          "line": 167,
+          "samples": 5
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\engine\\overground_session.py",
+          "function": "publish_visual",
+          "line": 231,
+          "samples": 5
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\hardware\\beam_filter.py",
+          "function": "_feed",
+          "line": 128,
+          "samples": 5
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\hardware\\beam_filter.py",
+          "function": "_feed",
+          "line": 130,
+          "samples": 5
+        },
+        {
+          "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\ui\\ground_track.py",
+          "function": "paintEvent",
+          "line": 86,
+          "samples": 4
+        }
+      ],
+      "scope": "Scheduled dense phase; actual captured GIL-owner samples only. No percentage of elapsed time or waiting-thread GIL duration inferred."
+    }
+  }
+}

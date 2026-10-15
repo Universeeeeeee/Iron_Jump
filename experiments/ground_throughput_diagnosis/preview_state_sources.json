@@ -1,0 +1,17 @@
+{
+  "enabled_replay.py": "9ce2e24936a8b05201c7b0a3634f25749a604902c66b439ad85ba124e15d3bce",
+  "enabled_probe.py": "7e37231599795a9c3d3e9a0e1a482069d06a4c19dc73421dd776a321f64a788e",
+  "state_target.py": "bb0ca2e014bc7d544c664cf57d63a0e4723246ac5d98b7c18d45a8617ba72e20",
+  "replay_change": [
+    "--- experiments/runtime_single_frame_fusion/fixed_replay.py\n",
+    "+++ enabled_replay.py\n",
+    "@@ -166,5 +166,5 @@\n",
+    "     cfg=config_class(**{k:v for k,v in meta.items() if k in config_class.__dataclass_fields__ and config_class.__dataclass_fields__[k].init})",
+    "     view.configure(cfg);view._camera_start_timer.stop();view._camera_panel.set_vision_enabled(args.source=='usb')",
+    "-    view._camera_panel.setEnabled(args.source=='usb')",
+    "+    view._camera_panel.setEnabled(True)",
+    "     for b in (view.btn_logi_camera,view.btn_tinyse_camera,view.btn_basic_camera):b.setEnabled(args.source=='usb')",
+    "     view.set_quality_preflight_required(True)"
+  ],
+  "scope": "Diagnostic harness correction only: enable the preview surface like production; recorded camera, pose, geometry, algorithm, original baseline files unchanged."
+}

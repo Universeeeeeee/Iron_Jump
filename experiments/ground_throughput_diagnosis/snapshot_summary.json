@@ -1,0 +1,250 @@
+{
+  "run": {
+    "full_raw_report_quality_runtime_exact": true,
+    "snapshot_marker": {
+      "mode": "run",
+      "native_result": 0,
+      "target_result": 0,
+      "request_ns": 66656731936000,
+      "return_ns": 66660632915700,
+      "snapshot_wall_ms": 3900.9797,
+      "scope": "One invasive native snapshot, not a performance trial. Full raw/report semantics must pass before considering its stack evidence."
+    },
+    "threads": [
+      {
+        "role": "consumer",
+        "thread_id": 15992,
+        "owns_gil": false,
+        "active": false,
+        "native_top": [
+          "NtWaitForSingleObject",
+          "WaitForSingleObjectEx",
+          "PyOS_URandomNonblock",
+          "PyOS_URandomNonblock",
+          "PyEval_RestoreThread",
+          "PyInit__multiarray_umath",
+          "PyInit__multiarray_umath",
+          "PyInit__multiarray_umath",
+          "PyInit__multiarray_umath",
+          "PyBytes_Repeat",
+          "PyObject_CallMethodId_SizeT",
+          "PyObject_CallFunctionObjArgs"
+        ],
+        "python_frames": [
+          {
+            "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\hardware\\walking_preflight.py",
+            "function": "observe",
+            "line": 48
+          },
+          {
+            "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\engine\\device_quality_session.py",
+            "function": "on_frame",
+            "line": 159
+          },
+          {
+            "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\ui\\session_controller.py",
+            "function": "_consume",
+            "line": 69
+          },
+          {
+            "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\ground_throughput_diagnosis\\probe.py",
+            "function": "consume",
+            "line": 80
+          },
+          {
+            "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\ui\\session_controller.py",
+            "function": "drain",
+            "line": 77
+          }
+        ]
+      },
+      {
+        "role": "gui",
+        "thread_id": 16148,
+        "owns_gil": true,
+        "active": true,
+        "native_top": [
+          "QCommonStyle::generatedIconPixmap",
+          "qt_plugin_query_metadata_v2",
+          "QApplicationPrivate::applyQIconStyleHelper",
+          "QPixmapIconEngine::scaledPixmap",
+          "QIcon::pixmap",
+          "QLabel::paintEvent",
+          "PyInit_QtWidgets",
+          "PyEval_EvalFrameDefault",
+          "PyEval_EvalFrameDefault",
+          "PyFunction_Vectorcall",
+          "PyCell_Set",
+          "PyMethod_Self"
+        ],
+        "python_frames": [
+          {
+            "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\ui\\annotation_canvas.py",
+            "function": "paintEvent",
+            "line": 223
+          },
+          {
+            "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\runtime_single_frame_fusion\\fixed_replay.py",
+            "function": "main",
+            "line": 356
+          },
+          {
+            "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\runtime_single_frame_fusion\\fixed_replay.py",
+            "function": "<module>",
+            "line": 391
+          },
+          {
+            "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\ground_throughput_diagnosis\\probe.py",
+            "function": "<module>",
+            "line": 281
+          },
+          {
+            "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\ground_throughput_diagnosis\\external_target.py",
+            "function": "<module>",
+            "line": 77
+          }
+        ]
+      }
+    ],
+    "scope": "Instantaneous co-occurrence only. Native symbol names without private PDBs may be nearest exports. Snapshot command wall duration is NOT GIL wait duration."
+  },
+  "walk": {
+    "full_raw_report_quality_runtime_exact": true,
+    "snapshot_marker": {
+      "mode": "walk",
+      "native_result": 0,
+      "target_result": 0,
+      "request_ns": 66752158084500,
+      "return_ns": 66753655700600,
+      "snapshot_wall_ms": 1497.6161,
+      "scope": "One invasive native snapshot, not a performance trial. Full raw/report semantics must pass before considering its stack evidence."
+    },
+    "threads": [
+      {
+        "role": "consumer",
+        "thread_id": 9568,
+        "owns_gil": true,
+        "active": true,
+        "native_top": [
+          "PyEval_EvalFrameDefault",
+          "PyEval_EvalFrameDefault",
+          "PyFunction_Vectorcall",
+          "PyVectorcall_Function",
+          "PyObject_Call",
+          "PyEval_GetFuncDesc",
+          "PyEval_EvalFrameDefault",
+          "PyEval_EvalFrameDefault",
+          "PyFunction_Vectorcall",
+          "PyCell_Set",
+          "PyMethod_Self",
+          "PyVectorcall_Function"
+        ],
+        "python_frames": [
+          {
+            "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\engine\\modes\\walking_processor.py",
+            "function": "<listcomp>",
+            "line": 474
+          },
+          {
+            "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\engine\\modes\\walking_processor.py",
+            "function": "_observe_ownership_groups",
+            "line": 474
+          },
+          {
+            "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\engine\\modes\\walking_processor.py",
+            "function": "process",
+            "line": 1022
+          },
+          {
+            "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\runtime_single_frame_fusion\\fixed_replay.py",
+            "function": "measured_process",
+            "line": 143
+          },
+          {
+            "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\engine\\overground_session.py",
+            "function": "_consume_frames",
+            "line": 125
+          },
+          {
+            "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\runtime_single_frame_fusion\\fixed_replay.py",
+            "function": "measured_consume",
+            "line": 299
+          },
+          {
+            "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\engine\\overground_session.py",
+            "function": "on_frame",
+            "line": 103
+          },
+          {
+            "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\engine\\gait_engine.py",
+            "function": "process_quality_frame",
+            "line": 396
+          },
+          {
+            "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\engine\\device_quality_session.py",
+            "function": "on_frame",
+            "line": 183
+          },
+          {
+            "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\ui\\session_controller.py",
+            "function": "_consume",
+            "line": 69
+          },
+          {
+            "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\ground_throughput_diagnosis\\probe.py",
+            "function": "consume",
+            "line": 80
+          },
+          {
+            "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\ui\\session_controller.py",
+            "function": "drain",
+            "line": 77
+          }
+        ]
+      },
+      {
+        "role": "gui",
+        "thread_id": 9124,
+        "owns_gil": false,
+        "active": false,
+        "native_top": [
+          "NtWaitForSingleObject",
+          "WaitForSingleObjectEx",
+          "PyOS_URandomNonblock",
+          "PyOS_URandomNonblock",
+          "PyGILState_Ensure",
+          "Shiboken::GilState::GilState",
+          "PySidePropertyBase::assignCheckCallable",
+          "QObject::qt_static_metacall",
+          "QMetaObject::activate",
+          "QTimer::timerEvent",
+          "PyInit_QtCore",
+          "QObject::event"
+        ],
+        "python_frames": [
+          {
+            "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\runtime_single_frame_fusion\\fixed_replay.py",
+            "function": "main",
+            "line": 356
+          },
+          {
+            "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\runtime_single_frame_fusion\\fixed_replay.py",
+            "function": "<module>",
+            "line": 391
+          },
+          {
+            "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\ground_throughput_diagnosis\\probe.py",
+            "function": "<module>",
+            "line": 281
+          },
+          {
+            "file": "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\ground_throughput_diagnosis\\external_target.py",
+            "function": "<module>",
+            "line": 77
+          }
+        ]
+      }
+    ],
+    "scope": "Instantaneous co-occurrence only. Native symbol names without private PDBs may be nearest exports. Snapshot command wall duration is NOT GIL wait duration."
+  }
+}
