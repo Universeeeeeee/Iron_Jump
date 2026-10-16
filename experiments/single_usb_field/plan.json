@@ -1,0 +1,31 @@
+{
+  "base_commit": "210d86ac1db73502f3a31e6e12382f1fa153103c",
+  "topology": "Production default UsbWorker -> direct _GroundFrameInbox -> DeviceQualitySession -> GaitEngine. One USB input, live TinySE native raw MJPEG+CSV, SDK full-body tracking, original lower-body Qt overlay, original NumPy and production renderer. No replay, no candidate renderer, no changes to production sources.",
+  "protocol": {
+    "modes": [
+      "walk",
+      "run"
+    ],
+    "start": "Operator visually confirms head-to-feet in frame and clear beams. Automatic prerequisite: original readiness, SDK start, actual native frames/bytes written, full-body nose/shoulder/hip/knee/ankle qualities >=0.65 inside frame >=2s, actual lower-body drawing >=8 nodes and >=6 connections sustained >=2s. Thresholds gate experiment readiness only, never algorithm configuration.",
+    "initial_empty_s": 5,
+    "passage": "Single outbound passage after Go; leave via outside lane. Keep camera live; no inbound crossing.",
+    "tail": "Operator marks clear; continue actual capture 15s. 60s safety upper limit if no marker. Do not treat operator mark as physical touchdown ground truth; independently inspect raw contacts and native video.",
+    "config": "Original defaults except supported stop_type=Software command to preserve post-passage empty tail. No confirmation/filter/processor threshold changes."
+  },
+  "observers": "Original byte-identical QueueProbe P (64-sample batch bucket plus 10Hz). Existing consume wrapper additionally retains one existing items list reference per batch, with raw/valid/wire/counters serialized only after stop; no extra USB signal connection or per-frame timing callback. Existing SDK tracking_event retained in memory. Original render/draw counters plus actual node/link counts. One GUI 1Hz control/counter tick. Original paint wrapper only records first confirmed contact paint; no nested processing timers. Additional retention/telemetry overhead is not independently calibrated and cannot prove unobserved production performance.",
+  "evidence": "All raw consumed SensorFrame bits, validity, wire, device/frame counters, receipt time, drops, layouts/flags/issues and order; original OvergroundSession formal archive; quality/runtime state; full original report; actual pose draw counts by control tick; SDK logs; raw native MJPEG+CSV, frame/byte/drop/queue stats and start before/after clock brackets. Final draining snapshot before artifact compression.",
+  "classification": "Freeze source before field start. Classify formal per-device 1s contact dense >=50% usable nonempty, empty <=1%, mixed otherwise after only original preflight bad mask. Report initial empty, contact span, dense device bins, trailing empty and whole formal separately. Keep all windows, missing/short windows are not passes.",
+  "sustained_gate": {
+    "enqueued_fps_min": 990,
+    "consumer_fps_max_exclusive": 970,
+    "actual_pending_min": 100,
+    "head_age_ms_min": 100,
+    "heavy_observed_span_s_min": 1,
+    "adjacent_observation_gap_ms_max": 250,
+    "completed_receipt_age_growth_ms_per_device_second_min_exclusive": 10,
+    "decision": "If any valid >=2s prespecified whole, initial, contact-span or tail window meets all criteria, conditional independent minimal ETW/WPR calibration. Dense 1s bins descriptive only, not capacity proof. Report both consistent consumer shortage and arrival/catch-up stalls; do not adjust replay or add call-tree profilers. If none, retain original NumPy/candidate and examine load differences, never claim fixed."
+  },
+  "correctness_scope": "Last walking step publication and effective-step interval count discrepancies remain separate. Save original reports/events; do not repair or normalize their semantics. Paint latency excludes missing/unpublished events and is not accuracy validation.",
+  "ETW": "Not started until field shortage is validated. Independently calibrate minimal thread-schedule recording ON/OFF before interpreting Running/Ready/Waiting/context switches; no inference of GIL/GC from scheduler events alone.",
+  "preparation_revision": "Revision 2 before any formal acquisition: operator could not see header checkbox. Preserve preparation01 runtime/version and evidence. Fit window to available screen and put unchanged ExecutionView inside a scroll area beneath fixed controls; pre-formal screenshot/geometry and per-landmark readiness diagnostics only. No formal capture-time screenshot."
+}

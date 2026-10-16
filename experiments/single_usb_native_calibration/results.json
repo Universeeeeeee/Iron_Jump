@@ -1,0 +1,1149 @@
+{
+  "scope": "Unmanned real single USB, native live recording, SDK and pose enabled; human left. Not human/dense-load calibration and not field root-cause trace.",
+  "frozen_plan_sha256": "087881484d1b62673cc05030bd2180578b3cb2caa4ce0a6a008735cfbf184ea3",
+  "all_six_pairs_passed": true,
+  "pairs": [
+    {
+      "pair": 1,
+      "mode": "walk",
+      "consumer_fps_ON_minus_OFF": 0.07857007822917694,
+      "head_p95_ON_minus_OFF_ms": -8.343059999999998,
+      "preview_ON_div_OFF": 1.0190077247662341,
+      "camera_ON_div_OFF": 1.0000411756292138,
+      "consumer_native_cpu_fraction_ON_div_OFF": 0.588926940311437,
+      "checks": {
+        "captures_valid": true,
+        "consumer_fps_delta_abs_le20": true,
+        "head_p95_increase_le20ms": true,
+        "preview_ratio_0.9_to_1.1": true,
+        "camera_ratio_0.95_to_1.05": true,
+        "consumer_cpu_increase_le10pct": true,
+        "trace_events_and_losses_valid": true
+      },
+      "passed": true
+    },
+    {
+      "pair": 2,
+      "mode": "run",
+      "consumer_fps_ON_minus_OFF": -0.00948215551920839,
+      "head_p95_ON_minus_OFF_ms": 0.05537999999999865,
+      "preview_ON_div_OFF": 0.9999381655086288,
+      "camera_ON_div_OFF": 0.9999599015328733,
+      "consumer_native_cpu_fraction_ON_div_OFF": 0.9851642293764866,
+      "checks": {
+        "captures_valid": true,
+        "consumer_fps_delta_abs_le20": true,
+        "head_p95_increase_le20ms": true,
+        "preview_ratio_0.9_to_1.1": true,
+        "camera_ratio_0.95_to_1.05": true,
+        "consumer_cpu_increase_le10pct": true,
+        "trace_events_and_losses_valid": true
+      },
+      "passed": true
+    },
+    {
+      "pair": 3,
+      "mode": "walk",
+      "consumer_fps_ON_minus_OFF": 0.015947948416624058,
+      "head_p95_ON_minus_OFF_ms": -0.7856349999999996,
+      "preview_ON_div_OFF": 0.9999934729803956,
+      "camera_ON_div_OFF": 0.9999009409849774,
+      "consumer_native_cpu_fraction_ON_div_OFF": 0.981426304985194,
+      "checks": {
+        "captures_valid": true,
+        "consumer_fps_delta_abs_le20": true,
+        "head_p95_increase_le20ms": true,
+        "preview_ratio_0.9_to_1.1": true,
+        "camera_ratio_0.95_to_1.05": true,
+        "consumer_cpu_increase_le10pct": true,
+        "trace_events_and_losses_valid": true
+      },
+      "passed": true
+    },
+    {
+      "pair": 4,
+      "mode": "run",
+      "consumer_fps_ON_minus_OFF": -0.03430663631331754,
+      "head_p95_ON_minus_OFF_ms": 0.21869999999999923,
+      "preview_ON_div_OFF": 0.9999988399411234,
+      "camera_ON_div_OFF": 1.0000471233917916,
+      "consumer_native_cpu_fraction_ON_div_OFF": 0.8984663329203473,
+      "checks": {
+        "captures_valid": true,
+        "consumer_fps_delta_abs_le20": true,
+        "head_p95_increase_le20ms": true,
+        "preview_ratio_0.9_to_1.1": true,
+        "camera_ratio_0.95_to_1.05": true,
+        "consumer_cpu_increase_le10pct": true,
+        "trace_events_and_losses_valid": true
+      },
+      "passed": true
+    },
+    {
+      "pair": 5,
+      "mode": "walk",
+      "consumer_fps_ON_minus_OFF": -0.5080362638639144,
+      "head_p95_ON_minus_OFF_ms": 0.5467800000000005,
+      "preview_ON_div_OFF": 0.9968163295659881,
+      "camera_ON_div_OFF": 1.000326808145787,
+      "consumer_native_cpu_fraction_ON_div_OFF": 0.9931509519152255,
+      "checks": {
+        "captures_valid": true,
+        "consumer_fps_delta_abs_le20": true,
+        "head_p95_increase_le20ms": true,
+        "preview_ratio_0.9_to_1.1": true,
+        "camera_ratio_0.95_to_1.05": true,
+        "consumer_cpu_increase_le10pct": true,
+        "trace_events_and_losses_valid": true
+      },
+      "passed": true
+    },
+    {
+      "pair": 6,
+      "mode": "run",
+      "consumer_fps_ON_minus_OFF": 0.16003774648447688,
+      "head_p95_ON_minus_OFF_ms": 0.43406000000000144,
+      "preview_ON_div_OFF": 0.99982389602194,
+      "camera_ON_div_OFF": 1.0002227463490212,
+      "consumer_native_cpu_fraction_ON_div_OFF": 1.0262852797886686,
+      "checks": {
+        "captures_valid": true,
+        "consumer_fps_delta_abs_le20": true,
+        "head_p95_increase_le20ms": true,
+        "preview_ratio_0.9_to_1.1": true,
+        "camera_ratio_0.95_to_1.05": true,
+        "consumer_cpu_increase_le10pct": true,
+        "trace_events_and_losses_valid": true
+      },
+      "passed": true
+    }
+  ],
+  "trials": [
+    {
+      "name": "p01_walk_OFF",
+      "mode": "walk",
+      "trace": false,
+      "pair": 1,
+      "valid_empty_capture": true,
+      "integrity": {
+        "name": "p01_walk_OFF",
+        "mode": "walk",
+        "integrity_passed": true,
+        "queue_invariant_snapshots": 792,
+        "raw_frames_with_preparation": 30927,
+        "formal_archived_frames": 20282,
+        "formal_usable_contact_fraction": 0.0008385123803886751,
+        "device_and_frame_counters_contiguous": true,
+        "wire_decodes_to_retained_bits": true,
+        "original_archive_equals_raw_sensorframes": true,
+        "event_audit_equals_report": true,
+        "quality_snapshot_equals_report": true,
+        "quality_history_untruncated": true,
+        "report_timeline_equals_original_quality_masked_history": true,
+        "active_publications": 0,
+        "painted_contact_ids": 0,
+        "report_touch_count": 0,
+        "report_valid_steps": 0,
+        "camera_csv_contiguous": true,
+        "native_video_bytes": 318840315,
+        "native_video_frames": 2114,
+        "one_reader_final_drained_sdk_stopped": true,
+        "scope": "Integrity and original report transformation checks, not cross-run algorithm equivalence or observer-overhead calibration."
+      },
+      "primary_3_to_19_host_s": {
+        "observations": 409,
+        "observed_s": 15.9348255,
+        "enqueued_fps": 999.8854395989463,
+        "consumer_fps": 1000.0737064864626,
+        "throughput_gap_to_actual_fps": -0.18826688751630627,
+        "pending": {
+          "count": 409,
+          "p95": 13.599999999999966,
+          "max": 104.0
+        },
+        "oldest_pending_ms": {
+          "count": 409,
+          "p95": 11.442479999999998,
+          "max": 53.2371
+        },
+        "completed_receipt_age_ms": {
+          "count": 409,
+          "p95": 22.487199999999937,
+          "max": 97.1229
+        },
+        "age_slope_ms_per_device_second": -0.15531768322199274,
+        "heavy_observed_span_s": 0.0,
+        "max_observation_gap_ms": 109.5317,
+        "sustained_shortage": false
+      },
+      "preview_fps": 20.933293001855482,
+      "preview_observed_s": 15.0000289,
+      "camera_record_fps": 100.00018261446732,
+      "camera_clock_scope": "Record-start perf bracket midpoint; CSV record elapsed, no camera/device drift correction.",
+      "native_cpu_seconds": {
+        "gui": 4.515625,
+        "consumer": 6.765625,
+        "reader": 3.9375
+      },
+      "native_cpu_snapshot_wall_s": 20.0005891,
+      "trace_validation": null,
+      "formal_visual": {
+        "renders": 420,
+        "pose_draw_calls": 0,
+        "valid_pose_draws": 0,
+        "valid_nodes_drawn": 0,
+        "valid_links_drawn": 0
+      }
+    },
+    {
+      "name": "p01_walk_ON",
+      "mode": "walk",
+      "trace": true,
+      "pair": 1,
+      "valid_empty_capture": true,
+      "integrity": {
+        "name": "p01_walk_ON",
+        "mode": "walk",
+        "integrity_passed": true,
+        "queue_invariant_snapshots": 711,
+        "raw_frames_with_preparation": 27773,
+        "formal_archived_frames": 20015,
+        "formal_usable_contact_fraction": 4.9975012493753125e-05,
+        "device_and_frame_counters_contiguous": true,
+        "wire_decodes_to_retained_bits": true,
+        "original_archive_equals_raw_sensorframes": true,
+        "event_audit_equals_report": true,
+        "quality_snapshot_equals_report": true,
+        "quality_history_untruncated": true,
+        "report_timeline_equals_original_quality_masked_history": true,
+        "active_publications": 0,
+        "painted_contact_ids": 0,
+        "report_touch_count": 0,
+        "report_valid_steps": 0,
+        "camera_csv_contiguous": true,
+        "native_video_bytes": 302032492,
+        "native_video_frames": 2005,
+        "one_reader_final_drained_sdk_stopped": true,
+        "scope": "Integrity and original report transformation checks, not cross-run algorithm equivalence or observer-overhead calibration."
+      },
+      "primary_3_to_19_host_s": {
+        "observations": 409,
+        "observed_s": 15.9735676,
+        "enqueued_fps": 999.901862875016,
+        "consumer_fps": 1000.1522765646918,
+        "throughput_gap_to_actual_fps": -0.2504136896757245,
+        "pending": {
+          "count": 409,
+          "p95": 4.0,
+          "max": 5.0
+        },
+        "oldest_pending_ms": {
+          "count": 409,
+          "p95": 3.09942,
+          "max": 5.007
+        },
+        "completed_receipt_age_ms": {
+          "count": 409,
+          "p95": 5.446179999999999,
+          "max": 9.8462
+        },
+        "age_slope_ms_per_device_second": 0.002161019946919142,
+        "heavy_observed_span_s": 0.0,
+        "max_observation_gap_ms": 68.0762,
+        "sustained_shortage": false
+      },
+      "preview_fps": 21.331187273685686,
+      "preview_observed_s": 15.0015091,
+      "camera_record_fps": 100.00430018490796,
+      "camera_clock_scope": "Record-start perf bracket midpoint; CSV record elapsed, no camera/device drift correction.",
+      "native_cpu_seconds": {
+        "gui": 1.515625,
+        "consumer": 3.984375,
+        "reader": 3.34375
+      },
+      "native_cpu_snapshot_wall_s": 20.0001683,
+      "trace_validation": {
+        "passed": true,
+        "event_counts": {
+          "CSwitch": 625308,
+          "ReadyThread": 383358
+        },
+        "full_scan_events_lost": 0,
+        "header_losses": {
+          "EventsLost": 0,
+          "BuffersLost": 0
+        },
+        "requested_keywords_in_collector": true,
+        "etl_bytes": 57540608,
+        "etl_sha256": "5d03e8aa679c9105b14c7eaf97389e45344f66feba5088bb8cff3c0c5f331104",
+        "summary_sha256": "307f8b88a3c0a0099d9781b110a4e0781a5bdd4bba0004a033cf8598fb39df11",
+        "header_export_scope": "First complete header event only; XML exporter stopped intentionally afterward. Full event counts/loss scan is separate tracerpt -o NUL summary. Original ETL unchanged.",
+        "cswitch_payload_decoded": false,
+        "limits": "CSwitch v5 is binary in installed schema; no Running/Ready/Waiting or GIL/GC attribution."
+      },
+      "formal_visual": {
+        "renders": 427,
+        "pose_draw_calls": 0,
+        "valid_pose_draws": 0,
+        "valid_nodes_drawn": 0,
+        "valid_links_drawn": 0
+      }
+    },
+    {
+      "name": "p02_run_ON",
+      "mode": "run",
+      "trace": true,
+      "pair": 2,
+      "valid_empty_capture": true,
+      "integrity": {
+        "name": "p02_run_ON",
+        "mode": "run",
+        "integrity_passed": true,
+        "queue_invariant_snapshots": 712,
+        "raw_frames_with_preparation": 27822,
+        "formal_archived_frames": 20035,
+        "formal_usable_contact_fraction": 9.98302885095338e-05,
+        "device_and_frame_counters_contiguous": true,
+        "wire_decodes_to_retained_bits": true,
+        "original_archive_equals_raw_sensorframes": true,
+        "event_audit_equals_report": true,
+        "quality_snapshot_equals_report": true,
+        "quality_history_untruncated": true,
+        "report_timeline_equals_original_quality_masked_history": true,
+        "active_publications": 0,
+        "painted_contact_ids": 0,
+        "report_touch_count": 0,
+        "report_valid_steps": 0,
+        "camera_csv_contiguous": true,
+        "native_video_bytes": 302264472,
+        "native_video_frames": 2006,
+        "one_reader_final_drained_sdk_stopped": true,
+        "scope": "Integrity and original report transformation checks, not cross-run algorithm equivalence or observer-overhead calibration."
+      },
+      "primary_3_to_19_host_s": {
+        "observations": 409,
+        "observed_s": 15.9363581,
+        "enqueued_fps": 999.9775293704024,
+        "consumer_fps": 999.9775293704024,
+        "throughput_gap_to_actual_fps": 0.0,
+        "pending": {
+          "count": 409,
+          "p95": 4.0,
+          "max": 5.0
+        },
+        "oldest_pending_ms": {
+          "count": 409,
+          "p95": 3.4259199999999983,
+          "max": 4.8234
+        },
+        "completed_receipt_age_ms": {
+          "count": 409,
+          "p95": 5.543299999999995,
+          "max": 7.6492
+        },
+        "age_slope_ms_per_device_second": 0.01210097489748934,
+        "heavy_observed_span_s": 0.0,
+        "max_observation_gap_ms": 69.5485,
+        "sustained_shortage": false
+      },
+      "preview_fps": 21.331432987073292,
+      "preview_observed_s": 15.0013363,
+      "camera_record_fps": 99.9960214215867,
+      "camera_clock_scope": "Record-start perf bracket midpoint; CSV record elapsed, no camera/device drift correction.",
+      "native_cpu_seconds": {
+        "gui": 1.03125,
+        "consumer": 4.125,
+        "reader": 3.3125
+      },
+      "native_cpu_snapshot_wall_s": 19.9999726,
+      "trace_validation": {
+        "passed": true,
+        "event_counts": {
+          "CSwitch": 683830,
+          "ReadyThread": 421202
+        },
+        "full_scan_events_lost": 0,
+        "header_losses": {
+          "EventsLost": 0,
+          "BuffersLost": 0
+        },
+        "requested_keywords_in_collector": true,
+        "etl_bytes": 61341696,
+        "etl_sha256": "0fcf8bd2f8bc46aff3c6640ee495558cf85a8c8cda53a882b041727779c5b479",
+        "summary_sha256": "f4246d68ae97ab575645252a30a088e141bf5866a4ad797d265ae307a2be3eaf",
+        "header_export_scope": "First complete header event only; XML exporter stopped intentionally afterward. Full event counts/loss scan is separate tracerpt -o NUL summary. Original ETL unchanged.",
+        "cswitch_payload_decoded": false,
+        "limits": "CSwitch v5 is binary in installed schema; no Running/Ready/Waiting or GIL/GC attribution."
+      },
+      "formal_visual": {
+        "renders": 427,
+        "pose_draw_calls": 0,
+        "valid_pose_draws": 0,
+        "valid_nodes_drawn": 0,
+        "valid_links_drawn": 0
+      }
+    },
+    {
+      "name": "p02_run_OFF",
+      "mode": "run",
+      "trace": false,
+      "pair": 2,
+      "valid_empty_capture": true,
+      "integrity": {
+        "name": "p02_run_OFF",
+        "mode": "run",
+        "integrity_passed": true,
+        "queue_invariant_snapshots": 712,
+        "raw_frames_with_preparation": 27829,
+        "formal_archived_frames": 20013,
+        "formal_usable_contact_fraction": 0.00014997750337449384,
+        "device_and_frame_counters_contiguous": true,
+        "wire_decodes_to_retained_bits": true,
+        "original_archive_equals_raw_sensorframes": true,
+        "event_audit_equals_report": true,
+        "quality_snapshot_equals_report": true,
+        "quality_history_untruncated": true,
+        "report_timeline_equals_original_quality_masked_history": true,
+        "active_publications": 0,
+        "painted_contact_ids": 0,
+        "report_touch_count": 0,
+        "report_valid_steps": 0,
+        "camera_csv_contiguous": true,
+        "native_video_bytes": 302192323,
+        "native_video_frames": 2005,
+        "one_reader_final_drained_sdk_stopped": true,
+        "scope": "Integrity and original report transformation checks, not cross-run algorithm equivalence or observer-overhead calibration."
+      },
+      "primary_3_to_19_host_s": {
+        "observations": 409,
+        "observed_s": 15.937207,
+        "enqueued_fps": 999.9870115259216,
+        "consumer_fps": 999.9870115259216,
+        "throughput_gap_to_actual_fps": 0.0,
+        "pending": {
+          "count": 409,
+          "p95": 4.0,
+          "max": 5.0
+        },
+        "oldest_pending_ms": {
+          "count": 409,
+          "p95": 3.3705399999999996,
+          "max": 4.8157
+        },
+        "completed_receipt_age_ms": {
+          "count": 409,
+          "p95": 4.965619999999998,
+          "max": 7.9034
+        },
+        "age_slope_ms_per_device_second": 0.019193204277321674,
+        "heavy_observed_span_s": 0.0,
+        "max_observation_gap_ms": 69.3076,
+        "sustained_shortage": false
+      },
+      "preview_fps": 21.332752086948137,
+      "preview_observed_s": 15.0004087,
+      "camera_record_fps": 100.00003126955323,
+      "camera_clock_scope": "Record-start perf bracket midpoint; CSV record elapsed, no camera/device drift correction.",
+      "native_cpu_seconds": {
+        "gui": 1.078125,
+        "consumer": 4.1875,
+        "reader": 3.296875
+      },
+      "native_cpu_snapshot_wall_s": 20.0017918,
+      "trace_validation": null,
+      "formal_visual": {
+        "renders": 424,
+        "pose_draw_calls": 0,
+        "valid_pose_draws": 0,
+        "valid_nodes_drawn": 0,
+        "valid_links_drawn": 0
+      }
+    },
+    {
+      "name": "p03_walk_ON",
+      "mode": "walk",
+      "trace": true,
+      "pair": 3,
+      "valid_empty_capture": true,
+      "integrity": {
+        "name": "p03_walk_ON",
+        "mode": "walk",
+        "integrity_passed": true,
+        "queue_invariant_snapshots": 738,
+        "raw_frames_with_preparation": 28813,
+        "formal_archived_frames": 20076,
+        "formal_usable_contact_fraction": 4.9897709695124994e-05,
+        "device_and_frame_counters_contiguous": true,
+        "wire_decodes_to_retained_bits": true,
+        "original_archive_equals_raw_sensorframes": true,
+        "event_audit_equals_report": true,
+        "quality_snapshot_equals_report": true,
+        "quality_history_untruncated": true,
+        "report_timeline_equals_original_quality_masked_history": true,
+        "active_publications": 0,
+        "painted_contact_ids": 0,
+        "report_touch_count": 0,
+        "report_valid_steps": 0,
+        "camera_csv_contiguous": true,
+        "native_video_bytes": 317839306,
+        "native_video_frames": 2108,
+        "one_reader_final_drained_sdk_stopped": true,
+        "scope": "Integrity and original report transformation checks, not cross-run algorithm equivalence or observer-overhead calibration."
+      },
+      "primary_3_to_19_host_s": {
+        "observations": 410,
+        "observed_s": 15.9793135,
+        "enqueued_fps": 999.9803808843227,
+        "consumer_fps": 1000.042961795574,
+        "throughput_gap_to_actual_fps": -0.0625809112513025,
+        "pending": {
+          "count": 410,
+          "p95": 4.0,
+          "max": 7.0
+        },
+        "oldest_pending_ms": {
+          "count": 410,
+          "p95": 3.094445,
+          "max": 5.0089
+        },
+        "completed_receipt_age_ms": {
+          "count": 410,
+          "p95": 5.044414999999995,
+          "max": 6.9796
+        },
+        "age_slope_ms_per_device_second": 0.001499029776107224,
+        "heavy_observed_span_s": 0.0,
+        "max_observation_gap_ms": 69.638,
+        "sustained_shortage": false
+      },
+      "preview_fps": 21.334486960158227,
+      "preview_observed_s": 14.9991889,
+      "camera_record_fps": 99.99076132890636,
+      "camera_clock_scope": "Record-start perf bracket midpoint; CSV record elapsed, no camera/device drift correction.",
+      "native_cpu_seconds": {
+        "gui": 1.96875,
+        "consumer": 4.109375,
+        "reader": 3.15625
+      },
+      "native_cpu_snapshot_wall_s": 20.0000575,
+      "trace_validation": {
+        "passed": true,
+        "event_counts": {
+          "CSwitch": 727767,
+          "ReadyThread": 436674
+        },
+        "full_scan_events_lost": 0,
+        "header_losses": {
+          "EventsLost": 0,
+          "BuffersLost": 0
+        },
+        "requested_keywords_in_collector": true,
+        "etl_bytes": 63307776,
+        "etl_sha256": "825e2ad0289a2ae3ac544f495b32417b7e9da69be044bbd774ad2824ffa1178b",
+        "summary_sha256": "17fa9dcce70bf93930229a31bfadc81f106a9188497bcf20d8503b5e15757569",
+        "header_export_scope": "First complete header event only; XML exporter stopped intentionally afterward. Full event counts/loss scan is separate tracerpt -o NUL summary. Original ETL unchanged.",
+        "cswitch_payload_decoded": false,
+        "limits": "CSwitch v5 is binary in installed schema; no Running/Ready/Waiting or GIL/GC attribution."
+      },
+      "formal_visual": {
+        "renders": 426,
+        "pose_draw_calls": 0,
+        "valid_pose_draws": 0,
+        "valid_nodes_drawn": 0,
+        "valid_links_drawn": 0
+      }
+    },
+    {
+      "name": "p03_walk_OFF",
+      "mode": "walk",
+      "trace": false,
+      "pair": 3,
+      "valid_empty_capture": true,
+      "integrity": {
+        "name": "p03_walk_OFF",
+        "mode": "walk",
+        "integrity_passed": true,
+        "queue_invariant_snapshots": 711,
+        "raw_frames_with_preparation": 27778,
+        "formal_archived_frames": 20029,
+        "formal_usable_contact_fraction": 0.00014994002399040384,
+        "device_and_frame_counters_contiguous": true,
+        "wire_decodes_to_retained_bits": true,
+        "original_archive_equals_raw_sensorframes": true,
+        "event_audit_equals_report": true,
+        "quality_snapshot_equals_report": true,
+        "quality_history_untruncated": true,
+        "report_timeline_equals_original_quality_masked_history": true,
+        "active_publications": 0,
+        "painted_contact_ids": 0,
+        "report_touch_count": 0,
+        "report_valid_steps": 0,
+        "camera_csv_contiguous": true,
+        "native_video_bytes": 302295118,
+        "native_video_frames": 2006,
+        "one_reader_final_drained_sdk_stopped": true,
+        "scope": "Integrity and original report transformation checks, not cross-run algorithm equivalence or observer-overhead calibration."
+      },
+      "primary_3_to_19_host_s": {
+        "observations": 409,
+        "observed_s": 15.9325696,
+        "enqueued_fps": 999.9642493323863,
+        "consumer_fps": 1000.0270138471574,
+        "throughput_gap_to_actual_fps": -0.06276451477106093,
+        "pending": {
+          "count": 409,
+          "p95": 4.0,
+          "max": 8.0
+        },
+        "oldest_pending_ms": {
+          "count": 409,
+          "p95": 3.8800799999999995,
+          "max": 6.7572
+        },
+        "completed_receipt_age_ms": {
+          "count": 409,
+          "p95": 5.397579999999998,
+          "max": 8.5993
+        },
+        "age_slope_ms_per_device_second": -0.01871194436959254,
+        "heavy_observed_span_s": 0.0,
+        "max_observation_gap_ms": 69.303,
+        "sustained_shortage": false
+      },
+      "preview_fps": 21.334626211681762,
+      "preview_observed_s": 14.999091,
+      "camera_record_fps": 100.00066729651036,
+      "camera_clock_scope": "Record-start perf bracket midpoint; CSV record elapsed, no camera/device drift correction.",
+      "native_cpu_seconds": {
+        "gui": 1.765625,
+        "consumer": 4.1875,
+        "reader": 3.078125
+      },
+      "native_cpu_snapshot_wall_s": 20.0017495,
+      "trace_validation": null,
+      "formal_visual": {
+        "renders": 425,
+        "pose_draw_calls": 0,
+        "valid_pose_draws": 0,
+        "valid_nodes_drawn": 0,
+        "valid_links_drawn": 0
+      }
+    },
+    {
+      "name": "p04_run_OFF",
+      "mode": "run",
+      "trace": false,
+      "pair": 4,
+      "valid_empty_capture": true,
+      "integrity": {
+        "name": "p04_run_OFF",
+        "mode": "run",
+        "integrity_passed": true,
+        "queue_invariant_snapshots": 734,
+        "raw_frames_with_preparation": 28728,
+        "formal_archived_frames": 20006,
+        "formal_usable_contact_fraction": 9.999000099990002e-05,
+        "device_and_frame_counters_contiguous": true,
+        "wire_decodes_to_retained_bits": true,
+        "original_archive_equals_raw_sensorframes": true,
+        "event_audit_equals_report": true,
+        "quality_snapshot_equals_report": true,
+        "quality_history_untruncated": true,
+        "report_timeline_equals_original_quality_masked_history": true,
+        "active_publications": 0,
+        "painted_contact_ids": 0,
+        "report_touch_count": 0,
+        "report_valid_steps": 0,
+        "camera_csv_contiguous": true,
+        "native_video_bytes": 316599165,
+        "native_video_frames": 2103,
+        "one_reader_final_drained_sdk_stopped": true,
+        "scope": "Integrity and original report transformation checks, not cross-run algorithm equivalence or observer-overhead calibration."
+      },
+      "primary_3_to_19_host_s": {
+        "observations": 409,
+        "observed_s": 15.9765186,
+        "enqueued_fps": 999.9675398619071,
+        "consumer_fps": 1000.2179072980267,
+        "throughput_gap_to_actual_fps": -0.25036743611963175,
+        "pending": {
+          "count": 409,
+          "p95": 4.0,
+          "max": 7.0
+        },
+        "oldest_pending_ms": {
+          "count": 409,
+          "p95": 3.20948,
+          "max": 5.3056
+        },
+        "completed_receipt_age_ms": {
+          "count": 409,
+          "p95": 6.09758,
+          "max": 11.1682
+        },
+        "age_slope_ms_per_device_second": -0.018796584329695627,
+        "heavy_observed_span_s": 0.0,
+        "max_observation_gap_ms": 71.5914,
+        "sustained_shortage": false
+      },
+      "preview_fps": 21.33444087527397,
+      "preview_observed_s": 14.9992213,
+      "camera_record_fps": 99.9956906172355,
+      "camera_clock_scope": "Record-start perf bracket midpoint; CSV record elapsed, no camera/device drift correction.",
+      "native_cpu_seconds": {
+        "gui": 1.390625,
+        "consumer": 4.3125,
+        "reader": 2.875
+      },
+      "native_cpu_snapshot_wall_s": 19.99922575,
+      "trace_validation": null,
+      "formal_visual": {
+        "renders": 425,
+        "pose_draw_calls": 0,
+        "valid_pose_draws": 0,
+        "valid_nodes_drawn": 0,
+        "valid_links_drawn": 0
+      }
+    },
+    {
+      "name": "p04_run_ON",
+      "mode": "run",
+      "trace": true,
+      "pair": 4,
+      "valid_empty_capture": true,
+      "integrity": {
+        "name": "p04_run_ON",
+        "mode": "run",
+        "integrity_passed": true,
+        "queue_invariant_snapshots": 735,
+        "raw_frames_with_preparation": 28725,
+        "formal_archived_frames": 20006,
+        "formal_usable_contact_fraction": 0.00014996250937265683,
+        "device_and_frame_counters_contiguous": true,
+        "wire_decodes_to_retained_bits": true,
+        "original_archive_equals_raw_sensorframes": true,
+        "event_audit_equals_report": true,
+        "quality_snapshot_equals_report": true,
+        "quality_history_untruncated": true,
+        "report_timeline_equals_original_quality_masked_history": true,
+        "active_publications": 0,
+        "painted_contact_ids": 0,
+        "report_touch_count": 0,
+        "report_valid_steps": 0,
+        "camera_csv_contiguous": true,
+        "native_video_bytes": 316364878,
+        "native_video_frames": 2103,
+        "one_reader_final_drained_sdk_stopped": true,
+        "scope": "Integrity and original report transformation checks, not cross-run algorithm equivalence or observer-overhead calibration."
+      },
+      "primary_3_to_19_host_s": {
+        "observations": 409,
+        "observed_s": 15.9770666,
+        "enqueued_fps": 999.933241812987,
+        "consumer_fps": 1000.1836006617134,
+        "throughput_gap_to_actual_fps": -0.25035884872636416,
+        "pending": {
+          "count": 409,
+          "p95": 4.0,
+          "max": 5.0
+        },
+        "oldest_pending_ms": {
+          "count": 409,
+          "p95": 3.4281799999999993,
+          "max": 5.2414
+        },
+        "completed_receipt_age_ms": {
+          "count": 409,
+          "p95": 4.962099999999996,
+          "max": 7.4356
+        },
+        "age_slope_ms_per_device_second": -0.0012730838833504043,
+        "heavy_observed_span_s": 0.0,
+        "max_observation_gap_ms": 67.7849,
+        "sustained_shortage": false
+      },
+      "preview_fps": 21.334416126066454,
+      "preview_observed_s": 14.9992387,
+      "camera_record_fps": 100.00040275334192,
+      "camera_clock_scope": "Record-start perf bracket midpoint; CSV record elapsed, no camera/device drift correction.",
+      "native_cpu_seconds": {
+        "gui": 1.203125,
+        "consumer": 3.875,
+        "reader": 2.828125
+      },
+      "native_cpu_snapshot_wall_s": 20.00110425,
+      "trace_validation": {
+        "passed": true,
+        "event_counts": {
+          "CSwitch": 641528,
+          "ReadyThread": 394163
+        },
+        "full_scan_events_lost": 0,
+        "header_losses": {
+          "EventsLost": 0,
+          "BuffersLost": 0
+        },
+        "requested_keywords_in_collector": true,
+        "etl_bytes": 58327040,
+        "etl_sha256": "55e58f0c96d9b32c8ee7ec16455dccb0fbeb88e4da4a44d5f7aa9a4c85cc37b5",
+        "summary_sha256": "411b478c4f23278278406d3545cf0b928a8feef91f6a4a61c81eb69e01114416",
+        "header_export_scope": "First complete header event only; XML exporter stopped intentionally afterward. Full event counts/loss scan is separate tracerpt -o NUL summary. Original ETL unchanged.",
+        "cswitch_payload_decoded": false,
+        "limits": "CSwitch v5 is binary in installed schema; no Running/Ready/Waiting or GIL/GC attribution."
+      },
+      "formal_visual": {
+        "renders": 425,
+        "pose_draw_calls": 0,
+        "valid_pose_draws": 0,
+        "valid_nodes_drawn": 0,
+        "valid_links_drawn": 0
+      }
+    },
+    {
+      "name": "p05_walk_OFF",
+      "mode": "walk",
+      "trace": false,
+      "pair": 5,
+      "valid_empty_capture": true,
+      "integrity": {
+        "name": "p05_walk_OFF",
+        "mode": "walk",
+        "integrity_passed": true,
+        "queue_invariant_snapshots": 712,
+        "raw_frames_with_preparation": 27785,
+        "formal_archived_frames": 20012,
+        "formal_usable_contact_fraction": 4.999250112483127e-05,
+        "device_and_frame_counters_contiguous": true,
+        "wire_decodes_to_retained_bits": true,
+        "original_archive_equals_raw_sensorframes": true,
+        "event_audit_equals_report": true,
+        "quality_snapshot_equals_report": true,
+        "quality_history_untruncated": true,
+        "report_timeline_equals_original_quality_masked_history": true,
+        "active_publications": 0,
+        "painted_contact_ids": 0,
+        "report_touch_count": 0,
+        "report_valid_steps": 0,
+        "camera_csv_contiguous": true,
+        "native_video_bytes": 302405664,
+        "native_video_frames": 2006,
+        "one_reader_final_drained_sdk_stopped": true,
+        "scope": "Integrity and original report transformation checks, not cross-run algorithm equivalence or observer-overhead calibration."
+      },
+      "primary_3_to_19_host_s": {
+        "observations": 409,
+        "observed_s": 15.9582911,
+        "enqueued_fps": 999.9817586984611,
+        "consumer_fps": 1000.4204021569703,
+        "throughput_gap_to_actual_fps": -0.4386434585092047,
+        "pending": {
+          "count": 409,
+          "p95": 4.0,
+          "max": 6.0
+        },
+        "oldest_pending_ms": {
+          "count": 409,
+          "p95": 3.1240799999999984,
+          "max": 5.3137
+        },
+        "completed_receipt_age_ms": {
+          "count": 409,
+          "p95": 6.146639999999999,
+          "max": 9.8263
+        },
+        "age_slope_ms_per_device_second": -0.01807552269830433,
+        "heavy_observed_span_s": 0.0,
+        "max_observation_gap_ms": 69.8433,
+        "sustained_shortage": false
+      },
+      "preview_fps": 21.334958914969594,
+      "preview_observed_s": 14.9988571,
+      "camera_record_fps": 100.00693048028228,
+      "camera_clock_scope": "Record-start perf bracket midpoint; CSV record elapsed, no camera/device drift correction.",
+      "native_cpu_seconds": {
+        "gui": 1.546875,
+        "consumer": 4.515625,
+        "reader": 2.96875
+      },
+      "native_cpu_snapshot_wall_s": 20.0001926,
+      "trace_validation": null,
+      "formal_visual": {
+        "renders": 425,
+        "pose_draw_calls": 0,
+        "valid_pose_draws": 0,
+        "valid_nodes_drawn": 0,
+        "valid_links_drawn": 0
+      }
+    },
+    {
+      "name": "p05_walk_ON",
+      "mode": "walk",
+      "trace": true,
+      "pair": 5,
+      "valid_empty_capture": true,
+      "integrity": {
+        "name": "p05_walk_ON",
+        "mode": "walk",
+        "integrity_passed": true,
+        "queue_invariant_snapshots": 712,
+        "raw_frames_with_preparation": 27804,
+        "formal_archived_frames": 20018,
+        "formal_usable_contact_fraction": 0.00014996250937265683,
+        "device_and_frame_counters_contiguous": true,
+        "wire_decodes_to_retained_bits": true,
+        "original_archive_equals_raw_sensorframes": true,
+        "event_audit_equals_report": true,
+        "quality_snapshot_equals_report": true,
+        "quality_history_untruncated": true,
+        "report_timeline_equals_original_quality_masked_history": true,
+        "active_publications": 0,
+        "painted_contact_ids": 0,
+        "report_touch_count": 0,
+        "report_valid_steps": 0,
+        "camera_csv_contiguous": true,
+        "native_video_bytes": 301722718,
+        "native_video_frames": 2006,
+        "one_reader_final_drained_sdk_stopped": true,
+        "scope": "Integrity and original report transformation checks, not cross-run algorithm equivalence or observer-overhead calibration."
+      },
+      "primary_3_to_19_host_s": {
+        "observations": 409,
+        "observed_s": 15.9583985,
+        "enqueued_fps": 1000.037691752089,
+        "consumer_fps": 999.9123658931064,
+        "throughput_gap_to_actual_fps": 0.12532585898259185,
+        "pending": {
+          "count": 409,
+          "p95": 4.0,
+          "max": 7.0
+        },
+        "oldest_pending_ms": {
+          "count": 409,
+          "p95": 3.670859999999999,
+          "max": 6.017
+        },
+        "completed_receipt_age_ms": {
+          "count": 409,
+          "p95": 5.437679999999999,
+          "max": 8.812
+        },
+        "age_slope_ms_per_device_second": -0.004183737756559334,
+        "heavy_observed_span_s": 0.0,
+        "max_observation_gap_ms": 69.7092,
+        "sustained_shortage": false
+      },
+      "preview_fps": 21.267035437061146,
+      "preview_observed_s": 14.9997399,
+      "camera_record_fps": 100.0396135597984,
+      "camera_clock_scope": "Record-start perf bracket midpoint; CSV record elapsed, no camera/device drift correction.",
+      "native_cpu_seconds": {
+        "gui": 1.453125,
+        "consumer": 4.484375,
+        "reader": 3.5
+      },
+      "native_cpu_snapshot_wall_s": 19.9987554,
+      "trace_validation": {
+        "passed": true,
+        "event_counts": {
+          "CSwitch": 659510,
+          "ReadyThread": 407956
+        },
+        "full_scan_events_lost": 0,
+        "header_losses": {
+          "EventsLost": 0,
+          "BuffersLost": 0
+        },
+        "requested_keywords_in_collector": true,
+        "etl_bytes": 59768832,
+        "etl_sha256": "2ba7431fe0298254d330933f85ff09029046271eff3445d2dd2b026caa29662d",
+        "summary_sha256": "8c24d8c373bd29c192ecbf9dff35d3acbbe9b1260e1bf37741e9ad2624f7c96d",
+        "header_export_scope": "First complete header event only; XML exporter stopped intentionally afterward. Full event counts/loss scan is separate tracerpt -o NUL summary. Original ETL unchanged.",
+        "cswitch_payload_decoded": false,
+        "limits": "CSwitch v5 is binary in installed schema; no Running/Ready/Waiting or GIL/GC attribution."
+      },
+      "formal_visual": {
+        "renders": 423,
+        "pose_draw_calls": 0,
+        "valid_pose_draws": 0,
+        "valid_nodes_drawn": 0,
+        "valid_links_drawn": 0
+      }
+    },
+    {
+      "name": "p06_run_ON",
+      "mode": "run",
+      "trace": true,
+      "pair": 6,
+      "valid_empty_capture": true,
+      "integrity": {
+        "name": "p06_run_ON",
+        "mode": "run",
+        "integrity_passed": true,
+        "queue_invariant_snapshots": 713,
+        "raw_frames_with_preparation": 27846,
+        "formal_archived_frames": 20013,
+        "formal_usable_contact_fraction": 9.998500224966255e-05,
+        "device_and_frame_counters_contiguous": true,
+        "wire_decodes_to_retained_bits": true,
+        "original_archive_equals_raw_sensorframes": true,
+        "event_audit_equals_report": true,
+        "quality_snapshot_equals_report": true,
+        "quality_history_untruncated": true,
+        "report_timeline_equals_original_quality_masked_history": true,
+        "active_publications": 0,
+        "painted_contact_ids": 0,
+        "report_touch_count": 0,
+        "report_valid_steps": 0,
+        "camera_csv_contiguous": true,
+        "native_video_bytes": 302447698,
+        "native_video_frames": 2009,
+        "one_reader_final_drained_sdk_stopped": true,
+        "scope": "Integrity and original report transformation checks, not cross-run algorithm equivalence or observer-overhead calibration."
+      },
+      "primary_3_to_19_host_s": {
+        "observations": 409,
+        "observed_s": 15.946647,
+        "enqueued_fps": 1000.0221363149257,
+        "consumer_fps": 1000.0221363149257,
+        "throughput_gap_to_actual_fps": 0.0,
+        "pending": {
+          "count": 409,
+          "p95": 4.0,
+          "max": 6.0
+        },
+        "oldest_pending_ms": {
+          "count": 409,
+          "p95": 4.024719999999999,
+          "max": 5.7199
+        },
+        "completed_receipt_age_ms": {
+          "count": 409,
+          "p95": 5.839999999999996,
+          "max": 7.4086
+        },
+        "age_slope_ms_per_device_second": 0.013154941001785839,
+        "heavy_observed_span_s": 0.0,
+        "max_observation_gap_ms": 68.2071,
+        "sustained_shortage": false
+      },
+      "preview_fps": 21.331392603234292,
+      "preview_observed_s": 15.0013647,
+      "camera_record_fps": 100.0144367305452,
+      "camera_clock_scope": "Record-start perf bracket midpoint; CSV record elapsed, no camera/device drift correction.",
+      "native_cpu_seconds": {
+        "gui": 1.0625,
+        "consumer": 4.265625,
+        "reader": 3.3125
+      },
+      "native_cpu_snapshot_wall_s": 19.99839515,
+      "trace_validation": {
+        "passed": true,
+        "event_counts": {
+          "CSwitch": 680243,
+          "ReadyThread": 421875
+        },
+        "full_scan_events_lost": 0,
+        "header_losses": {
+          "EventsLost": 0,
+          "BuffersLost": 0
+        },
+        "requested_keywords_in_collector": true,
+        "etl_bytes": 61472768,
+        "etl_sha256": "cabc9b1a2a65e83745da58ac8e50512d3e1b6387f2ea39b3cc4324957ce13462",
+        "summary_sha256": "14d2de968fbdb30e88eabdd17c343d76e8a65a9fe37b2fcf3db6503fe2fb0d6a",
+        "header_export_scope": "First complete header event only; XML exporter stopped intentionally afterward. Full event counts/loss scan is separate tracerpt -o NUL summary. Original ETL unchanged.",
+        "cswitch_payload_decoded": false,
+        "limits": "CSwitch v5 is binary in installed schema; no Running/Ready/Waiting or GIL/GC attribution."
+      },
+      "formal_visual": {
+        "renders": 426,
+        "pose_draw_calls": 0,
+        "valid_pose_draws": 0,
+        "valid_nodes_drawn": 0,
+        "valid_links_drawn": 0
+      }
+    },
+    {
+      "name": "p06_run_OFF",
+      "mode": "run",
+      "trace": false,
+      "pair": 6,
+      "valid_empty_capture": true,
+      "integrity": {
+        "name": "p06_run_OFF",
+        "mode": "run",
+        "integrity_passed": true,
+        "queue_invariant_snapshots": 738,
+        "raw_frames_with_preparation": 28829,
+        "formal_archived_frames": 20063,
+        "formal_usable_contact_fraction": 0.0,
+        "device_and_frame_counters_contiguous": true,
+        "wire_decodes_to_retained_bits": true,
+        "original_archive_equals_raw_sensorframes": true,
+        "event_audit_equals_report": true,
+        "quality_snapshot_equals_report": true,
+        "quality_history_untruncated": true,
+        "report_timeline_equals_original_quality_masked_history": true,
+        "active_publications": 0,
+        "painted_contact_ids": 0,
+        "report_touch_count": 0,
+        "report_valid_steps": 0,
+        "camera_csv_contiguous": true,
+        "native_video_bytes": 317330303,
+        "native_video_frames": 2108,
+        "one_reader_final_drained_sdk_stopped": true,
+        "scope": "Integrity and original report transformation checks, not cross-run algorithm equivalence or observer-overhead calibration."
+      },
+      "primary_3_to_19_host_s": {
+        "observations": 409,
+        "observed_s": 15.9672019,
+        "enqueued_fps": 1000.0499837106713,
+        "consumer_fps": 999.8620985684412,
+        "throughput_gap_to_actual_fps": 0.18788514223012953,
+        "pending": {
+          "count": 409,
+          "p95": 4.0,
+          "max": 5.0
+        },
+        "oldest_pending_ms": {
+          "count": 409,
+          "p95": 3.590659999999998,
+          "max": 4.5888
+        },
+        "completed_receipt_age_ms": {
+          "count": 409,
+          "p95": 5.4514,
+          "max": 7.7447
+        },
+        "age_slope_ms_per_device_second": 0.01582714015943024,
+        "heavy_observed_span_s": 0.0,
+        "max_observation_gap_ms": 67.6248,
+        "sustained_shortage": false
+      },
+      "preview_fps": 21.335149807987985,
+      "preview_observed_s": 14.9987229,
+      "camera_record_fps": 99.99216384111885,
+      "camera_clock_scope": "Record-start perf bracket midpoint; CSV record elapsed, no camera/device drift correction.",
+      "native_cpu_seconds": {
+        "gui": 1.234375,
+        "consumer": 4.15625,
+        "reader": 2.875
+      },
+      "native_cpu_snapshot_wall_s": 19.99780065,
+      "trace_validation": null,
+      "formal_visual": {
+        "renders": 426,
+        "pose_draw_calls": 0,
+        "valid_pose_draws": 0,
+        "valid_nodes_drawn": 0,
+        "valid_links_drawn": 0
+      }
+    }
+  ],
+  "limits": [
+    "No human or dense contact tracing calibration; observer retention/SDK logging overhead remains uncalibrated.",
+    "Only two native CPU boundary snapshots; approximate whole-20s CPU, separately from primary 3..19s window.",
+    "1000Hz input-capped consumer rate is not spare capacity or an optimization benefit.",
+    "No field ETW capture exists; no CPU-exclusive, GIL or GC root-cause attribution."
+  ]
+}

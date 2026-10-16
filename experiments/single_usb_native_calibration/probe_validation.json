@@ -1,0 +1,22 @@
+{
+  "event_counts": {
+    "ReadyThread": 20763,
+    "CSwitch": 32707
+  },
+  "examples": {
+    "ReadyThread": {
+      "TThreadId": "0x4E8",
+      "AdjustReason": "1",
+      "AdjustIncrement": "0",
+      "Flag": "1",
+      "Reserved": "0"
+    },
+    "CSwitch": {}
+  },
+  "header": {
+    "EventsLost": 0,
+    "BuffersLost": 0
+  },
+  "cswitch_payload_decoded": false,
+  "scope": "Delivered ETL events confirmed by numeric kernel thread GUID/opcode, not only WPR status. Current tracerpt does not decode CSwitch payload; no Running/Ready/Waiting attribution."
+}

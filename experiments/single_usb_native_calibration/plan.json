@@ -1,0 +1,90 @@
+{
+  "scope": "Unmanned real single USB, native live recording, SDK and pose enabled; human left. Not human/dense-load calibration and not field root-cause trace.",
+  "base_field_source_sha256": "6a049bca29b66aa3061e1a1fd5b07e1746c9f9a555d446378b66bb24cb31bd9b",
+  "protocol": "Fresh process per condition, 20s formal, 8s between; three OFF/ON pairs per mode, pair order alternates. Original NumPy/renderer/queue observer, batch reference archive and SDK records retained. Empty calibration bypasses human gate explicitly and never asks a person to pass.",
+  "trials": [
+    {
+      "name": "p01_walk_OFF",
+      "pair": 1,
+      "mode": "walk",
+      "trace": false
+    },
+    {
+      "name": "p01_walk_ON",
+      "pair": 1,
+      "mode": "walk",
+      "trace": true
+    },
+    {
+      "name": "p02_run_ON",
+      "pair": 2,
+      "mode": "run",
+      "trace": true
+    },
+    {
+      "name": "p02_run_OFF",
+      "pair": 2,
+      "mode": "run",
+      "trace": false
+    },
+    {
+      "name": "p03_walk_ON",
+      "pair": 3,
+      "mode": "walk",
+      "trace": true
+    },
+    {
+      "name": "p03_walk_OFF",
+      "pair": 3,
+      "mode": "walk",
+      "trace": false
+    },
+    {
+      "name": "p04_run_OFF",
+      "pair": 4,
+      "mode": "run",
+      "trace": false
+    },
+    {
+      "name": "p04_run_ON",
+      "pair": 4,
+      "mode": "run",
+      "trace": true
+    },
+    {
+      "name": "p05_walk_OFF",
+      "pair": 5,
+      "mode": "walk",
+      "trace": false
+    },
+    {
+      "name": "p05_walk_ON",
+      "pair": 5,
+      "mode": "walk",
+      "trace": true
+    },
+    {
+      "name": "p06_run_ON",
+      "pair": 6,
+      "mode": "run",
+      "trace": true
+    },
+    {
+      "name": "p06_run_OFF",
+      "pair": 6,
+      "mode": "run",
+      "trace": false
+    }
+  ],
+  "profile": "ProcessThread, Loader, CSwitch, ReadyThread only. No stacks, CPU sampled profile, Python call tree, GIL or GC profiler. Unique WPR instance; never cancel a preexisting recording.",
+  "native_boundary_observers": "Native GetThreadTimes for GUI/consumer/USB-reader at formal start/end plus two precise FILETIME/perf-counter clock brackets. No periodic CPU sampling.",
+  "primary_window": "Formal 3..19 host seconds, to exclude arm/startup and stop. Native CPU snapshots span approximately whole 20s, separately labelled.",
+  "validity": "All raw archives complete, contiguous device counters and no acquisition failures; actual raw video written, no writer drop, consumer/GUI threads different, one real reader, final queue empty and SDK closed. Usable contact <=1%; preserve original bad mask.",
+  "acceptance": "All 6 pairs must have abs consumer-fps delta <=20; ON-OFF queue-head P95 increase <=20ms; preview fps ratio in [0.9,1.1], native recorded-frame fps ratio in [0.95,1.05]; consumer native CPU increase <=10% in each pair. ON traces must show scheduler keywords and zero losses. Retain every trial, no rerun-until-pass; failure or lack of margin is not passed calibration. Input-capped fps is not a capacity improvement.",
+  "limits": "No human body/bone/dense contacts; possible background scene variations and process startup jitter. Even a pass only covers this light topology; field-load overhead still unvalidated. No under-load ETW/GIL/GC attribution this round.",
+  "references": [
+    "https://learn.microsoft.com/en-us/windows-hardware/test/wpt/wpr-command-line-options",
+    "https://learn.microsoft.com/en-us/windows-hardware/test/wpt/keyword--in-systemprovider-",
+    "https://learn.microsoft.com/en-us/windows-hardware/test/wpt/systemprovider"
+  ]
+}
