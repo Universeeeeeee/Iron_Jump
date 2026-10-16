@@ -1,0 +1,47 @@
+[
+  "Traceback (most recent call last):\n  File \"E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\experiments\\single_usb_human_etw\\check_ui.py\", line 36, in <module>\n    p=argparse.ArgumentParser();p.add_argument('output',type=Path);main(p.parse_args().output)\n                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\experiments\\single_usb_human_etw\\check_ui.py\", line 29, in main\n    write(output/'trace_ready.json',case);run.progress();start.assert_called_once()\n                                          ^^^^^^^^^^^^^^\n  File \"E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\experiments\\single_usb_human_etw\\human_runner.py\", line 41, in progress\n    self.arm_requested=True;self.mark('trace_handshake_accepted');BaseRun.start(self)\n                                                                  ^^^^^^^^^^^^^^^^^^^\n  File \"E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\experiments\\single_usb_human_etw\\field_runner.py\", line 162, in start\n    self.controller.start(acknowledge_quality=True,quality_key=self.status['device_key'])\n                                                               ~~~~~~~~~~~^^^^^^^^^^^^^^\nKeyError: 'device_key'\n"
+]
+{
+  "scope": "Hardware-blocked real Qt layout and handshake check, not a live field run.",
+  "qt_platform": "offscreen",
+  "screen": [
+    800,
+    800
+  ],
+  "widgets": {
+    "confirm": {
+      "visible": true,
+      "inside_screen": true,
+      "rect": [
+        13,
+        36,
+        748,
+        22
+      ]
+    },
+    "start_button": {
+      "visible": true,
+      "inside_screen": true,
+      "rect": [
+        13,
+        64,
+        748,
+        25
+      ]
+    },
+    "cancel_button": {
+      "visible": true,
+      "inside_screen": true,
+      "rect": [
+        13,
+        126,
+        748,
+        25
+      ]
+    }
+  },
+  "confirmation_waits_for_ETW": true,
+  "asynchronous_arm_requested_once": true,
+  "no_camera_recording_or_USB_reader": true,
+  "preview_start_intercepted": 1
+}

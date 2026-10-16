@@ -1,0 +1,118 @@
+{
+  "scope": "Build/preparation and hardware-blocked checks only. No real acquisition or live ETW was started this turn.",
+  "original_source_files_checked": 458,
+  "original_source_mismatch": [],
+  "inherited_field_runner_byte_identical": true,
+  "queue_probe_byte_identical": true,
+  "frozen_runtime_files": 11,
+  "frozen_sources_sha256": "013bcd8f15cf0323c8f1a7ec132f069f2f9259a80d47bc799c17408918f30cf3",
+  "hardware_free_protocol_tests_mac_passed": 11,
+  "hardware_free_protocol_tests_windows_passed": 11,
+  "powershell_launcher_check_only_passed": true,
+  "windows_static_check_verified_dependencies": 25,
+  "windows_native_layout": {
+    "scope": "Hardware-blocked real Qt layout and handshake check, not a live field run.",
+    "qt_platform": "windows",
+    "screen": [
+      1536,
+      816
+    ],
+    "widgets": {
+      "confirm": {
+        "visible": true,
+        "inside_screen": true,
+        "rect": [
+          18,
+          69,
+          1158,
+          24
+        ]
+      },
+      "start_button": {
+        "visible": true,
+        "inside_screen": true,
+        "rect": [
+          18,
+          99,
+          1158,
+          32
+        ]
+      },
+      "cancel_button": {
+        "visible": true,
+        "inside_screen": true,
+        "rect": [
+          18,
+          175,
+          1158,
+          32
+        ]
+      }
+    },
+    "confirmation_waits_for_ETW": true,
+    "asynchronous_arm_requested_once": true,
+    "no_camera_recording_or_USB_reader": true,
+    "preview_start_intercepted": 1
+  },
+  "windows_actual_button_signal_check": {
+    "scope": "Hardware-blocked real Qt layout and handshake check, not a live field run.",
+    "qt_platform": "offscreen",
+    "screen": [
+      800,
+      600
+    ],
+    "widgets": {
+      "confirm": {
+        "visible": true,
+        "inside_screen": true,
+        "rect": [
+          13,
+          36,
+          748,
+          23
+        ]
+      },
+      "start_button": {
+        "visible": true,
+        "inside_screen": true,
+        "rect": [
+          13,
+          65,
+          748,
+          25
+        ]
+      },
+      "cancel_button": {
+        "visible": true,
+        "inside_screen": true,
+        "rect": [
+          13,
+          127,
+          748,
+          25
+        ]
+      }
+    },
+    "confirmation_waits_for_ETW": true,
+    "asynchronous_arm_requested_once": true,
+    "no_camera_recording_or_USB_reader": true,
+    "preview_start_intercepted": 1
+  },
+  "build_failures_retained": [
+    {
+      "environment": "macOS offscreen Qt",
+      "result": "SIGSEGV at original EmbeddedCameraPanel QTimer signal connection during construction; no valid GUI result. Windows is the target and was checked independently."
+    },
+    {
+      "environment": "First Windows offscreen UI fixture",
+      "result": "Missing fake device_key in test fixture; corrected test only, retained exception under remote checks/ui_offscreen01; subsequent offscreen02, native01 and offscreen03 passed."
+    }
+  ],
+  "pending": [
+    "Real USB/camera/SDK integration at morning field test.",
+    "Human-load OFF/ON comparability and overhead verification.",
+    "Actual ETL event/loss validation and CSwitch v5 timing decode/GetThreadTimes cross-check."
+  ],
+  "production_changed": false,
+  "capture_auto_started": false
+}
