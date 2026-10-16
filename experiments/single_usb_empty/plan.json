@@ -1,0 +1,40 @@
+{
+  "base_commit": "ae2c13deca297ebc6d162250cfb4d272c08cdc66",
+  "topology": "One unmodified UsbWorker from default SessionController factory -> direct _GroundFrameInbox -> DeviceQualitySession -> GaitEngine. No offline source, second USB worker, per-frame observer/retention, renderer install, or recording. Production ExecutionView, production camera preview/decoder, inference, SDK full-body checkbox and pose draw checkbox enabled.",
+  "cold": "First formal session of a fresh Python process, after original hardware preflight and first real camera render/SDK start. Not OS reboot, file-cache purge, device power-cycle or completely un-warmed preflight. Startup timestamps retained.",
+  "warm": "Second same-mode session in the same process after a completed 30-second cold empty session and 3-second inter-session pause. Keep the original real camera/SDK/vision alive; original controller stop and prepare create the next USB/engine session. No gc.collect or algorithm warmup injection.",
+  "order": [
+    "pair_01_walk",
+    "pair_02_run",
+    "pair_03_walk",
+    "pair_04_run",
+    "pair_05_walk",
+    "pair_06_run"
+  ],
+  "duration_s": 30,
+  "smoke_duration_s": 5,
+  "between_phases_s": 3,
+  "mode_parameters": "Unmodified WalkingConfig/OvergroundRunningConfig defaults. Original quality readiness and acknowledgement path; no threshold changes.",
+  "observers": "Byte-identical previous QueueProbe P, common batch-boundary/64 bucket snapshots plus 10Hz sampler; count original GUI renders and actual pose drawing as in prior experiment; existing SDK telemetry counters. No per-frame arrival/USB callback observer, call tree, CPU sampler, ETW, additional live frame archive or camera recorder.",
+  "windows": "First 11 formal host seconds primary; formal 11..30 seconds secondary; preflight/startup and stop/drain separate. Consumer fps measured from batch sample progress and host time, not microbenchmarks. Pending age is real queue-head receipt age; batch state includes partial batch uncertainty.",
+  "reproduction_gate": {
+    "enqueued_fps_min": 990,
+    "consumer_fps_max_exclusive": 970,
+    "pending_frames_min": 100,
+    "oldest_pending_age_ms_min": 100,
+    "observed_heavy_span_s_min": 1,
+    "max_adjacent_heavy_observation_gap_ms": 250,
+    "completion_age_growth_ms_per_device_second_min_exclusive": 10,
+    "rule": "Retain all phases. At least one valid formal initial11s or later-window sustained shortage triggers the conditional native-scheduling stage. Report initial/later separately; do not repeat until success. No reproduction is not proof of dense-motion performance."
+  },
+  "validity": "Real eight-segment capture, one CyUsbInterfaceReader, camera enabled and actual renders>0, SDK tracking_start success and no control failure, full-duration manual stop, raw archive untruncated, no unexplained device counter gaps or quality acquisition failure. Report raw usable-contact density and events; motion/quality contamination remains separate. Effective pose draws may be zero in an unmanned scene and must be reported, not fabricated.",
+  "evidence": "Original OvergroundSession raw contact bits/device timestamps and full report/quality/runtime state retained after original stop. No extra SensorFrame list or secondary signal callback. This is not a full wire-packet capture or a deterministic replay oracle. Source hashes and original observer identity frozen before formal repetitions.",
+  "native_stage": "Only if valid sustained initial-empty shortage reproduces. Independently calibrate minimal Windows thread-scheduling recording before interpreting Running/Ready/Waiting/context switches; no new drawing A/B. No automatic GIL/GC attribution.",
+  "control": "Native enabled Windows desktop task, no screenshot during formal trials, read progress about once per minute. Functional smoke screenshot only; failed attempts retained under new names. No OS reboot or external app termination.",
+  "field_conditions": {
+    "operator_answer": "Cannot adjust onsite; keep current conditions",
+    "camera_scene": "Close-range blurry/low-detail view in both functional screenshots; no synthetic person or archived camera input substituted",
+    "beam_background": "Fixed preflight bad576, occasional usable single-bit64 signal and runtime_obstruction warnings retained; no new algorithm masks or threshold changes",
+    "interpretation": "Current unmanned scene only, not dense physical contacts or full effective human pose drawing. Report actual effective draws including zero."
+  }
+}
