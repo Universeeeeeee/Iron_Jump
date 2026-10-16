@@ -1,0 +1,12 @@
+{
+  "scope": "Offline reconstruction of the six existing hardware-profile trials; no replay, probe, wait strategy, renderer, algorithm or production changes; no new A/A or A/B.",
+  "base_commit": "c4141ec57c451bc18fb91416313e016173ed8da0",
+  "counts_at_locked_snapshot": "S=scheduled source frames by host timestamp; A=frames whose recorded pre-construction source timestamp has passed; E=latest actually enqueued sample; C=last completely acknowledged batch sample. S-C=(S-A)+(A-E)+(E-C). E-C includes up to one partially processed batch; real pending is separately exact.",
+  "enqueue_bounds": "Recorded A timestamp is before construction and direct signal emission, not an enqueue timestamp. For nonfinal frame, synchronous DirectConnection implies enqueue no later than next frame preparation timestamp; tighten by first locked snapshot witnessing latest>=frame. Final frame uses first locked witness. No fabricated exact enqueue or completion events.",
+  "completion_bounds": "Last snapshot acknowledging fewer than i and first snapshot acknowledging at least i bracket batch-boundary acknowledgement of i, not exact per-frame compute completion. Missing finer timestamps remain interval-censored.",
+  "camera_alignment": "Native CSV elapsed is measured before Python callback and before disk writing, relative to unrecorded native record_start_wall. Bound its host origin between checked-frame preparation and armed_ns; show midpoint plus uncertainty and retain native-relative gap durations. No exact native/Python callback alignment claimed.",
+  "USB_alignment": "Existing actual UsbWorker assembler receipt clock, not a timestamp of USB electrical arrival or native ReadDevice return.",
+  "focus_windows": "Walking trial1 initial empty: planned start of sample48904 to planned start59904. Running trial2: host armed+7..14s, plus largest source-interval event. Other trials retain matching first-empty and whole-session summaries.",
+  "event_thresholds_descriptive_only": "Source/USB/native-camera consecutive observation gaps >50ms; P sampler gaps >200ms. These describe gaps, do not estimate CPU usage, impose load eligibility, or gate comparisons.",
+  "native_evidence_decision": "Existing timestamps can identify upstream and downstream backlog; they cannot retrospectively supply CPU/GIL/ready-to-run traces. Do not record new uncalibrated traces to attribute historical events. State remaining causal uncertainty and a prospective independently calibrated native-only protocol."
+}

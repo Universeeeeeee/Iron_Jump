@@ -1,0 +1,764 @@
+[
+  {
+    "name": "scout_hardware_walk_connected",
+    "short": "walk1",
+    "initial_empty_by_planned_time": {
+      "requested_host_window_s": [
+        0.0013492,
+        11.0008716
+      ],
+      "observed_window_s": [
+        0.0093973,
+        10.9898631
+      ],
+      "snapshot_count": 208,
+      "planned_fps": 999.8665083952997,
+      "prepared_fps": 999.9575792130786,
+      "enqueued_fps": 999.9575792130786,
+      "batch_ack_fps": 579.5746843453582,
+      "source_lateness_ms": {
+        "p50": 1.7409,
+        "p95": 32.321515,
+        "max": 120.5047
+      },
+      "max_upstream_not_prepared": 117,
+      "max_pending_exact": 4604,
+      "max_enqueued_not_batch_ack": 4624,
+      "largest_plan_to_ack_debt_snapshot": {
+        "relative_s": 10.9898631,
+        "upstream_not_prepared": 0,
+        "prepared_not_enqueued": 0,
+        "enqueued_not_batch_ack": 4624,
+        "pending_exact": 4604,
+        "completed_sample": 55267,
+        "latest_enqueued_sample": 59891
+      },
+      "batch_phase_observations": 105,
+      "snapshot_max_gap_ms": 119.9623,
+      "raw_after_bad_mask": {
+        "frames": 11000,
+        "frames_with_any_usable_bit": 4,
+        "max_usable_bits": 1
+      }
+    },
+    "whole_formal_observed": {
+      "requested_host_window_s": [
+        0.0,
+        40.908918301
+      ],
+      "observed_window_s": [
+        0.0093973,
+        40.9089183
+      ],
+      "snapshot_count": 863,
+      "planned_fps": 725.631970115249,
+      "prepared_fps": 725.6564202793476,
+      "enqueued_fps": 725.6564202793476,
+      "batch_ack_fps": 725.8520215921355,
+      "source_lateness_ms": {
+        "p50": 1.8503,
+        "p95": 32.66015999999995,
+        "max": 190.9878
+      },
+      "max_upstream_not_prepared": 175,
+      "max_pending_exact": 15303,
+      "max_enqueued_not_batch_ack": 15323,
+      "largest_plan_to_ack_debt_snapshot": {
+        "relative_s": 29.7452075,
+        "upstream_not_prepared": 0,
+        "prepared_not_enqueued": 0,
+        "enqueued_not_batch_ack": 15323,
+        "pending_exact": 15303,
+        "completed_sample": 63267,
+        "latest_enqueued_sample": 78590
+      },
+      "batch_phase_observations": 389,
+      "snapshot_max_gap_ms": 211.9852
+    },
+    "focus_7_14s": null,
+    "sampled_consumer_state_counts": {
+      "empty": 3,
+      "batch": 389,
+      "pending": 7,
+      "handoff": 0
+    },
+    "same_active_batch_across_sampler_points": [
+      {
+        "start_s": 7.3322106,
+        "end_s": 7.4521729,
+        "observed_same_batch_span_ms": 119.9623,
+        "batch_first": 53368,
+        "batch_last": 53387,
+        "batch_size": 20
+      },
+      {
+        "start_s": 18.7256159,
+        "end_s": 18.8568473,
+        "observed_same_batch_span_ms": 131.2314,
+        "batch_first": 59048,
+        "batch_last": 59067,
+        "batch_size": 20
+      },
+      {
+        "start_s": 21.4911476,
+        "end_s": 21.7031328,
+        "observed_same_batch_span_ms": 211.9852,
+        "batch_first": 60248,
+        "batch_last": 60267,
+        "batch_size": 20
+      },
+      {
+        "start_s": 21.8033686,
+        "end_s": 21.9040913,
+        "observed_same_batch_span_ms": 100.7227,
+        "batch_first": 60268,
+        "batch_last": 60287,
+        "batch_size": 20
+      },
+      {
+        "start_s": 21.9040913,
+        "end_s": 22.0071471,
+        "observed_same_batch_span_ms": 103.0558,
+        "batch_first": 60268,
+        "batch_last": 60287,
+        "batch_size": 20
+      },
+      {
+        "start_s": 22.8226423,
+        "end_s": 22.9245448,
+        "observed_same_batch_span_ms": 101.9025,
+        "batch_first": 60488,
+        "batch_last": 60507,
+        "batch_size": 20
+      },
+      {
+        "start_s": 23.7393304,
+        "end_s": 23.8397464,
+        "observed_same_batch_span_ms": 100.416,
+        "batch_first": 60708,
+        "batch_last": 60727,
+        "batch_size": 20
+      },
+      {
+        "start_s": 24.157584,
+        "end_s": 24.2585125,
+        "observed_same_batch_span_ms": 100.9285,
+        "batch_first": 60808,
+        "batch_last": 60827,
+        "batch_size": 20
+      },
+      {
+        "start_s": 24.5601998,
+        "end_s": 24.6967778,
+        "observed_same_batch_span_ms": 136.578,
+        "batch_first": 60888,
+        "batch_last": 60907,
+        "batch_size": 20
+      },
+      {
+        "start_s": 25.119053,
+        "end_s": 25.2201903,
+        "observed_same_batch_span_ms": 101.1373,
+        "batch_first": 60968,
+        "batch_last": 60987,
+        "batch_size": 20
+      },
+      {
+        "start_s": 25.4238511,
+        "end_s": 25.5253783,
+        "observed_same_batch_span_ms": 101.5272,
+        "batch_first": 61008,
+        "batch_last": 61027,
+        "batch_size": 20
+      },
+      {
+        "start_s": 25.9378351,
+        "end_s": 26.0378839,
+        "observed_same_batch_span_ms": 100.0488,
+        "batch_first": 61108,
+        "batch_last": 61127,
+        "batch_size": 20
+      }
+    ],
+    "camera_alignment": {
+      "record_start_relative_host_s": [
+        -0.2334911,
+        0.0
+      ],
+      "alignment_midpoint_uncertainty_ms": 116.74555,
+      "CSV_is_pre_Python_callback": true,
+      "no_exact_record_start_timestamp": true
+    },
+    "snapshot_prepared_minus_enqueued_max": 1,
+    "source_to_enqueue_upper_bound_ms": {
+      "p50": 0.2014,
+      "p95": 3.6650149999999977,
+      "max": 175.1812
+    },
+    "semantic_exact": true
+  },
+  {
+    "name": "repeat_hardware_walk_2",
+    "short": "walk2",
+    "initial_empty_by_planned_time": {
+      "requested_host_window_s": [
+        0.0007222,
+        11.0002446
+      ],
+      "observed_window_s": [
+        0.0618664,
+        10.9434737
+      ],
+      "snapshot_count": 280,
+      "planned_fps": 1000.0360884186658,
+      "prepared_fps": 999.944190230059,
+      "enqueued_fps": 999.944190230059,
+      "batch_ack_fps": 1000.1279866072725,
+      "source_lateness_ms": {
+        "p50": 0.8384,
+        "p95": 2.1095699999999993,
+        "max": 5.169
+      },
+      "max_upstream_not_prepared": 6,
+      "max_pending_exact": 15,
+      "max_enqueued_not_batch_ack": 15,
+      "largest_plan_to_ack_debt_snapshot": {
+        "relative_s": 4.5651156,
+        "upstream_not_prepared": 6,
+        "prepared_not_enqueued": 0,
+        "enqueued_not_batch_ack": 15,
+        "pending_exact": 15,
+        "completed_sample": 53380,
+        "latest_enqueued_sample": 53395
+      },
+      "batch_phase_observations": 24,
+      "snapshot_max_gap_ms": 92.9306,
+      "raw_after_bad_mask": {
+        "frames": 11000,
+        "frames_with_any_usable_bit": 4,
+        "max_usable_bits": 1
+      }
+    },
+    "whole_formal_observed": {
+      "requested_host_window_s": [
+        0.0,
+        29.944275801
+      ],
+      "observed_window_s": [
+        0.0618664,
+        29.9442758
+      ],
+      "snapshot_count": 761,
+      "planned_fps": 991.3859221806927,
+      "prepared_fps": 991.419386684395,
+      "enqueued_fps": 991.419386684395,
+      "batch_ack_fps": 991.4863156917996,
+      "source_lateness_ms": {
+        "p50": 0.9502,
+        "p95": 4.736339999999997,
+        "max": 85.1321
+      },
+      "max_upstream_not_prepared": 80,
+      "max_pending_exact": 186,
+      "max_enqueued_not_batch_ack": 200,
+      "largest_plan_to_ack_debt_snapshot": {
+        "relative_s": 11.5678122,
+        "upstream_not_prepared": 1,
+        "prepared_not_enqueued": 0,
+        "enqueued_not_batch_ack": 200,
+        "pending_exact": 180,
+        "completed_sample": 60269,
+        "latest_enqueued_sample": 60469
+      },
+      "batch_phase_observations": 148,
+      "snapshot_max_gap_ms": 119.3567
+    },
+    "focus_7_14s": null,
+    "sampled_consumer_state_counts": {
+      "empty": 28,
+      "batch": 148,
+      "pending": 121,
+      "handoff": 0
+    },
+    "same_active_batch_across_sampler_points": [],
+    "camera_alignment": {
+      "record_start_relative_host_s": [
+        -0.0049703,
+        0.0
+      ],
+      "alignment_midpoint_uncertainty_ms": 2.48515,
+      "CSV_is_pre_Python_callback": true,
+      "no_exact_record_start_timestamp": true
+    },
+    "snapshot_prepared_minus_enqueued_max": 1,
+    "source_to_enqueue_upper_bound_ms": {
+      "p50": 0.28864999999999996,
+      "p95": 3.0669949999999995,
+      "max": 83.9254
+    },
+    "semantic_exact": true
+  },
+  {
+    "name": "repeat_hardware_walk_3",
+    "short": "walk3",
+    "initial_empty_by_planned_time": {
+      "requested_host_window_s": [
+        0.001531,
+        11.0010534
+      ],
+      "observed_window_s": [
+        0.0589802,
+        10.9512512
+      ],
+      "snapshot_count": 280,
+      "planned_fps": 999.9751199726853,
+      "prepared_fps": 1000.066928191559,
+      "enqueued_fps": 1000.066928191559,
+      "batch_ack_fps": 999.8833117538115,
+      "source_lateness_ms": {
+        "p50": 0.8379,
+        "p95": 2.16911,
+        "max": 16.795
+      },
+      "max_upstream_not_prepared": 7,
+      "max_pending_exact": 44,
+      "max_enqueued_not_batch_ack": 44,
+      "largest_plan_to_ack_debt_snapshot": {
+        "relative_s": 3.0483416,
+        "upstream_not_prepared": 2,
+        "prepared_not_enqueued": 0,
+        "enqueued_not_batch_ack": 44,
+        "pending_exact": 44,
+        "completed_sample": 51905,
+        "latest_enqueued_sample": 51949
+      },
+      "batch_phase_observations": 31,
+      "snapshot_max_gap_ms": 88.6513,
+      "raw_after_bad_mask": {
+        "frames": 11000,
+        "frames_with_any_usable_bit": 4,
+        "max_usable_bits": 1
+      }
+    },
+    "whole_formal_observed": {
+      "requested_host_window_s": [
+        0.0,
+        29.933516401
+      ],
+      "observed_window_s": [
+        0.0589802,
+        29.9335164
+      ],
+      "snapshot_count": 757,
+      "planned_fps": 991.7476141437135,
+      "prepared_fps": 991.7810874667235,
+      "enqueued_fps": 991.7810874667235,
+      "batch_ack_fps": 991.7810874667235,
+      "source_lateness_ms": {
+        "p50": 0.963,
+        "p95": 5.91184,
+        "max": 418.6913
+      },
+      "max_upstream_not_prepared": 409,
+      "max_pending_exact": 606,
+      "max_enqueued_not_batch_ack": 616,
+      "largest_plan_to_ack_debt_snapshot": {
+        "relative_s": 12.0347746,
+        "upstream_not_prepared": 0,
+        "prepared_not_enqueued": 0,
+        "enqueued_not_batch_ack": 616,
+        "pending_exact": 596,
+        "completed_sample": 60320,
+        "latest_enqueued_sample": 60936
+      },
+      "batch_phase_observations": 169,
+      "snapshot_max_gap_ms": 352.3292
+    },
+    "focus_7_14s": null,
+    "sampled_consumer_state_counts": {
+      "empty": 22,
+      "batch": 169,
+      "pending": 102,
+      "handoff": 0
+    },
+    "same_active_batch_across_sampler_points": [
+      {
+        "start_s": 11.7060692,
+        "end_s": 11.8322193,
+        "observed_same_batch_span_ms": 126.1501,
+        "batch_first": 60261,
+        "batch_last": 60280,
+        "batch_size": 20
+      }
+    ],
+    "camera_alignment": {
+      "record_start_relative_host_s": [
+        -0.0102234,
+        0.0
+      ],
+      "alignment_midpoint_uncertainty_ms": 5.1117,
+      "CSV_is_pre_Python_callback": true,
+      "no_exact_record_start_timestamp": true
+    },
+    "snapshot_prepared_minus_enqueued_max": 1,
+    "source_to_enqueue_upper_bound_ms": {
+      "p50": 0.23770000000000002,
+      "p95": 3.077459999999999,
+      "max": 274.2709
+    },
+    "semantic_exact": true
+  },
+  {
+    "name": "scout_hardware_run_connected",
+    "short": "run1",
+    "initial_empty_by_planned_time": {
+      "requested_host_window_s": [
+        0.0007682,
+        7.0006831
+      ],
+      "observed_window_s": [
+        0.0618164,
+        6.9727518
+      ],
+      "snapshot_count": 178,
+      "planned_fps": 999.8646492919034,
+      "prepared_fps": 1000.1540457171689,
+      "enqueued_fps": 1000.1540457171689,
+      "batch_ack_fps": 1000.0093475045361,
+      "source_lateness_ms": {
+        "p50": 0.8299,
+        "p95": 2.1069199999999983,
+        "max": 7.7888
+      },
+      "max_upstream_not_prepared": 5,
+      "max_pending_exact": 8,
+      "max_enqueued_not_batch_ack": 9,
+      "largest_plan_to_ack_debt_snapshot": {
+        "relative_s": 3.0053001,
+        "upstream_not_prepared": 0,
+        "prepared_not_enqueued": 0,
+        "enqueued_not_batch_ack": 9,
+        "pending_exact": 4,
+        "completed_sample": 135034,
+        "latest_enqueued_sample": 135043
+      },
+      "batch_phase_observations": 10,
+      "snapshot_max_gap_ms": 70.3806,
+      "raw_after_bad_mask": {
+        "frames": 7000,
+        "frames_with_any_usable_bit": 0,
+        "max_usable_bits": 0
+      }
+    },
+    "whole_formal_observed": {
+      "requested_host_window_s": [
+        0.0,
+        23.793660401
+      ],
+      "observed_window_s": [
+        0.0618164,
+        23.7936604
+      ],
+      "snapshot_count": 604,
+      "planned_fps": 988.9665548113329,
+      "prepared_fps": 989.0508297627441,
+      "enqueued_fps": 989.0508297627441,
+      "batch_ack_fps": 989.0508297627441,
+      "source_lateness_ms": {
+        "p50": 0.99865,
+        "p95": 6.487615000000001,
+        "max": 90.0036
+      },
+      "max_upstream_not_prepared": 99,
+      "max_pending_exact": 394,
+      "max_enqueued_not_batch_ack": 394,
+      "largest_plan_to_ack_debt_snapshot": {
+        "relative_s": 10.9581358,
+        "upstream_not_prepared": 1,
+        "prepared_not_enqueued": 0,
+        "enqueued_not_batch_ack": 394,
+        "pending_exact": 394,
+        "completed_sample": 142600,
+        "latest_enqueued_sample": 142994
+      },
+      "batch_phase_observations": 117,
+      "snapshot_max_gap_ms": 108.8907
+    },
+    "focus_7_14s": null,
+    "sampled_consumer_state_counts": {
+      "empty": 22,
+      "batch": 117,
+      "pending": 97,
+      "handoff": 0
+    },
+    "same_active_batch_across_sampler_points": [],
+    "camera_alignment": {
+      "record_start_relative_host_s": [
+        -0.0118476,
+        0.0
+      ],
+      "alignment_midpoint_uncertainty_ms": 5.9238,
+      "CSV_is_pre_Python_callback": true,
+      "no_exact_record_start_timestamp": true
+    },
+    "snapshot_prepared_minus_enqueued_max": 1,
+    "source_to_enqueue_upper_bound_ms": {
+      "p50": 0.1965,
+      "p95": 3.142279999999995,
+      "max": 80.1736
+    },
+    "semantic_exact": true
+  },
+  {
+    "name": "repeat_hardware_run_2",
+    "short": "run2",
+    "initial_empty_by_planned_time": {
+      "requested_host_window_s": [
+        -8.92e-05,
+        6.9998257
+      ],
+      "observed_window_s": [
+        0.0129019,
+        6.9782325
+      ],
+      "snapshot_count": 179,
+      "planned_fps": 999.6653999452661,
+      "prepared_fps": 999.9525363519716,
+      "enqueued_fps": 999.9525363519716,
+      "batch_ack_fps": 999.6653999452661,
+      "source_lateness_ms": {
+        "p50": 0.8485,
+        "p95": 2.3359899999999976,
+        "max": 22.3299
+      },
+      "max_upstream_not_prepared": 7,
+      "max_pending_exact": 145,
+      "max_enqueued_not_batch_ack": 149,
+      "largest_plan_to_ack_debt_snapshot": {
+        "relative_s": 3.1429939,
+        "upstream_not_prepared": 0,
+        "prepared_not_enqueued": 0,
+        "enqueued_not_batch_ack": 149,
+        "pending_exact": 143,
+        "completed_sample": 135032,
+        "latest_enqueued_sample": 135181
+      },
+      "batch_phase_observations": 28,
+      "snapshot_max_gap_ms": 100.9428,
+      "raw_after_bad_mask": {
+        "frames": 7000,
+        "frames_with_any_usable_bit": 0,
+        "max_usable_bits": 0
+      }
+    },
+    "whole_formal_observed": {
+      "requested_host_window_s": [
+        0.0,
+        23.813420101
+      ],
+      "observed_window_s": [
+        0.0129019,
+        23.8134201
+      ],
+      "snapshot_count": 598,
+      "planned_fps": 988.1297458472984,
+      "prepared_fps": 988.2137776311106,
+      "enqueued_fps": 988.2137776311106,
+      "batch_ack_fps": 988.2137776311106,
+      "source_lateness_ms": {
+        "p50": 1.0195,
+        "p95": 11.356000000000028,
+        "max": 692.3152
+      },
+      "max_upstream_not_prepared": 667,
+      "max_pending_exact": 968,
+      "max_enqueued_not_batch_ack": 977,
+      "largest_plan_to_ack_debt_snapshot": {
+        "relative_s": 9.2340483,
+        "upstream_not_prepared": 0,
+        "prepared_not_enqueued": 0,
+        "enqueued_not_batch_ack": 977,
+        "pending_exact": 957,
+        "completed_sample": 140295,
+        "latest_enqueued_sample": 141272
+      },
+      "batch_phase_observations": 101,
+      "snapshot_max_gap_ms": 714.0042
+    },
+    "focus_7_14s": {
+      "requested_host_window_s": [
+        7.0,
+        14.0
+      ],
+      "observed_window_s": [
+        7.0340697,
+        13.9598988
+      ],
+      "snapshot_count": 171,
+      "planned_fps": 999.8802887007421,
+      "prepared_fps": 999.8802887007421,
+      "enqueued_fps": 999.8802887007421,
+      "batch_ack_fps": 999.4471275648428,
+      "source_lateness_ms": {
+        "p50": 1.3596,
+        "p95": 424.56238999999977,
+        "max": 692.3152
+      },
+      "max_upstream_not_prepared": 667,
+      "max_pending_exact": 968,
+      "max_enqueued_not_batch_ack": 977,
+      "largest_plan_to_ack_debt_snapshot": {
+        "relative_s": 9.2340483,
+        "upstream_not_prepared": 0,
+        "prepared_not_enqueued": 0,
+        "enqueued_not_batch_ack": 977,
+        "pending_exact": 957,
+        "completed_sample": 140295,
+        "latest_enqueued_sample": 141272
+      },
+      "batch_phase_observations": 52,
+      "snapshot_max_gap_ms": 714.0042
+    },
+    "sampled_consumer_state_counts": {
+      "empty": 47,
+      "batch": 101,
+      "pending": 82,
+      "handoff": 0
+    },
+    "same_active_batch_across_sampler_points": [
+      {
+        "start_s": 3.0427005,
+        "end_s": 3.1429939,
+        "observed_same_batch_span_ms": 100.2934,
+        "batch_first": 135033,
+        "batch_last": 135038,
+        "batch_size": 6
+      },
+      {
+        "start_s": 8.5267763,
+        "end_s": 8.6271943,
+        "observed_same_batch_span_ms": 100.418,
+        "batch_first": 139842,
+        "batch_last": 139855,
+        "batch_size": 14
+      }
+    ],
+    "camera_alignment": {
+      "record_start_relative_host_s": [
+        -0.0119479,
+        0.0
+      ],
+      "alignment_midpoint_uncertainty_ms": 5.97395,
+      "CSV_is_pre_Python_callback": true,
+      "no_exact_record_start_timestamp": true
+    },
+    "snapshot_prepared_minus_enqueued_max": 1,
+    "source_to_enqueue_upper_bound_ms": {
+      "p50": 0.1745,
+      "p95": 3.0982399999999997,
+      "max": 338.4027
+    },
+    "semantic_exact": true
+  },
+  {
+    "name": "repeat_hardware_run_3",
+    "short": "run3",
+    "initial_empty_by_planned_time": {
+      "requested_host_window_s": [
+        -0.0005236,
+        6.9993913
+      ],
+      "observed_window_s": [
+        0.057763,
+        6.97468
+      ],
+      "snapshot_count": 178,
+      "planned_fps": 999.8674264849499,
+      "prepared_fps": 999.8674264849499,
+      "enqueued_fps": 999.8674264849499,
+      "batch_ack_fps": 999.8674264849499,
+      "source_lateness_ms": {
+        "p50": 0.8539,
+        "p95": 2.1222,
+        "max": 11.5496
+      },
+      "max_upstream_not_prepared": 5,
+      "max_pending_exact": 7,
+      "max_enqueued_not_batch_ack": 10,
+      "largest_plan_to_ack_debt_snapshot": {
+        "relative_s": 3.5925946,
+        "upstream_not_prepared": 1,
+        "prepared_not_enqueued": 0,
+        "enqueued_not_batch_ack": 9,
+        "pending_exact": 1,
+        "completed_sample": 135622,
+        "latest_enqueued_sample": 135631
+      },
+      "batch_phase_observations": 18,
+      "snapshot_max_gap_ms": 75.4518,
+      "raw_after_bad_mask": {
+        "frames": 7000,
+        "frames_with_any_usable_bit": 0,
+        "max_usable_bits": 0
+      }
+    },
+    "whole_formal_observed": {
+      "requested_host_window_s": [
+        0.0,
+        24.092994301
+      ],
+      "observed_window_s": [
+        0.057763,
+        24.0929943
+      ],
+      "snapshot_count": 607,
+      "planned_fps": 976.608034556339,
+      "prepared_fps": 976.6496401472117,
+      "enqueued_fps": 976.6496401472117,
+      "batch_ack_fps": 976.6496401472117,
+      "source_lateness_ms": {
+        "p50": 0.9847,
+        "p95": 5.887510000000002,
+        "max": 80.5439
+      },
+      "max_upstream_not_prepared": 77,
+      "max_pending_exact": 204,
+      "max_enqueued_not_batch_ack": 215,
+      "largest_plan_to_ack_debt_snapshot": {
+        "relative_s": 10.860454,
+        "upstream_not_prepared": 1,
+        "prepared_not_enqueued": 0,
+        "enqueued_not_batch_ack": 215,
+        "pending_exact": 195,
+        "completed_sample": 142683,
+        "latest_enqueued_sample": 142898
+      },
+      "batch_phase_observations": 137,
+      "snapshot_max_gap_ms": 105.4123
+    },
+    "focus_7_14s": null,
+    "sampled_consumer_state_counts": {
+      "empty": 23,
+      "batch": 137,
+      "pending": 79,
+      "handoff": 0
+    },
+    "same_active_batch_across_sampler_points": [],
+    "camera_alignment": {
+      "record_start_relative_host_s": [
+        -0.0098989,
+        0.0
+      ],
+      "alignment_midpoint_uncertainty_ms": 4.94945,
+      "CSV_is_pre_Python_callback": true,
+      "no_exact_record_start_timestamp": true
+    },
+    "snapshot_prepared_minus_enqueued_max": 1,
+    "source_to_enqueue_upper_bound_ms": {
+      "p50": 0.2123,
+      "p95": 3.150659999999994,
+      "max": 91.5578
+    },
+    "semantic_exact": true
+  }
+]
