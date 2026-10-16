@@ -1,0 +1,12 @@
+{
+  "trial": "scout_hardware_walk",
+  "stage": "hardware load start, before SDK/primary replay",
+  "included_in_scout_or_calibration_metrics": false,
+  "cause": "Original worker failed opening VID 04B4/PID 1004; independent PnP query found no matching device and no other Python processes",
+  "complete": {
+    "system_exit_code": null,
+    "measurement_serialized": false
+  },
+  "evidence": "usb_availability.json; scout_hardware_walk_target.log retained and hashed in final_evidence_manifest.json",
+  "retry": "New *_connected directories after user reconnected device; no overwritten trial"
+}

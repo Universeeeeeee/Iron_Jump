@@ -1,0 +1,61 @@
+{
+  "base_commit": "3020bb1db2e79437b05ee3ae00c0f210e9c33e13",
+  "scope": "Measurement and workload matching only; preserve candidate beam_layer and original NumPy/production files. No consumer sleeps, priorities, frame amplification, extra inference, or duplicated decoding.",
+  "queue_definitions": {
+    "pending": "Actual len(inbox._pending), and first pending receipt while holding the existing inbox lock. Empty pending alone is not an idle consumer. Fixed archived optical source has no issues, contiguous sample indices.",
+    "batch_state": "Detailed P stores batch first/last/count, no per-frame clocks. latest_received.sample - last completed batch sample is outstanding at batch boundary; subtract pending for popped/inflight (includes already completed frames inside that batch). Handoff before consume is explicit.",
+    "common": "Both L/P record one locked snapshot after a batch crosses a 64-sample bucket, plus identical raw/SDK/pose/footprint evidence. Existing common last completion age is retained.",
+    "P": "P additionally records batch state and snapshots via a separate Python thread at 10Hz, no Qt widget calls, stage trees or CPU profiler. Incremental P vs common L is calibrated; shared observers are not proven zero overhead.",
+    "empty_recovery": "First observed locked snapshot after last usable raw contact scheduled arrival with pending=0 and outstanding=0. This is a witnessed sample time, not an exact time of the first unobserved empty transition. Report observation gaps and missing as censored. No continuous 500ms/10ms age requirement.",
+    "jitter": "Completion-age P95/max after last contact, and count of >25ms completion ages at current empty witnesses; report separately, no assertion about root cause.",
+    "sampling_limit": "10Hz detail and ~64 device-sample common snapshots can miss short queue peaks or empty transitions; pending measurements are exact at their timestamps, not continuous monitoring."
+  },
+  "load_profiles": {
+    "fixed": "Prior controlled fixed optical/JPEG replay + enabled GUI/real SDK/actual skeleton. Production preview selector already 30Hz, archived100Hz yields ~25 selected frames/s.",
+    "capture": "fixed plus original TinySeDShowCapture 1920x1080 requested100fps with original native-to-Python byte-copy callback; callback counters only; no second decoder/inference.",
+    "record": "capture plus original native MJPEG/CSV writer during formal clip. Physical content differs from archived preview and bytes/frame must be reported; no actual optical USB parsing or old per-frame diagnostic scans."
+  },
+  "load_qualification": {
+    "repeat_count_per_mode": 3,
+    "actual_arrival_fps_min": 990,
+    "consumer_fps_max_exclusive": 970,
+    "pending_depth_min": 100,
+    "oldest_pending_age_ms_min": 100,
+    "observed_heavy_span_s_min": 1,
+    "completion_age_growth_ms_per_device_second_min_exclusive": 10,
+    "rule": "All three repeats of the same profile, each mode, must meet every threshold; no observer-only load is eligible. If no eligible profile, stop before A/A and A/B; preserve measured deficits/remaining differences."
+  },
+  "scout_order": [
+    "fixed_walk",
+    "fixed_run",
+    "record_walk",
+    "record_run",
+    "capture_walk",
+    "capture_run"
+  ],
+  "AA": {
+    "required": "Only after representative load qualified in both modes; baseline renderer A only, six pairs per mode, LP/PL alternation, modes interleaved. Freeze source hashes before first AA.",
+    "limits": {
+      "paired_median_consumer_fps_absolute": 20,
+      "paired_median_age_slope_ms_per_device_second_absolute": 5,
+      "paired_median_pending_p95_frames_absolute": 20,
+      "paired_median_oldest_pending_p95_ms_absolute": 20,
+      "paired_median_footprint_p95_ms_absolute": 25,
+      "paired_median_footprint_max_ms_absolute": 25,
+      "paired_median_first_observed_empty_s_absolute": 0.15
+    },
+    "stop": "Any failure or missing empty witness stops AB; report full pair ranges and noise90, no data exclusions."
+  },
+  "AB": {
+    "required": "Only after representative-load and AA gates, six AB/BA pairs per mode with P. No new renderer changes; retain existing byte-exact pixels and full semantic checks.",
+    "primary": "Deficit reduction to actual ~1000Hz arrivals, pending AUC, oldest-pending age and footprint P95. Do not require >5% fps beyond 1000Hz.",
+    "benefit": "All six paired gains in at least one primary metric, paired median gain > AA absolute-noise90 AND fps gain>=20 OR pending AUC reduction>=10% OR oldest-pending P95 reduction>=20ms OR footprint P95 reduction>=25ms; no material regression under AA limits; no source or visual-work reduction may explain the gain.",
+    "ceiling": "Always report actual arrival fps, deficit max(0,1000-consumption), and deficit to actual arrival. Finite-window >1000fps is catch-up, not increased sensor capacity."
+  },
+  "preservation": "Every trial must pass the independent clip oracle: full raw bits/wire/validity/drop/counters/stream/flags, archive, report, quality history, runtime/window, audit/timeline/mirror; normalize only verified checked receipt clocks. Pixel proofs from previous branch remain valid only with identical renderer hashes.",
+  "remote_control": "Interactive Windows task runs independently. No three-second scheduled-task polling; completion/progress read roughly once per minute. No screenshots during measurement (functional smoke only).",
+  "renderer_sha256": {
+    "A": "d12f0f671b75013918d2c0700d10de128106384a936716a68e1cf1ceff495554",
+    "B": "68f6f59c27378a8af71e5f6590b09c19b4422f6ced368d8733da76c6be5559e1"
+  }
+}

@@ -1,0 +1,616 @@
+{
+  "local_metadata": {
+    "runs/repeat_hardware_run_2/armed.json": {
+      "bytes": 28,
+      "sha256": "a977f232f054fc906cee0fddd6fa51cde91f4d7a603e9823ef0c830a4ae498d3"
+    },
+    "runs/repeat_hardware_run_2/complete.json": {
+      "bytes": 55,
+      "sha256": "7898f0c88dc39cd78087043aa2f3835240c801b3c3fd6eb25c62a4efaa974ec4"
+    },
+    "runs/repeat_hardware_run_2/exit_cleanup.json": {
+      "bytes": 125,
+      "sha256": "87d32d583676a8a4cd51d4bc34bfc33c5f5e31589f5c7e08264954b89f2f8d5e"
+    },
+    "runs/repeat_hardware_run_2/measurement.json": {
+      "bytes": 1354340,
+      "sha256": "b7fedfcb963c5d701d6c108bffd1a37340a632391b2fceeeee7f121d3466ac8d"
+    },
+    "runs/repeat_hardware_run_2/native_camera.csv": {
+      "bytes": 137324,
+      "sha256": "a63c02205dbac7da1d756df64009f96a458b2d370966539edb12258273e12820"
+    },
+    "runs/repeat_hardware_run_2/native_usb_frames.npz": {
+      "bytes": 421736,
+      "sha256": "409e63a2b7eaaa20d43454d618a1df809af1d9c2b7453080620ff01833ee9e84"
+    },
+    "runs/repeat_hardware_run_2/native_usb_metadata.json": {
+      "bytes": 2905238,
+      "sha256": "30e84cea0c6026cd697832ca8ae52f417d173aefe2117ddd25391bc958e341d5"
+    },
+    "runs/repeat_hardware_run_2/pid.json": {
+      "bytes": 14,
+      "sha256": "c65b7845288ec74f28e0104ae064ad9375fa1fca32baf6ed1fcdd4475d4cc867"
+    },
+    "runs/repeat_hardware_run_2/raw_frames.npz": {
+      "bytes": 283899,
+      "sha256": "66c99820185b87847c7551a55ba575f605d71f7431a58aeb2e86ac2467b84a83"
+    },
+    "runs/repeat_hardware_run_2/report.json": {
+      "bytes": 4731664,
+      "sha256": "dc7db159188321ee4e30049139a8a7a38f9a9f8362393349b56989e0d9f0cf68"
+    },
+    "runs/repeat_hardware_run_2/summary.json": {
+      "bytes": 7227,
+      "sha256": "7ebde3ef6f867ce31d6d19d23cb601edae1cbf805abbc24805e1ec6ce55e0865"
+    },
+    "runs/repeat_hardware_run_3/armed.json": {
+      "bytes": 28,
+      "sha256": "f2741feb6fef2e19c347ca80693e7afc9d9e0d4368b2c7c8b2535dec48b999a5"
+    },
+    "runs/repeat_hardware_run_3/complete.json": {
+      "bytes": 55,
+      "sha256": "7898f0c88dc39cd78087043aa2f3835240c801b3c3fd6eb25c62a4efaa974ec4"
+    },
+    "runs/repeat_hardware_run_3/exit_cleanup.json": {
+      "bytes": 125,
+      "sha256": "87d32d583676a8a4cd51d4bc34bfc33c5f5e31589f5c7e08264954b89f2f8d5e"
+    },
+    "runs/repeat_hardware_run_3/measurement.json": {
+      "bytes": 1355418,
+      "sha256": "6655ff4a6321345613ef4e7a10b680f61b17346ad0e1e62e87f5a9c4cbc1cd3f"
+    },
+    "runs/repeat_hardware_run_3/native_camera.csv": {
+      "bytes": 145111,
+      "sha256": "7f1745b2598aad29e89e503a29ce8acdd57119e060550f758585d657941d1d85"
+    },
+    "runs/repeat_hardware_run_3/native_usb_frames.npz": {
+      "bytes": 429255,
+      "sha256": "b4ef9a7ccc1ccb314129ead6a0df284381eaae1e5a3f96829a00e02e165c2d65"
+    },
+    "runs/repeat_hardware_run_3/native_usb_metadata.json": {
+      "bytes": 2957366,
+      "sha256": "74d24373a3ef56f336d314748d169e98e2d8ab2b90ba8422be67eebac53ac4d9"
+    },
+    "runs/repeat_hardware_run_3/pid.json": {
+      "bytes": 14,
+      "sha256": "32cebeff35238499ecf49184887fee41184f965349df28c9c45c04c74234fa34"
+    },
+    "runs/repeat_hardware_run_3/raw_frames.npz": {
+      "bytes": 284064,
+      "sha256": "5c0f3ac11c781f6e83f45fcd44fd2af1f9b3845f2b58a130a8ddc79d1164a765"
+    },
+    "runs/repeat_hardware_run_3/report.json": {
+      "bytes": 4731664,
+      "sha256": "0ec1058d60246c55dc0c4be4c29d8c841153da6455fe8a73602bdd6302f7a9fc"
+    },
+    "runs/repeat_hardware_run_3/summary.json": {
+      "bytes": 7132,
+      "sha256": "c75dc79352c2feecf660a403906be3fef383a462bacc99324461dbdeeb6397a0"
+    },
+    "runs/repeat_hardware_walk_2/armed.json": {
+      "bytes": 28,
+      "sha256": "074c7757ed1c55f12dcd8aab71faf5b9235ef126048530ab4d432c39e86bb83f"
+    },
+    "runs/repeat_hardware_walk_2/complete.json": {
+      "bytes": 55,
+      "sha256": "7898f0c88dc39cd78087043aa2f3835240c801b3c3fd6eb25c62a4efaa974ec4"
+    },
+    "runs/repeat_hardware_walk_2/exit_cleanup.json": {
+      "bytes": 125,
+      "sha256": "87d32d583676a8a4cd51d4bc34bfc33c5f5e31589f5c7e08264954b89f2f8d5e"
+    },
+    "runs/repeat_hardware_walk_2/measurement.json": {
+      "bytes": 1612732,
+      "sha256": "f7d457b7386f1e452372a3e5abbf675f940adc1d431a3a86f018f85faf33c593"
+    },
+    "runs/repeat_hardware_walk_2/native_camera.csv": {
+      "bytes": 174794,
+      "sha256": "42aa8f5d8bcd47f15b20cecc3d0f4b1f60f32c2c5ec43f90492907cbd0a91fce"
+    },
+    "runs/repeat_hardware_walk_2/native_usb_frames.npz": {
+      "bytes": 489307,
+      "sha256": "cd6902dee285733b0fd8380e2468b5d3d014aac4eaa3b1d395809ac6b24c955c"
+    },
+    "runs/repeat_hardware_walk_2/native_usb_metadata.json": {
+      "bytes": 3369134,
+      "sha256": "74336a9bb221852a5f4638273a2f3e0780e060e10a72b3c401e076ba9ef0985b"
+    },
+    "runs/repeat_hardware_walk_2/pid.json": {
+      "bytes": 13,
+      "sha256": "e03af24851605e1710ad5abe0cf6734ebc43011c7ee60415a34c77121072c0d6"
+    },
+    "runs/repeat_hardware_walk_2/raw_frames.npz": {
+      "bytes": 357719,
+      "sha256": "014dec8ee62b96bd3811a664b3787d807820dce99d6f12543e8eadc4ff047893"
+    },
+    "runs/repeat_hardware_walk_2/report.json": {
+      "bytes": 5446621,
+      "sha256": "535c6c5b197d750bd5be511895c7e40a19e7d1f5cc1280d6595bc30a4772f1fb"
+    },
+    "runs/repeat_hardware_walk_2/summary.json": {
+      "bytes": 7144,
+      "sha256": "998ffa59626a4c59fe5c4968ce9a9ea32736999eeff60ade2ec2253d62223b4c"
+    },
+    "runs/repeat_hardware_walk_3/armed.json": {
+      "bytes": 28,
+      "sha256": "7c82f88fe37a06f154df4634dcae0e4aee8ececae764fda320cf39e1a75b6c83"
+    },
+    "runs/repeat_hardware_walk_3/complete.json": {
+      "bytes": 55,
+      "sha256": "7898f0c88dc39cd78087043aa2f3835240c801b3c3fd6eb25c62a4efaa974ec4"
+    },
+    "runs/repeat_hardware_walk_3/exit_cleanup.json": {
+      "bytes": 125,
+      "sha256": "87d32d583676a8a4cd51d4bc34bfc33c5f5e31589f5c7e08264954b89f2f8d5e"
+    },
+    "runs/repeat_hardware_walk_3/measurement.json": {
+      "bytes": 1612436,
+      "sha256": "8165b51998c0b8c7006482fff672d4cbf6a0fdf392f212ef7bffa8ede849b3e2"
+    },
+    "runs/repeat_hardware_walk_3/native_camera.csv": {
+      "bytes": 174153,
+      "sha256": "154f7ba61239d26cd8fee2ebb3901378a77f242f1285b2c27ea1640239aaf143"
+    },
+    "runs/repeat_hardware_walk_3/native_usb_frames.npz": {
+      "bytes": 485506,
+      "sha256": "59867893da02d6fdb2b5ba8076bd1d2add94c0933d95d705f44e3a2bbe92e2d3"
+    },
+    "runs/repeat_hardware_walk_3/native_usb_metadata.json": {
+      "bytes": 3337094,
+      "sha256": "7a45ab5f588ecab199ff0efec5020cdcee8aacf5b1c184c6cb05dc258a921b92"
+    },
+    "runs/repeat_hardware_walk_3/pid.json": {
+      "bytes": 14,
+      "sha256": "87ffd3f8b4ef479042a2b600a4c0fa103d2515aac811784e5a6f3dba4665e9c6"
+    },
+    "runs/repeat_hardware_walk_3/raw_frames.npz": {
+      "bytes": 357457,
+      "sha256": "1b4f314c43ab4f9e42c87fefe77af081c69d48685ae8733fadb70859976e6584"
+    },
+    "runs/repeat_hardware_walk_3/report.json": {
+      "bytes": 5446621,
+      "sha256": "e1b3f52ea5f4fb07fbc1887f41136c3eeda2c52d7da0a2cb300709a7bc5c0b9b"
+    },
+    "runs/repeat_hardware_walk_3/summary.json": {
+      "bytes": 7140,
+      "sha256": "7ad03f46a847bb9363440354c7bfc986a1075164a3cb1040872111518f262874"
+    },
+    "runs/scout_capture_run/armed.json": {
+      "bytes": 28,
+      "sha256": "8dd249fd37de8a0e26b4641f892b31607a5b1667198b2ed9fd9218a0ecdcf420"
+    },
+    "runs/scout_capture_run/complete.json": {
+      "bytes": 55,
+      "sha256": "7898f0c88dc39cd78087043aa2f3835240c801b3c3fd6eb25c62a4efaa974ec4"
+    },
+    "runs/scout_capture_run/exit_cleanup.json": {
+      "bytes": 125,
+      "sha256": "87d32d583676a8a4cd51d4bc34bfc33c5f5e31589f5c7e08264954b89f2f8d5e"
+    },
+    "runs/scout_capture_run/measurement.json": {
+      "bytes": 1352859,
+      "sha256": "34337b02f9598fd92326a78ffb373dcbffa7370c82ffccd6d74d6852ddc6967d"
+    },
+    "runs/scout_capture_run/pid.json": {
+      "bytes": 14,
+      "sha256": "618fb1d6864e7b3346a5f69d35e6b4f1d0a63e8cdc26b471ac382bc957daca28"
+    },
+    "runs/scout_capture_run/raw_frames.npz": {
+      "bytes": 283723,
+      "sha256": "756730bab5531cee94a77de76e8a00b13a534f1be600ed02c8c76ba54ce6eaba"
+    },
+    "runs/scout_capture_run/report.json": {
+      "bytes": 4731664,
+      "sha256": "77313294bd449e8e4eaa274ba0734f60216f084278b9b995fe312bc6748b32f4"
+    },
+    "runs/scout_capture_run/summary.json": {
+      "bytes": 5832,
+      "sha256": "93b9f63564841e24da276fe9f40519ff43660e6246ded8f7930ab3f012a3217a"
+    },
+    "runs/scout_capture_walk/armed.json": {
+      "bytes": 28,
+      "sha256": "80fb84d70095edc926a716233e6e28b87a4d1b77afe605eb909d6d4178dcf26e"
+    },
+    "runs/scout_capture_walk/complete.json": {
+      "bytes": 55,
+      "sha256": "7898f0c88dc39cd78087043aa2f3835240c801b3c3fd6eb25c62a4efaa974ec4"
+    },
+    "runs/scout_capture_walk/exit_cleanup.json": {
+      "bytes": 125,
+      "sha256": "87d32d583676a8a4cd51d4bc34bfc33c5f5e31589f5c7e08264954b89f2f8d5e"
+    },
+    "runs/scout_capture_walk/measurement.json": {
+      "bytes": 1610137,
+      "sha256": "87386c31bab186f56cd33535e656c8ecf7204058249616acd0df763980e2bc34"
+    },
+    "runs/scout_capture_walk/pid.json": {
+      "bytes": 14,
+      "sha256": "c3d3fdb6faeb30625c2de094b983ab708aa7a0acc7e9b4446b51b42521ad195a"
+    },
+    "runs/scout_capture_walk/raw_frames.npz": {
+      "bytes": 357383,
+      "sha256": "eaa435a6ea31bc71ec203ba6bf7826aa90e3fbaac96ad2179fa2d375571feaf9"
+    },
+    "runs/scout_capture_walk/report.json": {
+      "bytes": 5446621,
+      "sha256": "623652de199aaf79114f279bcb000661944585ab21f4bb67d862b2c17928491b"
+    },
+    "runs/scout_capture_walk/summary.json": {
+      "bytes": 5794,
+      "sha256": "916e362a3f6f0a417639aad930ca3e035d49966c1206d2f54fe1eacabcad3337"
+    },
+    "runs/scout_fixed_run/armed.json": {
+      "bytes": 28,
+      "sha256": "8abdb285f453b1c4503c0089f4add23d395239717a236a152435291345d45d8b"
+    },
+    "runs/scout_fixed_run/complete.json": {
+      "bytes": 55,
+      "sha256": "7898f0c88dc39cd78087043aa2f3835240c801b3c3fd6eb25c62a4efaa974ec4"
+    },
+    "runs/scout_fixed_run/exit_cleanup.json": {
+      "bytes": 125,
+      "sha256": "87d32d583676a8a4cd51d4bc34bfc33c5f5e31589f5c7e08264954b89f2f8d5e"
+    },
+    "runs/scout_fixed_run/measurement.json": {
+      "bytes": 1351884,
+      "sha256": "38c77ad0060cc27ec4e02999f9777c62897ec036759a8b810ea06f205d72314a"
+    },
+    "runs/scout_fixed_run/pid.json": {
+      "bytes": 14,
+      "sha256": "80b3196851a531caf94ae30bac8e814359d0201b643df9603f23eb650fbd4779"
+    },
+    "runs/scout_fixed_run/raw_frames.npz": {
+      "bytes": 283342,
+      "sha256": "4d523322232375fe023c490c85473979c9976cd78fab04bc6cc828fe540d6985"
+    },
+    "runs/scout_fixed_run/report.json": {
+      "bytes": 4731664,
+      "sha256": "eaa1d36b31845b541b0bb11a26142185d3e5ee3d2bf3c044d0b58fb7ed9592a5"
+    },
+    "runs/scout_fixed_run/summary.json": {
+      "bytes": 5025,
+      "sha256": "3e43cc9a152df3ce747c7202fc9e95faba0b5da6e656c7f1a473e41d4a7e749b"
+    },
+    "runs/scout_fixed_walk/armed.json": {
+      "bytes": 28,
+      "sha256": "c60b516f95cef8e0d365fbe3c39ea53fd098c6a144425e6222c1568a27035c0a"
+    },
+    "runs/scout_fixed_walk/complete.json": {
+      "bytes": 55,
+      "sha256": "7898f0c88dc39cd78087043aa2f3835240c801b3c3fd6eb25c62a4efaa974ec4"
+    },
+    "runs/scout_fixed_walk/exit_cleanup.json": {
+      "bytes": 125,
+      "sha256": "87d32d583676a8a4cd51d4bc34bfc33c5f5e31589f5c7e08264954b89f2f8d5e"
+    },
+    "runs/scout_fixed_walk/measurement.json": {
+      "bytes": 1609077,
+      "sha256": "0a7eac0aec4e5753aca7841f5ea977d61f7c47d613e9aca25d109aeb6bca5f2f"
+    },
+    "runs/scout_fixed_walk/pid.json": {
+      "bytes": 13,
+      "sha256": "aa6fd83f39de0099959aae4218a3a1f97bf7bf47d56e1c68f2eac39d2a5bc045"
+    },
+    "runs/scout_fixed_walk/raw_frames.npz": {
+      "bytes": 357280,
+      "sha256": "deea25769b7727152b9b1eb04c6ea9d44700c910d5cd41b5d0712c73e29ab6a0"
+    },
+    "runs/scout_fixed_walk/report.json": {
+      "bytes": 5446621,
+      "sha256": "a230b76b1d91005e60050c7c95e6bfc2d9fe6210598ecf768b36a95bb0e86afd"
+    },
+    "runs/scout_fixed_walk/summary.json": {
+      "bytes": 5043,
+      "sha256": "dbf88442d11402363ae33bf9ac34ea8702b865beebd6aa70d37b5f2c7837c7af"
+    },
+    "runs/scout_hardware_run_connected/armed.json": {
+      "bytes": 28,
+      "sha256": "1bb317344994508411e9b8b1e4668d1b0fb5169d75e5a934af4a7017d5715b39"
+    },
+    "runs/scout_hardware_run_connected/complete.json": {
+      "bytes": 55,
+      "sha256": "7898f0c88dc39cd78087043aa2f3835240c801b3c3fd6eb25c62a4efaa974ec4"
+    },
+    "runs/scout_hardware_run_connected/exit_cleanup.json": {
+      "bytes": 125,
+      "sha256": "87d32d583676a8a4cd51d4bc34bfc33c5f5e31589f5c7e08264954b89f2f8d5e"
+    },
+    "runs/scout_hardware_run_connected/measurement.json": {
+      "bytes": 1354927,
+      "sha256": "d22e506399724f8915a767ceded7f440dd5b06af19830a890d7a449f299bf411"
+    },
+    "runs/scout_hardware_run_connected/native_camera.csv": {
+      "bytes": 141719,
+      "sha256": "56c76ccf7e192c2408b59023a724500a50f50af391d2962e1f64b0c34e1d2285"
+    },
+    "runs/scout_hardware_run_connected/native_usb_frames.npz": {
+      "bytes": 424547,
+      "sha256": "f879fcdb5e3f59d22f85f62f730cc80fbb3ff67e5082c7cea0635fad5973ee46"
+    },
+    "runs/scout_hardware_run_connected/native_usb_metadata.json": {
+      "bytes": 2920934,
+      "sha256": "0d8a561127989e70b374a98e9fd94463537d3ba977e30159d47e960ba61fff04"
+    },
+    "runs/scout_hardware_run_connected/pid.json": {
+      "bytes": 14,
+      "sha256": "ad8044f6898392162323417984ff385ee65ba8bfac0d3f271afc5920b47e770a"
+    },
+    "runs/scout_hardware_run_connected/raw_frames.npz": {
+      "bytes": 283869,
+      "sha256": "d5f3bebac3749269e490d2250bcdef154f0ed7aef6ac65c822496a67a7570e40"
+    },
+    "runs/scout_hardware_run_connected/report.json": {
+      "bytes": 4731664,
+      "sha256": "ef449b9baa2239529d50c0f235906568845611b9802a961ea7eaf3e4cf1e0a9d"
+    },
+    "runs/scout_hardware_run_connected/summary.json": {
+      "bytes": 7189,
+      "sha256": "797709f0550b0158000238570c89050ee93fd6d2db9b96680c59eb9f61e59d29"
+    },
+    "runs/scout_hardware_walk/complete.json": {
+      "bytes": 59,
+      "sha256": "11c835c362f9e327faf6385fdf6ed60cf5bd591d62ae3ab6677b8bce014be9e2"
+    },
+    "runs/scout_hardware_walk/pid.json": {
+      "bytes": 14,
+      "sha256": "f386062c0d304f302e13300a4dcbf6e10928748f8341a8ece665710ee4619461"
+    },
+    "runs/scout_hardware_walk_connected/armed.json": {
+      "bytes": 28,
+      "sha256": "57821a000468f981c41ba0afd318f8fa6b27db121cccc56189e22bcc16a11992"
+    },
+    "runs/scout_hardware_walk_connected/complete.json": {
+      "bytes": 55,
+      "sha256": "7898f0c88dc39cd78087043aa2f3835240c801b3c3fd6eb25c62a4efaa974ec4"
+    },
+    "runs/scout_hardware_walk_connected/exit_cleanup.json": {
+      "bytes": 125,
+      "sha256": "87d32d583676a8a4cd51d4bc34bfc33c5f5e31589f5c7e08264954b89f2f8d5e"
+    },
+    "runs/scout_hardware_walk_connected/measurement.json": {
+      "bytes": 1633282,
+      "sha256": "e1e9383ee1694f137d7aa0d497bc625026e6d64fd32a9f104b13e1c9f22120c0"
+    },
+    "runs/scout_hardware_walk_connected/native_camera.csv": {
+      "bytes": 230975,
+      "sha256": "caf551c5e88b98ad11344118e5904dfc8e0b94e58d84288845c4abe5cc548393"
+    },
+    "runs/scout_hardware_walk_connected/native_usb_frames.npz": {
+      "bytes": 708215,
+      "sha256": "dcb9f12521698ee11c7315f93f69a06d67d33f3a3f8b8ed4d2948a387e515ee2"
+    },
+    "runs/scout_hardware_walk_connected/native_usb_metadata.json": {
+      "bytes": 4840742,
+      "sha256": "537886edab2db30eea887ea7f5ca94a4eff296892fb5ba93d58dcf457c393c33"
+    },
+    "runs/scout_hardware_walk_connected/pid.json": {
+      "bytes": 13,
+      "sha256": "a2fd09b0c486f6e12f5ceb2c58e13d4d7ad76122a6ed2380a0aca88cc7578aeb"
+    },
+    "runs/scout_hardware_walk_connected/raw_frames.npz": {
+      "bytes": 361361,
+      "sha256": "de4c36a39c7999a72310c1a4852bc777e9d5786bd0653efcbbb9293f362efcd8"
+    },
+    "runs/scout_hardware_walk_connected/report.json": {
+      "bytes": 5446621,
+      "sha256": "b77719d7c6fb0091cc239e10a241aacfce95446bf5036e6e4458ba1a77573779"
+    },
+    "runs/scout_hardware_walk_connected/summary.json": {
+      "bytes": 7284,
+      "sha256": "c78e8744a1080647d30d3f564e513263ec08a3a929809ef19866779b8ca06fc5"
+    },
+    "runs/scout_record_run/armed.json": {
+      "bytes": 28,
+      "sha256": "80f2a704273db21fa49048867d351c9846dc3e71483695fe4a464eeb6031cc91"
+    },
+    "runs/scout_record_run/complete.json": {
+      "bytes": 55,
+      "sha256": "7898f0c88dc39cd78087043aa2f3835240c801b3c3fd6eb25c62a4efaa974ec4"
+    },
+    "runs/scout_record_run/exit_cleanup.json": {
+      "bytes": 125,
+      "sha256": "87d32d583676a8a4cd51d4bc34bfc33c5f5e31589f5c7e08264954b89f2f8d5e"
+    },
+    "runs/scout_record_run/measurement.json": {
+      "bytes": 1353455,
+      "sha256": "9da183359a4e6acf33d71b76a6ac994685990e284dd896038df3c6d5752be3f0"
+    },
+    "runs/scout_record_run/native_camera.csv": {
+      "bytes": 125112,
+      "sha256": "e46e1043bb20a5e9ba64c939e2a69f3a195833ced80d69e311ccadc0f585d5c1"
+    },
+    "runs/scout_record_run/pid.json": {
+      "bytes": 14,
+      "sha256": "443665708656806a018abadb7d18c316e75a876f72cc372f204f5ecbda50cf4a"
+    },
+    "runs/scout_record_run/raw_frames.npz": {
+      "bytes": 283595,
+      "sha256": "5506533f5d3d91f510cdd147e267ea210e40e7bda6bdfc84fa1355e907d83238"
+    },
+    "runs/scout_record_run/report.json": {
+      "bytes": 4731664,
+      "sha256": "e1cdc293756465221d20cb4654be7bd452e0dad6a7d8a1fbd0219e5fdd134ddb"
+    },
+    "runs/scout_record_run/summary.json": {
+      "bytes": 6567,
+      "sha256": "03ac5ec4c903938dcf774bc0c01a6c56a5633dabcbb7cca1c08f6467a86f62c0"
+    },
+    "runs/scout_record_walk/armed.json": {
+      "bytes": 28,
+      "sha256": "3324ce6ed950ef599e8089e04a6c69915f94bb2387f6d409196eed3597c1bf1f"
+    },
+    "runs/scout_record_walk/complete.json": {
+      "bytes": 55,
+      "sha256": "7898f0c88dc39cd78087043aa2f3835240c801b3c3fd6eb25c62a4efaa974ec4"
+    },
+    "runs/scout_record_walk/exit_cleanup.json": {
+      "bytes": 125,
+      "sha256": "87d32d583676a8a4cd51d4bc34bfc33c5f5e31589f5c7e08264954b89f2f8d5e"
+    },
+    "runs/scout_record_walk/measurement.json": {
+      "bytes": 1610063,
+      "sha256": "9e67fd3a396af281ec4b1ed6771644e55b296fb5ce1fbe2ec9631896169ec455"
+    },
+    "runs/scout_record_walk/native_camera.csv": {
+      "bytes": 160371,
+      "sha256": "973fe7bfd1916d0354ca2310c595e0fbb919d95cf8a6d9b4bf1d10a57414169d"
+    },
+    "runs/scout_record_walk/pid.json": {
+      "bytes": 13,
+      "sha256": "ba7f1e86dc6eedc251303d160a708da9b5baf9892d39ff4768b56586b9261ead"
+    },
+    "runs/scout_record_walk/raw_frames.npz": {
+      "bytes": 357567,
+      "sha256": "0b92cda68a03ebea80bb466c63d09b5cd11429788772740db5363941f9d428fb"
+    },
+    "runs/scout_record_walk/report.json": {
+      "bytes": 5446621,
+      "sha256": "c83d416577089ac26e16e6c4f4fba78192f3a752c9d28e424ec0f83bf220b97f"
+    },
+    "runs/scout_record_walk/summary.json": {
+      "bytes": 6482,
+      "sha256": "2fd7ab17664a5195fc348e918e54f596850725644febc6b573e21e367562a7ae"
+    },
+    "runs/smoke_walk/armed.json": {
+      "bytes": 28,
+      "sha256": "cd12d894ffeaa44ca6eb915cb9acd68826591d821e2d7b0eea4d4d1e5aa0355f"
+    },
+    "runs/smoke_walk/complete.json": {
+      "bytes": 55,
+      "sha256": "7898f0c88dc39cd78087043aa2f3835240c801b3c3fd6eb25c62a4efaa974ec4"
+    },
+    "runs/smoke_walk/exit_cleanup.json": {
+      "bytes": 125,
+      "sha256": "87d32d583676a8a4cd51d4bc34bfc33c5f5e31589f5c7e08264954b89f2f8d5e"
+    },
+    "runs/smoke_walk/measurement.json": {
+      "bytes": 1618575,
+      "sha256": "13698b5313485309e95b2cfef6cda7121870a3efe0bc315e84c822d9210a6e34"
+    },
+    "runs/smoke_walk/pid.json": {
+      "bytes": 14,
+      "sha256": "f2e26964910c719f81afb9e93c087ce55cdd9ed94b557a173a7b125a3396df80"
+    },
+    "runs/smoke_walk/preview.png": {
+      "bytes": 582348,
+      "sha256": "948d24f79a16618eb9ce12dc1b2ef39309a6a4d79c7ccbccfb23870abc1bbbec"
+    },
+    "runs/smoke_walk/raw_frames.npz": {
+      "bytes": 360863,
+      "sha256": "86582bd2ad010bf9ab97ac0f948e2d77d5cf7173ef0dfe5e319a4e457563cfaa"
+    },
+    "runs/smoke_walk/report.json": {
+      "bytes": 5446621,
+      "sha256": "f4e30ea4dca5a8efc637578f0a7b259e3bb4576ad26df905b5b467b0081f1d39"
+    },
+    "runs/smoke_walk/summary.json": {
+      "bytes": 4995,
+      "sha256": "d99294301b22c687f28e8555e853b6b70617566a2c724ef618abc867f42eb818"
+    },
+    "oracles/run/report.json": {
+      "bytes": 4731582,
+      "sha256": "9b3e40505ea8ce403a234916bc8cd584eec8c8060850794569e69510984a9626"
+    },
+    "oracles/run/state.json": {
+      "bytes": 14882,
+      "sha256": "3ee119529f80a2c8d74371c0c25fd4e6f9e909b8db88da3aceb6db6466287823"
+    },
+    "oracles/walk/report.json": {
+      "bytes": 5446539,
+      "sha256": "e8baed893ba234bb55ced7e6852bcda5da0112e894045b8ae1a84471b79584fe"
+    },
+    "oracles/walk/state.json": {
+      "bytes": 14881,
+      "sha256": "b9c04d12de8f90f4058c900c8094e4f5640939529d2f0f40f36d574db5635fb9"
+    }
+  },
+  "logs": {
+    "IronJump-backlog-hardware.log": {
+      "bytes": 2420,
+      "sha256": "f1f3ba3cd1ec962257de11cba4a92ab40d510de95f62547726c04c5ba27fd8af"
+    },
+    "IronJump-backlog-hardware_connected.log": {
+      "bytes": 164,
+      "sha256": "12a6194a4254034be6a7a1c3e4a9b322797aca05fe2a9a086c00742157d280d8"
+    },
+    "IronJump-backlog-hardware_repeat.log": {
+      "bytes": 276,
+      "sha256": "dc77807e3809050c2e364d899c7d2a1ca322ade02d05962ba30ded68c91c15cb"
+    },
+    "IronJump-backlog-scout.log": {
+      "bytes": 356,
+      "sha256": "7739e1794bd207a2aceaf5bc11cc659df00be3ca6032efa65fedfa496e6aafb5"
+    },
+    "IronJump-backlog-smoke.log": {
+      "bytes": 46,
+      "sha256": "a9da7545f4e3d764c4402bbec7980ca397532067642bd06ff62bfb0d2bb525a6"
+    },
+    "IronJump-backlog-unit.log": {
+      "bytes": 250,
+      "sha256": "99c6960732ad5a99b5b7c6edd62bb69b78b4895f108276c11cebcfc3dae62a28"
+    },
+    "IronJump-backlog-unit_final.log": {
+      "bytes": 250,
+      "sha256": "99c6960732ad5a99b5b7c6edd62bb69b78b4895f108276c11cebcfc3dae62a28"
+    },
+    "repeat_hardware_run_2_target.log": {
+      "bytes": 929,
+      "sha256": "e38d86562c4a5a3b42a54bce3c8f797a814fea9a50d40c4fb1b2617a41df5d4f"
+    },
+    "repeat_hardware_run_3_target.log": {
+      "bytes": 928,
+      "sha256": "7fc03eec1285c4feee8fff02c5db0f7cc7a5673f4dbce02340c563d4c728b38a"
+    },
+    "repeat_hardware_walk_2_target.log": {
+      "bytes": 929,
+      "sha256": "badaf51f62996879a52841c479ac72d674b6f75ab4dae965e9766fe63e6810a4"
+    },
+    "repeat_hardware_walk_3_target.log": {
+      "bytes": 930,
+      "sha256": "df20efd8a2830211dfd480705551a589348baa5da5ea92d344d0b9ad7c53064e"
+    },
+    "scout_capture_run_target.log": {
+      "bytes": 929,
+      "sha256": "d2f282278098eafbceced1b0023962d93c6f9db6853dbac3efc319872a95c4c6"
+    },
+    "scout_capture_walk_target.log": {
+      "bytes": 930,
+      "sha256": "8e61f3d1d99b98f56882acf427dc27c3a4b81086e9d81d963e18a6e8e90edbf0"
+    },
+    "scout_fixed_run_target.log": {
+      "bytes": 929,
+      "sha256": "b94b7ecbf60f526403dfc0a3b1e04ef99701a49fa0e22fa8c71b87dc57000c08"
+    },
+    "scout_fixed_walk_target.log": {
+      "bytes": 930,
+      "sha256": "b35500c4807a6675d93d73ba85e2204c485abaa0239c0c9e6eba3abb64f50b8e"
+    },
+    "scout_hardware_run_connected_target.log": {
+      "bytes": 928,
+      "sha256": "13d5a16b87120629920044cb372ff94d206c2cc5ff798367fd6584197d4d6bd6"
+    },
+    "scout_hardware_walk_connected_target.log": {
+      "bytes": 930,
+      "sha256": "de2c032c87c09885502f4717604a5b558c0b73246addd62da4e8bc29f2a7a38e"
+    },
+    "scout_hardware_walk_target.log": {
+      "bytes": 1728,
+      "sha256": "7ebee138ac724b104cc9278782acfb85282490b293728998ab32f83a70247bc6"
+    },
+    "scout_record_run_target.log": {
+      "bytes": 930,
+      "sha256": "b2f48df5428a371571180c229f57d3ba1525feb0ecb993c62cda00867e989008"
+    },
+    "scout_record_walk_target.log": {
+      "bytes": 931,
+      "sha256": "8e12f64f9363494ff83d71f48b2c064da21ccd63c3fd44afe55c8a647414d512"
+    },
+    "smoke_walk_target.log": {
+      "bytes": 929,
+      "sha256": "5264a3210ecce1a1ce2f8a54be1c416fe50f530fac29ac29152d8fc5ee390068"
+    }
+  },
+  "remote_native_videos": "Recorded per-trial in final_results.json native.record_files; MJPEG/CSV retained in Windows run directories",
+  "inputs": "input_manifest.json; original camera inputs retained on Windows"
+}
