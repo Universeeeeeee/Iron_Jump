@@ -1,0 +1,209 @@
+{
+  "case": "20261017_220528_012bb590_walk_off",
+  "mode": "cpu",
+  "capture_cleanup_confirmed": true,
+  "owned_WPR_stop_confirmed": true,
+  "interval_100ns": {
+    "interval_before_100ns": 10000,
+    "interval_requested_100ns": 100000,
+    "interval_readback_100ns": 100000,
+    "interval_restored_100ns": 10000,
+    "interval_restore_ok": true
+  },
+  "observer_brackets_formal_s": {
+    "before": [
+      10.2838854,
+      10.2875763
+    ],
+    "after": [
+      16.2880297,
+      16.2909946
+    ]
+  },
+  "observed_target_sample_range_formal_s": [
+    9.7366237,
+    16.9203993
+  ],
+  "acceptance": {
+    "source_etl_sha256": "21cfa5343598550b0313d695cf093b83c1cca29851c5e6f4c8e7d052786a4dee",
+    "measurement_acceptance_pass": false,
+    "quantitative_field_attribution_ready": false,
+    "requires_actual_load_calibration": true,
+    "processes": {
+      "11948": {
+        "quality_pass": false,
+        "independent_scan_pass": true,
+        "measurement_acceptance_pass": false
+      },
+      "22252": {
+        "quality_pass": false,
+        "independent_scan_pass": true,
+        "measurement_acceptance_pass": false
+      }
+    },
+    "source_unchanged": true
+  },
+  "clock_mapping": {
+    "qpc_frequency": 10000000,
+    "host_ns_offset_lower": -5300,
+    "host_ns_offset_upper": 3100,
+    "uncertainty_ns": 8400,
+    "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+  },
+  "gui_process": 11948,
+  "sdk_process": 22252,
+  "gui_quality_checks": {
+    "controller": true,
+    "loss_zero": true,
+    "clock": true,
+    "identity": true,
+    "cycles": true,
+    "association": true,
+    "user_root": false,
+    "unambiguous": true,
+    "interval_restored": true,
+    "profiles_exclusive": true,
+    "interval_event": true,
+    "counter": true,
+    "sample_floor": true,
+    "ip_matches_stack": false,
+    "interval_covers_windows": true
+  },
+  "sdk_quality_checks": {
+    "controller": true,
+    "loss_zero": true,
+    "clock": true,
+    "identity": true,
+    "cycles": false,
+    "association": true,
+    "user_root": true,
+    "unambiguous": true,
+    "interval_restored": true,
+    "profiles_exclusive": true,
+    "interval_event": true,
+    "counter": true,
+    "sample_floor": false,
+    "ip_matches_stack": true,
+    "interval_covers_windows": true
+  },
+  "core_threads": {
+    "gui": {
+      "tid": 20448,
+      "cpu_s": 2.75,
+      "cycles": 6939930480,
+      "sample_events": 305,
+      "nonprocess_samples": 8,
+      "association_rate": 1.0,
+      "user_root_complete_rate": 0.9704918032786886,
+      "sample_cpu_s": 2.97,
+      "cpu_error_s": 0.2200000000000002
+    },
+    "consumer": {
+      "tid": 6336,
+      "cpu_s": 2.5625,
+      "cycles": 5829523200,
+      "sample_events": 251,
+      "nonprocess_samples": 9,
+      "association_rate": 1.0,
+      "user_root_complete_rate": 0.952191235059761,
+      "sample_cpu_s": 2.42,
+      "cpu_error_s": -0.14250000000000007
+    },
+    "reader": {
+      "tid": 16932,
+      "cpu_s": 0.859375,
+      "cycles": 2171768640,
+      "sample_events": 102,
+      "nonprocess_samples": 10,
+      "association_rate": 1.0,
+      "user_root_complete_rate": 0.8725490196078431,
+      "sample_cpu_s": 0.92,
+      "cpu_error_s": 0.06062500000000004
+    }
+  },
+  "independent_scans": {
+    "gui": {
+      "events_lost": 0,
+      "counts": {
+        "Stack": {
+          "reader": 2943,
+          "tracerpt": 2943,
+          "equal": true
+        },
+        "SampleProf": {
+          "reader": 2743,
+          "tracerpt": 2743,
+          "equal": true
+        },
+        "36": {
+          "reader": 0,
+          "tracerpt": 0,
+          "equal": true
+        },
+        "ReadyThread": {
+          "reader": 0,
+          "tracerpt": 0,
+          "equal": true
+        }
+      },
+      "passed": true,
+      "summary_sha256": "f51129bb27c63cbaff816089eb2a616840a73e79f8b88ba753d270072eaa83c6"
+    },
+    "sdk": {
+      "events_lost": 0,
+      "counts": {
+        "Stack": {
+          "reader": 2943,
+          "tracerpt": 2943,
+          "equal": true
+        },
+        "SampleProf": {
+          "reader": 2743,
+          "tracerpt": 2743,
+          "equal": true
+        },
+        "36": {
+          "reader": 0,
+          "tracerpt": 0,
+          "equal": true
+        },
+        "ReadyThread": {
+          "reader": 0,
+          "tracerpt": 0,
+          "equal": true
+        }
+      },
+      "passed": true,
+      "summary_sha256": "f51129bb27c63cbaff816089eb2a616840a73e79f8b88ba753d270072eaa83c6"
+    }
+  },
+  "failed_gates": [
+    "GUI process: reader user-root closure89/102 (87.25%) below95%; do not omit its low-quality samples or reduce the denominator.",
+    "GUI process:2 sampled kernel IPs not present in linked stacks, one consumer and one reader. Both retained with module/address offsets in cpu_witnesses01.json; neither was marked NonProcess by the delivered sample flag.",
+    "SDK process: inactive targets with zero cycles and only25 process samples, below100 minimum. Preserve as unqualified.",
+    "No complete paired actual-load disturbance calibration; historical CPU2/3 and failed wait field gates remain."
+  ],
+  "individual_execution_path_witnesses": {
+    "file": "cpu_witnesses01.json",
+    "categories": [
+      "gui_python_widget_callback",
+      "gui_paint",
+      "gui_opencv_module",
+      "consumer_python_processing",
+      "consumer_numpy_module"
+    ],
+    "meaning": "Individually closed, unambiguous, IP-matched non-NonProcess examples only. Not percentages, hotspot rankings or a passed overall capture."
+  },
+  "qualitative_findings": [
+    "GUI execution witnesses include Qt raster/background painting, Python widget callbacks and OpenCV-module paths. A specific Python widget/function and GIL ownership are not uniquely identified.",
+    "Consumer execution witnesses include CPython evaluation/allocation and NumPy-module paths through the original Qt signal chain. No specific NumPy internal operation is named without symbols.",
+    "Together with earlier paired in-flight wait witnesses, GIL reacquisition is a directly observed blocking mechanism; current evidence still does not quantify its contribution or prove a sole causal function."
+  ],
+  "source_sha256": {
+    "experiments/native_stack_capture/analyze.py": "e99d90dc65b29daaf7e75fbb8f60d45f4a53af48b3bdaa7cbae8b929807d1808",
+    "ui/ground_track.py": "9b902ace875bfb1b253e0b4653dd790d70b204385471578d0781498d77e5f527",
+    "ui/footprint_channel.py": "02f49947f4391583ceb0c2df7583f28ee50adfbcb72049fdf593258a5950df94"
+  },
+  "production_fix_applied": false,
+  "quantitative_field_attribution_ready": false
+}
