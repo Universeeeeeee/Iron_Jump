@@ -1,0 +1,329 @@
+{
+  "case": "20261017_214905_5c874d97_walk_off",
+  "mode": "wait",
+  "capture_cleanup_confirmed": true,
+  "WPR_owned_stop_confirmed": true,
+  "observer_targets_before_after": [
+    24,
+    24
+  ],
+  "observer_brackets_formal_s": {
+    "before": [
+      11.1026142,
+      11.1055818
+    ],
+    "after": [
+      17.1061474,
+      17.1090881
+    ]
+  },
+  "etl_sha256": "0e0c71ccd8f77f09075d35bdc1936a5d02290624f6765a6acd14d42881067523",
+  "acceptance": {
+    "source_etl_sha256": "0e0c71ccd8f77f09075d35bdc1936a5d02290624f6765a6acd14d42881067523",
+    "measurement_acceptance_pass": false,
+    "quantitative_field_attribution_ready": false,
+    "requires_actual_load_calibration": true,
+    "processes": {
+      "4344": {
+        "quality_pass": false,
+        "independent_scan_pass": true,
+        "measurement_acceptance_pass": false
+      },
+      "17752": {
+        "quality_pass": false,
+        "independent_scan_pass": true,
+        "measurement_acceptance_pass": false
+      }
+    },
+    "source_unchanged": true
+  },
+  "clock_mapping": {
+    "qpc_frequency": 10000000,
+    "host_ns_offset_lower": -5500,
+    "host_ns_offset_upper": 3300,
+    "uncertainty_ns": 8800,
+    "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+  },
+  "pid_roles": {
+    "gui_process": 17752,
+    "consumer_tid": 5376,
+    "gui_tid": 20420,
+    "reader_tid": 20732,
+    "sdk_process": 4344
+  },
+  "gui_quality_checks": {
+    "controller": true,
+    "loss_zero": true,
+    "clock": true,
+    "identity": true,
+    "cycles": true,
+    "association": true,
+    "user_root": true,
+    "unambiguous": true,
+    "profiles_exclusive": true,
+    "events_present": true,
+    "counter": false,
+    "schedule_chain": true
+  },
+  "sdk_quality_checks": {
+    "controller": true,
+    "loss_zero": true,
+    "clock": true,
+    "identity": true,
+    "cycles": false,
+    "association": true,
+    "user_root": false,
+    "unambiguous": true,
+    "profiles_exclusive": true,
+    "events_present": false,
+    "counter": false,
+    "schedule_chain": true
+  },
+  "gui_core_threads": {
+    "gui": {
+      "tid": 20420,
+      "cpu_s": 2.890625,
+      "cycles": 7223976000,
+      "stack_events_expected": 20030,
+      "association_rate": 1.0,
+      "user_root_complete_rate": 0.9980029955067399,
+      "schedule_residency_s": 3.075089700000011,
+      "schedule_error_s": 0.18446470000001103,
+      "paired_wait_intervals": 17825,
+      "paired_wait_chain_counts": {
+        "gil_wait_chain": 16536
+      }
+    },
+    "consumer": {
+      "tid": 5376,
+      "cpu_s": 3.078125,
+      "cycles": 7305980880,
+      "stack_events_expected": 28795,
+      "association_rate": 1.0,
+      "user_root_complete_rate": 0.9987497829484285,
+      "schedule_residency_s": 3.146313899999968,
+      "schedule_error_s": 0.06818889999996802,
+      "paired_wait_intervals": 26546,
+      "paired_wait_chain_counts": {
+        "gil_wait_chain": 26377
+      }
+    },
+    "reader": {
+      "tid": 20732,
+      "cpu_s": 1.6875,
+      "cycles": 3275888640,
+      "stack_events_expected": 46628,
+      "association_rate": 1.0,
+      "user_root_complete_rate": 0.9984773097709531,
+      "schedule_residency_s": 1.4480716000000131,
+      "schedule_error_s": -0.23942839999998689,
+      "paired_wait_intervals": 41830,
+      "paired_wait_chain_counts": {
+        "gil_wait_chain": 37015
+      }
+    }
+  },
+  "independent_scans": {
+    "gui": {
+      "events_lost": 0,
+      "counts": {
+        "Stack": {
+          "reader": 379632,
+          "tracerpt": 379632,
+          "equal": true
+        },
+        "SampleProf": {
+          "reader": 0,
+          "tracerpt": 0,
+          "equal": true
+        },
+        "36": {
+          "reader": 350767,
+          "tracerpt": 350767,
+          "equal": true
+        },
+        "ReadyThread": {
+          "reader": 199207,
+          "tracerpt": 199207,
+          "equal": true
+        }
+      },
+      "passed": true,
+      "summary_sha256": "21e7f3ee7059b2dbf798f1fd4f0096be8b3151266665d397a368b3d3efd8de1e"
+    },
+    "sdk": {
+      "events_lost": 0,
+      "counts": {
+        "Stack": {
+          "reader": 379632,
+          "tracerpt": 379632,
+          "equal": true
+        },
+        "SampleProf": {
+          "reader": 0,
+          "tracerpt": 0,
+          "equal": true
+        },
+        "36": {
+          "reader": 350767,
+          "tracerpt": 350767,
+          "equal": true
+        },
+        "ReadyThread": {
+          "reader": 199207,
+          "tracerpt": 199207,
+          "equal": true
+        }
+      },
+      "passed": true,
+      "summary_sha256": "21e7f3ee7059b2dbf798f1fd4f0096be8b3151266665d397a368b3d3efd8de1e"
+    }
+  },
+  "guarded_consumer_batch_witnesses": {
+    "count": 6,
+    "file": "batch_wait_witnesses01.json",
+    "guard_ns": 100000,
+    "examples": [
+      {
+        "host_formal_s": 12.808202,
+        "queue_snapshot": [
+          240791225269800,
+          31967,
+          240790715303800,
+          481,
+          240790736588400,
+          32468,
+          240791220229600,
+          501,
+          20,
+          "batch",
+          31968,
+          31987,
+          20
+        ],
+        "switch_out_qpc": 2407912247878,
+        "switch_in_qpc": 2407912254334
+      },
+      {
+        "host_formal_s": 13.2200252,
+        "queue_snapshot": [
+          240791637093000,
+          32267,
+          240791020449900,
+          590,
+          240791037545600,
+          32877,
+          240791631583900,
+          610,
+          20,
+          "batch",
+          32268,
+          32287,
+          20
+        ],
+        "switch_out_qpc": 2407916366718,
+        "switch_in_qpc": 2407916378537
+      },
+      {
+        "host_formal_s": 13.3230065,
+        "queue_snapshot": [
+          240791740074300,
+          32367,
+          240791125276900,
+          595,
+          240791142588700,
+          32982,
+          240791735429300,
+          615,
+          20,
+          "batch",
+          32368,
+          32387,
+          20
+        ],
+        "switch_out_qpc": 2407917390338,
+        "switch_in_qpc": 2407917404137
+      },
+      {
+        "host_formal_s": 13.8641344,
+        "queue_snapshot": [
+          240792281202200,
+          32567,
+          240791315919300,
+          672,
+          240791337139800,
+          33259,
+          240792013742300,
+          692,
+          20,
+          "batch",
+          32568,
+          32587,
+          20
+        ],
+        "switch_out_qpc": 2407922789942,
+        "switch_in_qpc": 2407922814152
+      },
+      {
+        "host_formal_s": 14.1321266,
+        "queue_snapshot": [
+          240792549194400,
+          32667,
+          240791442557300,
+          1027,
+          240791449530400,
+          33714,
+          240792469398800,
+          1047,
+          20,
+          "batch",
+          32668,
+          32687,
+          20
+        ],
+        "switch_out_qpc": 2407925455135,
+        "switch_in_qpc": 2407925493656
+      },
+      {
+        "host_formal_s": 15.3840173,
+        "queue_snapshot": [
+          240793801085100,
+          33867,
+          240792615310000,
+          1156,
+          240792692123500,
+          35043,
+          240793795371100,
+          1176,
+          20,
+          "batch",
+          33868,
+          33887,
+          20
+        ],
+        "switch_out_qpc": 2407937998559,
+        "switch_in_qpc": 2407938013265
+      }
+    ]
+  },
+  "qualitative_findings": [
+    "Consumer is directly witnessed waiting to acquire the GIL while pending>100 and a20-sample batch is in flight; paired same-TID out(stateWaiting)/in and a unique user stack closes to the thread entry.",
+    "Some such chains return from NumPy via PyEval_RestoreThread; others acquire GIL in a PySide/Shiboken callback via PyGILState_Ensure. Qt activation frames alone are not evidence of a Qt mutex wait.",
+    "GUI also has complete GIL wait chains in Qt paint/event paths. This does not identify the GIL owner or prove a particular widget/NumPy operation dominates.",
+    "SDK process is separate and does not share GUI CPython GIL. Inactive SDK threads have no validated stack evidence, not a pass."
+  ],
+  "failed_gates": {
+    "gui_process": "reader residency1.4480716s vs GetThreadTimes1.6875s differs by0.2394284s (~14.19%), above unchanged max(10%,30ms) gate. GUI and consumer own counters within that gate. Overall process still fails.",
+    "sdk_process": "Dormant targets have zero cycles/events; several active targets below95% user-root closure; one low-CPU SDK counter exceeds30ms floor. Do not omit them to make acceptance pass.",
+    "field_calibration": "Planned round01 OFF observer timed out and no full actual-load paired disturbance calibration exists. No comparison of two human rounds as equivalent inputs."
+  },
+  "not_established": [
+    "GIL wait duration or percentage",
+    "GIL ownership/holding time",
+    "Exclusive NumPy/Processor/Qt function CPU cost",
+    "A quantitatively validated sole backlog root cause or production fix"
+  ],
+  "new_CPU_recording_started": false,
+  "production_changes": false,
+  "quantitative_field_attribution_ready": false
+}

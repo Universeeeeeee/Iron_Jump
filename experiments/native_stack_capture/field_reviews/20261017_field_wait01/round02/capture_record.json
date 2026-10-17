@@ -1,0 +1,1720 @@
+{
+  "mode": "wait",
+  "instance": "IJNative_f38b09f3cee44d1682965f1abd3d5b17",
+  "start": {
+    "qpc_before": 2407867636401,
+    "qpc_after": 2407867636482,
+    "frequency": 10000000,
+    "filetime_100ns": 134367185825480991,
+    "perf_ns": 240786763648500,
+    "perf_before_ns": 240786763636200,
+    "perf_after_ns": 240786763648500
+  },
+  "commands": [
+    {
+      "args": [
+        "logman",
+        "query",
+        "-ets"
+      ],
+      "returncode": 0,
+      "stdout": "\r\nData Collector Set                      Type                          Status\r\n-------------------------------------------------------------------------------\nCircular Kernel Context Logger          Trace                         Running \r\nAccessValidatorLog                      Trace                         Running \r\nAppModel                                Trace                         Running \r\nCimFSUnionFS-Filter                     Trace                         Running \r\nDiagLog                                 Trace                         Running \r\nDiagtrack-Listener                      Trace                         Running \r\nEventLog-Application                    Trace                         Running \r\nEventLog-DebugChannel                   Trace                         Running \r\nEventLog-Lenovo-Sif-Companion-Operational Trace                         Running \r\nEventLog-Lenovo-Sif-Core-Operational    Trace                         Running \r\nEventLog-Lenovo-Sif-Device-Operational  Trace                         Running \r\nEventLog-Lenovo-Sif-Settings-Operational Trace                         Running \r\nEventLog-System                         Trace                         Running \r\nFilterMgr-Logger                        Trace                         Running \r\niclsClient                              Trace                         Running \r\niclsProxy                               Trace                         Running \r\nIntelPTTEKRecertification               Trace                         Running \r\nIntelRST                                Trace                         Running \r\nLwtNetLog                               Trace                         Running \r\nMicrosoft-Windows-Rdp-Graphics-RdpIdd-Trace Trace                         Running \r\nNetCore                                 Trace                         Running \r\nNtfsLog                                 Trace                         Running \r\nRadioMgr                                Trace                         Running \r\nReFSLog                                 Trace                         Running \r\nSocketHeciServer                        Trace                         Running \r\nTPMProvisioningService                  Trace                         Running \r\nUBPM                                    Trace                         Running \r\nWdiContextLog                           Trace                         Running \r\nWiFiDriverIHVSession                    Trace                         Running \r\nWiFiSession                             Trace                         Running \r\nWPR_initiated_DiagTrackMiniLogger_WPR System Collector Trace                         Running \r\nWPR_initiated_DiagTrackMiniLogger_OneTrace_User_Logger_20261016_1_EC_0 Trace                         Running \r\nZulerCoreToolWatchDog{4A234956-2B7D-4221-BADF-12593BD342A8} Trace                         Running \r\nSHS-10152026-080753-7-1ff               Trace                         Running \r\nSCM                                     Trace                         Running \r\nSleepStudyTraceSession                  Trace                         Running \r\nCldFltLog                               Trace                         Running \r\nNVIDIA-NVTOPPS-NOCAT                    Trace                         Running \r\nNVIDIA-NVTOPPS-FILTER                   Trace                         Running \r\nhrtracev2                               Trace                         Running \r\nScreenOnPowerStudyTraceSession          Trace                         Running \r\n8696EAC4-1288-4288-A4EE-49EE431B0AD9    Trace                         Running \r\nUpdateSessionOrchestration              Trace                         Running \r\nMoUxCoreWorker                          Trace                         Running \r\nWXSendinput_{3688DDE4-9B04-4441-91EB-A414E33B2BF2 Trace                         Running \r\nWinDiag-Realtime-Session                Trace                         Running \r\nDefenderApiLoggerLowPriv                Trace                         Running \r\nWindows-Compat-Inventory-InstallMon     Trace                         Running \r\nWINNETESP                               Trace                         Running \r\n\nThe command completed successfully.\r\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "wpr",
+        "-start",
+        "E:\\OptoJump\\IronJump-native-stack-field-d47e067-20261017-01\\wait.wprp!Nativewait",
+        "-filemode",
+        "-instancename",
+        "IJNative_f38b09f3cee44d1682965f1abd3d5b17"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "wpr",
+        "-status",
+        "-instancename",
+        "IJNative_f38b09f3cee44d1682965f1abd3d5b17"
+      ],
+      "returncode": 0,
+      "stdout": "\r\nMicrosoft Windows Performance Recorder Version 10.0.26100 (CoreSystem)\r\nCopyright (c) 2024 Microsoft Corporation. All rights reserved.\r\n\r\nWPR recording is in progress...\r\n\r\nTime since start\t: 00:00:00\r\nDropped event\t\t: 0\r\nLogging mode\t\t: File\r\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "wpr",
+        "-stop",
+        "E:\\OptoJump\\IronJump-native-stack-field-d47e067-20261017-01\\field_reviews\\20261017_field_wait01\\round02\\capture\\trace.etl",
+        "-instancename",
+        "IJNative_f38b09f3cee44d1682965f1abd3d5b17"
+      ],
+      "returncode": 0,
+      "stdout": "Press Ctrl+C to cancel the stop operation.\r\nThe trace was successfully saved.\r\n",
+      "stderr": ""
+    }
+  ],
+  "cleanup_complete": true,
+  "human_test_started_by_tool": false,
+  "external_targets": true,
+  "source_sha256": {
+    "align_clock.py": "d49f54563591d23e9fc8e08b7d8eab028b65fbaa7dcb329e12b6ac58c2c893f1",
+    "analyze.py": "e99d90dc65b29daaf7e75fbb8f60d45f4a53af48b3bdaa7cbae8b929807d1808",
+    "cleanup_mock_result.json": "d6b2b79db8f3bd12c3a9fabb30f99a3ab86adc50f857063c85fcf9b21760bd3e",
+    "cpu.wprp": "949d5973ba665469586cc48ee5a0e3dbb5043ca847f4eb396bca29f6d4bef9fb",
+    "deployment_manifest.json": "4ec80d5efb924aaf1e78938181b0348b2103147979a0c5d96496bfe40d4345d3",
+    "export_external_evidence.py": "ca38c0642907a7d76c16d2ad1226e4e2631453e871de51dfc382fdb74e439859",
+    "external_calibration.py": "9c223685f254ac5b4ab85155203e788bb61956fb0e5b376d355b11fc8c0c3a94",
+    "external_fixture.py": "7a370154e85a14e5fdf6a853bb55fd7beac1979ed1ea5c6ee1976b7e8ad6283e",
+    "external_plan_cleanup01.json": "d5ce999e4875cbfec5d011955cf82a545404b79fe60637f1d282985bf03194c2",
+    "external_report.py": "105776b8544e4d0e8b2e663e1116c7394defea4bb9588b85c20a0b80fcf9901d",
+    "field_preflight01.json": "ab33cd7a45b110e1cc5e272a3c4153a46cd035ed4cc2f3f192b5c6798e893b15",
+    "field_preflight_core01.json": "f4cc5de22c82876ec0e31a156a570f8a75f0725639e11cf9fe9648d9babcc887",
+    "fixture.py": "2b41846ecb267ff649d1f2cb554c7d8bdadcc0e305a9302672d6afb17f30d882",
+    "observe.py": "f33c6b2da48593b28e1748417ded306632b7997bbaf7f608e8baef5e3c391777",
+    "plan.json": "2a0ec4593a07e65bda0c329e094480775b4bc3574af3853bd9d86b8532196178",
+    "readiness_inventory.json": "ccf58ceff2dfd317cead8d12791e9e4cb7623663d8079b53186f2208675aedb6",
+    "ReadStacks.cs": "fb20ca77da7dfb4a26167ef3b54a75ee94633cc6b6d88c79a69220a9088d2476",
+    "recheck_external.py": "e05211464a46fe84b7d1a49c22c9e2c1f267d05ef1d6ea2820872909da6bb337",
+    "record.py": "c6d963a249ad10c78cb8a0dba1f9be03889683a2852f1ddb96038f9f53f38d81",
+    "report.py": "10decf431f79fd75f1595638ab14381f9f99957e608947ca82dfb340d1348043",
+    "runtime_preflight.json": "ca882422cf21ac0075a80f597e53c6cd32897a5b0223a902e45911b567db22a8",
+    "smoke_external.py": "c4e5d3a35ce237e95c330b04608ab82b5687ef0bcd5f593e4c1b05ce4bb643cd",
+    "split_field.py": "624f3c3dd935f12c818324f5c37c3aa69b034d3ecef13ffbd98b62bc386ac9e0",
+    "symbolize.py": "e45766dc0177d105769a9afe6c411025dcefe376a516920d0c56a33cf6fe79c8",
+    "test_external_fixture_windows.py": "d5e116795c033f09a850b39f9513665e6f45e3dd4146099133e51f2df7b8de1a",
+    "test_external_report.py": "7e84dbe8c6f641f15655743de5a0e9fc98b9430f7face5cb40ba34f7210e1126",
+    "test_quality.py": "125a8fd0c3ff25176b858aad92317d71d48aa325b4782c6dc5552ed298429ac7",
+    "test_record_cleanup.py": "a8efd3d9a05e42cddf020d72c21e059e3af7b27066cb4512c2e21c49bc1d2e40",
+    "test_schedule_boundary.py": "f53bc0f53a84d363c3a2eb2ac8c333addaa5c57ae75f6f964019f94e4d131d0e",
+    "test_split_field.py": "c772307e43a73d6dc39891fe03e6d737ddd30ca922bd12e4ea09226853da88ed",
+    "test_windows_observer.py": "f3596aeb5876ddc773770aeaaf4163a6bc140758b36ac89d884585e92ca977ce",
+    "verify_runs.py": "8ad080f1fbb7ff05bfd4c0be85300bc19f2b19cfba37c6f5def08bc000c503f0",
+    "wait.wprp": "d584fc8c90595bf5f2bf4e9cdf8b2595908b5c1dbd931f9c885cc0dd08c1bcf8",
+    "winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6"
+  },
+  "sessions_before": "\r\nData Collector Set                      Type                          Status\r\n-------------------------------------------------------------------------------\nCircular Kernel Context Logger          Trace                         Running \r\nAccessValidatorLog                      Trace                         Running \r\nAppModel                                Trace                         Running \r\nCimFSUnionFS-Filter                     Trace                         Running \r\nDiagLog                                 Trace                         Running \r\nDiagtrack-Listener                      Trace                         Running \r\nEventLog-Application                    Trace                         Running \r\nEventLog-DebugChannel                   Trace                         Running \r\nEventLog-Lenovo-Sif-Companion-Operational Trace                         Running \r\nEventLog-Lenovo-Sif-Core-Operational    Trace                         Running \r\nEventLog-Lenovo-Sif-Device-Operational  Trace                         Running \r\nEventLog-Lenovo-Sif-Settings-Operational Trace                         Running \r\nEventLog-System                         Trace                         Running \r\nFilterMgr-Logger                        Trace                         Running \r\niclsClient                              Trace                         Running \r\niclsProxy                               Trace                         Running \r\nIntelPTTEKRecertification               Trace                         Running \r\nIntelRST                                Trace                         Running \r\nLwtNetLog                               Trace                         Running \r\nMicrosoft-Windows-Rdp-Graphics-RdpIdd-Trace Trace                         Running \r\nNetCore                                 Trace                         Running \r\nNtfsLog                                 Trace                         Running \r\nRadioMgr                                Trace                         Running \r\nReFSLog                                 Trace                         Running \r\nSocketHeciServer                        Trace                         Running \r\nTPMProvisioningService                  Trace                         Running \r\nUBPM                                    Trace                         Running \r\nWdiContextLog                           Trace                         Running \r\nWiFiDriverIHVSession                    Trace                         Running \r\nWiFiSession                             Trace                         Running \r\nWPR_initiated_DiagTrackMiniLogger_WPR System Collector Trace                         Running \r\nWPR_initiated_DiagTrackMiniLogger_OneTrace_User_Logger_20261016_1_EC_0 Trace                         Running \r\nZulerCoreToolWatchDog{4A234956-2B7D-4221-BADF-12593BD342A8} Trace                         Running \r\nSHS-10152026-080753-7-1ff               Trace                         Running \r\nSCM                                     Trace                         Running \r\nSleepStudyTraceSession                  Trace                         Running \r\nCldFltLog                               Trace                         Running \r\nNVIDIA-NVTOPPS-NOCAT                    Trace                         Running \r\nNVIDIA-NVTOPPS-FILTER                   Trace                         Running \r\nhrtracev2                               Trace                         Running \r\nScreenOnPowerStudyTraceSession          Trace                         Running \r\n8696EAC4-1288-4288-A4EE-49EE431B0AD9    Trace                         Running \r\nUpdateSessionOrchestration              Trace                         Running \r\nMoUxCoreWorker                          Trace                         Running \r\nWXSendinput_{3688DDE4-9B04-4441-91EB-A414E33B2BF2 Trace                         Running \r\nWinDiag-Realtime-Session                Trace                         Running \r\nDefenderApiLoggerLowPriv                Trace                         Running \r\nWindows-Compat-Inventory-InstallMon     Trace                         Running \r\nWINNETESP                               Trace                         Running \r\n\nThe command completed successfully.\r\n",
+  "profile_sha256": "d584fc8c90595bf5f2bf4e9cdf8b2595908b5c1dbd931f9c885cc0dd08c1bcf8",
+  "targets": [
+    {
+      "run_id": "20261017_214905_5c874d97",
+      "tid": 20420,
+      "pid": 17752,
+      "role": "gui"
+    },
+    {
+      "run_id": "20261017_214905_5c874d97",
+      "tid": 5376,
+      "pid": 17752,
+      "role": "consumer"
+    },
+    {
+      "run_id": "20261017_214905_5c874d97",
+      "tid": 20732,
+      "pid": 17752,
+      "role": "reader"
+    },
+    {
+      "run_id": "20261017_214905_5c874d97",
+      "tid": 21060,
+      "pid": 4344,
+      "name": "sdk_21060",
+      "role": "sdk"
+    },
+    {
+      "run_id": "20261017_214905_5c874d97",
+      "tid": 10148,
+      "pid": 4344,
+      "name": "sdk_10148",
+      "role": "sdk"
+    },
+    {
+      "run_id": "20261017_214905_5c874d97",
+      "tid": 18928,
+      "pid": 4344,
+      "name": "sdk_18928",
+      "role": "sdk"
+    },
+    {
+      "run_id": "20261017_214905_5c874d97",
+      "tid": 20556,
+      "pid": 4344,
+      "name": "sdk_20556",
+      "role": "sdk"
+    },
+    {
+      "run_id": "20261017_214905_5c874d97",
+      "tid": 19788,
+      "pid": 4344,
+      "name": "sdk_19788",
+      "role": "sdk"
+    },
+    {
+      "run_id": "20261017_214905_5c874d97",
+      "tid": 22248,
+      "pid": 4344,
+      "name": "sdk_22248",
+      "role": "sdk"
+    },
+    {
+      "run_id": "20261017_214905_5c874d97",
+      "tid": 6336,
+      "pid": 4344,
+      "name": "sdk_6336",
+      "role": "sdk"
+    },
+    {
+      "run_id": "20261017_214905_5c874d97",
+      "tid": 10404,
+      "pid": 4344,
+      "name": "sdk_10404",
+      "role": "sdk"
+    },
+    {
+      "run_id": "20261017_214905_5c874d97",
+      "tid": 16092,
+      "pid": 4344,
+      "name": "sdk_16092",
+      "role": "sdk"
+    },
+    {
+      "run_id": "20261017_214905_5c874d97",
+      "tid": 18516,
+      "pid": 4344,
+      "name": "sdk_18516",
+      "role": "sdk"
+    },
+    {
+      "run_id": "20261017_214905_5c874d97",
+      "tid": 12500,
+      "pid": 4344,
+      "name": "sdk_12500",
+      "role": "sdk"
+    },
+    {
+      "run_id": "20261017_214905_5c874d97",
+      "tid": 15060,
+      "pid": 4344,
+      "name": "sdk_15060",
+      "role": "sdk"
+    },
+    {
+      "run_id": "20261017_214905_5c874d97",
+      "tid": 8768,
+      "pid": 4344,
+      "name": "sdk_8768",
+      "role": "sdk"
+    },
+    {
+      "run_id": "20261017_214905_5c874d97",
+      "tid": 11544,
+      "pid": 4344,
+      "name": "sdk_11544",
+      "role": "sdk"
+    },
+    {
+      "run_id": "20261017_214905_5c874d97",
+      "tid": 14820,
+      "pid": 4344,
+      "name": "sdk_14820",
+      "role": "sdk"
+    },
+    {
+      "run_id": "20261017_214905_5c874d97",
+      "tid": 8016,
+      "pid": 4344,
+      "name": "sdk_8016",
+      "role": "sdk"
+    },
+    {
+      "run_id": "20261017_214905_5c874d97",
+      "tid": 21496,
+      "pid": 4344,
+      "name": "sdk_21496",
+      "role": "sdk"
+    },
+    {
+      "run_id": "20261017_214905_5c874d97",
+      "tid": 11036,
+      "pid": 4344,
+      "name": "sdk_11036",
+      "role": "sdk"
+    },
+    {
+      "run_id": "20261017_214905_5c874d97",
+      "tid": 21932,
+      "pid": 4344,
+      "name": "sdk_21932",
+      "role": "sdk"
+    },
+    {
+      "run_id": "20261017_214905_5c874d97",
+      "tid": 15592,
+      "pid": 4344,
+      "name": "sdk_15592",
+      "role": "sdk"
+    },
+    {
+      "run_id": "20261017_214905_5c874d97",
+      "tid": 9072,
+      "pid": 4344,
+      "name": "sdk_9072",
+      "role": "sdk"
+    }
+  ],
+  "synthetic_targets": false,
+  "external_observation": {
+    "before": [
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 20420,
+        "pid": 17752,
+        "role": "gui",
+        "creation_100ns": 134367185451692745,
+        "kernel_100ns": 49218750,
+        "user_100ns": 93906250,
+        "cycles": 38697220320,
+        "active": true,
+        "start": {
+          "qpc_before": 2407895196850,
+          "qpc_after": 2407895196893,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853041416,
+          "perf_ns": 240789519689600,
+          "perf_before_ns": 240789519682000,
+          "perf_after_ns": 240789519689600
+        },
+        "end": {
+          "qpc_before": 2407895197622,
+          "qpc_after": 2407895197662,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853042186,
+          "perf_ns": 240789519766400,
+          "perf_before_ns": 240789519759400,
+          "perf_after_ns": 240789519766400
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 5376,
+        "pid": 17752,
+        "role": "consumer",
+        "creation_100ns": 134367185542007669,
+        "kernel_100ns": 11250000,
+        "user_100ns": 40937500,
+        "cycles": 13908217680,
+        "active": true,
+        "start": {
+          "qpc_before": 2407895198175,
+          "qpc_after": 2407895198210,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853042735,
+          "perf_ns": 240789519821200,
+          "perf_before_ns": 240789519814700,
+          "perf_after_ns": 240789519821200
+        },
+        "end": {
+          "qpc_before": 2407895199542,
+          "qpc_after": 2407895199581,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853044105,
+          "perf_ns": 240789519958400,
+          "perf_before_ns": 240789519951500,
+          "perf_after_ns": 240789519958400
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 20732,
+        "pid": 17752,
+        "role": "reader",
+        "creation_100ns": 134367185545080884,
+        "kernel_100ns": 14375000,
+        "user_100ns": 33281250,
+        "cycles": 12153460080,
+        "active": true,
+        "start": {
+          "qpc_before": 2407895200173,
+          "qpc_after": 2407895200238,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853044757,
+          "perf_ns": 240789520024200,
+          "perf_before_ns": 240789520012700,
+          "perf_after_ns": 240789520024200
+        },
+        "end": {
+          "qpc_before": 2407895201069,
+          "qpc_after": 2407895201106,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853045630,
+          "perf_ns": 240789520110800,
+          "perf_before_ns": 240789520104100,
+          "perf_after_ns": 240789520110800
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 21060,
+        "pid": 4344,
+        "name": "sdk_21060",
+        "role": "sdk",
+        "creation_100ns": 134367185541504666,
+        "kernel_100ns": 9843750,
+        "user_100ns": 8281250,
+        "cycles": 4584849840,
+        "active": true,
+        "start": {
+          "qpc_before": 2407895201684,
+          "qpc_after": 2407895201722,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853046246,
+          "perf_ns": 240789520172500,
+          "perf_before_ns": 240789520165600,
+          "perf_after_ns": 240789520172500
+        },
+        "end": {
+          "qpc_before": 2407895202275,
+          "qpc_after": 2407895202311,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853046835,
+          "perf_ns": 240789520231300,
+          "perf_before_ns": 240789520224800,
+          "perf_after_ns": 240789520231300
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 10148,
+        "pid": 4344,
+        "name": "sdk_10148",
+        "role": "sdk",
+        "creation_100ns": 134367185541664458,
+        "kernel_100ns": 0,
+        "user_100ns": 312500,
+        "cycles": 82370400,
+        "active": true,
+        "start": {
+          "qpc_before": 2407895202788,
+          "qpc_after": 2407895202822,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853047346,
+          "perf_ns": 240789520282400,
+          "perf_before_ns": 240789520275600,
+          "perf_after_ns": 240789520282400
+        },
+        "end": {
+          "qpc_before": 2407895203513,
+          "qpc_after": 2407895203576,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853048096,
+          "perf_ns": 240789520358000,
+          "perf_before_ns": 240789520347900,
+          "perf_after_ns": 240789520358000
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 18928,
+        "pid": 4344,
+        "name": "sdk_18928",
+        "role": "sdk",
+        "creation_100ns": 134367185541665792,
+        "kernel_100ns": 312500,
+        "user_100ns": 156250,
+        "cycles": 76931520,
+        "active": true,
+        "start": {
+          "qpc_before": 2407895204103,
+          "qpc_after": 2407895204140,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853048664,
+          "perf_ns": 240789520414200,
+          "perf_before_ns": 240789520407300,
+          "perf_after_ns": 240789520414200
+        },
+        "end": {
+          "qpc_before": 2407895205429,
+          "qpc_after": 2407895205463,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853049987,
+          "perf_ns": 240789520546500,
+          "perf_before_ns": 240789520540000,
+          "perf_after_ns": 240789520546500
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 20556,
+        "pid": 4344,
+        "name": "sdk_20556",
+        "role": "sdk",
+        "creation_100ns": 134367185541669879,
+        "kernel_100ns": 468750,
+        "user_100ns": 0,
+        "cycles": 101251680,
+        "active": true,
+        "start": {
+          "qpc_before": 2407895205932,
+          "qpc_after": 2407895205964,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853050489,
+          "perf_ns": 240789520596500,
+          "perf_before_ns": 240789520590500,
+          "perf_after_ns": 240789520596500
+        },
+        "end": {
+          "qpc_before": 2407895206461,
+          "qpc_after": 2407895206494,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853051019,
+          "perf_ns": 240789520649600,
+          "perf_before_ns": 240789520643700,
+          "perf_after_ns": 240789520649600
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 19788,
+        "pid": 4344,
+        "name": "sdk_19788",
+        "role": "sdk",
+        "creation_100ns": 134367185548753915,
+        "kernel_100ns": 0,
+        "user_100ns": 0,
+        "cycles": 486480,
+        "active": true,
+        "start": {
+          "qpc_before": 2407895207150,
+          "qpc_after": 2407895207184,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853051709,
+          "perf_ns": 240789520718600,
+          "perf_before_ns": 240789520712400,
+          "perf_after_ns": 240789520718600
+        },
+        "end": {
+          "qpc_before": 2407895207718,
+          "qpc_after": 2407895207753,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853052278,
+          "perf_ns": 240789520775500,
+          "perf_before_ns": 240789520769300,
+          "perf_after_ns": 240789520775500
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 22248,
+        "pid": 4344,
+        "name": "sdk_22248",
+        "role": "sdk",
+        "creation_100ns": 134367185548754446,
+        "kernel_100ns": 0,
+        "user_100ns": 0,
+        "cycles": 442560,
+        "active": true,
+        "start": {
+          "qpc_before": 2407895208216,
+          "qpc_after": 2407895209041,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853053556,
+          "perf_ns": 240789520904700,
+          "perf_before_ns": 240789520818900,
+          "perf_after_ns": 240789520904700
+        },
+        "end": {
+          "qpc_before": 2407895210137,
+          "qpc_after": 2407895210179,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853054702,
+          "perf_ns": 240789521018100,
+          "perf_before_ns": 240789521009800,
+          "perf_after_ns": 240789521018100
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 6336,
+        "pid": 4344,
+        "name": "sdk_6336",
+        "role": "sdk",
+        "creation_100ns": 134367185548754856,
+        "kernel_100ns": 0,
+        "user_100ns": 0,
+        "cycles": 353760,
+        "active": true,
+        "start": {
+          "qpc_before": 2407895210862,
+          "qpc_after": 2407895210898,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853055422,
+          "perf_ns": 240789521090100,
+          "perf_before_ns": 240789521083400,
+          "perf_after_ns": 240789521090100
+        },
+        "end": {
+          "qpc_before": 2407895211555,
+          "qpc_after": 2407895211606,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853056128,
+          "perf_ns": 240789521160900,
+          "perf_before_ns": 240789521150800,
+          "perf_after_ns": 240789521160900
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 10404,
+        "pid": 4344,
+        "name": "sdk_10404",
+        "role": "sdk",
+        "creation_100ns": 134367185548755307,
+        "kernel_100ns": 0,
+        "user_100ns": 0,
+        "cycles": 330000,
+        "active": true,
+        "start": {
+          "qpc_before": 2407895212134,
+          "qpc_after": 2407895212171,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853056696,
+          "perf_ns": 240789521217300,
+          "perf_before_ns": 240789521210600,
+          "perf_after_ns": 240789521217300
+        },
+        "end": {
+          "qpc_before": 2407895212670,
+          "qpc_after": 2407895212703,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853057228,
+          "perf_ns": 240789521270500,
+          "perf_before_ns": 240789521264100,
+          "perf_after_ns": 240789521270500
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 16092,
+        "pid": 4344,
+        "name": "sdk_16092",
+        "role": "sdk",
+        "creation_100ns": 134367185548755951,
+        "kernel_100ns": 0,
+        "user_100ns": 0,
+        "cycles": 350880,
+        "active": true,
+        "start": {
+          "qpc_before": 2407895213164,
+          "qpc_after": 2407895213197,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853057722,
+          "perf_ns": 240789521319800,
+          "perf_before_ns": 240789521313700,
+          "perf_after_ns": 240789521319800
+        },
+        "end": {
+          "qpc_before": 2407895213682,
+          "qpc_after": 2407895213715,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853058240,
+          "perf_ns": 240789521371700,
+          "perf_before_ns": 240789521365600,
+          "perf_after_ns": 240789521371700
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 18516,
+        "pid": 4344,
+        "name": "sdk_18516",
+        "role": "sdk",
+        "creation_100ns": 134367185548756243,
+        "kernel_100ns": 0,
+        "user_100ns": 0,
+        "cycles": 351120,
+        "active": true,
+        "start": {
+          "qpc_before": 2407895214207,
+          "qpc_after": 2407895214240,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853058765,
+          "perf_ns": 240789521424200,
+          "perf_before_ns": 240789521418100,
+          "perf_after_ns": 240789521424200
+        },
+        "end": {
+          "qpc_before": 2407895214782,
+          "qpc_after": 2407895214814,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853059339,
+          "perf_ns": 240789521481600,
+          "perf_before_ns": 240789521475500,
+          "perf_after_ns": 240789521481600
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 12500,
+        "pid": 4344,
+        "name": "sdk_12500",
+        "role": "sdk",
+        "creation_100ns": 134367185548756521,
+        "kernel_100ns": 0,
+        "user_100ns": 0,
+        "cycles": 347280,
+        "active": true,
+        "start": {
+          "qpc_before": 2407895215274,
+          "qpc_after": 2407895215327,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853059852,
+          "perf_ns": 240789521532900,
+          "perf_before_ns": 240789521524900,
+          "perf_after_ns": 240789521532900
+        },
+        "end": {
+          "qpc_before": 2407895215871,
+          "qpc_after": 2407895215904,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853060429,
+          "perf_ns": 240789521590500,
+          "perf_before_ns": 240789521584400,
+          "perf_after_ns": 240789521590500
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 15060,
+        "pid": 4344,
+        "name": "sdk_15060",
+        "role": "sdk",
+        "creation_100ns": 134367185559196780,
+        "kernel_100ns": 1718750,
+        "user_100ns": 312500,
+        "cycles": 478318800,
+        "active": true,
+        "start": {
+          "qpc_before": 2407895216396,
+          "qpc_after": 2407895216430,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853060955,
+          "perf_ns": 240789521643200,
+          "perf_before_ns": 240789521635000,
+          "perf_after_ns": 240789521643200
+        },
+        "end": {
+          "qpc_before": 2407895217019,
+          "qpc_after": 2407895217052,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853061577,
+          "perf_ns": 240789521705400,
+          "perf_before_ns": 240789521699400,
+          "perf_after_ns": 240789521705400
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 8768,
+        "pid": 4344,
+        "name": "sdk_8768",
+        "role": "sdk",
+        "creation_100ns": 134367185559197460,
+        "kernel_100ns": 156250,
+        "user_100ns": 0,
+        "cycles": 43341600,
+        "active": true,
+        "start": {
+          "qpc_before": 2407895217485,
+          "qpc_after": 2407895217518,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853062043,
+          "perf_ns": 240789521752000,
+          "perf_before_ns": 240789521745900,
+          "perf_after_ns": 240789521752000
+        },
+        "end": {
+          "qpc_before": 2407895217996,
+          "qpc_after": 2407895218031,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853062556,
+          "perf_ns": 240789521803300,
+          "perf_before_ns": 240789521797100,
+          "perf_after_ns": 240789521803300
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 11544,
+        "pid": 4344,
+        "name": "sdk_11544",
+        "role": "sdk",
+        "creation_100ns": 134367185562040511,
+        "kernel_100ns": 156250,
+        "user_100ns": 0,
+        "cycles": 923040,
+        "active": true,
+        "start": {
+          "qpc_before": 2407895219447,
+          "qpc_after": 2407895219482,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853064006,
+          "perf_ns": 240789521948400,
+          "perf_before_ns": 240789521942100,
+          "perf_after_ns": 240789521948400
+        },
+        "end": {
+          "qpc_before": 2407895219977,
+          "qpc_after": 2407895220010,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853064534,
+          "perf_ns": 240789522001200,
+          "perf_before_ns": 240789521995200,
+          "perf_after_ns": 240789522001200
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 14820,
+        "pid": 4344,
+        "name": "sdk_14820",
+        "role": "sdk",
+        "creation_100ns": 134367185562116874,
+        "kernel_100ns": 0,
+        "user_100ns": 0,
+        "cycles": 404160,
+        "active": true,
+        "start": {
+          "qpc_before": 2407895220465,
+          "qpc_after": 2407895220499,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853065023,
+          "perf_ns": 240789522050100,
+          "perf_before_ns": 240789522043900,
+          "perf_after_ns": 240789522050100
+        },
+        "end": {
+          "qpc_before": 2407895220964,
+          "qpc_after": 2407895220996,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853065521,
+          "perf_ns": 240789522099800,
+          "perf_before_ns": 240789522093900,
+          "perf_after_ns": 240789522099800
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 8016,
+        "pid": 4344,
+        "name": "sdk_8016",
+        "role": "sdk",
+        "creation_100ns": 134367185562117526,
+        "kernel_100ns": 0,
+        "user_100ns": 0,
+        "cycles": 16174080,
+        "active": true,
+        "start": {
+          "qpc_before": 2407895221397,
+          "qpc_after": 2407895221428,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853065954,
+          "perf_ns": 240789522143000,
+          "perf_before_ns": 240789522137300,
+          "perf_after_ns": 240789522143000
+        },
+        "end": {
+          "qpc_before": 2407895221898,
+          "qpc_after": 2407895221931,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853066456,
+          "perf_ns": 240789522193300,
+          "perf_before_ns": 240789522187200,
+          "perf_after_ns": 240789522193300
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 21496,
+        "pid": 4344,
+        "name": "sdk_21496",
+        "role": "sdk",
+        "creation_100ns": 134367185562214789,
+        "kernel_100ns": 0,
+        "user_100ns": 0,
+        "cycles": 494160,
+        "active": true,
+        "start": {
+          "qpc_before": 2407895222335,
+          "qpc_after": 2407895222367,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853066892,
+          "perf_ns": 240789522236900,
+          "perf_before_ns": 240789522231100,
+          "perf_after_ns": 240789522236900
+        },
+        "end": {
+          "qpc_before": 2407895222820,
+          "qpc_after": 2407895222851,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853067377,
+          "perf_ns": 240789522285300,
+          "perf_before_ns": 240789522279600,
+          "perf_after_ns": 240789522285300
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 11036,
+        "pid": 4344,
+        "name": "sdk_11036",
+        "role": "sdk",
+        "creation_100ns": 134367185562219348,
+        "kernel_100ns": 0,
+        "user_100ns": 0,
+        "cycles": 399120,
+        "active": true,
+        "start": {
+          "qpc_before": 2407895223248,
+          "qpc_after": 2407895223279,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853067804,
+          "perf_ns": 240789522328100,
+          "perf_before_ns": 240789522322400,
+          "perf_after_ns": 240789522328100
+        },
+        "end": {
+          "qpc_before": 2407895223724,
+          "qpc_after": 2407895223755,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853068280,
+          "perf_ns": 240789522375700,
+          "perf_before_ns": 240789522370000,
+          "perf_after_ns": 240789522375700
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 21932,
+        "pid": 4344,
+        "name": "sdk_21932",
+        "role": "sdk",
+        "creation_100ns": 134367185567671487,
+        "kernel_100ns": 0,
+        "user_100ns": 312500,
+        "cycles": 151910640,
+        "active": true,
+        "start": {
+          "qpc_before": 2407895224144,
+          "qpc_after": 2407895224175,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853068701,
+          "perf_ns": 240789522417700,
+          "perf_before_ns": 240789522412000,
+          "perf_after_ns": 240789522417700
+        },
+        "end": {
+          "qpc_before": 2407895224622,
+          "qpc_after": 2407895224653,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853069178,
+          "perf_ns": 240789522465500,
+          "perf_before_ns": 240789522459800,
+          "perf_after_ns": 240789522465500
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 15592,
+        "pid": 4344,
+        "name": "sdk_15592",
+        "role": "sdk",
+        "creation_100ns": 134367185567671895,
+        "kernel_100ns": 0,
+        "user_100ns": 0,
+        "cycles": 396480,
+        "active": true,
+        "start": {
+          "qpc_before": 2407895225054,
+          "qpc_after": 2407895225086,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853069611,
+          "perf_ns": 240789522508800,
+          "perf_before_ns": 240789522502600,
+          "perf_after_ns": 240789522508800
+        },
+        "end": {
+          "qpc_before": 2407895225551,
+          "qpc_after": 2407895225582,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853070107,
+          "perf_ns": 240789522558400,
+          "perf_before_ns": 240789522552700,
+          "perf_after_ns": 240789522558400
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 9072,
+        "pid": 4344,
+        "name": "sdk_9072",
+        "role": "sdk",
+        "creation_100ns": 134367185614204831,
+        "kernel_100ns": 0,
+        "user_100ns": 156250,
+        "cycles": 941824080,
+        "active": true,
+        "start": {
+          "qpc_before": 2407895225981,
+          "qpc_after": 2407895226015,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853070540,
+          "perf_ns": 240789522601700,
+          "perf_before_ns": 240789522595700,
+          "perf_after_ns": 240789522601700
+        },
+        "end": {
+          "qpc_before": 2407895226462,
+          "qpc_after": 2407895226495,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185853071020,
+          "perf_ns": 240789522649600,
+          "perf_before_ns": 240789522643700,
+          "perf_after_ns": 240789522649600
+        }
+      }
+    ],
+    "after": [
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 20420,
+        "pid": 17752,
+        "role": "gui",
+        "creation_100ns": 134367185451692745,
+        "kernel_100ns": 52031250,
+        "user_100ns": 120000000,
+        "cycles": 45921196320,
+        "active": true,
+        "start": {
+          "qpc_before": 2407955232206,
+          "qpc_after": 2407955232282,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913076832,
+          "perf_ns": 240795523228600,
+          "perf_before_ns": 240795523215200,
+          "perf_after_ns": 240795523228600
+        },
+        "end": {
+          "qpc_before": 2407955233206,
+          "qpc_after": 2407955233270,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913077820,
+          "perf_ns": 240795523327300,
+          "perf_before_ns": 240795523316300,
+          "perf_after_ns": 240795523327300
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 5376,
+        "pid": 17752,
+        "role": "consumer",
+        "creation_100ns": 134367185542007669,
+        "kernel_100ns": 16406250,
+        "user_100ns": 66562500,
+        "cycles": 21214198560,
+        "active": true,
+        "start": {
+          "qpc_before": 2407955234021,
+          "qpc_after": 2407955234056,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913078610,
+          "perf_ns": 240795523405800,
+          "perf_before_ns": 240795523399400,
+          "perf_after_ns": 240795523405800
+        },
+        "end": {
+          "qpc_before": 2407955234769,
+          "qpc_after": 2407955234806,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913079360,
+          "perf_ns": 240795523480800,
+          "perf_before_ns": 240795523474300,
+          "perf_after_ns": 240795523480800
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 20732,
+        "pid": 17752,
+        "role": "reader",
+        "creation_100ns": 134367185545080884,
+        "kernel_100ns": 22968750,
+        "user_100ns": 41562500,
+        "cycles": 15429348720,
+        "active": true,
+        "start": {
+          "qpc_before": 2407955235360,
+          "qpc_after": 2407955236467,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913081019,
+          "perf_ns": 240795523646900,
+          "perf_before_ns": 240795523531800,
+          "perf_after_ns": 240795523646900
+        },
+        "end": {
+          "qpc_before": 2407955237009,
+          "qpc_after": 2407955237043,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913081598,
+          "perf_ns": 240795523704500,
+          "perf_before_ns": 240795523698400,
+          "perf_after_ns": 240795523704500
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 21060,
+        "pid": 4344,
+        "name": "sdk_21060",
+        "role": "sdk",
+        "creation_100ns": 134367185541504666,
+        "kernel_100ns": 9843750,
+        "user_100ns": 8437500,
+        "cycles": 4725644160,
+        "active": true,
+        "start": {
+          "qpc_before": 2407955237519,
+          "qpc_after": 2407955237554,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913082109,
+          "perf_ns": 240795523755600,
+          "perf_before_ns": 240795523749500,
+          "perf_after_ns": 240795523755600
+        },
+        "end": {
+          "qpc_before": 2407955238047,
+          "qpc_after": 2407955238081,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913082636,
+          "perf_ns": 240795523808300,
+          "perf_before_ns": 240795523802100,
+          "perf_after_ns": 240795523808300
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 10148,
+        "pid": 4344,
+        "name": "sdk_10148",
+        "role": "sdk",
+        "creation_100ns": 134367185541664458,
+        "kernel_100ns": 0,
+        "user_100ns": 312500,
+        "cycles": 82370400,
+        "active": true,
+        "start": {
+          "qpc_before": 2407955238681,
+          "qpc_after": 2407955238750,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913083303,
+          "perf_ns": 240795523875300,
+          "perf_before_ns": 240795523863400,
+          "perf_after_ns": 240795523875300
+        },
+        "end": {
+          "qpc_before": 2407955239287,
+          "qpc_after": 2407955239321,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913083875,
+          "perf_ns": 240795523932200,
+          "perf_before_ns": 240795523926100,
+          "perf_after_ns": 240795523932200
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 18928,
+        "pid": 4344,
+        "name": "sdk_18928",
+        "role": "sdk",
+        "creation_100ns": 134367185541665792,
+        "kernel_100ns": 312500,
+        "user_100ns": 156250,
+        "cycles": 76931520,
+        "active": true,
+        "start": {
+          "qpc_before": 2407955239758,
+          "qpc_after": 2407955239817,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913084368,
+          "perf_ns": 240795523982000,
+          "perf_before_ns": 240795523972500,
+          "perf_after_ns": 240795523982000
+        },
+        "end": {
+          "qpc_before": 2407955240851,
+          "qpc_after": 2407955240941,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913085491,
+          "perf_ns": 240795524094400,
+          "perf_before_ns": 240795524077300,
+          "perf_after_ns": 240795524094400
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 20556,
+        "pid": 4344,
+        "name": "sdk_20556",
+        "role": "sdk",
+        "creation_100ns": 134367185541669879,
+        "kernel_100ns": 468750,
+        "user_100ns": 0,
+        "cycles": 101251680,
+        "active": true,
+        "start": {
+          "qpc_before": 2407955241925,
+          "qpc_after": 2407955241969,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913086522,
+          "perf_ns": 240795524197200,
+          "perf_before_ns": 240795524186600,
+          "perf_after_ns": 240795524197200
+        },
+        "end": {
+          "qpc_before": 2407955242587,
+          "qpc_after": 2407955242621,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913087176,
+          "perf_ns": 240795524262300,
+          "perf_before_ns": 240795524255900,
+          "perf_after_ns": 240795524262300
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 19788,
+        "pid": 4344,
+        "name": "sdk_19788",
+        "role": "sdk",
+        "creation_100ns": 134367185548753915,
+        "kernel_100ns": 0,
+        "user_100ns": 0,
+        "cycles": 486480,
+        "active": true,
+        "start": {
+          "qpc_before": 2407955243073,
+          "qpc_after": 2407955243108,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913087663,
+          "perf_ns": 240795524311000,
+          "perf_before_ns": 240795524304800,
+          "perf_after_ns": 240795524311000
+        },
+        "end": {
+          "qpc_before": 2407955243603,
+          "qpc_after": 2407955243644,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913088198,
+          "perf_ns": 240795524364600,
+          "perf_before_ns": 240795524357400,
+          "perf_after_ns": 240795524364600
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 22248,
+        "pid": 4344,
+        "name": "sdk_22248",
+        "role": "sdk",
+        "creation_100ns": 134367185548754446,
+        "kernel_100ns": 0,
+        "user_100ns": 0,
+        "cycles": 442560,
+        "active": true,
+        "start": {
+          "qpc_before": 2407955244065,
+          "qpc_after": 2407955244100,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913088655,
+          "perf_ns": 240795524410200,
+          "perf_before_ns": 240795524404000,
+          "perf_after_ns": 240795524410200
+        },
+        "end": {
+          "qpc_before": 2407955245266,
+          "qpc_after": 2407955245309,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913089863,
+          "perf_ns": 240795524531100,
+          "perf_before_ns": 240795524522700,
+          "perf_after_ns": 240795524531100
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 6336,
+        "pid": 4344,
+        "name": "sdk_6336",
+        "role": "sdk",
+        "creation_100ns": 134367185548754856,
+        "kernel_100ns": 0,
+        "user_100ns": 0,
+        "cycles": 353760,
+        "active": true,
+        "start": {
+          "qpc_before": 2407955245810,
+          "qpc_after": 2407955245847,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913090402,
+          "perf_ns": 240795524584900,
+          "perf_before_ns": 240795524578500,
+          "perf_after_ns": 240795524584900
+        },
+        "end": {
+          "qpc_before": 2407955246356,
+          "qpc_after": 2407955246391,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913090945,
+          "perf_ns": 240795524639200,
+          "perf_before_ns": 240795524633000,
+          "perf_after_ns": 240795524639200
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 10404,
+        "pid": 4344,
+        "name": "sdk_10404",
+        "role": "sdk",
+        "creation_100ns": 134367185548755307,
+        "kernel_100ns": 0,
+        "user_100ns": 0,
+        "cycles": 330000,
+        "active": true,
+        "start": {
+          "qpc_before": 2407955246830,
+          "qpc_after": 2407955246866,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913091421,
+          "perf_ns": 240795524686800,
+          "perf_before_ns": 240795524680300,
+          "perf_after_ns": 240795524686800
+        },
+        "end": {
+          "qpc_before": 2407955247344,
+          "qpc_after": 2407955247377,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913091932,
+          "perf_ns": 240795524737900,
+          "perf_before_ns": 240795524731900,
+          "perf_after_ns": 240795524737900
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 16092,
+        "pid": 4344,
+        "name": "sdk_16092",
+        "role": "sdk",
+        "creation_100ns": 134367185548755951,
+        "kernel_100ns": 0,
+        "user_100ns": 0,
+        "cycles": 350880,
+        "active": true,
+        "start": {
+          "qpc_before": 2407955247810,
+          "qpc_after": 2407955247842,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913092397,
+          "perf_ns": 240795524784400,
+          "perf_before_ns": 240795524778500,
+          "perf_after_ns": 240795524784400
+        },
+        "end": {
+          "qpc_before": 2407955248312,
+          "qpc_after": 2407955248346,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913092901,
+          "perf_ns": 240795524834800,
+          "perf_before_ns": 240795524828700,
+          "perf_after_ns": 240795524834800
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 18516,
+        "pid": 4344,
+        "name": "sdk_18516",
+        "role": "sdk",
+        "creation_100ns": 134367185548756243,
+        "kernel_100ns": 0,
+        "user_100ns": 0,
+        "cycles": 351120,
+        "active": true,
+        "start": {
+          "qpc_before": 2407955248927,
+          "qpc_after": 2407955248959,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913093515,
+          "perf_ns": 240795524896100,
+          "perf_before_ns": 240795524890100,
+          "perf_after_ns": 240795524896100
+        },
+        "end": {
+          "qpc_before": 2407955249498,
+          "qpc_after": 2407955249534,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913094089,
+          "perf_ns": 240795524953600,
+          "perf_before_ns": 240795524944700,
+          "perf_after_ns": 240795524953600
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 12500,
+        "pid": 4344,
+        "name": "sdk_12500",
+        "role": "sdk",
+        "creation_100ns": 134367185548756521,
+        "kernel_100ns": 0,
+        "user_100ns": 0,
+        "cycles": 347280,
+        "active": true,
+        "start": {
+          "qpc_before": 2407955251151,
+          "qpc_after": 2407955251186,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913095740,
+          "perf_ns": 240795525118800,
+          "perf_before_ns": 240795525112400,
+          "perf_after_ns": 240795525118800
+        },
+        "end": {
+          "qpc_before": 2407955251704,
+          "qpc_after": 2407955251738,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913096293,
+          "perf_ns": 240795525174000,
+          "perf_before_ns": 240795525167800,
+          "perf_after_ns": 240795525174000
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 15060,
+        "pid": 4344,
+        "name": "sdk_15060",
+        "role": "sdk",
+        "creation_100ns": 134367185559196780,
+        "kernel_100ns": 1875000,
+        "user_100ns": 312500,
+        "cycles": 520496640,
+        "active": true,
+        "start": {
+          "qpc_before": 2407955252168,
+          "qpc_after": 2407955252202,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913096757,
+          "perf_ns": 240795525220400,
+          "perf_before_ns": 240795525214200,
+          "perf_after_ns": 240795525220400
+        },
+        "end": {
+          "qpc_before": 2407955252678,
+          "qpc_after": 2407955252715,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913097270,
+          "perf_ns": 240795525271700,
+          "perf_before_ns": 240795525265400,
+          "perf_after_ns": 240795525271700
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 8768,
+        "pid": 4344,
+        "name": "sdk_8768",
+        "role": "sdk",
+        "creation_100ns": 134367185559197460,
+        "kernel_100ns": 156250,
+        "user_100ns": 0,
+        "cycles": 45295200,
+        "active": true,
+        "start": {
+          "qpc_before": 2407955253134,
+          "qpc_after": 2407955253166,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913097721,
+          "perf_ns": 240795525316700,
+          "perf_before_ns": 240795525310700,
+          "perf_after_ns": 240795525316700
+        },
+        "end": {
+          "qpc_before": 2407955253626,
+          "qpc_after": 2407955253661,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913098216,
+          "perf_ns": 240795525366300,
+          "perf_before_ns": 240795525360100,
+          "perf_after_ns": 240795525366300
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 11544,
+        "pid": 4344,
+        "name": "sdk_11544",
+        "role": "sdk",
+        "creation_100ns": 134367185562040511,
+        "kernel_100ns": 156250,
+        "user_100ns": 0,
+        "cycles": 923040,
+        "active": true,
+        "start": {
+          "qpc_before": 2407955254071,
+          "qpc_after": 2407955254105,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913098660,
+          "perf_ns": 240795525410600,
+          "perf_before_ns": 240795525404600,
+          "perf_after_ns": 240795525410600
+        },
+        "end": {
+          "qpc_before": 2407955254859,
+          "qpc_after": 2407955254892,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913099447,
+          "perf_ns": 240795525489300,
+          "perf_before_ns": 240795525483200,
+          "perf_after_ns": 240795525489300
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 14820,
+        "pid": 4344,
+        "name": "sdk_14820",
+        "role": "sdk",
+        "creation_100ns": 134367185562116874,
+        "kernel_100ns": 0,
+        "user_100ns": 0,
+        "cycles": 404160,
+        "active": true,
+        "start": {
+          "qpc_before": 2407955255335,
+          "qpc_after": 2407955255368,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913099924,
+          "perf_ns": 240795525537000,
+          "perf_before_ns": 240795525530700,
+          "perf_after_ns": 240795525537000
+        },
+        "end": {
+          "qpc_before": 2407955255832,
+          "qpc_after": 2407955255864,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913100419,
+          "perf_ns": 240795525586600,
+          "perf_before_ns": 240795525580600,
+          "perf_after_ns": 240795525586600
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 8016,
+        "pid": 4344,
+        "name": "sdk_8016",
+        "role": "sdk",
+        "creation_100ns": 134367185562117526,
+        "kernel_100ns": 0,
+        "user_100ns": 0,
+        "cycles": 16174080,
+        "active": true,
+        "start": {
+          "qpc_before": 2407955256272,
+          "qpc_after": 2407955256305,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913100860,
+          "perf_ns": 240795525630600,
+          "perf_before_ns": 240795525624800,
+          "perf_after_ns": 240795525630600
+        },
+        "end": {
+          "qpc_before": 2407955256759,
+          "qpc_after": 2407955256792,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913101347,
+          "perf_ns": 240795525679300,
+          "perf_before_ns": 240795525673600,
+          "perf_after_ns": 240795525679300
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 21496,
+        "pid": 4344,
+        "name": "sdk_21496",
+        "role": "sdk",
+        "creation_100ns": 134367185562214789,
+        "kernel_100ns": 0,
+        "user_100ns": 0,
+        "cycles": 494160,
+        "active": true,
+        "start": {
+          "qpc_before": 2407955257200,
+          "qpc_after": 2407955257233,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913101788,
+          "perf_ns": 240795525723400,
+          "perf_before_ns": 240795525717600,
+          "perf_after_ns": 240795525723400
+        },
+        "end": {
+          "qpc_before": 2407955257692,
+          "qpc_after": 2407955257725,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913102280,
+          "perf_ns": 240795525772700,
+          "perf_before_ns": 240795525766700,
+          "perf_after_ns": 240795525772700
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 11036,
+        "pid": 4344,
+        "name": "sdk_11036",
+        "role": "sdk",
+        "creation_100ns": 134367185562219348,
+        "kernel_100ns": 0,
+        "user_100ns": 0,
+        "cycles": 580800,
+        "active": true,
+        "start": {
+          "qpc_before": 2407955258126,
+          "qpc_after": 2407955258158,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913102713,
+          "perf_ns": 240795525816000,
+          "perf_before_ns": 240795525810100,
+          "perf_after_ns": 240795525816000
+        },
+        "end": {
+          "qpc_before": 2407955258615,
+          "qpc_after": 2407955258649,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913103204,
+          "perf_ns": 240795525865100,
+          "perf_before_ns": 240795525859000,
+          "perf_after_ns": 240795525865100
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 21932,
+        "pid": 4344,
+        "name": "sdk_21932",
+        "role": "sdk",
+        "creation_100ns": 134367185567671487,
+        "kernel_100ns": 312500,
+        "user_100ns": 312500,
+        "cycles": 207213600,
+        "active": true,
+        "start": {
+          "qpc_before": 2407955259061,
+          "qpc_after": 2407955259093,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913103649,
+          "perf_ns": 240795525909500,
+          "perf_before_ns": 240795525903300,
+          "perf_after_ns": 240795525909500
+        },
+        "end": {
+          "qpc_before": 2407955259556,
+          "qpc_after": 2407955259589,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913104144,
+          "perf_ns": 240795525959100,
+          "perf_before_ns": 240795525953000,
+          "perf_after_ns": 240795525959100
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 15592,
+        "pid": 4344,
+        "name": "sdk_15592",
+        "role": "sdk",
+        "creation_100ns": 134367185567671895,
+        "kernel_100ns": 0,
+        "user_100ns": 0,
+        "cycles": 530400,
+        "active": true,
+        "start": {
+          "qpc_before": 2407955259986,
+          "qpc_after": 2407955260019,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913104574,
+          "perf_ns": 240795526002100,
+          "perf_before_ns": 240795525996200,
+          "perf_after_ns": 240795526002100
+        },
+        "end": {
+          "qpc_before": 2407955260534,
+          "qpc_after": 2407955260566,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913105121,
+          "perf_ns": 240795526056700,
+          "perf_before_ns": 240795526050900,
+          "perf_after_ns": 240795526056700
+        }
+      },
+      {
+        "run_id": "20261017_214905_5c874d97",
+        "tid": 9072,
+        "pid": 4344,
+        "name": "sdk_9072",
+        "role": "sdk",
+        "creation_100ns": 134367185614204831,
+        "kernel_100ns": 0,
+        "user_100ns": 1093750,
+        "cycles": 1177195920,
+        "active": true,
+        "start": {
+          "qpc_before": 2407955261006,
+          "qpc_after": 2407955261037,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913105593,
+          "perf_ns": 240795526103900,
+          "perf_before_ns": 240795526098100,
+          "perf_after_ns": 240795526103900
+        },
+        "end": {
+          "qpc_before": 2407955261525,
+          "qpc_after": 2407955261557,
+          "frequency": 10000000,
+          "filetime_100ns": 134367185913106112,
+          "perf_ns": 240795526155900,
+          "perf_before_ns": 240795526150200,
+          "perf_after_ns": 240795526155900
+        }
+      }
+    ]
+  },
+  "stop_ok": true,
+  "end": {
+    "qpc_before": 2408169648991,
+    "qpc_after": 2408169649104,
+    "frequency": 10000000,
+    "filetime_100ns": 134367186127493755,
+    "perf_ns": 240816964910900,
+    "perf_before_ns": 240816964890600,
+    "perf_after_ns": 240816964910900
+  }
+}

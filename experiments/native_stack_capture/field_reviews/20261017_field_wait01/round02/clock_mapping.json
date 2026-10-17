@@ -1,0 +1,7 @@
+{
+  "qpc_frequency": 10000000,
+  "host_ns_offset_lower": -5500,
+  "host_ns_offset_upper": 3300,
+  "uncertainty_ns": 8800,
+  "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+}

@@ -1,0 +1,327 @@
+{
+  "case": "20261017_214905_5c874d97_walk_off",
+  "original_controller_result": {
+    "valid_capture": true,
+    "errors": [],
+    "terminated_after_child_cleanup": true,
+    "child_returncode": 1,
+    "trace_owned_remaining": false,
+    "scope": "Capture/cleanup status only. ETL event validation, under-load overhead, density and actual skeleton coverage remain offline decisions."
+  },
+  "clean_process_exit": false,
+  "integrity": "Passed original verify_trial; see integrity01.json. Not a stack or disturbance-calibration pass.",
+  "formal_duration_s": 40.4384668,
+  "protocol": {
+    "valid_field_protocol": true,
+    "continuous_device_samples": true,
+    "scene_protocol_valid": true,
+    "quality_acquisition_failures": [],
+    "sustained_shortage_reproduced": false
+  },
+  "queue_maxima": {
+    "pending": 1314,
+    "unfinished": 1320,
+    "popped_inflight": 20
+  },
+  "windows": {
+    "whole_formal": {
+      "observations": 1026,
+      "observed_s": 40.4019054,
+      "enqueued_fps": 1000.0270927816192,
+      "consumer_fps": 1000.0270927816192,
+      "throughput_gap_to_actual_fps": 0.0,
+      "pending": {
+        "count": 1026,
+        "p95": 791.0,
+        "max": 1314.0
+      },
+      "oldest_pending_ms": {
+        "count": 1026,
+        "p95": 834.724675,
+        "max": 1314.1764
+      },
+      "completed_receipt_age_ms": {
+        "count": 1026,
+        "p95": 835.38425,
+        "max": 1319.5335
+      },
+      "age_slope_ms_per_device_second": -5.0927667841533895,
+      "heavy_observed_span_s": 3.6984128,
+      "max_observation_gap_ms": 340.2361,
+      "sustained_shortage": false,
+      "start_ns": 240778417067800,
+      "end_ns": 240818855534600,
+      "raw_frames": 40439,
+      "usable_contact_fraction": 0.15776849081332378
+    },
+    "initial_empty": {
+      "observations": 128,
+      "observed_s": 4.9448458,
+      "enqueued_fps": 1000.2334147608808,
+      "consumer_fps": 1000.4356455362065,
+      "throughput_gap_to_actual_fps": -0.20223077532568823,
+      "pending": {
+        "count": 128,
+        "p95": 4.6499999999999915,
+        "max": 6.0
+      },
+      "oldest_pending_ms": {
+        "count": 128,
+        "p95": 4.076069999999999,
+        "max": 5.2503
+      },
+      "completed_receipt_age_ms": {
+        "count": 128,
+        "p95": 5.503354999999996,
+        "max": 15.2246
+      },
+      "age_slope_ms_per_device_second": -0.08667426409525428,
+      "heavy_observed_span_s": 0.0,
+      "max_observation_gap_ms": 82.8471,
+      "sustained_shortage": false,
+      "start_ns": 240778417067800,
+      "end_ns": 240783417067800,
+      "raw_frames": 5000,
+      "usable_contact_fraction": 0.0
+    },
+    "contact_span": {
+      "observations": 784,
+      "observed_s": 30.9059626,
+      "enqueued_fps": 999.9688539065274,
+      "consumer_fps": 1001.8455144315744,
+      "throughput_gap_to_actual_fps": -1.8766605250469865,
+      "pending": {
+        "count": 784,
+        "p95": 1005.0999999999995,
+        "max": 1314.0
+      },
+      "oldest_pending_ms": {
+        "count": 784,
+        "p95": 1007.2468949999999,
+        "max": 1314.1764
+      },
+      "completed_receipt_age_ms": {
+        "count": 784,
+        "p95": 1023.466115,
+        "max": 1319.5335
+      },
+      "age_slope_ms_per_device_second": -17.166344087338096,
+      "heavy_observed_span_s": 3.6984128,
+      "max_observation_gap_ms": 340.2361,
+      "sustained_shortage": false,
+      "start_ns": 240786324644100,
+      "end_ns": 240817303069000,
+      "raw_frames": 31023,
+      "usable_contact_fraction": 0.2056538697095703
+    },
+    "operator_tail": {
+      "observations": 382,
+      "observed_s": 14.9754981,
+      "enqueued_fps": 1000.0335147449954,
+      "consumer_fps": 999.966739002825,
+      "throughput_gap_to_actual_fps": 0.06677574217042093,
+      "pending": {
+        "count": 382,
+        "p95": 47.94999999999999,
+        "max": 149.0
+      },
+      "oldest_pending_ms": {
+        "count": 382,
+        "p95": 43.176429999999975,
+        "max": 126.8272
+      },
+      "completed_receipt_age_ms": {
+        "count": 382,
+        "p95": 46.461154999999984,
+        "max": 134.5747
+      },
+      "age_slope_ms_per_device_second": 0.6529239028334248,
+      "heavy_observed_span_s": 0.0,
+      "max_observation_gap_ms": 149.7108,
+      "sustained_shortage": false,
+      "start_ns": 240803854061500,
+      "end_ns": 240818855534600,
+      "raw_frames": 15002,
+      "usable_contact_fraction": 0.0015331289161445141
+    }
+  },
+  "active_publications": 11,
+  "painted_contacts": 11,
+  "touch_count": 11,
+  "valid_steps": 9,
+  "footprint_timings": [
+    {
+      "contact_id": 0,
+      "sample": 27535,
+      "receipt_to_paint_ms": 156.0101
+    },
+    {
+      "contact_id": 2,
+      "sample": 28167,
+      "receipt_to_paint_ms": 149.7962
+    },
+    {
+      "contact_id": 3,
+      "sample": 28717,
+      "receipt_to_paint_ms": 210.6312
+    },
+    {
+      "contact_id": 4,
+      "sample": 29232,
+      "receipt_to_paint_ms": 259.7906
+    },
+    {
+      "contact_id": 5,
+      "sample": 29796,
+      "receipt_to_paint_ms": 667.1326
+    },
+    {
+      "contact_id": 6,
+      "sample": 30327,
+      "receipt_to_paint_ms": 482.3706
+    },
+    {
+      "contact_id": 7,
+      "sample": 30861,
+      "receipt_to_paint_ms": 453.2228
+    },
+    {
+      "contact_id": 8,
+      "sample": 31398,
+      "receipt_to_paint_ms": 530.298
+    },
+    {
+      "contact_id": 9,
+      "sample": 31944,
+      "receipt_to_paint_ms": 644.6888
+    },
+    {
+      "contact_id": 10,
+      "sample": 32483,
+      "receipt_to_paint_ms": 763.2255
+    },
+    {
+      "contact_id": 11,
+      "sample": 33063,
+      "receipt_to_paint_ms": 1380.2746
+    }
+  ],
+  "footprint_receipt_to_paint_ms": {
+    "count": 11,
+    "p95": 1071.75005,
+    "max": 1380.2746
+  },
+  "main_raw_contact_interval": {
+    "samples": [
+      27535,
+      33871
+    ],
+    "raw_samples": 6337,
+    "receipt_formal_s": [
+      7.91224,
+      14.2035922
+    ],
+    "consumer_completion_bounds_formal_s": [
+      [
+        7.7881193,
+        7.9272628
+      ],
+      [
+        15.3663387,
+        15.4369746
+      ]
+    ],
+    "pose_intervals": [
+      {
+        "start_ns": 240785412022900,
+        "end_ns": 240786486730400,
+        "valid_draws": 21,
+        "nodes_drawn": 210,
+        "links_drawn": 210
+      },
+      {
+        "start_ns": 240786486730400,
+        "end_ns": 240787414981600,
+        "valid_draws": 17,
+        "nodes_drawn": 170,
+        "links_drawn": 170
+      },
+      {
+        "start_ns": 240787414981600,
+        "end_ns": 240788446189700,
+        "valid_draws": 18,
+        "nodes_drawn": 180,
+        "links_drawn": 180
+      },
+      {
+        "start_ns": 240788446189700,
+        "end_ns": 240789488415200,
+        "valid_draws": 6,
+        "nodes_drawn": 60,
+        "links_drawn": 60
+      },
+      {
+        "start_ns": 240789488415200,
+        "end_ns": 240790454111200,
+        "valid_draws": 13,
+        "nodes_drawn": 130,
+        "links_drawn": 130
+      },
+      {
+        "start_ns": 240790454111200,
+        "end_ns": 240791485262100,
+        "valid_draws": 17,
+        "nodes_drawn": 170,
+        "links_drawn": 170
+      },
+      {
+        "start_ns": 240791485262100,
+        "end_ns": 240792415224900,
+        "valid_draws": 10,
+        "nodes_drawn": 100,
+        "links_drawn": 100
+      },
+      {
+        "start_ns": 240792415224900,
+        "end_ns": 240793415443400,
+        "valid_draws": 13,
+        "nodes_drawn": 123,
+        "links_drawn": 116
+      }
+    ],
+    "valid_draws_each_intersecting_interval": true,
+    "scope": "Raw after frozen bad-bit mask; not filtered Processor mapping or a physical-foot contact definition."
+  },
+  "video_inspection": {
+    "frames_s": [
+      40,
+      41,
+      42,
+      43,
+      44,
+      45,
+      46,
+      47,
+      48,
+      49,
+      50,
+      61.53333333333333
+    ],
+    "decoded_size": [
+      1918,
+      1022
+    ],
+    "findings": [
+      "Requested interval shows outward walking with pose overlay and continuing footprint updates.",
+      "GUI formal elapsed display approximately6..16s across clip40..50; coarse anchor only, not a shared recorder/QPC clock.",
+      "No obvious full skeleton disappearance at the sampled one-second frames; not proof of every intervening frame."
+    ]
+  },
+  "bad_beam576_policy": "Unknown, neither blocked nor clear, no automatic bridging; preserve 6m physical coordinate. No policy or threshold change.",
+  "stack_window": "../20261017_field_wait01/round02/review01.json",
+  "source_sha256": {
+    "experiments/single_usb_field/analyze.py": "5fa16df3e598b83e7b0628cdfd65a0446ea603fb4a22c2142d7206b19cf9dbfa",
+    "engine/modes/walking_processor.py": "c71a9e657142966c6036cc1f8090e26a7731cefde2b4f80393f8e06ed37829ba"
+  },
+  "quantitative_field_attribution_ready": false
+}

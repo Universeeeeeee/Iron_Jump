@@ -1,0 +1,1553 @@
+{
+  "mode": "wait",
+  "pid": 4344,
+  "threads": {
+    "sdk_21060": {
+      "tid": 21060,
+      "cpu_s": 0.015625,
+      "cycles": 140794320,
+      "work": null,
+      "sample_events": 0,
+      "nonprocess_samples": 0,
+      "joined": 485,
+      "root_complete": 442,
+      "kernel_present": 485,
+      "ambiguous": 0,
+      "user_frames": 12292,
+      "unknown_symbol_frames": 449,
+      "unmapped_frames": 0,
+      "max_user_depth": 39,
+      "families": {
+        "gil_wait_chain": 2
+      },
+      "witnesses": {
+        "gil_wait_chain": {
+          "qpc": 2407909533704,
+          "frames": [
+            {
+              "address": 140705335090644,
+              "module": "ntdll.dll",
+              "rva": 1449428,
+              "symbol": "NtWaitForSingleObject",
+              "pdb_matched": true,
+              "displacement": 20
+            },
+            {
+              "address": 140705291615903,
+              "module": "KernelBase.dll",
+              "rva": 114335,
+              "symbol": "WaitForSingleObjectEx",
+              "pdb_matched": true,
+              "displacement": 175
+            },
+            {
+              "address": 140703173447058,
+              "module": "python311.dll",
+              "rva": 2035090,
+              "symbol": "_PyCOND_WAIT_MS",
+              "pdb_matched": true,
+              "displacement": 50
+            },
+            {
+              "address": 140703173447681,
+              "module": "python311.dll",
+              "rva": 2035713,
+              "symbol": "take_gil",
+              "pdb_matched": true,
+              "displacement": 177
+            },
+            {
+              "address": 140703172097023,
+              "module": "python311.dll",
+              "rva": 685055,
+              "symbol": "acquire_timed",
+              "pdb_matched": true,
+              "displacement": 319
+            },
+            {
+              "address": 140703172097601,
+              "module": "python311.dll",
+              "rva": 685633,
+              "symbol": "lock_PyThread_acquire_lock",
+              "pdb_matched": true,
+              "displacement": 49
+            },
+            {
+              "address": 140703172499583,
+              "module": "python311.dll",
+              "rva": 1087615,
+              "symbol": "method_vectorcall_VARARGS_KEYWORDS",
+              "pdb_matched": true,
+              "displacement": 287
+            },
+            {
+              "address": 140703172453977,
+              "module": "python311.dll",
+              "rva": 1042009,
+              "symbol": "_PyObject_VectorcallTstate",
+              "pdb_matched": true,
+              "displacement": 73
+            },
+            {
+              "address": 140703172455377,
+              "module": "python311.dll",
+              "rva": 1043409,
+              "symbol": "PyObject_Vectorcall",
+              "pdb_matched": true,
+              "displacement": 33
+            },
+            {
+              "address": 140703173471322,
+              "module": "python311.dll",
+              "rva": 2059354,
+              "symbol": "_PyEval_EvalFrameDefault",
+              "pdb_matched": true,
+              "displacement": 18362
+            },
+            {
+              "address": 140703173487182,
+              "module": "python311.dll",
+              "rva": 2075214,
+              "symbol": "_PyEval_Vector",
+              "pdb_matched": true,
+              "displacement": 190
+            },
+            {
+              "address": 140703173452160,
+              "module": "python311.dll",
+              "rva": 2040192,
+              "symbol": "PyEval_EvalCode",
+              "pdb_matched": true,
+              "displacement": 160
+            },
+            {
+              "address": 140703173431193,
+              "module": "python311.dll",
+              "rva": 2019225,
+              "symbol": "builtin_exec_impl",
+              "pdb_matched": true,
+              "displacement": 553
+            },
+            {
+              "address": 140703173421566,
+              "module": "python311.dll",
+              "rva": 2009598,
+              "symbol": "builtin_exec",
+              "pdb_matched": true,
+              "displacement": 206
+            },
+            {
+              "address": 140703172736424,
+              "module": "python311.dll",
+              "rva": 1324456,
+              "symbol": "cfunction_vectorcall_FASTCALL_KEYWORDS",
+              "pdb_matched": true,
+              "displacement": 136
+            },
+            {
+              "address": 140703172453977,
+              "module": "python311.dll",
+              "rva": 1042009,
+              "symbol": "_PyObject_VectorcallTstate",
+              "pdb_matched": true,
+              "displacement": 73
+            },
+            {
+              "address": 140703172455377,
+              "module": "python311.dll",
+              "rva": 1043409,
+              "symbol": "PyObject_Vectorcall",
+              "pdb_matched": true,
+              "displacement": 33
+            },
+            {
+              "address": 140703173471322,
+              "module": "python311.dll",
+              "rva": 2059354,
+              "symbol": "_PyEval_EvalFrameDefault",
+              "pdb_matched": true,
+              "displacement": 18362
+            },
+            {
+              "address": 140703173487182,
+              "module": "python311.dll",
+              "rva": 2075214,
+              "symbol": "_PyEval_Vector",
+              "pdb_matched": true,
+              "displacement": 190
+            },
+            {
+              "address": 140703172455853,
+              "module": "python311.dll",
+              "rva": 1043885,
+              "symbol": "_PyFunction_Vectorcall",
+              "pdb_matched": true,
+              "displacement": 61
+            },
+            {
+              "address": 140703172455246,
+              "module": "python311.dll",
+              "rva": 1043278,
+              "symbol": "_PyVectorcall_Call",
+              "pdb_matched": true,
+              "displacement": 206
+            },
+            {
+              "address": 140703172455519,
+              "module": "python311.dll",
+              "rva": 1043551,
+              "symbol": "_PyObject_Call",
+              "pdb_matched": true,
+              "displacement": 79
+            },
+            {
+              "address": 140703171938124,
+              "module": "python311.dll",
+              "rva": 526156,
+              "symbol": "pymain_run_module",
+              "pdb_matched": true,
+              "displacement": 572
+            },
+            {
+              "address": 140703171941384,
+              "module": "python311.dll",
+              "rva": 529416,
+              "symbol": "pymain_run_python",
+              "pdb_matched": true,
+              "displacement": 1128
+            },
+            {
+              "address": 140703171942448,
+              "module": "python311.dll",
+              "rva": 530480,
+              "symbol": "Py_Main",
+              "pdb_matched": true,
+              "displacement": 96
+            },
+            {
+              "address": 140695431681172,
+              "module": "python.exe",
+              "rva": 5268,
+              "symbol": null,
+              "pdb_matched": false
+            },
+            {
+              "address": 140705322753447,
+              "module": "kernel32.dll",
+              "rva": 187815,
+              "symbol": "BaseThreadInitThunk",
+              "pdb_matched": true,
+              "displacement": 23
+            },
+            {
+              "address": 140705334160972,
+              "module": "ntdll.dll",
+              "rva": 519756,
+              "symbol": "RtlUserThreadStart",
+              "pdb_matched": true,
+              "displacement": 44
+            }
+          ]
+        }
+      },
+      "lifecycle_ok": true,
+      "creation_unchanged": true,
+      "stack_events_expected": 485,
+      "association_rate": 1.0,
+      "user_root_complete_rate": 0.911340206185567,
+      "schedule_residency_s": 0.05974910000000001,
+      "schedule_error_s": 0.04412410000000001,
+      "schedule_violations": [],
+      "schedule_left_boundary_events": [],
+      "paired_wait_intervals": 391,
+      "paired_wait_chain_counts": {
+        "gil_wait_chain": 2
+      }
+    },
+    "sdk_10148": {
+      "tid": 10148,
+      "cpu_s": 0.0,
+      "cycles": 0,
+      "work": null,
+      "sample_events": 0,
+      "nonprocess_samples": 0,
+      "joined": 0,
+      "root_complete": 0,
+      "kernel_present": 0,
+      "ambiguous": 0,
+      "user_frames": 0,
+      "unknown_symbol_frames": 0,
+      "unmapped_frames": 0,
+      "max_user_depth": 0,
+      "families": {},
+      "witnesses": {},
+      "lifecycle_ok": true,
+      "creation_unchanged": true,
+      "stack_events_expected": 0,
+      "association_rate": null,
+      "user_root_complete_rate": null,
+      "schedule_residency_s": 0,
+      "schedule_error_s": 0.0,
+      "schedule_violations": [],
+      "schedule_left_boundary_events": [],
+      "paired_wait_intervals": 0,
+      "paired_wait_chain_counts": {}
+    },
+    "sdk_18928": {
+      "tid": 18928,
+      "cpu_s": 0.0,
+      "cycles": 0,
+      "work": null,
+      "sample_events": 0,
+      "nonprocess_samples": 0,
+      "joined": 0,
+      "root_complete": 0,
+      "kernel_present": 0,
+      "ambiguous": 0,
+      "user_frames": 0,
+      "unknown_symbol_frames": 0,
+      "unmapped_frames": 0,
+      "max_user_depth": 0,
+      "families": {},
+      "witnesses": {},
+      "lifecycle_ok": true,
+      "creation_unchanged": true,
+      "stack_events_expected": 0,
+      "association_rate": null,
+      "user_root_complete_rate": null,
+      "schedule_residency_s": 0,
+      "schedule_error_s": 0.0,
+      "schedule_violations": [],
+      "schedule_left_boundary_events": [],
+      "paired_wait_intervals": 0,
+      "paired_wait_chain_counts": {}
+    },
+    "sdk_20556": {
+      "tid": 20556,
+      "cpu_s": 0.0,
+      "cycles": 0,
+      "work": null,
+      "sample_events": 0,
+      "nonprocess_samples": 0,
+      "joined": 0,
+      "root_complete": 0,
+      "kernel_present": 0,
+      "ambiguous": 0,
+      "user_frames": 0,
+      "unknown_symbol_frames": 0,
+      "unmapped_frames": 0,
+      "max_user_depth": 0,
+      "families": {},
+      "witnesses": {},
+      "lifecycle_ok": true,
+      "creation_unchanged": true,
+      "stack_events_expected": 0,
+      "association_rate": null,
+      "user_root_complete_rate": null,
+      "schedule_residency_s": 0,
+      "schedule_error_s": 0.0,
+      "schedule_violations": [],
+      "schedule_left_boundary_events": [],
+      "paired_wait_intervals": 0,
+      "paired_wait_chain_counts": {}
+    },
+    "sdk_19788": {
+      "tid": 19788,
+      "cpu_s": 0.0,
+      "cycles": 0,
+      "work": null,
+      "sample_events": 0,
+      "nonprocess_samples": 0,
+      "joined": 0,
+      "root_complete": 0,
+      "kernel_present": 0,
+      "ambiguous": 0,
+      "user_frames": 0,
+      "unknown_symbol_frames": 0,
+      "unmapped_frames": 0,
+      "max_user_depth": 0,
+      "families": {},
+      "witnesses": {},
+      "lifecycle_ok": true,
+      "creation_unchanged": true,
+      "stack_events_expected": 0,
+      "association_rate": null,
+      "user_root_complete_rate": null,
+      "schedule_residency_s": 0,
+      "schedule_error_s": 0.0,
+      "schedule_violations": [],
+      "schedule_left_boundary_events": [],
+      "paired_wait_intervals": 0,
+      "paired_wait_chain_counts": {}
+    },
+    "sdk_22248": {
+      "tid": 22248,
+      "cpu_s": 0.0,
+      "cycles": 0,
+      "work": null,
+      "sample_events": 0,
+      "nonprocess_samples": 0,
+      "joined": 0,
+      "root_complete": 0,
+      "kernel_present": 0,
+      "ambiguous": 0,
+      "user_frames": 0,
+      "unknown_symbol_frames": 0,
+      "unmapped_frames": 0,
+      "max_user_depth": 0,
+      "families": {},
+      "witnesses": {},
+      "lifecycle_ok": true,
+      "creation_unchanged": true,
+      "stack_events_expected": 0,
+      "association_rate": null,
+      "user_root_complete_rate": null,
+      "schedule_residency_s": 0,
+      "schedule_error_s": 0.0,
+      "schedule_violations": [],
+      "schedule_left_boundary_events": [],
+      "paired_wait_intervals": 0,
+      "paired_wait_chain_counts": {}
+    },
+    "sdk_6336": {
+      "tid": 6336,
+      "cpu_s": 0.0,
+      "cycles": 0,
+      "work": null,
+      "sample_events": 0,
+      "nonprocess_samples": 0,
+      "joined": 0,
+      "root_complete": 0,
+      "kernel_present": 0,
+      "ambiguous": 0,
+      "user_frames": 0,
+      "unknown_symbol_frames": 0,
+      "unmapped_frames": 0,
+      "max_user_depth": 0,
+      "families": {},
+      "witnesses": {},
+      "lifecycle_ok": true,
+      "creation_unchanged": true,
+      "stack_events_expected": 0,
+      "association_rate": null,
+      "user_root_complete_rate": null,
+      "schedule_residency_s": 0,
+      "schedule_error_s": 0.0,
+      "schedule_violations": [],
+      "schedule_left_boundary_events": [],
+      "paired_wait_intervals": 0,
+      "paired_wait_chain_counts": {}
+    },
+    "sdk_10404": {
+      "tid": 10404,
+      "cpu_s": 0.0,
+      "cycles": 0,
+      "work": null,
+      "sample_events": 0,
+      "nonprocess_samples": 0,
+      "joined": 0,
+      "root_complete": 0,
+      "kernel_present": 0,
+      "ambiguous": 0,
+      "user_frames": 0,
+      "unknown_symbol_frames": 0,
+      "unmapped_frames": 0,
+      "max_user_depth": 0,
+      "families": {},
+      "witnesses": {},
+      "lifecycle_ok": true,
+      "creation_unchanged": true,
+      "stack_events_expected": 0,
+      "association_rate": null,
+      "user_root_complete_rate": null,
+      "schedule_residency_s": 0,
+      "schedule_error_s": 0.0,
+      "schedule_violations": [],
+      "schedule_left_boundary_events": [],
+      "paired_wait_intervals": 0,
+      "paired_wait_chain_counts": {}
+    },
+    "sdk_16092": {
+      "tid": 16092,
+      "cpu_s": 0.0,
+      "cycles": 0,
+      "work": null,
+      "sample_events": 0,
+      "nonprocess_samples": 0,
+      "joined": 0,
+      "root_complete": 0,
+      "kernel_present": 0,
+      "ambiguous": 0,
+      "user_frames": 0,
+      "unknown_symbol_frames": 0,
+      "unmapped_frames": 0,
+      "max_user_depth": 0,
+      "families": {},
+      "witnesses": {},
+      "lifecycle_ok": true,
+      "creation_unchanged": true,
+      "stack_events_expected": 0,
+      "association_rate": null,
+      "user_root_complete_rate": null,
+      "schedule_residency_s": 0,
+      "schedule_error_s": 0.0,
+      "schedule_violations": [],
+      "schedule_left_boundary_events": [],
+      "paired_wait_intervals": 0,
+      "paired_wait_chain_counts": {}
+    },
+    "sdk_18516": {
+      "tid": 18516,
+      "cpu_s": 0.0,
+      "cycles": 0,
+      "work": null,
+      "sample_events": 0,
+      "nonprocess_samples": 0,
+      "joined": 0,
+      "root_complete": 0,
+      "kernel_present": 0,
+      "ambiguous": 0,
+      "user_frames": 0,
+      "unknown_symbol_frames": 0,
+      "unmapped_frames": 0,
+      "max_user_depth": 0,
+      "families": {},
+      "witnesses": {},
+      "lifecycle_ok": true,
+      "creation_unchanged": true,
+      "stack_events_expected": 0,
+      "association_rate": null,
+      "user_root_complete_rate": null,
+      "schedule_residency_s": 0,
+      "schedule_error_s": 0.0,
+      "schedule_violations": [],
+      "schedule_left_boundary_events": [],
+      "paired_wait_intervals": 0,
+      "paired_wait_chain_counts": {}
+    },
+    "sdk_12500": {
+      "tid": 12500,
+      "cpu_s": 0.0,
+      "cycles": 0,
+      "work": null,
+      "sample_events": 0,
+      "nonprocess_samples": 0,
+      "joined": 0,
+      "root_complete": 0,
+      "kernel_present": 0,
+      "ambiguous": 0,
+      "user_frames": 0,
+      "unknown_symbol_frames": 0,
+      "unmapped_frames": 0,
+      "max_user_depth": 0,
+      "families": {},
+      "witnesses": {},
+      "lifecycle_ok": true,
+      "creation_unchanged": true,
+      "stack_events_expected": 0,
+      "association_rate": null,
+      "user_root_complete_rate": null,
+      "schedule_residency_s": 0,
+      "schedule_error_s": 0.0,
+      "schedule_violations": [],
+      "schedule_left_boundary_events": [],
+      "paired_wait_intervals": 0,
+      "paired_wait_chain_counts": {}
+    },
+    "sdk_15060": {
+      "tid": 15060,
+      "cpu_s": 0.015625,
+      "cycles": 42177840,
+      "work": null,
+      "sample_events": 0,
+      "nonprocess_samples": 0,
+      "joined": 30,
+      "root_complete": 21,
+      "kernel_present": 30,
+      "ambiguous": 0,
+      "user_frames": 350,
+      "unknown_symbol_frames": 145,
+      "unmapped_frames": 0,
+      "max_user_depth": 25,
+      "families": {
+        "system_timer_wait_chain": 6
+      },
+      "witnesses": {
+        "system_timer_wait_chain": {
+          "qpc": 2407903385126,
+          "frames": [
+            {
+              "address": 140705335092180,
+              "module": "ntdll.dll",
+              "rva": 1450964,
+              "symbol": "NtDelayExecution",
+              "pdb_matched": true,
+              "displacement": 20
+            },
+            {
+              "address": 140705334497236,
+              "module": "ntdll.dll",
+              "rva": 856020,
+              "symbol": "RtlDelayExecution",
+              "pdb_matched": true,
+              "displacement": 52
+            },
+            {
+              "address": 140705292073409,
+              "module": "KernelBase.dll",
+              "rva": 571841,
+              "symbol": "SleepEx",
+              "pdb_matched": true,
+              "displacement": 145
+            },
+            {
+              "address": 140703432386199,
+              "module": "msvcp140.dll",
+              "rva": 75415,
+              "symbol": null,
+              "pdb_matched": false
+            },
+            {
+              "address": 140736085313338,
+              "module": "libdev.dll",
+              "rva": 83770,
+              "symbol": "std::this_thread::sleep_until<std::chrono::steady_clock,std::chrono::duration<__int64,std::ratio<1,1000000000> > >",
+              "pdb_matched": true,
+              "displacement": 346
+            },
+            {
+              "address": 140736086650431,
+              "module": "libdev.dll",
+              "rva": 1420863,
+              "symbol": "DevicesPrivate::run",
+              "pdb_matched": true,
+              "displacement": 175
+            },
+            {
+              "address": 140736085315567,
+              "module": "libdev.dll",
+              "rva": 85999,
+              "symbol": "std::thread::_Invoke<std::tuple<void (__cdecl DevicePrivate::*)(void),DevicePrivate *>,0,1>",
+              "pdb_matched": true,
+              "displacement": 15
+            },
+            {
+              "address": 140705287949616,
+              "module": "ucrtbase.dll",
+              "rva": 183600,
+              "symbol": "thread_start<unsigned int (__cdecl*)(void *),1>",
+              "pdb_matched": true,
+              "displacement": 48
+            },
+            {
+              "address": 140705322753447,
+              "module": "kernel32.dll",
+              "rva": 187815,
+              "symbol": "BaseThreadInitThunk",
+              "pdb_matched": true,
+              "displacement": 23
+            },
+            {
+              "address": 140705334160972,
+              "module": "ntdll.dll",
+              "rva": 519756,
+              "symbol": "RtlUserThreadStart",
+              "pdb_matched": true,
+              "displacement": 44
+            }
+          ]
+        }
+      },
+      "lifecycle_ok": true,
+      "creation_unchanged": true,
+      "stack_events_expected": 30,
+      "association_rate": 1.0,
+      "user_root_complete_rate": 0.7,
+      "schedule_residency_s": 0.0181332,
+      "schedule_error_s": 0.0025081999999999986,
+      "schedule_violations": [],
+      "schedule_left_boundary_events": [],
+      "paired_wait_intervals": 5,
+      "paired_wait_chain_counts": {
+        "system_timer_wait_chain": 5
+      }
+    },
+    "sdk_8768": {
+      "tid": 8768,
+      "cpu_s": 0.0,
+      "cycles": 1953600,
+      "work": null,
+      "sample_events": 0,
+      "nonprocess_samples": 0,
+      "joined": 33,
+      "root_complete": 31,
+      "kernel_present": 33,
+      "ambiguous": 0,
+      "user_frames": 310,
+      "unknown_symbol_frames": 31,
+      "unmapped_frames": 0,
+      "max_user_depth": 10,
+      "families": {
+        "system_timer_wait_chain": 31
+      },
+      "witnesses": {
+        "system_timer_wait_chain": {
+          "qpc": 2407896796343,
+          "frames": [
+            {
+              "address": 140705335092180,
+              "module": "ntdll.dll",
+              "rva": 1450964,
+              "symbol": "NtDelayExecution",
+              "pdb_matched": true,
+              "displacement": 20
+            },
+            {
+              "address": 140705334497236,
+              "module": "ntdll.dll",
+              "rva": 856020,
+              "symbol": "RtlDelayExecution",
+              "pdb_matched": true,
+              "displacement": 52
+            },
+            {
+              "address": 140705292073409,
+              "module": "KernelBase.dll",
+              "rva": 571841,
+              "symbol": "SleepEx",
+              "pdb_matched": true,
+              "displacement": 145
+            },
+            {
+              "address": 140703432386199,
+              "module": "msvcp140.dll",
+              "rva": 75415,
+              "symbol": null,
+              "pdb_matched": false
+            },
+            {
+              "address": 140736085313338,
+              "module": "libdev.dll",
+              "rva": 83770,
+              "symbol": "std::this_thread::sleep_until<std::chrono::steady_clock,std::chrono::duration<__int64,std::ratio<1,1000000000> > >",
+              "pdb_matched": true,
+              "displacement": 346
+            },
+            {
+              "address": 140736086373424,
+              "module": "libdev.dll",
+              "rva": 1143856,
+              "symbol": "DevicesPrivate::runForTail",
+              "pdb_matched": true,
+              "displacement": 224
+            },
+            {
+              "address": 140736085315567,
+              "module": "libdev.dll",
+              "rva": 85999,
+              "symbol": "std::thread::_Invoke<std::tuple<void (__cdecl DevicePrivate::*)(void),DevicePrivate *>,0,1>",
+              "pdb_matched": true,
+              "displacement": 15
+            },
+            {
+              "address": 140705287949616,
+              "module": "ucrtbase.dll",
+              "rva": 183600,
+              "symbol": "thread_start<unsigned int (__cdecl*)(void *),1>",
+              "pdb_matched": true,
+              "displacement": 48
+            },
+            {
+              "address": 140705322753447,
+              "module": "kernel32.dll",
+              "rva": 187815,
+              "symbol": "BaseThreadInitThunk",
+              "pdb_matched": true,
+              "displacement": 23
+            },
+            {
+              "address": 140705334160972,
+              "module": "ntdll.dll",
+              "rva": 519756,
+              "symbol": "RtlUserThreadStart",
+              "pdb_matched": true,
+              "displacement": 44
+            }
+          ]
+        }
+      },
+      "lifecycle_ok": true,
+      "creation_unchanged": true,
+      "stack_events_expected": 33,
+      "association_rate": 1.0,
+      "user_root_complete_rate": 0.9393939393939394,
+      "schedule_residency_s": 0.0008604,
+      "schedule_error_s": 0.0008604,
+      "schedule_violations": [],
+      "schedule_left_boundary_events": [],
+      "paired_wait_intervals": 29,
+      "paired_wait_chain_counts": {
+        "system_timer_wait_chain": 29
+      }
+    },
+    "sdk_11544": {
+      "tid": 11544,
+      "cpu_s": 0.0,
+      "cycles": 0,
+      "work": null,
+      "sample_events": 0,
+      "nonprocess_samples": 0,
+      "joined": 0,
+      "root_complete": 0,
+      "kernel_present": 0,
+      "ambiguous": 0,
+      "user_frames": 0,
+      "unknown_symbol_frames": 0,
+      "unmapped_frames": 0,
+      "max_user_depth": 0,
+      "families": {},
+      "witnesses": {},
+      "lifecycle_ok": true,
+      "creation_unchanged": true,
+      "stack_events_expected": 0,
+      "association_rate": null,
+      "user_root_complete_rate": null,
+      "schedule_residency_s": 0,
+      "schedule_error_s": 0.0,
+      "schedule_violations": [],
+      "schedule_left_boundary_events": [],
+      "paired_wait_intervals": 0,
+      "paired_wait_chain_counts": {}
+    },
+    "sdk_14820": {
+      "tid": 14820,
+      "cpu_s": 0.0,
+      "cycles": 0,
+      "work": null,
+      "sample_events": 0,
+      "nonprocess_samples": 0,
+      "joined": 0,
+      "root_complete": 0,
+      "kernel_present": 0,
+      "ambiguous": 0,
+      "user_frames": 0,
+      "unknown_symbol_frames": 0,
+      "unmapped_frames": 0,
+      "max_user_depth": 0,
+      "families": {},
+      "witnesses": {},
+      "lifecycle_ok": true,
+      "creation_unchanged": true,
+      "stack_events_expected": 0,
+      "association_rate": null,
+      "user_root_complete_rate": null,
+      "schedule_residency_s": 0,
+      "schedule_error_s": 0.0,
+      "schedule_violations": [],
+      "schedule_left_boundary_events": [],
+      "paired_wait_intervals": 0,
+      "paired_wait_chain_counts": {}
+    },
+    "sdk_8016": {
+      "tid": 8016,
+      "cpu_s": 0.0,
+      "cycles": 0,
+      "work": null,
+      "sample_events": 0,
+      "nonprocess_samples": 0,
+      "joined": 0,
+      "root_complete": 0,
+      "kernel_present": 0,
+      "ambiguous": 0,
+      "user_frames": 0,
+      "unknown_symbol_frames": 0,
+      "unmapped_frames": 0,
+      "max_user_depth": 0,
+      "families": {},
+      "witnesses": {},
+      "lifecycle_ok": true,
+      "creation_unchanged": true,
+      "stack_events_expected": 0,
+      "association_rate": null,
+      "user_root_complete_rate": null,
+      "schedule_residency_s": 0,
+      "schedule_error_s": 0.0,
+      "schedule_violations": [],
+      "schedule_left_boundary_events": [],
+      "paired_wait_intervals": 0,
+      "paired_wait_chain_counts": {}
+    },
+    "sdk_21496": {
+      "tid": 21496,
+      "cpu_s": 0.0,
+      "cycles": 0,
+      "work": null,
+      "sample_events": 0,
+      "nonprocess_samples": 0,
+      "joined": 0,
+      "root_complete": 0,
+      "kernel_present": 0,
+      "ambiguous": 0,
+      "user_frames": 0,
+      "unknown_symbol_frames": 0,
+      "unmapped_frames": 0,
+      "max_user_depth": 0,
+      "families": {},
+      "witnesses": {},
+      "lifecycle_ok": true,
+      "creation_unchanged": true,
+      "stack_events_expected": 0,
+      "association_rate": null,
+      "user_root_complete_rate": null,
+      "schedule_residency_s": 0,
+      "schedule_error_s": 0.0,
+      "schedule_violations": [],
+      "schedule_left_boundary_events": [],
+      "paired_wait_intervals": 0,
+      "paired_wait_chain_counts": {}
+    },
+    "sdk_11036": {
+      "tid": 11036,
+      "cpu_s": 0.0,
+      "cycles": 181680,
+      "work": null,
+      "sample_events": 0,
+      "nonprocess_samples": 0,
+      "joined": 1,
+      "root_complete": 1,
+      "kernel_present": 1,
+      "ambiguous": 0,
+      "user_frames": 4,
+      "unknown_symbol_frames": 0,
+      "unmapped_frames": 0,
+      "max_user_depth": 4,
+      "families": {},
+      "witnesses": {},
+      "lifecycle_ok": true,
+      "creation_unchanged": true,
+      "stack_events_expected": 1,
+      "association_rate": 1.0,
+      "user_root_complete_rate": 1.0,
+      "schedule_residency_s": 7.86e-05,
+      "schedule_error_s": 7.86e-05,
+      "schedule_violations": [],
+      "schedule_left_boundary_events": [],
+      "paired_wait_intervals": 0,
+      "paired_wait_chain_counts": {}
+    },
+    "sdk_21932": {
+      "tid": 21932,
+      "cpu_s": 0.03125,
+      "cycles": 55302960,
+      "work": null,
+      "sample_events": 0,
+      "nonprocess_samples": 0,
+      "joined": 512,
+      "root_complete": 484,
+      "kernel_present": 512,
+      "ambiguous": 0,
+      "user_frames": 5530,
+      "unknown_symbol_frames": 1183,
+      "unmapped_frames": 0,
+      "max_user_depth": 16,
+      "families": {
+        "system_timer_wait_chain": 276
+      },
+      "witnesses": {
+        "system_timer_wait_chain": {
+          "qpc": 2407895325104,
+          "frames": [
+            {
+              "address": 140705335092180,
+              "module": "ntdll.dll",
+              "rva": 1450964,
+              "symbol": "NtDelayExecution",
+              "pdb_matched": true,
+              "displacement": 20
+            },
+            {
+              "address": 140705334497236,
+              "module": "ntdll.dll",
+              "rva": 856020,
+              "symbol": "RtlDelayExecution",
+              "pdb_matched": true,
+              "displacement": 52
+            },
+            {
+              "address": 140705292073409,
+              "module": "KernelBase.dll",
+              "rva": 571841,
+              "symbol": "SleepEx",
+              "pdb_matched": true,
+              "displacement": 145
+            },
+            {
+              "address": 140703432386199,
+              "module": "msvcp140.dll",
+              "rva": 75415,
+              "symbol": null,
+              "pdb_matched": false
+            },
+            {
+              "address": 140736085313338,
+              "module": "libdev.dll",
+              "rva": 83770,
+              "symbol": "std::this_thread::sleep_until<std::chrono::steady_clock,std::chrono::duration<__int64,std::ratio<1,1000000000> > >",
+              "pdb_matched": true,
+              "displacement": 346
+            },
+            {
+              "address": 140736085278876,
+              "module": "libdev.dll",
+              "rva": 49308,
+              "symbol": "DevicePrivate::run",
+              "pdb_matched": true,
+              "displacement": 348
+            },
+            {
+              "address": 140736085315567,
+              "module": "libdev.dll",
+              "rva": 85999,
+              "symbol": "std::thread::_Invoke<std::tuple<void (__cdecl DevicePrivate::*)(void),DevicePrivate *>,0,1>",
+              "pdb_matched": true,
+              "displacement": 15
+            },
+            {
+              "address": 140705287949616,
+              "module": "ucrtbase.dll",
+              "rva": 183600,
+              "symbol": "thread_start<unsigned int (__cdecl*)(void *),1>",
+              "pdb_matched": true,
+              "displacement": 48
+            },
+            {
+              "address": 140705322753447,
+              "module": "kernel32.dll",
+              "rva": 187815,
+              "symbol": "BaseThreadInitThunk",
+              "pdb_matched": true,
+              "displacement": 23
+            },
+            {
+              "address": 140705334160972,
+              "module": "ntdll.dll",
+              "rva": 519756,
+              "symbol": "RtlUserThreadStart",
+              "pdb_matched": true,
+              "displacement": 44
+            }
+          ]
+        }
+      },
+      "lifecycle_ok": true,
+      "creation_unchanged": true,
+      "stack_events_expected": 512,
+      "association_rate": 1.0,
+      "user_root_complete_rate": 0.9453125,
+      "schedule_residency_s": 0.02385559999999998,
+      "schedule_error_s": -0.00739440000000002,
+      "schedule_violations": [],
+      "schedule_left_boundary_events": [],
+      "paired_wait_intervals": 473,
+      "paired_wait_chain_counts": {
+        "system_timer_wait_chain": 274
+      }
+    },
+    "sdk_15592": {
+      "tid": 15592,
+      "cpu_s": 0.0,
+      "cycles": 133920,
+      "work": null,
+      "sample_events": 0,
+      "nonprocess_samples": 0,
+      "joined": 2,
+      "root_complete": 2,
+      "kernel_present": 2,
+      "ambiguous": 0,
+      "user_frames": 20,
+      "unknown_symbol_frames": 2,
+      "unmapped_frames": 0,
+      "max_user_depth": 10,
+      "families": {
+        "system_timer_wait_chain": 2
+      },
+      "witnesses": {
+        "system_timer_wait_chain": {
+          "qpc": 2407909879527,
+          "frames": [
+            {
+              "address": 140705335092180,
+              "module": "ntdll.dll",
+              "rva": 1450964,
+              "symbol": "NtDelayExecution",
+              "pdb_matched": true,
+              "displacement": 20
+            },
+            {
+              "address": 140705334497236,
+              "module": "ntdll.dll",
+              "rva": 856020,
+              "symbol": "RtlDelayExecution",
+              "pdb_matched": true,
+              "displacement": 52
+            },
+            {
+              "address": 140705292073409,
+              "module": "KernelBase.dll",
+              "rva": 571841,
+              "symbol": "SleepEx",
+              "pdb_matched": true,
+              "displacement": 145
+            },
+            {
+              "address": 140703432386199,
+              "module": "msvcp140.dll",
+              "rva": 75415,
+              "symbol": null,
+              "pdb_matched": false
+            },
+            {
+              "address": 140736085313338,
+              "module": "libdev.dll",
+              "rva": 83770,
+              "symbol": "std::this_thread::sleep_until<std::chrono::steady_clock,std::chrono::duration<__int64,std::ratio<1,1000000000> > >",
+              "pdb_matched": true,
+              "displacement": 346
+            },
+            {
+              "address": 140736085280071,
+              "module": "libdev.dll",
+              "rva": 50503,
+              "symbol": "DevicePrivate::listen_thread",
+              "pdb_matched": true,
+              "displacement": 135
+            },
+            {
+              "address": 140736085315567,
+              "module": "libdev.dll",
+              "rva": 85999,
+              "symbol": "std::thread::_Invoke<std::tuple<void (__cdecl DevicePrivate::*)(void),DevicePrivate *>,0,1>",
+              "pdb_matched": true,
+              "displacement": 15
+            },
+            {
+              "address": 140705287949616,
+              "module": "ucrtbase.dll",
+              "rva": 183600,
+              "symbol": "thread_start<unsigned int (__cdecl*)(void *),1>",
+              "pdb_matched": true,
+              "displacement": 48
+            },
+            {
+              "address": 140705322753447,
+              "module": "kernel32.dll",
+              "rva": 187815,
+              "symbol": "BaseThreadInitThunk",
+              "pdb_matched": true,
+              "displacement": 23
+            },
+            {
+              "address": 140705334160972,
+              "module": "ntdll.dll",
+              "rva": 519756,
+              "symbol": "RtlUserThreadStart",
+              "pdb_matched": true,
+              "displacement": 44
+            }
+          ]
+        }
+      },
+      "lifecycle_ok": true,
+      "creation_unchanged": true,
+      "stack_events_expected": 2,
+      "association_rate": 1.0,
+      "user_root_complete_rate": 1.0,
+      "schedule_residency_s": 5.82e-05,
+      "schedule_error_s": 5.82e-05,
+      "schedule_violations": [],
+      "schedule_left_boundary_events": [],
+      "paired_wait_intervals": 1,
+      "paired_wait_chain_counts": {
+        "system_timer_wait_chain": 1
+      }
+    },
+    "sdk_9072": {
+      "tid": 9072,
+      "cpu_s": 0.09375,
+      "cycles": 235371840,
+      "work": null,
+      "sample_events": 0,
+      "nonprocess_samples": 0,
+      "joined": 139,
+      "root_complete": 123,
+      "kernel_present": 139,
+      "ambiguous": 0,
+      "user_frames": 4190,
+      "unknown_symbol_frames": 0,
+      "unmapped_frames": 0,
+      "max_user_depth": 43,
+      "families": {
+        "gil_wait_chain": 1
+      },
+      "witnesses": {
+        "gil_wait_chain": {
+          "qpc": 2407909534102,
+          "frames": [
+            {
+              "address": 140705335090644,
+              "module": "ntdll.dll",
+              "rva": 1449428,
+              "symbol": "NtWaitForSingleObject",
+              "pdb_matched": true,
+              "displacement": 20
+            },
+            {
+              "address": 140705291615903,
+              "module": "KernelBase.dll",
+              "rva": 114335,
+              "symbol": "WaitForSingleObjectEx",
+              "pdb_matched": true,
+              "displacement": 175
+            },
+            {
+              "address": 140703173447058,
+              "module": "python311.dll",
+              "rva": 2035090,
+              "symbol": "_PyCOND_WAIT_MS",
+              "pdb_matched": true,
+              "displacement": 50
+            },
+            {
+              "address": 140703173447681,
+              "module": "python311.dll",
+              "rva": 2035713,
+              "symbol": "take_gil",
+              "pdb_matched": true,
+              "displacement": 177
+            },
+            {
+              "address": 140703173630558,
+              "module": "python311.dll",
+              "rva": 2218590,
+              "symbol": "_Py_write_impl",
+              "pdb_matched": true,
+              "displacement": 286
+            },
+            {
+              "address": 140703172152102,
+              "module": "python311.dll",
+              "rva": 740134,
+              "symbol": "_io_FileIO_write",
+              "pdb_matched": true,
+              "displacement": 374
+            },
+            {
+              "address": 140703172500685,
+              "module": "python311.dll",
+              "rva": 1088717,
+              "symbol": "method_vectorcall_O",
+              "pdb_matched": true,
+              "displacement": 205
+            },
+            {
+              "address": 140703172453977,
+              "module": "python311.dll",
+              "rva": 1042009,
+              "symbol": "_PyObject_VectorcallTstate",
+              "pdb_matched": true,
+              "displacement": 73
+            },
+            {
+              "address": 140703172216756,
+              "module": "python311.dll",
+              "rva": 804788,
+              "symbol": "_textiowrapper_writeflush",
+              "pdb_matched": true,
+              "displacement": 628
+            },
+            {
+              "address": 140703172217860,
+              "module": "python311.dll",
+              "rva": 805892,
+              "symbol": "_io_TextIOWrapper_write_impl",
+              "pdb_matched": true,
+              "displacement": 996
+            },
+            {
+              "address": 140703172234838,
+              "module": "python311.dll",
+              "rva": 822870,
+              "symbol": "_io_TextIOWrapper_write",
+              "pdb_matched": true,
+              "displacement": 150
+            },
+            {
+              "address": 140703172737162,
+              "module": "python311.dll",
+              "rva": 1325194,
+              "symbol": "cfunction_vectorcall_O",
+              "pdb_matched": true,
+              "displacement": 234
+            },
+            {
+              "address": 140703172453977,
+              "module": "python311.dll",
+              "rva": 1042009,
+              "symbol": "_PyObject_VectorcallTstate",
+              "pdb_matched": true,
+              "displacement": 73
+            },
+            {
+              "address": 140703172455779,
+              "module": "python311.dll",
+              "rva": 1043811,
+              "symbol": "PyObject_CallOneArg",
+              "pdb_matched": true,
+              "displacement": 51
+            },
+            {
+              "address": 140703172577720,
+              "module": "python311.dll",
+              "rva": 1165752,
+              "symbol": "PyFile_WriteObject",
+              "pdb_matched": true,
+              "displacement": 168
+            },
+            {
+              "address": 140703173436585,
+              "module": "python311.dll",
+              "rva": 2024617,
+              "symbol": "builtin_print_impl",
+              "pdb_matched": true,
+              "displacement": 441
+            },
+            {
+              "address": 140703173423028,
+              "module": "python311.dll",
+              "rva": 2011060,
+              "symbol": "builtin_print",
+              "pdb_matched": true,
+              "displacement": 244
+            },
+            {
+              "address": 140703173473463,
+              "module": "python311.dll",
+              "rva": 2061495,
+              "symbol": "_PyEval_EvalFrameDefault",
+              "pdb_matched": true,
+              "displacement": 20503
+            },
+            {
+              "address": 140703173487182,
+              "module": "python311.dll",
+              "rva": 2075214,
+              "symbol": "_PyEval_Vector",
+              "pdb_matched": true,
+              "displacement": 190
+            },
+            {
+              "address": 140703172455853,
+              "module": "python311.dll",
+              "rva": 1043885,
+              "symbol": "_PyFunction_Vectorcall",
+              "pdb_matched": true,
+              "displacement": 61
+            },
+            {
+              "address": 140703172455246,
+              "module": "python311.dll",
+              "rva": 1043278,
+              "symbol": "_PyVectorcall_Call",
+              "pdb_matched": true,
+              "displacement": 206
+            },
+            {
+              "address": 140703172455519,
+              "module": "python311.dll",
+              "rva": 1043551,
+              "symbol": "_PyObject_Call",
+              "pdb_matched": true,
+              "displacement": 79
+            },
+            {
+              "address": 140703173494013,
+              "module": "python311.dll",
+              "rva": 2082045,
+              "symbol": "do_call_core",
+              "pdb_matched": true,
+              "displacement": 397
+            },
+            {
+              "address": 140703173475711,
+              "module": "python311.dll",
+              "rva": 2063743,
+              "symbol": "_PyEval_EvalFrameDefault",
+              "pdb_matched": true,
+              "displacement": 22751
+            },
+            {
+              "address": 140703173487182,
+              "module": "python311.dll",
+              "rva": 2075214,
+              "symbol": "_PyEval_Vector",
+              "pdb_matched": true,
+              "displacement": 190
+            },
+            {
+              "address": 140703172455853,
+              "module": "python311.dll",
+              "rva": 1043885,
+              "symbol": "_PyFunction_Vectorcall",
+              "pdb_matched": true,
+              "displacement": 61
+            },
+            {
+              "address": 140703172464886,
+              "module": "python311.dll",
+              "rva": 1052918,
+              "symbol": "method_vectorcall",
+              "pdb_matched": true,
+              "displacement": 262
+            },
+            {
+              "address": 140703172455246,
+              "module": "python311.dll",
+              "rva": 1043278,
+              "symbol": "_PyVectorcall_Call",
+              "pdb_matched": true,
+              "displacement": 206
+            },
+            {
+              "address": 140703172455519,
+              "module": "python311.dll",
+              "rva": 1043551,
+              "symbol": "_PyObject_Call",
+              "pdb_matched": true,
+              "displacement": 79
+            },
+            {
+              "address": 140703172103189,
+              "module": "python311.dll",
+              "rva": 691221,
+              "symbol": "thread_run",
+              "pdb_matched": true,
+              "displacement": 181
+            },
+            {
+              "address": 140703174030850,
+              "module": "python311.dll",
+              "rva": 2618882,
+              "symbol": "bootstrap",
+              "pdb_matched": true,
+              "displacement": 50
+            },
+            {
+              "address": 140705287949616,
+              "module": "ucrtbase.dll",
+              "rva": 183600,
+              "symbol": "thread_start<unsigned int (__cdecl*)(void *),1>",
+              "pdb_matched": true,
+              "displacement": 48
+            },
+            {
+              "address": 140705322753447,
+              "module": "kernel32.dll",
+              "rva": 187815,
+              "symbol": "BaseThreadInitThunk",
+              "pdb_matched": true,
+              "displacement": 23
+            },
+            {
+              "address": 140705334160972,
+              "module": "ntdll.dll",
+              "rva": 519756,
+              "symbol": "RtlUserThreadStart",
+              "pdb_matched": true,
+              "displacement": 44
+            }
+          ]
+        }
+      },
+      "lifecycle_ok": true,
+      "creation_unchanged": true,
+      "stack_events_expected": 139,
+      "association_rate": 1.0,
+      "user_root_complete_rate": 0.8848920863309353,
+      "schedule_residency_s": 0.10084200000000003,
+      "schedule_error_s": 0.007092000000000029,
+      "schedule_violations": [],
+      "schedule_left_boundary_events": [],
+      "paired_wait_intervals": 82,
+      "paired_wait_chain_counts": {
+        "gil_wait_chain": 1
+      }
+    }
+  },
+  "synthetic_only": false,
+  "loss": {
+    "header_events_lost": 0,
+    "consumer_events_lost": 0,
+    "buffers_lost": 0
+  },
+  "interval_events": [],
+  "clock_type": 1,
+  "clock_max_residual_ms": 0.0126,
+  "anchor_width_us_max": 196.3,
+  "pdb_matched_modules": [
+    "D:\\conda\\python311.dll",
+    "C:\\Windows\\System32\\ucrtbase.dll",
+    "C:\\Windows\\System32\\KernelBase.dll",
+    "C:\\Windows\\System32\\kernel32.dll",
+    "C:\\Windows\\System32\\ntdll.dll",
+    "D:\\conda\\Lib\\site-packages\\PySide6\\Qt6Gui.dll",
+    "D:\\conda\\Lib\\site-packages\\PySide6\\Qt6Core.dll",
+    "D:\\conda\\Lib\\site-packages\\PySide6\\Qt6Widgets.dll",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\camera\\bin\\libdev.dll"
+  ],
+  "kernel_symbols_complete": false,
+  "sample_ip_not_in_linked_stack": 0,
+  "quality_checks": {
+    "controller": true,
+    "loss_zero": true,
+    "clock": true,
+    "identity": true,
+    "cycles": false,
+    "association": true,
+    "user_root": false,
+    "unambiguous": true,
+    "profiles_exclusive": true,
+    "events_present": false,
+    "counter": false,
+    "schedule_chain": true
+  },
+  "quality_pass": false,
+  "quantitative_field_attribution_ready": false,
+  "independent_scan": {
+    "events_lost": 0,
+    "counts": {
+      "Stack": {
+        "reader": 379632,
+        "tracerpt": 379632,
+        "equal": true
+      },
+      "SampleProf": {
+        "reader": 0,
+        "tracerpt": 0,
+        "equal": true
+      },
+      "36": {
+        "reader": 350767,
+        "tracerpt": 350767,
+        "equal": true
+      },
+      "ReadyThread": {
+        "reader": 199207,
+        "tracerpt": 199207,
+        "equal": true
+      }
+    },
+    "passed": true,
+    "summary_sha256": "21e7f3ee7059b2dbf798f1fd4f0096be8b3151266665d397a368b3d3efd8de1e"
+  },
+  "measurement_acceptance_pass": false
+}
