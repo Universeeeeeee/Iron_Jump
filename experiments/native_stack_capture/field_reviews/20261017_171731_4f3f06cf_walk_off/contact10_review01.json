@@ -1,0 +1,122 @@
+{
+  "case": "20261017_171731_4f3f06cf_walk_off",
+  "candidate_correspondence": "Contact 10 near 6m lies between published contacts 9 and 11, consistent with user-reported missing ninth physical step; exact physical-touch synchronization is unavailable.",
+  "contact": {
+    "id": 10,
+    "epoch": 0,
+    "label": "",
+    "side": "unknown",
+    "start": 4.523000000000003,
+    "last": 5.216999999999999,
+    "low": 605,
+    "high": 605,
+    "end": null,
+    "confirmed": true,
+    "exclusion": "masked_contact_boundary",
+    "confirmed_at": 4.582000000000001,
+    "lift_confirmed_at": null,
+    "observed_samples": 695,
+    "peak_width_m": 0.22880000000000056,
+    "touch_known": false,
+    "position_known": false,
+    "candidate_outcome": "confirmed_contact",
+    "touch_sample": null,
+    "lift_sample": null,
+    "confirmed_sample": 39903,
+    "merged_interruptions": [
+      {
+        "start_sample": 39925,
+        "end_sample": 39942,
+        "reason": "unresolved_fragment_join"
+      },
+      {
+        "start_sample": 39941,
+        "end_sample": 40539,
+        "reason": "unresolved_fragment_join"
+      }
+    ],
+    "touch_s": {
+      "value": null,
+      "valid": false,
+      "missing_reason": "not_observed"
+    },
+    "lift_s": {
+      "value": null,
+      "valid": false,
+      "missing_reason": "not_observed"
+    },
+    "contact_s": {
+      "value": null,
+      "valid": false,
+      "missing_reason": "not_observed"
+    },
+    "metric_evidence": {
+      "lift": {
+        "basis": "observed_contact_boundary"
+      }
+    },
+    "centre_m": {
+      "value": null,
+      "valid": false,
+      "missing_reason": "incomplete_contact",
+      "evidence": {
+        "rule_version": "owned_sparse_centre_v1",
+        "valid": false,
+        "window": [
+          39844,
+          null
+        ],
+        "missing_reason": "incomplete_contact"
+      }
+    },
+    "position_m": 6.1404
+  },
+  "timeline_first": {
+    "sample": 39910,
+    "contact_id": 10,
+    "label": "",
+    "centroid_cm": 603.12,
+    "length_cm": null,
+    "side": "unknown",
+    "shape_valid": false,
+    "status": "candidate"
+  },
+  "timeline_last": {
+    "sample": 40539,
+    "contact_id": 10,
+    "label": "",
+    "centroid_cm": 614.04,
+    "length_cm": null,
+    "side": "unknown",
+    "shape_valid": false,
+    "status": "candidate"
+  },
+  "timeline_statuses": [
+    "candidate"
+  ],
+  "published": false,
+  "painted": false,
+  "preflight_bad_indices": [
+    576
+  ],
+  "preflight_bad_types": [
+    "持续遮挡"
+  ],
+  "beam576": {
+    "segment_id": "7",
+    "position_m": 6.0,
+    "raw_samples": 66548,
+    "blocked_samples": 66548,
+    "first_neighbor_blocked_sample": 39844,
+    "raw_39843_blocked_nearby": [
+      576
+    ],
+    "raw_39844_blocked_nearby": [
+      576,
+      577
+    ]
+  },
+  "publication_guard": "WalkingProcessor does not publish a newly confirmed contact while touch_known is false. Visual status reflects active touch publication, not Contact.confirmed alone.",
+  "cause_scope": "Proximal missing-publication condition found. Persistent blocked beam could be obstruction/alignment/device behavior; physical cause and safe contact-boundary recovery remain unverified. This is not a backlog cause.",
+  "source_sha256": "c71a9e657142966c6036cc1f8090e26a7731cefde2b4f80393f8e06ed37829ba"
+}

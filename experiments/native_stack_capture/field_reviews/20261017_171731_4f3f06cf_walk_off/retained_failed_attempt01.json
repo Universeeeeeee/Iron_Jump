@@ -1,0 +1,99 @@
+{
+  "case": "20261017_171643_6d311ff4_walk_off",
+  "user_description": "第一次应该是卡住了",
+  "formal_started_exists": false,
+  "controller": {
+    "valid_capture": false,
+    "errors": [
+      "本轮取消、失败或 SDK/设备关闭未确认；保留全部证据"
+    ],
+    "terminated_after_child_cleanup": true,
+    "child_returncode": 1,
+    "trace_owned_remaining": false,
+    "scope": "Capture/cleanup status only. ETL event validation, under-load overhead, density and actual skeleton coverage remain offline decisions."
+  },
+  "shutdown": {
+    "serialized": false,
+    "SDK": {
+      "starts": 1,
+      "stops": 1,
+      "nonzero_speeds": 0
+    },
+    "SDK_errors": [],
+    "errors": [
+      "operator_cancel"
+    ],
+    "readers": []
+  },
+  "manifest": {
+    "abort_request.json": {
+      "bytes": 124,
+      "sha256": "9765614157e3daf325a7d24e5d2a9e6927b12bdcc849f96bd63b7f362c18b59a"
+    },
+    "cancelled.json": {
+      "bytes": 68,
+      "sha256": "6d46fdfddc100da9fd510894eaf86b572b64eb409f95ac62ff4d6fa9854da4e2"
+    },
+    "case.json": {
+      "bytes": 302,
+      "sha256": "550a5f8169b3b9326cf48512a86847c2f732dca9ec63d5bd6589b1e84c30c08a"
+    },
+    "controller_result.json": {
+      "bytes": 386,
+      "sha256": "ea03b1e0e4f4c041a8e9190c200a33c71e219b8702cfe2a89a25d3dc9a803460"
+    },
+    "gui.log": {
+      "bytes": 1481,
+      "sha256": "12265026934999436e0223a3dfc71d31f5366ca2fb6a9d4524f13b4fc40cefd3"
+    },
+    "trace_end_request.json": {
+      "bytes": 77,
+      "sha256": "3498a2d7a73691661b8fe92a7a20023a15846f930f06c883e18bf28ca6a462be"
+    },
+    "capture\\camera.csv": {
+      "bytes": 55668,
+      "sha256": "e380fc57aa357c247165f04bd1c735141fe6e0ee51ece4c4e8ef86f9e6eeb8a5"
+    },
+    "capture\\camera.mjpg": {
+      "bytes": 171544626,
+      "sha256": "b8e2decea1dc4817aa9d9533c15e570f4617d0006b3697bb8d62920c43e612cc"
+    },
+    "capture\\camera_record_start.json": {
+      "bytes": 258,
+      "sha256": "48c5753e6c900f2957eb00433a7ad1fcf78836801d018ea75cb6da36db18e5ac"
+    },
+    "capture\\complete.json": {
+      "bytes": 58,
+      "sha256": "5fc32eb2411ef49aafb4c1360a40701d1a8fa1c514f5f3916cc484948c91c6c1"
+    },
+    "capture\\native_cpu.json": {
+      "bytes": 230,
+      "sha256": "30093457cd2c74daf731daf252ebfbafcc793e44a7fb551509453370138b966a"
+    },
+    "capture\\preparation_geometry.json": {
+      "bytes": 205,
+      "sha256": "586e33c196a8fb6614fc3c451c5f2a9d2c8e325e4c2f8fe8f3b06b36c6af4ad8"
+    },
+    "capture\\preparation_queue.json": {
+      "bytes": 108171,
+      "sha256": "fc9fa61886d8954e39135e01cb293302ae2a14c02c0b9a2b8ec77c1144966d60"
+    },
+    "capture\\preparation_window.png": {
+      "bytes": 130777,
+      "sha256": "a84fb24692b3aef86af826ae41ec971d92e8b6eddb8e73bf8b829a5edab39ed0"
+    },
+    "capture\\ready.json": {
+      "bytes": 404,
+      "sha256": "bee534d003a9275589fa23e883a96e9707f1a51edd6f241a7c99b704868e27e1"
+    },
+    "capture\\SDK_events.json": {
+      "bytes": 486383,
+      "sha256": "ecbb04cc95e2a6a8d3fc5d9dbacd7cabbdf616f05b0e4f1d61c7d60c7a8ed1df"
+    },
+    "capture\\shutdown.json": {
+      "bytes": 188,
+      "sha256": "dd60c5f12b80e3d6945578c367ee573ab7587b56a02b2a00deed7b3fa5024a1b"
+    }
+  },
+  "interpretation": "No formal acquisition. operator_cancel can originate from cancel or close; it does not establish deliberate user cancellation or the cause of the hang."
+}

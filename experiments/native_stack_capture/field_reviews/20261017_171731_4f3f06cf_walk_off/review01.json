@@ -1,0 +1,314 @@
+{
+  "case": "20261017_171731_4f3f06cf_walk_off",
+  "base_commit": "2758ed68afd20476ae588ef4a163b88a4a5bffb4",
+  "original_controller_result": {
+    "valid_capture": true,
+    "errors": [],
+    "terminated_after_child_cleanup": true,
+    "child_returncode": 1,
+    "trace_owned_remaining": false,
+    "scope": "Capture/cleanup status only. ETL event validation, under-load overhead, density and actual skeleton coverage remain offline decisions."
+  },
+  "clean_process_exit": false,
+  "native_stack_capture_taken": false,
+  "quantitative_field_attribution_ready": false,
+  "formal_duration_s": 39.8049349,
+  "protocol": {
+    "valid_field_protocol": true,
+    "continuous_device_samples": true,
+    "quality_acquisition_failures": [],
+    "scene_protocol_valid": true
+  },
+  "queue_maxima": {
+    "pending": 141,
+    "unfinished": 144,
+    "inflight": 20
+  },
+  "windows": {
+    "whole_formal": {
+      "observations": 1015,
+      "observed_s": 39.7427963,
+      "enqueued_fps": 999.9799636645093,
+      "consumer_fps": 999.9799636645093,
+      "throughput_gap_to_actual_fps": 0.0,
+      "pending": {
+        "count": 1015,
+        "p95": 65.0,
+        "max": 141.0
+      },
+      "oldest_pending_ms": {
+        "count": 1015,
+        "p95": 59.279859999999985,
+        "max": 123.7275
+      },
+      "completed_receipt_age_ms": {
+        "count": 1015,
+        "p95": 71.62579999999994,
+        "max": 128.7484
+      },
+      "age_slope_ms_per_device_second": -0.36086116326867723,
+      "heavy_observed_span_s": 0.0,
+      "max_observation_gap_ms": 185.6267,
+      "sustained_shortage": false,
+      "start_ns": 224489187262300,
+      "end_ns": 224528992197200,
+      "raw_frames": 39805,
+      "usable_contact_fraction": 0.1623414143951765
+    },
+    "initial_empty": {
+      "observations": 127,
+      "observed_s": 4.9340873,
+      "enqueued_fps": 999.9823067581314,
+      "consumer_fps": 998.9689481173144,
+      "throughput_gap_to_actual_fps": 1.0133586408169322,
+      "pending": {
+        "count": 127,
+        "p95": 5.0,
+        "max": 71.0
+      },
+      "oldest_pending_ms": {
+        "count": 127,
+        "p95": 4.232539999999999,
+        "max": 17.2056
+      },
+      "completed_receipt_age_ms": {
+        "count": 127,
+        "p95": 5.804349999999998,
+        "max": 80.0866
+      },
+      "age_slope_ms_per_device_second": 0.8448434348720503,
+      "heavy_observed_span_s": 0.0,
+      "max_observation_gap_ms": 121.112,
+      "sustained_shortage": false,
+      "start_ns": 224489187262300,
+      "end_ns": 224494187262300,
+      "raw_frames": 5001,
+      "usable_contact_fraction": 0.0005998800239952009
+    },
+    "contact_span": {
+      "observations": 872,
+      "observed_s": 34.2022161,
+      "enqueued_fps": 998.1809336617811,
+      "consumer_fps": 997.8885549465901,
+      "throughput_gap_to_actual_fps": 0.29237871519092096,
+      "pending": {
+        "count": 872,
+        "p95": 67.44999999999993,
+        "max": 124.0
+      },
+      "oldest_pending_ms": {
+        "count": 872,
+        "p95": 64.33076499999999,
+        "max": 123.7275
+      },
+      "completed_receipt_age_ms": {
+        "count": 872,
+        "p95": 76.17686999999994,
+        "max": 128.7484
+      },
+      "age_slope_ms_per_device_second": -0.764336480030106,
+      "heavy_observed_span_s": 0.0,
+      "max_observation_gap_ms": 185.6267,
+      "sustained_shortage": false,
+      "start_ns": 224493418892600,
+      "end_ns": 224527669516200,
+      "raw_frames": 34298,
+      "usable_contact_fraction": 0.18840748731704474
+    },
+    "operator_tail": {
+      "observations": 381,
+      "observed_s": 14.9094605,
+      "enqueued_fps": 999.9691135705414,
+      "consumer_fps": 1000.1703280947021,
+      "throughput_gap_to_actual_fps": -0.2012145241607186,
+      "pending": {
+        "count": 381,
+        "p95": 7.0,
+        "max": 141.0
+      },
+      "oldest_pending_ms": {
+        "count": 381,
+        "p95": 5.3842,
+        "max": 123.7275
+      },
+      "completed_receipt_age_ms": {
+        "count": 381,
+        "p95": 12.9016,
+        "max": 128.7484
+      },
+      "age_slope_ms_per_device_second": 0.314004772672486,
+      "heavy_observed_span_s": 0.0,
+      "max_observation_gap_ms": 185.6267,
+      "sustained_shortage": false,
+      "start_ns": 224513990802300,
+      "end_ns": 224528992197200,
+      "raw_frames": 15001,
+      "usable_contact_fraction": 0.0007332844477034864
+    }
+  },
+  "sustained_shortage_reproduced": false,
+  "footprint_receipt_to_paint_ms": {
+    "count": 10,
+    "p95": 177.11649499999996,
+    "max": 189.9527
+  },
+  "footprint_timings": [
+    {
+      "contact_id": 0,
+      "sample": 35321,
+      "receipt_to_paint_ms": 140.1732
+    },
+    {
+      "contact_id": 1,
+      "sample": 35963,
+      "receipt_to_paint_ms": 152.0947
+    },
+    {
+      "contact_id": 3,
+      "sample": 36531,
+      "receipt_to_paint_ms": 108.5077
+    },
+    {
+      "contact_id": 4,
+      "sample": 37081,
+      "receipt_to_paint_ms": 137.0158
+    },
+    {
+      "contact_id": 5,
+      "sample": 37669,
+      "receipt_to_paint_ms": 150.8786
+    },
+    {
+      "contact_id": 6,
+      "sample": 38197,
+      "receipt_to_paint_ms": 140.4269
+    },
+    {
+      "contact_id": 8,
+      "sample": 38744,
+      "receipt_to_paint_ms": 117.7318
+    },
+    {
+      "contact_id": 9,
+      "sample": 39272,
+      "receipt_to_paint_ms": 189.9527
+    },
+    {
+      "contact_id": 11,
+      "sample": 40392,
+      "receipt_to_paint_ms": 161.4278
+    },
+    {
+      "contact_id": 12,
+      "sample": 40955,
+      "receipt_to_paint_ms": 151.0252
+    }
+  ],
+  "active_publications": 10,
+  "painted_contact_ids": [
+    "0",
+    "1",
+    "3",
+    "4",
+    "5",
+    "6",
+    "8",
+    "9",
+    "11",
+    "12"
+  ],
+  "report_touch_count": 10,
+  "report_valid_steps": 5,
+  "main_raw_contact_run": {
+    "samples": [
+      35321,
+      41764
+    ],
+    "count": 6444,
+    "receipt_formal_s": [
+      8.5787276,
+      15.0228707
+    ],
+    "consumer_completion_bounds_formal_s": [
+      [
+        8.5257691,
+        8.5886222
+      ],
+      [
+        15.0330998,
+        15.0991905
+      ]
+    ],
+    "pose_intervals": [
+      {
+        "start_ns": 224497178827700,
+        "end_ns": 224498197878300,
+        "valid_draws": 20,
+        "nodes_drawn": 200,
+        "links_drawn": 200
+      },
+      {
+        "start_ns": 224498197878300,
+        "end_ns": 224499178398100,
+        "valid_draws": 21,
+        "nodes_drawn": 210,
+        "links_drawn": 210
+      },
+      {
+        "start_ns": 224499178398100,
+        "end_ns": 224500203564000,
+        "valid_draws": 20,
+        "nodes_drawn": 200,
+        "links_drawn": 200
+      },
+      {
+        "start_ns": 224500203564000,
+        "end_ns": 224501209078500,
+        "valid_draws": 18,
+        "nodes_drawn": 180,
+        "links_drawn": 180
+      },
+      {
+        "start_ns": 224501209078500,
+        "end_ns": 224502186848700,
+        "valid_draws": 19,
+        "nodes_drawn": 190,
+        "links_drawn": 190
+      },
+      {
+        "start_ns": 224502186848700,
+        "end_ns": 224503202173600,
+        "valid_draws": 19,
+        "nodes_drawn": 190,
+        "links_drawn": 190
+      },
+      {
+        "start_ns": 224503202173600,
+        "end_ns": 224504189383300,
+        "valid_draws": 17,
+        "nodes_drawn": 170,
+        "links_drawn": 170
+      },
+      {
+        "start_ns": 224504189383300,
+        "end_ns": 224505232805800,
+        "valid_draws": 21,
+        "nodes_drawn": 207,
+        "links_drawn": 204
+      }
+    ],
+    "valid_draws_in_each_intersecting_interval": true,
+    "scope": "Longest continuous raw active run after frozen bad-bit mask, not filtered Processor replay or full pose proof."
+  },
+  "broad_contact_pose_check": false,
+  "broad_contact_pose_limit": "Broad first-to-last raw active span includes sparse empty-tail events after the person leaves. Its false flag is not evidence of skeleton loss during the walk. Preserve the original flag and inspect the main contact interval separately.",
+  "source_sha256": {
+    "experiments/single_usb_field/analyze.py": "5fa16df3e598b83e7b0628cdfd65a0446ea603fb4a22c2142d7206b19cf9dbfa",
+    "engine/modes/walking_processor.py": "c71a9e657142966c6036cc1f8090e26a7731cefde2b4f80393f8e06ed37829ba"
+  },
+  "conclusions": [
+    "This trial does not reproduce the historical multi-second backlog; unchanged formal sources and no performance fix mean it is not proof of repair.",
+    "All ten active contact publications have paint records. No published-event drawing omission found.",
+    "Screen recording was enabled by user report/video; this is not an equivalent OFF/ON overhead pair."
+  ]
+}
