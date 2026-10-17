@@ -1,0 +1,174 @@
+{
+  "base_commit": "aeb2d891115af0f76e359f36b49d389e010ef4d1",
+  "question": "Recent low latency: deployed optimization or variation?",
+  "related_threads": [
+    {
+      "id": "01a12be0-8373-7ed2-b686-9c34ee7c2859",
+      "title": "定位地面模式算法根因"
+    },
+    {
+      "id": "6acddf2a-63f0-83e9-b210-38f82d066e83",
+      "title": "Windows积压问题审查"
+    },
+    {
+      "id": "6ad0e7fc-4600-83e9-a3d9-90645ab0e117",
+      "title": "延迟对比分析"
+    }
+  ],
+  "reference_files_sha256": {
+    "/Users/vae/Projects/Iron_Jump/exports/ground_windows_acceptance_20261012/session_02/gui_final_v2_20261014/latest_manifest.json": "41501e331b523008e9fbcd82f41c44bfce400878175e074d58ca6fc8b52aee19",
+    "/Users/vae/Projects/Iron_Jump/exports/ground_windows_acceptance_20261012/session_02/gui_final_v2_20261014/verification.json": "53a8ff0337acedfd3c9b8b76ce2288a69808600b54c07e985fd189f02cff011c",
+    "/Users/vae/Projects/Iron_Jump/exports/ground_windows_acceptance_20261012/session_02/gui_final_v2_20261014/manual_walk.py": "fa3896c6dc756bb175e50758dd3126f6384f6b185b51fc6f9bf3539c42dd7bd5",
+    "/Users/vae/Projects/Iron_Jump/exports/ground_windows_acceptance_20261012/session_02/gui_final_v2_20261014/paint_cache.py": "d12f0f671b75013918d2c0700d10de128106384a936716a68e1cf1ceff495554",
+    "/Users/vae/Projects/Iron_Jump/exports/ground_windows_acceptance_20261012/session_02/stage5_gui_D1_v1_20261014/D1_results.md": "e52ad90302166302d4c08d002fce3a6d44fa96dcd199194417e71d0ef416e57b",
+    "/Users/vae/Projects/Iron_Jump/exports/ground_windows_acceptance_20261012/session_02/stage5_gui_D1_v1_20261014/verification.json": "edfa77cafa27533451c20ba0884d8d61b91ef517c9540c09c5acac1a1aeb765b"
+  },
+  "windows_static_check": {
+    "checked_at": "2026-10-17T21:06:15.637593+08:00",
+    "admin": true,
+    "original_and_frozen_hashes_match": true,
+    "wpr_profile_available": true,
+    "dependency_files_verified": 25,
+    "scope": "Static readiness only; no USB, SDK, camera or ETW recording started."
+  },
+  "windows_evidence": {
+    "current_files": {
+      "ui/ground_track.py": "9b902ace875bfb1b253e0b4653dd790d70b204385471578d0781498d77e5f527",
+      "ui/footprint_channel.py": "02f49947f4391583ceb0c2df7583f28ee50adfbcb72049fdf593258a5950df94",
+      "engine/device_quality_session.py": "60bcda47899b3bd320e2f4870103d14202e15ad905cbd502a376195f91e6d2cb",
+      "hardware/beam_filter.py": "3b4e9a1b1ac278eb4b7011cd54b4bbce49b4346fb65ee2371aa21a06807bb846",
+      "engine/modes/walking_processor.py": "c71a9e657142966c6036cc1f8090e26a7731cefde2b4f80393f8e06ed37829ba",
+      "engine/overground_session.py": "c5ceaf0d0f44818a6d3b077d4025249c0285b9666b41b15275f30d20c7759c67",
+      "ui/session_controller.py": "548b7acfb92f7f622d07adf8dd46ab1bfb5e7f9c97f8e7de51e09558bba6d409",
+      "experiments/single_usb_human_etw/entry.py": "317ebf97fad372ae49280b68c7aecee9f4ca27ace576c533c7a7f0194fd5e0cb",
+      "experiments/single_usb_human_etw/field_runner.py": "6a049bca29b66aa3061e1a1fd5b07e1746c9f9a555d446378b66bb24cb31bd9b",
+      "experiments/single_usb_human_etw/human_runner.py": "893cbef159aa95e37aa98d40e8f9df788f47405427c87bfd6e0960b8d609ea3e"
+    },
+    "trials": [
+      {
+        "case": "20261017_111818_dc83b931_walk_off",
+        "measurement_sha256": "d4dc4a6d0bdc587ef0f580f4b0173dc0d80c45e3d573e2585f9f592dd4982a58",
+        "frozen_sources_sha256": "e81e6a013c1feef532124204ff77768f33ac9adeb8512f7bf4490a28f4017aa0",
+        "renderer_file": "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\ui\\ground_track.py"
+      },
+      {
+        "case": "20261017_112623_8416401b_walk_on",
+        "measurement_sha256": "5f6c2d85f67afd6d80b7be18cf11b37015bd2ce98fd8fa45824bfae0a3e98b9b",
+        "frozen_sources_sha256": "e81e6a013c1feef532124204ff77768f33ac9adeb8512f7bf4490a28f4017aa0",
+        "renderer_file": "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\ui\\ground_track.py"
+      },
+      {
+        "case": "20261017_113358_00ae9eca_walk_on",
+        "measurement_sha256": "936b31b44e55d9ef8a49a9507420317d56e5bd275b113652277193e824081e91",
+        "frozen_sources_sha256": "e81e6a013c1feef532124204ff77768f33ac9adeb8512f7bf4490a28f4017aa0",
+        "renderer_file": "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\ui\\ground_track.py"
+      },
+      {
+        "case": "20261017_113916_32a7af0d_walk_off",
+        "measurement_sha256": "c853af7845cc3cf2051a9ae16973b8afd6c029adab1d75615782c841c4a4bbcd",
+        "frozen_sources_sha256": "e81e6a013c1feef532124204ff77768f33ac9adeb8512f7bf4490a28f4017aa0",
+        "renderer_file": "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\ui\\ground_track.py"
+      },
+      {
+        "case": "20261017_155522_68978862_walk_off",
+        "measurement_sha256": "0e8133ef5d38dff9abe5a547703234b33a07c7fe5a110ffeeda6b8468ad7e57d",
+        "frozen_sources_sha256": "e81e6a013c1feef532124204ff77768f33ac9adeb8512f7bf4490a28f4017aa0",
+        "renderer_file": "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\ui\\ground_track.py"
+      },
+      {
+        "case": "20261017_162258_1b99f795_walk_off",
+        "measurement_sha256": "cf1e821301656e9677825c6b69c4d629e5a417ae1db40d03feb8b0bb6f051a80",
+        "frozen_sources_sha256": "e81e6a013c1feef532124204ff77768f33ac9adeb8512f7bf4490a28f4017aa0",
+        "renderer_file": "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\ui\\ground_track.py"
+      },
+      {
+        "case": "20261017_171731_4f3f06cf_walk_off",
+        "measurement_sha256": "a6d54d286600703d806cb8729d76c81e6541d7323ee472ac71d26dc9660caf64",
+        "frozen_sources_sha256": "e81e6a013c1feef532124204ff77768f33ac9adeb8512f7bf4490a28f4017aa0",
+        "renderer_file": "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\ui\\ground_track.py"
+      }
+    ]
+  },
+  "old_cached_root": "E:/OptoJump/IronJump-validation-latest-gui-20261014-v2",
+  "old_cached_entry": "IronJump-GUI-final-v2/01_walk_cached.cmd",
+  "old_cached_installer": "manual_walk.py calls paint_cache.install() before QApplication",
+  "current_root": "E:/OptoJump/IronJump-single-usb-human-etw-20261017",
+  "current_entry": "IronJump-ETW-20261017/WALK-ETW-OFF.lnk",
+  "current_renderer_evidence": "field_runner imports ui.ground_track, checks original module before wrapping paint for timestamps, and does not import/install paint_cache or fixed_geometry_cache. On-disk files match frozen baseline; this audit does not start GUI or claim fresh runtime stack introspection.",
+  "old_vs_current_file_hashes": {
+    "ui/ground_track.py": {
+      "cached_copy_baseline": "592d00e83463c209ddb530ef5198fdbd1a05053d4d98cdb7f2d6afc79ec20400",
+      "current": "9b902ace875bfb1b253e0b4653dd790d70b204385471578d0781498d77e5f527"
+    },
+    "ui/footprint_channel.py": {
+      "cached_copy_baseline": "eeab2633a1a4d894b823414b55232eaa8e364488e8f8cef9b932ee2ed63d6f62",
+      "current": "02f49947f4391583ceb0c2df7583f28ee50adfbcb72049fdf593258a5950df94"
+    },
+    "hardware/beam_filter.py": {
+      "cached_copy_baseline": "d1fa8fb547c45a98decaa09549d8546081f62950938afcc77f2072f12faa8daa",
+      "current": "3b4e9a1b1ac278eb4b7011cd54b4bbce49b4346fb65ee2371aa21a06807bb846"
+    },
+    "engine/modes/walking_processor.py": {
+      "cached_copy_baseline": "f037377897a8b70d564964877c27f56f0574f21e8d6433a1e55a8eae12d9ffd3",
+      "current": "c71a9e657142966c6036cc1f8090e26a7731cefde2b4f80393f8e06ed37829ba"
+    },
+    "engine/overground_session.py": {
+      "cached_copy_baseline": "79bbb6d464d6341f5ee30bd003e6697045438fec357d65143077ff7d0ace8428",
+      "current": "c5ceaf0d0f44818a6d3b077d4025249c0285b9666b41b15275f30d20c7759c67"
+    }
+  },
+  "changes_between_morning_and_recent": {
+    "formal_source_git_diff_since_94c844c": [],
+    "seven_trial_frozen_manifest_identical": true,
+    "same_renderer_path_recorded": true,
+    "scope": "Frozen capture-harness manifest plus actual current runtime source hashes and deployment baseline. Not proof of equal input/pose/recording/thermal/power/OS conditions."
+  },
+  "earlier_optimization_results": [
+    {
+      "candidate": "GUI geometry/beam cache",
+      "evidence": "D1 original versus cached real USB empty field",
+      "overview_p50_ms": [
+        33.49,
+        2.58
+      ],
+      "receipt_to_core_p99_ms": [
+        63.31,
+        26.95
+      ],
+      "deployed_in_current_field_entry": false,
+      "limit": "Separate isolated candidate; live-human and full F acceptance were not completed."
+    },
+    {
+      "candidate": "single-frame NumPy fusion/GIL variants",
+      "commit": "5e16864",
+      "adopted": false,
+      "evidence": "experiments/runtime_single_frame_fusion/results.txt"
+    },
+    {
+      "candidate": "beam painter QBrush reuse",
+      "commit": "3020bb1",
+      "adopted": false,
+      "evidence": "experiments/beam_painter_state/RESULTS.md"
+    },
+    {
+      "change": "human GUI tail text and close behavior",
+      "commit": "94c844c",
+      "scope": "Experiment UI correctness; applied before BOTH historical slow and later fast windows."
+    },
+    {
+      "change": "native capture controller cleanup",
+      "commit": "d47e067",
+      "scope": "Separate record.py cleanup; recent Walk OFF did not invoke native CPU/wait recording."
+    }
+  ],
+  "conclusions": [
+    "Earlier GUI optimization has demonstrated benefits in its measured conditions; claiming no optimization ever existed would be wrong.",
+    "The current field entry has not enabled that cache. Morning slow and later low-latency windows have the same frozen harness fingerprint and renderer path, with no subsequent formal-source change.",
+    "Recent improvement cannot be attributed to a newly applied performance fix between those windows. It remains variable behavior under unseparated scene/input/runtime conditions, not established random chance and not established resolution.",
+    "Switching to the old cached entry would also switch frozen algorithm/filter/UI versions. It is not a controlled cache-only performance test."
+  ],
+  "next_field_action": "Do not silently switch to the old cached entry or start another undifferentiated OFF round. Preserve current version and establish a bounded CPU/wait capture protocol under the existing calibration and source gates before the next diagnostic passage.",
+  "new_human_test_started": false,
+  "production_changes": false,
+  "optimization_AB_started": false
+}
