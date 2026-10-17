@@ -1,0 +1,79 @@
+{
+  "scope": "Read-only investigation of PrtSc/Snipping Tool interaction during preparation; no new GUI launch, recording, Walk, Run, benchmark or source modification",
+  "user_report": "按下 PrtSc 无反应，过了一会 IronJump 退出，退出后可以正常录屏",
+  "cancelled_cases": [
+    "20261017_160750_1eeb5a85_walk_off",
+    "20261017_160919_4bad11c4_walk_off"
+  ],
+  "observations": {
+    "formal_started_in_either_case": false,
+    "trace_requested_in_either_case": false,
+    "both_cancellation_reasons": "operator_cancel",
+    "final_assertion": "field_runner.main asserts serialized and no errors after app.exec returned; this is downstream of cancellation and does not prove the hotkey crashed the application",
+    "both_SDK_starts_stops": [
+      1,
+      1
+    ],
+    "remaining_USB_readers": 0,
+    "SDK_errors": [],
+    "experiment_locks_present_at_check": false,
+    "printscreen_activated_snipping_processes": [
+      {
+        "pid": 15720,
+        "start_unix_ms": 1792224547629,
+        "command_suffix": "ms-screenclip:///?source=PrintScreen",
+        "responding": true,
+        "main_window_handle": 0
+      },
+      {
+        "pid": 21764,
+        "start_unix_ms": 1792224603630,
+        "command_suffix": "ms-screenclip:///?source=PrintScreen",
+        "responding": true,
+        "main_window_handle": 0
+      }
+    ],
+    "snipping_tool_version": "11.2608.41.0",
+    "snipping_package_status": 0,
+    "matching_Application_1000_1001_1002_events_in_preceding_30_minutes": [],
+    "registry_PrintScreenKeyForSnippingEnabled": "Absent in HKCU Control Panel Keyboard; no setting was changed",
+    "gui_launched_elevated": true,
+    "snipping_integrity_level_measured": false
+  },
+  "source_inspection": {
+    "files": [
+      "experiments/single_usb_human_etw/field_runner.py",
+      "experiments/single_usb_human_etw/human_runner.py",
+      "ui/ground_track.py",
+      "camera/"
+    ],
+    "explicit_PrintScreen_block_or_global_keyboard_grab_found": false,
+    "cancel_sources_in_human_runner": [
+      "Cancel button",
+      "QEvent.Close handler"
+    ],
+    "cancel_source_disambiguation": "Existing operator_cancel marker does not distinguish these sources; it is not proof of an operator clicking Cancel"
+  },
+  "assessment": {
+    "hotkey_delivered_to_system": true,
+    "hotkey_delivery_is_not_proof_capture_overlay_displayed": true,
+    "PrtSc_directly_caused_IronJump_exit": "Not established",
+    "privilege_or_graphics_capture_conflict": "Possible, unverified; no configuration changes made",
+    "recording_issue_root_cause": "Unresolved; requires non-walking desktop interaction check",
+    "CPU_GIL_Qt_root_cause": "No attribution"
+  },
+  "preservation": {
+    "both_failed_attempts_retained": true,
+    "original_media_remains_on_Windows": true,
+    "windows_review_root": "E:/OptoJump/IronJump-native-stack-field-d47e067-20261017-01/field_reviews/screen_recording_issue01",
+    "retained_failures_sha256": "f38852662a9fd8d9673e428b42950b09465f5b2ea64605a2f0597f00a76596b2",
+    "snipping_processes_not_terminated": true,
+    "production_or_capture_tool_source_changed": false
+  },
+  "next_check": [
+    "With IronJump closed, open Snipping Tool from Start menu and select video recording directly.",
+    "Select the desktop area where the GUI will appear and start recording before opening WALK-ETW-OFF.",
+    "Open the GUI and remain in preparation; do not press formal Start or perform a passage.",
+    "Check whether recording continues and whether GUI remains open. Preserve any new error text; record changed screen-recorder load separately."
+  ]
+}
