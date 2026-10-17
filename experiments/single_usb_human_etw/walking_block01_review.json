@@ -1,0 +1,988 @@
+{
+  "scope": "Frozen walking OFF/ON/ON/OFF block, offline review only. No production or algorithm edits.",
+  "trials": [
+    {
+      "case": "20261017_111818_dc83b931_walk_off",
+      "trace": "off",
+      "integrity": {
+        "name": "20261017_111818_dc83b931_walk_off",
+        "mode": "walk",
+        "integrity_passed": true,
+        "queue_invariant_snapshots": 2343,
+        "raw_frames_with_preparation": 91875,
+        "formal_archived_frames": 43224,
+        "formal_usable_contact_fraction": 0.15314314800675596,
+        "device_and_frame_counters_contiguous": true,
+        "wire_decodes_to_retained_bits": true,
+        "original_archive_equals_raw_sensorframes": true,
+        "event_audit_equals_report": true,
+        "quality_snapshot_equals_report": true,
+        "quality_history_untruncated": true,
+        "report_timeline_equals_original_quality_masked_history": true,
+        "active_publications": 10,
+        "painted_contact_ids": 10,
+        "report_touch_count": 10,
+        "report_valid_steps": 6,
+        "camera_csv_contiguous": true,
+        "native_video_bytes": 1239471172,
+        "native_video_frames": 8226,
+        "one_reader_final_drained_sdk_stopped": true,
+        "scope": "Integrity and original report transformation checks, not cross-run algorithm equivalence or observer-overhead calibration."
+      },
+      "human_ground_truth": {
+        "actual_steps": 11,
+        "first_foot": "left",
+        "source": "User onsite observation",
+        "scope": "Ground truth kept separately; original starting_foot and report unchanged."
+      },
+      "duration_s": 43.2213935,
+      "initial_empty": {
+        "observations": 128,
+        "observed_s": 4.9387173,
+        "enqueued_fps": 1000.2597233091271,
+        "consumer_fps": 999.4497964076622,
+        "throughput_gap_to_actual_fps": 0.8099269014649053,
+        "pending": {
+          "count": 128,
+          "p95": 4.0,
+          "max": 14.0
+        },
+        "oldest_pending_ms": {
+          "count": 128,
+          "p95": 3.343134999999999,
+          "max": 4.4764
+        },
+        "completed_receipt_age_ms": {
+          "count": 128,
+          "p95": 5.170589999999999,
+          "max": 8.0674
+        },
+        "age_slope_ms_per_device_second": 0.015515441179269252,
+        "heavy_observed_span_s": 0.0,
+        "max_observation_gap_ms": 66.8707,
+        "sustained_shortage": false,
+        "start_ns": 202960838552300,
+        "end_ns": 202965838552300,
+        "raw_frames": 5000,
+        "usable_contact_fraction": 0.0
+      },
+      "primary_host_3_to_19_s": {
+        "observations": 407,
+        "observed_s": 15.9338849,
+        "enqueued_fps": 1000.0072235993119,
+        "consumer_fps": 1000.0072235993119,
+        "throughput_gap_to_actual_fps": 0.0,
+        "pending": {
+          "count": 407,
+          "p95": 54.69999999999999,
+          "max": 80.0
+        },
+        "oldest_pending_ms": {
+          "count": 407,
+          "p95": 51.72603999999998,
+          "max": 88.8625
+        },
+        "completed_receipt_age_ms": {
+          "count": 407,
+          "p95": 58.277739999999994,
+          "max": 100.7739
+        },
+        "age_slope_ms_per_device_second": 0.8828710255931768,
+        "heavy_observed_span_s": 0.0,
+        "max_observation_gap_ms": 156.9025,
+        "sustained_shortage": false
+      },
+      "dense_blocks": [
+        {
+          "observations": 178,
+          "observed_s": 6.9671856,
+          "enqueued_fps": 999.1121809644343,
+          "consumer_fps": 997.9639411357149,
+          "throughput_gap_to_actual_fps": 1.1482398287193973,
+          "pending": {
+            "count": 178,
+            "p95": 67.30000000000001,
+            "max": 80.0
+          },
+          "oldest_pending_ms": {
+            "count": 178,
+            "p95": 64.58058,
+            "max": 80.0586
+          },
+          "completed_receipt_age_ms": {
+            "count": 178,
+            "p95": 72.01251500000001,
+            "max": 91.6287
+          },
+          "age_slope_ms_per_device_second": 0.16868288333888326,
+          "heavy_observed_span_s": 0.0,
+          "max_observation_gap_ms": 101.3104,
+          "sustained_shortage": false,
+          "device_seconds_inclusive": [
+            9,
+            15
+          ],
+          "pose_intervals": [
+            {
+              "end_formal_s": 9.9968467,
+              "valid_pose_draws": 19,
+              "valid_nodes_drawn": 189,
+              "valid_links_drawn": 188
+            },
+            {
+              "end_formal_s": 11.0001854,
+              "valid_pose_draws": 19,
+              "valid_nodes_drawn": 183,
+              "valid_links_drawn": 181
+            },
+            {
+              "end_formal_s": 11.9994378,
+              "valid_pose_draws": 17,
+              "valid_nodes_drawn": 170,
+              "valid_links_drawn": 170
+            },
+            {
+              "end_formal_s": 13.0083296,
+              "valid_pose_draws": 21,
+              "valid_nodes_drawn": 210,
+              "valid_links_drawn": 210
+            },
+            {
+              "end_formal_s": 13.998742,
+              "valid_pose_draws": 18,
+              "valid_nodes_drawn": 180,
+              "valid_links_drawn": 180
+            },
+            {
+              "end_formal_s": 14.9977973,
+              "valid_pose_draws": 18,
+              "valid_nodes_drawn": 180,
+              "valid_links_drawn": 180
+            },
+            {
+              "end_formal_s": 16.0156229,
+              "valid_pose_draws": 16,
+              "valid_nodes_drawn": 160,
+              "valid_links_drawn": 160
+            }
+          ],
+          "first_empty_witness_after_dense_end_ms": 77.6061,
+          "empty_witness_scope": "Sampled upper bound from density-bin end, not exact physical passage end or exact drain time."
+        }
+      ],
+      "whole_formal": {
+        "observations": 1101,
+        "observed_s": 43.1350139,
+        "enqueued_fps": 999.9996777559866,
+        "consumer_fps": 999.9533117108838,
+        "throughput_gap_to_actual_fps": 0.0463660451027863,
+        "pending": {
+          "count": 1101,
+          "p95": 36.0,
+          "max": 115.0
+        },
+        "oldest_pending_ms": {
+          "count": 1101,
+          "p95": 30.8223,
+          "max": 111.3445
+        },
+        "completed_receipt_age_ms": {
+          "count": 1101,
+          "p95": 34.9121,
+          "max": 127.2606
+        },
+        "age_slope_ms_per_device_second": -0.20223726641816187,
+        "heavy_observed_span_s": 0.0,
+        "max_observation_gap_ms": 156.9025,
+        "sustained_shortage": false,
+        "start_ns": 202960838552300,
+        "end_ns": 203004059945800,
+        "raw_frames": 43221,
+        "usable_contact_fraction": 0.15314314800675596
+      },
+      "footprint_receipt_to_paint_ms": {
+        "count": 10,
+        "p95": 156.06639999999996,
+        "max": 169.4557
+      },
+      "actual_visual_formal": {
+        "renders": 897,
+        "pose_draw_calls": 473,
+        "valid_pose_draws": 468,
+        "valid_nodes_drawn": 4470,
+        "valid_links_drawn": 4351
+      },
+      "whole_formal_render_fps": 20.75361128742876,
+      "native_recorded_primary_fps": 100.0,
+      "camera_alignment_scope": "Start perf bracket midpoint; no drift correction.",
+      "formal_SDK_nonzero_speeds": 264,
+      "native_thread_cpu_seconds": {
+        "gui": 11.28125,
+        "consumer": 13.46875,
+        "reader": 6.609375
+      },
+      "native_cpu_scope": "Only GUI, consumer and reader threads; approximately arm-to-stop. Not whole-process/system CPU or exclusive Python stage time.",
+      "max_formal_receipt_gap_ms": 122.8094,
+      "last_formal_observed_pending": 2,
+      "last_formal_observation_before_stop_ms": 28.6047,
+      "stop_request_to_callback_s": 0.0535401,
+      "stop_callback_scope": "Includes original stopping/draining work; not isolated queue drain cost.",
+      "queue_final_empty": true,
+      "ETW_validation": null
+    },
+    {
+      "case": "20261017_112623_8416401b_walk_on",
+      "trace": "on",
+      "integrity": {
+        "name": "20261017_112623_8416401b_walk_on",
+        "mode": "walk",
+        "integrity_passed": true,
+        "queue_invariant_snapshots": 1761,
+        "raw_frames_with_preparation": 69102,
+        "formal_archived_frames": 40427,
+        "formal_usable_contact_fraction": 0.15748849636336648,
+        "device_and_frame_counters_contiguous": true,
+        "wire_decodes_to_retained_bits": true,
+        "original_archive_equals_raw_sensorframes": true,
+        "event_audit_equals_report": true,
+        "quality_snapshot_equals_report": true,
+        "quality_history_untruncated": true,
+        "report_timeline_equals_original_quality_masked_history": true,
+        "active_publications": 11,
+        "painted_contact_ids": 11,
+        "report_touch_count": 11,
+        "report_valid_steps": 5,
+        "camera_csv_contiguous": true,
+        "native_video_bytes": 898030034,
+        "native_video_frames": 5960,
+        "one_reader_final_drained_sdk_stopped": true,
+        "scope": "Integrity and original report transformation checks, not cross-run algorithm equivalence or observer-overhead calibration."
+      },
+      "human_ground_truth": {
+        "actual_steps": 11,
+        "first_foot": "left",
+        "source": "User onsite observation",
+        "scope": "Ground truth separate; original config/report unchanged"
+      },
+      "duration_s": 40.4207039,
+      "initial_empty": {
+        "observations": 125,
+        "observed_s": 4.9139805,
+        "enqueued_fps": 1000.0039682697153,
+        "consumer_fps": 980.671372220545,
+        "throughput_gap_to_actual_fps": 19.33259604917032,
+        "pending": {
+          "count": 125,
+          "p95": 7.799999999999997,
+          "max": 132.0
+        },
+        "oldest_pending_ms": {
+          "count": 125,
+          "p95": 9.179759999999995,
+          "max": 99.3139
+        },
+        "completed_receipt_age_ms": {
+          "count": 125,
+          "p95": 23.025459999999967,
+          "max": 107.0918
+        },
+        "age_slope_ms_per_device_second": 1.7315627800527331,
+        "heavy_observed_span_s": 0.0,
+        "max_observation_gap_ms": 128.0256,
+        "sustained_shortage": false,
+        "start_ns": 203425472400600,
+        "end_ns": 203430472400600,
+        "raw_frames": 5000,
+        "usable_contact_fraction": 0.0014
+      },
+      "primary_host_3_to_19_s": {
+        "observations": 332,
+        "observed_s": 15.9881898,
+        "enqueued_fps": 999.9881287373759,
+        "consumer_fps": 696.8894001996398,
+        "throughput_gap_to_actual_fps": 303.09872853773606,
+        "pending": {
+          "count": 332,
+          "p95": 4815.0,
+          "max": 4859.0
+        },
+        "oldest_pending_ms": {
+          "count": 332,
+          "p95": 4811.33806,
+          "max": 4857.7175
+        },
+        "completed_receipt_age_ms": {
+          "count": 332,
+          "p95": 4819.24381,
+          "max": 4866.5611
+        },
+        "age_slope_ms_per_device_second": 479.48687366404766,
+        "heavy_observed_span_s": 9.5979788,
+        "max_observation_gap_ms": 128.0256,
+        "sustained_shortage": true
+      },
+      "dense_blocks": [
+        {
+          "observations": 105,
+          "observed_s": 5.9557638,
+          "enqueued_fps": 998.6964224471092,
+          "consumer_fps": 484.2367993169911,
+          "throughput_gap_to_actual_fps": 514.4596231301181,
+          "pending": {
+            "count": 105,
+            "p95": 2939.7999999999997,
+            "max": 3071.0
+          },
+          "oldest_pending_ms": {
+            "count": 105,
+            "p95": 2932.3625199999997,
+            "max": 3055.2415
+          },
+          "completed_receipt_age_ms": {
+            "count": 105,
+            "p95": 2940.3721,
+            "max": 3087.125
+          },
+          "age_slope_ms_per_device_second": 1081.615272767554,
+          "heavy_observed_span_s": 5.5901953,
+          "max_observation_gap_ms": 106.9223,
+          "sustained_shortage": true,
+          "device_seconds_inclusive": [
+            9,
+            14
+          ],
+          "pose_intervals": [
+            {
+              "end_formal_s": 9.9886595,
+              "valid_pose_draws": 16,
+              "valid_nodes_drawn": 160,
+              "valid_links_drawn": 160
+            },
+            {
+              "end_formal_s": 11.0493375,
+              "valid_pose_draws": 16,
+              "valid_nodes_drawn": 160,
+              "valid_links_drawn": 160
+            },
+            {
+              "end_formal_s": 11.9886939,
+              "valid_pose_draws": 16,
+              "valid_nodes_drawn": 160,
+              "valid_links_drawn": 160
+            },
+            {
+              "end_formal_s": 13.0558089,
+              "valid_pose_draws": 15,
+              "valid_nodes_drawn": 150,
+              "valid_links_drawn": 150
+            },
+            {
+              "end_formal_s": 14.0350671,
+              "valid_pose_draws": 16,
+              "valid_nodes_drawn": 160,
+              "valid_links_drawn": 160
+            },
+            {
+              "end_formal_s": 14.9928903,
+              "valid_pose_draws": 14,
+              "valid_nodes_drawn": 140,
+              "valid_links_drawn": 140
+            },
+            {
+              "end_formal_s": 16.0095329,
+              "valid_pose_draws": 15,
+              "valid_nodes_drawn": 150,
+              "valid_links_drawn": 150
+            }
+          ],
+          "first_empty_witness_after_dense_end_ms": 10004.3312,
+          "empty_witness_scope": "Sampled upper bound from density-bin end, not exact physical passage end or exact drain time."
+        }
+      ],
+      "whole_formal": {
+        "observations": 1029,
+        "observed_s": 40.3206719,
+        "enqueued_fps": 1000.0081372651928,
+        "consumer_fps": 1000.1073419612335,
+        "throughput_gap_to_actual_fps": -0.09920469604071513,
+        "pending": {
+          "count": 1029,
+          "p95": 4833.2,
+          "max": 5029.0
+        },
+        "oldest_pending_ms": {
+          "count": 1029,
+          "p95": 4826.61452,
+          "max": 5027.7002
+        },
+        "completed_receipt_age_ms": {
+          "count": 1029,
+          "p95": 4835.67846,
+          "max": 5048.4643
+        },
+        "age_slope_ms_per_device_second": -34.99355250376864,
+        "heavy_observed_span_s": 15.4917237,
+        "max_observation_gap_ms": 130.0143,
+        "sustained_shortage": false,
+        "start_ns": 203425472400600,
+        "end_ns": 203465893104500,
+        "raw_frames": 40422,
+        "usable_contact_fraction": 0.15748849636336648
+      },
+      "footprint_receipt_to_paint_ms": {
+        "count": 11,
+        "p95": 5020.416649999999,
+        "max": 5105.2696
+      },
+      "actual_visual_formal": {
+        "renders": 805,
+        "pose_draw_calls": 444,
+        "valid_pose_draws": 444,
+        "valid_nodes_drawn": 4207,
+        "valid_links_drawn": 4064
+      },
+      "whole_formal_render_fps": 19.915536404105026,
+      "native_recorded_primary_fps": 99.9375,
+      "camera_alignment_scope": "Start perf bracket midpoint; no drift correction.",
+      "formal_SDK_nonzero_speeds": 228,
+      "native_thread_cpu_seconds": {
+        "gui": 14.890625,
+        "consumer": 15.0625,
+        "reader": 7.1875
+      },
+      "native_cpu_scope": "Only GUI, consumer and reader threads; approximately arm-to-stop. Not whole-process/system CPU or exclusive Python stage time.",
+      "max_formal_receipt_gap_ms": 105.9494,
+      "last_formal_observed_pending": 1,
+      "last_formal_observation_before_stop_ms": 43.3819,
+      "stop_request_to_callback_s": 0.0497829,
+      "stop_callback_scope": "Includes original stopping/draining work; not isolated queue drain cost.",
+      "queue_final_empty": true,
+      "ETW_validation": {
+        "passed": true,
+        "event_counts": {
+          "CSwitch": 1543091,
+          "ReadyThread": 871912
+        },
+        "full_scan_events_lost": 0,
+        "header_losses": {
+          "EventsLost": 0,
+          "BuffersLost": 0
+        },
+        "requested_keywords_in_collector": true,
+        "etl_bytes": 114032640,
+        "etl_sha256": "d4547ab23a4d1e30eb0e016f1113eab00c65271f92ebb51bfeb6da364d92ffd9",
+        "summary_sha256": "7443a3df16a5a3d4245d5de6ad1aae63b7a164c53a51f3201138b33a0febd663",
+        "header_export_scope": "First complete header event only; XML exporter stopped intentionally afterward. Full event counts/loss scan is separate tracerpt -o NUL summary. Original ETL unchanged.",
+        "cswitch_payload_decoded": false,
+        "limits": "CSwitch v5 is binary in installed schema; no Running/Ready/Waiting or GIL/GC attribution."
+      }
+    },
+    {
+      "case": "20261017_113358_00ae9eca_walk_on",
+      "trace": "on",
+      "integrity": {
+        "name": "20261017_113358_00ae9eca_walk_on",
+        "mode": "walk",
+        "integrity_passed": true,
+        "queue_invariant_snapshots": 1918,
+        "raw_frames_with_preparation": 75233,
+        "formal_archived_frames": 40546,
+        "formal_usable_contact_fraction": 0.14110187264069476,
+        "device_and_frame_counters_contiguous": true,
+        "wire_decodes_to_retained_bits": true,
+        "original_archive_equals_raw_sensorframes": true,
+        "event_audit_equals_report": true,
+        "quality_snapshot_equals_report": true,
+        "quality_history_untruncated": true,
+        "report_timeline_equals_original_quality_masked_history": true,
+        "active_publications": 10,
+        "painted_contact_ids": 10,
+        "report_touch_count": 10,
+        "report_valid_steps": 6,
+        "camera_csv_contiguous": true,
+        "native_video_bytes": 989213849,
+        "native_video_frames": 6565,
+        "one_reader_final_drained_sdk_stopped": true,
+        "scope": "Integrity and original report transformation checks, not cross-run algorithm equivalence or observer-overhead calibration."
+      },
+      "human_ground_truth": {
+        "actual_steps": 10,
+        "first_foot": "left",
+        "source": "User onsite observation",
+        "scope": "Ground truth separate; original config/report unchanged"
+      },
+      "duration_s": 40.5301767,
+      "initial_empty": {
+        "observations": 127,
+        "observed_s": 4.9340205,
+        "enqueued_fps": 1000.1985196453886,
+        "consumer_fps": 999.7931707012567,
+        "throughput_gap_to_actual_fps": 0.4053489441319016,
+        "pending": {
+          "count": 127,
+          "p95": 6.0,
+          "max": 32.0
+        },
+        "oldest_pending_ms": {
+          "count": 127,
+          "p95": 6.083239999999995,
+          "max": 13.4399
+        },
+        "completed_receipt_age_ms": {
+          "count": 127,
+          "p95": 8.596759999999998,
+          "max": 13.5753
+        },
+        "age_slope_ms_per_device_second": 0.20994130833476876,
+        "heavy_observed_span_s": 0.0,
+        "max_observation_gap_ms": 68.5978,
+        "sustained_shortage": false,
+        "start_ns": 203886497291900,
+        "end_ns": 203891497291900,
+        "raw_frames": 5001,
+        "usable_contact_fraction": 0.0001999600079984003
+      },
+      "primary_host_3_to_19_s": {
+        "observations": 408,
+        "observed_s": 15.9872556,
+        "enqueued_fps": 999.9840122653698,
+        "consumer_fps": 1000.1716617328618,
+        "throughput_gap_to_actual_fps": -0.18764946749206501,
+        "pending": {
+          "count": 408,
+          "p95": 588.9499999999999,
+          "max": 661.0
+        },
+        "oldest_pending_ms": {
+          "count": 408,
+          "p95": 589.5156649999999,
+          "max": 647.4841
+        },
+        "completed_receipt_age_ms": {
+          "count": 408,
+          "p95": 596.00839,
+          "max": 650.3794
+        },
+        "age_slope_ms_per_device_second": 5.633695476406001,
+        "heavy_observed_span_s": 6.2698289,
+        "max_observation_gap_ms": 101.5176,
+        "sustained_shortage": false
+      },
+      "dense_blocks": [
+        {
+          "observations": 124,
+          "observed_s": 5.0020222,
+          "enqueued_fps": 996.3970171903676,
+          "consumer_fps": 955.6135116713397,
+          "throughput_gap_to_actual_fps": 40.783505519027926,
+          "pending": {
+            "count": 124,
+            "p95": 631.0,
+            "max": 661.0
+          },
+          "oldest_pending_ms": {
+            "count": 124,
+            "p95": 629.7506999999999,
+            "max": 647.4841
+          },
+          "completed_receipt_age_ms": {
+            "count": 124,
+            "p95": 630.9712199999999,
+            "max": 650.3794
+          },
+          "age_slope_ms_per_device_second": 7.208175772912175,
+          "heavy_observed_span_s": 5.0020222,
+          "max_observation_gap_ms": 101.5176,
+          "sustained_shortage": false,
+          "device_seconds_inclusive": [
+            9,
+            13
+          ],
+          "pose_intervals": [
+            {
+              "end_formal_s": 9.0036896,
+              "valid_pose_draws": 17,
+              "valid_nodes_drawn": 170,
+              "valid_links_drawn": 170
+            },
+            {
+              "end_formal_s": 9.9803553,
+              "valid_pose_draws": 16,
+              "valid_nodes_drawn": 122,
+              "valid_links_drawn": 105
+            },
+            {
+              "end_formal_s": 10.9770206,
+              "valid_pose_draws": 20,
+              "valid_nodes_drawn": 173,
+              "valid_links_drawn": 162
+            },
+            {
+              "end_formal_s": 11.9864321,
+              "valid_pose_draws": 19,
+              "valid_nodes_drawn": 190,
+              "valid_links_drawn": 190
+            },
+            {
+              "end_formal_s": 12.9906897,
+              "valid_pose_draws": 18,
+              "valid_nodes_drawn": 180,
+              "valid_links_drawn": 180
+            },
+            {
+              "end_formal_s": 13.9784537,
+              "valid_pose_draws": 17,
+              "valid_nodes_drawn": 170,
+              "valid_links_drawn": 170
+            },
+            {
+              "end_formal_s": 14.9789074,
+              "valid_pose_draws": 21,
+              "valid_nodes_drawn": 210,
+              "valid_links_drawn": 210
+            }
+          ],
+          "first_empty_witness_after_dense_end_ms": 1264.6322,
+          "empty_witness_scope": "Sampled upper bound from density-bin end, not exact physical passage end or exact drain time."
+        }
+      ],
+      "whole_formal": {
+        "observations": 1034,
+        "observed_s": 40.4711204,
+        "enqueued_fps": 999.9476070842853,
+        "consumer_fps": 999.8981891294516,
+        "throughput_gap_to_actual_fps": 0.049417954833756994,
+        "pending": {
+          "count": 1034,
+          "p95": 544.0499999999997,
+          "max": 661.0
+        },
+        "oldest_pending_ms": {
+          "count": 1034,
+          "p95": 541.60871,
+          "max": 647.4841
+        },
+        "completed_receipt_age_ms": {
+          "count": 1034,
+          "p95": 548.13459,
+          "max": 650.3794
+        },
+        "age_slope_ms_per_device_second": -4.968459177220887,
+        "heavy_observed_span_s": 6.2698289,
+        "max_observation_gap_ms": 116.6046,
+        "sustained_shortage": false,
+        "start_ns": 203886497291900,
+        "end_ns": 203927027468600,
+        "raw_frames": 40531,
+        "usable_contact_fraction": 0.14110187264069476
+      },
+      "footprint_receipt_to_paint_ms": {
+        "count": 10,
+        "p95": 702.190625,
+        "max": 712.0922
+      },
+      "actual_visual_formal": {
+        "renders": 847,
+        "pose_draw_calls": 720,
+        "valid_pose_draws": 710,
+        "valid_nodes_drawn": 6679,
+        "valid_links_drawn": 6448
+      },
+      "whole_formal_render_fps": 20.898009062960735,
+      "native_recorded_primary_fps": 100.0,
+      "camera_alignment_scope": "Start perf bracket midpoint; no drift correction.",
+      "formal_SDK_nonzero_speeds": 250,
+      "native_thread_cpu_seconds": {
+        "gui": 11.515625,
+        "consumer": 12.5625,
+        "reader": 6.671875
+      },
+      "native_cpu_scope": "Only GUI, consumer and reader threads; approximately arm-to-stop. Not whole-process/system CPU or exclusive Python stage time.",
+      "max_formal_receipt_gap_ms": 106.1622,
+      "last_formal_observed_pending": 2,
+      "last_formal_observation_before_stop_ms": 8.4068,
+      "stop_request_to_callback_s": 0.0532151,
+      "stop_callback_scope": "Includes original stopping/draining work; not isolated queue drain cost.",
+      "queue_final_empty": true,
+      "ETW_validation": {
+        "passed": true,
+        "event_counts": {
+          "CSwitch": 1237352,
+          "ReadyThread": 728177
+        },
+        "full_scan_events_lost": 0,
+        "header_losses": {
+          "EventsLost": 0,
+          "BuffersLost": 0
+        },
+        "requested_keywords_in_collector": true,
+        "etl_bytes": 95158272,
+        "etl_sha256": "ba1e6ba138ff17ed726f9585e7a82cad8d0683865a8df1102cad4af4f7eb68dc",
+        "summary_sha256": "73ffa70d2425c18941c8c7ae92fd49c8bf88f9703eb6156ca64bfee59ad16540",
+        "header_export_scope": "First complete header event only; XML exporter stopped intentionally afterward. Full event counts/loss scan is separate tracerpt -o NUL summary. Original ETL unchanged.",
+        "cswitch_payload_decoded": false,
+        "limits": "CSwitch v5 is binary in installed schema; no Running/Ready/Waiting or GIL/GC attribution."
+      }
+    },
+    {
+      "case": "20261017_113916_32a7af0d_walk_off",
+      "trace": "off",
+      "integrity": {
+        "name": "20261017_113916_32a7af0d_walk_off",
+        "mode": "walk",
+        "integrity_passed": true,
+        "queue_invariant_snapshots": 1633,
+        "raw_frames_with_preparation": 65646,
+        "formal_archived_frames": 40956,
+        "formal_usable_contact_fraction": 0.1512093818714879,
+        "device_and_frame_counters_contiguous": true,
+        "wire_decodes_to_retained_bits": true,
+        "original_archive_equals_raw_sensorframes": true,
+        "event_audit_equals_report": true,
+        "quality_snapshot_equals_report": true,
+        "quality_history_untruncated": true,
+        "report_timeline_equals_original_quality_masked_history": true,
+        "active_publications": 11,
+        "painted_contact_ids": 11,
+        "report_touch_count": 11,
+        "report_valid_steps": 6,
+        "camera_csv_contiguous": true,
+        "native_video_bytes": 870663698,
+        "native_video_frames": 5779,
+        "one_reader_final_drained_sdk_stopped": true,
+        "scope": "Integrity and original report transformation checks, not cross-run algorithm equivalence or observer-overhead calibration."
+      },
+      "human_ground_truth": {
+        "actual_steps": 11,
+        "first_foot": "right",
+        "source": "User onsite observation",
+        "scope": "Ground truth separate; original config/report unchanged"
+      },
+      "duration_s": 40.9416604,
+      "initial_empty": {
+        "observations": 128,
+        "observed_s": 4.9675166,
+        "enqueued_fps": 1000.4999278714037,
+        "consumer_fps": 999.0907730434158,
+        "throughput_gap_to_actual_fps": 1.4091548279878907,
+        "pending": {
+          "count": 128,
+          "p95": 14.54999999999994,
+          "max": 85.0
+        },
+        "oldest_pending_ms": {
+          "count": 128,
+          "p95": 13.480709999999993,
+          "max": 93.2398
+        },
+        "completed_receipt_age_ms": {
+          "count": 128,
+          "p95": 18.417994999999987,
+          "max": 97.3194
+        },
+        "age_slope_ms_per_device_second": 0.34694444014008136,
+        "heavy_observed_span_s": 0.0,
+        "max_observation_gap_ms": 122.0831,
+        "sustained_shortage": false,
+        "start_ns": 204193816145900,
+        "end_ns": 204198816145900,
+        "raw_frames": 5000,
+        "usable_contact_fraction": 0.001
+      },
+      "primary_host_3_to_19_s": {
+        "observations": 329,
+        "observed_s": 15.9470911,
+        "enqueued_fps": 999.9315799983108,
+        "consumer_fps": 689.5301425850637,
+        "throughput_gap_to_actual_fps": 310.4014374132471,
+        "pending": {
+          "count": 329,
+          "p95": 4327.199999999998,
+          "max": 4937.0
+        },
+        "oldest_pending_ms": {
+          "count": 329,
+          "p95": 4329.7689599999985,
+          "max": 4939.2267
+        },
+        "completed_receipt_age_ms": {
+          "count": 329,
+          "p95": 4334.743679999999,
+          "max": 4958.9826
+        },
+        "age_slope_ms_per_device_second": 416.9028326826739,
+        "heavy_observed_span_s": 9.566772,
+        "max_observation_gap_ms": 152.2503,
+        "sustained_shortage": true
+      },
+      "dense_blocks": [
+        {
+          "observations": 108,
+          "observed_s": 5.9053628,
+          "enqueued_fps": 998.4145258611377,
+          "consumer_fps": 527.6559807637898,
+          "throughput_gap_to_actual_fps": 470.7585450973479,
+          "pending": {
+            "count": 108,
+            "p95": 2661.65,
+            "max": 2780.0
+          },
+          "oldest_pending_ms": {
+            "count": 108,
+            "p95": 2655.704785,
+            "max": 2771.9845
+          },
+          "completed_receipt_age_ms": {
+            "count": 108,
+            "p95": 2670.87457,
+            "max": 2792.8665
+          },
+          "age_slope_ms_per_device_second": 925.6320460024822,
+          "heavy_observed_span_s": 5.4964423,
+          "max_observation_gap_ms": 116.6273,
+          "sustained_shortage": true,
+          "device_seconds_inclusive": [
+            9,
+            14
+          ],
+          "pose_intervals": [
+            {
+              "end_formal_s": 10.010641,
+              "valid_pose_draws": 16,
+              "valid_nodes_drawn": 160,
+              "valid_links_drawn": 160
+            },
+            {
+              "end_formal_s": 11.0017436,
+              "valid_pose_draws": 15,
+              "valid_nodes_drawn": 150,
+              "valid_links_drawn": 150
+            },
+            {
+              "end_formal_s": 11.99239,
+              "valid_pose_draws": 16,
+              "valid_nodes_drawn": 160,
+              "valid_links_drawn": 160
+            },
+            {
+              "end_formal_s": 12.9928525,
+              "valid_pose_draws": 16,
+              "valid_nodes_drawn": 160,
+              "valid_links_drawn": 160
+            },
+            {
+              "end_formal_s": 13.992218,
+              "valid_pose_draws": 16,
+              "valid_nodes_drawn": 160,
+              "valid_links_drawn": 160
+            },
+            {
+              "end_formal_s": 15.0062887,
+              "valid_pose_draws": 16,
+              "valid_nodes_drawn": 160,
+              "valid_links_drawn": 160
+            }
+          ],
+          "first_empty_witness_after_dense_end_ms": 27635.1578,
+          "empty_witness_scope": "Sampled upper bound from density-bin end, not exact physical passage end or exact drain time."
+        }
+      ],
+      "whole_formal": {
+        "observations": 988,
+        "observed_s": 40.9076991,
+        "enqueued_fps": 1000.0318008597065,
+        "consumer_fps": 915.4267002027498,
+        "throughput_gap_to_actual_fps": 84.60510065695678,
+        "pending": {
+          "count": 988,
+          "p95": 5980.65,
+          "max": 6245.0
+        },
+        "oldest_pending_ms": {
+          "count": 988,
+          "p95": 5985.524045,
+          "max": 6246.9172
+        },
+        "completed_receipt_age_ms": {
+          "count": 988,
+          "p95": 6000.60132,
+          "max": 6250.4917
+        },
+        "age_slope_ms_per_device_second": 147.8314189309729,
+        "heavy_observed_span_s": 31.5092551,
+        "max_observation_gap_ms": 168.5702,
+        "sustained_shortage": true,
+        "start_ns": 204193816145900,
+        "end_ns": 204234757806300,
+        "raw_frames": 40930,
+        "usable_contact_fraction": 0.1512093818714879
+      },
+      "footprint_receipt_to_paint_ms": {
+        "count": 11,
+        "p95": 5376.4577,
+        "max": 5677.4196
+      },
+      "actual_visual_formal": {
+        "renders": 794,
+        "pose_draw_calls": 534,
+        "valid_pose_draws": 531,
+        "valid_nodes_drawn": 4723,
+        "valid_links_drawn": 4437
+      },
+      "whole_formal_render_fps": 19.393448928124077,
+      "native_recorded_primary_fps": 99.9375,
+      "camera_alignment_scope": "Start perf bracket midpoint; no drift correction.",
+      "formal_SDK_nonzero_speeds": 299,
+      "native_thread_cpu_seconds": {
+        "gui": 17.65625,
+        "consumer": 18.765625,
+        "reader": 8.34375
+      },
+      "native_cpu_scope": "Only GUI, consumer and reader threads; approximately arm-to-stop. Not whole-process/system CPU or exclusive Python stage time.",
+      "max_formal_receipt_gap_ms": 134.5589,
+      "last_formal_observed_pending": 3462,
+      "last_formal_observation_before_stop_ms": 19.0783,
+      "stop_request_to_callback_s": 1.7689276,
+      "stop_callback_scope": "Includes original stopping/draining work; not isolated queue drain cost.",
+      "queue_final_empty": true,
+      "ETW_validation": null
+    }
+  ],
+  "pairs": [
+    {
+      "off": "20261017_111818_dc83b931_walk_off",
+      "on": "20261017_112623_8416401b_walk_on",
+      "primary_consumer_delta_on_minus_off_fps": -303.11782339967215,
+      "primary_abs_consumer_delta_le_20fps": false,
+      "primary_head_p95_increase_ms": 4759.6120200000005,
+      "primary_head_p95_increase_le_20ms": false,
+      "native_recorded_primary_fps_ratio": 0.999375,
+      "whole_formal_render_fps_ratio": 0.9596178770182813,
+      "calibration_status": "Inconclusive: unmatched human input/bone load and incomplete whole-process CPU coverage; do not interpret numerical deltas as causal ETW overhead."
+    },
+    {
+      "off": "20261017_113916_32a7af0d_walk_off",
+      "on": "20261017_113358_00ae9eca_walk_on",
+      "primary_consumer_delta_on_minus_off_fps": 310.64151914779814,
+      "primary_abs_consumer_delta_le_20fps": false,
+      "primary_head_p95_increase_ms": -3740.2532949999986,
+      "primary_head_p95_increase_le_20ms": true,
+      "native_recorded_primary_fps_ratio": 1.0006253908692933,
+      "whole_formal_render_fps_ratio": 1.077580843944409,
+      "calibration_status": "Inconclusive: unmatched human input/bone load and incomplete whole-process CPU coverage; do not interpret numerical deltas as causal ETW overhead."
+    }
+  ],
+  "human_ETW_overhead_calibration": "Not passed; differences exceed gate and inputs/load differ.",
+  "conclusions": [
+    "Sustained consumer shortage occurs with ETW disabled; tracing is not necessary for the anomaly.",
+    "Regular approximately 1000Hz enqueue coexists with dense-window consumer shortage; a purely upstream late-delivery explanation is insufficient.",
+    "ETW event presence/loss validation does not establish thread-state interpretation or GIL/GC root cause.",
+    "No new drawing A/B or optimization is justified by these captures alone."
+  ],
+  "limits": [
+    "Raw receipt timing begins after USB reading/assembly; upstream wire timing remains unknown.",
+    "Near-camera clipping in reviewed ON samples prevents claiming continuous full-body equivalence.",
+    "CPU snapshots do not isolate DeviceQualitySession/filter/Processor computation or GIL waits.",
+    "One walking block does not prove repeatability across people or running loads."
+  ]
+}
