@@ -1,0 +1,185 @@
+{
+  "verified_existing_witnesses": [
+    {
+      "formal_s": 12.808202,
+      "pending": 481,
+      "batch": [
+        31968,
+        31987,
+        20
+      ],
+      "switch_out_qpc": 2407912247878,
+      "ready_qpc": 2407912253827,
+      "switch_in_qpc": 2407912254334,
+      "conservative_wait_guard_margin_us": 107.4,
+      "family": "NumPy reduction GIL return",
+      "numpy_rvas": [
+        1552036,
+        1519081,
+        1537076,
+        1519969,
+        757916
+      ]
+    },
+    {
+      "formal_s": 13.2200252,
+      "pending": 590,
+      "batch": [
+        32268,
+        32287,
+        20
+      ],
+      "switch_out_qpc": 2407916366718,
+      "ready_qpc": 2407916378480,
+      "switch_in_qpc": 2407916378537,
+      "conservative_wait_guard_margin_us": 417.9,
+      "family": "PySide callback GIL entry",
+      "numpy_rvas": []
+    },
+    {
+      "formal_s": 13.3230065,
+      "pending": 595,
+      "batch": [
+        32368,
+        32387,
+        20
+      ],
+      "switch_out_qpc": 2407917390338,
+      "ready_qpc": 2407917403614,
+      "switch_in_qpc": 2407917404137,
+      "conservative_wait_guard_margin_us": 281.6,
+      "family": "NumPy unnamed GIL return",
+      "numpy_rvas": [
+        1049629,
+        1038349
+      ]
+    },
+    {
+      "formal_s": 13.8641344,
+      "pending": 672,
+      "batch": [
+        32568,
+        32587,
+        20
+      ],
+      "switch_out_qpc": 2407922789942,
+      "ready_qpc": 2407922813548,
+      "switch_in_qpc": 2407922814152,
+      "conservative_wait_guard_margin_us": 147.1,
+      "family": "NumPy reduction GIL return",
+      "numpy_rvas": [
+        1552036,
+        1519081,
+        1537076,
+        1519969,
+        757916
+      ]
+    },
+    {
+      "formal_s": 14.1321266,
+      "pending": 1027,
+      "batch": [
+        32668,
+        32687,
+        20
+      ],
+      "switch_out_qpc": 2407925455135,
+      "ready_qpc": 2407925493111,
+      "switch_in_qpc": 2407925493656,
+      "conservative_wait_guard_margin_us": 111.2,
+      "family": "NumPy reduction GIL return",
+      "numpy_rvas": [
+        1552036,
+        1519081,
+        1537076,
+        1519969,
+        1081321,
+        1061189,
+        757916
+      ]
+    },
+    {
+      "formal_s": 15.3840173,
+      "pending": 1156,
+      "batch": [
+        33868,
+        33887,
+        20
+      ],
+      "switch_out_qpc": 2407937998559,
+      "ready_qpc": 2407938012848,
+      "switch_in_qpc": 2407938013265,
+      "conservative_wait_guard_margin_us": 194.2,
+      "family": "PySide callback GIL entry",
+      "numpy_rvas": []
+    }
+  ],
+  "original_chain_costs": [
+    {
+      "case": "20261017_111818_dc83b931_walk_off",
+      "contact_core": {
+        "median": 575.67128,
+        "min": 328.07014,
+        "max": 575.7857600000001
+      },
+      "initial_empty": {
+        "median": 190.98814,
+        "min": 109.32132,
+        "max": 192.36504
+      }
+    },
+    {
+      "case": "20261017_112623_8416401b_walk_on",
+      "contact_core": {
+        "median": 559.1335,
+        "min": 555.32334,
+        "max": 612.3676
+      },
+      "initial_empty": {
+        "median": 189.34646,
+        "min": 189.13666,
+        "max": 205.35003999999998
+      }
+    },
+    {
+      "case": "20261017_113358_00ae9eca_walk_on",
+      "contact_core": {
+        "median": 554.8199800000001,
+        "min": 554.7728,
+        "max": 586.11176
+      },
+      "initial_empty": {
+        "median": 190.5103,
+        "min": 190.313,
+        "max": 199.16292
+      }
+    },
+    {
+      "case": "20261017_113916_32a7af0d_walk_off",
+      "contact_core": {
+        "median": 549.45998,
+        "min": 548.7739,
+        "max": 553.76732
+      },
+      "initial_empty": {
+        "median": 192.2275,
+        "min": 191.23218,
+        "max": 213.59771999999998
+      }
+    }
+  ],
+  "ON2_vs_ON3_contact_core_median_wall_difference_pct": 0.7774629889860663,
+  "native_acceptance_unchanged_false": true,
+  "input_sha256": {
+    "experiments/native_stack_capture/field_reviews/20261017_field_wait01/round02/batch_wait_witnesses01.json": "c771075133847e4843ffebb34c154808d88d6736a4c333c258e9116895e12c87",
+    "experiments/native_stack_capture/field_reviews/gil_contenders01/joined01.json": "1dbe51e645234e4469dc7ca6f0fb5fc87bd638d7d6e105dbb1abe3e779e68989",
+    "experiments/native_stack_capture/runs/gil_contenders01/schedule01.jsonl.gz": "b361ae9a10b027497f1771bf8fad4dad04a450de50321873d79dd2494f6283f7",
+    "experiments/native_stack_capture/runs/field_wait01_round02/split01/17752/decoded/events.jsonl": "cb31e0fffd46629402bcbe488c47f7f784c4b92130947913f832c8b21b22d9cf",
+    "experiments/native_stack_capture/runs/field_wait01_round02/split01/17752/symbols03.json": "1a572258fd92ffe2a8cac42525e842de59eea9001263ca90eedbb16045fe4f97",
+    "experiments/single_usb_human_etw/runs/20261017_214905_5c874d97_walk_off/capture/measurement.json": "cf44031761530ace41869ef568252fbb8b20a0a7ed624a84ac6144a1c7912d30",
+    "experiments/walk_compute_offline_diagnosis/chain_summary01.json": "28fa57348513443b44635617d022c32ec9003fd66f7982fd2940e7b792cf15a8",
+    "experiments/native_stack_capture/field_reviews/20261017_field_wait01/round02/acceptance.json": "9e1fb7197d4b3e08ebe0459f49304b85e0e33d4734db963267593f392323bce6",
+    "experiments/native_stack_capture/field_reviews/20261017_field_cpu01/round01/acceptance.json": "02cbe3b66608c30db03a45ca7c052c39fbb237abeebb24f1b4f184e61fa15e40"
+  },
+  "scope": "Offline consistency/identity and before-Ready witness validation only. No new recording, replay benchmark, optimization comparison or time-share attribution."
+}

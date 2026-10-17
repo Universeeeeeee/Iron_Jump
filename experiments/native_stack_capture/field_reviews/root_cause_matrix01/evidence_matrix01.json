@@ -1,0 +1,249 @@
+{
+  "based_on_commit": "92f5d5b6c6fd89f1b3969a8489f925be5610d1ad",
+  "purpose": "核对用户提供的其他AI补充，并输出阻塞位置→对应代码→候选竞争来源→证据等级→缺失证据→最小验证方式。",
+  "grade_definitions": {
+    "现场直接证实": "特定原始记录的PID/TID/QPC/批次/闭合调用链可复核；不自动表示整体质量通过或主因。",
+    "映射/回放对应": "同SHA公开入口或原输入原实现回放证明代码会经过该边界；不能冒充该现场时刻的Python栈。",
+    "候选/假设": "源码或跨轮观察支持继续检查，没有建立现场持有者/主导贡献的因果。"
+  },
+  "matrix": [
+    {
+      "id": "queue_after_receipt",
+      "阻塞位置": "输入接收后，消费批次尚未完成，pending累积。",
+      "对应代码": "ui/session_controller.py:67/72 _consume/drain → DeviceQualitySession → GaitEngine/OvergroundSession → 原滤波/Processor。",
+      "候选竞争来源": "本线程计算、同进程GIL竞争、Qt/系统调度；不把接收至批次完成全部算成某函数CPU。",
+      "证据等级": "现场直接证实排队与延迟；责任函数未知。",
+      "缺失证据": "现场单位样本CPU与同步成本的可验收分解。",
+      "最小验证方式": "当前复用queue_common/queue_final完成边界、raw接收时刻与脚印绘制记录；定量分解须先补齐原生质量/扰动校准，不追加无目的Walk。",
+      "evidence": [
+        "../power_history01/comparison01.json",
+        "../20261017_213018_48007d13_walk_off/operator_disturbance_supplement01.json"
+      ]
+    },
+    {
+      "id": "consumer_numpy_reduction",
+      "阻塞位置": "消费者经NumPy归约返回，在PyEval_RestoreThread→take_gil等待。",
+      "对应代码": "现场公开入口映射到ufunc.reduce，其中一条包含ndarray.all；原链回放对应engine/device_quality_session.py:168的np.array_equal，以及hardware/beam_filter.py:121/122/138/145/146/150的np.all/np.any。",
+      "候选竞争来源": "GUI绘制/预览、USB读取、相机/视觉及其他同进程Python路径。归约运算本身的计算也未排除。",
+      "证据等级": "现场直接证实等待边界＋同SHA公开入口映射＋原链回放证实这些源调用会经过该边界；具体现场Python调用点未唯一绑定。",
+      "缺失证据": "同一现场时刻的Python调用链、GIL持有线程/代码、合格的贡献量测。",
+      "最小验证方式": "当前已完成二进制入口/导入指针/.pdata及原链调用来源核对；下一步所缺的是同窗持有者和Python栈证据，不能由重复统计现有等待者栈补出。",
+      "evidence": [
+        "verification01.json",
+        "../gil_boundary01/numpy_entry_map03.json",
+        "../gil_boundary01/numpy_disassembly02.txt",
+        "../gil_boundary01/original_callers01.json"
+      ]
+    },
+    {
+      "id": "consumer_numpy_unnamed",
+      "阻塞位置": "消费者在另一条NumPy+0x10041d返回路径重新获取GIL。",
+      "对应代码": "本帧消费链内的NumPy操作；内部函数/具体算子继续未知，不凭偏移附近函数或模块名命名。",
+      "候选竞争来源": "同进程其他GIL使用者；具体NumPy原生工作亦未定。",
+      "证据等级": "现场完整GIL等待链，且同SHA机器码确认RestoreThread调用；源码算子对应未知。",
+      "缺失证据": "精确二进制的内部链接映射/符号或同次Python调用点。",
+      "最小验证方式": "保留模块＋RVA；有精确来源映射后才补注释。公开入口不覆盖的内部函数不强行映射。",
+      "evidence": [
+        "verification01.json",
+        "../gil_boundary01/numpy_entry_map03.json"
+      ]
+    },
+    {
+      "id": "consumer_pyside_entry",
+      "阻塞位置": "消费者跨SignalInstance.emit/Qt回调桥，经PyGILState_Ensure→take_gil等待。",
+      "对应代码": "消费侧存在engine/device_quality_session.py:183 frame_ready.emit → ui/session_controller.py:296连接 → engine/gait_engine.py:389；另有QTimer→inbox.drain入口。现场具体信号实例未确定。",
+      "候选竞争来源": "GUI、读取、相机/视觉线程；同线程Python→Qt→Python的桥接也形成重新获取边界。",
+      "证据等级": "现场直接证实GIL入口等待；同SHA公开emit入口范围已核对；具体信号及责任源位置仍是候选。",
+      "缺失证据": "信号实例/同步调用上下文及同窗持有者；不是Qt互斥锁归因。",
+      "最小验证方式": "当前已完成公开emit入口及连接关系核对；不得把QMetaObject::activate或任意WaitForSingleObject直接命名为Qt锁等待。",
+      "evidence": [
+        "verification01.json",
+        "../gil_boundary01/qt_emit_entry01.json",
+        "../gil_contenders01/joined01.json"
+      ]
+    },
+    {
+      "id": "camera_callback",
+      "阻塞位置": "同GUI PID的TID7332在tinyse_capture_v2.dll→ffi/_ctypes→PyGILState_Ensure等待。",
+      "对应代码": "camera/tinyse_dshow_capture.py:60 _deliver_frame回调桥、camera/tinyse_camera.py:542 _on_mjpg_frame是源码对应路径；回调中有复制/邮箱通知，但未证明其耗时或持锁主导。",
+      "候选竞争来源": "整个GUI进程内的GIL竞争，包括地面消费、主线程和其他相机/视觉线程；OBSBOT SDK子进程不共享该GIL。",
+      "证据等级": "现场直接证实相机回调是等待者，并与消费等待在部分点重叠；源码桥接相容。不是持有者身份。",
+      "缺失证据": "回调实际GIL占用/持有者身份，复制、通知或图像处理各自的现场成本。",
+      "最小验证方式": "当前已核对原始同PID栈、ReadyThread及相机回调源码；不能用录像帧数或JPEG字节量推算GIL耗时。",
+      "evidence": [
+        "../gil_contenders01/joined01.json",
+        "../gil_contenders01/review01.json"
+      ]
+    },
+    {
+      "id": "gui_vision_candidates",
+      "阻塞位置": "GUI绘制/预览和其他OpenCV/Python线程是候选竞争路径；部分自身也等待GIL。",
+      "对应代码": "ui/embedded_camera_panel.py:688 _render_frame，ui/annotation_canvas.py:222 paintEvent，vision/service.py:190 _run，vision/mediapipe_pose.py:81 infer_bgr；未给未知TID强配业务函数。",
+      "候选竞争来源": "绘制、图像变换、视觉Python封装、原生计算/内存分配及调度；能执行不等于持有GIL。",
+      "证据等级": "现场有完整GIL等待链与另轮个别合格CPU执行见证；源码给出可能路径。主导竞争来源仍未证实。",
+      "缺失证据": "同一慢轮的持有者＋Python/原生执行链，以及合格校准。历史py-spy回放样本不能补作本轮持有者。",
+      "最小验证方式": "优先核对已有原生CPU见证与源码；跨轮只能提出候选，不能合并算占比或把同时运行者认作owner。",
+      "evidence": [
+        "../gil_contenders01/joined01.json",
+        "../20261017_field_cpu01/round01/cpu_witnesses01.json",
+        "../../../ground_throughput_diagnosis/external_summary.json"
+      ]
+    },
+    {
+      "id": "original_computation",
+      "阻塞位置": "接触态原链计算负担增加；与同步开销叠加导致服务不足仍为优先验证假设。",
+      "对应代码": "DeviceQualitySession → GaitEngine/OvergroundSession → GroundStabilityFilter → WalkingProcessor原实现。",
+      "候选竞争来源": "计算、分配/缓存、CPU交付和同步共同影响现场单位服务成本；不能仅凭离线墙钟分配预算。",
+      "证据等级": "历史无GUI/USB/SDK竞争的原链回放证实接触核心块中位549.46–575.67us/输入，初始空场189.35–192.23us；ON2/ON3中位相差0.77746%。现场主因仅假设。",
+      "缺失证据": "离线与现场运行条件、输入/姿态和CPU交付不相同；缺现场可验收分解。",
+      "最小验证方式": "当前复核已有整链三次重复及范围，不重跑替换原结果；不用1000us减离线耗时来推算GIL等待，也不把阶段耗时相加替代整链。",
+      "evidence": [
+        "verification01.json",
+        "../../../walk_compute_offline_diagnosis/chain_summary01.json"
+      ]
+    },
+    {
+      "id": "upstream_power",
+      "阻塞位置": "第二轮有约267.56ms的Python接收间隙；设备供电关联仍未定。",
+      "对应代码": "hardware/usb_worker.py:265在Python读取/组帧后设置received_ns；该时刻不是硬件采样或USB总线到达时刻。",
+      "候选竞争来源": "设备/驱动送数、读取线程GIL/调度、CPU交付；断电期间主机也有休息，构成混杂。",
+      "证据等级": "间隙和断电后较低延迟是观察；设备缓存、温升或固件因果未证实。接收后积压已独立存在。",
+      "缺失证据": "独立设备/总线时间、精确供电时刻及复位范围；匹配条件下的重复性。",
+      "最小验证方式": "当前先使用已有接收残差、连续帧号和供电补充；不把帧号归零当硬件重启，不新增人体或电源A/B。",
+      "evidence": [
+        "../power_history01/comparison01.json",
+        "../power_history01/review01.json"
+      ]
+    }
+  ],
+  "six_witness_revalidation": "verification01.json：六点均在100us保护和完整时钟不确定性后位于ReadyThread之前，不只是switch-in之前；3条归约返回、1条未命名NumPy返回、2条PySide入口。",
+  "historical_GIL_owner_evidence_scope": [
+    {
+      "name": "external_walk_gil_01",
+      "scope": "历史固定输入回放，不是本轮单USB人体现场，也不是性能基线；包含不同绘图/预览配置。",
+      "sampler_messages": [
+        "py-spy> Sampling process 99 times a second for 8 seconds. Press Control-C to exit.",
+        "",
+        "py-spy> Wrote speedscope file to 'E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\ground_throughput_diagnosis\\runs\\external_walk_gil_01\\profile.json'. Samples: 578 Errors: 113",
+        "py-spy> Visit https://www.speedscope.app/ to view"
+      ],
+      "not_a_baseline": true
+    },
+    {
+      "name": "enabled_external_walk_gil_01",
+      "scope": "历史固定输入回放，不是本轮单USB人体现场，也不是性能基线；包含不同绘图/预览配置。",
+      "sampler_messages": [
+        "py-spy> Sampling process 99 times a second for 8 seconds. Press Control-C to exit.",
+        "",
+        "py-spy> Wrote speedscope file to 'E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\ground_throughput_diagnosis\\runs\\enabled_external_walk_gil_01\\profile.json'. Samples: 595 Errors: 121",
+        "py-spy> Visit https://www.speedscope.app/ to view"
+      ],
+      "not_a_baseline": true
+    }
+  ],
+  "assessment_of_AI_supplement": [
+    "对当前未闭环状态及不得量化归因的限制基本准确。其ed86ce3基准早于26505c3和92f5d5b，应补入公开调用边界及同进程其他等待线程的核查结果。",
+    "约549–576us与约0.8%的数值已由原整链结果核对，必须保留中位数/重复范围及离线作用域；不得将其当现场CPU预算。",
+    "最高/第二优先级可用作排查顺序，不能表述成已测得的贡献大小排序。",
+    "NumPy内部多数仍无符号，但ufunc.reduce、ndarray.all公开入口已用同SHA指针/展开范围验证。公开边界可命名，未覆盖内部函数仍保留模块/RVA。",
+    "历史py-spy样本提供了另一回放环境中的Python路径线索，存在非阻塞采样错误及不同绘图配置，没有本轮同步持有者证据，不可移植归因。"
+  ],
+  "current_conclusion": "已确认积压期间消费链GIL获取阻塞及多条同进程等待路径。尚未确定持有者、高成本责任函数、主导贡献或可验证修复。",
+  "next_minimum_evidence_gap": "本轮ETL/原始输入未记录现场Python调用栈或GIL所有权，不能离线逆推出。先继续核对已有CPU与精确二进制边界；若要突破该缺口，需要另行准备并校验同窗持有者/调用栈的低扰动观测，实际负载与原生质量门槛仍须通过。本次不部署或启动该观测，不要求新人体轮次。",
+  "constraints_preserved": {
+    "new_human_Run_or_optimization_AB": false,
+    "production_NumPy_filter_Processor_threading_paint_edits": false,
+    "capture_gate_changes": false,
+    "historical_failure_replacement": false,
+    "new_frozen_capture_plan_needed": false
+  },
+  "source_anchors": [
+    {
+      "file": "engine/device_quality_session.py",
+      "line": 168,
+      "sha256": "60bcda47899b3bd320e2f4870103d14202e15ad905cbd502a376195f91e6d2cb",
+      "matches_frozen_baseline": true
+    },
+    {
+      "file": "hardware/beam_filter.py",
+      "line": 121,
+      "sha256": "3b4e9a1b1ac278eb4b7011cd54b4bbce49b4346fb65ee2371aa21a06807bb846",
+      "matches_frozen_baseline": true
+    },
+    {
+      "file": "ui/session_controller.py",
+      "line": 67,
+      "sha256": "548b7acfb92f7f622d07adf8dd46ab1bfb5e7f9c97f8e7de51e09558bba6d409",
+      "matches_frozen_baseline": true
+    },
+    {
+      "file": "ui/session_controller.py",
+      "line": 296,
+      "sha256": "548b7acfb92f7f622d07adf8dd46ab1bfb5e7f9c97f8e7de51e09558bba6d409",
+      "matches_frozen_baseline": true
+    },
+    {
+      "file": "engine/gait_engine.py",
+      "line": 389,
+      "sha256": "063f13a5b1bc14dbaba54febaf835746dc1758a6104d2b5ecb8276d42e344075",
+      "matches_frozen_baseline": true
+    },
+    {
+      "file": "camera/tinyse_dshow_capture.py",
+      "line": 60,
+      "sha256": "3917b0200a2104d074276023a35e0d14567a9b74d4e7e35ae46cb83ed8253ae4",
+      "matches_frozen_baseline": true
+    },
+    {
+      "file": "camera/tinyse_camera.py",
+      "line": 542,
+      "sha256": "8a3b29213bdaa2367bb8ba36c8f32486e287d23490dd7ca8e53ddad37208b1e9",
+      "matches_frozen_baseline": true
+    },
+    {
+      "file": "camera/tinyse_camera.py",
+      "line": 562,
+      "sha256": "8a3b29213bdaa2367bb8ba36c8f32486e287d23490dd7ca8e53ddad37208b1e9",
+      "matches_frozen_baseline": true
+    },
+    {
+      "file": "ui/embedded_camera_panel.py",
+      "line": 688,
+      "sha256": "dd03cb082d7d3c77071d1f47c208e8996dc7b489b0d21fc2e55b0a479269e936",
+      "matches_frozen_baseline": true
+    },
+    {
+      "file": "vision/service.py",
+      "line": 190,
+      "sha256": "d8f43d891a6162db79d04e78cc198452814bbcaf30a4566c16c7f5646ebc42dc",
+      "matches_frozen_baseline": true
+    },
+    {
+      "file": "vision/mediapipe_pose.py",
+      "line": 81,
+      "sha256": "b4b771ce3e18d88c50fd1c698ac006bd0b87d2be9c5f50feb5f080a48f6c43e1",
+      "matches_frozen_baseline": true
+    },
+    {
+      "file": "ui/annotation_canvas.py",
+      "line": 222,
+      "sha256": "ab573f096bc859ce2550821973abd508e1484e8bf90494b048c42dd8cc162df4",
+      "matches_frozen_baseline": true
+    },
+    {
+      "file": "hardware/usb_worker.py",
+      "line": 265,
+      "sha256": "57ca85b42401f242026fdfded5d4002d06e85d5da866980dcc2ab99771a9041d",
+      "matches_frozen_baseline": true
+    }
+  ],
+  "input_sha256": {
+    "experiments/native_stack_capture/field_reviews/gil_boundary01/review01.json": "32c4a89bc8b735041e4c11bdb1a601cee5c868d62583b7c9dcbd8e0aa90d8b35",
+    "experiments/native_stack_capture/field_reviews/gil_contenders01/review01.json": "d3d522d84f7192ab59c3b3f52ad99b56daaf753ccebcf39ace5022677c8747d8",
+    "experiments/ground_throughput_diagnosis/external_summary.json": "9f0982543e839fd7b6564e639644cc09eb806d4608ce278b903c3e4036770509",
+    "experiments/ground_throughput_diagnosis/external.py": "64b3477a4173ca657f7096a1d20f5e94ac1de6fe2c47978c0e56909569be6bef",
+    "experiments/walk_compute_offline_diagnosis/chain_summary01.json": "28fa57348513443b44635617d022c32ec9003fd66f7982fd2940e7b792cf15a8",
+    "experiments/native_stack_capture/field_reviews/20261017_field_cpu01/round01/cpu_witnesses01.json": "a16c023315d1715a85af907a4276756801cde20d0daa953d96bc19f51c6b0531"
+  },
+  "verification_sha256": "1f5761d18e917692be9ab9e57a4fd455feff89e8feea3944e293c9754f166b0b"
+}
