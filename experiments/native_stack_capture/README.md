@@ -2,7 +2,7 @@
 
 2026-10-17，基于 `codex/native-stack-symbol-preflight` 的 `c85612f0aa14b77e240b10485a1f88b40ebc6d26`；本阶段分支 `codex/native-stack-capture-calibration`。
 
-**工具准备完成，六对合成校准通过冻结门槛。现场定量归因尚未就绪。** 本轮没有新增人体测试，没有启动正式 GUI、USB、相机或 OBSBOT 服务，没有 Run 模式测试、优化 A/B、库替换或正式程序修改。合成进程只使用 Python 算术、Qt 等待对象和系统等待；双进程外部观察冒烟中的 `gui/sdk` 是路由标签，两者都是新建的 Python 定时等待进程，不是真实 GUI/SDK。
+**前一阶段的六对合成校准通过冻结门槛；最终外部观察器的后续验收见 [EXTERNAL_RESULTS.md](EXTERNAL_RESULTS.md)。现场定量归因尚未就绪。** 本轮没有新增人体测试，没有启动正式 GUI、USB、相机或 OBSBOT 服务，没有 Run 模式测试、优化 A/B、库替换或正式程序修改。合成进程只使用 Python 算术、Qt 等待对象和系统等待；双进程外部观察冒烟中的 `gui/sdk` 是路由标签，两者都是新建的 Python 定时等待进程，不是真实 GUI/SDK。
 
 ## 工具和验证顺序
 
@@ -12,7 +12,7 @@
 4. `fixture.py` 是四线程合成见证：两条 Python 算术线程制造计算/GIL 竞争，另两条分别 `QWaitCondition::wait` 和经 ctypes 调用 `Sleep`。`GetThreadTimes`、线程 creation time、cycles、TID、QPC/FILETIME 都由实际 Windows API 读取，未把 Python `thread_time` 或调度驻留冒充 CPU。没有 Q(Core)Application、设备对象或 NumPy 运算。
 5. `ReadStacks.cs` 使用 `OpenTrace/ProcessTrace` 读取已保存 ETL；原始 QPC 与 Windows 转换 FILETIME 两遍交叉核验。保留原始 payload、provider/opcode/version、header PID/TID 和 CPU。只接受本机已核验的 x64 SampleProf v2/16、StackWalk v2、CSwitch v5/28、ReadyThread v2/8；未知事件形状不能套结构继续归因。
 6. `symbolize.py` 用实际 Image Load/rundown 的 base/size/checksum/path 对照当前 PE，记录 SHA。通过 `QueryDosDeviceW` 映射设备路径，不按同名 DLL 猜路径。离线 DbgHelp 不侵入目标进程，不执行目标 DLL；要求 PE RSDS、PDB 独立 GUID/DBI age、DbgHelp GUID/age 全部一致、SymPdb 且 PdbUnmatched=false；不使用 LOAD_ANYTHING，不将导出符号当匹配 PDB。
-7. `analyze.py` 检查事件关联、线程生命周期、用户栈闭合、未知帧、内核段、歧义、时钟、计数与 CPU/cycles。`verify_runs.py` 另用 `tracerpt -o NUL -summary` 全扫描，`report.py` 比较独立事件计数和冻结门槛。`results02.json` 是当前接受结果；`rejected/` 是初始分析，不用于验收。
+7. `analyze.py` 检查事件关联、线程生命周期、用户栈闭合、未知帧、内核段、歧义、时钟、计数与 CPU/cycles。`split_field.py` 现在强制执行独立 tracerpt 全扫描、双边主机时钟映射、起止线程身份检查和原 ETL 前后 SHA 复核，分别保存每个 PID 的报告及总 `acceptance.json`；任何一步失败都不能产生验收通过。`verify_runs.py` 另用 `tracerpt -o NUL -summary` 全扫描，`report.py` 比较独立事件计数和冻结门槛。`results02.json` 是当前接受结果；`rejected/` 是初始分析，不用于验收。
 
 ## 校准和验收门槛
 
@@ -27,7 +27,7 @@
 - wait 逐线程 in/out 交替、运行区间 CPU 一致；调度驻留与 CPU 账本误差 ≤max(10%,30 ms)，cycles 必须有真实增量。cycles 不按固定频率换算秒，也不将驻留强行缩放到 CPU。10% 是本轮工具门槛，不是二者相等的证明。
 - 原始 QPC 与独立 ProcessTrace FILETIME 转换符合所有观察时钟括号，最大越界残差 ≤1 ms。宽 ctypes 括号可能包含 GIL 重新调度，不能把宽括号的中点当真值。最终外部观察器另用双边 perf/QPC 括号生成到既有 `host_ns` 的映射；`align_clock.py` 拒绝旧版单边 perf 锚点或大于 1 ms 的映射不确定性。
 
-**现场还必须重新做两套分开的扰动验收。** 冻结版本 `harness_versions/calibration01/` 保存本次合成测量使用的 observer/controller；最终外部目标模式采用保留线程句柄与更完整的时钟括号，已另作双进程冒烟。合成 workload 和外部冒烟均不能替代正式单 USB、相机/有效骨架/SDK 实际负载下的校准。现场比较必须同时保留实际接触负载、批次进度、pending/在途、延迟以及有效骨架和 SDK 状态；人体输入不可控时，只能给差异和不确定性，不宣布无扰动。
+**现场还必须重新做两套分开的扰动验收。** 后续 `external_plan.json` 专门冻结最终 `--targets` 外部观察模式，使用两个合成进程各四条工作线程，分别做 CPU 与 wait 各三对校准；结果与保留失败见 `EXTERNAL_RESULTS.md`。 冻结版本 `harness_versions/calibration01/` 保存本次合成测量使用的 observer/controller；最终外部目标模式采用保留线程句柄与更完整的时钟括号，已另作双进程冒烟。合成 workload 和外部冒烟均不能替代正式单 USB、相机/有效骨架/SDK 实际负载下的校准。现场比较必须同时保留实际接触负载、批次进度、pending/在途、延迟以及有效骨架和 SDK 状态；人体输入不可控时，只能给差异和不确定性，不宣布无扰动。
 
 ## 当前结果
 
@@ -90,13 +90,12 @@ Set-Location E:/OptoJump/IronJump-native-stack-capture-20261017-01
 D:/conda/python.exe record.py cpu '<新目录>/cpu_window' --targets '<新目录>/targets.json' --seconds 6
 # CPU 窗完全停止并验收、下一等待窗口条件满足后再执行：
 D:/conda/python.exe record.py wait '<新目录>/wait_window' --targets '<新目录>/targets.json' --seconds 6
-# 负载结束后离线处理，各 PID 保持分开；先独立 tracerpt 全扫描，再 quality。
-tracerpt '<新目录>/cpu_window/trace.etl' -o NUL -summary '<新目录>/cpu_summary.txt' -y
+# 负载结束后离线验收：一次执行全扫描、时钟映射、分 PID 栈/账本检查。
 D:/conda/python.exe split_field.py '<新目录>/cpu_window' '<新目录>/cpu_split'
-D:/conda/python.exe align_clock.py '<新目录>/cpu_window/record.json' '<新目录>/cpu_clock.json'
+D:/conda/python.exe split_field.py '<新目录>/wait_window' '<新目录>/wait_split'
 ```
 
-等待窗口同样执行 tracerpt、split、clock。`quality_pass` 只表示该进程的测量质量；还需独立扫描、实际负载扰动、SHA/PDB 和批次/接触对齐全部验收，才可能讨论有限的定量归因。多线程 SDK 中完全休眠且无栈的线程会保留“未验证”，不能虚报完整。
+查看两个输出根的 `acceptance.json` 以及各 PID 的 `quality.json`、`tracerpt_summary.txt`、`clock_mapping.json`。`measurement_acceptance_pass` 汇总测量门槛，`quantitative_field_attribution_ready` 仍固定为 false；`quality_pass` 只表示该进程的基础测量质量；还需独立扫描、实际负载扰动、SHA/PDB 和批次/接触对齐全部验收，才可能讨论有限的定量归因。多线程 SDK 中完全休眠且无栈的线程会保留“未验证”，不能虚报完整。
 
 ## 保存和复核
 
@@ -107,6 +106,6 @@ python -m unittest discover -s experiments/native_stack_capture -p test_quality.
 python experiments/native_stack_capture/report.py <新的结果.json>
 ```
 
-12 个跨平台工具测试覆盖截断链、RestoreThread 误判、分离内核段、多用户段歧义、未知地址、Qt/系统链、两 profile 隔离、时钟失配/宽括号/缺失证据和双边 host 映射；Mac 和 Windows 均通过；另有 3 个 Windows 原生句柄测试，覆盖 PID/TID 错配、GUI/SDK 同 PID 拒绝及 SDK 多线程分别观察。它们不是现场 Run 测试。结果复算拒绝覆盖；最终源/工具 SHA 及清理状态见 `validation_manifest.json`。
+12 个跨平台工具测试覆盖截断链、RestoreThread 误判、分离内核段、多用户段歧义、未知地址、Qt/系统链、两 profile 隔离、时钟失配/宽括号/缺失证据和双边 host 映射；Mac 和 Windows 均通过；另有 3 个 Windows 原生句柄测试，覆盖 PID/TID 错配、GUI/SDK 同 PID 拒绝及 SDK 多线程分别观察。它们不是现场 Run 测试。结果复算拒绝覆盖；前一阶段源/工具 SHA 及清理状态见 `validation_manifest.json`（对应 `73e04cd`）；本轮交付见 `external_validation_manifest.json`。
 
 公开实现依据：[Microsoft SystemProvider/WPR schema](https://learn.microsoft.com/en-us/windows-hardware/test/wpt/systemprovider)、[TRACE_QUERY_INFO_CLASS](https://learn.microsoft.com/en-us/windows/win32/api/evntrace/ne-evntrace-trace_query_info_class)、[Microsoft TraceEvent 的采样间隔设置](https://github.com/microsoft/perfview/blob/main/src/TraceEvent/TraceEventSession.cs)、[KernelTraceEventParser 的事件载荷与 NonProcess 位定义](https://github.com/microsoft/perfview/blob/main/src/TraceEvent/Parsers/KernelTraceEventParser.cs)。源码文档用于校核结构；实际交付仍以上述 raw payload、独立 scan、PE/PDB 身份、时钟和 CPU/cycles 为验收依据。

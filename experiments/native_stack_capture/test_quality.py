@@ -1,7 +1,7 @@
 """Tests for evidence rejection and CPU/wait isolation; no Windows capture needed."""
 import unittest
 import xml.etree.ElementTree as ET
-from analyze import HERE, stack_info, clock_residual_ms
+from analyze import HERE, stack_info, clock_residual_ms, interval_covers_window
 from align_clock import mapping
 
 
@@ -66,6 +66,12 @@ class QualityTests(unittest.TestCase):
         self.assertLessEqual(r['host_ns_offset_lower'],0)
         self.assertGreaterEqual(r['host_ns_offset_upper'],0)
         self.assertEqual(r['uncertainty_ns'],220)
+
+    def test_interval_must_cover_whole_window(self):
+        intervals=[dict(qpc=0,source=0,new=100000),dict(qpc=50,source=0,new=10000)]
+        self.assertFalse(interval_covers_window(intervals,10,90,100000))
+        self.assertTrue(interval_covers_window(intervals,10,40,100000))
+        self.assertFalse(interval_covers_window(intervals,-10,40,100000))
 
     def test_profiles_do_not_enable_each_other(self):
         for mode, expected in [('cpu','SampledProfile'),('wait','CSwitch')]:

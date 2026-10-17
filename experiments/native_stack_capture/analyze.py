@@ -56,6 +56,34 @@ def clock_residual_ms(anchors, samples, frequency):
     return max(max(low-o,o-high,0)/1e4 for low,high in bounds for o in offsets)
 
 
+def interval_covers_window(intervals,begin,end,required):
+    timer=sorted((i for i in intervals if i['source']==0),key=lambda i:i['qpc'])
+    previous=[i for i in timer if i['qpc']<=begin]
+    return bool(previous) and previous[-1]['new']==required and all(
+        i['new']==required for i in timer if begin<i['qpc']<=end)
+
+
+def schedule_residency(switches,tid,begin,end,frequency,preexisting):
+    running,start,active_cpu=0,None,None
+    violations,left_boundary=[],[]
+    seen=False
+    for q,new,old,state,cpu in switches:
+        if old==tid:
+            if start is None:
+                if not seen and preexisting and q<begin:
+                    left_boundary.append(dict(qpc=q,cpu=cpu,reason='pre-existing running thread; cut-out precedes counter window'))
+                else:violations.append('out_without_in')
+            elif cpu!=active_cpu:violations.append('cpu_changed_while_running')
+            else:running+=max(0,min(q,end)-max(start,begin))/frequency
+            start,active_cpu=None,None
+            seen=True
+        if new==tid:
+            if start is not None:violations.append('in_without_out')
+            start,active_cpu=q,cpu
+            seen=True
+    return running,violations,left_boundary
+
+
 def quality(case, symbols_file='symbols03.json'):
     fixture, record = read(case/'fixture/fixture.json'), read(case/'record.json')
     roles = {v['before']['tid']: name for name, v in fixture['threads'].items()}
@@ -145,25 +173,23 @@ def quality(case, symbols_file='symbols03.json'):
         r['association_rate'] = r['joined']/len(selected) if selected else None
         r['user_root_complete_rate'] = r['root_complete']/len(selected) if selected else None
         if record['mode'] == 'cpu':
+            r['interval_covers_window'] = interval_covers_window(intervals,begin,end,PLAN['cpu_interval_100ns'])
             r['sample_cpu_s'] = (len(selected)-r['nonprocess_samples'])*PLAN['cpu_interval_100ns']/1e7
             r['cpu_error_s'] = r['sample_cpu_s']-r['cpu_s']
         else:
-            running, start, active_cpu, violations, last_out = 0,None,None,[],None
+            running,violations,left_boundary = schedule_residency(switches,tid,begin,end,freq,
+                t['before']['creation_100ns']<metadata['trace_start_filetime_100ns'])
+            last_out = None
             paired_waits, wait_chain_witnesses = 0,Counter()
             for q,new,old,state,cpu in switches:
                 if old == tid:
-                    if start is None: violations.append('out_without_in')
-                    elif cpu != active_cpu: violations.append('cpu_changed_while_running')
-                    else: running += max(0,min(q,end)-max(start,begin))/freq
-                    start, active_cpu, last_out = None,None,(q,state)
+                    last_out = (q,state)
                 if new == tid:
-                    if start is not None: violations.append('in_without_out')
-                    start, active_cpu = q,cpu
                     if last_out and last_out[1]==5 and begin<=last_out[0]<=q<=end:
                         paired_waits += 1
                         info = stack_info(stacks.get((q,tid),[]),symbols['addresses'])
                         for family in info['families']: wait_chain_witnesses[family]+=1
-            r.update(schedule_residency_s=running, schedule_error_s=running-r['cpu_s'], schedule_violations=violations,
+            r.update(schedule_residency_s=running, schedule_error_s=running-r['cpu_s'], schedule_violations=violations,schedule_left_boundary_events=left_boundary,
                      paired_wait_intervals=paired_waits, paired_wait_chain_counts=dict(wait_chain_witnesses))
     gates = PLAN['gates']
     checks = dict(controller=not record.get('failure') and all(c['returncode']==0 for c in record['commands']),
@@ -179,7 +205,8 @@ def quality(case, symbols_file='symbols03.json'):
                       interval_event=any(i['source']==0 and i['new']==PLAN['cpu_interval_100ns'] for i in intervals),
                       counter=all(abs(t['cpu_error_s'])<=max(gates['cpu_vs_threadtimes_absolute_error_s_floor'],t['cpu_s']*gates['cpu_vs_threadtimes_relative_error_max']) for role,t in result['threads'].items() if role.startswith('cpu') or (not fixture['synthetic_only'] and t['cpu_s']>=0.5)),
                       sample_floor=sum(t['sample_events'] for t in result['threads'].values())>=gates['cpu_process_samples_min'],
-                      ip_matches_stack=result['sample_ip_not_in_linked_stack']==0)
+                      ip_matches_stack=result['sample_ip_not_in_linked_stack']==0,
+                      interval_covers_windows=all(t['interval_covers_window'] for t in result['threads'].values()))
     else:
         checks.update(profiles_exclusive=not any(shape.startswith('ce1dbfb4-137e-4da6-87b0-3f59aa102cbc/46/') for shape in metadata['shapes']),
                       events_present=all(t['stack_events_expected']>0 for t in result['threads'].values()),

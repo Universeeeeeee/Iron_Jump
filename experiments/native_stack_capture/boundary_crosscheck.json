@@ -1,0 +1,64 @@
+{
+  "scope": "Independent boundary audit: raw CSwitch payload vs external GetThreadTimes creation and QPC counter brackets",
+  "Windows_case": "E:/OptoJump/IronJump-native-stack-capture-20261017-01/external_runs/wait_pair1_wait",
+  "source_sha256": {
+    "record.json": "891c4db1566ea63829758307d14d22f4b408e29184682fe9d1b1341369e86efe",
+    "metadata.json": "16f8d5d9733bf729980a0a8b01bc1555ab06021bcba687ebed69c97425ab9e49",
+    "events.jsonl": "aae130052e40a74d43329010f6d7de7a9cae1f785251ffb509a94eeef970f332"
+  },
+  "trace_start_filetime_100ns": 134366943529445823,
+  "threads": {
+    "cpu_a": {
+      "tid": 12728,
+      "creation_100ns": 134366943509465346,
+      "counter_begin_qpc": 2165576317535,
+      "frequency": 10000000,
+      "first_scheduling_event": {
+        "kind": "in",
+        "qpc": 2165571767283,
+        "cpu": 3,
+        "payload": "uDEAAAAAAAAJAAAAAAwCAwEAAAAjKximAgAAAA==",
+        "version": 5
+      }
+    },
+    "cpu_b": {
+      "tid": 21288,
+      "creation_100ns": 134366943509475034,
+      "counter_begin_qpc": 2165576318723,
+      "frequency": 10000000,
+      "first_scheduling_event": {
+        "kind": "out",
+        "qpc": 2165571767613,
+        "cpu": 0,
+        "payload": "oAsAAChTAAAJCQAABgEFBQEAAAB6tgAAAAAAAA==",
+        "version": 5
+      }
+    },
+    "qt_wait": {
+      "tid": 2976,
+      "creation_100ns": 134366943509477139,
+      "counter_begin_qpc": 2165576319821,
+      "frequency": 10000000,
+      "first_scheduling_event": {
+        "kind": "in",
+        "qpc": 2165571767613,
+        "cpu": 0,
+        "payload": "oAsAAChTAAAJCQAABgEFBQEAAAB6tgAAAAAAAA==",
+        "version": 5
+      }
+    },
+    "system_wait": {
+      "tid": 18468,
+      "creation_100ns": 134366943509479341,
+      "counter_begin_qpc": 2165576320913,
+      "frequency": 10000000,
+      "first_scheduling_event": {
+        "kind": "in",
+        "qpc": 2165571757510,
+        "cpu": 1,
+        "payload": "JEgAAAAAAAAJAAIAAAwCAQEAAAABcS1xAgAAAA==",
+        "version": 5
+      }
+    }
+  }
+}

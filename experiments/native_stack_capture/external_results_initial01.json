@@ -1,0 +1,3909 @@
+{
+  "scope": "Final external observer; two synthetic processes only, no real GUI/SDK/device/human load",
+  "cases": {
+    "cpu_pair1_off": {
+      "mode": "off",
+      "processes": {
+        "gui": {
+          "pid": 18956,
+          "threads": {
+            "cpu_a": {
+              "tid": 18524,
+              "cpu_s": 3.203125,
+              "cycles": 7342982640,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 113.0
+            },
+            "cpu_b": {
+              "tid": 17968,
+              "cpu_s": 2.765625,
+              "cycles": 6996781200,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 90.1
+            },
+            "qt_wait": {
+              "tid": 14508,
+              "cpu_s": 0.015625,
+              "cycles": 14402880,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 91.60000000000001
+            },
+            "system_wait": {
+              "tid": 7276,
+              "cpu_s": 0.015625,
+              "cycles": 9279360,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 84.4
+            }
+          }
+        },
+        "sdk": {
+          "pid": 9328,
+          "threads": {
+            "cpu_a": {
+              "tid": 19816,
+              "cpu_s": 3.109375,
+              "cycles": 7442279040,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 92.3
+            },
+            "cpu_b": {
+              "tid": 20012,
+              "cpu_s": 2.890625,
+              "cycles": 6895971120,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 86.5
+            },
+            "qt_wait": {
+              "tid": 10924,
+              "cpu_s": 0.0,
+              "cycles": 14165280,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 88.5
+            },
+            "system_wait": {
+              "tid": 12548,
+              "cpu_s": 0.0,
+              "cycles": 9378960,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 90.69999999999999
+            }
+          }
+        }
+      },
+      "clock_mapping": {
+        "qpc_frequency": 10000000,
+        "host_ns_offset_lower": -5800,
+        "host_ns_offset_upper": 3400,
+        "uncertainty_ns": 9200,
+        "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+      },
+      "cross_process_clock_maps": {
+        "gui": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -8300,
+          "host_ns_offset_upper": 5600,
+          "uncertainty_ns": 13900,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        },
+        "sdk": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -11000,
+          "host_ns_offset_upper": 7600,
+          "uncertainty_ns": 18600,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        }
+      },
+      "plan_reference": {
+        "external_plan_sha256": "38b1766d4f692aca747378533c1e7e7cb24c9e16c12143639b3292c53a95ecf9",
+        "source_sha256": {
+          "external_fixture.py": "096235daf83df9ccea222fef5e7bd3430568c7d15afbda64a2f2b6c1fba83389",
+          "external_calibration.py": "c447daf50f23a2058fae578b6fac8d1e7d6bdf565022b014a38df27aa8e82413",
+          "record.py": "2f2b2cfd0a5860fcfd2dce6706d8f3439cd8e4ce6cc1fe2078a5474cf9ed85d8",
+          "observe.py": "f33c6b2da48593b28e1748417ded306632b7997bbaf7f608e8baef5e3c391777",
+          "winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+          "split_field.py": "624f3c3dd935f12c818324f5c37c3aa69b034d3ecef13ffbd98b62bc386ac9e0",
+          "align_clock.py": "d49f54563591d23e9fc8e08b7d8eab028b65fbaa7dcb329e12b6ac58c2c893f1",
+          "ReadStacks.cs": "fb20ca77da7dfb4a26167ef3b54a75ee94633cc6b6d88c79a69220a9088d2476",
+          "symbolize.py": "e45766dc0177d105769a9afe6c411025dcefe376a516920d0c56a33cf6fe79c8",
+          "analyze.py": "018978e51cdd721717b1f4ee4c98e74c4aa99d3e0aca38061e27c40b7c314961",
+          "report.py": "10decf431f79fd75f1595638ab14381f9f99957e608947ca82dfb340d1348043",
+          "cpu.wprp": "949d5973ba665469586cc48ee5a0e3dbb5043ca847f4eb396bca29f6d4bef9fb",
+          "wait.wprp": "d584fc8c90595bf5f2bf4e9cdf8b2595908b5c1dbd931f9c885cc0dd08c1bcf8",
+          "plan.json": "2a0ec4593a07e65bda0c329e094480775b4bc3574af3853bd9d86b8532196178",
+          "external_report.py": "b2cf61d94cc64daa581d33142f69d1843353a3b980f88dfdeb6c081bc389ee6a"
+        },
+        "synthetic_only": true
+      },
+      "synthetic_only": true
+    },
+    "cpu_pair1_cpu": {
+      "mode": "cpu",
+      "processes": {
+        "gui": {
+          "pid": 20820,
+          "threads": {
+            "cpu_a": {
+              "tid": 11900,
+              "cpu_s": 2.96875,
+              "cycles": 7137712560,
+              "work": {
+                "lower": 26780000,
+                "upper": 27290000
+              },
+              "counter_bracket_us_max": 108.3
+            },
+            "cpu_b": {
+              "tid": 15144,
+              "cpu_s": 3.0,
+              "cycles": 7185069840,
+              "work": {
+                "lower": 26670000,
+                "upper": 27240000
+              },
+              "counter_bracket_us_max": 111.0
+            },
+            "qt_wait": {
+              "tid": 3588,
+              "cpu_s": 0.0,
+              "cycles": 14436960,
+              "work": {
+                "lower": 181,
+                "upper": 185
+              },
+              "counter_bracket_us_max": 94.1
+            },
+            "system_wait": {
+              "tid": 20864,
+              "cpu_s": 0.0,
+              "cycles": 9685440,
+              "work": {
+                "lower": 193,
+                "upper": 197
+              },
+              "counter_bracket_us_max": 89.3
+            }
+          },
+          "quality_checks": {
+            "controller": true,
+            "loss_zero": true,
+            "clock": true,
+            "identity": true,
+            "cycles": true,
+            "association": true,
+            "user_root": true,
+            "unambiguous": true,
+            "interval_restored": true,
+            "profiles_exclusive": true,
+            "interval_event": true,
+            "counter": true,
+            "sample_floor": true,
+            "ip_matches_stack": true,
+            "interval_covers_windows": true
+          },
+          "measurement_acceptance_pass": true,
+          "trace_metrics": {
+            "cpu_a": {
+              "tid": 11900,
+              "cpu_s": 2.96875,
+              "cycles": 7137712560,
+              "sample_events": 295,
+              "nonprocess_samples": 1,
+              "joined": 295,
+              "root_complete": 294,
+              "kernel_present": 2,
+              "ambiguous": 0,
+              "user_frames": 5399,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 295,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9966101694915255,
+              "interval_covers_window": true,
+              "sample_cpu_s": 2.94,
+              "cpu_error_s": -0.028750000000000053
+            },
+            "cpu_b": {
+              "tid": 15144,
+              "cpu_s": 3.0,
+              "cycles": 7185069840,
+              "sample_events": 290,
+              "nonprocess_samples": 2,
+              "joined": 290,
+              "root_complete": 287,
+              "kernel_present": 4,
+              "ambiguous": 0,
+              "user_frames": 5363,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 290,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9896551724137931,
+              "interval_covers_window": true,
+              "sample_cpu_s": 2.88,
+              "cpu_error_s": -0.1200000000000001
+            },
+            "qt_wait": {
+              "tid": 3588,
+              "cpu_s": 0.0,
+              "cycles": 14436960,
+              "sample_events": 1,
+              "nonprocess_samples": 0,
+              "joined": 1,
+              "root_complete": 1,
+              "kernel_present": 1,
+              "ambiguous": 0,
+              "user_frames": 26,
+              "unknown_symbol_frames": 1,
+              "unmapped_frames": 0,
+              "max_user_depth": 26,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 1,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 1.0,
+              "interval_covers_window": true,
+              "sample_cpu_s": 0.01,
+              "cpu_error_s": 0.01
+            },
+            "system_wait": {
+              "tid": 20864,
+              "cpu_s": 0.0,
+              "cycles": 9685440,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 0,
+              "root_complete": 0,
+              "kernel_present": 0,
+              "ambiguous": 0,
+              "user_frames": 0,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 0,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 0,
+              "association_rate": null,
+              "user_root_complete_rate": null,
+              "interval_covers_window": true,
+              "sample_cpu_s": 0.0,
+              "cpu_error_s": 0.0
+            }
+          },
+          "families": {
+            "cpu_a": {},
+            "cpu_b": {},
+            "qt_wait": {
+              "gil_wait_chain": 1
+            },
+            "system_wait": {}
+          },
+          "independent_scan": {
+            "events_lost": 0,
+            "counts": {
+              "Stack": {
+                "reader": 2070,
+                "tracerpt": 2070,
+                "equal": true
+              },
+              "SampleProf": {
+                "reader": 2034,
+                "tracerpt": 2034,
+                "equal": true
+              },
+              "36": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              },
+              "ReadyThread": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              }
+            },
+            "passed": true,
+            "summary_sha256": "ee6f370f5d693368b7515db7006043962567a91c2e8cd62e519733e30a774d82"
+          },
+          "clock_max_residual_ms": 0.0112
+        },
+        "sdk": {
+          "pid": 19552,
+          "threads": {
+            "cpu_a": {
+              "tid": 13084,
+              "cpu_s": 2.984375,
+              "cycles": 7086498000,
+              "work": {
+                "lower": 27200000,
+                "upper": 27700000
+              },
+              "counter_bracket_us_max": 88.9
+            },
+            "cpu_b": {
+              "tid": 12508,
+              "cpu_s": 2.96875,
+              "cycles": 7230749520,
+              "work": {
+                "lower": 26430000,
+                "upper": 26990000
+              },
+              "counter_bracket_us_max": 97.6
+            },
+            "qt_wait": {
+              "tid": 10664,
+              "cpu_s": 0.0,
+              "cycles": 14454960,
+              "work": {
+                "lower": 182,
+                "upper": 186
+              },
+              "counter_bracket_us_max": 225.8
+            },
+            "system_wait": {
+              "tid": 20052,
+              "cpu_s": 0.0,
+              "cycles": 9295200,
+              "work": {
+                "lower": 195,
+                "upper": 199
+              },
+              "counter_bracket_us_max": 85.9
+            }
+          },
+          "quality_checks": {
+            "controller": true,
+            "loss_zero": true,
+            "clock": true,
+            "identity": true,
+            "cycles": true,
+            "association": true,
+            "user_root": false,
+            "unambiguous": true,
+            "interval_restored": true,
+            "profiles_exclusive": true,
+            "interval_event": true,
+            "counter": true,
+            "sample_floor": true,
+            "ip_matches_stack": true,
+            "interval_covers_windows": true
+          },
+          "measurement_acceptance_pass": false,
+          "trace_metrics": {
+            "cpu_a": {
+              "tid": 13084,
+              "cpu_s": 2.984375,
+              "cycles": 7086498000,
+              "sample_events": 293,
+              "nonprocess_samples": 1,
+              "joined": 293,
+              "root_complete": 292,
+              "kernel_present": 1,
+              "ambiguous": 0,
+              "user_frames": 5375,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 293,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9965870307167235,
+              "interval_covers_window": true,
+              "sample_cpu_s": 2.92,
+              "cpu_error_s": -0.06437500000000007
+            },
+            "cpu_b": {
+              "tid": 12508,
+              "cpu_s": 2.96875,
+              "cycles": 7230749520,
+              "sample_events": 314,
+              "nonprocess_samples": 1,
+              "joined": 314,
+              "root_complete": 312,
+              "kernel_present": 3,
+              "ambiguous": 0,
+              "user_frames": 5850,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 314,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9936305732484076,
+              "interval_covers_window": true,
+              "sample_cpu_s": 3.13,
+              "cpu_error_s": 0.1612499999999999
+            },
+            "qt_wait": {
+              "tid": 10664,
+              "cpu_s": 0.0,
+              "cycles": 14454960,
+              "sample_events": 1,
+              "nonprocess_samples": 0,
+              "joined": 1,
+              "root_complete": 0,
+              "kernel_present": 1,
+              "ambiguous": 0,
+              "user_frames": 0,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 0,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 1,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.0,
+              "interval_covers_window": true,
+              "sample_cpu_s": 0.01,
+              "cpu_error_s": 0.01
+            },
+            "system_wait": {
+              "tid": 20052,
+              "cpu_s": 0.0,
+              "cycles": 9295200,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 0,
+              "root_complete": 0,
+              "kernel_present": 0,
+              "ambiguous": 0,
+              "user_frames": 0,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 0,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 0,
+              "association_rate": null,
+              "user_root_complete_rate": null,
+              "interval_covers_window": true,
+              "sample_cpu_s": 0.0,
+              "cpu_error_s": 0.0
+            }
+          },
+          "families": {
+            "cpu_a": {},
+            "cpu_b": {},
+            "qt_wait": {},
+            "system_wait": {}
+          },
+          "independent_scan": {
+            "events_lost": 0,
+            "counts": {
+              "Stack": {
+                "reader": 2070,
+                "tracerpt": 2070,
+                "equal": true
+              },
+              "SampleProf": {
+                "reader": 2034,
+                "tracerpt": 2034,
+                "equal": true
+              },
+              "36": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              },
+              "ReadyThread": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              }
+            },
+            "passed": true,
+            "summary_sha256": "ee6f370f5d693368b7515db7006043962567a91c2e8cd62e519733e30a774d82"
+          },
+          "clock_max_residual_ms": 0.0112
+        }
+      },
+      "clock_mapping": {
+        "qpc_frequency": 10000000,
+        "host_ns_offset_lower": -5500,
+        "host_ns_offset_upper": 3300,
+        "uncertainty_ns": 8800,
+        "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+      },
+      "cross_process_clock_maps": {
+        "gui": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -7800,
+          "host_ns_offset_upper": 5100,
+          "uncertainty_ns": 12900,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        },
+        "sdk": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -8500,
+          "host_ns_offset_upper": 5500,
+          "uncertainty_ns": 14000,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        }
+      },
+      "plan_reference": {
+        "external_plan_sha256": "38b1766d4f692aca747378533c1e7e7cb24c9e16c12143639b3292c53a95ecf9",
+        "source_sha256": {
+          "external_fixture.py": "096235daf83df9ccea222fef5e7bd3430568c7d15afbda64a2f2b6c1fba83389",
+          "external_calibration.py": "c447daf50f23a2058fae578b6fac8d1e7d6bdf565022b014a38df27aa8e82413",
+          "record.py": "2f2b2cfd0a5860fcfd2dce6706d8f3439cd8e4ce6cc1fe2078a5474cf9ed85d8",
+          "observe.py": "f33c6b2da48593b28e1748417ded306632b7997bbaf7f608e8baef5e3c391777",
+          "winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+          "split_field.py": "624f3c3dd935f12c818324f5c37c3aa69b034d3ecef13ffbd98b62bc386ac9e0",
+          "align_clock.py": "d49f54563591d23e9fc8e08b7d8eab028b65fbaa7dcb329e12b6ac58c2c893f1",
+          "ReadStacks.cs": "fb20ca77da7dfb4a26167ef3b54a75ee94633cc6b6d88c79a69220a9088d2476",
+          "symbolize.py": "e45766dc0177d105769a9afe6c411025dcefe376a516920d0c56a33cf6fe79c8",
+          "analyze.py": "018978e51cdd721717b1f4ee4c98e74c4aa99d3e0aca38061e27c40b7c314961",
+          "report.py": "10decf431f79fd75f1595638ab14381f9f99957e608947ca82dfb340d1348043",
+          "cpu.wprp": "949d5973ba665469586cc48ee5a0e3dbb5043ca847f4eb396bca29f6d4bef9fb",
+          "wait.wprp": "d584fc8c90595bf5f2bf4e9cdf8b2595908b5c1dbd931f9c885cc0dd08c1bcf8",
+          "plan.json": "2a0ec4593a07e65bda0c329e094480775b4bc3574af3853bd9d86b8532196178",
+          "external_report.py": "b2cf61d94cc64daa581d33142f69d1843353a3b980f88dfdeb6c081bc389ee6a"
+        },
+        "synthetic_only": true
+      },
+      "synthetic_only": true,
+      "acceptance": {
+        "source_etl_sha256": "696d3cef00d09770307ad75cd7f2c8451327a8ba4ac748c608271f68c3301090",
+        "measurement_acceptance_pass": false,
+        "quantitative_field_attribution_ready": false,
+        "requires_actual_load_calibration": true,
+        "processes": {
+          "19552": {
+            "quality_pass": false,
+            "independent_scan_pass": true,
+            "measurement_acceptance_pass": false
+          },
+          "20820": {
+            "quality_pass": true,
+            "independent_scan_pass": true,
+            "measurement_acceptance_pass": true
+          }
+        },
+        "source_unchanged": true
+      }
+    },
+    "cpu_pair2_off": {
+      "mode": "off",
+      "processes": {
+        "gui": {
+          "pid": 11456,
+          "threads": {
+            "cpu_a": {
+              "tid": 19672,
+              "cpu_s": 2.953125,
+              "cycles": 7089652080,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 107.80000000000001
+            },
+            "cpu_b": {
+              "tid": 19656,
+              "cpu_s": 3.03125,
+              "cycles": 7244418000,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 89.0
+            },
+            "qt_wait": {
+              "tid": 19748,
+              "cpu_s": 0.0,
+              "cycles": 15113760,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 128.70000000000002
+            },
+            "system_wait": {
+              "tid": 12612,
+              "cpu_s": 0.0,
+              "cycles": 10000560,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 92.80000000000001
+            }
+          }
+        },
+        "sdk": {
+          "pid": 17020,
+          "threads": {
+            "cpu_a": {
+              "tid": 13936,
+              "cpu_s": 3.046875,
+              "cycles": 7216413840,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 120.10000000000001
+            },
+            "cpu_b": {
+              "tid": 20732,
+              "cpu_s": 2.890625,
+              "cycles": 7122073680,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 60.300000000000004
+            },
+            "qt_wait": {
+              "tid": 4080,
+              "cpu_s": 0.0,
+              "cycles": 14874000,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 57.2
+            },
+            "system_wait": {
+              "tid": 20132,
+              "cpu_s": 0.0,
+              "cycles": 9821280,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 74.9
+            }
+          }
+        }
+      },
+      "clock_mapping": {
+        "qpc_frequency": 10000000,
+        "host_ns_offset_lower": -5700,
+        "host_ns_offset_upper": 3400,
+        "uncertainty_ns": 9100,
+        "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+      },
+      "cross_process_clock_maps": {
+        "gui": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -8400,
+          "host_ns_offset_upper": 5600,
+          "uncertainty_ns": 14000,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        },
+        "sdk": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -8600,
+          "host_ns_offset_upper": 5600,
+          "uncertainty_ns": 14200,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        }
+      },
+      "plan_reference": {
+        "external_plan_sha256": "38b1766d4f692aca747378533c1e7e7cb24c9e16c12143639b3292c53a95ecf9",
+        "source_sha256": {
+          "external_fixture.py": "096235daf83df9ccea222fef5e7bd3430568c7d15afbda64a2f2b6c1fba83389",
+          "external_calibration.py": "c447daf50f23a2058fae578b6fac8d1e7d6bdf565022b014a38df27aa8e82413",
+          "record.py": "2f2b2cfd0a5860fcfd2dce6706d8f3439cd8e4ce6cc1fe2078a5474cf9ed85d8",
+          "observe.py": "f33c6b2da48593b28e1748417ded306632b7997bbaf7f608e8baef5e3c391777",
+          "winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+          "split_field.py": "624f3c3dd935f12c818324f5c37c3aa69b034d3ecef13ffbd98b62bc386ac9e0",
+          "align_clock.py": "d49f54563591d23e9fc8e08b7d8eab028b65fbaa7dcb329e12b6ac58c2c893f1",
+          "ReadStacks.cs": "fb20ca77da7dfb4a26167ef3b54a75ee94633cc6b6d88c79a69220a9088d2476",
+          "symbolize.py": "e45766dc0177d105769a9afe6c411025dcefe376a516920d0c56a33cf6fe79c8",
+          "analyze.py": "018978e51cdd721717b1f4ee4c98e74c4aa99d3e0aca38061e27c40b7c314961",
+          "report.py": "10decf431f79fd75f1595638ab14381f9f99957e608947ca82dfb340d1348043",
+          "cpu.wprp": "949d5973ba665469586cc48ee5a0e3dbb5043ca847f4eb396bca29f6d4bef9fb",
+          "wait.wprp": "d584fc8c90595bf5f2bf4e9cdf8b2595908b5c1dbd931f9c885cc0dd08c1bcf8",
+          "plan.json": "2a0ec4593a07e65bda0c329e094480775b4bc3574af3853bd9d86b8532196178",
+          "external_report.py": "b2cf61d94cc64daa581d33142f69d1843353a3b980f88dfdeb6c081bc389ee6a"
+        },
+        "synthetic_only": true
+      },
+      "synthetic_only": true
+    },
+    "cpu_pair2_cpu": {
+      "mode": "cpu",
+      "processes": {
+        "gui": {
+          "pid": 20756,
+          "threads": {
+            "cpu_a": {
+              "tid": 17520,
+              "cpu_s": 2.90625,
+              "cycles": 7202986800,
+              "work": {
+                "lower": 26800000,
+                "upper": 27320000
+              },
+              "counter_bracket_us_max": 76.5
+            },
+            "cpu_b": {
+              "tid": 11616,
+              "cpu_s": 3.078125,
+              "cycles": 7117505760,
+              "work": {
+                "lower": 26170000,
+                "upper": 26770000
+              },
+              "counter_bracket_us_max": 87.7
+            },
+            "qt_wait": {
+              "tid": 12416,
+              "cpu_s": 0.015625,
+              "cycles": 14717280,
+              "work": {
+                "lower": 175,
+                "upper": 179
+              },
+              "counter_bracket_us_max": 61.4
+            },
+            "system_wait": {
+              "tid": 5132,
+              "cpu_s": 0.0,
+              "cycles": 9737520,
+              "work": {
+                "lower": 190,
+                "upper": 194
+              },
+              "counter_bracket_us_max": 61.0
+            }
+          },
+          "quality_checks": {
+            "controller": true,
+            "loss_zero": true,
+            "clock": true,
+            "identity": true,
+            "cycles": true,
+            "association": true,
+            "user_root": false,
+            "unambiguous": true,
+            "interval_restored": true,
+            "profiles_exclusive": true,
+            "interval_event": true,
+            "counter": true,
+            "sample_floor": true,
+            "ip_matches_stack": true,
+            "interval_covers_windows": true
+          },
+          "measurement_acceptance_pass": false,
+          "trace_metrics": {
+            "cpu_a": {
+              "tid": 17520,
+              "cpu_s": 2.90625,
+              "cycles": 7202986800,
+              "sample_events": 301,
+              "nonprocess_samples": 2,
+              "joined": 301,
+              "root_complete": 299,
+              "kernel_present": 3,
+              "ambiguous": 0,
+              "user_frames": 5569,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 301,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9933554817275747,
+              "interval_covers_window": true,
+              "sample_cpu_s": 2.99,
+              "cpu_error_s": 0.08375000000000021
+            },
+            "cpu_b": {
+              "tid": 11616,
+              "cpu_s": 3.078125,
+              "cycles": 7117505760,
+              "sample_events": 290,
+              "nonprocess_samples": 0,
+              "joined": 290,
+              "root_complete": 290,
+              "kernel_present": 0,
+              "ambiguous": 0,
+              "user_frames": 5385,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 290,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 1.0,
+              "interval_covers_window": true,
+              "sample_cpu_s": 2.9,
+              "cpu_error_s": -0.1781250000000001
+            },
+            "qt_wait": {
+              "tid": 12416,
+              "cpu_s": 0.015625,
+              "cycles": 14717280,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 0,
+              "root_complete": 0,
+              "kernel_present": 0,
+              "ambiguous": 0,
+              "user_frames": 0,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 0,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 0,
+              "association_rate": null,
+              "user_root_complete_rate": null,
+              "interval_covers_window": true,
+              "sample_cpu_s": 0.0,
+              "cpu_error_s": -0.015625
+            },
+            "system_wait": {
+              "tid": 5132,
+              "cpu_s": 0.0,
+              "cycles": 9737520,
+              "sample_events": 1,
+              "nonprocess_samples": 0,
+              "joined": 1,
+              "root_complete": 0,
+              "kernel_present": 1,
+              "ambiguous": 0,
+              "user_frames": 0,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 0,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 1,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.0,
+              "interval_covers_window": true,
+              "sample_cpu_s": 0.01,
+              "cpu_error_s": 0.01
+            }
+          },
+          "families": {
+            "cpu_a": {},
+            "cpu_b": {},
+            "qt_wait": {},
+            "system_wait": {}
+          },
+          "independent_scan": {
+            "events_lost": 0,
+            "counts": {
+              "Stack": {
+                "reader": 2057,
+                "tracerpt": 2057,
+                "equal": true
+              },
+              "SampleProf": {
+                "reader": 2024,
+                "tracerpt": 2024,
+                "equal": true
+              },
+              "36": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              },
+              "ReadyThread": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              }
+            },
+            "passed": true,
+            "summary_sha256": "91da8efa77663ba9eb9eccf6f914d45ce692cb15eb068cf9525979e4cf77d057"
+          },
+          "clock_max_residual_ms": 0.0112
+        },
+        "sdk": {
+          "pid": 17504,
+          "threads": {
+            "cpu_a": {
+              "tid": 7952,
+              "cpu_s": 2.984375,
+              "cycles": 7483227600,
+              "work": {
+                "lower": 28180000,
+                "upper": 28680000
+              },
+              "counter_bracket_us_max": 72.10000000000001
+            },
+            "cpu_b": {
+              "tid": 15544,
+              "cpu_s": 2.9375,
+              "cycles": 6834093600,
+              "work": {
+                "lower": 24570000,
+                "upper": 25110000
+              },
+              "counter_bracket_us_max": 64.6
+            },
+            "qt_wait": {
+              "tid": 15268,
+              "cpu_s": 0.015625,
+              "cycles": 14326560,
+              "work": {
+                "lower": 179,
+                "upper": 183
+              },
+              "counter_bracket_us_max": 151.29999999999998
+            },
+            "system_wait": {
+              "tid": 13616,
+              "cpu_s": 0.0,
+              "cycles": 9468480,
+              "work": {
+                "lower": 181,
+                "upper": 185
+              },
+              "counter_bracket_us_max": 54.2
+            }
+          },
+          "quality_checks": {
+            "controller": true,
+            "loss_zero": true,
+            "clock": true,
+            "identity": true,
+            "cycles": true,
+            "association": true,
+            "user_root": true,
+            "unambiguous": true,
+            "interval_restored": true,
+            "profiles_exclusive": true,
+            "interval_event": true,
+            "counter": true,
+            "sample_floor": true,
+            "ip_matches_stack": true,
+            "interval_covers_windows": true
+          },
+          "measurement_acceptance_pass": true,
+          "trace_metrics": {
+            "cpu_a": {
+              "tid": 7952,
+              "cpu_s": 2.984375,
+              "cycles": 7483227600,
+              "sample_events": 312,
+              "nonprocess_samples": 2,
+              "joined": 312,
+              "root_complete": 310,
+              "kernel_present": 2,
+              "ambiguous": 0,
+              "user_frames": 5767,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 312,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9935897435897436,
+              "interval_covers_window": true,
+              "sample_cpu_s": 3.1,
+              "cpu_error_s": 0.11562500000000009
+            },
+            "cpu_b": {
+              "tid": 15544,
+              "cpu_s": 2.9375,
+              "cycles": 6834093600,
+              "sample_events": 299,
+              "nonprocess_samples": 1,
+              "joined": 299,
+              "root_complete": 298,
+              "kernel_present": 1,
+              "ambiguous": 0,
+              "user_frames": 5500,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 299,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9966555183946488,
+              "interval_covers_window": true,
+              "sample_cpu_s": 2.98,
+              "cpu_error_s": 0.04249999999999998
+            },
+            "qt_wait": {
+              "tid": 15268,
+              "cpu_s": 0.015625,
+              "cycles": 14326560,
+              "sample_events": 1,
+              "nonprocess_samples": 0,
+              "joined": 1,
+              "root_complete": 1,
+              "kernel_present": 0,
+              "ambiguous": 0,
+              "user_frames": 24,
+              "unknown_symbol_frames": 2,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 1,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 1.0,
+              "interval_covers_window": true,
+              "sample_cpu_s": 0.01,
+              "cpu_error_s": -0.005625
+            },
+            "system_wait": {
+              "tid": 13616,
+              "cpu_s": 0.0,
+              "cycles": 9468480,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 0,
+              "root_complete": 0,
+              "kernel_present": 0,
+              "ambiguous": 0,
+              "user_frames": 0,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 0,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 0,
+              "association_rate": null,
+              "user_root_complete_rate": null,
+              "interval_covers_window": true,
+              "sample_cpu_s": 0.0,
+              "cpu_error_s": 0.0
+            }
+          },
+          "families": {
+            "cpu_a": {},
+            "cpu_b": {},
+            "qt_wait": {},
+            "system_wait": {}
+          },
+          "independent_scan": {
+            "events_lost": 0,
+            "counts": {
+              "Stack": {
+                "reader": 2057,
+                "tracerpt": 2057,
+                "equal": true
+              },
+              "SampleProf": {
+                "reader": 2024,
+                "tracerpt": 2024,
+                "equal": true
+              },
+              "36": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              },
+              "ReadyThread": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              }
+            },
+            "passed": true,
+            "summary_sha256": "91da8efa77663ba9eb9eccf6f914d45ce692cb15eb068cf9525979e4cf77d057"
+          },
+          "clock_max_residual_ms": 0.0112
+        }
+      },
+      "clock_mapping": {
+        "qpc_frequency": 10000000,
+        "host_ns_offset_lower": -5500,
+        "host_ns_offset_upper": 3300,
+        "uncertainty_ns": 8800,
+        "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+      },
+      "cross_process_clock_maps": {
+        "gui": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -7900,
+          "host_ns_offset_upper": 5100,
+          "uncertainty_ns": 13000,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        },
+        "sdk": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -9100,
+          "host_ns_offset_upper": 6000,
+          "uncertainty_ns": 15100,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        }
+      },
+      "plan_reference": {
+        "external_plan_sha256": "38b1766d4f692aca747378533c1e7e7cb24c9e16c12143639b3292c53a95ecf9",
+        "source_sha256": {
+          "external_fixture.py": "096235daf83df9ccea222fef5e7bd3430568c7d15afbda64a2f2b6c1fba83389",
+          "external_calibration.py": "c447daf50f23a2058fae578b6fac8d1e7d6bdf565022b014a38df27aa8e82413",
+          "record.py": "2f2b2cfd0a5860fcfd2dce6706d8f3439cd8e4ce6cc1fe2078a5474cf9ed85d8",
+          "observe.py": "f33c6b2da48593b28e1748417ded306632b7997bbaf7f608e8baef5e3c391777",
+          "winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+          "split_field.py": "624f3c3dd935f12c818324f5c37c3aa69b034d3ecef13ffbd98b62bc386ac9e0",
+          "align_clock.py": "d49f54563591d23e9fc8e08b7d8eab028b65fbaa7dcb329e12b6ac58c2c893f1",
+          "ReadStacks.cs": "fb20ca77da7dfb4a26167ef3b54a75ee94633cc6b6d88c79a69220a9088d2476",
+          "symbolize.py": "e45766dc0177d105769a9afe6c411025dcefe376a516920d0c56a33cf6fe79c8",
+          "analyze.py": "018978e51cdd721717b1f4ee4c98e74c4aa99d3e0aca38061e27c40b7c314961",
+          "report.py": "10decf431f79fd75f1595638ab14381f9f99957e608947ca82dfb340d1348043",
+          "cpu.wprp": "949d5973ba665469586cc48ee5a0e3dbb5043ca847f4eb396bca29f6d4bef9fb",
+          "wait.wprp": "d584fc8c90595bf5f2bf4e9cdf8b2595908b5c1dbd931f9c885cc0dd08c1bcf8",
+          "plan.json": "2a0ec4593a07e65bda0c329e094480775b4bc3574af3853bd9d86b8532196178",
+          "external_report.py": "b2cf61d94cc64daa581d33142f69d1843353a3b980f88dfdeb6c081bc389ee6a"
+        },
+        "synthetic_only": true
+      },
+      "synthetic_only": true,
+      "acceptance": {
+        "source_etl_sha256": "c003b838be30e1fcca16affcfdedb9c2f712a836e38a4135bac5f5ce33d4cb48",
+        "measurement_acceptance_pass": false,
+        "quantitative_field_attribution_ready": false,
+        "requires_actual_load_calibration": true,
+        "processes": {
+          "17504": {
+            "quality_pass": true,
+            "independent_scan_pass": true,
+            "measurement_acceptance_pass": true
+          },
+          "20756": {
+            "quality_pass": false,
+            "independent_scan_pass": true,
+            "measurement_acceptance_pass": false
+          }
+        },
+        "source_unchanged": true
+      }
+    },
+    "cpu_pair3_off": {
+      "mode": "off",
+      "processes": {
+        "gui": {
+          "pid": 20516,
+          "threads": {
+            "cpu_a": {
+              "tid": 15172,
+              "cpu_s": 3.296875,
+              "cycles": 7462083600,
+              "work": {
+                "lower": 28360000,
+                "upper": 29140000
+              },
+              "counter_bracket_us_max": 76.3
+            },
+            "cpu_b": {
+              "tid": 20224,
+              "cpu_s": 2.671875,
+              "cycles": 6870784800,
+              "work": {
+                "lower": 25910000,
+                "upper": 26590000
+              },
+              "counter_bracket_us_max": 63.1
+            },
+            "qt_wait": {
+              "tid": 19832,
+              "cpu_s": 0.0,
+              "cycles": 14575200,
+              "work": {
+                "lower": 186,
+                "upper": 191
+              },
+              "counter_bracket_us_max": 88.2
+            },
+            "system_wait": {
+              "tid": 20492,
+              "cpu_s": 0.0,
+              "cycles": 9457680,
+              "work": {
+                "lower": 192,
+                "upper": 196
+              },
+              "counter_bracket_us_max": 75.1
+            }
+          }
+        },
+        "sdk": {
+          "pid": 11136,
+          "threads": {
+            "cpu_a": {
+              "tid": 10680,
+              "cpu_s": 3.03125,
+              "cycles": 7311492480,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 62.3
+            },
+            "cpu_b": {
+              "tid": 7240,
+              "cpu_s": 2.9375,
+              "cycles": 7023543600,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 59.0
+            },
+            "qt_wait": {
+              "tid": 18776,
+              "cpu_s": 0.015625,
+              "cycles": 14929200,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 56.5
+            },
+            "system_wait": {
+              "tid": 2652,
+              "cpu_s": 0.0,
+              "cycles": 9776160,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 71.5
+            }
+          }
+        }
+      },
+      "clock_mapping": {
+        "qpc_frequency": 10000000,
+        "host_ns_offset_lower": -5700,
+        "host_ns_offset_upper": 3300,
+        "uncertainty_ns": 9000,
+        "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+      },
+      "cross_process_clock_maps": {
+        "gui": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -11400,
+          "host_ns_offset_upper": 7600,
+          "uncertainty_ns": 19000,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        },
+        "sdk": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -8400,
+          "host_ns_offset_upper": 5200,
+          "uncertainty_ns": 13600,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        }
+      },
+      "plan_reference": {
+        "external_plan_sha256": "38b1766d4f692aca747378533c1e7e7cb24c9e16c12143639b3292c53a95ecf9",
+        "source_sha256": {
+          "external_fixture.py": "096235daf83df9ccea222fef5e7bd3430568c7d15afbda64a2f2b6c1fba83389",
+          "external_calibration.py": "c447daf50f23a2058fae578b6fac8d1e7d6bdf565022b014a38df27aa8e82413",
+          "record.py": "2f2b2cfd0a5860fcfd2dce6706d8f3439cd8e4ce6cc1fe2078a5474cf9ed85d8",
+          "observe.py": "f33c6b2da48593b28e1748417ded306632b7997bbaf7f608e8baef5e3c391777",
+          "winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+          "split_field.py": "624f3c3dd935f12c818324f5c37c3aa69b034d3ecef13ffbd98b62bc386ac9e0",
+          "align_clock.py": "d49f54563591d23e9fc8e08b7d8eab028b65fbaa7dcb329e12b6ac58c2c893f1",
+          "ReadStacks.cs": "fb20ca77da7dfb4a26167ef3b54a75ee94633cc6b6d88c79a69220a9088d2476",
+          "symbolize.py": "e45766dc0177d105769a9afe6c411025dcefe376a516920d0c56a33cf6fe79c8",
+          "analyze.py": "018978e51cdd721717b1f4ee4c98e74c4aa99d3e0aca38061e27c40b7c314961",
+          "report.py": "10decf431f79fd75f1595638ab14381f9f99957e608947ca82dfb340d1348043",
+          "cpu.wprp": "949d5973ba665469586cc48ee5a0e3dbb5043ca847f4eb396bca29f6d4bef9fb",
+          "wait.wprp": "d584fc8c90595bf5f2bf4e9cdf8b2595908b5c1dbd931f9c885cc0dd08c1bcf8",
+          "plan.json": "2a0ec4593a07e65bda0c329e094480775b4bc3574af3853bd9d86b8532196178",
+          "external_report.py": "b2cf61d94cc64daa581d33142f69d1843353a3b980f88dfdeb6c081bc389ee6a"
+        },
+        "synthetic_only": true
+      },
+      "synthetic_only": true
+    },
+    "cpu_pair3_cpu": {
+      "mode": "cpu",
+      "processes": {
+        "gui": {
+          "pid": 21152,
+          "threads": {
+            "cpu_a": {
+              "tid": 20308,
+              "cpu_s": 2.875,
+              "cycles": 7247372880,
+              "work": {
+                "lower": 26200000,
+                "upper": 26790000
+              },
+              "counter_bracket_us_max": 102.2
+            },
+            "cpu_b": {
+              "tid": 3192,
+              "cpu_s": 3.125,
+              "cycles": 7061612400,
+              "work": {
+                "lower": 25820000,
+                "upper": 26520000
+              },
+              "counter_bracket_us_max": 100.9
+            },
+            "qt_wait": {
+              "tid": 20116,
+              "cpu_s": 0.0,
+              "cycles": 14710800,
+              "work": {
+                "lower": 179,
+                "upper": 184
+              },
+              "counter_bracket_us_max": 90.4
+            },
+            "system_wait": {
+              "tid": 8732,
+              "cpu_s": 0.015625,
+              "cycles": 10038720,
+              "work": {
+                "lower": 189,
+                "upper": 194
+              },
+              "counter_bracket_us_max": 87.7
+            }
+          },
+          "quality_checks": {
+            "controller": true,
+            "loss_zero": true,
+            "clock": true,
+            "identity": true,
+            "cycles": true,
+            "association": true,
+            "user_root": true,
+            "unambiguous": true,
+            "interval_restored": true,
+            "profiles_exclusive": true,
+            "interval_event": true,
+            "counter": true,
+            "sample_floor": true,
+            "ip_matches_stack": true,
+            "interval_covers_windows": true
+          },
+          "measurement_acceptance_pass": true,
+          "trace_metrics": {
+            "cpu_a": {
+              "tid": 20308,
+              "cpu_s": 2.875,
+              "cycles": 7247372880,
+              "sample_events": 306,
+              "nonprocess_samples": 0,
+              "joined": 306,
+              "root_complete": 306,
+              "kernel_present": 1,
+              "ambiguous": 0,
+              "user_frames": 5608,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 306,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 1.0,
+              "interval_covers_window": true,
+              "sample_cpu_s": 3.06,
+              "cpu_error_s": 0.18500000000000005
+            },
+            "cpu_b": {
+              "tid": 3192,
+              "cpu_s": 3.125,
+              "cycles": 7061612400,
+              "sample_events": 298,
+              "nonprocess_samples": 2,
+              "joined": 298,
+              "root_complete": 296,
+              "kernel_present": 2,
+              "ambiguous": 0,
+              "user_frames": 5472,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 298,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9932885906040269,
+              "interval_covers_window": true,
+              "sample_cpu_s": 2.96,
+              "cpu_error_s": -0.16500000000000004
+            },
+            "qt_wait": {
+              "tid": 20116,
+              "cpu_s": 0.0,
+              "cycles": 14710800,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 0,
+              "root_complete": 0,
+              "kernel_present": 0,
+              "ambiguous": 0,
+              "user_frames": 0,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 0,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 0,
+              "association_rate": null,
+              "user_root_complete_rate": null,
+              "interval_covers_window": true,
+              "sample_cpu_s": 0.0,
+              "cpu_error_s": 0.0
+            },
+            "system_wait": {
+              "tid": 8732,
+              "cpu_s": 0.015625,
+              "cycles": 10038720,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 0,
+              "root_complete": 0,
+              "kernel_present": 0,
+              "ambiguous": 0,
+              "user_frames": 0,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 0,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 0,
+              "association_rate": null,
+              "user_root_complete_rate": null,
+              "interval_covers_window": true,
+              "sample_cpu_s": 0.0,
+              "cpu_error_s": -0.015625
+            }
+          },
+          "families": {
+            "cpu_a": {
+              "gil_wait_chain": 1
+            },
+            "cpu_b": {},
+            "qt_wait": {},
+            "system_wait": {}
+          },
+          "independent_scan": {
+            "events_lost": 0,
+            "counts": {
+              "Stack": {
+                "reader": 2012,
+                "tracerpt": 2012,
+                "equal": true
+              },
+              "SampleProf": {
+                "reader": 2003,
+                "tracerpt": 2003,
+                "equal": true
+              },
+              "36": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              },
+              "ReadyThread": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              }
+            },
+            "passed": true,
+            "summary_sha256": "2ce1d2f2d91970c26eb5d58cedfe2108184e73b90e890ad107f7661f839b5844"
+          },
+          "clock_max_residual_ms": 0.0115
+        },
+        "sdk": {
+          "pid": 7920,
+          "threads": {
+            "cpu_a": {
+              "tid": 20556,
+              "cpu_s": 3.203125,
+              "cycles": 7291294800,
+              "work": {
+                "lower": 26150000,
+                "upper": 26780000
+              },
+              "counter_bracket_us_max": 88.2
+            },
+            "cpu_b": {
+              "tid": 19968,
+              "cpu_s": 2.75,
+              "cycles": 7020223680,
+              "work": {
+                "lower": 25720000,
+                "upper": 26470000
+              },
+              "counter_bracket_us_max": 95.1
+            },
+            "qt_wait": {
+              "tid": 16884,
+              "cpu_s": 0.0,
+              "cycles": 15085680,
+              "work": {
+                "lower": 180,
+                "upper": 184
+              },
+              "counter_bracket_us_max": 223.79999999999998
+            },
+            "system_wait": {
+              "tid": 20072,
+              "cpu_s": 0.0,
+              "cycles": 9479760,
+              "work": {
+                "lower": 188,
+                "upper": 192
+              },
+              "counter_bracket_us_max": 85.5
+            }
+          },
+          "quality_checks": {
+            "controller": true,
+            "loss_zero": true,
+            "clock": true,
+            "identity": true,
+            "cycles": true,
+            "association": true,
+            "user_root": true,
+            "unambiguous": true,
+            "interval_restored": true,
+            "profiles_exclusive": true,
+            "interval_event": true,
+            "counter": true,
+            "sample_floor": true,
+            "ip_matches_stack": true,
+            "interval_covers_windows": true
+          },
+          "measurement_acceptance_pass": true,
+          "trace_metrics": {
+            "cpu_a": {
+              "tid": 20556,
+              "cpu_s": 3.203125,
+              "cycles": 7291294800,
+              "sample_events": 303,
+              "nonprocess_samples": 1,
+              "joined": 303,
+              "root_complete": 302,
+              "kernel_present": 2,
+              "ambiguous": 0,
+              "user_frames": 5614,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 303,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9966996699669967,
+              "interval_covers_window": true,
+              "sample_cpu_s": 3.02,
+              "cpu_error_s": -0.18312499999999998
+            },
+            "cpu_b": {
+              "tid": 19968,
+              "cpu_s": 2.75,
+              "cycles": 7020223680,
+              "sample_events": 294,
+              "nonprocess_samples": 2,
+              "joined": 294,
+              "root_complete": 292,
+              "kernel_present": 3,
+              "ambiguous": 0,
+              "user_frames": 5407,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 294,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9931972789115646,
+              "interval_covers_window": true,
+              "sample_cpu_s": 2.92,
+              "cpu_error_s": 0.16999999999999993
+            },
+            "qt_wait": {
+              "tid": 16884,
+              "cpu_s": 0.0,
+              "cycles": 15085680,
+              "sample_events": 1,
+              "nonprocess_samples": 0,
+              "joined": 1,
+              "root_complete": 1,
+              "kernel_present": 0,
+              "ambiguous": 0,
+              "user_frames": 19,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 19,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 1,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 1.0,
+              "interval_covers_window": true,
+              "sample_cpu_s": 0.01,
+              "cpu_error_s": 0.01
+            },
+            "system_wait": {
+              "tid": 20072,
+              "cpu_s": 0.0,
+              "cycles": 9479760,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 0,
+              "root_complete": 0,
+              "kernel_present": 0,
+              "ambiguous": 0,
+              "user_frames": 0,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 0,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 0,
+              "association_rate": null,
+              "user_root_complete_rate": null,
+              "interval_covers_window": true,
+              "sample_cpu_s": 0.0,
+              "cpu_error_s": 0.0
+            }
+          },
+          "families": {
+            "cpu_a": {},
+            "cpu_b": {},
+            "qt_wait": {},
+            "system_wait": {}
+          },
+          "independent_scan": {
+            "events_lost": 0,
+            "counts": {
+              "Stack": {
+                "reader": 2012,
+                "tracerpt": 2012,
+                "equal": true
+              },
+              "SampleProf": {
+                "reader": 2003,
+                "tracerpt": 2003,
+                "equal": true
+              },
+              "36": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              },
+              "ReadyThread": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              }
+            },
+            "passed": true,
+            "summary_sha256": "2ce1d2f2d91970c26eb5d58cedfe2108184e73b90e890ad107f7661f839b5844"
+          },
+          "clock_max_residual_ms": 0.0115
+        }
+      },
+      "clock_mapping": {
+        "qpc_frequency": 10000000,
+        "host_ns_offset_lower": -5700,
+        "host_ns_offset_upper": 3300,
+        "uncertainty_ns": 9000,
+        "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+      },
+      "cross_process_clock_maps": {
+        "gui": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -8400,
+          "host_ns_offset_upper": 5300,
+          "uncertainty_ns": 13700,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        },
+        "sdk": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -8500,
+          "host_ns_offset_upper": 5500,
+          "uncertainty_ns": 14000,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        }
+      },
+      "plan_reference": {
+        "external_plan_sha256": "38b1766d4f692aca747378533c1e7e7cb24c9e16c12143639b3292c53a95ecf9",
+        "source_sha256": {
+          "external_fixture.py": "096235daf83df9ccea222fef5e7bd3430568c7d15afbda64a2f2b6c1fba83389",
+          "external_calibration.py": "c447daf50f23a2058fae578b6fac8d1e7d6bdf565022b014a38df27aa8e82413",
+          "record.py": "2f2b2cfd0a5860fcfd2dce6706d8f3439cd8e4ce6cc1fe2078a5474cf9ed85d8",
+          "observe.py": "f33c6b2da48593b28e1748417ded306632b7997bbaf7f608e8baef5e3c391777",
+          "winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+          "split_field.py": "624f3c3dd935f12c818324f5c37c3aa69b034d3ecef13ffbd98b62bc386ac9e0",
+          "align_clock.py": "d49f54563591d23e9fc8e08b7d8eab028b65fbaa7dcb329e12b6ac58c2c893f1",
+          "ReadStacks.cs": "fb20ca77da7dfb4a26167ef3b54a75ee94633cc6b6d88c79a69220a9088d2476",
+          "symbolize.py": "e45766dc0177d105769a9afe6c411025dcefe376a516920d0c56a33cf6fe79c8",
+          "analyze.py": "018978e51cdd721717b1f4ee4c98e74c4aa99d3e0aca38061e27c40b7c314961",
+          "report.py": "10decf431f79fd75f1595638ab14381f9f99957e608947ca82dfb340d1348043",
+          "cpu.wprp": "949d5973ba665469586cc48ee5a0e3dbb5043ca847f4eb396bca29f6d4bef9fb",
+          "wait.wprp": "d584fc8c90595bf5f2bf4e9cdf8b2595908b5c1dbd931f9c885cc0dd08c1bcf8",
+          "plan.json": "2a0ec4593a07e65bda0c329e094480775b4bc3574af3853bd9d86b8532196178",
+          "external_report.py": "b2cf61d94cc64daa581d33142f69d1843353a3b980f88dfdeb6c081bc389ee6a"
+        },
+        "synthetic_only": true
+      },
+      "synthetic_only": true,
+      "acceptance": {
+        "source_etl_sha256": "6dba031f6573d97b2bef9224ffc2c8137e0664b833e9c4696c7b01dbe6faafe1",
+        "measurement_acceptance_pass": true,
+        "quantitative_field_attribution_ready": false,
+        "requires_actual_load_calibration": true,
+        "processes": {
+          "7920": {
+            "quality_pass": true,
+            "independent_scan_pass": true,
+            "measurement_acceptance_pass": true
+          },
+          "21152": {
+            "quality_pass": true,
+            "independent_scan_pass": true,
+            "measurement_acceptance_pass": true
+          }
+        },
+        "source_unchanged": true
+      }
+    },
+    "wait_pair1_off": {
+      "mode": "off",
+      "processes": {
+        "gui": {
+          "pid": 9148,
+          "threads": {
+            "cpu_a": {
+              "tid": 5448,
+              "cpu_s": 3.15625,
+              "cycles": 7340235840,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 85.4
+            },
+            "cpu_b": {
+              "tid": 8,
+              "cpu_s": 2.859375,
+              "cycles": 6996747840,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 63.3
+            },
+            "qt_wait": {
+              "tid": 792,
+              "cpu_s": 0.0,
+              "cycles": 14029680,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 62.4
+            },
+            "system_wait": {
+              "tid": 13708,
+              "cpu_s": 0.015625,
+              "cycles": 9285120,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 64.5
+            }
+          }
+        },
+        "sdk": {
+          "pid": 2720,
+          "threads": {
+            "cpu_a": {
+              "tid": 10908,
+              "cpu_s": 2.90625,
+              "cycles": 7068860160,
+              "work": {
+                "lower": 27020000,
+                "upper": 27820000
+              },
+              "counter_bracket_us_max": 60.099999999999994
+            },
+            "cpu_b": {
+              "tid": 16108,
+              "cpu_s": 3.046875,
+              "cycles": 7265400480,
+              "work": {
+                "lower": 28080000,
+                "upper": 28520000
+              },
+              "counter_bracket_us_max": 59.6
+            },
+            "qt_wait": {
+              "tid": 19868,
+              "cpu_s": 0.0,
+              "cycles": 13824960,
+              "work": {
+                "lower": 175,
+                "upper": 179
+              },
+              "counter_bracket_us_max": 69.7
+            },
+            "system_wait": {
+              "tid": 16904,
+              "cpu_s": 0.0,
+              "cycles": 10962720,
+              "work": {
+                "lower": 184,
+                "upper": 188
+              },
+              "counter_bracket_us_max": 71.69999999999999
+            }
+          }
+        }
+      },
+      "clock_mapping": {
+        "qpc_frequency": 10000000,
+        "host_ns_offset_lower": -5900,
+        "host_ns_offset_upper": 3500,
+        "uncertainty_ns": 9400,
+        "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+      },
+      "cross_process_clock_maps": {
+        "gui": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -8100,
+          "host_ns_offset_upper": 5200,
+          "uncertainty_ns": 13300,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        },
+        "sdk": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -8200,
+          "host_ns_offset_upper": 5400,
+          "uncertainty_ns": 13600,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        }
+      },
+      "plan_reference": {
+        "external_plan_sha256": "38b1766d4f692aca747378533c1e7e7cb24c9e16c12143639b3292c53a95ecf9",
+        "source_sha256": {
+          "external_fixture.py": "096235daf83df9ccea222fef5e7bd3430568c7d15afbda64a2f2b6c1fba83389",
+          "external_calibration.py": "c447daf50f23a2058fae578b6fac8d1e7d6bdf565022b014a38df27aa8e82413",
+          "record.py": "2f2b2cfd0a5860fcfd2dce6706d8f3439cd8e4ce6cc1fe2078a5474cf9ed85d8",
+          "observe.py": "f33c6b2da48593b28e1748417ded306632b7997bbaf7f608e8baef5e3c391777",
+          "winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+          "split_field.py": "624f3c3dd935f12c818324f5c37c3aa69b034d3ecef13ffbd98b62bc386ac9e0",
+          "align_clock.py": "d49f54563591d23e9fc8e08b7d8eab028b65fbaa7dcb329e12b6ac58c2c893f1",
+          "ReadStacks.cs": "fb20ca77da7dfb4a26167ef3b54a75ee94633cc6b6d88c79a69220a9088d2476",
+          "symbolize.py": "e45766dc0177d105769a9afe6c411025dcefe376a516920d0c56a33cf6fe79c8",
+          "analyze.py": "018978e51cdd721717b1f4ee4c98e74c4aa99d3e0aca38061e27c40b7c314961",
+          "report.py": "10decf431f79fd75f1595638ab14381f9f99957e608947ca82dfb340d1348043",
+          "cpu.wprp": "949d5973ba665469586cc48ee5a0e3dbb5043ca847f4eb396bca29f6d4bef9fb",
+          "wait.wprp": "d584fc8c90595bf5f2bf4e9cdf8b2595908b5c1dbd931f9c885cc0dd08c1bcf8",
+          "plan.json": "2a0ec4593a07e65bda0c329e094480775b4bc3574af3853bd9d86b8532196178",
+          "external_report.py": "b2cf61d94cc64daa581d33142f69d1843353a3b980f88dfdeb6c081bc389ee6a"
+        },
+        "synthetic_only": true
+      },
+      "synthetic_only": true
+    },
+    "wait_pair1_wait": {
+      "mode": "wait",
+      "processes": {
+        "gui": {
+          "pid": 14044,
+          "threads": {
+            "cpu_a": {
+              "tid": 12728,
+              "cpu_s": 3.1875,
+              "cycles": 7352005440,
+              "work": {
+                "lower": 27610000,
+                "upper": 28300000
+              },
+              "counter_bracket_us_max": 109.1
+            },
+            "cpu_b": {
+              "tid": 21288,
+              "cpu_s": 2.828125,
+              "cycles": 7041093840,
+              "work": {
+                "lower": 25720000,
+                "upper": 26450000
+              },
+              "counter_bracket_us_max": 106.2
+            },
+            "qt_wait": {
+              "tid": 2976,
+              "cpu_s": 0.0,
+              "cycles": 40076160,
+              "work": {
+                "lower": 188,
+                "upper": 193
+              },
+              "counter_bracket_us_max": 102.7
+            },
+            "system_wait": {
+              "tid": 18468,
+              "cpu_s": 0.0,
+              "cycles": 32414880,
+              "work": {
+                "lower": 195,
+                "upper": 199
+              },
+              "counter_bracket_us_max": 88.39999999999999
+            }
+          },
+          "quality_checks": {
+            "controller": true,
+            "loss_zero": true,
+            "clock": true,
+            "identity": true,
+            "cycles": true,
+            "association": true,
+            "user_root": true,
+            "unambiguous": true,
+            "profiles_exclusive": true,
+            "events_present": true,
+            "counter": true,
+            "schedule_chain": false
+          },
+          "measurement_acceptance_pass": false,
+          "trace_metrics": {
+            "cpu_a": {
+              "tid": 12728,
+              "cpu_s": 3.1875,
+              "cycles": 7352005440,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 1923,
+              "root_complete": 1914,
+              "kernel_present": 1923,
+              "ambiguous": 0,
+              "user_frames": 40726,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 1923,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9953198127925117,
+              "schedule_residency_s": 3.0791396000000013,
+              "schedule_error_s": -0.10836039999999869,
+              "schedule_violations": [],
+              "paired_wait_intervals": 1198,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 772
+              }
+            },
+            "cpu_b": {
+              "tid": 21288,
+              "cpu_s": 2.828125,
+              "cycles": 7041093840,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 1851,
+              "root_complete": 1847,
+              "kernel_present": 1851,
+              "ambiguous": 0,
+              "user_frames": 39353,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 1851,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9978390059427337,
+              "schedule_residency_s": 2.946174900000002,
+              "schedule_error_s": 0.11804990000000215,
+              "schedule_violations": [
+                "out_without_in"
+              ],
+              "paired_wait_intervals": 1201,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 795
+              }
+            },
+            "qt_wait": {
+              "tid": 2976,
+              "cpu_s": 0.0,
+              "cycles": 40076160,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 596,
+              "root_complete": 596,
+              "kernel_present": 596,
+              "ambiguous": 0,
+              "user_frames": 15057,
+              "unknown_symbol_frames": 596,
+              "unmapped_frames": 0,
+              "max_user_depth": 28,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 596,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 1.0,
+              "schedule_residency_s": 0.0177207,
+              "schedule_error_s": 0.0177207,
+              "schedule_violations": [],
+              "paired_wait_intervals": 572,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 349,
+                "qt_wait_chain": 223
+              }
+            },
+            "system_wait": {
+              "tid": 18468,
+              "cpu_s": 0.0,
+              "cycles": 32414880,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 548,
+              "root_complete": 548,
+              "kernel_present": 548,
+              "ambiguous": 0,
+              "user_frames": 14998,
+              "unknown_symbol_frames": 2226,
+              "unmapped_frames": 0,
+              "max_user_depth": 29,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 548,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 1.0,
+              "schedule_residency_s": 0.014388999999999999,
+              "schedule_error_s": 0.014388999999999999,
+              "schedule_violations": [],
+              "paired_wait_intervals": 525,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 331,
+                "system_timer_wait_chain": 194
+              }
+            }
+          },
+          "families": {
+            "cpu_a": {
+              "gil_wait_chain": 1000
+            },
+            "cpu_b": {
+              "gil_wait_chain": 989
+            },
+            "qt_wait": {
+              "qt_wait_chain": 224,
+              "gil_wait_chain": 372
+            },
+            "system_wait": {
+              "gil_wait_chain": 353,
+              "system_timer_wait_chain": 194
+            }
+          },
+          "independent_scan": {
+            "events_lost": 0,
+            "counts": {
+              "Stack": {
+                "reader": 75533,
+                "tracerpt": 75533,
+                "equal": true
+              },
+              "SampleProf": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              },
+              "36": {
+                "reader": 63557,
+                "tracerpt": 63557,
+                "equal": true
+              },
+              "ReadyThread": {
+                "reader": 37914,
+                "tracerpt": 37914,
+                "equal": true
+              }
+            },
+            "passed": true,
+            "summary_sha256": "4cb733cf7ea0686f1ad1fd1911194c5d34efedb0a4900d87d27040d745179cb5"
+          },
+          "clock_max_residual_ms": 0.0109
+        },
+        "sdk": {
+          "pid": 15580,
+          "threads": {
+            "cpu_a": {
+              "tid": 21412,
+              "cpu_s": 2.953125,
+              "cycles": 7326460800,
+              "work": {
+                "lower": 26750000,
+                "upper": 27370000
+              },
+              "counter_bracket_us_max": 91.3
+            },
+            "cpu_b": {
+              "tid": 14596,
+              "cpu_s": 3.0625,
+              "cycles": 7070114640,
+              "work": {
+                "lower": 25900000,
+                "upper": 26440000
+              },
+              "counter_bracket_us_max": 88.39999999999999
+            },
+            "qt_wait": {
+              "tid": 21112,
+              "cpu_s": 0.015625,
+              "cycles": 38579040,
+              "work": {
+                "lower": 188,
+                "upper": 192
+              },
+              "counter_bracket_us_max": 90.3
+            },
+            "system_wait": {
+              "tid": 12972,
+              "cpu_s": 0.015625,
+              "cycles": 31134480,
+              "work": {
+                "lower": 199,
+                "upper": 203
+              },
+              "counter_bracket_us_max": 91.3
+            }
+          },
+          "quality_checks": {
+            "controller": true,
+            "loss_zero": true,
+            "clock": true,
+            "identity": true,
+            "cycles": true,
+            "association": true,
+            "user_root": true,
+            "unambiguous": true,
+            "profiles_exclusive": true,
+            "events_present": true,
+            "counter": true,
+            "schedule_chain": false
+          },
+          "measurement_acceptance_pass": false,
+          "trace_metrics": {
+            "cpu_a": {
+              "tid": 21412,
+              "cpu_s": 2.953125,
+              "cycles": 7326460800,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 1888,
+              "root_complete": 1882,
+              "kernel_present": 1888,
+              "ambiguous": 0,
+              "user_frames": 40091,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 1888,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.996822033898305,
+              "schedule_residency_s": 3.067680900000001,
+              "schedule_error_s": 0.11455590000000093,
+              "schedule_violations": [],
+              "paired_wait_intervals": 1209,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 785
+              }
+            },
+            "cpu_b": {
+              "tid": 14596,
+              "cpu_s": 3.0625,
+              "cycles": 7070114640,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 1845,
+              "root_complete": 1841,
+              "kernel_present": 1845,
+              "ambiguous": 0,
+              "user_frames": 39302,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 1845,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9978319783197832,
+              "schedule_residency_s": 2.9563783999999975,
+              "schedule_error_s": -0.10612160000000248,
+              "schedule_violations": [
+                "out_without_in"
+              ],
+              "paired_wait_intervals": 1224,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 811
+              }
+            },
+            "qt_wait": {
+              "tid": 21112,
+              "cpu_s": 0.015625,
+              "cycles": 38579040,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 579,
+              "root_complete": 577,
+              "kernel_present": 579,
+              "ambiguous": 0,
+              "user_frames": 14582,
+              "unknown_symbol_frames": 577,
+              "unmapped_frames": 0,
+              "max_user_depth": 28,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 579,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9965457685664939,
+              "schedule_residency_s": 0.01701320000000001,
+              "schedule_error_s": 0.0013882000000000096,
+              "schedule_violations": [],
+              "paired_wait_intervals": 547,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 330,
+                "qt_wait_chain": 217
+              }
+            },
+            "system_wait": {
+              "tid": 12972,
+              "cpu_s": 0.015625,
+              "cycles": 31134480,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 504,
+              "root_complete": 502,
+              "kernel_present": 504,
+              "ambiguous": 0,
+              "user_frames": 13761,
+              "unknown_symbol_frames": 2109,
+              "unmapped_frames": 0,
+              "max_user_depth": 29,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 504,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.996031746031746,
+              "schedule_residency_s": 0.013869399999999994,
+              "schedule_error_s": -0.0017556000000000065,
+              "schedule_violations": [],
+              "paired_wait_intervals": 487,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 286,
+                "system_timer_wait_chain": 201
+              }
+            }
+          },
+          "families": {
+            "cpu_a": {
+              "gil_wait_chain": 996
+            },
+            "cpu_b": {
+              "gil_wait_chain": 1000
+            },
+            "qt_wait": {
+              "qt_wait_chain": 218,
+              "gil_wait_chain": 359
+            },
+            "system_wait": {
+              "gil_wait_chain": 300,
+              "system_timer_wait_chain": 201
+            }
+          },
+          "independent_scan": {
+            "events_lost": 0,
+            "counts": {
+              "Stack": {
+                "reader": 75533,
+                "tracerpt": 75533,
+                "equal": true
+              },
+              "SampleProf": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              },
+              "36": {
+                "reader": 63557,
+                "tracerpt": 63557,
+                "equal": true
+              },
+              "ReadyThread": {
+                "reader": 37914,
+                "tracerpt": 37914,
+                "equal": true
+              }
+            },
+            "passed": true,
+            "summary_sha256": "4cb733cf7ea0686f1ad1fd1911194c5d34efedb0a4900d87d27040d745179cb5"
+          },
+          "clock_max_residual_ms": 0.0109
+        }
+      },
+      "clock_mapping": {
+        "qpc_frequency": 10000000,
+        "host_ns_offset_lower": -5600,
+        "host_ns_offset_upper": 3300,
+        "uncertainty_ns": 8900,
+        "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+      },
+      "cross_process_clock_maps": {
+        "gui": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -8800,
+          "host_ns_offset_upper": 5500,
+          "uncertainty_ns": 14300,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        },
+        "sdk": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -8700,
+          "host_ns_offset_upper": 5800,
+          "uncertainty_ns": 14500,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        }
+      },
+      "plan_reference": {
+        "external_plan_sha256": "38b1766d4f692aca747378533c1e7e7cb24c9e16c12143639b3292c53a95ecf9",
+        "source_sha256": {
+          "external_fixture.py": "096235daf83df9ccea222fef5e7bd3430568c7d15afbda64a2f2b6c1fba83389",
+          "external_calibration.py": "c447daf50f23a2058fae578b6fac8d1e7d6bdf565022b014a38df27aa8e82413",
+          "record.py": "2f2b2cfd0a5860fcfd2dce6706d8f3439cd8e4ce6cc1fe2078a5474cf9ed85d8",
+          "observe.py": "f33c6b2da48593b28e1748417ded306632b7997bbaf7f608e8baef5e3c391777",
+          "winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+          "split_field.py": "624f3c3dd935f12c818324f5c37c3aa69b034d3ecef13ffbd98b62bc386ac9e0",
+          "align_clock.py": "d49f54563591d23e9fc8e08b7d8eab028b65fbaa7dcb329e12b6ac58c2c893f1",
+          "ReadStacks.cs": "fb20ca77da7dfb4a26167ef3b54a75ee94633cc6b6d88c79a69220a9088d2476",
+          "symbolize.py": "e45766dc0177d105769a9afe6c411025dcefe376a516920d0c56a33cf6fe79c8",
+          "analyze.py": "018978e51cdd721717b1f4ee4c98e74c4aa99d3e0aca38061e27c40b7c314961",
+          "report.py": "10decf431f79fd75f1595638ab14381f9f99957e608947ca82dfb340d1348043",
+          "cpu.wprp": "949d5973ba665469586cc48ee5a0e3dbb5043ca847f4eb396bca29f6d4bef9fb",
+          "wait.wprp": "d584fc8c90595bf5f2bf4e9cdf8b2595908b5c1dbd931f9c885cc0dd08c1bcf8",
+          "plan.json": "2a0ec4593a07e65bda0c329e094480775b4bc3574af3853bd9d86b8532196178",
+          "external_report.py": "b2cf61d94cc64daa581d33142f69d1843353a3b980f88dfdeb6c081bc389ee6a"
+        },
+        "synthetic_only": true
+      },
+      "synthetic_only": true,
+      "acceptance": {
+        "source_etl_sha256": "8fe8f141a4b1a0eb6f41df693b27e79dae41c89e08e9e89c25ab71eee13907a0",
+        "measurement_acceptance_pass": false,
+        "quantitative_field_attribution_ready": false,
+        "requires_actual_load_calibration": true,
+        "processes": {
+          "14044": {
+            "quality_pass": false,
+            "independent_scan_pass": true,
+            "measurement_acceptance_pass": false
+          },
+          "15580": {
+            "quality_pass": false,
+            "independent_scan_pass": true,
+            "measurement_acceptance_pass": false
+          }
+        },
+        "source_unchanged": true
+      }
+    },
+    "wait_pair2_off": {
+      "mode": "off",
+      "processes": {
+        "gui": {
+          "pid": 8704,
+          "threads": {
+            "cpu_a": {
+              "tid": 3572,
+              "cpu_s": 3.078125,
+              "cycles": 7354886880,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 75.8
+            },
+            "cpu_b": {
+              "tid": 10932,
+              "cpu_s": 2.90625,
+              "cycles": 6975740160,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 63.3
+            },
+            "qt_wait": {
+              "tid": 18056,
+              "cpu_s": 0.0,
+              "cycles": 14122080,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 62.0
+            },
+            "system_wait": {
+              "tid": 19104,
+              "cpu_s": 0.0,
+              "cycles": 9263760,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 81.89999999999999
+            }
+          }
+        },
+        "sdk": {
+          "pid": 10340,
+          "threads": {
+            "cpu_a": {
+              "tid": 18804,
+              "cpu_s": 2.859375,
+              "cycles": 7366393440,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 59.2
+            },
+            "cpu_b": {
+              "tid": 19776,
+              "cpu_s": 3.046875,
+              "cycles": 6965145360,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 59.3
+            },
+            "qt_wait": {
+              "tid": 15968,
+              "cpu_s": 0.0,
+              "cycles": 14213280,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 81.0
+            },
+            "system_wait": {
+              "tid": 7788,
+              "cpu_s": 0.0,
+              "cycles": 9553920,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 72.39999999999999
+            }
+          }
+        }
+      },
+      "clock_mapping": {
+        "qpc_frequency": 10000000,
+        "host_ns_offset_lower": -5700,
+        "host_ns_offset_upper": 3400,
+        "uncertainty_ns": 9100,
+        "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+      },
+      "cross_process_clock_maps": {
+        "gui": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -8600,
+          "host_ns_offset_upper": 5700,
+          "uncertainty_ns": 14300,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        },
+        "sdk": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -8600,
+          "host_ns_offset_upper": 5400,
+          "uncertainty_ns": 14000,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        }
+      },
+      "plan_reference": {
+        "external_plan_sha256": "38b1766d4f692aca747378533c1e7e7cb24c9e16c12143639b3292c53a95ecf9",
+        "source_sha256": {
+          "external_fixture.py": "096235daf83df9ccea222fef5e7bd3430568c7d15afbda64a2f2b6c1fba83389",
+          "external_calibration.py": "c447daf50f23a2058fae578b6fac8d1e7d6bdf565022b014a38df27aa8e82413",
+          "record.py": "2f2b2cfd0a5860fcfd2dce6706d8f3439cd8e4ce6cc1fe2078a5474cf9ed85d8",
+          "observe.py": "f33c6b2da48593b28e1748417ded306632b7997bbaf7f608e8baef5e3c391777",
+          "winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+          "split_field.py": "624f3c3dd935f12c818324f5c37c3aa69b034d3ecef13ffbd98b62bc386ac9e0",
+          "align_clock.py": "d49f54563591d23e9fc8e08b7d8eab028b65fbaa7dcb329e12b6ac58c2c893f1",
+          "ReadStacks.cs": "fb20ca77da7dfb4a26167ef3b54a75ee94633cc6b6d88c79a69220a9088d2476",
+          "symbolize.py": "e45766dc0177d105769a9afe6c411025dcefe376a516920d0c56a33cf6fe79c8",
+          "analyze.py": "018978e51cdd721717b1f4ee4c98e74c4aa99d3e0aca38061e27c40b7c314961",
+          "report.py": "10decf431f79fd75f1595638ab14381f9f99957e608947ca82dfb340d1348043",
+          "cpu.wprp": "949d5973ba665469586cc48ee5a0e3dbb5043ca847f4eb396bca29f6d4bef9fb",
+          "wait.wprp": "d584fc8c90595bf5f2bf4e9cdf8b2595908b5c1dbd931f9c885cc0dd08c1bcf8",
+          "plan.json": "2a0ec4593a07e65bda0c329e094480775b4bc3574af3853bd9d86b8532196178",
+          "external_report.py": "b2cf61d94cc64daa581d33142f69d1843353a3b980f88dfdeb6c081bc389ee6a"
+        },
+        "synthetic_only": true
+      },
+      "synthetic_only": true
+    },
+    "wait_pair2_wait": {
+      "mode": "wait",
+      "processes": {
+        "gui": {
+          "pid": 15544,
+          "threads": {
+            "cpu_a": {
+              "tid": 20552,
+              "cpu_s": 3.1875,
+              "cycles": 7281115920,
+              "work": {
+                "lower": 27960000,
+                "upper": 28500000
+              },
+              "counter_bracket_us_max": 120.5
+            },
+            "cpu_b": {
+              "tid": 17904,
+              "cpu_s": 2.796875,
+              "cycles": 7122788400,
+              "work": {
+                "lower": 26540000,
+                "upper": 27070000
+              },
+              "counter_bracket_us_max": 93.6
+            },
+            "qt_wait": {
+              "tid": 21152,
+              "cpu_s": 0.0,
+              "cycles": 38459280,
+              "work": {
+                "lower": 191,
+                "upper": 195
+              },
+              "counter_bracket_us_max": 89.7
+            },
+            "system_wait": {
+              "tid": 7920,
+              "cpu_s": 0.0,
+              "cycles": 36616560,
+              "work": {
+                "lower": 178,
+                "upper": 182
+              },
+              "counter_bracket_us_max": 92.80000000000001
+            }
+          },
+          "quality_checks": {
+            "controller": true,
+            "loss_zero": true,
+            "clock": true,
+            "identity": true,
+            "cycles": true,
+            "association": true,
+            "user_root": true,
+            "unambiguous": true,
+            "profiles_exclusive": true,
+            "events_present": true,
+            "counter": true,
+            "schedule_chain": false
+          },
+          "measurement_acceptance_pass": false,
+          "trace_metrics": {
+            "cpu_a": {
+              "tid": 20552,
+              "cpu_s": 3.1875,
+              "cycles": 7281115920,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 1848,
+              "root_complete": 1842,
+              "kernel_present": 1848,
+              "ambiguous": 0,
+              "user_frames": 39322,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 1848,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9967532467532467,
+              "schedule_residency_s": 3.0471200000000014,
+              "schedule_error_s": -0.14037999999999862,
+              "schedule_violations": [
+                "out_without_in"
+              ],
+              "paired_wait_intervals": 1176,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 780
+              }
+            },
+            "cpu_b": {
+              "tid": 17904,
+              "cpu_s": 2.796875,
+              "cycles": 7122788400,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 1797,
+              "root_complete": 1794,
+              "kernel_present": 1797,
+              "ambiguous": 0,
+              "user_frames": 38356,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 1797,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.998330550918197,
+              "schedule_residency_s": 2.9784416000000036,
+              "schedule_error_s": 0.18156660000000358,
+              "schedule_violations": [],
+              "paired_wait_intervals": 1174,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 783
+              }
+            },
+            "qt_wait": {
+              "tid": 21152,
+              "cpu_s": 0.0,
+              "cycles": 38459280,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 564,
+              "root_complete": 564,
+              "kernel_present": 564,
+              "ambiguous": 0,
+              "user_frames": 14244,
+              "unknown_symbol_frames": 564,
+              "unmapped_frames": 0,
+              "max_user_depth": 28,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 564,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 1.0,
+              "schedule_residency_s": 0.017202199999999994,
+              "schedule_error_s": 0.017202199999999994,
+              "schedule_violations": [],
+              "paired_wait_intervals": 546,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 321,
+                "qt_wait_chain": 225
+              }
+            },
+            "system_wait": {
+              "tid": 7920,
+              "cpu_s": 0.0,
+              "cycles": 36616560,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 605,
+              "root_complete": 604,
+              "kernel_present": 605,
+              "ambiguous": 0,
+              "user_frames": 16493,
+              "unknown_symbol_frames": 2360,
+              "unmapped_frames": 0,
+              "max_user_depth": 29,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 605,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9983471074380166,
+              "schedule_residency_s": 0.016299299999999982,
+              "schedule_error_s": 0.016299299999999982,
+              "schedule_violations": [],
+              "paired_wait_intervals": 560,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 379,
+                "system_timer_wait_chain": 181
+              }
+            }
+          },
+          "families": {
+            "cpu_a": {
+              "gil_wait_chain": 997
+            },
+            "cpu_b": {
+              "gil_wait_chain": 978
+            },
+            "qt_wait": {
+              "qt_wait_chain": 226,
+              "gil_wait_chain": 338
+            },
+            "system_wait": {
+              "system_timer_wait_chain": 182,
+              "gil_wait_chain": 419
+            }
+          },
+          "independent_scan": {
+            "events_lost": 0,
+            "counts": {
+              "Stack": {
+                "reader": 72440,
+                "tracerpt": 72440,
+                "equal": true
+              },
+              "SampleProf": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              },
+              "36": {
+                "reader": 58847,
+                "tracerpt": 58847,
+                "equal": true
+              },
+              "ReadyThread": {
+                "reader": 35580,
+                "tracerpt": 35580,
+                "equal": true
+              }
+            },
+            "passed": true,
+            "summary_sha256": "494abfadbf0f447aa739431fe05e5c0c100847d5fbb9200102ae59ae53c48f7d"
+          },
+          "clock_max_residual_ms": 0.0113
+        },
+        "sdk": {
+          "pid": 5132,
+          "threads": {
+            "cpu_a": {
+              "tid": 10452,
+              "cpu_s": 2.828125,
+              "cycles": 7418301840,
+              "work": {
+                "lower": 28020000,
+                "upper": 28660000
+              },
+              "counter_bracket_us_max": 93.0
+            },
+            "cpu_b": {
+              "tid": 18784,
+              "cpu_s": 3.140625,
+              "cycles": 6983229600,
+              "work": {
+                "lower": 26350000,
+                "upper": 26680000
+              },
+              "counter_bracket_us_max": 85.0
+            },
+            "qt_wait": {
+              "tid": 5692,
+              "cpu_s": 0.015625,
+              "cycles": 39526560,
+              "work": {
+                "lower": 182,
+                "upper": 186
+              },
+              "counter_bracket_us_max": 87.39999999999999
+            },
+            "system_wait": {
+              "tid": 19856,
+              "cpu_s": 0.0,
+              "cycles": 33732240,
+              "work": {
+                "lower": 189,
+                "upper": 192
+              },
+              "counter_bracket_us_max": 109.9
+            }
+          },
+          "quality_checks": {
+            "controller": true,
+            "loss_zero": true,
+            "clock": true,
+            "identity": true,
+            "cycles": true,
+            "association": true,
+            "user_root": true,
+            "unambiguous": true,
+            "profiles_exclusive": true,
+            "events_present": true,
+            "counter": true,
+            "schedule_chain": false
+          },
+          "measurement_acceptance_pass": false,
+          "trace_metrics": {
+            "cpu_a": {
+              "tid": 10452,
+              "cpu_s": 2.828125,
+              "cycles": 7418301840,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 1833,
+              "root_complete": 1824,
+              "kernel_present": 1833,
+              "ambiguous": 0,
+              "user_frames": 38932,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 1833,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9950900163666121,
+              "schedule_residency_s": 3.105547599999995,
+              "schedule_error_s": 0.2774225999999951,
+              "schedule_violations": [
+                "out_without_in"
+              ],
+              "paired_wait_intervals": 1175,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 762
+              }
+            },
+            "cpu_b": {
+              "tid": 18784,
+              "cpu_s": 3.140625,
+              "cycles": 6983229600,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 1771,
+              "root_complete": 1765,
+              "kernel_present": 1771,
+              "ambiguous": 0,
+              "user_frames": 37867,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 1771,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9966120835686053,
+              "schedule_residency_s": 2.9204309000000017,
+              "schedule_error_s": -0.22019409999999828,
+              "schedule_violations": [],
+              "paired_wait_intervals": 1181,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 803
+              }
+            },
+            "qt_wait": {
+              "tid": 5692,
+              "cpu_s": 0.015625,
+              "cycles": 39526560,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 601,
+              "root_complete": 598,
+              "kernel_present": 601,
+              "ambiguous": 0,
+              "user_frames": 15116,
+              "unknown_symbol_frames": 598,
+              "unmapped_frames": 0,
+              "max_user_depth": 28,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 601,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9950083194675541,
+              "schedule_residency_s": 0.01750460000000001,
+              "schedule_error_s": 0.001879600000000009,
+              "schedule_violations": [],
+              "paired_wait_intervals": 574,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 355,
+                "qt_wait_chain": 219
+              }
+            },
+            "system_wait": {
+              "tid": 19856,
+              "cpu_s": 0.0,
+              "cycles": 33732240,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 566,
+              "root_complete": 564,
+              "kernel_present": 566,
+              "ambiguous": 0,
+              "user_frames": 15433,
+              "unknown_symbol_frames": 2265,
+              "unmapped_frames": 0,
+              "max_user_depth": 29,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 566,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9964664310954063,
+              "schedule_residency_s": 0.015003599999999999,
+              "schedule_error_s": 0.015003599999999999,
+              "schedule_violations": [],
+              "paired_wait_intervals": 539,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 349,
+                "system_timer_wait_chain": 190
+              }
+            }
+          },
+          "families": {
+            "cpu_a": {
+              "gil_wait_chain": 956
+            },
+            "cpu_b": {
+              "gil_wait_chain": 998
+            },
+            "qt_wait": {
+              "qt_wait_chain": 220,
+              "gil_wait_chain": 377
+            },
+            "system_wait": {
+              "system_timer_wait_chain": 191,
+              "gil_wait_chain": 373
+            }
+          },
+          "independent_scan": {
+            "events_lost": 0,
+            "counts": {
+              "Stack": {
+                "reader": 72440,
+                "tracerpt": 72440,
+                "equal": true
+              },
+              "SampleProf": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              },
+              "36": {
+                "reader": 58847,
+                "tracerpt": 58847,
+                "equal": true
+              },
+              "ReadyThread": {
+                "reader": 35580,
+                "tracerpt": 35580,
+                "equal": true
+              }
+            },
+            "passed": true,
+            "summary_sha256": "494abfadbf0f447aa739431fe05e5c0c100847d5fbb9200102ae59ae53c48f7d"
+          },
+          "clock_max_residual_ms": 0.0113
+        }
+      },
+      "clock_mapping": {
+        "qpc_frequency": 10000000,
+        "host_ns_offset_lower": -5800,
+        "host_ns_offset_upper": 3400,
+        "uncertainty_ns": 9200,
+        "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+      },
+      "cross_process_clock_maps": {
+        "gui": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -8400,
+          "host_ns_offset_upper": 5700,
+          "uncertainty_ns": 14100,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        },
+        "sdk": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -11100,
+          "host_ns_offset_upper": 7700,
+          "uncertainty_ns": 18800,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        }
+      },
+      "plan_reference": {
+        "external_plan_sha256": "38b1766d4f692aca747378533c1e7e7cb24c9e16c12143639b3292c53a95ecf9",
+        "source_sha256": {
+          "external_fixture.py": "096235daf83df9ccea222fef5e7bd3430568c7d15afbda64a2f2b6c1fba83389",
+          "external_calibration.py": "c447daf50f23a2058fae578b6fac8d1e7d6bdf565022b014a38df27aa8e82413",
+          "record.py": "2f2b2cfd0a5860fcfd2dce6706d8f3439cd8e4ce6cc1fe2078a5474cf9ed85d8",
+          "observe.py": "f33c6b2da48593b28e1748417ded306632b7997bbaf7f608e8baef5e3c391777",
+          "winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+          "split_field.py": "624f3c3dd935f12c818324f5c37c3aa69b034d3ecef13ffbd98b62bc386ac9e0",
+          "align_clock.py": "d49f54563591d23e9fc8e08b7d8eab028b65fbaa7dcb329e12b6ac58c2c893f1",
+          "ReadStacks.cs": "fb20ca77da7dfb4a26167ef3b54a75ee94633cc6b6d88c79a69220a9088d2476",
+          "symbolize.py": "e45766dc0177d105769a9afe6c411025dcefe376a516920d0c56a33cf6fe79c8",
+          "analyze.py": "018978e51cdd721717b1f4ee4c98e74c4aa99d3e0aca38061e27c40b7c314961",
+          "report.py": "10decf431f79fd75f1595638ab14381f9f99957e608947ca82dfb340d1348043",
+          "cpu.wprp": "949d5973ba665469586cc48ee5a0e3dbb5043ca847f4eb396bca29f6d4bef9fb",
+          "wait.wprp": "d584fc8c90595bf5f2bf4e9cdf8b2595908b5c1dbd931f9c885cc0dd08c1bcf8",
+          "plan.json": "2a0ec4593a07e65bda0c329e094480775b4bc3574af3853bd9d86b8532196178",
+          "external_report.py": "b2cf61d94cc64daa581d33142f69d1843353a3b980f88dfdeb6c081bc389ee6a"
+        },
+        "synthetic_only": true
+      },
+      "synthetic_only": true,
+      "acceptance": {
+        "source_etl_sha256": "53428073d89de61f8c050aa978900095d5569f74f2934eb32d136032a0ed0480",
+        "measurement_acceptance_pass": false,
+        "quantitative_field_attribution_ready": false,
+        "requires_actual_load_calibration": true,
+        "processes": {
+          "5132": {
+            "quality_pass": false,
+            "independent_scan_pass": true,
+            "measurement_acceptance_pass": false
+          },
+          "15544": {
+            "quality_pass": false,
+            "independent_scan_pass": true,
+            "measurement_acceptance_pass": false
+          }
+        },
+        "source_unchanged": true
+      }
+    },
+    "wait_pair3_off": {
+      "mode": "off",
+      "processes": {
+        "gui": {
+          "pid": 18884,
+          "threads": {
+            "cpu_a": {
+              "tid": 13336,
+              "cpu_s": 3.015625,
+              "cycles": 7190916480,
+              "work": {
+                "lower": 27520000,
+                "upper": 28320000
+              },
+              "counter_bracket_us_max": 73.6
+            },
+            "cpu_b": {
+              "tid": 21500,
+              "cpu_s": 2.921875,
+              "cycles": 7143635040,
+              "work": {
+                "lower": 27410000,
+                "upper": 27810000
+              },
+              "counter_bracket_us_max": 71.1
+            },
+            "qt_wait": {
+              "tid": 19052,
+              "cpu_s": 0.015625,
+              "cycles": 14263200,
+              "work": {
+                "lower": 179,
+                "upper": 183
+              },
+              "counter_bracket_us_max": 61.9
+            },
+            "system_wait": {
+              "tid": 15340,
+              "cpu_s": 0.015625,
+              "cycles": 9381120,
+              "work": {
+                "lower": 190,
+                "upper": 193
+              },
+              "counter_bracket_us_max": 60.0
+            }
+          }
+        },
+        "sdk": {
+          "pid": 15644,
+          "threads": {
+            "cpu_a": {
+              "tid": 13564,
+              "cpu_s": 2.890625,
+              "cycles": 7376406240,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 60.0
+            },
+            "cpu_b": {
+              "tid": 19992,
+              "cpu_s": 3.0625,
+              "cycles": 6963526560,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 75.0
+            },
+            "qt_wait": {
+              "tid": 19884,
+              "cpu_s": 0.0,
+              "cycles": 14186400,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 56.7
+            },
+            "system_wait": {
+              "tid": 18848,
+              "cpu_s": 0.0,
+              "cycles": 9278880,
+              "work": {
+                "lower": null,
+                "upper": null,
+                "failure": "Progress does not bracket the counter window"
+              },
+              "counter_bracket_us_max": 74.4
+            }
+          }
+        }
+      },
+      "clock_mapping": {
+        "qpc_frequency": 10000000,
+        "host_ns_offset_lower": -5700,
+        "host_ns_offset_upper": 3400,
+        "uncertainty_ns": 9100,
+        "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+      },
+      "cross_process_clock_maps": {
+        "gui": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -8300,
+          "host_ns_offset_upper": 5500,
+          "uncertainty_ns": 13800,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        },
+        "sdk": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -11300,
+          "host_ns_offset_upper": 8000,
+          "uncertainty_ns": 19300,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        }
+      },
+      "plan_reference": {
+        "external_plan_sha256": "38b1766d4f692aca747378533c1e7e7cb24c9e16c12143639b3292c53a95ecf9",
+        "source_sha256": {
+          "external_fixture.py": "096235daf83df9ccea222fef5e7bd3430568c7d15afbda64a2f2b6c1fba83389",
+          "external_calibration.py": "c447daf50f23a2058fae578b6fac8d1e7d6bdf565022b014a38df27aa8e82413",
+          "record.py": "2f2b2cfd0a5860fcfd2dce6706d8f3439cd8e4ce6cc1fe2078a5474cf9ed85d8",
+          "observe.py": "f33c6b2da48593b28e1748417ded306632b7997bbaf7f608e8baef5e3c391777",
+          "winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+          "split_field.py": "624f3c3dd935f12c818324f5c37c3aa69b034d3ecef13ffbd98b62bc386ac9e0",
+          "align_clock.py": "d49f54563591d23e9fc8e08b7d8eab028b65fbaa7dcb329e12b6ac58c2c893f1",
+          "ReadStacks.cs": "fb20ca77da7dfb4a26167ef3b54a75ee94633cc6b6d88c79a69220a9088d2476",
+          "symbolize.py": "e45766dc0177d105769a9afe6c411025dcefe376a516920d0c56a33cf6fe79c8",
+          "analyze.py": "018978e51cdd721717b1f4ee4c98e74c4aa99d3e0aca38061e27c40b7c314961",
+          "report.py": "10decf431f79fd75f1595638ab14381f9f99957e608947ca82dfb340d1348043",
+          "cpu.wprp": "949d5973ba665469586cc48ee5a0e3dbb5043ca847f4eb396bca29f6d4bef9fb",
+          "wait.wprp": "d584fc8c90595bf5f2bf4e9cdf8b2595908b5c1dbd931f9c885cc0dd08c1bcf8",
+          "plan.json": "2a0ec4593a07e65bda0c329e094480775b4bc3574af3853bd9d86b8532196178",
+          "external_report.py": "b2cf61d94cc64daa581d33142f69d1843353a3b980f88dfdeb6c081bc389ee6a"
+        },
+        "synthetic_only": true
+      },
+      "synthetic_only": true
+    },
+    "wait_pair3_wait": {
+      "mode": "wait",
+      "processes": {
+        "gui": {
+          "pid": 13136,
+          "threads": {
+            "cpu_a": {
+              "tid": 19912,
+              "cpu_s": 3.359375,
+              "cycles": 7667127600,
+              "work": {
+                "lower": 27840000,
+                "upper": 28650000
+              },
+              "counter_bracket_us_max": 78.2
+            },
+            "cpu_b": {
+              "tid": 15936,
+              "cpu_s": 2.65625,
+              "cycles": 6727346640,
+              "work": {
+                "lower": 24730000,
+                "upper": 25270000
+              },
+              "counter_bracket_us_max": 67.39999999999999
+            },
+            "qt_wait": {
+              "tid": 9660,
+              "cpu_s": 0.015625,
+              "cycles": 39113520,
+              "work": {
+                "lower": 186,
+                "upper": 190
+              },
+              "counter_bracket_us_max": 74.7
+            },
+            "system_wait": {
+              "tid": 17156,
+              "cpu_s": 0.046875,
+              "cycles": 33285840,
+              "work": {
+                "lower": 191,
+                "upper": 196
+              },
+              "counter_bracket_us_max": 65.7
+            }
+          },
+          "quality_checks": {
+            "controller": true,
+            "loss_zero": true,
+            "clock": true,
+            "identity": true,
+            "cycles": true,
+            "association": true,
+            "user_root": true,
+            "unambiguous": true,
+            "profiles_exclusive": true,
+            "events_present": true,
+            "counter": false,
+            "schedule_chain": false
+          },
+          "measurement_acceptance_pass": false,
+          "trace_metrics": {
+            "cpu_a": {
+              "tid": 19912,
+              "cpu_s": 3.359375,
+              "cycles": 7667127600,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 1877,
+              "root_complete": 1871,
+              "kernel_present": 1877,
+              "ambiguous": 0,
+              "user_frames": 39669,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 1877,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.996803409696324,
+              "schedule_residency_s": 3.2103443000000014,
+              "schedule_error_s": -0.14903069999999863,
+              "schedule_violations": [
+                "out_without_in"
+              ],
+              "paired_wait_intervals": 1180,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 745
+              }
+            },
+            "cpu_b": {
+              "tid": 15936,
+              "cpu_s": 2.65625,
+              "cycles": 6727346640,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 1822,
+              "root_complete": 1815,
+              "kernel_present": 1822,
+              "ambiguous": 0,
+              "user_frames": 38873,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 1822,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9961580680570802,
+              "schedule_residency_s": 2.8126953999999964,
+              "schedule_error_s": 0.1564453999999964,
+              "schedule_violations": [],
+              "paired_wait_intervals": 1207,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 844
+              }
+            },
+            "qt_wait": {
+              "tid": 9660,
+              "cpu_s": 0.015625,
+              "cycles": 39113520,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 582,
+              "root_complete": 581,
+              "kernel_present": 582,
+              "ambiguous": 0,
+              "user_frames": 14680,
+              "unknown_symbol_frames": 581,
+              "unmapped_frames": 0,
+              "max_user_depth": 28,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 582,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9982817869415808,
+              "schedule_residency_s": 0.017296299999999976,
+              "schedule_error_s": 0.0016712999999999763,
+              "schedule_violations": [],
+              "paired_wait_intervals": 557,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 340,
+                "qt_wait_chain": 217
+              }
+            },
+            "system_wait": {
+              "tid": 17156,
+              "cpu_s": 0.046875,
+              "cycles": 33285840,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 548,
+              "root_complete": 548,
+              "kernel_present": 548,
+              "ambiguous": 0,
+              "user_frames": 15006,
+              "unknown_symbol_frames": 2229,
+              "unmapped_frames": 0,
+              "max_user_depth": 29,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 548,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 1.0,
+              "schedule_residency_s": 0.014812299999999999,
+              "schedule_error_s": -0.0320627,
+              "schedule_violations": [],
+              "paired_wait_intervals": 523,
+              "paired_wait_chain_counts": {
+                "system_timer_wait_chain": 195,
+                "gil_wait_chain": 328
+              }
+            }
+          },
+          "families": {
+            "cpu_a": {
+              "gil_wait_chain": 932
+            },
+            "cpu_b": {
+              "gil_wait_chain": 1044
+            },
+            "qt_wait": {
+              "qt_wait_chain": 218,
+              "gil_wait_chain": 362
+            },
+            "system_wait": {
+              "gil_wait_chain": 353,
+              "system_timer_wait_chain": 195
+            }
+          },
+          "independent_scan": {
+            "events_lost": 0,
+            "counts": {
+              "Stack": {
+                "reader": 75316,
+                "tracerpt": 75316,
+                "equal": true
+              },
+              "SampleProf": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              },
+              "36": {
+                "reader": 60436,
+                "tracerpt": 60436,
+                "equal": true
+              },
+              "ReadyThread": {
+                "reader": 36575,
+                "tracerpt": 36575,
+                "equal": true
+              }
+            },
+            "passed": true,
+            "summary_sha256": "b30e567cd96a1fa5b20f7fcd9e1a0b56b9b1cee53cd5b5d4681c2b9a10cb381d"
+          },
+          "clock_max_residual_ms": 0.0109
+        },
+        "sdk": {
+          "pid": 4104,
+          "threads": {
+            "cpu_a": {
+              "tid": 2864,
+              "cpu_s": 2.75,
+              "cycles": 7040487600,
+              "work": {
+                "lower": 25420000,
+                "upper": 26230000
+              },
+              "counter_bracket_us_max": 55.0
+            },
+            "cpu_b": {
+              "tid": 10612,
+              "cpu_s": 3.234375,
+              "cycles": 7353050880,
+              "work": {
+                "lower": 27060000,
+                "upper": 27890000
+              },
+              "counter_bracket_us_max": 61.4
+            },
+            "qt_wait": {
+              "tid": 19904,
+              "cpu_s": 0.0,
+              "cycles": 40224240,
+              "work": {
+                "lower": 184,
+                "upper": 188
+              },
+              "counter_bracket_us_max": 57.3
+            },
+            "system_wait": {
+              "tid": 16364,
+              "cpu_s": 0.03125,
+              "cycles": 33797520,
+              "work": {
+                "lower": 186,
+                "upper": 192
+              },
+              "counter_bracket_us_max": 70.8
+            }
+          },
+          "quality_checks": {
+            "controller": true,
+            "loss_zero": true,
+            "clock": true,
+            "identity": true,
+            "cycles": true,
+            "association": true,
+            "user_root": true,
+            "unambiguous": true,
+            "profiles_exclusive": true,
+            "events_present": true,
+            "counter": true,
+            "schedule_chain": false
+          },
+          "measurement_acceptance_pass": false,
+          "trace_metrics": {
+            "cpu_a": {
+              "tid": 2864,
+              "cpu_s": 2.75,
+              "cycles": 7040487600,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 1912,
+              "root_complete": 1904,
+              "kernel_present": 1912,
+              "ambiguous": 0,
+              "user_frames": 40540,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 1912,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.99581589958159,
+              "schedule_residency_s": 2.948481599999987,
+              "schedule_error_s": 0.19848159999998716,
+              "schedule_violations": [],
+              "paired_wait_intervals": 1200,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 805
+              }
+            },
+            "cpu_b": {
+              "tid": 10612,
+              "cpu_s": 3.234375,
+              "cycles": 7353050880,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 1800,
+              "root_complete": 1796,
+              "kernel_present": 1800,
+              "ambiguous": 0,
+              "user_frames": 38416,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 1800,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9977777777777778,
+              "schedule_residency_s": 3.0761862000000018,
+              "schedule_error_s": -0.15818879999999824,
+              "schedule_violations": [
+                "out_without_in"
+              ],
+              "paired_wait_intervals": 1147,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 749
+              }
+            },
+            "qt_wait": {
+              "tid": 19904,
+              "cpu_s": 0.0,
+              "cycles": 40224240,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 606,
+              "root_complete": 605,
+              "kernel_present": 606,
+              "ambiguous": 0,
+              "user_frames": 15270,
+              "unknown_symbol_frames": 605,
+              "unmapped_frames": 0,
+              "max_user_depth": 28,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 606,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9983498349834984,
+              "schedule_residency_s": 0.01780790000000001,
+              "schedule_error_s": 0.01780790000000001,
+              "schedule_violations": [],
+              "paired_wait_intervals": 576,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 341,
+                "qt_wait_chain": 235
+              }
+            },
+            "system_wait": {
+              "tid": 16364,
+              "cpu_s": 0.03125,
+              "cycles": 33797520,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 564,
+              "root_complete": 564,
+              "kernel_present": 564,
+              "ambiguous": 0,
+              "user_frames": 15428,
+              "unknown_symbol_frames": 2262,
+              "unmapped_frames": 0,
+              "max_user_depth": 29,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 564,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 1.0,
+              "schedule_residency_s": 0.015163800000000017,
+              "schedule_error_s": -0.01608619999999998,
+              "schedule_violations": [],
+              "paired_wait_intervals": 535,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 346,
+                "system_timer_wait_chain": 189
+              }
+            }
+          },
+          "families": {
+            "cpu_a": {
+              "gil_wait_chain": 1034
+            },
+            "cpu_b": {
+              "gil_wait_chain": 945
+            },
+            "qt_wait": {
+              "gil_wait_chain": 370,
+              "qt_wait_chain": 235
+            },
+            "system_wait": {
+              "system_timer_wait_chain": 190,
+              "gil_wait_chain": 374
+            }
+          },
+          "independent_scan": {
+            "events_lost": 0,
+            "counts": {
+              "Stack": {
+                "reader": 75316,
+                "tracerpt": 75316,
+                "equal": true
+              },
+              "SampleProf": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              },
+              "36": {
+                "reader": 60436,
+                "tracerpt": 60436,
+                "equal": true
+              },
+              "ReadyThread": {
+                "reader": 36575,
+                "tracerpt": 36575,
+                "equal": true
+              }
+            },
+            "passed": true,
+            "summary_sha256": "b30e567cd96a1fa5b20f7fcd9e1a0b56b9b1cee53cd5b5d4681c2b9a10cb381d"
+          },
+          "clock_max_residual_ms": 0.0109
+        }
+      },
+      "clock_mapping": {
+        "qpc_frequency": 10000000,
+        "host_ns_offset_lower": -5700,
+        "host_ns_offset_upper": 3300,
+        "uncertainty_ns": 9000,
+        "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+      },
+      "cross_process_clock_maps": {
+        "gui": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -8100,
+          "host_ns_offset_upper": 5300,
+          "uncertainty_ns": 13400,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        },
+        "sdk": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -8600,
+          "host_ns_offset_upper": 5600,
+          "uncertainty_ns": 14200,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        }
+      },
+      "plan_reference": {
+        "external_plan_sha256": "38b1766d4f692aca747378533c1e7e7cb24c9e16c12143639b3292c53a95ecf9",
+        "source_sha256": {
+          "external_fixture.py": "096235daf83df9ccea222fef5e7bd3430568c7d15afbda64a2f2b6c1fba83389",
+          "external_calibration.py": "c447daf50f23a2058fae578b6fac8d1e7d6bdf565022b014a38df27aa8e82413",
+          "record.py": "2f2b2cfd0a5860fcfd2dce6706d8f3439cd8e4ce6cc1fe2078a5474cf9ed85d8",
+          "observe.py": "f33c6b2da48593b28e1748417ded306632b7997bbaf7f608e8baef5e3c391777",
+          "winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+          "split_field.py": "624f3c3dd935f12c818324f5c37c3aa69b034d3ecef13ffbd98b62bc386ac9e0",
+          "align_clock.py": "d49f54563591d23e9fc8e08b7d8eab028b65fbaa7dcb329e12b6ac58c2c893f1",
+          "ReadStacks.cs": "fb20ca77da7dfb4a26167ef3b54a75ee94633cc6b6d88c79a69220a9088d2476",
+          "symbolize.py": "e45766dc0177d105769a9afe6c411025dcefe376a516920d0c56a33cf6fe79c8",
+          "analyze.py": "018978e51cdd721717b1f4ee4c98e74c4aa99d3e0aca38061e27c40b7c314961",
+          "report.py": "10decf431f79fd75f1595638ab14381f9f99957e608947ca82dfb340d1348043",
+          "cpu.wprp": "949d5973ba665469586cc48ee5a0e3dbb5043ca847f4eb396bca29f6d4bef9fb",
+          "wait.wprp": "d584fc8c90595bf5f2bf4e9cdf8b2595908b5c1dbd931f9c885cc0dd08c1bcf8",
+          "plan.json": "2a0ec4593a07e65bda0c329e094480775b4bc3574af3853bd9d86b8532196178",
+          "external_report.py": "b2cf61d94cc64daa581d33142f69d1843353a3b980f88dfdeb6c081bc389ee6a"
+        },
+        "synthetic_only": true
+      },
+      "synthetic_only": true,
+      "acceptance": {
+        "source_etl_sha256": "f0d5b760f52e66066ac956d7ca5c3656eadac3a0c3af9a4277bac2ffd1177859",
+        "measurement_acceptance_pass": false,
+        "quantitative_field_attribution_ready": false,
+        "requires_actual_load_calibration": true,
+        "processes": {
+          "4104": {
+            "quality_pass": false,
+            "independent_scan_pass": true,
+            "measurement_acceptance_pass": false
+          },
+          "13136": {
+            "quality_pass": false,
+            "independent_scan_pass": true,
+            "measurement_acceptance_pass": false
+          }
+        },
+        "source_unchanged": true
+      }
+    }
+  },
+  "pairs": {
+    "cpu": [
+      {
+        "pair": 1,
+        "processes": {
+          "gui": {
+            "work_unavailable": [
+              "Progress does not bracket the counter window",
+              "Progress does not bracket the counter window"
+            ],
+            "perturbation_pass": false,
+            "measurement_acceptance_pass": true
+          },
+          "sdk": {
+            "work_unavailable": [
+              "Progress does not bracket the counter window",
+              "Progress does not bracket the counter window"
+            ],
+            "perturbation_pass": false,
+            "measurement_acceptance_pass": false
+          }
+        },
+        "passed": false
+      },
+      {
+        "pair": 2,
+        "processes": {
+          "gui": {
+            "work_unavailable": [
+              "Progress does not bracket the counter window",
+              "Progress does not bracket the counter window"
+            ],
+            "perturbation_pass": false,
+            "measurement_acceptance_pass": false
+          },
+          "sdk": {
+            "work_unavailable": [
+              "Progress does not bracket the counter window",
+              "Progress does not bracket the counter window"
+            ],
+            "perturbation_pass": false,
+            "measurement_acceptance_pass": true
+          }
+        },
+        "passed": false
+      },
+      {
+        "pair": 3,
+        "processes": {
+          "gui": {
+            "work_relative_change_bounds": {
+              "lower": -0.06657096716310784,
+              "upper": -0.017689331122166974
+            },
+            "relative_changes": {
+              "cpu_s": 0.005235602094240788,
+              "cycles": -0.0016663182367598894
+            },
+            "perturbation_pass": true,
+            "measurement_acceptance_pass": true
+          },
+          "sdk": {
+            "work_unavailable": [
+              "Progress does not bracket the counter window",
+              "Progress does not bracket the counter window"
+            ],
+            "perturbation_pass": false,
+            "measurement_acceptance_pass": true
+          }
+        },
+        "passed": false
+      }
+    ],
+    "wait": [
+      {
+        "pair": 1,
+        "processes": {
+          "gui": {
+            "work_unavailable": [
+              "Progress does not bracket the counter window",
+              "Progress does not bracket the counter window"
+            ],
+            "perturbation_pass": false,
+            "measurement_acceptance_pass": false
+          },
+          "sdk": {
+            "work_relative_change_bounds": {
+              "lower": -0.06549520766773165,
+              "upper": -0.023411978221415608
+            },
+            "relative_changes": {
+              "cpu_s": 0.01049868766404205,
+              "cycles": 0.004347262936332363
+            },
+            "perturbation_pass": true,
+            "measurement_acceptance_pass": false
+          }
+        },
+        "passed": false
+      },
+      {
+        "pair": 2,
+        "processes": {
+          "gui": {
+            "work_unavailable": [
+              "Progress does not bracket the counter window",
+              "Progress does not bracket the counter window"
+            ],
+            "perturbation_pass": false,
+            "measurement_acceptance_pass": false
+          },
+          "sdk": {
+            "work_unavailable": [
+              "Progress does not bracket the counter window",
+              "Progress does not bracket the counter window"
+            ],
+            "perturbation_pass": false,
+            "measurement_acceptance_pass": false
+          }
+        },
+        "passed": false
+      },
+      {
+        "pair": 3,
+        "processes": {
+          "gui": {
+            "work_relative_change_bounds": {
+              "lower": -0.0634241938357385,
+              "upper": -0.01838703804842523
+            },
+            "relative_changes": {
+              "cpu_s": 0.013157894736842035,
+              "cycles": 0.0041802996010300575
+            },
+            "perturbation_pass": true,
+            "measurement_acceptance_pass": false
+          },
+          "sdk": {
+            "work_unavailable": [
+              "Progress does not bracket the counter window",
+              "Progress does not bracket the counter window"
+            ],
+            "perturbation_pass": false,
+            "measurement_acceptance_pass": false
+          }
+        },
+        "passed": false
+      }
+    ]
+  },
+  "final_external_synthetic_qualification_pass": {
+    "cpu": false,
+    "wait": false
+  },
+  "quantitative_field_attribution_ready": false,
+  "external_plan_sha256": "38b1766d4f692aca747378533c1e7e7cb24c9e16c12143639b3292c53a95ecf9"
+}

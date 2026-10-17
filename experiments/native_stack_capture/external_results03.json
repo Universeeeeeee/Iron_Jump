@@ -1,0 +1,4015 @@
+{
+  "scope": "Final external observer; two synthetic processes only, no real GUI/SDK/device/human load",
+  "cases": {
+    "cpu_pair1_off": {
+      "mode": "off",
+      "processes": {
+        "gui": {
+          "pid": 10080,
+          "threads": {
+            "cpu_a": {
+              "tid": 20712,
+              "cpu_s": 2.875,
+              "cycles": 7239770400,
+              "work": {
+                "lower": 16780000,
+                "upper": 17120000
+              },
+              "counter_bracket_us_max": 120.60000000000001
+            },
+            "cpu_b": {
+              "tid": 14852,
+              "cpu_s": 3.09375,
+              "cycles": 7056378240,
+              "work": {
+                "lower": 16290000,
+                "upper": 16700000
+              },
+              "counter_bracket_us_max": 125.89999999999999
+            },
+            "qt_wait": {
+              "tid": 12804,
+              "cpu_s": 0.0,
+              "cycles": 24275280,
+              "work": {
+                "lower": 175,
+                "upper": 177
+              },
+              "counter_bracket_us_max": 101.8
+            },
+            "system_wait": {
+              "tid": 7080,
+              "cpu_s": 0.015625,
+              "cycles": 16573440,
+              "work": {
+                "lower": 176,
+                "upper": 179
+              },
+              "counter_bracket_us_max": 118.3
+            }
+          }
+        },
+        "sdk": {
+          "pid": 13912,
+          "threads": {
+            "cpu_a": {
+              "tid": 21184,
+              "cpu_s": 2.90625,
+              "cycles": 7014121440,
+              "work": {
+                "lower": 16210000,
+                "upper": 16830000
+              },
+              "counter_bracket_us_max": 104.4
+            },
+            "cpu_b": {
+              "tid": 9468,
+              "cpu_s": 3.0625,
+              "cycles": 7290149760,
+              "work": {
+                "lower": 16950000,
+                "upper": 17390000
+              },
+              "counter_bracket_us_max": 99.8
+            },
+            "qt_wait": {
+              "tid": 11572,
+              "cpu_s": 0.015625,
+              "cycles": 24215760,
+              "work": {
+                "lower": 172,
+                "upper": 176
+              },
+              "counter_bracket_us_max": 144.79999999999998
+            },
+            "system_wait": {
+              "tid": 17896,
+              "cpu_s": 0.015625,
+              "cycles": 15998640,
+              "work": {
+                "lower": 187,
+                "upper": 192
+              },
+              "counter_bracket_us_max": 126.30000000000001
+            }
+          }
+        }
+      },
+      "clock_mapping": {
+        "qpc_frequency": 10000000,
+        "host_ns_offset_lower": -9400,
+        "host_ns_offset_upper": 5600,
+        "uncertainty_ns": 15000,
+        "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+      },
+      "cross_process_clock_maps": {
+        "gui": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -13300,
+          "host_ns_offset_upper": 8400,
+          "uncertainty_ns": 21700,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        },
+        "sdk": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -18700,
+          "host_ns_offset_upper": 12500,
+          "uncertainty_ns": 31200,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        }
+      },
+      "plan_reference": {
+        "external_plan_sha256": "9675c1c92ceb3a333d55905a011d0f1eda9980fb25c5648aacffe93fe6c795a2",
+        "source_sha256": {
+          "external_fixture.py": "7a370154e85a14e5fdf6a853bb55fd7beac1979ed1ea5c6ee1976b7e8ad6283e",
+          "external_calibration.py": "c447daf50f23a2058fae578b6fac8d1e7d6bdf565022b014a38df27aa8e82413",
+          "record.py": "2f2b2cfd0a5860fcfd2dce6706d8f3439cd8e4ce6cc1fe2078a5474cf9ed85d8",
+          "observe.py": "f33c6b2da48593b28e1748417ded306632b7997bbaf7f608e8baef5e3c391777",
+          "winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+          "split_field.py": "624f3c3dd935f12c818324f5c37c3aa69b034d3ecef13ffbd98b62bc386ac9e0",
+          "align_clock.py": "d49f54563591d23e9fc8e08b7d8eab028b65fbaa7dcb329e12b6ac58c2c893f1",
+          "ReadStacks.cs": "fb20ca77da7dfb4a26167ef3b54a75ee94633cc6b6d88c79a69220a9088d2476",
+          "symbolize.py": "e45766dc0177d105769a9afe6c411025dcefe376a516920d0c56a33cf6fe79c8",
+          "analyze.py": "018978e51cdd721717b1f4ee4c98e74c4aa99d3e0aca38061e27c40b7c314961",
+          "report.py": "10decf431f79fd75f1595638ab14381f9f99957e608947ca82dfb340d1348043",
+          "cpu.wprp": "949d5973ba665469586cc48ee5a0e3dbb5043ca847f4eb396bca29f6d4bef9fb",
+          "wait.wprp": "d584fc8c90595bf5f2bf4e9cdf8b2595908b5c1dbd931f9c885cc0dd08c1bcf8",
+          "plan.json": "2a0ec4593a07e65bda0c329e094480775b4bc3574af3853bd9d86b8532196178",
+          "external_report.py": "9c68ac4b13974521a4c1f8321570268b4bfece73433098dc97524df49ce042e8"
+        },
+        "synthetic_only": true
+      },
+      "synthetic_only": true
+    },
+    "cpu_pair1_cpu": {
+      "mode": "cpu",
+      "processes": {
+        "gui": {
+          "pid": 20244,
+          "threads": {
+            "cpu_a": {
+              "tid": 14836,
+              "cpu_s": 3.1875,
+              "cycles": 7168103040,
+              "work": {
+                "lower": 15330000,
+                "upper": 15600000
+              },
+              "counter_bracket_us_max": 166.1
+            },
+            "cpu_b": {
+              "tid": 20572,
+              "cpu_s": 2.734375,
+              "cycles": 7084318320,
+              "work": {
+                "lower": 15600000,
+                "upper": 15940000
+              },
+              "counter_bracket_us_max": 173.4
+            },
+            "qt_wait": {
+              "tid": 13452,
+              "cpu_s": 0.0,
+              "cycles": 24849360,
+              "work": {
+                "lower": 176,
+                "upper": 179
+              },
+              "counter_bracket_us_max": 173.4
+            },
+            "system_wait": {
+              "tid": 14808,
+              "cpu_s": 0.015625,
+              "cycles": 16276320,
+              "work": {
+                "lower": 191,
+                "upper": 195
+              },
+              "counter_bracket_us_max": 103.6
+            }
+          },
+          "quality_checks": {
+            "controller": true,
+            "loss_zero": true,
+            "clock": true,
+            "identity": true,
+            "cycles": true,
+            "association": true,
+            "user_root": true,
+            "unambiguous": true,
+            "interval_restored": true,
+            "profiles_exclusive": true,
+            "interval_event": true,
+            "counter": true,
+            "sample_floor": true,
+            "ip_matches_stack": true,
+            "interval_covers_windows": true
+          },
+          "measurement_acceptance_pass": true,
+          "trace_metrics": {
+            "cpu_a": {
+              "tid": 14836,
+              "cpu_s": 3.1875,
+              "cycles": 7168103040,
+              "sample_events": 311,
+              "nonprocess_samples": 2,
+              "joined": 311,
+              "root_complete": 309,
+              "kernel_present": 3,
+              "ambiguous": 0,
+              "user_frames": 5753,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 311,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9935691318327974,
+              "interval_covers_window": true,
+              "sample_cpu_s": 3.09,
+              "cpu_error_s": -0.09750000000000014
+            },
+            "cpu_b": {
+              "tid": 20572,
+              "cpu_s": 2.734375,
+              "cycles": 7084318320,
+              "sample_events": 303,
+              "nonprocess_samples": 4,
+              "joined": 303,
+              "root_complete": 299,
+              "kernel_present": 8,
+              "ambiguous": 0,
+              "user_frames": 5540,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 303,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9867986798679867,
+              "interval_covers_window": true,
+              "sample_cpu_s": 2.99,
+              "cpu_error_s": 0.2556250000000002
+            },
+            "qt_wait": {
+              "tid": 13452,
+              "cpu_s": 0.0,
+              "cycles": 24849360,
+              "sample_events": 1,
+              "nonprocess_samples": 0,
+              "joined": 1,
+              "root_complete": 1,
+              "kernel_present": 0,
+              "ambiguous": 0,
+              "user_frames": 23,
+              "unknown_symbol_frames": 3,
+              "unmapped_frames": 0,
+              "max_user_depth": 23,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 1,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 1.0,
+              "interval_covers_window": true,
+              "sample_cpu_s": 0.01,
+              "cpu_error_s": 0.01
+            },
+            "system_wait": {
+              "tid": 14808,
+              "cpu_s": 0.015625,
+              "cycles": 16276320,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 0,
+              "root_complete": 0,
+              "kernel_present": 0,
+              "ambiguous": 0,
+              "user_frames": 0,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 0,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 0,
+              "association_rate": null,
+              "user_root_complete_rate": null,
+              "interval_covers_window": true,
+              "sample_cpu_s": 0.0,
+              "cpu_error_s": -0.015625
+            }
+          },
+          "families": {
+            "cpu_a": {},
+            "cpu_b": {},
+            "qt_wait": {},
+            "system_wait": {}
+          },
+          "independent_scan": {
+            "events_lost": 0,
+            "counts": {
+              "Stack": {
+                "reader": 3020,
+                "tracerpt": 3020,
+                "equal": true
+              },
+              "SampleProf": {
+                "reader": 2948,
+                "tracerpt": 2948,
+                "equal": true
+              },
+              "36": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              },
+              "ReadyThread": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              }
+            },
+            "passed": true,
+            "summary_sha256": "f8c69a9e047f6eca47f230134b01a2b62fe75b9df7b3a74d679534e8025fd994"
+          },
+          "clock_max_residual_ms": 0.0165
+        },
+        "sdk": {
+          "pid": 14044,
+          "threads": {
+            "cpu_a": {
+              "tid": 14112,
+              "cpu_s": 3.046875,
+              "cycles": 7265276160,
+              "work": {
+                "lower": 15410000,
+                "upper": 15690000
+              },
+              "counter_bracket_us_max": 186.70000000000002
+            },
+            "cpu_b": {
+              "tid": 18384,
+              "cpu_s": 2.90625,
+              "cycles": 6994066320,
+              "work": {
+                "lower": 15780000,
+                "upper": 16080000
+              },
+              "counter_bracket_us_max": 151.29999999999998
+            },
+            "qt_wait": {
+              "tid": 20324,
+              "cpu_s": 0.0,
+              "cycles": 24499440,
+              "work": {
+                "lower": 177,
+                "upper": 181
+              },
+              "counter_bracket_us_max": 269.59999999999997
+            },
+            "system_wait": {
+              "tid": 12588,
+              "cpu_s": 0.0,
+              "cycles": 16695840,
+              "work": {
+                "lower": 184,
+                "upper": 188
+              },
+              "counter_bracket_us_max": 144.4
+            }
+          },
+          "quality_checks": {
+            "controller": true,
+            "loss_zero": true,
+            "clock": true,
+            "identity": true,
+            "cycles": true,
+            "association": true,
+            "user_root": true,
+            "unambiguous": true,
+            "interval_restored": true,
+            "profiles_exclusive": true,
+            "interval_event": true,
+            "counter": true,
+            "sample_floor": true,
+            "ip_matches_stack": true,
+            "interval_covers_windows": true
+          },
+          "measurement_acceptance_pass": true,
+          "trace_metrics": {
+            "cpu_a": {
+              "tid": 14112,
+              "cpu_s": 3.046875,
+              "cycles": 7265276160,
+              "sample_events": 303,
+              "nonprocess_samples": 4,
+              "joined": 303,
+              "root_complete": 298,
+              "kernel_present": 7,
+              "ambiguous": 0,
+              "user_frames": 5528,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 303,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9834983498349835,
+              "interval_covers_window": true,
+              "sample_cpu_s": 2.99,
+              "cpu_error_s": -0.05687499999999979
+            },
+            "cpu_b": {
+              "tid": 18384,
+              "cpu_s": 2.90625,
+              "cycles": 6994066320,
+              "sample_events": 294,
+              "nonprocess_samples": 1,
+              "joined": 294,
+              "root_complete": 292,
+              "kernel_present": 2,
+              "ambiguous": 0,
+              "user_frames": 5398,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 294,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9931972789115646,
+              "interval_covers_window": true,
+              "sample_cpu_s": 2.93,
+              "cpu_error_s": 0.02375000000000016
+            },
+            "qt_wait": {
+              "tid": 20324,
+              "cpu_s": 0.0,
+              "cycles": 24499440,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 0,
+              "root_complete": 0,
+              "kernel_present": 0,
+              "ambiguous": 0,
+              "user_frames": 0,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 0,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 0,
+              "association_rate": null,
+              "user_root_complete_rate": null,
+              "interval_covers_window": true,
+              "sample_cpu_s": 0.0,
+              "cpu_error_s": 0.0
+            },
+            "system_wait": {
+              "tid": 12588,
+              "cpu_s": 0.0,
+              "cycles": 16695840,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 0,
+              "root_complete": 0,
+              "kernel_present": 0,
+              "ambiguous": 0,
+              "user_frames": 0,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 0,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 0,
+              "association_rate": null,
+              "user_root_complete_rate": null,
+              "interval_covers_window": true,
+              "sample_cpu_s": 0.0,
+              "cpu_error_s": 0.0
+            }
+          },
+          "families": {
+            "cpu_a": {},
+            "cpu_b": {},
+            "qt_wait": {},
+            "system_wait": {}
+          },
+          "independent_scan": {
+            "events_lost": 0,
+            "counts": {
+              "Stack": {
+                "reader": 3020,
+                "tracerpt": 3020,
+                "equal": true
+              },
+              "SampleProf": {
+                "reader": 2948,
+                "tracerpt": 2948,
+                "equal": true
+              },
+              "36": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              },
+              "ReadyThread": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              }
+            },
+            "passed": true,
+            "summary_sha256": "f8c69a9e047f6eca47f230134b01a2b62fe75b9df7b3a74d679534e8025fd994"
+          },
+          "clock_max_residual_ms": 0.0165
+        }
+      },
+      "clock_mapping": {
+        "qpc_frequency": 10000000,
+        "host_ns_offset_lower": -9400,
+        "host_ns_offset_upper": 5600,
+        "uncertainty_ns": 15000,
+        "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+      },
+      "cross_process_clock_maps": {
+        "gui": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -12900,
+          "host_ns_offset_upper": 8200,
+          "uncertainty_ns": 21100,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        },
+        "sdk": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -12500,
+          "host_ns_offset_upper": 8100,
+          "uncertainty_ns": 20600,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        }
+      },
+      "plan_reference": {
+        "external_plan_sha256": "9675c1c92ceb3a333d55905a011d0f1eda9980fb25c5648aacffe93fe6c795a2",
+        "source_sha256": {
+          "external_fixture.py": "7a370154e85a14e5fdf6a853bb55fd7beac1979ed1ea5c6ee1976b7e8ad6283e",
+          "external_calibration.py": "c447daf50f23a2058fae578b6fac8d1e7d6bdf565022b014a38df27aa8e82413",
+          "record.py": "2f2b2cfd0a5860fcfd2dce6706d8f3439cd8e4ce6cc1fe2078a5474cf9ed85d8",
+          "observe.py": "f33c6b2da48593b28e1748417ded306632b7997bbaf7f608e8baef5e3c391777",
+          "winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+          "split_field.py": "624f3c3dd935f12c818324f5c37c3aa69b034d3ecef13ffbd98b62bc386ac9e0",
+          "align_clock.py": "d49f54563591d23e9fc8e08b7d8eab028b65fbaa7dcb329e12b6ac58c2c893f1",
+          "ReadStacks.cs": "fb20ca77da7dfb4a26167ef3b54a75ee94633cc6b6d88c79a69220a9088d2476",
+          "symbolize.py": "e45766dc0177d105769a9afe6c411025dcefe376a516920d0c56a33cf6fe79c8",
+          "analyze.py": "018978e51cdd721717b1f4ee4c98e74c4aa99d3e0aca38061e27c40b7c314961",
+          "report.py": "10decf431f79fd75f1595638ab14381f9f99957e608947ca82dfb340d1348043",
+          "cpu.wprp": "949d5973ba665469586cc48ee5a0e3dbb5043ca847f4eb396bca29f6d4bef9fb",
+          "wait.wprp": "d584fc8c90595bf5f2bf4e9cdf8b2595908b5c1dbd931f9c885cc0dd08c1bcf8",
+          "plan.json": "2a0ec4593a07e65bda0c329e094480775b4bc3574af3853bd9d86b8532196178",
+          "external_report.py": "9c68ac4b13974521a4c1f8321570268b4bfece73433098dc97524df49ce042e8"
+        },
+        "synthetic_only": true
+      },
+      "synthetic_only": true,
+      "acceptance": {
+        "source_etl_sha256": "ce6c64e963c7597406a32499b0b29eb1a041962582b3c0d78ee423d516b769b7",
+        "source_unchanged": true,
+        "processes": {
+          "14044": {
+            "quality_pass": true,
+            "independent_scan_pass": true,
+            "measurement_acceptance_pass": true
+          },
+          "20244": {
+            "quality_pass": true,
+            "independent_scan_pass": true,
+            "measurement_acceptance_pass": true
+          }
+        },
+        "clock_mapping": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -9400,
+          "host_ns_offset_upper": 5600,
+          "uncertainty_ns": 15000,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        },
+        "measurement_acceptance_pass": true,
+        "quantitative_field_attribution_ready": false,
+        "requires_actual_load_calibration": true,
+        "scope": "Offline recheck only; original ETL, exports, counters and previous quality reports preserved"
+      }
+    },
+    "cpu_pair2_off": {
+      "mode": "off",
+      "processes": {
+        "gui": {
+          "pid": 20300,
+          "threads": {
+            "cpu_a": {
+              "tid": 13268,
+              "cpu_s": 2.953125,
+              "cycles": 7084660800,
+              "work": {
+                "lower": 15990000,
+                "upper": 16440000
+              },
+              "counter_bracket_us_max": 121.80000000000001
+            },
+            "cpu_b": {
+              "tid": 14616,
+              "cpu_s": 3.0,
+              "cycles": 7223828160,
+              "work": {
+                "lower": 16490000,
+                "upper": 17000000
+              },
+              "counter_bracket_us_max": 114.2
+            },
+            "qt_wait": {
+              "tid": 1872,
+              "cpu_s": 0.015625,
+              "cycles": 24261360,
+              "work": {
+                "lower": 174,
+                "upper": 179
+              },
+              "counter_bracket_us_max": 101.19999999999999
+            },
+            "system_wait": {
+              "tid": 21456,
+              "cpu_s": 0.015625,
+              "cycles": 16303440,
+              "work": {
+                "lower": 185,
+                "upper": 189
+              },
+              "counter_bracket_us_max": 99.5
+            }
+          }
+        },
+        "sdk": {
+          "pid": 21116,
+          "threads": {
+            "cpu_a": {
+              "tid": 20824,
+              "cpu_s": 2.828125,
+              "cycles": 7240966080,
+              "work": {
+                "lower": 16710000,
+                "upper": 17200000
+              },
+              "counter_bracket_us_max": 100.60000000000001
+            },
+            "cpu_b": {
+              "tid": 12380,
+              "cpu_s": 3.140625,
+              "cycles": 7065834480,
+              "work": {
+                "lower": 16160000,
+                "upper": 16460000
+              },
+              "counter_bracket_us_max": 151.8
+            },
+            "qt_wait": {
+              "tid": 20732,
+              "cpu_s": 0.0,
+              "cycles": 23799120,
+              "work": {
+                "lower": 174,
+                "upper": 178
+              },
+              "counter_bracket_us_max": 102.5
+            },
+            "system_wait": {
+              "tid": 4404,
+              "cpu_s": 0.0,
+              "cycles": 16423680,
+              "work": {
+                "lower": 184,
+                "upper": 189
+              },
+              "counter_bracket_us_max": 125.69999999999999
+            }
+          }
+        }
+      },
+      "clock_mapping": {
+        "qpc_frequency": 10000000,
+        "host_ns_offset_lower": -9300,
+        "host_ns_offset_upper": 5500,
+        "uncertainty_ns": 14800,
+        "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+      },
+      "cross_process_clock_maps": {
+        "gui": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -13200,
+          "host_ns_offset_upper": 8500,
+          "uncertainty_ns": 21700,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        },
+        "sdk": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -13700,
+          "host_ns_offset_upper": 8600,
+          "uncertainty_ns": 22300,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        }
+      },
+      "plan_reference": {
+        "external_plan_sha256": "9675c1c92ceb3a333d55905a011d0f1eda9980fb25c5648aacffe93fe6c795a2",
+        "source_sha256": {
+          "external_fixture.py": "7a370154e85a14e5fdf6a853bb55fd7beac1979ed1ea5c6ee1976b7e8ad6283e",
+          "external_calibration.py": "c447daf50f23a2058fae578b6fac8d1e7d6bdf565022b014a38df27aa8e82413",
+          "record.py": "2f2b2cfd0a5860fcfd2dce6706d8f3439cd8e4ce6cc1fe2078a5474cf9ed85d8",
+          "observe.py": "f33c6b2da48593b28e1748417ded306632b7997bbaf7f608e8baef5e3c391777",
+          "winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+          "split_field.py": "624f3c3dd935f12c818324f5c37c3aa69b034d3ecef13ffbd98b62bc386ac9e0",
+          "align_clock.py": "d49f54563591d23e9fc8e08b7d8eab028b65fbaa7dcb329e12b6ac58c2c893f1",
+          "ReadStacks.cs": "fb20ca77da7dfb4a26167ef3b54a75ee94633cc6b6d88c79a69220a9088d2476",
+          "symbolize.py": "e45766dc0177d105769a9afe6c411025dcefe376a516920d0c56a33cf6fe79c8",
+          "analyze.py": "018978e51cdd721717b1f4ee4c98e74c4aa99d3e0aca38061e27c40b7c314961",
+          "report.py": "10decf431f79fd75f1595638ab14381f9f99957e608947ca82dfb340d1348043",
+          "cpu.wprp": "949d5973ba665469586cc48ee5a0e3dbb5043ca847f4eb396bca29f6d4bef9fb",
+          "wait.wprp": "d584fc8c90595bf5f2bf4e9cdf8b2595908b5c1dbd931f9c885cc0dd08c1bcf8",
+          "plan.json": "2a0ec4593a07e65bda0c329e094480775b4bc3574af3853bd9d86b8532196178",
+          "external_report.py": "9c68ac4b13974521a4c1f8321570268b4bfece73433098dc97524df49ce042e8"
+        },
+        "synthetic_only": true
+      },
+      "synthetic_only": true
+    },
+    "cpu_pair2_cpu": {
+      "mode": "cpu",
+      "processes": {
+        "gui": {
+          "pid": 21392,
+          "threads": {
+            "cpu_a": {
+              "tid": 13080,
+              "cpu_s": 2.890625,
+              "cycles": 7136726640,
+              "work": {
+                "lower": 15900000,
+                "upper": 16220000
+              },
+              "counter_bracket_us_max": 197.1
+            },
+            "cpu_b": {
+              "tid": 14212,
+              "cpu_s": 3.078125,
+              "cycles": 7138936800,
+              "work": {
+                "lower": 16100000,
+                "upper": 16350000
+              },
+              "counter_bracket_us_max": 166.2
+            },
+            "qt_wait": {
+              "tid": 13544,
+              "cpu_s": 0.015625,
+              "cycles": 24763200,
+              "work": {
+                "lower": 177,
+                "upper": 181
+              },
+              "counter_bracket_us_max": 157.2
+            },
+            "system_wait": {
+              "tid": 11240,
+              "cpu_s": 0.0,
+              "cycles": 16818480,
+              "work": {
+                "lower": 189,
+                "upper": 192
+              },
+              "counter_bracket_us_max": 156.0
+            }
+          },
+          "quality_checks": {
+            "controller": true,
+            "loss_zero": true,
+            "clock": true,
+            "identity": true,
+            "cycles": true,
+            "association": true,
+            "user_root": true,
+            "unambiguous": true,
+            "interval_restored": true,
+            "profiles_exclusive": true,
+            "interval_event": true,
+            "counter": true,
+            "sample_floor": true,
+            "ip_matches_stack": true,
+            "interval_covers_windows": true
+          },
+          "measurement_acceptance_pass": true,
+          "trace_metrics": {
+            "cpu_a": {
+              "tid": 13080,
+              "cpu_s": 2.890625,
+              "cycles": 7136726640,
+              "sample_events": 286,
+              "nonprocess_samples": 1,
+              "joined": 286,
+              "root_complete": 285,
+              "kernel_present": 1,
+              "ambiguous": 0,
+              "user_frames": 5281,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 286,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9965034965034965,
+              "interval_covers_window": true,
+              "sample_cpu_s": 2.85,
+              "cpu_error_s": -0.04062499999999991
+            },
+            "cpu_b": {
+              "tid": 14212,
+              "cpu_s": 3.078125,
+              "cycles": 7138936800,
+              "sample_events": 293,
+              "nonprocess_samples": 1,
+              "joined": 293,
+              "root_complete": 292,
+              "kernel_present": 1,
+              "ambiguous": 0,
+              "user_frames": 5369,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 293,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9965870307167235,
+              "interval_covers_window": true,
+              "sample_cpu_s": 2.92,
+              "cpu_error_s": -0.15812500000000007
+            },
+            "qt_wait": {
+              "tid": 13544,
+              "cpu_s": 0.015625,
+              "cycles": 24763200,
+              "sample_events": 1,
+              "nonprocess_samples": 0,
+              "joined": 1,
+              "root_complete": 1,
+              "kernel_present": 0,
+              "ambiguous": 0,
+              "user_frames": 19,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 19,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 1,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 1.0,
+              "interval_covers_window": true,
+              "sample_cpu_s": 0.01,
+              "cpu_error_s": -0.005625
+            },
+            "system_wait": {
+              "tid": 11240,
+              "cpu_s": 0.0,
+              "cycles": 16818480,
+              "sample_events": 1,
+              "nonprocess_samples": 0,
+              "joined": 1,
+              "root_complete": 1,
+              "kernel_present": 1,
+              "ambiguous": 0,
+              "user_frames": 28,
+              "unknown_symbol_frames": 6,
+              "unmapped_frames": 0,
+              "max_user_depth": 28,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 1,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 1.0,
+              "interval_covers_window": true,
+              "sample_cpu_s": 0.01,
+              "cpu_error_s": 0.01
+            }
+          },
+          "families": {
+            "cpu_a": {
+              "gil_wait_chain": 1
+            },
+            "cpu_b": {},
+            "qt_wait": {},
+            "system_wait": {
+              "system_timer_wait_chain": 1
+            }
+          },
+          "independent_scan": {
+            "events_lost": 0,
+            "counts": {
+              "Stack": {
+                "reader": 2542,
+                "tracerpt": 2542,
+                "equal": true
+              },
+              "SampleProf": {
+                "reader": 2528,
+                "tracerpt": 2528,
+                "equal": true
+              },
+              "36": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              },
+              "ReadyThread": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              }
+            },
+            "passed": true,
+            "summary_sha256": "e1e34986ff679223cbd2fad5ccf034eee55a8c48769c814f7daf4cfc1b071821"
+          },
+          "clock_max_residual_ms": 0.0163
+        },
+        "sdk": {
+          "pid": 956,
+          "threads": {
+            "cpu_a": {
+              "tid": 1228,
+              "cpu_s": 3.0,
+              "cycles": 7063991280,
+              "work": {
+                "lower": 15360000,
+                "upper": 15700000
+              },
+              "counter_bracket_us_max": 144.1
+            },
+            "cpu_b": {
+              "tid": 20028,
+              "cpu_s": 2.875,
+              "cycles": 7199120160,
+              "work": {
+                "lower": 16470000,
+                "upper": 16700000
+              },
+              "counter_bracket_us_max": 103.8
+            },
+            "qt_wait": {
+              "tid": 15516,
+              "cpu_s": 0.015625,
+              "cycles": 24513360,
+              "work": {
+                "lower": 175,
+                "upper": 179
+              },
+              "counter_bracket_us_max": 242.79999999999998
+            },
+            "system_wait": {
+              "tid": 18528,
+              "cpu_s": 0.0,
+              "cycles": 16600080,
+              "work": {
+                "lower": 185,
+                "upper": 190
+              },
+              "counter_bracket_us_max": 106.39999999999999
+            }
+          },
+          "quality_checks": {
+            "controller": true,
+            "loss_zero": true,
+            "clock": true,
+            "identity": true,
+            "cycles": true,
+            "association": true,
+            "user_root": true,
+            "unambiguous": true,
+            "interval_restored": true,
+            "profiles_exclusive": true,
+            "interval_event": true,
+            "counter": true,
+            "sample_floor": true,
+            "ip_matches_stack": true,
+            "interval_covers_windows": true
+          },
+          "measurement_acceptance_pass": true,
+          "trace_metrics": {
+            "cpu_a": {
+              "tid": 1228,
+              "cpu_s": 3.0,
+              "cycles": 7063991280,
+              "sample_events": 302,
+              "nonprocess_samples": 4,
+              "joined": 302,
+              "root_complete": 298,
+              "kernel_present": 4,
+              "ambiguous": 0,
+              "user_frames": 5498,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 302,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9867549668874173,
+              "interval_covers_window": true,
+              "sample_cpu_s": 2.98,
+              "cpu_error_s": -0.020000000000000018
+            },
+            "cpu_b": {
+              "tid": 20028,
+              "cpu_s": 2.875,
+              "cycles": 7199120160,
+              "sample_events": 315,
+              "nonprocess_samples": 1,
+              "joined": 315,
+              "root_complete": 314,
+              "kernel_present": 2,
+              "ambiguous": 0,
+              "user_frames": 5853,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 315,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9968253968253968,
+              "interval_covers_window": true,
+              "sample_cpu_s": 3.14,
+              "cpu_error_s": 0.2650000000000001
+            },
+            "qt_wait": {
+              "tid": 15516,
+              "cpu_s": 0.015625,
+              "cycles": 24513360,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 0,
+              "root_complete": 0,
+              "kernel_present": 0,
+              "ambiguous": 0,
+              "user_frames": 0,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 0,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 0,
+              "association_rate": null,
+              "user_root_complete_rate": null,
+              "interval_covers_window": true,
+              "sample_cpu_s": 0.0,
+              "cpu_error_s": -0.015625
+            },
+            "system_wait": {
+              "tid": 18528,
+              "cpu_s": 0.0,
+              "cycles": 16600080,
+              "sample_events": 2,
+              "nonprocess_samples": 0,
+              "joined": 2,
+              "root_complete": 2,
+              "kernel_present": 1,
+              "ambiguous": 0,
+              "user_frames": 52,
+              "unknown_symbol_frames": 9,
+              "unmapped_frames": 0,
+              "max_user_depth": 27,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 2,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 1.0,
+              "interval_covers_window": true,
+              "sample_cpu_s": 0.02,
+              "cpu_error_s": 0.02
+            }
+          },
+          "families": {
+            "cpu_a": {},
+            "cpu_b": {
+              "gil_wait_chain": 1
+            },
+            "qt_wait": {},
+            "system_wait": {
+              "gil_wait_chain": 1
+            }
+          },
+          "independent_scan": {
+            "events_lost": 0,
+            "counts": {
+              "Stack": {
+                "reader": 2542,
+                "tracerpt": 2542,
+                "equal": true
+              },
+              "SampleProf": {
+                "reader": 2528,
+                "tracerpt": 2528,
+                "equal": true
+              },
+              "36": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              },
+              "ReadyThread": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              }
+            },
+            "passed": true,
+            "summary_sha256": "e1e34986ff679223cbd2fad5ccf034eee55a8c48769c814f7daf4cfc1b071821"
+          },
+          "clock_max_residual_ms": 0.0163
+        }
+      },
+      "clock_mapping": {
+        "qpc_frequency": 10000000,
+        "host_ns_offset_lower": -9300,
+        "host_ns_offset_upper": 5400,
+        "uncertainty_ns": 14700,
+        "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+      },
+      "cross_process_clock_maps": {
+        "gui": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -13400,
+          "host_ns_offset_upper": 8500,
+          "uncertainty_ns": 21900,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        },
+        "sdk": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -13100,
+          "host_ns_offset_upper": 8400,
+          "uncertainty_ns": 21500,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        }
+      },
+      "plan_reference": {
+        "external_plan_sha256": "9675c1c92ceb3a333d55905a011d0f1eda9980fb25c5648aacffe93fe6c795a2",
+        "source_sha256": {
+          "external_fixture.py": "7a370154e85a14e5fdf6a853bb55fd7beac1979ed1ea5c6ee1976b7e8ad6283e",
+          "external_calibration.py": "c447daf50f23a2058fae578b6fac8d1e7d6bdf565022b014a38df27aa8e82413",
+          "record.py": "2f2b2cfd0a5860fcfd2dce6706d8f3439cd8e4ce6cc1fe2078a5474cf9ed85d8",
+          "observe.py": "f33c6b2da48593b28e1748417ded306632b7997bbaf7f608e8baef5e3c391777",
+          "winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+          "split_field.py": "624f3c3dd935f12c818324f5c37c3aa69b034d3ecef13ffbd98b62bc386ac9e0",
+          "align_clock.py": "d49f54563591d23e9fc8e08b7d8eab028b65fbaa7dcb329e12b6ac58c2c893f1",
+          "ReadStacks.cs": "fb20ca77da7dfb4a26167ef3b54a75ee94633cc6b6d88c79a69220a9088d2476",
+          "symbolize.py": "e45766dc0177d105769a9afe6c411025dcefe376a516920d0c56a33cf6fe79c8",
+          "analyze.py": "018978e51cdd721717b1f4ee4c98e74c4aa99d3e0aca38061e27c40b7c314961",
+          "report.py": "10decf431f79fd75f1595638ab14381f9f99957e608947ca82dfb340d1348043",
+          "cpu.wprp": "949d5973ba665469586cc48ee5a0e3dbb5043ca847f4eb396bca29f6d4bef9fb",
+          "wait.wprp": "d584fc8c90595bf5f2bf4e9cdf8b2595908b5c1dbd931f9c885cc0dd08c1bcf8",
+          "plan.json": "2a0ec4593a07e65bda0c329e094480775b4bc3574af3853bd9d86b8532196178",
+          "external_report.py": "9c68ac4b13974521a4c1f8321570268b4bfece73433098dc97524df49ce042e8"
+        },
+        "synthetic_only": true
+      },
+      "synthetic_only": true,
+      "acceptance": {
+        "source_etl_sha256": "e075a495ce79cdff6be2e8094db415c884f3b2f00d6662ce7f6bcf223abfd86d",
+        "source_unchanged": true,
+        "processes": {
+          "21392": {
+            "quality_pass": true,
+            "independent_scan_pass": true,
+            "measurement_acceptance_pass": true
+          },
+          "956": {
+            "quality_pass": true,
+            "independent_scan_pass": true,
+            "measurement_acceptance_pass": true
+          }
+        },
+        "clock_mapping": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -9300,
+          "host_ns_offset_upper": 5400,
+          "uncertainty_ns": 14700,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        },
+        "measurement_acceptance_pass": true,
+        "quantitative_field_attribution_ready": false,
+        "requires_actual_load_calibration": true,
+        "scope": "Offline recheck only; original ETL, exports, counters and previous quality reports preserved"
+      }
+    },
+    "cpu_pair3_off": {
+      "mode": "off",
+      "processes": {
+        "gui": {
+          "pid": 18728,
+          "threads": {
+            "cpu_a": {
+              "tid": 9096,
+              "cpu_s": 3.015625,
+              "cycles": 7267356000,
+              "work": {
+                "lower": 16540000,
+                "upper": 17090000
+              },
+              "counter_bracket_us_max": 215.60000000000002
+            },
+            "cpu_b": {
+              "tid": 4200,
+              "cpu_s": 2.953125,
+              "cycles": 7040215200,
+              "work": {
+                "lower": 15900000,
+                "upper": 16290000
+              },
+              "counter_bracket_us_max": 160.9
+            },
+            "qt_wait": {
+              "tid": 6104,
+              "cpu_s": 0.015625,
+              "cycles": 23664480,
+              "work": {
+                "lower": 164,
+                "upper": 170
+              },
+              "counter_bracket_us_max": 155.3
+            },
+            "system_wait": {
+              "tid": 12508,
+              "cpu_s": 0.0,
+              "cycles": 16635120,
+              "work": {
+                "lower": 180,
+                "upper": 185
+              },
+              "counter_bracket_us_max": 179.8
+            }
+          }
+        },
+        "sdk": {
+          "pid": 7620,
+          "threads": {
+            "cpu_a": {
+              "tid": 9732,
+              "cpu_s": 2.984375,
+              "cycles": 7340314800,
+              "work": {
+                "lower": 16860000,
+                "upper": 17250000
+              },
+              "counter_bracket_us_max": 116.89999999999999
+            },
+            "cpu_b": {
+              "tid": 7996,
+              "cpu_s": 2.953125,
+              "cycles": 6965116560,
+              "work": {
+                "lower": 16190000,
+                "upper": 16570000
+              },
+              "counter_bracket_us_max": 110.60000000000001
+            },
+            "qt_wait": {
+              "tid": 19196,
+              "cpu_s": 0.015625,
+              "cycles": 24034800,
+              "work": {
+                "lower": 176,
+                "upper": 180
+              },
+              "counter_bracket_us_max": 99.9
+            },
+            "system_wait": {
+              "tid": 14992,
+              "cpu_s": 0.0,
+              "cycles": 16002720,
+              "work": {
+                "lower": 182,
+                "upper": 185
+              },
+              "counter_bracket_us_max": 126.4
+            }
+          }
+        }
+      },
+      "clock_mapping": {
+        "qpc_frequency": 10000000,
+        "host_ns_offset_lower": -9600,
+        "host_ns_offset_upper": 5600,
+        "uncertainty_ns": 15200,
+        "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+      },
+      "cross_process_clock_maps": {
+        "gui": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -13300,
+          "host_ns_offset_upper": 8500,
+          "uncertainty_ns": 21800,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        },
+        "sdk": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -13200,
+          "host_ns_offset_upper": 8600,
+          "uncertainty_ns": 21800,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        }
+      },
+      "plan_reference": {
+        "external_plan_sha256": "9675c1c92ceb3a333d55905a011d0f1eda9980fb25c5648aacffe93fe6c795a2",
+        "source_sha256": {
+          "external_fixture.py": "7a370154e85a14e5fdf6a853bb55fd7beac1979ed1ea5c6ee1976b7e8ad6283e",
+          "external_calibration.py": "c447daf50f23a2058fae578b6fac8d1e7d6bdf565022b014a38df27aa8e82413",
+          "record.py": "2f2b2cfd0a5860fcfd2dce6706d8f3439cd8e4ce6cc1fe2078a5474cf9ed85d8",
+          "observe.py": "f33c6b2da48593b28e1748417ded306632b7997bbaf7f608e8baef5e3c391777",
+          "winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+          "split_field.py": "624f3c3dd935f12c818324f5c37c3aa69b034d3ecef13ffbd98b62bc386ac9e0",
+          "align_clock.py": "d49f54563591d23e9fc8e08b7d8eab028b65fbaa7dcb329e12b6ac58c2c893f1",
+          "ReadStacks.cs": "fb20ca77da7dfb4a26167ef3b54a75ee94633cc6b6d88c79a69220a9088d2476",
+          "symbolize.py": "e45766dc0177d105769a9afe6c411025dcefe376a516920d0c56a33cf6fe79c8",
+          "analyze.py": "018978e51cdd721717b1f4ee4c98e74c4aa99d3e0aca38061e27c40b7c314961",
+          "report.py": "10decf431f79fd75f1595638ab14381f9f99957e608947ca82dfb340d1348043",
+          "cpu.wprp": "949d5973ba665469586cc48ee5a0e3dbb5043ca847f4eb396bca29f6d4bef9fb",
+          "wait.wprp": "d584fc8c90595bf5f2bf4e9cdf8b2595908b5c1dbd931f9c885cc0dd08c1bcf8",
+          "plan.json": "2a0ec4593a07e65bda0c329e094480775b4bc3574af3853bd9d86b8532196178",
+          "external_report.py": "9c68ac4b13974521a4c1f8321570268b4bfece73433098dc97524df49ce042e8"
+        },
+        "synthetic_only": true
+      },
+      "synthetic_only": true
+    },
+    "cpu_pair3_cpu": {
+      "mode": "cpu",
+      "processes": {
+        "gui": {
+          "pid": 14516,
+          "threads": {
+            "cpu_a": {
+              "tid": 16876,
+              "cpu_s": 2.671875,
+              "cycles": 6979727520,
+              "work": {
+                "lower": 15340000,
+                "upper": 15780000
+              },
+              "counter_bracket_us_max": 208.6
+            },
+            "cpu_b": {
+              "tid": 15660,
+              "cpu_s": 3.21875,
+              "cycles": 7282941120,
+              "work": {
+                "lower": 15830000,
+                "upper": 16280000
+              },
+              "counter_bracket_us_max": 178.6
+            },
+            "qt_wait": {
+              "tid": 21156,
+              "cpu_s": 0.0,
+              "cycles": 25369680,
+              "work": {
+                "lower": 172,
+                "upper": 177
+              },
+              "counter_bracket_us_max": 878.7
+            },
+            "system_wait": {
+              "tid": 10800,
+              "cpu_s": 0.0,
+              "cycles": 16578000,
+              "work": {
+                "lower": 186,
+                "upper": 191
+              },
+              "counter_bracket_us_max": 186.89999999999998
+            }
+          },
+          "quality_checks": {
+            "controller": true,
+            "loss_zero": true,
+            "clock": true,
+            "identity": true,
+            "cycles": true,
+            "association": true,
+            "user_root": true,
+            "unambiguous": true,
+            "interval_restored": true,
+            "profiles_exclusive": true,
+            "interval_event": true,
+            "counter": true,
+            "sample_floor": true,
+            "ip_matches_stack": true,
+            "interval_covers_windows": true
+          },
+          "measurement_acceptance_pass": true,
+          "trace_metrics": {
+            "cpu_a": {
+              "tid": 16876,
+              "cpu_s": 2.671875,
+              "cycles": 6979727520,
+              "sample_events": 285,
+              "nonprocess_samples": 0,
+              "joined": 285,
+              "root_complete": 285,
+              "kernel_present": 0,
+              "ambiguous": 0,
+              "user_frames": 5287,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 285,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 1.0,
+              "interval_covers_window": true,
+              "sample_cpu_s": 2.85,
+              "cpu_error_s": 0.1781250000000001
+            },
+            "cpu_b": {
+              "tid": 15660,
+              "cpu_s": 3.21875,
+              "cycles": 7282941120,
+              "sample_events": 309,
+              "nonprocess_samples": 2,
+              "joined": 309,
+              "root_complete": 307,
+              "kernel_present": 4,
+              "ambiguous": 0,
+              "user_frames": 5697,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 309,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9935275080906149,
+              "interval_covers_window": true,
+              "sample_cpu_s": 3.07,
+              "cpu_error_s": -0.14875000000000016
+            },
+            "qt_wait": {
+              "tid": 21156,
+              "cpu_s": 0.0,
+              "cycles": 25369680,
+              "sample_events": 1,
+              "nonprocess_samples": 0,
+              "joined": 1,
+              "root_complete": 1,
+              "kernel_present": 0,
+              "ambiguous": 0,
+              "user_frames": 26,
+              "unknown_symbol_frames": 1,
+              "unmapped_frames": 0,
+              "max_user_depth": 26,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 1,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 1.0,
+              "interval_covers_window": true,
+              "sample_cpu_s": 0.01,
+              "cpu_error_s": 0.01
+            },
+            "system_wait": {
+              "tid": 10800,
+              "cpu_s": 0.0,
+              "cycles": 16578000,
+              "sample_events": 1,
+              "nonprocess_samples": 0,
+              "joined": 1,
+              "root_complete": 1,
+              "kernel_present": 0,
+              "ambiguous": 0,
+              "user_frames": 27,
+              "unknown_symbol_frames": 3,
+              "unmapped_frames": 0,
+              "max_user_depth": 27,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 1,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 1.0,
+              "interval_covers_window": true,
+              "sample_cpu_s": 0.01,
+              "cpu_error_s": 0.01
+            }
+          },
+          "families": {
+            "cpu_a": {},
+            "cpu_b": {},
+            "qt_wait": {},
+            "system_wait": {}
+          },
+          "independent_scan": {
+            "events_lost": 0,
+            "counts": {
+              "Stack": {
+                "reader": 2664,
+                "tracerpt": 2664,
+                "equal": true
+              },
+              "SampleProf": {
+                "reader": 2601,
+                "tracerpt": 2601,
+                "equal": true
+              },
+              "36": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              },
+              "ReadyThread": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              }
+            },
+            "passed": true,
+            "summary_sha256": "1220398333970836a2b89060a7da2701cbe68189a9250d50d283596671aab587"
+          },
+          "clock_max_residual_ms": 0.0149
+        },
+        "sdk": {
+          "pid": 14560,
+          "threads": {
+            "cpu_a": {
+              "tid": 11900,
+              "cpu_s": 3.171875,
+              "cycles": 7328862480,
+              "work": {
+                "lower": 16070000,
+                "upper": 16390000
+              },
+              "counter_bracket_us_max": 173.1
+            },
+            "cpu_b": {
+              "tid": 17592,
+              "cpu_s": 2.78125,
+              "cycles": 6938451840,
+              "work": {
+                "lower": 15110000,
+                "upper": 15400000
+              },
+              "counter_bracket_us_max": 183.5
+            },
+            "qt_wait": {
+              "tid": 6200,
+              "cpu_s": 0.0,
+              "cycles": 25161120,
+              "work": {
+                "lower": 171,
+                "upper": 175
+              },
+              "counter_bracket_us_max": 353.59999999999997
+            },
+            "system_wait": {
+              "tid": 17600,
+              "cpu_s": 0.0,
+              "cycles": 16854480,
+              "work": {
+                "lower": 188,
+                "upper": 192
+              },
+              "counter_bracket_us_max": 145.3
+            }
+          },
+          "quality_checks": {
+            "controller": true,
+            "loss_zero": true,
+            "clock": true,
+            "identity": true,
+            "cycles": true,
+            "association": true,
+            "user_root": false,
+            "unambiguous": true,
+            "interval_restored": true,
+            "profiles_exclusive": true,
+            "interval_event": true,
+            "counter": true,
+            "sample_floor": true,
+            "ip_matches_stack": true,
+            "interval_covers_windows": true
+          },
+          "measurement_acceptance_pass": false,
+          "trace_metrics": {
+            "cpu_a": {
+              "tid": 11900,
+              "cpu_s": 3.171875,
+              "cycles": 7328862480,
+              "sample_events": 318,
+              "nonprocess_samples": 0,
+              "joined": 318,
+              "root_complete": 318,
+              "kernel_present": 1,
+              "ambiguous": 0,
+              "user_frames": 5927,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 318,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 1.0,
+              "interval_covers_window": true,
+              "sample_cpu_s": 3.18,
+              "cpu_error_s": 0.00812500000000016
+            },
+            "cpu_b": {
+              "tid": 17592,
+              "cpu_s": 2.78125,
+              "cycles": 6938451840,
+              "sample_events": 275,
+              "nonprocess_samples": 0,
+              "joined": 275,
+              "root_complete": 274,
+              "kernel_present": 2,
+              "ambiguous": 0,
+              "user_frames": 5078,
+              "unknown_symbol_frames": 1,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 275,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9963636363636363,
+              "interval_covers_window": true,
+              "sample_cpu_s": 2.75,
+              "cpu_error_s": -0.03125
+            },
+            "qt_wait": {
+              "tid": 6200,
+              "cpu_s": 0.0,
+              "cycles": 25161120,
+              "sample_events": 3,
+              "nonprocess_samples": 1,
+              "joined": 3,
+              "root_complete": 2,
+              "kernel_present": 1,
+              "ambiguous": 0,
+              "user_frames": 48,
+              "unknown_symbol_frames": 3,
+              "unmapped_frames": 0,
+              "max_user_depth": 26,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 3,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.6666666666666666,
+              "interval_covers_window": true,
+              "sample_cpu_s": 0.02,
+              "cpu_error_s": 0.02
+            },
+            "system_wait": {
+              "tid": 17600,
+              "cpu_s": 0.0,
+              "cycles": 16854480,
+              "sample_events": 2,
+              "nonprocess_samples": 1,
+              "joined": 2,
+              "root_complete": 1,
+              "kernel_present": 2,
+              "ambiguous": 0,
+              "user_frames": 27,
+              "unknown_symbol_frames": 3,
+              "unmapped_frames": 0,
+              "max_user_depth": 27,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 2,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.5,
+              "interval_covers_window": true,
+              "sample_cpu_s": 0.01,
+              "cpu_error_s": 0.01
+            }
+          },
+          "families": {
+            "cpu_a": {
+              "gil_wait_chain": 1
+            },
+            "cpu_b": {},
+            "qt_wait": {
+              "gil_wait_chain": 1
+            },
+            "system_wait": {
+              "gil_wait_chain": 1
+            }
+          },
+          "independent_scan": {
+            "events_lost": 0,
+            "counts": {
+              "Stack": {
+                "reader": 2664,
+                "tracerpt": 2664,
+                "equal": true
+              },
+              "SampleProf": {
+                "reader": 2601,
+                "tracerpt": 2601,
+                "equal": true
+              },
+              "36": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              },
+              "ReadyThread": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              }
+            },
+            "passed": true,
+            "summary_sha256": "1220398333970836a2b89060a7da2701cbe68189a9250d50d283596671aab587"
+          },
+          "clock_max_residual_ms": 0.0149
+        }
+      },
+      "clock_mapping": {
+        "qpc_frequency": 10000000,
+        "host_ns_offset_lower": -8300,
+        "host_ns_offset_upper": 5100,
+        "uncertainty_ns": 13400,
+        "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+      },
+      "cross_process_clock_maps": {
+        "gui": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -8300,
+          "host_ns_offset_upper": 5400,
+          "uncertainty_ns": 13700,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        },
+        "sdk": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -8300,
+          "host_ns_offset_upper": 5100,
+          "uncertainty_ns": 13400,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        }
+      },
+      "plan_reference": {
+        "external_plan_sha256": "9675c1c92ceb3a333d55905a011d0f1eda9980fb25c5648aacffe93fe6c795a2",
+        "source_sha256": {
+          "external_fixture.py": "7a370154e85a14e5fdf6a853bb55fd7beac1979ed1ea5c6ee1976b7e8ad6283e",
+          "external_calibration.py": "c447daf50f23a2058fae578b6fac8d1e7d6bdf565022b014a38df27aa8e82413",
+          "record.py": "2f2b2cfd0a5860fcfd2dce6706d8f3439cd8e4ce6cc1fe2078a5474cf9ed85d8",
+          "observe.py": "f33c6b2da48593b28e1748417ded306632b7997bbaf7f608e8baef5e3c391777",
+          "winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+          "split_field.py": "624f3c3dd935f12c818324f5c37c3aa69b034d3ecef13ffbd98b62bc386ac9e0",
+          "align_clock.py": "d49f54563591d23e9fc8e08b7d8eab028b65fbaa7dcb329e12b6ac58c2c893f1",
+          "ReadStacks.cs": "fb20ca77da7dfb4a26167ef3b54a75ee94633cc6b6d88c79a69220a9088d2476",
+          "symbolize.py": "e45766dc0177d105769a9afe6c411025dcefe376a516920d0c56a33cf6fe79c8",
+          "analyze.py": "018978e51cdd721717b1f4ee4c98e74c4aa99d3e0aca38061e27c40b7c314961",
+          "report.py": "10decf431f79fd75f1595638ab14381f9f99957e608947ca82dfb340d1348043",
+          "cpu.wprp": "949d5973ba665469586cc48ee5a0e3dbb5043ca847f4eb396bca29f6d4bef9fb",
+          "wait.wprp": "d584fc8c90595bf5f2bf4e9cdf8b2595908b5c1dbd931f9c885cc0dd08c1bcf8",
+          "plan.json": "2a0ec4593a07e65bda0c329e094480775b4bc3574af3853bd9d86b8532196178",
+          "external_report.py": "9c68ac4b13974521a4c1f8321570268b4bfece73433098dc97524df49ce042e8"
+        },
+        "synthetic_only": true
+      },
+      "synthetic_only": true,
+      "acceptance": {
+        "source_etl_sha256": "df836bb01fe271688aaf056305516d22f1945966dde25d7c20baf10f49865f08",
+        "source_unchanged": true,
+        "processes": {
+          "14516": {
+            "quality_pass": true,
+            "independent_scan_pass": true,
+            "measurement_acceptance_pass": true
+          },
+          "14560": {
+            "quality_pass": false,
+            "independent_scan_pass": true,
+            "measurement_acceptance_pass": false
+          }
+        },
+        "clock_mapping": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -9800,
+          "host_ns_offset_upper": 5700,
+          "uncertainty_ns": 15500,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        },
+        "measurement_acceptance_pass": false,
+        "quantitative_field_attribution_ready": false,
+        "requires_actual_load_calibration": true,
+        "scope": "Offline recheck only; original ETL, exports, counters and previous quality reports preserved"
+      }
+    },
+    "wait_pair1_off": {
+      "mode": "off",
+      "processes": {
+        "gui": {
+          "pid": 5716,
+          "threads": {
+            "cpu_a": {
+              "tid": 12820,
+              "cpu_s": 2.703125,
+              "cycles": 7142867280,
+              "work": {
+                "lower": 27380000,
+                "upper": 27980000
+              },
+              "counter_bracket_us_max": 78.30000000000001
+            },
+            "cpu_b": {
+              "tid": 7080,
+              "cpu_s": 3.296875,
+              "cycles": 7193804400,
+              "work": {
+                "lower": 27780000,
+                "upper": 28550000
+              },
+              "counter_bracket_us_max": 61.9
+            },
+            "qt_wait": {
+              "tid": 12804,
+              "cpu_s": 0.0,
+              "cycles": 14609520,
+              "work": {
+                "lower": 174,
+                "upper": 178
+              },
+              "counter_bracket_us_max": 61.4
+            },
+            "system_wait": {
+              "tid": 20712,
+              "cpu_s": 0.0,
+              "cycles": 9557760,
+              "work": {
+                "lower": 191,
+                "upper": 196
+              },
+              "counter_bracket_us_max": 71.5
+            }
+          }
+        },
+        "sdk": {
+          "pid": 3268,
+          "threads": {
+            "cpu_a": {
+              "tid": 11572,
+              "cpu_s": 3.25,
+              "cycles": 7437086640,
+              "work": {
+                "lower": 28520000,
+                "upper": 29290000
+              },
+              "counter_bracket_us_max": 59.3
+            },
+            "cpu_b": {
+              "tid": 20880,
+              "cpu_s": 2.734375,
+              "cycles": 6901956000,
+              "work": {
+                "lower": 25940000,
+                "upper": 26570000
+              },
+              "counter_bracket_us_max": 64.1
+            },
+            "qt_wait": {
+              "tid": 9648,
+              "cpu_s": 0.0,
+              "cycles": 14251920,
+              "work": {
+                "lower": 173,
+                "upper": 178
+              },
+              "counter_bracket_us_max": 57.9
+            },
+            "system_wait": {
+              "tid": 17888,
+              "cpu_s": 0.0,
+              "cycles": 9323280,
+              "work": {
+                "lower": 184,
+                "upper": 190
+              },
+              "counter_bracket_us_max": 71.2
+            }
+          }
+        }
+      },
+      "clock_mapping": {
+        "qpc_frequency": 10000000,
+        "host_ns_offset_lower": -5700,
+        "host_ns_offset_upper": 3300,
+        "uncertainty_ns": 9000,
+        "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+      },
+      "cross_process_clock_maps": {
+        "gui": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -8100,
+          "host_ns_offset_upper": 5300,
+          "uncertainty_ns": 13400,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        },
+        "sdk": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -8300,
+          "host_ns_offset_upper": 5400,
+          "uncertainty_ns": 13700,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        }
+      },
+      "plan_reference": {
+        "external_plan_sha256": "9675c1c92ceb3a333d55905a011d0f1eda9980fb25c5648aacffe93fe6c795a2",
+        "source_sha256": {
+          "external_fixture.py": "7a370154e85a14e5fdf6a853bb55fd7beac1979ed1ea5c6ee1976b7e8ad6283e",
+          "external_calibration.py": "c447daf50f23a2058fae578b6fac8d1e7d6bdf565022b014a38df27aa8e82413",
+          "record.py": "2f2b2cfd0a5860fcfd2dce6706d8f3439cd8e4ce6cc1fe2078a5474cf9ed85d8",
+          "observe.py": "f33c6b2da48593b28e1748417ded306632b7997bbaf7f608e8baef5e3c391777",
+          "winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+          "split_field.py": "624f3c3dd935f12c818324f5c37c3aa69b034d3ecef13ffbd98b62bc386ac9e0",
+          "align_clock.py": "d49f54563591d23e9fc8e08b7d8eab028b65fbaa7dcb329e12b6ac58c2c893f1",
+          "ReadStacks.cs": "fb20ca77da7dfb4a26167ef3b54a75ee94633cc6b6d88c79a69220a9088d2476",
+          "symbolize.py": "e45766dc0177d105769a9afe6c411025dcefe376a516920d0c56a33cf6fe79c8",
+          "analyze.py": "018978e51cdd721717b1f4ee4c98e74c4aa99d3e0aca38061e27c40b7c314961",
+          "report.py": "10decf431f79fd75f1595638ab14381f9f99957e608947ca82dfb340d1348043",
+          "cpu.wprp": "949d5973ba665469586cc48ee5a0e3dbb5043ca847f4eb396bca29f6d4bef9fb",
+          "wait.wprp": "d584fc8c90595bf5f2bf4e9cdf8b2595908b5c1dbd931f9c885cc0dd08c1bcf8",
+          "plan.json": "2a0ec4593a07e65bda0c329e094480775b4bc3574af3853bd9d86b8532196178",
+          "external_report.py": "9c68ac4b13974521a4c1f8321570268b4bfece73433098dc97524df49ce042e8"
+        },
+        "synthetic_only": true
+      },
+      "synthetic_only": true
+    },
+    "wait_pair1_wait": {
+      "mode": "wait",
+      "processes": {
+        "gui": {
+          "pid": 6332,
+          "threads": {
+            "cpu_a": {
+              "tid": 4104,
+              "cpu_s": 2.96875,
+              "cycles": 6997405440,
+              "work": {
+                "lower": 25850000,
+                "upper": 26420000
+              },
+              "counter_bracket_us_max": 115.60000000000001
+            },
+            "cpu_b": {
+              "tid": 18452,
+              "cpu_s": 3.078125,
+              "cycles": 7399947120,
+              "work": {
+                "lower": 26780000,
+                "upper": 27600000
+              },
+              "counter_bracket_us_max": 97.89999999999999
+            },
+            "qt_wait": {
+              "tid": 8476,
+              "cpu_s": 0.015625,
+              "cycles": 39753360,
+              "work": {
+                "lower": 186,
+                "upper": 190
+              },
+              "counter_bracket_us_max": 101.3
+            },
+            "system_wait": {
+              "tid": 12416,
+              "cpu_s": 0.015625,
+              "cycles": 32783040,
+              "work": {
+                "lower": 191,
+                "upper": 195
+              },
+              "counter_bracket_us_max": 87.39999999999999
+            }
+          },
+          "quality_checks": {
+            "controller": true,
+            "loss_zero": true,
+            "clock": true,
+            "identity": true,
+            "cycles": true,
+            "association": true,
+            "user_root": true,
+            "unambiguous": true,
+            "profiles_exclusive": true,
+            "events_present": true,
+            "counter": true,
+            "schedule_chain": true
+          },
+          "measurement_acceptance_pass": true,
+          "trace_metrics": {
+            "cpu_a": {
+              "tid": 4104,
+              "cpu_s": 2.96875,
+              "cycles": 6997405440,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 1862,
+              "root_complete": 1858,
+              "kernel_present": 1862,
+              "ambiguous": 0,
+              "user_frames": 39598,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 1862,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9978517722878625,
+              "schedule_residency_s": 2.9272544999999996,
+              "schedule_error_s": -0.04149550000000035,
+              "schedule_violations": [],
+              "schedule_left_boundary_events": [
+                {
+                  "qpc": 2170300220036,
+                  "cpu": 3,
+                  "reason": "pre-existing running thread; cut-out precedes counter window"
+                }
+              ],
+              "paired_wait_intervals": 1190,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 806
+              }
+            },
+            "cpu_b": {
+              "tid": 18452,
+              "cpu_s": 3.078125,
+              "cycles": 7399947120,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 1879,
+              "root_complete": 1878,
+              "kernel_present": 1879,
+              "ambiguous": 0,
+              "user_frames": 39971,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 1879,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9994678020223523,
+              "schedule_residency_s": 3.0979335999999984,
+              "schedule_error_s": 0.0198085999999984,
+              "schedule_violations": [],
+              "schedule_left_boundary_events": [],
+              "paired_wait_intervals": 1186,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 780
+              }
+            },
+            "qt_wait": {
+              "tid": 8476,
+              "cpu_s": 0.015625,
+              "cycles": 39753360,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 600,
+              "root_complete": 599,
+              "kernel_present": 600,
+              "ambiguous": 0,
+              "user_frames": 15139,
+              "unknown_symbol_frames": 599,
+              "unmapped_frames": 0,
+              "max_user_depth": 28,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 600,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9983333333333333,
+              "schedule_residency_s": 0.0176822,
+              "schedule_error_s": 0.0020571999999999986,
+              "schedule_violations": [],
+              "schedule_left_boundary_events": [],
+              "paired_wait_intervals": 572,
+              "paired_wait_chain_counts": {
+                "qt_wait_chain": 227,
+                "gil_wait_chain": 345
+              }
+            },
+            "system_wait": {
+              "tid": 12416,
+              "cpu_s": 0.015625,
+              "cycles": 32783040,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 547,
+              "root_complete": 546,
+              "kernel_present": 547,
+              "ambiguous": 0,
+              "user_frames": 14940,
+              "unknown_symbol_frames": 2220,
+              "unmapped_frames": 0,
+              "max_user_depth": 29,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 547,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9981718464351006,
+              "schedule_residency_s": 0.014579300000000007,
+              "schedule_error_s": -0.0010456999999999932,
+              "schedule_violations": [],
+              "schedule_left_boundary_events": [],
+              "paired_wait_intervals": 525,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 332,
+                "system_timer_wait_chain": 193
+              }
+            }
+          },
+          "families": {
+            "cpu_a": {
+              "gil_wait_chain": 1003
+            },
+            "cpu_b": {
+              "gil_wait_chain": 972
+            },
+            "qt_wait": {
+              "qt_wait_chain": 228,
+              "gil_wait_chain": 371
+            },
+            "system_wait": {
+              "system_timer_wait_chain": 194,
+              "gil_wait_chain": 352
+            }
+          },
+          "independent_scan": {
+            "events_lost": 0,
+            "counts": {
+              "Stack": {
+                "reader": 73021,
+                "tracerpt": 73021,
+                "equal": true
+              },
+              "SampleProf": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              },
+              "36": {
+                "reader": 59364,
+                "tracerpt": 59364,
+                "equal": true
+              },
+              "ReadyThread": {
+                "reader": 35608,
+                "tracerpt": 35608,
+                "equal": true
+              }
+            },
+            "passed": true,
+            "summary_sha256": "a8b294fb9dbeef98653a0b0c23b78032ade99a57bc5911ff09a59783f387571e"
+          },
+          "clock_max_residual_ms": 0.0106
+        },
+        "sdk": {
+          "pid": 20360,
+          "threads": {
+            "cpu_a": {
+              "tid": 12596,
+              "cpu_s": 2.703125,
+              "cycles": 7052320320,
+              "work": {
+                "lower": 25910000,
+                "upper": 26560000
+              },
+              "counter_bracket_us_max": 102.7
+            },
+            "cpu_b": {
+              "tid": 21392,
+              "cpu_s": 3.3125,
+              "cycles": 7348997040,
+              "work": {
+                "lower": 27190000,
+                "upper": 27710000
+              },
+              "counter_bracket_us_max": 88.0
+            },
+            "qt_wait": {
+              "tid": 956,
+              "cpu_s": 0.0,
+              "cycles": 38673600,
+              "work": {
+                "lower": 191,
+                "upper": 195
+              },
+              "counter_bracket_us_max": 88.30000000000001
+            },
+            "system_wait": {
+              "tid": 356,
+              "cpu_s": 0.0,
+              "cycles": 33772080,
+              "work": {
+                "lower": 186,
+                "upper": 191
+              },
+              "counter_bracket_us_max": 93.2
+            }
+          },
+          "quality_checks": {
+            "controller": true,
+            "loss_zero": true,
+            "clock": true,
+            "identity": true,
+            "cycles": true,
+            "association": true,
+            "user_root": true,
+            "unambiguous": true,
+            "profiles_exclusive": true,
+            "events_present": true,
+            "counter": true,
+            "schedule_chain": true
+          },
+          "measurement_acceptance_pass": true,
+          "trace_metrics": {
+            "cpu_a": {
+              "tid": 12596,
+              "cpu_s": 2.703125,
+              "cycles": 7052320320,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 1865,
+              "root_complete": 1863,
+              "kernel_present": 1865,
+              "ambiguous": 0,
+              "user_frames": 39791,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 1865,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9989276139410188,
+              "schedule_residency_s": 2.949710000000002,
+              "schedule_error_s": 0.24658500000000183,
+              "schedule_violations": [],
+              "schedule_left_boundary_events": [],
+              "paired_wait_intervals": 1211,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 819
+              }
+            },
+            "cpu_b": {
+              "tid": 21392,
+              "cpu_s": 3.3125,
+              "cycles": 7348997040,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 1884,
+              "root_complete": 1881,
+              "kernel_present": 1884,
+              "ambiguous": 0,
+              "user_frames": 40037,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 1884,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9984076433121019,
+              "schedule_residency_s": 3.076218399999999,
+              "schedule_error_s": -0.2362816000000012,
+              "schedule_violations": [],
+              "schedule_left_boundary_events": [
+                {
+                  "qpc": 2170300239955,
+                  "cpu": 7,
+                  "reason": "pre-existing running thread; cut-out precedes counter window"
+                }
+              ],
+              "paired_wait_intervals": 1195,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 784
+              }
+            },
+            "qt_wait": {
+              "tid": 956,
+              "cpu_s": 0.0,
+              "cycles": 38673600,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 577,
+              "root_complete": 576,
+              "kernel_present": 577,
+              "ambiguous": 0,
+              "user_frames": 14528,
+              "unknown_symbol_frames": 576,
+              "unmapped_frames": 0,
+              "max_user_depth": 28,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 577,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9982668977469671,
+              "schedule_residency_s": 0.01714629999999999,
+              "schedule_error_s": 0.01714629999999999,
+              "schedule_violations": [],
+              "schedule_left_boundary_events": [],
+              "paired_wait_intervals": 550,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 318,
+                "qt_wait_chain": 232
+              }
+            },
+            "system_wait": {
+              "tid": 356,
+              "cpu_s": 0.0,
+              "cycles": 33772080,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 553,
+              "root_complete": 551,
+              "kernel_present": 553,
+              "ambiguous": 0,
+              "user_frames": 15080,
+              "unknown_symbol_frames": 2217,
+              "unmapped_frames": 0,
+              "max_user_depth": 29,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 553,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9963833634719711,
+              "schedule_residency_s": 0.015024400000000002,
+              "schedule_error_s": 0.015024400000000002,
+              "schedule_violations": [],
+              "schedule_left_boundary_events": [],
+              "paired_wait_intervals": 529,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 342,
+                "system_timer_wait_chain": 187
+              }
+            }
+          },
+          "families": {
+            "cpu_a": {
+              "gil_wait_chain": 1018
+            },
+            "cpu_b": {
+              "gil_wait_chain": 983
+            },
+            "qt_wait": {
+              "qt_wait_chain": 233,
+              "gil_wait_chain": 343
+            },
+            "system_wait": {
+              "system_timer_wait_chain": 188,
+              "gil_wait_chain": 363
+            }
+          },
+          "independent_scan": {
+            "events_lost": 0,
+            "counts": {
+              "Stack": {
+                "reader": 73021,
+                "tracerpt": 73021,
+                "equal": true
+              },
+              "SampleProf": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              },
+              "36": {
+                "reader": 59364,
+                "tracerpt": 59364,
+                "equal": true
+              },
+              "ReadyThread": {
+                "reader": 35608,
+                "tracerpt": 35608,
+                "equal": true
+              }
+            },
+            "passed": true,
+            "summary_sha256": "a8b294fb9dbeef98653a0b0c23b78032ade99a57bc5911ff09a59783f387571e"
+          },
+          "clock_max_residual_ms": 0.0106
+        }
+      },
+      "clock_mapping": {
+        "qpc_frequency": 10000000,
+        "host_ns_offset_lower": -5700,
+        "host_ns_offset_upper": 3300,
+        "uncertainty_ns": 9000,
+        "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+      },
+      "cross_process_clock_maps": {
+        "gui": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -8400,
+          "host_ns_offset_upper": 5100,
+          "uncertainty_ns": 13500,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        },
+        "sdk": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -8300,
+          "host_ns_offset_upper": 5100,
+          "uncertainty_ns": 13400,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        }
+      },
+      "plan_reference": {
+        "external_plan_sha256": "9675c1c92ceb3a333d55905a011d0f1eda9980fb25c5648aacffe93fe6c795a2",
+        "source_sha256": {
+          "external_fixture.py": "7a370154e85a14e5fdf6a853bb55fd7beac1979ed1ea5c6ee1976b7e8ad6283e",
+          "external_calibration.py": "c447daf50f23a2058fae578b6fac8d1e7d6bdf565022b014a38df27aa8e82413",
+          "record.py": "2f2b2cfd0a5860fcfd2dce6706d8f3439cd8e4ce6cc1fe2078a5474cf9ed85d8",
+          "observe.py": "f33c6b2da48593b28e1748417ded306632b7997bbaf7f608e8baef5e3c391777",
+          "winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+          "split_field.py": "624f3c3dd935f12c818324f5c37c3aa69b034d3ecef13ffbd98b62bc386ac9e0",
+          "align_clock.py": "d49f54563591d23e9fc8e08b7d8eab028b65fbaa7dcb329e12b6ac58c2c893f1",
+          "ReadStacks.cs": "fb20ca77da7dfb4a26167ef3b54a75ee94633cc6b6d88c79a69220a9088d2476",
+          "symbolize.py": "e45766dc0177d105769a9afe6c411025dcefe376a516920d0c56a33cf6fe79c8",
+          "analyze.py": "018978e51cdd721717b1f4ee4c98e74c4aa99d3e0aca38061e27c40b7c314961",
+          "report.py": "10decf431f79fd75f1595638ab14381f9f99957e608947ca82dfb340d1348043",
+          "cpu.wprp": "949d5973ba665469586cc48ee5a0e3dbb5043ca847f4eb396bca29f6d4bef9fb",
+          "wait.wprp": "d584fc8c90595bf5f2bf4e9cdf8b2595908b5c1dbd931f9c885cc0dd08c1bcf8",
+          "plan.json": "2a0ec4593a07e65bda0c329e094480775b4bc3574af3853bd9d86b8532196178",
+          "external_report.py": "9c68ac4b13974521a4c1f8321570268b4bfece73433098dc97524df49ce042e8"
+        },
+        "synthetic_only": true
+      },
+      "synthetic_only": true,
+      "acceptance": {
+        "source_etl_sha256": "181dddb8fc8d6cc621fe3f7cd52178af093ce50dd5f1bcc7780ce43cfea29120",
+        "source_unchanged": true,
+        "processes": {
+          "20360": {
+            "quality_pass": true,
+            "independent_scan_pass": true,
+            "measurement_acceptance_pass": true
+          },
+          "6332": {
+            "quality_pass": true,
+            "independent_scan_pass": true,
+            "measurement_acceptance_pass": true
+          }
+        },
+        "clock_mapping": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -5700,
+          "host_ns_offset_upper": 3300,
+          "uncertainty_ns": 9000,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        },
+        "measurement_acceptance_pass": true,
+        "quantitative_field_attribution_ready": false,
+        "requires_actual_load_calibration": true,
+        "scope": "Offline recheck only; original ETL, exports, counters and previous quality reports preserved"
+      }
+    },
+    "wait_pair2_off": {
+      "mode": "off",
+      "processes": {
+        "gui": {
+          "pid": 2196,
+          "threads": {
+            "cpu_a": {
+              "tid": 14520,
+              "cpu_s": 2.90625,
+              "cycles": 7122005280,
+              "work": {
+                "lower": 27790000,
+                "upper": 28540000
+              },
+              "counter_bracket_us_max": 79.1
+            },
+            "cpu_b": {
+              "tid": 5716,
+              "cpu_s": 3.0625,
+              "cycles": 7205733360,
+              "work": {
+                "lower": 28030000,
+                "upper": 28780000
+              },
+              "counter_bracket_us_max": 61.199999999999996
+            },
+            "qt_wait": {
+              "tid": 3268,
+              "cpu_s": 0.0,
+              "cycles": 14333760,
+              "work": {
+                "lower": 179,
+                "upper": 184
+              },
+              "counter_bracket_us_max": 69.8
+            },
+            "system_wait": {
+              "tid": 20132,
+              "cpu_s": 0.015625,
+              "cycles": 9237120,
+              "work": {
+                "lower": 186,
+                "upper": 191
+              },
+              "counter_bracket_us_max": 71.4
+            }
+          }
+        },
+        "sdk": {
+          "pid": 16040,
+          "threads": {
+            "cpu_a": {
+              "tid": 20084,
+              "cpu_s": 3.359375,
+              "cycles": 7366453440,
+              "work": {
+                "lower": 28620000,
+                "upper": 29320000
+              },
+              "counter_bracket_us_max": 58.9
+            },
+            "cpu_b": {
+              "tid": 17300,
+              "cpu_s": 2.578125,
+              "cycles": 6961225440,
+              "work": {
+                "lower": 26850000,
+                "upper": 27490000
+              },
+              "counter_bracket_us_max": 63.800000000000004
+            },
+            "qt_wait": {
+              "tid": 19536,
+              "cpu_s": 0.0,
+              "cycles": 14141760,
+              "work": {
+                "lower": 187,
+                "upper": 192
+              },
+              "counter_bracket_us_max": 73.39999999999999
+            },
+            "system_wait": {
+              "tid": 13548,
+              "cpu_s": 0.015625,
+              "cycles": 9168960,
+              "work": {
+                "lower": 192,
+                "upper": 197
+              },
+              "counter_bracket_us_max": 72.2
+            }
+          }
+        }
+      },
+      "clock_mapping": {
+        "qpc_frequency": 10000000,
+        "host_ns_offset_lower": -5600,
+        "host_ns_offset_upper": 3400,
+        "uncertainty_ns": 9000,
+        "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+      },
+      "cross_process_clock_maps": {
+        "gui": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -8000,
+          "host_ns_offset_upper": 4900,
+          "uncertainty_ns": 12900,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        },
+        "sdk": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -7900,
+          "host_ns_offset_upper": 4900,
+          "uncertainty_ns": 12800,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        }
+      },
+      "plan_reference": {
+        "external_plan_sha256": "9675c1c92ceb3a333d55905a011d0f1eda9980fb25c5648aacffe93fe6c795a2",
+        "source_sha256": {
+          "external_fixture.py": "7a370154e85a14e5fdf6a853bb55fd7beac1979ed1ea5c6ee1976b7e8ad6283e",
+          "external_calibration.py": "c447daf50f23a2058fae578b6fac8d1e7d6bdf565022b014a38df27aa8e82413",
+          "record.py": "2f2b2cfd0a5860fcfd2dce6706d8f3439cd8e4ce6cc1fe2078a5474cf9ed85d8",
+          "observe.py": "f33c6b2da48593b28e1748417ded306632b7997bbaf7f608e8baef5e3c391777",
+          "winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+          "split_field.py": "624f3c3dd935f12c818324f5c37c3aa69b034d3ecef13ffbd98b62bc386ac9e0",
+          "align_clock.py": "d49f54563591d23e9fc8e08b7d8eab028b65fbaa7dcb329e12b6ac58c2c893f1",
+          "ReadStacks.cs": "fb20ca77da7dfb4a26167ef3b54a75ee94633cc6b6d88c79a69220a9088d2476",
+          "symbolize.py": "e45766dc0177d105769a9afe6c411025dcefe376a516920d0c56a33cf6fe79c8",
+          "analyze.py": "018978e51cdd721717b1f4ee4c98e74c4aa99d3e0aca38061e27c40b7c314961",
+          "report.py": "10decf431f79fd75f1595638ab14381f9f99957e608947ca82dfb340d1348043",
+          "cpu.wprp": "949d5973ba665469586cc48ee5a0e3dbb5043ca847f4eb396bca29f6d4bef9fb",
+          "wait.wprp": "d584fc8c90595bf5f2bf4e9cdf8b2595908b5c1dbd931f9c885cc0dd08c1bcf8",
+          "plan.json": "2a0ec4593a07e65bda0c329e094480775b4bc3574af3853bd9d86b8532196178",
+          "external_report.py": "9c68ac4b13974521a4c1f8321570268b4bfece73433098dc97524df49ce042e8"
+        },
+        "synthetic_only": true
+      },
+      "synthetic_only": true
+    },
+    "wait_pair2_wait": {
+      "mode": "wait",
+      "processes": {
+        "gui": {
+          "pid": 18284,
+          "threads": {
+            "cpu_a": {
+              "tid": 20072,
+              "cpu_s": 3.0625,
+              "cycles": 7333672560,
+              "work": {
+                "lower": 27180000,
+                "upper": 27710000
+              },
+              "counter_bracket_us_max": 78.2
+            },
+            "cpu_b": {
+              "tid": 20676,
+              "cpu_s": 2.9375,
+              "cycles": 7046833920,
+              "work": {
+                "lower": 26130000,
+                "upper": 26600000
+              },
+              "counter_bracket_us_max": 76.5
+            },
+            "qt_wait": {
+              "tid": 19636,
+              "cpu_s": 0.03125,
+              "cycles": 43605600,
+              "work": {
+                "lower": 188,
+                "upper": 192
+              },
+              "counter_bracket_us_max": 63.800000000000004
+            },
+            "system_wait": {
+              "tid": 792,
+              "cpu_s": 0.0,
+              "cycles": 35903040,
+              "work": {
+                "lower": 189,
+                "upper": 193
+              },
+              "counter_bracket_us_max": 57.800000000000004
+            }
+          },
+          "quality_checks": {
+            "controller": true,
+            "loss_zero": true,
+            "clock": true,
+            "identity": true,
+            "cycles": true,
+            "association": true,
+            "user_root": true,
+            "unambiguous": true,
+            "profiles_exclusive": true,
+            "events_present": true,
+            "counter": true,
+            "schedule_chain": true
+          },
+          "measurement_acceptance_pass": true,
+          "trace_metrics": {
+            "cpu_a": {
+              "tid": 20072,
+              "cpu_s": 3.0625,
+              "cycles": 7333672560,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 2041,
+              "root_complete": 2018,
+              "kernel_present": 2041,
+              "ambiguous": 0,
+              "user_frames": 42636,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 2041,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9887310142087212,
+              "schedule_residency_s": 3.072222299999997,
+              "schedule_error_s": 0.009722299999996853,
+              "schedule_violations": [],
+              "schedule_left_boundary_events": [],
+              "paired_wait_intervals": 1207,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 790
+              }
+            },
+            "cpu_b": {
+              "tid": 20676,
+              "cpu_s": 2.9375,
+              "cycles": 7046833920,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 1947,
+              "root_complete": 1938,
+              "kernel_present": 1947,
+              "ambiguous": 0,
+              "user_frames": 41133,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 1947,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9953775038520801,
+              "schedule_residency_s": 2.9492788999999964,
+              "schedule_error_s": 0.011778899999996373,
+              "schedule_violations": [],
+              "schedule_left_boundary_events": [
+                {
+                  "qpc": 2170811342365,
+                  "cpu": 4,
+                  "reason": "pre-existing running thread; cut-out precedes counter window"
+                }
+              ],
+              "paired_wait_intervals": 1218,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 820
+              }
+            },
+            "qt_wait": {
+              "tid": 19636,
+              "cpu_s": 0.03125,
+              "cycles": 43605600,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 604,
+              "root_complete": 600,
+              "kernel_present": 604,
+              "ambiguous": 0,
+              "user_frames": 15173,
+              "unknown_symbol_frames": 600,
+              "unmapped_frames": 0,
+              "max_user_depth": 28,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 604,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9933774834437086,
+              "schedule_residency_s": 0.0190984,
+              "schedule_error_s": -0.012151599999999999,
+              "schedule_violations": [],
+              "schedule_left_boundary_events": [],
+              "paired_wait_intervals": 574,
+              "paired_wait_chain_counts": {
+                "qt_wait_chain": 227,
+                "gil_wait_chain": 347
+              }
+            },
+            "system_wait": {
+              "tid": 792,
+              "cpu_s": 0.0,
+              "cycles": 35903040,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 574,
+              "root_complete": 568,
+              "kernel_present": 574,
+              "ambiguous": 0,
+              "user_frames": 15547,
+              "unknown_symbol_frames": 2274,
+              "unmapped_frames": 0,
+              "max_user_depth": 29,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 574,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9895470383275261,
+              "schedule_residency_s": 0.015956,
+              "schedule_error_s": 0.015956,
+              "schedule_violations": [],
+              "schedule_left_boundary_events": [],
+              "paired_wait_intervals": 545,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 356,
+                "system_timer_wait_chain": 189
+              }
+            }
+          },
+          "families": {
+            "cpu_a": {
+              "gil_wait_chain": 1000
+            },
+            "cpu_b": {
+              "gil_wait_chain": 1025
+            },
+            "qt_wait": {
+              "qt_wait_chain": 228,
+              "gil_wait_chain": 371
+            },
+            "system_wait": {
+              "system_timer_wait_chain": 190,
+              "gil_wait_chain": 378
+            }
+          },
+          "independent_scan": {
+            "events_lost": 0,
+            "counts": {
+              "Stack": {
+                "reader": 92124,
+                "tracerpt": 92124,
+                "equal": true
+              },
+              "SampleProf": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              },
+              "36": {
+                "reader": 84378,
+                "tracerpt": 84378,
+                "equal": true
+              },
+              "ReadyThread": {
+                "reader": 49751,
+                "tracerpt": 49751,
+                "equal": true
+              }
+            },
+            "passed": true,
+            "summary_sha256": "ffc1ee421e55bf2ca20cff9240e882deaf5c070e6f7a3341a094eafc1596c17e"
+          },
+          "clock_max_residual_ms": 0.0111
+        },
+        "sdk": {
+          "pid": 6336,
+          "threads": {
+            "cpu_a": {
+              "tid": 5956,
+              "cpu_s": 2.96875,
+              "cycles": 7077339360,
+              "work": {
+                "lower": 25990000,
+                "upper": 26670000
+              },
+              "counter_bracket_us_max": 61.0
+            },
+            "cpu_b": {
+              "tid": 11508,
+              "cpu_s": 3.046875,
+              "cycles": 7296200640,
+              "work": {
+                "lower": 26340000,
+                "upper": 27120000
+              },
+              "counter_bracket_us_max": 57.9
+            },
+            "qt_wait": {
+              "tid": 21252,
+              "cpu_s": 0.015625,
+              "cycles": 44634240,
+              "work": {
+                "lower": 182,
+                "upper": 187
+              },
+              "counter_bracket_us_max": 60.4
+            },
+            "system_wait": {
+              "tid": 19568,
+              "cpu_s": 0.0,
+              "cycles": 36303120,
+              "work": {
+                "lower": 187,
+                "upper": 190
+              },
+              "counter_bracket_us_max": 81.89999999999999
+            }
+          },
+          "quality_checks": {
+            "controller": true,
+            "loss_zero": true,
+            "clock": true,
+            "identity": true,
+            "cycles": true,
+            "association": true,
+            "user_root": true,
+            "unambiguous": true,
+            "profiles_exclusive": true,
+            "events_present": true,
+            "counter": true,
+            "schedule_chain": true
+          },
+          "measurement_acceptance_pass": true,
+          "trace_metrics": {
+            "cpu_a": {
+              "tid": 5956,
+              "cpu_s": 2.96875,
+              "cycles": 7077339360,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 1963,
+              "root_complete": 1953,
+              "kernel_present": 1963,
+              "ambiguous": 0,
+              "user_frames": 41478,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 1963,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9949057564951604,
+              "schedule_residency_s": 2.9651295999999987,
+              "schedule_error_s": -0.0036204000000013004,
+              "schedule_violations": [],
+              "schedule_left_boundary_events": [
+                {
+                  "qpc": 2170811402288,
+                  "cpu": 6,
+                  "reason": "pre-existing running thread; cut-out precedes counter window"
+                }
+              ],
+              "paired_wait_intervals": 1238,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 830
+              }
+            },
+            "cpu_b": {
+              "tid": 11508,
+              "cpu_s": 3.046875,
+              "cycles": 7296200640,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 1948,
+              "root_complete": 1930,
+              "kernel_present": 1948,
+              "ambiguous": 0,
+              "user_frames": 40942,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 1948,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9907597535934292,
+              "schedule_residency_s": 3.055314900000004,
+              "schedule_error_s": 0.008439900000003941,
+              "schedule_violations": [],
+              "schedule_left_boundary_events": [],
+              "paired_wait_intervals": 1195,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 776
+              }
+            },
+            "qt_wait": {
+              "tid": 21252,
+              "cpu_s": 0.015625,
+              "cycles": 44634240,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 643,
+              "root_complete": 640,
+              "kernel_present": 643,
+              "ambiguous": 0,
+              "user_frames": 16196,
+              "unknown_symbol_frames": 640,
+              "unmapped_frames": 0,
+              "max_user_depth": 28,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 643,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.995334370139969,
+              "schedule_residency_s": 0.019687100000000003,
+              "schedule_error_s": 0.0040621000000000025,
+              "schedule_violations": [],
+              "schedule_left_boundary_events": [],
+              "paired_wait_intervals": 609,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 376,
+                "qt_wait_chain": 233
+              }
+            },
+            "system_wait": {
+              "tid": 19568,
+              "cpu_s": 0.0,
+              "cycles": 36303120,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 573,
+              "root_complete": 572,
+              "kernel_present": 573,
+              "ambiguous": 0,
+              "user_frames": 15657,
+              "unknown_symbol_frames": 2286,
+              "unmapped_frames": 0,
+              "max_user_depth": 29,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 573,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9982547993019197,
+              "schedule_residency_s": 0.01618899999999999,
+              "schedule_error_s": 0.01618899999999999,
+              "schedule_violations": [],
+              "schedule_left_boundary_events": [],
+              "paired_wait_intervals": 541,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 352,
+                "system_timer_wait_chain": 189
+              }
+            }
+          },
+          "families": {
+            "cpu_a": {
+              "gil_wait_chain": 1034
+            },
+            "cpu_b": {
+              "gil_wait_chain": 979
+            },
+            "qt_wait": {
+              "qt_wait_chain": 234,
+              "gil_wait_chain": 405
+            },
+            "system_wait": {
+              "system_timer_wait_chain": 190,
+              "gil_wait_chain": 382
+            }
+          },
+          "independent_scan": {
+            "events_lost": 0,
+            "counts": {
+              "Stack": {
+                "reader": 92124,
+                "tracerpt": 92124,
+                "equal": true
+              },
+              "SampleProf": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              },
+              "36": {
+                "reader": 84378,
+                "tracerpt": 84378,
+                "equal": true
+              },
+              "ReadyThread": {
+                "reader": 49751,
+                "tracerpt": 49751,
+                "equal": true
+              }
+            },
+            "passed": true,
+            "summary_sha256": "ffc1ee421e55bf2ca20cff9240e882deaf5c070e6f7a3341a094eafc1596c17e"
+          },
+          "clock_max_residual_ms": 0.0111
+        }
+      },
+      "clock_mapping": {
+        "qpc_frequency": 10000000,
+        "host_ns_offset_lower": -5600,
+        "host_ns_offset_upper": 3300,
+        "uncertainty_ns": 8900,
+        "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+      },
+      "cross_process_clock_maps": {
+        "gui": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -7900,
+          "host_ns_offset_upper": 5200,
+          "uncertainty_ns": 13100,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        },
+        "sdk": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -8400,
+          "host_ns_offset_upper": 5400,
+          "uncertainty_ns": 13800,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        }
+      },
+      "plan_reference": {
+        "external_plan_sha256": "9675c1c92ceb3a333d55905a011d0f1eda9980fb25c5648aacffe93fe6c795a2",
+        "source_sha256": {
+          "external_fixture.py": "7a370154e85a14e5fdf6a853bb55fd7beac1979ed1ea5c6ee1976b7e8ad6283e",
+          "external_calibration.py": "c447daf50f23a2058fae578b6fac8d1e7d6bdf565022b014a38df27aa8e82413",
+          "record.py": "2f2b2cfd0a5860fcfd2dce6706d8f3439cd8e4ce6cc1fe2078a5474cf9ed85d8",
+          "observe.py": "f33c6b2da48593b28e1748417ded306632b7997bbaf7f608e8baef5e3c391777",
+          "winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+          "split_field.py": "624f3c3dd935f12c818324f5c37c3aa69b034d3ecef13ffbd98b62bc386ac9e0",
+          "align_clock.py": "d49f54563591d23e9fc8e08b7d8eab028b65fbaa7dcb329e12b6ac58c2c893f1",
+          "ReadStacks.cs": "fb20ca77da7dfb4a26167ef3b54a75ee94633cc6b6d88c79a69220a9088d2476",
+          "symbolize.py": "e45766dc0177d105769a9afe6c411025dcefe376a516920d0c56a33cf6fe79c8",
+          "analyze.py": "018978e51cdd721717b1f4ee4c98e74c4aa99d3e0aca38061e27c40b7c314961",
+          "report.py": "10decf431f79fd75f1595638ab14381f9f99957e608947ca82dfb340d1348043",
+          "cpu.wprp": "949d5973ba665469586cc48ee5a0e3dbb5043ca847f4eb396bca29f6d4bef9fb",
+          "wait.wprp": "d584fc8c90595bf5f2bf4e9cdf8b2595908b5c1dbd931f9c885cc0dd08c1bcf8",
+          "plan.json": "2a0ec4593a07e65bda0c329e094480775b4bc3574af3853bd9d86b8532196178",
+          "external_report.py": "9c68ac4b13974521a4c1f8321570268b4bfece73433098dc97524df49ce042e8"
+        },
+        "synthetic_only": true
+      },
+      "synthetic_only": true,
+      "acceptance": {
+        "source_etl_sha256": "f2c40b11f4b3a5e1b283e5f38ee7606ba8795b4c3983cc49da623039ca6ad3d7",
+        "source_unchanged": true,
+        "processes": {
+          "18284": {
+            "quality_pass": true,
+            "independent_scan_pass": true,
+            "measurement_acceptance_pass": true
+          },
+          "6336": {
+            "quality_pass": true,
+            "independent_scan_pass": true,
+            "measurement_acceptance_pass": true
+          }
+        },
+        "clock_mapping": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -5600,
+          "host_ns_offset_upper": 3300,
+          "uncertainty_ns": 8900,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        },
+        "measurement_acceptance_pass": true,
+        "quantitative_field_attribution_ready": false,
+        "requires_actual_load_calibration": true,
+        "scope": "Offline recheck only; original ETL, exports, counters and previous quality reports preserved"
+      }
+    },
+    "wait_pair3_off": {
+      "mode": "off",
+      "processes": {
+        "gui": {
+          "pid": 10044,
+          "threads": {
+            "cpu_a": {
+              "tid": 17536,
+              "cpu_s": 2.9375,
+              "cycles": 7297018320,
+              "work": {
+                "lower": 27810000,
+                "upper": 28720000
+              },
+              "counter_bracket_us_max": 79.8
+            },
+            "cpu_b": {
+              "tid": 18956,
+              "cpu_s": 3.046875,
+              "cycles": 7032313680,
+              "work": {
+                "lower": 26140000,
+                "upper": 27070000
+              },
+              "counter_bracket_us_max": 60.900000000000006
+            },
+            "qt_wait": {
+              "tid": 18392,
+              "cpu_s": 0.0,
+              "cycles": 14439360,
+              "work": {
+                "lower": 186,
+                "upper": 191
+              },
+              "counter_bracket_us_max": 59.2
+            },
+            "system_wait": {
+              "tid": 3752,
+              "cpu_s": 0.0,
+              "cycles": 9654000,
+              "work": {
+                "lower": 189,
+                "upper": 194
+              },
+              "counter_bracket_us_max": 63.89999999999999
+            }
+          }
+        },
+        "sdk": {
+          "pid": 7920,
+          "threads": {
+            "cpu_a": {
+              "tid": 6348,
+              "cpu_s": 3.21875,
+              "cycles": 7313544000,
+              "work": {
+                "lower": 27980000,
+                "upper": 28700000
+              },
+              "counter_bracket_us_max": 61.60000000000001
+            },
+            "cpu_b": {
+              "tid": 21188,
+              "cpu_s": 2.71875,
+              "cycles": 7018259280,
+              "work": {
+                "lower": 26240000,
+                "upper": 26780000
+              },
+              "counter_bracket_us_max": 68.89999999999999
+            },
+            "qt_wait": {
+              "tid": 16348,
+              "cpu_s": 0.0,
+              "cycles": 14716320,
+              "work": {
+                "lower": 179,
+                "upper": 183
+              },
+              "counter_bracket_us_max": 63.800000000000004
+            },
+            "system_wait": {
+              "tid": 18892,
+              "cpu_s": 0.0,
+              "cycles": 9573600,
+              "work": {
+                "lower": 188,
+                "upper": 192
+              },
+              "counter_bracket_us_max": 72.0
+            }
+          }
+        }
+      },
+      "clock_mapping": {
+        "qpc_frequency": 10000000,
+        "host_ns_offset_lower": -5600,
+        "host_ns_offset_upper": 3300,
+        "uncertainty_ns": 8900,
+        "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+      },
+      "cross_process_clock_maps": {
+        "gui": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -7800,
+          "host_ns_offset_upper": 4900,
+          "uncertainty_ns": 12700,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        },
+        "sdk": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -8000,
+          "host_ns_offset_upper": 5200,
+          "uncertainty_ns": 13200,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        }
+      },
+      "plan_reference": {
+        "external_plan_sha256": "9675c1c92ceb3a333d55905a011d0f1eda9980fb25c5648aacffe93fe6c795a2",
+        "source_sha256": {
+          "external_fixture.py": "7a370154e85a14e5fdf6a853bb55fd7beac1979ed1ea5c6ee1976b7e8ad6283e",
+          "external_calibration.py": "c447daf50f23a2058fae578b6fac8d1e7d6bdf565022b014a38df27aa8e82413",
+          "record.py": "2f2b2cfd0a5860fcfd2dce6706d8f3439cd8e4ce6cc1fe2078a5474cf9ed85d8",
+          "observe.py": "f33c6b2da48593b28e1748417ded306632b7997bbaf7f608e8baef5e3c391777",
+          "winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+          "split_field.py": "624f3c3dd935f12c818324f5c37c3aa69b034d3ecef13ffbd98b62bc386ac9e0",
+          "align_clock.py": "d49f54563591d23e9fc8e08b7d8eab028b65fbaa7dcb329e12b6ac58c2c893f1",
+          "ReadStacks.cs": "fb20ca77da7dfb4a26167ef3b54a75ee94633cc6b6d88c79a69220a9088d2476",
+          "symbolize.py": "e45766dc0177d105769a9afe6c411025dcefe376a516920d0c56a33cf6fe79c8",
+          "analyze.py": "018978e51cdd721717b1f4ee4c98e74c4aa99d3e0aca38061e27c40b7c314961",
+          "report.py": "10decf431f79fd75f1595638ab14381f9f99957e608947ca82dfb340d1348043",
+          "cpu.wprp": "949d5973ba665469586cc48ee5a0e3dbb5043ca847f4eb396bca29f6d4bef9fb",
+          "wait.wprp": "d584fc8c90595bf5f2bf4e9cdf8b2595908b5c1dbd931f9c885cc0dd08c1bcf8",
+          "plan.json": "2a0ec4593a07e65bda0c329e094480775b4bc3574af3853bd9d86b8532196178",
+          "external_report.py": "9c68ac4b13974521a4c1f8321570268b4bfece73433098dc97524df49ce042e8"
+        },
+        "synthetic_only": true
+      },
+      "synthetic_only": true
+    },
+    "wait_pair3_wait": {
+      "mode": "wait",
+      "processes": {
+        "gui": {
+          "pid": 17456,
+          "threads": {
+            "cpu_a": {
+              "tid": 20736,
+              "cpu_s": 3.015625,
+              "cycles": 7526718240,
+              "work": {
+                "lower": 27730000,
+                "upper": 28320000
+              },
+              "counter_bracket_us_max": 114.5
+            },
+            "cpu_b": {
+              "tid": 19228,
+              "cpu_s": 3.015625,
+              "cycles": 6869490000,
+              "work": {
+                "lower": 25220000,
+                "upper": 25730000
+              },
+              "counter_bracket_us_max": 95.3
+            },
+            "qt_wait": {
+              "tid": 560,
+              "cpu_s": 0.03125,
+              "cycles": 40395120,
+              "work": {
+                "lower": 183,
+                "upper": 187
+              },
+              "counter_bracket_us_max": 88.8
+            },
+            "system_wait": {
+              "tid": 19628,
+              "cpu_s": 0.015625,
+              "cycles": 34804560,
+              "work": {
+                "lower": 184,
+                "upper": 188
+              },
+              "counter_bracket_us_max": 100.3
+            }
+          },
+          "quality_checks": {
+            "controller": true,
+            "loss_zero": true,
+            "clock": true,
+            "identity": true,
+            "cycles": true,
+            "association": true,
+            "user_root": true,
+            "unambiguous": true,
+            "profiles_exclusive": true,
+            "events_present": true,
+            "counter": true,
+            "schedule_chain": true
+          },
+          "measurement_acceptance_pass": true,
+          "trace_metrics": {
+            "cpu_a": {
+              "tid": 20736,
+              "cpu_s": 3.015625,
+              "cycles": 7526718240,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 1891,
+              "root_complete": 1889,
+              "kernel_present": 1891,
+              "ambiguous": 0,
+              "user_frames": 40198,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 1891,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9989423585404548,
+              "schedule_residency_s": 3.151500799999998,
+              "schedule_error_s": 0.13587579999999821,
+              "schedule_violations": [],
+              "schedule_left_boundary_events": [
+                {
+                  "qpc": 2171523896889,
+                  "cpu": 7,
+                  "reason": "pre-existing running thread; cut-out precedes counter window"
+                }
+              ],
+              "paired_wait_intervals": 1179,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 764
+              }
+            },
+            "cpu_b": {
+              "tid": 19228,
+              "cpu_s": 3.015625,
+              "cycles": 6869490000,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 1828,
+              "root_complete": 1825,
+              "kernel_present": 1828,
+              "ambiguous": 0,
+              "user_frames": 38940,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 1828,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9983588621444202,
+              "schedule_residency_s": 2.8741423999999904,
+              "schedule_error_s": -0.14148260000000956,
+              "schedule_violations": [],
+              "schedule_left_boundary_events": [],
+              "paired_wait_intervals": 1195,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 791
+              }
+            },
+            "qt_wait": {
+              "tid": 560,
+              "cpu_s": 0.03125,
+              "cycles": 40395120,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 599,
+              "root_complete": 598,
+              "kernel_present": 599,
+              "ambiguous": 0,
+              "user_frames": 15132,
+              "unknown_symbol_frames": 598,
+              "unmapped_frames": 0,
+              "max_user_depth": 28,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 599,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.998330550918197,
+              "schedule_residency_s": 0.01787269999999999,
+              "schedule_error_s": -0.013377300000000009,
+              "schedule_violations": [],
+              "schedule_left_boundary_events": [],
+              "paired_wait_intervals": 577,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 359,
+                "qt_wait_chain": 218
+              }
+            },
+            "system_wait": {
+              "tid": 19628,
+              "cpu_s": 0.015625,
+              "cycles": 34804560,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 576,
+              "root_complete": 575,
+              "kernel_present": 576,
+              "ambiguous": 0,
+              "user_frames": 15719,
+              "unknown_symbol_frames": 2286,
+              "unmapped_frames": 0,
+              "max_user_depth": 29,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 576,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9982638888888888,
+              "schedule_residency_s": 0.015447999999999998,
+              "schedule_error_s": -0.0001770000000000018,
+              "schedule_violations": [],
+              "schedule_left_boundary_events": [],
+              "paired_wait_intervals": 545,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 358,
+                "system_timer_wait_chain": 187
+              }
+            }
+          },
+          "families": {
+            "cpu_a": {
+              "gil_wait_chain": 975
+            },
+            "cpu_b": {
+              "gil_wait_chain": 999
+            },
+            "qt_wait": {
+              "qt_wait_chain": 219,
+              "gil_wait_chain": 379
+            },
+            "system_wait": {
+              "gil_wait_chain": 387,
+              "system_timer_wait_chain": 187
+            }
+          },
+          "independent_scan": {
+            "events_lost": 0,
+            "counts": {
+              "Stack": {
+                "reader": 73272,
+                "tracerpt": 73272,
+                "equal": true
+              },
+              "SampleProf": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              },
+              "36": {
+                "reader": 59290,
+                "tracerpt": 59290,
+                "equal": true
+              },
+              "ReadyThread": {
+                "reader": 35752,
+                "tracerpt": 35752,
+                "equal": true
+              }
+            },
+            "passed": true,
+            "summary_sha256": "68dcc58fd1685a8ca9eb4e0f1d3a4392c86bf8b25168fe73d882c1133475a099"
+          },
+          "clock_max_residual_ms": 0.0111
+        },
+        "sdk": {
+          "pid": 17332,
+          "threads": {
+            "cpu_a": {
+              "tid": 17520,
+              "cpu_s": 3.078125,
+              "cycles": 7463388000,
+              "work": {
+                "lower": 27050000,
+                "upper": 27620000
+              },
+              "counter_bracket_us_max": 94.1
+            },
+            "cpu_b": {
+              "tid": 16456,
+              "cpu_s": 2.953125,
+              "cycles": 6937043760,
+              "work": {
+                "lower": 25940000,
+                "upper": 26410000
+              },
+              "counter_bracket_us_max": 86.89999999999999
+            },
+            "qt_wait": {
+              "tid": 21316,
+              "cpu_s": 0.046875,
+              "cycles": 39081600,
+              "work": {
+                "lower": 189,
+                "upper": 193
+              },
+              "counter_bracket_us_max": 89.4
+            },
+            "system_wait": {
+              "tid": 18752,
+              "cpu_s": 0.015625,
+              "cycles": 34418160,
+              "work": {
+                "lower": 188,
+                "upper": 191
+              },
+              "counter_bracket_us_max": 101.5
+            }
+          },
+          "quality_checks": {
+            "controller": true,
+            "loss_zero": true,
+            "clock": true,
+            "identity": true,
+            "cycles": true,
+            "association": true,
+            "user_root": true,
+            "unambiguous": true,
+            "profiles_exclusive": true,
+            "events_present": true,
+            "counter": true,
+            "schedule_chain": true
+          },
+          "measurement_acceptance_pass": true,
+          "trace_metrics": {
+            "cpu_a": {
+              "tid": 17520,
+              "cpu_s": 3.078125,
+              "cycles": 7463388000,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 1886,
+              "root_complete": 1881,
+              "kernel_present": 1886,
+              "ambiguous": 0,
+              "user_frames": 39962,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 1886,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9973488865323435,
+              "schedule_residency_s": 3.123859399999992,
+              "schedule_error_s": 0.04573439999999218,
+              "schedule_violations": [],
+              "schedule_left_boundary_events": [
+                {
+                  "qpc": 2171523897288,
+                  "cpu": 4,
+                  "reason": "pre-existing running thread; cut-out precedes counter window"
+                }
+              ],
+              "paired_wait_intervals": 1187,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 762
+              }
+            },
+            "cpu_b": {
+              "tid": 16456,
+              "cpu_s": 2.953125,
+              "cycles": 6937043760,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 1839,
+              "root_complete": 1831,
+              "kernel_present": 1839,
+              "ambiguous": 0,
+              "user_frames": 39194,
+              "unknown_symbol_frames": 0,
+              "unmapped_frames": 0,
+              "max_user_depth": 24,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 1839,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 0.9956498096791735,
+              "schedule_residency_s": 2.9017723999999987,
+              "schedule_error_s": -0.0513526000000013,
+              "schedule_violations": [],
+              "schedule_left_boundary_events": [],
+              "paired_wait_intervals": 1209,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 824
+              }
+            },
+            "qt_wait": {
+              "tid": 21316,
+              "cpu_s": 0.046875,
+              "cycles": 39081600,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 569,
+              "root_complete": 569,
+              "kernel_present": 569,
+              "ambiguous": 0,
+              "user_frames": 14362,
+              "unknown_symbol_frames": 569,
+              "unmapped_frames": 0,
+              "max_user_depth": 28,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 569,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 1.0,
+              "schedule_residency_s": 0.01727540000000001,
+              "schedule_error_s": -0.02959959999999999,
+              "schedule_violations": [],
+              "schedule_left_boundary_events": [],
+              "paired_wait_intervals": 549,
+              "paired_wait_chain_counts": {
+                "qt_wait_chain": 224,
+                "gil_wait_chain": 325
+              }
+            },
+            "system_wait": {
+              "tid": 18752,
+              "cpu_s": 0.015625,
+              "cycles": 34418160,
+              "sample_events": 0,
+              "nonprocess_samples": 0,
+              "joined": 566,
+              "root_complete": 566,
+              "kernel_present": 566,
+              "ambiguous": 0,
+              "user_frames": 15483,
+              "unknown_symbol_frames": 2267,
+              "unmapped_frames": 0,
+              "max_user_depth": 29,
+              "lifecycle_ok": true,
+              "creation_unchanged": true,
+              "stack_events_expected": 566,
+              "association_rate": 1.0,
+              "user_root_complete_rate": 1.0,
+              "schedule_residency_s": 0.01530930000000001,
+              "schedule_error_s": -0.00031569999999998995,
+              "schedule_violations": [],
+              "schedule_left_boundary_events": [],
+              "paired_wait_intervals": 535,
+              "paired_wait_chain_counts": {
+                "gil_wait_chain": 345,
+                "system_timer_wait_chain": 190
+              }
+            }
+          },
+          "families": {
+            "cpu_a": {
+              "gil_wait_chain": 965
+            },
+            "cpu_b": {
+              "gil_wait_chain": 1019
+            },
+            "qt_wait": {
+              "qt_wait_chain": 225,
+              "gil_wait_chain": 344
+            },
+            "system_wait": {
+              "gil_wait_chain": 375,
+              "system_timer_wait_chain": 190
+            }
+          },
+          "independent_scan": {
+            "events_lost": 0,
+            "counts": {
+              "Stack": {
+                "reader": 73272,
+                "tracerpt": 73272,
+                "equal": true
+              },
+              "SampleProf": {
+                "reader": 0,
+                "tracerpt": 0,
+                "equal": true
+              },
+              "36": {
+                "reader": 59290,
+                "tracerpt": 59290,
+                "equal": true
+              },
+              "ReadyThread": {
+                "reader": 35752,
+                "tracerpt": 35752,
+                "equal": true
+              }
+            },
+            "passed": true,
+            "summary_sha256": "68dcc58fd1685a8ca9eb4e0f1d3a4392c86bf8b25168fe73d882c1133475a099"
+          },
+          "clock_max_residual_ms": 0.0111
+        }
+      },
+      "clock_mapping": {
+        "qpc_frequency": 10000000,
+        "host_ns_offset_lower": -5900,
+        "host_ns_offset_upper": 3500,
+        "uncertainty_ns": 9400,
+        "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+      },
+      "cross_process_clock_maps": {
+        "gui": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -8300,
+          "host_ns_offset_upper": 5500,
+          "uncertainty_ns": 13800,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        },
+        "sdk": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -8300,
+          "host_ns_offset_upper": 5300,
+          "uncertainty_ns": 13600,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        }
+      },
+      "plan_reference": {
+        "external_plan_sha256": "9675c1c92ceb3a333d55905a011d0f1eda9980fb25c5648aacffe93fe6c795a2",
+        "source_sha256": {
+          "external_fixture.py": "7a370154e85a14e5fdf6a853bb55fd7beac1979ed1ea5c6ee1976b7e8ad6283e",
+          "external_calibration.py": "c447daf50f23a2058fae578b6fac8d1e7d6bdf565022b014a38df27aa8e82413",
+          "record.py": "2f2b2cfd0a5860fcfd2dce6706d8f3439cd8e4ce6cc1fe2078a5474cf9ed85d8",
+          "observe.py": "f33c6b2da48593b28e1748417ded306632b7997bbaf7f608e8baef5e3c391777",
+          "winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+          "split_field.py": "624f3c3dd935f12c818324f5c37c3aa69b034d3ecef13ffbd98b62bc386ac9e0",
+          "align_clock.py": "d49f54563591d23e9fc8e08b7d8eab028b65fbaa7dcb329e12b6ac58c2c893f1",
+          "ReadStacks.cs": "fb20ca77da7dfb4a26167ef3b54a75ee94633cc6b6d88c79a69220a9088d2476",
+          "symbolize.py": "e45766dc0177d105769a9afe6c411025dcefe376a516920d0c56a33cf6fe79c8",
+          "analyze.py": "018978e51cdd721717b1f4ee4c98e74c4aa99d3e0aca38061e27c40b7c314961",
+          "report.py": "10decf431f79fd75f1595638ab14381f9f99957e608947ca82dfb340d1348043",
+          "cpu.wprp": "949d5973ba665469586cc48ee5a0e3dbb5043ca847f4eb396bca29f6d4bef9fb",
+          "wait.wprp": "d584fc8c90595bf5f2bf4e9cdf8b2595908b5c1dbd931f9c885cc0dd08c1bcf8",
+          "plan.json": "2a0ec4593a07e65bda0c329e094480775b4bc3574af3853bd9d86b8532196178",
+          "external_report.py": "9c68ac4b13974521a4c1f8321570268b4bfece73433098dc97524df49ce042e8"
+        },
+        "synthetic_only": true
+      },
+      "synthetic_only": true,
+      "acceptance": {
+        "source_etl_sha256": "a8c31a496dc8710df4438756111521012e655dbb0c9f33a97302aad5fbaf7e68",
+        "source_unchanged": true,
+        "processes": {
+          "17332": {
+            "quality_pass": true,
+            "independent_scan_pass": true,
+            "measurement_acceptance_pass": true
+          },
+          "17456": {
+            "quality_pass": true,
+            "independent_scan_pass": true,
+            "measurement_acceptance_pass": true
+          }
+        },
+        "clock_mapping": {
+          "qpc_frequency": 10000000,
+          "host_ns_offset_lower": -5900,
+          "host_ns_offset_upper": 3500,
+          "uncertainty_ns": 9400,
+          "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+        },
+        "measurement_acceptance_pass": true,
+        "quantitative_field_attribution_ready": false,
+        "requires_actual_load_calibration": true,
+        "scope": "Offline recheck only; original ETL, exports, counters and previous quality reports preserved"
+      }
+    }
+  },
+  "pairs": {
+    "cpu": [
+      {
+        "pair": 1,
+        "processes": {
+          "gui": {
+            "work_relative_change_bounds": {
+              "lower": -0.08545239503252511,
+              "upper": -0.046265497429694546
+            },
+            "relative_changes": {
+              "cpu_s": -0.007853403141361293,
+              "cycles": -0.003058675528712196
+            },
+            "perturbation_pass": true,
+            "measurement_acceptance_pass": true
+          },
+          "sdk": {
+            "work_relative_change_bounds": {
+              "lower": -0.08854471069549974,
+              "upper": -0.041917973462002434
+            },
+            "relative_changes": {
+              "cpu_s": -0.002617801047120394,
+              "cycles": -0.0031409303816890555
+            },
+            "perturbation_pass": true,
+            "measurement_acceptance_pass": true
+          }
+        },
+        "passed": true
+      },
+      {
+        "pair": 2,
+        "processes": {
+          "gui": {
+            "work_relative_change_bounds": {
+              "lower": -0.0430622009569378,
+              "upper": 0.002770935960591192
+            },
+            "relative_changes": {
+              "cpu_s": 0.002624671916010568,
+              "cycles": -0.00229412903708881
+            },
+            "perturbation_pass": true,
+            "measurement_acceptance_pass": true
+          },
+          "sdk": {
+            "work_relative_change_bounds": {
+              "lower": -0.054367201426024914,
+              "upper": -0.014298752662001868
+            },
+            "relative_changes": {
+              "cpu_s": -0.015706806282722474,
+              "cycles": -0.0030537309733770224
+            },
+            "perturbation_pass": true,
+            "measurement_acceptance_pass": true
+          }
+        },
+        "passed": true
+      },
+      {
+        "pair": 3,
+        "processes": {
+          "gui": {
+            "work_relative_change_bounds": {
+              "lower": -0.06620730976632716,
+              "upper": -0.011713933415536393
+            },
+            "relative_changes": {
+              "cpu_s": -0.01308900523560208,
+              "cycles": -0.003138377532589165
+            },
+            "perturbation_pass": true,
+            "measurement_acceptance_pass": true
+          },
+          "sdk": {
+            "work_relative_change_bounds": {
+              "lower": -0.07806031933766999,
+              "upper": -0.038124054462934986
+            },
+            "relative_changes": {
+              "cpu_s": 0.002631578947368318,
+              "cycles": -0.0026645152488432577
+            },
+            "perturbation_pass": true,
+            "measurement_acceptance_pass": false
+          }
+        },
+        "passed": false
+      }
+    ],
+    "wait": [
+      {
+        "pair": 1,
+        "processes": {
+          "gui": {
+            "work_relative_change_bounds": {
+              "lower": -0.06898991685830536,
+              "upper": -0.020667150108774512
+            },
+            "relative_changes": {
+              "cpu_s": 0.0078125,
+              "cycles": 0.004232563969826408
+            },
+            "perturbation_pass": true,
+            "measurement_acceptance_pass": true
+          },
+          "sdk": {
+            "work_relative_change_bounds": {
+              "lower": -0.04940923737916214,
+              "upper": -0.0034887991186192124
+            },
+            "relative_changes": {
+              "cpu_s": 0.005221932114882533,
+              "cycles": 0.004343017979894892
+            },
+            "perturbation_pass": true,
+            "measurement_acceptance_pass": true
+          }
+        },
+        "passed": true
+      },
+      {
+        "pair": 2,
+        "processes": {
+          "gui": {
+            "work_relative_change_bounds": {
+              "lower": -0.06995812979762739,
+              "upper": -0.027051236116087396
+            },
+            "relative_changes": {
+              "cpu_s": 0.005235602094240788,
+              "cycles": 0.0036829147519961136
+            },
+            "perturbation_pass": true,
+            "measurement_acceptance_pass": true
+          },
+          "sdk": {
+            "work_relative_change_bounds": {
+              "lower": -0.07885935574722758,
+              "upper": -0.0302866414277988
+            },
+            "relative_changes": {
+              "cpu_s": 0.013157894736842035,
+              "cycles": 0.0032008757583210645
+            },
+            "perturbation_pass": true,
+            "measurement_acceptance_pass": true
+          }
+        },
+        "passed": true
+      },
+      {
+        "pair": 3,
+        "processes": {
+          "gui": {
+            "work_relative_change_bounds": {
+              "lower": -0.05090518013981005,
+              "upper": 0.001853568118628468
+            },
+            "relative_changes": {
+              "cpu_s": 0.007832898172323688,
+              "cycles": 0.0046670870630953765
+            },
+            "perturbation_pass": true,
+            "measurement_acceptance_pass": true
+          },
+          "sdk": {
+            "work_relative_change_bounds": {
+              "lower": -0.044881038211968316,
+              "upper": -0.0035042419771301736
+            },
+            "relative_changes": {
+              "cpu_s": 0.015789473684210575,
+              "cycles": 0.004788544655491611
+            },
+            "perturbation_pass": true,
+            "measurement_acceptance_pass": true
+          }
+        },
+        "passed": true
+      }
+    ]
+  },
+  "final_external_synthetic_qualification_pass": {
+    "cpu": false,
+    "wait": true
+  },
+  "quantitative_field_attribution_ready": false,
+  "external_plan_sha256": "9675c1c92ceb3a333d55905a011d0f1eda9980fb25c5648aacffe93fe6c795a2"
+}

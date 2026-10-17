@@ -1,0 +1,76 @@
+{
+  "base_commit": "73e04cddda0108bef00b675c3b5e238aa7f11e82",
+  "scope": "Final external observer; two synthetic processes only, no real GUI/SDK/device/human load",
+  "capture_seconds": 6,
+  "processes": [
+    "gui",
+    "sdk"
+  ],
+  "workers_per_process": [
+    "cpu_a",
+    "cpu_b",
+    "qt_wait",
+    "system_wait"
+  ],
+  "progress_period_s": 0.05,
+  "calibration_orders": {
+    "cpu": [
+      [
+        "off",
+        "cpu"
+      ],
+      [
+        "cpu",
+        "off"
+      ],
+      [
+        "off",
+        "cpu"
+      ]
+    ],
+    "wait": [
+      [
+        "off",
+        "wait"
+      ],
+      [
+        "wait",
+        "off"
+      ],
+      [
+        "off",
+        "wait"
+      ]
+    ]
+  },
+  "quality_gate_plan_sha256": "2a0ec4593a07e65bda0c329e094480775b4bc3574af3853bd9d86b8532196178",
+  "pair_limits": {
+    "work": 0.15,
+    "cpu_s": 0.15,
+    "cycles": 0.15
+  },
+  "work_comparison": "Use monotone progress bounds at both counter brackets; all possible ON/OFF changes must lie within symmetric limits",
+  "no_retries_to_replace_failed_pairs": true,
+  "quantitative_field_attribution_ready": false,
+  "source_sha256": {
+    "external_fixture.py": "7a370154e85a14e5fdf6a853bb55fd7beac1979ed1ea5c6ee1976b7e8ad6283e",
+    "external_calibration.py": "c447daf50f23a2058fae578b6fac8d1e7d6bdf565022b014a38df27aa8e82413",
+    "record.py": "2f2b2cfd0a5860fcfd2dce6706d8f3439cd8e4ce6cc1fe2078a5474cf9ed85d8",
+    "observe.py": "f33c6b2da48593b28e1748417ded306632b7997bbaf7f608e8baef5e3c391777",
+    "winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+    "split_field.py": "624f3c3dd935f12c818324f5c37c3aa69b034d3ecef13ffbd98b62bc386ac9e0",
+    "align_clock.py": "d49f54563591d23e9fc8e08b7d8eab028b65fbaa7dcb329e12b6ac58c2c893f1",
+    "ReadStacks.cs": "fb20ca77da7dfb4a26167ef3b54a75ee94633cc6b6d88c79a69220a9088d2476",
+    "symbolize.py": "e45766dc0177d105769a9afe6c411025dcefe376a516920d0c56a33cf6fe79c8",
+    "analyze.py": "018978e51cdd721717b1f4ee4c98e74c4aa99d3e0aca38061e27c40b7c314961",
+    "report.py": "10decf431f79fd75f1595638ab14381f9f99957e608947ca82dfb340d1348043",
+    "cpu.wprp": "949d5973ba665469586cc48ee5a0e3dbb5043ca847f4eb396bca29f6d4bef9fb",
+    "wait.wprp": "d584fc8c90595bf5f2bf4e9cdf8b2595908b5c1dbd931f9c885cc0dd08c1bcf8",
+    "plan.json": "2a0ec4593a07e65bda0c329e094480775b4bc3574af3853bd9d86b8532196178",
+    "external_report.py": "9c68ac4b13974521a4c1f8321570268b4bfece73433098dc97524df49ce042e8"
+  },
+  "cross_process_time_check": "Intersect independently measured parent/gui/sdk QPC-perf anchor bounds before work comparisons",
+  "version": 2,
+  "previous_plan_sha256": "38b1766d4f692aca747378533c1e7e7cb24c9e16c12143639b3292c53a95ecf9",
+  "protocol_repair": "Append one progress snapshot after the external observer has ended; preserve the initial series and its failed trace gates; no change inside the measured workload loop or to any acceptance threshold"
+}

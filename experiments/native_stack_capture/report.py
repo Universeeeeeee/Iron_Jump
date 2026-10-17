@@ -7,8 +7,8 @@ import re
 from analyze import HERE, PLAN, quality, read
 
 
-def independent_scan(case):
-    summary=case/'tracerpt_summary.txt'
+def independent_scan(case, summary=None):
+    summary=case/'tracerpt_summary.txt' if summary is None else summary
     text=summary.read_text(encoding='utf-8-sig')
     lost=re.search(r'Total Events\s+Lost\s+(\d+)',text)
     if not lost: raise ValueError('Unrecognized tracerpt summary')

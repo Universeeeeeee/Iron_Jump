@@ -51,6 +51,7 @@ def main(a):
             from observe import observe
             targets = json.loads(a.targets.read_text(encoding='utf-8-sig'))
             log['targets'] = targets
+            log['synthetic_targets'] = bool(targets) and all(t.get('synthetic_only') is True for t in targets)
             log['external_observation'] = observe(targets,a.seconds)
         else:
             call([sys.executable, str(HERE / 'fixture.py'), str(a.output / 'fixture'), '--seconds', str(a.seconds)])
