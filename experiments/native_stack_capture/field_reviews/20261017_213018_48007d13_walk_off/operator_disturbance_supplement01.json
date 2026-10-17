@@ -1,0 +1,49 @@
+{
+  "case": "20261017_213018_48007d13_walk_off",
+  "user_statement": "第 8 段是我不小心踢到了，你需要忽略掉这个",
+  "interpretation": "User-confirmed mechanical disturbance. Exclude the subsequent segment8 contact interval from backlog root-cause attribution, workload comparison and calibration. Do not treat it as spontaneous input/device failure or an extra walking passage.",
+  "raw_evidence_retained": true,
+  "original_reports_retained": true,
+  "analysis_exclusion": {
+    "first_continuous_postwalk_active_raw_sample": 41426,
+    "first_continuous_postwalk_active_receipt_formal_s": 18.6651034,
+    "known_exact_physical_kick_time": false,
+    "excluded_data": "Subsequent sustained segment8 input and its processing/drain; do not cite 3.8s tail backlog as the undisturbed walk latency."
+  },
+  "undisturbed_walk_evidence": {
+    "raw_sample_interval": [
+      32048,
+      38724
+    ],
+    "receipt_formal_s": [
+      9.2871627,
+      15.9631388
+    ],
+    "consumer_completion_bounds_formal_s": [
+      [
+        9.2428628,
+        9.3073783
+      ],
+      [
+        16.6950619,
+        16.7888579
+      ]
+    ],
+    "completion_upper_bound_precedes_postwalk_active_onset": true,
+    "active_publications": 11,
+    "painted_contacts": 11,
+    "footprint_receipt_to_paint_ms": {
+      "count": 11,
+      "p95": 803.24305,
+      "max": 835.2699
+    },
+    "first_last_footprint_receipt_to_paint_ms": [
+      152.77,
+      835.2699
+    ],
+    "limits": "Observed postwalk active onset is not a precise kick timestamp. The completed walking interval is separated in saved input/consumer records. No CPU/GIL/Qt quantitative attribution without matching stacks and calibration."
+  },
+  "next_round_precondition": "Restore segment8 physical alignment and visually confirm empty beams before formal start. Bad576 remains unknown, never clear/blocked or automatically bridged, with unchanged physical coordinates.",
+  "supplements": "review01.json",
+  "original_review_sha256": "555c91b9ade2ce995c03ebfbed73b2df1bdf1e59d074e3c59dff7590dd5f7da1"
+}

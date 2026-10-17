@@ -1,0 +1,550 @@
+{
+  "case": "20261017_213018_48007d13_walk_off",
+  "original_controller_result": {
+    "valid_capture": true,
+    "errors": [],
+    "terminated_after_child_cleanup": true,
+    "child_returncode": 1,
+    "trace_owned_remaining": false,
+    "scope": "Capture/cleanup status only. ETL event validation, under-load overhead, density and actual skeleton coverage remain offline decisions."
+  },
+  "clean_process_exit": false,
+  "data_integrity": "Independent verify_trial passed; see integrity01.json. Integrity is distinct from protocol/capture qualification.",
+  "formal_duration_s": 41.4419579,
+  "original_analyzer_protocol": {
+    "valid_field_protocol": false,
+    "scene_protocol_valid": false,
+    "quality_acquisition_failures": [
+      {
+        "code": "data_timeout",
+        "start_s": 41.459,
+        "end_s": 41.459,
+        "indices": [],
+        "impact": "持续无数据，结束采集，保留已有结果"
+      }
+    ],
+    "sustained_shortage_reproduced": false
+  },
+  "interpretation": "The unchanged analyzer reports sustained-shortage flags within windows, but aggregate sustained_shortage_reproduced=false because scene/quality protocol failed. Retain both. Direct queue growth and footprint delay remain observations, not a full field qualification.",
+  "windows": {
+    "whole_formal": {
+      "observations": 996,
+      "observed_s": 41.3975728,
+      "enqueued_fps": 999.9861634399977,
+      "consumer_fps": 907.8793141224937,
+      "throughput_gap_to_actual_fps": 92.10684931750393,
+      "pending": {
+        "count": 996,
+        "p95": 3280.75,
+        "max": 3814.0
+      },
+      "oldest_pending_ms": {
+        "count": 996,
+        "p95": 3281.8233999999998,
+        "max": 3814.0855
+      },
+      "completed_receipt_age_ms": {
+        "count": 996,
+        "p95": 3284.3197,
+        "max": 3821.4277
+      },
+      "age_slope_ms_per_device_second": 66.33678169516328,
+      "heavy_observed_span_s": 14.4692457,
+      "max_observation_gap_ms": 147.4429,
+      "sustained_shortage": true,
+      "start_ns": 239652365564500,
+      "end_ns": 239693807522400,
+      "raw_frames": 41442,
+      "usable_contact_fraction": 0.7111384585686019
+    },
+    "initial_empty": {
+      "observations": 128,
+      "observed_s": 4.9571614,
+      "enqueued_fps": 1000.1691693960175,
+      "consumer_fps": 999.9674410439812,
+      "throughput_gap_to_actual_fps": 0.20172835203629802,
+      "pending": {
+        "count": 128,
+        "p95": 4.0,
+        "max": 7.0
+      },
+      "oldest_pending_ms": {
+        "count": 128,
+        "p95": 4.0445400000000005,
+        "max": 5.4717
+      },
+      "completed_receipt_age_ms": {
+        "count": 128,
+        "p95": 5.196744999999999,
+        "max": 7.6399
+      },
+      "age_slope_ms_per_device_second": 0.19207325067022105,
+      "heavy_observed_span_s": 0.0,
+      "max_observation_gap_ms": 67.0911,
+      "sustained_shortage": false,
+      "start_ns": 239652365564500,
+      "end_ns": 239657365564500,
+      "raw_frames": 5000,
+      "usable_contact_fraction": 0.0
+    },
+    "contact_span": {
+      "observations": 776,
+      "observed_s": 32.7361851,
+      "enqueued_fps": 1000.085987417025,
+      "consumer_fps": 885.8393215769054,
+      "throughput_gap_to_actual_fps": 114.24666584011959,
+      "pending": {
+        "count": 776,
+        "p95": 3421.25,
+        "max": 3814.0
+      },
+      "oldest_pending_ms": {
+        "count": 776,
+        "p95": 3414.419625,
+        "max": 3814.0855
+      },
+      "completed_receipt_age_ms": {
+        "count": 776,
+        "p95": 3416.5269749999998,
+        "max": 3821.4277
+      },
+      "age_slope_ms_per_device_second": 92.92309508931334,
+      "heavy_observed_span_s": 14.4692457,
+      "max_observation_gap_ms": 147.4429,
+      "sustained_shortage": true,
+      "start_ns": 239661026829000,
+      "end_ns": 239693808263500,
+      "raw_frames": 32844,
+      "usable_contact_fraction": 0.8973328461819511
+    },
+    "operator_tail": {
+      "observations": 322,
+      "observed_s": 14.9494459,
+      "enqueued_fps": 999.970172807542,
+      "consumer_fps": 745.9808259515491,
+      "throughput_gap_to_actual_fps": 253.98934685599284,
+      "pending": {
+        "count": 322,
+        "p95": 3688.9,
+        "max": 3814.0
+      },
+      "oldest_pending_ms": {
+        "count": 322,
+        "p95": 3677.486575,
+        "max": 3814.0855
+      },
+      "completed_receipt_age_ms": {
+        "count": 322,
+        "p95": 3687.2072949999997,
+        "max": 3821.4277
+      },
+      "age_slope_ms_per_device_second": 349.82078212660815,
+      "heavy_observed_span_s": 14.4692457,
+      "max_observation_gap_ms": 147.4429,
+      "sustained_shortage": true,
+      "start_ns": 239678805644100,
+      "end_ns": 239693807522400,
+      "raw_frames": 15002,
+      "usable_contact_fraction": 1.0
+    }
+  },
+  "queue_maxima": {
+    "pending": 3814,
+    "unfinished": 3821,
+    "popped_inflight": 3820
+  },
+  "footprint_timings": [
+    {
+      "contact_id": 0,
+      "sample": 32048,
+      "receipt_to_paint_ms": 152.77
+    },
+    {
+      "contact_id": 1,
+      "sample": 32709,
+      "receipt_to_paint_ms": 193.5986
+    },
+    {
+      "contact_id": 2,
+      "sample": 33292,
+      "receipt_to_paint_ms": 286.7295
+    },
+    {
+      "contact_id": 3,
+      "sample": 33867,
+      "receipt_to_paint_ms": 343.4299
+    },
+    {
+      "contact_id": 4,
+      "sample": 34461,
+      "receipt_to_paint_ms": 326.2948
+    },
+    {
+      "contact_id": 5,
+      "sample": 35002,
+      "receipt_to_paint_ms": 417.8083
+    },
+    {
+      "contact_id": 7,
+      "sample": 35531,
+      "receipt_to_paint_ms": 489.2228
+    },
+    {
+      "contact_id": 8,
+      "sample": 36098,
+      "receipt_to_paint_ms": 617.0801
+    },
+    {
+      "contact_id": 9,
+      "sample": 36687,
+      "receipt_to_paint_ms": 655.1111
+    },
+    {
+      "contact_id": 10,
+      "sample": 37269,
+      "receipt_to_paint_ms": 771.2162
+    },
+    {
+      "contact_id": 11,
+      "sample": 37875,
+      "receipt_to_paint_ms": 835.2699
+    }
+  ],
+  "footprint_receipt_to_paint_ms": {
+    "count": 11,
+    "p95": 803.24305,
+    "max": 835.2699
+  },
+  "active_publications": 11,
+  "painted_contacts": 11,
+  "report_touch_count": 11,
+  "report_valid_steps": 7,
+  "raw_contact_runs_longer_than_1000_samples": [
+    {
+      "raw_samples": [
+        32048,
+        38724
+      ],
+      "raw_active_samples": 6677,
+      "receipt_formal_s": [
+        9.2871627,
+        15.9631388
+      ],
+      "consumer_completion_bounds_formal_s": [
+        [
+          9.2428628,
+          9.3073783
+        ],
+        [
+          16.6950619,
+          16.7888579
+        ]
+      ],
+      "completion_span_progress_bounds_fps": [
+        884.7077040906108,
+        903.6662046544604
+      ],
+      "pose_intervals": [
+        {
+          "start_ns": 239661349678200,
+          "end_ns": 239662351033900,
+          "valid_draws": 20,
+          "nodes_drawn": 200,
+          "links_drawn": 200
+        },
+        {
+          "start_ns": 239662351033900,
+          "end_ns": 239663384391300,
+          "valid_draws": 18,
+          "nodes_drawn": 180,
+          "links_drawn": 180
+        },
+        {
+          "start_ns": 239663384391300,
+          "end_ns": 239664350706300,
+          "valid_draws": 18,
+          "nodes_drawn": 180,
+          "links_drawn": 180
+        },
+        {
+          "start_ns": 239664350706300,
+          "end_ns": 239665350016400,
+          "valid_draws": 15,
+          "nodes_drawn": 150,
+          "links_drawn": 150
+        },
+        {
+          "start_ns": 239665350016400,
+          "end_ns": 239666350039700,
+          "valid_draws": 17,
+          "nodes_drawn": 170,
+          "links_drawn": 170
+        },
+        {
+          "start_ns": 239666350039700,
+          "end_ns": 239667351140200,
+          "valid_draws": 15,
+          "nodes_drawn": 150,
+          "links_drawn": 150
+        },
+        {
+          "start_ns": 239667351140200,
+          "end_ns": 239668353778800,
+          "valid_draws": 16,
+          "nodes_drawn": 160,
+          "links_drawn": 160
+        }
+      ],
+      "valid_draws_in_each_intersecting_interval": true,
+      "scope": "Raw samples after frozen bad-bit mask; not filtered Processor replay, physical step labels, or function timings."
+    },
+    {
+      "raw_samples": [
+        41426,
+        64208
+      ],
+      "raw_active_samples": 22783,
+      "receipt_formal_s": [
+        18.6651034,
+        41.4473875
+      ],
+      "consumer_completion_bounds_formal_s": [
+        [
+          18.648643,
+          18.7185297
+        ],
+        [
+          41.4225793,
+          45.2235605
+        ]
+      ],
+      "completion_span_progress_bounds_fps": [
+        857.274533401656,
+        1003.4333258327624
+      ],
+      "pose_intervals": [
+        {
+          "start_ns": 239670349538600,
+          "end_ns": 239671352393600,
+          "valid_draws": 21,
+          "nodes_drawn": 162,
+          "links_drawn": 133
+        },
+        {
+          "start_ns": 239671352393600,
+          "end_ns": 239672352173100,
+          "valid_draws": 22,
+          "nodes_drawn": 219,
+          "links_drawn": 218
+        },
+        {
+          "start_ns": 239672352173100,
+          "end_ns": 239673349348300,
+          "valid_draws": 19,
+          "nodes_drawn": 163,
+          "links_drawn": 146
+        },
+        {
+          "start_ns": 239673349348300,
+          "end_ns": 239674350915800,
+          "valid_draws": 1,
+          "nodes_drawn": 10,
+          "links_drawn": 2
+        },
+        {
+          "start_ns": 239674350915800,
+          "end_ns": 239675349733000,
+          "valid_draws": 3,
+          "nodes_drawn": 12,
+          "links_drawn": 6
+        },
+        {
+          "start_ns": 239675349733000,
+          "end_ns": 239676351453000,
+          "valid_draws": 0,
+          "nodes_drawn": 0,
+          "links_drawn": 0
+        },
+        {
+          "start_ns": 239676351453000,
+          "end_ns": 239677355651600,
+          "valid_draws": 16,
+          "nodes_drawn": 61,
+          "links_drawn": 29
+        },
+        {
+          "start_ns": 239677355651600,
+          "end_ns": 239678356385100,
+          "valid_draws": 21,
+          "nodes_drawn": 117,
+          "links_drawn": 75
+        },
+        {
+          "start_ns": 239678356385100,
+          "end_ns": 239679355982200,
+          "valid_draws": 20,
+          "nodes_drawn": 177,
+          "links_drawn": 154
+        },
+        {
+          "start_ns": 239679355982200,
+          "end_ns": 239680361807300,
+          "valid_draws": 21,
+          "nodes_drawn": 189,
+          "links_drawn": 168
+        },
+        {
+          "start_ns": 239680361807300,
+          "end_ns": 239681350676400,
+          "valid_draws": 21,
+          "nodes_drawn": 189,
+          "links_drawn": 168
+        },
+        {
+          "start_ns": 239681350676400,
+          "end_ns": 239682349651300,
+          "valid_draws": 21,
+          "nodes_drawn": 189,
+          "links_drawn": 168
+        },
+        {
+          "start_ns": 239682349651300,
+          "end_ns": 239683352194500,
+          "valid_draws": 22,
+          "nodes_drawn": 205,
+          "links_drawn": 190
+        },
+        {
+          "start_ns": 239683352194500,
+          "end_ns": 239684353496300,
+          "valid_draws": 22,
+          "nodes_drawn": 199,
+          "links_drawn": 178
+        },
+        {
+          "start_ns": 239684353496300,
+          "end_ns": 239685351232700,
+          "valid_draws": 21,
+          "nodes_drawn": 153,
+          "links_drawn": 125
+        },
+        {
+          "start_ns": 239685351232700,
+          "end_ns": 239686353219800,
+          "valid_draws": 21,
+          "nodes_drawn": 126,
+          "links_drawn": 84
+        },
+        {
+          "start_ns": 239686353219800,
+          "end_ns": 239687351415000,
+          "valid_draws": 21,
+          "nodes_drawn": 126,
+          "links_drawn": 84
+        },
+        {
+          "start_ns": 239687351415000,
+          "end_ns": 239688351418400,
+          "valid_draws": 21,
+          "nodes_drawn": 126,
+          "links_drawn": 84
+        },
+        {
+          "start_ns": 239688351418400,
+          "end_ns": 239689351239100,
+          "valid_draws": 22,
+          "nodes_drawn": 131,
+          "links_drawn": 87
+        },
+        {
+          "start_ns": 239689351239100,
+          "end_ns": 239690351260800,
+          "valid_draws": 17,
+          "nodes_drawn": 106,
+          "links_drawn": 73
+        },
+        {
+          "start_ns": 239690351260800,
+          "end_ns": 239691350114700,
+          "valid_draws": 21,
+          "nodes_drawn": 169,
+          "links_drawn": 148
+        },
+        {
+          "start_ns": 239691350114700,
+          "end_ns": 239692350396000,
+          "valid_draws": 21,
+          "nodes_drawn": 188,
+          "links_drawn": 167
+        },
+        {
+          "start_ns": 239692350396000,
+          "end_ns": 239693359066500,
+          "valid_draws": 24,
+          "nodes_drawn": 234,
+          "links_drawn": 228
+        },
+        {
+          "start_ns": 239693359066500,
+          "end_ns": 239693807522400,
+          "valid_draws": 10,
+          "nodes_drawn": 100,
+          "links_drawn": 100
+        }
+      ],
+      "valid_draws_in_each_intersecting_interval": false,
+      "scope": "Raw samples after frozen bad-bit mask; not filtered Processor replay, physical step labels, or function timings."
+    }
+  ],
+  "tail_obstruction": {
+    "first_raw_sample": 41426,
+    "start_formal_s": 18.6651034,
+    "continues_until_last_sample": true,
+    "last_frame_active_indices": [
+      674,
+      677,
+      678,
+      681,
+      688,
+      689,
+      695
+    ],
+    "physical_range_m": [
+      7.0208,
+      7.2392
+    ],
+    "segment": 8,
+    "distinct_from_bad576": true,
+    "user_returned_outside": true,
+    "cause": "Unresolved. Not proof of foot contact or hardware failure. Independent wire-to-bits check passed."
+  },
+  "terminal_quality_event": {
+    "original": [
+      {
+        "code": "data_timeout",
+        "start_s": 41.459,
+        "end_s": 41.459,
+        "indices": [],
+        "impact": "持续无数据，结束采集，保留已有结果"
+      }
+    ],
+    "last_raw_receipt_formal_s": 41.4473875,
+    "final_consumer_witness_formal_s": 45.3240773,
+    "stop_callback_formal_s": 45.3239399,
+    "limit": "data_timeout is recorded at final device sample while backlog drains after stop. Exact poll dispatch time is not logged; do not conclude USB stalled during the walk."
+  },
+  "calibration": {
+    "round": 1,
+    "planned_mode": "off external observer",
+    "actual_short_observer_taken": false,
+    "reason": "Watcher timed out before this GUI started. See series round01/operator_failure.json.",
+    "paired_calibration_pass": false,
+    "native_cpu_or_wait_stack_taken": false,
+    "field_quantitative_attribution_ready": false
+  },
+  "source_sha256": {
+    "experiments/single_usb_field/analyze.py": "5fa16df3e598b83e7b0628cdfd65a0446ea603fb4a22c2142d7206b19cf9dbfa",
+    "engine/modes/walking_processor.py": "c71a9e657142966c6036cc1f8090e26a7731cefde2b4f80393f8e06ed37829ba",
+    "hardware/beam_quality.py": "98e7129a4491e48a3111216ecf316ec8a548769ec6e15977b872118a539940b5"
+  }
+}

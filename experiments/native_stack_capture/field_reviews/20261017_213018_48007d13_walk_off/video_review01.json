@@ -1,0 +1,32 @@
+{
+  "original_sha256": "bf808bfd2f01907c5b5c2162be3cae5a724d43b661bb5181321264eaa2da428b",
+  "original_duration_s": 61.76663333333333,
+  "decoded_size": [
+    1918,
+    1016
+  ],
+  "interval_s": [
+    40,
+    50
+  ],
+  "frame_samples_s": [
+    40,
+    41,
+    42,
+    43,
+    44,
+    45,
+    46,
+    47,
+    48,
+    49,
+    50
+  ],
+  "findings": [
+    "Requested interval includes the outward walk and footprint updates; no obvious complete pose disappearance in the one-second sample frames. This is not proof of continuous pose validity between frames.",
+    "The GUI formal elapsed display progresses approximately 8 to 18 seconds across clip40..50; it can provide a coarse alignment, not a shared recorder/QPC clock.",
+    "Later footprint updates lag behind the moving preview; saved receipt-to-paint records independently quantify increasing delay.",
+    "At video59.733s, user appears at the computer and GUI is in the empty-tail stage. Video does not establish the physical source of persistent segment8 beam reports."
+  ],
+  "frame_inspection": "One frame per second at40..50 plus59.733, extracted with AVFoundation from SHA-verified original; no exact physical latency inferred from preview."
+}
