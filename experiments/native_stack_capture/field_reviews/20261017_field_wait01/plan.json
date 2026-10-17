@@ -1,0 +1,64 @@
+{
+  "base_commit": "61039d852f18e11029be4bf149d0a737ad209c9e",
+  "scope": "Prospective real single-USB Walk wait-observer disturbance calibration; operator starts each passage manually. Not an optimization AB or CPU qualification.",
+  "user_authorization": "好的，请开始，可以多测几轮",
+  "order": [
+    "off",
+    "wait",
+    "wait",
+    "off",
+    "off",
+    "wait"
+  ],
+  "pairs": [
+    [
+      1,
+      2
+    ],
+    [
+      3,
+      4
+    ],
+    [
+      5,
+      6
+    ]
+  ],
+  "rounds_not_automatically_started": true,
+  "stop_after_each_round_for_review": true,
+  "capture_seconds": 6,
+  "launch_requested_formal_s": 8,
+  "actual_counter_brackets_authoritative": true,
+  "field_entry": "WALK-ETW-OFF",
+  "screen_recording": "Windows software recording throughout every round, same settings, start before GUI",
+  "human_protocol": "5s empty lead-in; one outward normal Walk; operator-clear; 15s empty tail; no return or supplemental steps",
+  "tool_plan_file": "external_plan_cleanup01.json",
+  "tool_plan_sha256": "d5ce999e4875cbfec5d011955cf82a545404b79fe60637f1d282985bf03194c2",
+  "source_sha256": {
+    "external_fixture.py": "7a370154e85a14e5fdf6a853bb55fd7beac1979ed1ea5c6ee1976b7e8ad6283e",
+    "external_calibration.py": "9c223685f254ac5b4ab85155203e788bb61956fb0e5b376d355b11fc8c0c3a94",
+    "record.py": "c6d963a249ad10c78cb8a0dba1f9be03889683a2852f1ddb96038f9f53f38d81",
+    "observe.py": "f33c6b2da48593b28e1748417ded306632b7997bbaf7f608e8baef5e3c391777",
+    "winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+    "split_field.py": "624f3c3dd935f12c818324f5c37c3aa69b034d3ecef13ffbd98b62bc386ac9e0",
+    "align_clock.py": "d49f54563591d23e9fc8e08b7d8eab028b65fbaa7dcb329e12b6ac58c2c893f1",
+    "ReadStacks.cs": "fb20ca77da7dfb4a26167ef3b54a75ee94633cc6b6d88c79a69220a9088d2476",
+    "symbolize.py": "e45766dc0177d105769a9afe6c411025dcefe376a516920d0c56a33cf6fe79c8",
+    "analyze.py": "e99d90dc65b29daaf7e75fbb8f60d45f4a53af48b3bdaa7cbae8b929807d1808",
+    "report.py": "10decf431f79fd75f1595638ab14381f9f99957e608947ca82dfb340d1348043",
+    "cpu.wprp": "949d5973ba665469586cc48ee5a0e3dbb5043ca847f4eb396bca29f6d4bef9fb",
+    "wait.wprp": "d584fc8c90595bf5f2bf4e9cdf8b2595908b5c1dbd931f9c885cc0dd08c1bcf8",
+    "plan.json": "2a0ec4593a07e65bda0c329e094480775b4bc3574af3853bd9d86b8532196178",
+    "external_report.py": "105776b8544e4d0e8b2e663e1116c7394defea4bb9588b85c20a0b80fcf9901d",
+    "test_record_cleanup.py": "a8efd3d9a05e42cddf020d72c21e059e3af7b27066cb4512c2e21c49bc1d2e40"
+  },
+  "prepare_targets_sha256": "ecd850ac990ddbc61d6c76b14a7b027a4750d75ab4c7226a6d1299ee9ebdbef8",
+  "trace_quality_plan_sha256": "2a0ec4593a07e65bda0c329e094480775b4bc3574af3853bd9d86b8532196178",
+  "frozen_field_sources_sha256": "e81e6a013c1feef532124204ff77768f33ac9adeb8512f7bf4490a28f4017aa0",
+  "acceptance": "Existing stack, identity, PDB, time, event-loss, CPU/cycles and symmetric 15% gates unchanged. Work comparison uses consumer completion bounds at actual observation brackets. Compare contact input geometry/density, pose/SDK activity, pending/inflight and paint latency; unmatched human load or incomplete chains means no quantitative attribution. All three planned pairs and independent trace checks required before declaring this calibration complete.",
+  "source_or_workload_changes_require_new_plan": true,
+  "failed_windows_retained_and_not_replaced": true,
+  "historical_cpu_status": "2/3 passed; failed window retained; no global CPU qualification",
+  "historical_wait_status": "3/3 synthetic only; real-load calibration pending",
+  "quantitative_field_attribution_ready": false
+}
