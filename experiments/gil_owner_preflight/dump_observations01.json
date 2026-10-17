@@ -1,0 +1,652 @@
+{
+  "records": {
+    "held": {
+      "mode": "held",
+      "errors": [],
+      "forced_cleanup": [],
+      "ready": {
+        "pid": 12764,
+        "main_tid": 22224,
+        "tids": {
+          "heartbeat": 21312,
+          "sleeper": 15828
+        },
+        "mode": "held"
+      },
+      "begin": {
+        "host_ns": 248846726184100,
+        "tid": 15828,
+        "mode": "held",
+        "counter": 5
+      },
+      "OS_before": {
+        "state": "Wait",
+        "reason": "ExecutionDelay"
+      },
+      "command": [
+        "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\ground_throughput_diagnosis\\tools\\py-spy.exe",
+        "dump",
+        "--pid",
+        "12764",
+        "--json",
+        "--full-filenames"
+      ],
+      "heartbeat_observations": [
+        [
+          248847981923400,
+          5
+        ],
+        [
+          248848105211700,
+          5
+        ],
+        [
+          248848125364600,
+          5
+        ],
+        [
+          248848145949500,
+          5
+        ],
+        [
+          248848166165300,
+          5
+        ],
+        [
+          248848186585800,
+          5
+        ],
+        [
+          248848207199400,
+          5
+        ],
+        [
+          248848227568100,
+          5
+        ],
+        [
+          248848248497400,
+          5
+        ],
+        [
+          248848269418800,
+          5
+        ],
+        [
+          248848289993900,
+          5
+        ],
+        [
+          248848310508400,
+          5
+        ],
+        [
+          248848331025600,
+          5
+        ],
+        [
+          248848351523000,
+          5
+        ],
+        [
+          248848372087600,
+          5
+        ],
+        [
+          248848392619600,
+          5
+        ],
+        [
+          248848413196500,
+          5
+        ],
+        [
+          248848433584000,
+          5
+        ],
+        [
+          248848454174500,
+          5
+        ],
+        [
+          248848474686300,
+          5
+        ],
+        [
+          248848495206800,
+          5
+        ],
+        [
+          248848515710500,
+          5
+        ],
+        [
+          248848536198200,
+          5
+        ],
+        [
+          248848556700400,
+          5
+        ],
+        [
+          248848577246200,
+          5
+        ],
+        [
+          248848597600600,
+          5
+        ]
+      ],
+      "sampler_bracket_ns": [
+        248847981938500,
+        248848105204200
+      ],
+      "OS_after": {
+        "state": "Wait",
+        "reason": "ExecutionDelay"
+      },
+      "sampler_returncode": 0,
+      "target_returncode": 0,
+      "end": {
+        "host_ns": 248856729593300,
+        "tid": 15828,
+        "counter": 6
+      },
+      "complete": {
+        "pid": 12764,
+        "mode": "held",
+        "completed": true
+      }
+    },
+    "released": {
+      "mode": "released",
+      "errors": [],
+      "forced_cleanup": [],
+      "ready": {
+        "pid": 4308,
+        "main_tid": 18664,
+        "tids": {
+          "heartbeat": 7944,
+          "sleeper": 9564
+        },
+        "mode": "released"
+      },
+      "begin": {
+        "host_ns": 248857035391300,
+        "tid": 9564,
+        "mode": "released",
+        "counter": 5
+      },
+      "OS_before": {
+        "state": "Wait",
+        "reason": "ExecutionDelay"
+      },
+      "command": [
+        "E:\\OptoJump\\IronJump-throughput-diagnosis-20261015\\experiments\\ground_throughput_diagnosis\\tools\\py-spy.exe",
+        "dump",
+        "--pid",
+        "4308",
+        "--json",
+        "--full-filenames"
+      ],
+      "heartbeat_observations": [
+        [
+          248858315683900,
+          238
+        ],
+        [
+          248858439590000,
+          260
+        ],
+        [
+          248858460104400,
+          264
+        ],
+        [
+          248858480835500,
+          268
+        ],
+        [
+          248858501558500,
+          272
+        ],
+        [
+          248858522230100,
+          276
+        ],
+        [
+          248858543122500,
+          279
+        ],
+        [
+          248858564030600,
+          283
+        ],
+        [
+          248858584519100,
+          287
+        ],
+        [
+          248858604588300,
+          290
+        ],
+        [
+          248858625283800,
+          294
+        ],
+        [
+          248858646070400,
+          298
+        ],
+        [
+          248858666740200,
+          302
+        ],
+        [
+          248858687662400,
+          305
+        ],
+        [
+          248858708280800,
+          309
+        ],
+        [
+          248858728615700,
+          313
+        ],
+        [
+          248858749461900,
+          317
+        ],
+        [
+          248858769846000,
+          321
+        ],
+        [
+          248858790382100,
+          324
+        ],
+        [
+          248858810805400,
+          328
+        ],
+        [
+          248858831238900,
+          332
+        ],
+        [
+          248858851991100,
+          336
+        ],
+        [
+          248858872373700,
+          339
+        ],
+        [
+          248858892951900,
+          343
+        ],
+        [
+          248858913619900,
+          347
+        ],
+        [
+          248858933734900,
+          350
+        ]
+      ],
+      "sampler_bracket_ns": [
+        248858315694400,
+        248858439581700
+      ],
+      "OS_after": {
+        "state": "Wait",
+        "reason": "ExecutionDelay"
+      },
+      "sampler_returncode": 0,
+      "target_returncode": 0,
+      "end": {
+        "host_ns": 248867039169000,
+        "tid": 9564,
+        "counter": 1836
+      },
+      "complete": {
+        "pid": 4308,
+        "mode": "released",
+        "completed": true
+      }
+    }
+  },
+  "traces": {
+    "held": [
+      {
+        "pid": 12764,
+        "thread_id": 15828,
+        "thread_name": "KnownSleepThread",
+        "os_thread_id": 15828,
+        "active": false,
+        "owns_gil": true,
+        "frames": [
+          {
+            "name": "held_sleep",
+            "filename": "E:\\OptoJump\\IronJump-gil-dump-preflight-20261018-01\\experiments\\gil_owner_preflight\\fixture.py",
+            "module": null,
+            "short_filename": "E:\\OptoJump\\IronJump-gil-dump-preflight-20261018-01\\experiments\\gil_owner_preflight\\fixture.py",
+            "line": 21,
+            "locals": null,
+            "is_entry": false,
+            "is_shim_entry": false
+          },
+          {
+            "name": "worker",
+            "filename": "E:\\OptoJump\\IronJump-gil-dump-preflight-20261018-01\\experiments\\gil_owner_preflight\\fixture.py",
+            "module": null,
+            "short_filename": "E:\\OptoJump\\IronJump-gil-dump-preflight-20261018-01\\experiments\\gil_owner_preflight\\fixture.py",
+            "line": 56,
+            "locals": null,
+            "is_entry": true,
+            "is_shim_entry": false
+          },
+          {
+            "name": "run",
+            "filename": "D:\\conda\\Lib\\threading.py",
+            "module": null,
+            "short_filename": "D:\\conda\\Lib\\threading.py",
+            "line": 975,
+            "locals": null,
+            "is_entry": false,
+            "is_shim_entry": false
+          },
+          {
+            "name": "_bootstrap_inner",
+            "filename": "D:\\conda\\Lib\\threading.py",
+            "module": null,
+            "short_filename": "D:\\conda\\Lib\\threading.py",
+            "line": 1038,
+            "locals": null,
+            "is_entry": false,
+            "is_shim_entry": false
+          },
+          {
+            "name": "_bootstrap",
+            "filename": "D:\\conda\\Lib\\threading.py",
+            "module": null,
+            "short_filename": "D:\\conda\\Lib\\threading.py",
+            "line": 995,
+            "locals": null,
+            "is_entry": true,
+            "is_shim_entry": true
+          }
+        ],
+        "process_info": null
+      },
+      {
+        "pid": 12764,
+        "thread_id": 21312,
+        "thread_name": "IndependentHeartbeat",
+        "os_thread_id": 21312,
+        "active": false,
+        "owns_gil": false,
+        "frames": [
+          {
+            "name": "heartbeat",
+            "filename": "E:\\OptoJump\\IronJump-gil-dump-preflight-20261018-01\\experiments\\gil_owner_preflight\\fixture.py",
+            "module": null,
+            "short_filename": "E:\\OptoJump\\IronJump-gil-dump-preflight-20261018-01\\experiments\\gil_owner_preflight\\fixture.py",
+            "line": 47,
+            "locals": null,
+            "is_entry": true,
+            "is_shim_entry": false
+          },
+          {
+            "name": "run",
+            "filename": "D:\\conda\\Lib\\threading.py",
+            "module": null,
+            "short_filename": "D:\\conda\\Lib\\threading.py",
+            "line": 975,
+            "locals": null,
+            "is_entry": false,
+            "is_shim_entry": false
+          },
+          {
+            "name": "_bootstrap_inner",
+            "filename": "D:\\conda\\Lib\\threading.py",
+            "module": null,
+            "short_filename": "D:\\conda\\Lib\\threading.py",
+            "line": 1038,
+            "locals": null,
+            "is_entry": false,
+            "is_shim_entry": false
+          },
+          {
+            "name": "_bootstrap",
+            "filename": "D:\\conda\\Lib\\threading.py",
+            "module": null,
+            "short_filename": "D:\\conda\\Lib\\threading.py",
+            "line": 995,
+            "locals": null,
+            "is_entry": true,
+            "is_shim_entry": true
+          }
+        ],
+        "process_info": null
+      },
+      {
+        "pid": 12764,
+        "thread_id": 22224,
+        "thread_name": "MainThread",
+        "os_thread_id": 22224,
+        "active": false,
+        "owns_gil": false,
+        "frames": [
+          {
+            "name": "_wait_for_tstate_lock",
+            "filename": "D:\\conda\\Lib\\threading.py",
+            "module": null,
+            "short_filename": "D:\\conda\\Lib\\threading.py",
+            "line": 1132,
+            "locals": null,
+            "is_entry": false,
+            "is_shim_entry": false
+          },
+          {
+            "name": "join",
+            "filename": "D:\\conda\\Lib\\threading.py",
+            "module": null,
+            "short_filename": "D:\\conda\\Lib\\threading.py",
+            "line": 1112,
+            "locals": null,
+            "is_entry": false,
+            "is_shim_entry": false
+          },
+          {
+            "name": "main",
+            "filename": "E:\\OptoJump\\IronJump-gil-dump-preflight-20261018-01\\experiments\\gil_owner_preflight\\fixture.py",
+            "module": null,
+            "short_filename": "E:\\OptoJump\\IronJump-gil-dump-preflight-20261018-01\\experiments\\gil_owner_preflight\\fixture.py",
+            "line": 74,
+            "locals": null,
+            "is_entry": false,
+            "is_shim_entry": false
+          },
+          {
+            "name": "<module>",
+            "filename": "E:\\OptoJump\\IronJump-gil-dump-preflight-20261018-01\\experiments\\gil_owner_preflight\\fixture.py",
+            "module": null,
+            "short_filename": "E:\\OptoJump\\IronJump-gil-dump-preflight-20261018-01\\experiments\\gil_owner_preflight\\fixture.py",
+            "line": 87,
+            "locals": null,
+            "is_entry": true,
+            "is_shim_entry": true
+          }
+        ],
+        "process_info": null
+      }
+    ],
+    "released": [
+      {
+        "pid": 4308,
+        "thread_id": 9564,
+        "thread_name": "KnownSleepThread",
+        "os_thread_id": 9564,
+        "active": false,
+        "owns_gil": false,
+        "frames": [
+          {
+            "name": "released_sleep",
+            "filename": "E:\\OptoJump\\IronJump-gil-dump-preflight-20261018-01\\experiments\\gil_owner_preflight\\fixture.py",
+            "module": null,
+            "short_filename": "E:\\OptoJump\\IronJump-gil-dump-preflight-20261018-01\\experiments\\gil_owner_preflight\\fixture.py",
+            "line": 27,
+            "locals": null,
+            "is_entry": false,
+            "is_shim_entry": false
+          },
+          {
+            "name": "worker",
+            "filename": "E:\\OptoJump\\IronJump-gil-dump-preflight-20261018-01\\experiments\\gil_owner_preflight\\fixture.py",
+            "module": null,
+            "short_filename": "E:\\OptoJump\\IronJump-gil-dump-preflight-20261018-01\\experiments\\gil_owner_preflight\\fixture.py",
+            "line": 56,
+            "locals": null,
+            "is_entry": true,
+            "is_shim_entry": false
+          },
+          {
+            "name": "run",
+            "filename": "D:\\conda\\Lib\\threading.py",
+            "module": null,
+            "short_filename": "D:\\conda\\Lib\\threading.py",
+            "line": 975,
+            "locals": null,
+            "is_entry": false,
+            "is_shim_entry": false
+          },
+          {
+            "name": "_bootstrap_inner",
+            "filename": "D:\\conda\\Lib\\threading.py",
+            "module": null,
+            "short_filename": "D:\\conda\\Lib\\threading.py",
+            "line": 1038,
+            "locals": null,
+            "is_entry": false,
+            "is_shim_entry": false
+          },
+          {
+            "name": "_bootstrap",
+            "filename": "D:\\conda\\Lib\\threading.py",
+            "module": null,
+            "short_filename": "D:\\conda\\Lib\\threading.py",
+            "line": 995,
+            "locals": null,
+            "is_entry": true,
+            "is_shim_entry": true
+          }
+        ],
+        "process_info": null
+      },
+      {
+        "pid": 4308,
+        "thread_id": 7944,
+        "thread_name": "IndependentHeartbeat",
+        "os_thread_id": 7944,
+        "active": false,
+        "owns_gil": false,
+        "frames": [
+          {
+            "name": "heartbeat",
+            "filename": "E:\\OptoJump\\IronJump-gil-dump-preflight-20261018-01\\experiments\\gil_owner_preflight\\fixture.py",
+            "module": null,
+            "short_filename": "E:\\OptoJump\\IronJump-gil-dump-preflight-20261018-01\\experiments\\gil_owner_preflight\\fixture.py",
+            "line": 47,
+            "locals": null,
+            "is_entry": true,
+            "is_shim_entry": false
+          },
+          {
+            "name": "run",
+            "filename": "D:\\conda\\Lib\\threading.py",
+            "module": null,
+            "short_filename": "D:\\conda\\Lib\\threading.py",
+            "line": 975,
+            "locals": null,
+            "is_entry": false,
+            "is_shim_entry": false
+          },
+          {
+            "name": "_bootstrap_inner",
+            "filename": "D:\\conda\\Lib\\threading.py",
+            "module": null,
+            "short_filename": "D:\\conda\\Lib\\threading.py",
+            "line": 1038,
+            "locals": null,
+            "is_entry": false,
+            "is_shim_entry": false
+          },
+          {
+            "name": "_bootstrap",
+            "filename": "D:\\conda\\Lib\\threading.py",
+            "module": null,
+            "short_filename": "D:\\conda\\Lib\\threading.py",
+            "line": 995,
+            "locals": null,
+            "is_entry": true,
+            "is_shim_entry": true
+          }
+        ],
+        "process_info": null
+      },
+      {
+        "pid": 4308,
+        "thread_id": 18664,
+        "thread_name": "MainThread",
+        "os_thread_id": 18664,
+        "active": false,
+        "owns_gil": false,
+        "frames": [
+          {
+            "name": "_wait_for_tstate_lock",
+            "filename": "D:\\conda\\Lib\\threading.py",
+            "module": null,
+            "short_filename": "D:\\conda\\Lib\\threading.py",
+            "line": 1132,
+            "locals": null,
+            "is_entry": false,
+            "is_shim_entry": false
+          },
+          {
+            "name": "join",
+            "filename": "D:\\conda\\Lib\\threading.py",
+            "module": null,
+            "short_filename": "D:\\conda\\Lib\\threading.py",
+            "line": 1112,
+            "locals": null,
+            "is_entry": false,
+            "is_shim_entry": false
+          },
+          {
+            "name": "main",
+            "filename": "E:\\OptoJump\\IronJump-gil-dump-preflight-20261018-01\\experiments\\gil_owner_preflight\\fixture.py",
+            "module": null,
+            "short_filename": "E:\\OptoJump\\IronJump-gil-dump-preflight-20261018-01\\experiments\\gil_owner_preflight\\fixture.py",
+            "line": 74,
+            "locals": null,
+            "is_entry": false,
+            "is_shim_entry": false
+          },
+          {
+            "name": "<module>",
+            "filename": "E:\\OptoJump\\IronJump-gil-dump-preflight-20261018-01\\experiments\\gil_owner_preflight\\fixture.py",
+            "module": null,
+            "short_filename": "E:\\OptoJump\\IronJump-gil-dump-preflight-20261018-01\\experiments\\gil_owner_preflight\\fixture.py",
+            "line": 87,
+            "locals": null,
+            "is_entry": true,
+            "is_shim_entry": true
+          }
+        ],
+        "process_info": null
+      }
+    ]
+  }
+}

@@ -1,0 +1,156 @@
+{
+  "scope": "既有同SHA py-spy默认dump模式，两个独立合成进程各一次稳定控制。不是现场数据、负载校准或性能A/B。",
+  "frozen_plan": "dump_plan01.json",
+  "frozen_plan_sha256": "f48484d5bdf78551aade55925809746644012aa59da1e995ad1c1701fee04716",
+  "outcome": {
+    "held": {
+      "pid": 12764,
+      "known_sleeper_TID": 15828,
+      "observed_owners": [
+        15828
+      ],
+      "heartbeat_increment": 0
+    },
+    "released": {
+      "pid": 4308,
+      "known_sleeper_TID": 9564,
+      "observed_owners": [],
+      "heartbeat_increment": 112
+    },
+    "all_expected_checks_passed": true,
+    "stderr_empty": true,
+    "forced_cleanup": false,
+    "post_dump_target_execution_and_normal_exit": true
+  },
+  "timing": {
+    "external_bracket_ms": {
+      "held": 123.2657,
+      "released": 123.8873
+    },
+    "historical_six_wait_intervals": [
+      {
+        "formal_s": 12.808202,
+        "pending": 481,
+        "switch_out_to_ready_ms": 0.5949
+      },
+      {
+        "formal_s": 13.2200252,
+        "pending": 590,
+        "switch_out_to_ready_ms": 1.1762
+      },
+      {
+        "formal_s": 13.3230065,
+        "pending": 595,
+        "switch_out_to_ready_ms": 1.3276
+      },
+      {
+        "formal_s": 13.8641344,
+        "pending": 672,
+        "switch_out_to_ready_ms": 2.3606
+      },
+      {
+        "formal_s": 14.1321266,
+        "pending": 1027,
+        "switch_out_to_ready_ms": 3.7976
+      },
+      {
+        "formal_s": 15.3840173,
+        "pending": 1156,
+        "switch_out_to_ready_ms": 1.4289
+      }
+    ],
+    "interpretation": "约123ms的外部括号大于历史六个0.595–3.798ms等待区间。这里只比较观测能力，不跨轮配对：该dump不能用于把这些短等待点的阻塞直接归给某位持有者；不允许扣除初始化耗时或取括号中点。",
+    "usable_scope": "将来若全括号被独立证实位于较长积压区间，可能提供该区间某次GIL持有者Python路径线索；不能证明该线程主导积压，不能计算等待占比或持锁时间。"
+  },
+  "classification": {
+    "stable_default_dump_correctness": true,
+    "post_observer_recovery": true,
+    "suspend_operation_independently_observed": false,
+    "concurrent_mutating_frame_coherence": false,
+    "actual_load_disturbance": false,
+    "field_GIL_owner_identified": false,
+    "quantitative_attribution": false,
+    "root_cause_or_fix_complete": false
+  },
+  "tests": {
+    "Mac_owner": {
+      "run": 25,
+      "passed": 25
+    },
+    "Windows_owner": {
+      "run": 25,
+      "passed": 25
+    },
+    "Mac_native_capture": {
+      "run": 47,
+      "passed": 43,
+      "skipped": 4,
+      "reason": "Windows native fixture/handles required"
+    }
+  },
+  "preservation": {
+    "baseline_files_matching": 458,
+    "field_frozen_sources_sha256": "e81e6a013c1feef532124204ff77768f33ac9adeb8512f7bf4490a28f4017aa0",
+    "python_dll_sha256": "162e8557fbed5f39ae24983ee62b2d435b4796c937d9c1a34371888c7e43af00",
+    "py_spy_sha256": "6e83ab095f40453742d01a2719a178f308534015da519ec0659d2584139dc995",
+    "lock_remaining": false,
+    "owned_processes_remaining": [],
+    "new_human_USB_Run_optimization_AB": false,
+    "production_or_field_collector_edits": false,
+    "historical_failed_windows_or_plans_overwritten": false
+  },
+  "deployment_issue": {
+    "stage": "scp before extraction or any tests/controls",
+    "error": "Destination omitted SSH host prefix; scp interpreted E: as remote host and connection was closed. No target/control started.",
+    "evidence_preserved": true
+  },
+  "next_minimum_evidence": "现有离线证据仍不包含真实积压时的Python持有者。当前默认dump模式仅过稳定正确性检查，时间分辨率/并发一致性和实际负载扰动尚未合格；不部署现场、不请求走路、不把这些合成持有者带入Walk归因。突破缺口需要另外审查能在真实积压窗保留可靠时间和所有权的观测，并在恢复现场授权后做合格实际负载校准。",
+  "audit_reproduces_saved_results": true,
+  "artifact_sha256": {
+    "dump_check.py": "0038949a654f74b0f881974009c2165dab605e7a3b0a4de087c67c41c703b1d1",
+    "test_dump_check.py": "8e78f7ce7220a604e697a31354803bb6efe1c163935986ea85a925b72f066918",
+    "dump_plan01.json": "f48484d5bdf78551aade55925809746644012aa59da1e995ad1c1701fee04716",
+    "dump_observations01.json": "6e2401dcdd0d8eb486cf58da7b369135e915db831da133d04616bbd1062c6c6a",
+    "dump_results01.json": "c0aad444bb5c9ba5b0c2a5282108f1d7fa7d78a3e3eec4d8bfe8d8e5bfdb3d2a"
+  },
+  "preserved_acceptance_sha256": {
+    "experiments/native_stack_capture/field_reviews/20261017_field_wait01/round02/acceptance.json": "9e1fb7197d4b3e08ebe0459f49304b85e0e33d4734db963267593f392323bce6",
+    "experiments/native_stack_capture/field_reviews/20261017_field_cpu01/round01/acceptance.json": "02cbe3b66608c30db03a45ca7c052c39fbb237abeebb24f1b4f184e61fa15e40"
+  },
+  "raw_evidence": {
+    "remote_root": "E:/OptoJump/IronJump-gil-dump-preflight-20261018-01",
+    "local_root": "/Users/vae/.codex/worktrees/native-stack-capture/Iron_Jump/experiments/native_stack_capture/runs/gil_dump_preflight01",
+    "sha256": {
+      "sources01.zip": "9235d2f3b81e211fbd6ec88328c52853d9d47126525f2610cee7bb5a95f8c436",
+      "evidence01.zip": "6f4c694d401302e7f299da253416f289664784a5340ed1b44fe0e8a6264c75cd",
+      "deployment_failure01.json": "18ce379ff7ca9ee18c4caaf71725f660ed4ec6540ad903c1974cdcc124b2784d",
+      "processes_after01.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+      "normalized01/controller01.log": "626751e24144f3abffc5f73426bb679d2b38305d5653c2958865c43c81e3f15d",
+      "normalized01/post01.json": "511a874de50ed742510e16c31145b61348d75252c034340a478de272c3c0a0c4",
+      "normalized01/run01/held/complete.json": "8274d227bf202b8566243eedf1cb1eadd0b5663f090be53f9f8e675ee1dd8b93",
+      "normalized01/run01/held/go": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "normalized01/run01/held/heartbeat.bin": "23d7f42b1cdc1f0d492ebd756ed0fe8003995dda554d99418d47a81813650207",
+      "normalized01/run01/held/phase_begin.json": "7a3ca8727355826bbe151323176feeeb3f95326dfd5452359c765320e2c3964d",
+      "normalized01/run01/held/phase_end.json": "a533db5afdcc1ccdea1d9213bb79d0b35422633d11e3698f1a9a4fda3de898b1",
+      "normalized01/run01/held/ready.json": "04670c66130baefa5863bdded082448365eeb14ef6d4112141f006c51b5552f8",
+      "normalized01/run01/held_dump.json": "852f4ab8dc68de60466d97ab054a64a520ab1aeb513000f022a9293194c4993c",
+      "normalized01/run01/held_record.json": "a3293b98c5670849b053f2b4bbb33e7f1ed781e97cb3af5a9d31b6267d63465f",
+      "normalized01/run01/held_result.json": "a2505f5f2b897161f086e976b111426d153180ff6d583d84807c655f466854be",
+      "normalized01/run01/held_stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "normalized01/run01/held_target.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "normalized01/run01/released/complete.json": "7b78cbfd6cc441c6b5835f3f42487d77a466a7e7859751ec0b397b27f6055c22",
+      "normalized01/run01/released/go": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "normalized01/run01/released/heartbeat.bin": "8118af2010ea983032ee6a69c8fb87599f33de4b798341c7d4be1fcb9ea5342a",
+      "normalized01/run01/released/phase_begin.json": "350a2e70b4db16a417f7db40fca2709eed7c4089215f87f812c639ec6fe91bdb",
+      "normalized01/run01/released/phase_end.json": "e8c414faf0112cd420b5b82c4335404decd4e0769906b51b033661b6d06cbbec",
+      "normalized01/run01/released/ready.json": "8983e9b4f42c7d20f8e5c39c75e18ccd503c5c48eda3b4f7763b4dd0e69baf70",
+      "normalized01/run01/released_dump.json": "a1cab2f0b19ed3309d85a77ef56315a45b30c7e7daf35efcab4aad4e93efb7f1",
+      "normalized01/run01/released_record.json": "a3846279e4a9b3b147a64cf2924cf2de3f7796f89f16c578504fd1728702adb0",
+      "normalized01/run01/released_result.json": "341ba78a85f137ff4c9a85464f62f75627abb5ba3f231160d206cd4ba830c85d",
+      "normalized01/run01/released_stderr.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "normalized01/run01/released_target.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "normalized01/run01/result.json": "ee4f89dfe4d3ad381e6c1e10f1eaca0b0563be328c25938822a61a59cf198194",
+      "normalized01/tests01.log": "af0817893668488141b8bb6e217fda821bb242827eef01661014e16dbaad87f1"
+    }
+  }
+}

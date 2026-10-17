@@ -1,0 +1,63 @@
+{
+  "plan_sha256": "f48484d5bdf78551aade55925809746644012aa59da1e995ad1c1701fee04716",
+  "controls": {
+    "held": {
+      "checks": {
+        "schema_and_PID": true,
+        "unique_native_TIDs": true,
+        "known_sleep_frame": true,
+        "known_owner": true,
+        "at_most_one_owner": true,
+        "heartbeat_delivery": true,
+        "sleep_OS_before_after": true,
+        "bracket_inside_phase": true,
+        "target_executed_after_dump": true,
+        "processes_exited": true,
+        "no_stderr": true,
+        "no_error_or_forced_cleanup": true
+      },
+      "stable_correctness_pass": true,
+      "owner_native_TIDs": [
+        15828
+      ],
+      "heartbeat_increment": 0,
+      "observation_bracket_ns": [
+        248847981938500,
+        248848105204200
+      ],
+      "field_attribution_ready": false,
+      "concurrent_mutating_frames_validated": false,
+      "actual_load_disturbance_pass": false
+    },
+    "released": {
+      "checks": {
+        "schema_and_PID": true,
+        "unique_native_TIDs": true,
+        "known_sleep_frame": true,
+        "known_owner": true,
+        "at_most_one_owner": true,
+        "heartbeat_delivery": true,
+        "sleep_OS_before_after": true,
+        "bracket_inside_phase": true,
+        "target_executed_after_dump": true,
+        "processes_exited": true,
+        "no_stderr": true,
+        "no_error_or_forced_cleanup": true
+      },
+      "stable_correctness_pass": true,
+      "owner_native_TIDs": [],
+      "heartbeat_increment": 112,
+      "observation_bracket_ns": [
+        248858315694400,
+        248858439581700
+      ],
+      "field_attribution_ready": false,
+      "concurrent_mutating_frames_validated": false,
+      "actual_load_disturbance_pass": false
+    }
+  },
+  "hashes_match": true,
+  "stable_correctness_pass": true,
+  "field_attribution_ready": false,
+  "actual_load_disturbance_pass": false
+}
