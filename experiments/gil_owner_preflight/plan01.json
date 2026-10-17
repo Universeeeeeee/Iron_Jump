@@ -1,0 +1,32 @@
+{
+  "scope": "One predeclared held-GIL Sleep correctness control and one released-GIL Sleep correctness control, in fresh synthetic Python processes only. Independent memory-mapped heartbeat and OS ExecutionDelay snapshots check delivered behavior. No application, GUI, camera, USB, Run, optimization candidate, ETW or machine interval access.",
+  "controls": [
+    "held",
+    "released"
+  ],
+  "sleep_ms": 10000,
+  "sample_rate_hz": 49,
+  "sample_duration_s": 2,
+  "held_sample_floor": 40,
+  "heartbeat_observation_floor": 20,
+  "released_heartbeat_increment_floor": 20,
+  "errors_must_be_zero": true,
+  "must_match_OS_wait": {
+    "state": "Wait",
+    "reason": "ExecutionDelay"
+  },
+  "held_expected": "heartbeat unchanged during observer window; at least40 held_sleep GIL samples, all on the known native thread ID, no other sampled GIL thread.",
+  "released_expected": "heartbeat advances at least20 times; zero released_sleep GIL samples. Other Python thread samples may legitimately occur.",
+  "py_spy_sha256": "6e83ab095f40453742d01a2719a178f308534015da519ec0659d2584139dc995",
+  "py_spy_version": "0.4.2",
+  "python_dll_sha256": "162e8557fbed5f39ae24983ee62b2d435b4796c937d9c1a34371888c7e43af00",
+  "source_sha256": {
+    "fixture.py": "c3d20f6302d7d8eea14be896928af2745621fd3d1628a176127c8be03073d620",
+    "check.py": "39e8eade0aa5afb46d9ccc10da4095e0f1e6f1e738165142eee182cd95b3e36c"
+  },
+  "limits": [
+    "Logical correctness controls do not qualify field disturbance, GIL time shares, inference under concurrent frame mutation or native stack completeness.",
+    "All controls and failures are retained. No repeat to substitute failure and no lowered gates. Existing CPU/wait failures and frozen plans are untouched.",
+    "A future field use would require a separately reviewed/frozen collection plan and actual-load calibration; this preflight does not start or authorize one."
+  ]
+}

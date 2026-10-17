@@ -1,0 +1,108 @@
+{
+  "scope": "Existing py-spy0.4.2 correctness readiness in two predeclared fresh synthetic processes. No original application, GUI, devices, camera, USB, Run, optimization candidate or ETW started. Production threading/NumPy/filter/Processor/paint unchanged.",
+  "why": "原生等待栈已确认多个等待者，但没有现场同窗GIL持有者。先验证现成持有者观测工具在可独立核验的受控状态下是否能识别线程，避免把工具标签直接当真。",
+  "frozen_plan": "plan01.json",
+  "known_control_delivery": [
+    {
+      "control": "held",
+      "contract": "ctypes.PyDLL调用kernel32.Sleep保持GIL。",
+      "independent_OS": "采样前后均为Wait/ExecutionDelay。",
+      "independent_heartbeat_increment": 0,
+      "sampler_observation": "KnownSleepThread TID2228的held_sleep被捕获97个GIL样本，其他GIL线程为0，读取错误0。",
+      "result": "正确性检查通过；样本数不是连续持有时间或占比。"
+    },
+    {
+      "control": "released",
+      "contract": "ctypes.WinDLL调用kernel32.Sleep释放GIL。",
+      "independent_OS": "采样前后均为Wait/ExecutionDelay。",
+      "independent_heartbeat_increment": 397,
+      "sampler_observation": "released_sleep线程样本为0；实际采到IndependentHeartbeat TID3196的9个GIL样本，读取错误0。",
+      "result": "正确性检查通过；独立心跳证实其他Python线程得到实际执行机会。"
+    }
+  ],
+  "time_identity_checks": "原生线程ID来自合成目标ready标记；采样器启动/结束的整个外部括号都位于10秒受控阶段内部并保留至少200ms边界。OS线程状态与共享内存心跳分别由目标之外读取，不依赖py-spy的自报标签。记录详见records01.json。",
+  "interpretation": [
+    "现有精确SHA的py-spy在这两个逻辑正确性控制中能识别受控持有者，并排除已释放GIL的睡眠线程，具备后续补证的初步可用性。",
+    "Waiting/ExecutionDelay线程可以仍持有GIL。单看Running/Ready/Waiting或同时运行者无法确定持有者，原有归因限制继续成立。",
+    "这里只验证稳定受控状态与线程对应，不验证现场并发修改帧时非阻塞读取的准确性，不解释历史113/121次读取错误。",
+    "两项控制使用同一冻结方案各执行一次，没有为获得通过而替换失败记录。"
+  ],
+  "qualification": {
+    "synthetic_correctness_pass": true,
+    "concurrent_mutating_frames_validated": false,
+    "actual_field_load_disturbance_calibration_passed": false,
+    "original_CPU_wait_acceptance_upgraded": false,
+    "field_GIL_holder_identified": false,
+    "root_cause_or_fix_completed": false
+  },
+  "tests": {
+    "Mac": {
+      "run": 9,
+      "passed": 9
+    },
+    "Windows": {
+      "run": 9,
+      "passed": 9
+    },
+    "faults_covered": [
+      "wrong native TID",
+      "heartbeat contradicts held state",
+      "released sleeper falsely included",
+      "other purported owner during known hold",
+      "sampler read errors",
+      "OS sleep not confirmed",
+      "sample bracket outside controlled phase"
+    ]
+  },
+  "preservation": {
+    "local_and_Windows_frozen_production_files_matching": 458,
+    "field_source_manifest_unchanged": "e81e6a013c1feef532124204ff77768f33ac9adeb8512f7bf4490a28f4017aa0",
+    "runtime_binary_SHA_unchanged": true,
+    "owned_processes_remaining": [],
+    "new_human_USB_Run_optimization_AB_or_field_capture": false
+  },
+  "next_minimum_step": "若获准后续现场补证，先为同一真实积压窗口的持有者Python栈、PID/TID及队列/批次边界对齐准备独立冻结方案，并评估实际负载读取错误/扰动；当前不部署现场入口、不要求走路、不启动补采。原CPU/等待栈门槛和失败证据不变。",
+  "raw_evidence": {
+    "remote_root": "E:/OptoJump/IronJump-gil-owner-preflight-20261017-01",
+    "local_root": "/Users/vae/.codex/worktrees/native-stack-capture/Iron_Jump/experiments/native_stack_capture/runs/gil_owner_preflight01",
+    "files_sha256": {
+      "tests01.log": "ce10c40b83226aed4f125c3575341e1c38368594b4a56940655a9e70e2ef0d6c",
+      "run01.zip": "4a3fe663ddc664e0ed970a79660ebe0141f61f859fd287d85e1d589febc5bda9",
+      "controller01.log": "30fc984592eeb35ff98543db86519c20c8d1b76b995158cf1694e7f62bb90aa2",
+      "run01/result.json": "2512279a580167b4366fd5ed60db22950bbed9758c99d417f0b14c167938f453",
+      "run01/held_target.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "run01/held_sampler.log": "200d3ee715a49a4df8fecbdccf07e46b9c780323b321c606f3b0e64671373e4d",
+      "run01/released_target.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "run01/released_sampler.log": "5acd0f236ec824d839c0305202193a90f17c8c20fcf9364f50f1492dbcac4718",
+      "run01/released/phase_begin.json": "0ca11498204156e1ae80f8e8cdc04ae108d785b24f7113957c159750845e35b1",
+      "run01/released/go": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "run01/released/record.json": "3a213a6e65fb6ae7f7adadff9d79978018ecd930d066e767462179636eefee99",
+      "run01/released/complete.json": "a94a3ca9e3b06aa93f99fbc80c901f653405f42937a6d42ddd08bc5d1486dce2",
+      "run01/released/phase_end.json": "86ead37c28cf10f22747e231b98b04625254a5f85eba0b17d3162d543d68d502",
+      "run01/released/ready.json": "f8bad64731e3ffa518f18f587762ebaf1dae5fbbdc07561f75d210cf0c22e289",
+      "run01/released/heartbeat.bin": "79c03c505284400e54db3ba62be5285e974ba33bec4d8603c7003d13fec1620a",
+      "run01/released/profile.json": "f095fcc9af50500848a914f176f9bcbb09cb6b1f87b3a46d1fe74251de6254a9",
+      "run01/held/phase_begin.json": "e0d640c8a974c987bad75d3d1c6696313f2c7afe56b5a8f23ef3587689660705",
+      "run01/held/go": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "run01/held/record.json": "8faa609e08664bf514b2de13f34f353324ad6d28fc20131e3037b51dbbbf887c",
+      "run01/held/complete.json": "1ad56c50a57823021dc9a67a0073f334b0690adfad929029a271db122e15077f",
+      "run01/held/phase_end.json": "38fd33a859cd76490d40608eee5ba476d68e7624c9370dcf0bfbf1b1464b95c2",
+      "run01/held/ready.json": "e93e5a591d4be3ee66afff1382b16b06219b3c741e1c2d116a628993710a3e58",
+      "run01/held/heartbeat.bin": "23d7f42b1cdc1f0d492ebd756ed0fe8003995dda554d99418d47a81813650207",
+      "run01/held/profile.json": "2154ff07fd5fd0490787959a2c60e4c622aa6156c8584827e54fabed14487925"
+    }
+  },
+  "preserved_original_acceptance_sha256": {
+    "experiments/native_stack_capture/field_reviews/20261017_field_wait01/round02/acceptance.json": "9e1fb7197d4b3e08ebe0459f49304b85e0e33d4734db963267593f392323bce6",
+    "experiments/native_stack_capture/field_reviews/20261017_field_cpu01/round01/acceptance.json": "02cbe3b66608c30db03a45ca7c052c39fbb237abeebb24f1b4f184e61fa15e40"
+  },
+  "artifact_sha256": {
+    "plan01.json": "4dffdeb0512d06cde17c613405462b9c09d6e321bf53fb95ea4af6a7614ec013",
+    "fixture.py": "c3d20f6302d7d8eea14be896928af2745621fd3d1628a176127c8be03073d620",
+    "post01.json": "3fea673802a46a66de9d8917a37914ec169efed36153822482e39f71f9de8dc4",
+    "records01.json": "d02d0d5ac9479013fe263a71bc362f45c29c3aac361dfb6b3630b11dcb87d9e8",
+    "check.py": "39e8eade0aa5afb46d9ccc10da4095e0f1e6f1e738165142eee182cd95b3e36c",
+    "results01.json": "dc95ea1869e49eefc534decf854c0877218ada1f7d5732432207bea3760812e6",
+    "test_checks.py": "df69051abb99ee3dda0a142d44e3395202f1f2f670633f03e6b0411ae2a8141e"
+  }
+}

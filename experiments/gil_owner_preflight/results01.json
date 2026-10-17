@@ -1,0 +1,72 @@
+{
+  "plan_sha256": "4dffdeb0512d06cde17c613405462b9c09d6e321bf53fb95ea4af6a7614ec013",
+  "controls": [
+    {
+      "mode": "held",
+      "checks": {
+        "processes_succeeded": true,
+        "sampler_inside_sleep_bracket": true,
+        "OS_sleep_before_after": true,
+        "heartbeat_observation_floor": true,
+        "heartbeat_delivery": true,
+        "no_known_wrong_TID": true,
+        "held_has_no_other_GIL_thread": true,
+        "expected_GIL_filter": true,
+        "sampler_reported_no_errors": true
+      },
+      "correctness_pass": true,
+      "sleep_thread_samples": 97,
+      "heartbeat_increment": 0,
+      "profile_threads": [
+        {
+          "name": "Thread 2228 \"KnownSleepThread\"",
+          "tid": 2228,
+          "captured_samples": 97
+        }
+      ],
+      "log_tail": [
+        "py-spy> Sampling process 49 times a second for 2 seconds. Press Control-C to exit.",
+        "",
+        "py-spy> Wrote speedscope file to 'E:\\OptoJump\\IronJump-gil-owner-preflight-20261017-01\\run01\\held\\profile.json'. Samples: 97 Errors: 0",
+        "py-spy> Visit https://www.speedscope.app/ to view"
+      ],
+      "unexpected": [],
+      "scope": "Synthetic correctness only; samples are not elapsed GIL time or a field disturbance calibration."
+    },
+    {
+      "mode": "released",
+      "checks": {
+        "processes_succeeded": true,
+        "sampler_inside_sleep_bracket": true,
+        "OS_sleep_before_after": true,
+        "heartbeat_observation_floor": true,
+        "heartbeat_delivery": true,
+        "no_known_wrong_TID": true,
+        "held_has_no_other_GIL_thread": true,
+        "expected_GIL_filter": true,
+        "sampler_reported_no_errors": true
+      },
+      "correctness_pass": true,
+      "sleep_thread_samples": 0,
+      "heartbeat_increment": 397,
+      "profile_threads": [
+        {
+          "name": "Thread 3196 \"IndependentHeartbeat\"",
+          "tid": 3196,
+          "captured_samples": 9
+        }
+      ],
+      "log_tail": [
+        "py-spy> Sampling process 49 times a second for 2 seconds. Press Control-C to exit.",
+        "",
+        "py-spy> Wrote speedscope file to 'E:\\OptoJump\\IronJump-gil-owner-preflight-20261017-01\\run01\\released\\profile.json'. Samples: 9 Errors: 0",
+        "py-spy> Visit https://www.speedscope.app/ to view"
+      ],
+      "unexpected": [],
+      "scope": "Synthetic correctness only; samples are not elapsed GIL time or a field disturbance calibration."
+    }
+  ],
+  "synthetic_correctness_pass": true,
+  "field_attribution_ready": false,
+  "actual_load_calibration_passed": false
+}
