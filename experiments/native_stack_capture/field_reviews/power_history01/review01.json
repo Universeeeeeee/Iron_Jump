@@ -1,0 +1,44 @@
+{
+  "question": "光栅供电历史是否与前三轮延迟变化有关？",
+  "scope": "离线对比与用户供电历史补充；不启动设备、人体、Run或优化A/B，不修改正式程序、采集控制器或验收门槛。",
+  "operator_power_history": {
+    "verbatim_answers": [
+      "只关闭光栅设备电源，USB线保持连接",
+      "断电大概20分钟，重新通电后2分钟开始走路"
+    ],
+    "source": "User reply to call_670119c7ebf642eeb05761a6da37a62d, items 0 and 1",
+    "absolute_switch_timestamps": null,
+    "timing_limit": "人工回忆为约数。第二、三轮案例开始时间相差约16分23秒，与20分钟断电加2分钟上电不能直接拼成精确时间线；不据此拟合通电时长或温升。",
+    "reset_confirmed": false,
+    "reset_limit": "USB线未拔不证明控制器保持供电，也不证明其重启。现有证据没有各电源轨、控制器启动标志或USB重新枚举记录。"
+  },
+  "comparison": "comparison01.json",
+  "findings": [
+    "三轮冻结源SHA相同，GUI进程各自重启；版本沿革另见../version_lineage01/review01.json。低延迟不是本轮新部署性能修复的证据。",
+    "剔除第一轮被踢偏的第8段尾部后，11个脚印的接收至绘制最大延迟依次为835.2699、1380.2746、479.5654ms，确认三轮体验差异也存在于主机内部时序。",
+    "最后一个行走输入的接收至消费批次完成边界分别为731.9231–825.7191、1162.7465–1233.3824、336.65–412.3758ms。边界来自queue_common与queue_final，不是逐帧精确完成时间。纯粹的接收前迟发不足以解释全部已观察延迟。",
+    "第一、三轮接收残差范围约29.25和32.28ms，相邻帧最大接收间隙约19.10和21.10ms，未见其行走窗口内多秒增长的送数迟滞证据；不能排除采集前已存在的固定设备延迟。",
+    "第二轮最大接收间隙267.5586ms、相对首帧的接收残差范围约279.94ms。时间戳位于Python读取/组帧后，设备、驱动、读取线程调度/GIL和采集扰动尚不能区分。",
+    "三轮原始遮挡束数中位数均20，但行走样本长度6677/6337/6071、变化次数1474/1690/1474以及追踪模式不同。几何统计不建立相同Processor/GIL/Qt负载。",
+    "三轮wire帧号与本地sample号均从0开始，包括前两轮未报告同类断电干预的窗口。归零不是第三轮硬件复位的独立证据。",
+    "源码中显式ResetDevice调用位于hardware/receive.py的__main__独立工具入口；生产USBWorker启动路径调用DLL StopCapture、排空、StartCapture并确认ACK。本地assembler重置不能证明硬件重启，现有源码也不足以确定DLL或固件内部复位范围。",
+    "已有完整消费者调用链证明过take_gil等待发生于pending与20帧批次在途期间。CPU与CSwitch整体验收/实际负载校准未通过，继续保留失败结论，不推导GIL占比、持有者或主因。"
+  ],
+  "decision": {
+    "power_history_is_candidate_factor": true,
+    "power_causality_established": false,
+    "device_heat_buffer_or_firmware_root_cause_established": false,
+    "production_fix_applied": false,
+    "next_action_now": "无需继续人体采集；保留当前供电与软件状态说明，继续离线根因分析。",
+    "conditional_future_field_design": "若离线仍需区分供电因素，再安排固定同一入口、单USB、屏幕录制/相机和相同采集模式的匹配Walk对照，记录精确开关电时刻、每轮进程身份与等待时长。需分开控制等时休息、软件重启和设备电源变化，避免把20分钟主机休息当成纯设备效应。开始前先部署并验证Windows独立操作入口；本次未启动该实验。",
+    "mask_and_evidence": "576仍为unknown，不判清晰/遮挡、不桥接且物理坐标保留；全部历史窗口、失败校准、原计划不变。新增文件仅用于离线解释，不改变冻结采集源。"
+  },
+  "local_source_inspection_sha256": {
+    "hardware/receive.py": "90d0179663717c14be902b571af64555f53dccfe90694224412338e63842ae28",
+    "hardware/usb_worker.py": "57ca85b42401f242026fdfded5d4002d06e85d5da866980dcc2ab99771a9041d",
+    "hardware/sensor_frame.py": "87ed38175e80e56a7a586372357701c5ba879cd1fdb4ea2ea00c7b7c6bd6a95d",
+    "hardware/protocol.py": "9a0bde3b581bc9580369b15c26d0b47d0ca121865f37be2e73c5230ead480d63",
+    "docs/采集数据接口.md": "9e684be0fb095b6f0657024f40e8c27e644fca2dceb4c8633ea2a3cd80f65d7f"
+  },
+  "source_inspection_limit": "以上为当前分支源码检查，不是控制器断电复位或设备内部时间的实测。"
+}

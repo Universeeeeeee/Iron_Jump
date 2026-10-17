@@ -1,0 +1,165 @@
+{
+  "input_sha256": {
+    "experiments/single_usb_human_etw/runs/20261017_213018_48007d13_walk_off/capture/measurement.json": "aca4ddb469b985b71163fbe42c75fab8013681e8fb73a470262ac7b008aa9abb",
+    "experiments/single_usb_human_etw/runs/20261017_213018_48007d13_walk_off/capture/state.json": "6cc12cbb6b3117e613c4d7c45664e93108c29d5c821454332239ec10e58d48d1",
+    "experiments/single_usb_human_etw/runs/20261017_213018_48007d13_walk_off/capture/raw_frames.npz": "9c78d84b9d3de94c1f97a712173f80f12efe0bd65f303bafebd3abc5cb9bf1da",
+    "experiments/native_stack_capture/field_reviews/20261017_213018_48007d13_walk_off/review01.json": "555c91b9ade2ce995c03ebfbed73b2df1bdf1e59d074e3c59dff7590dd5f7da1",
+    "experiments/native_stack_capture/field_reviews/20261017_213018_48007d13_walk_off/operator_disturbance_supplement01.json": "93c7c203ef8e4bcd9f21567035642fad6de505b8d727a1571bb26ce2523d8c06",
+    "experiments/single_usb_human_etw/runs/20261017_214905_5c874d97_walk_off/capture/measurement.json": "cf44031761530ace41869ef568252fbb8b20a0a7ed624a84ac6144a1c7912d30",
+    "experiments/single_usb_human_etw/runs/20261017_214905_5c874d97_walk_off/capture/state.json": "7376b4b8f38fa0bc8453b66bf488cc54c6a3d0bcc8ba950b6b60edc5c69169ef",
+    "experiments/single_usb_human_etw/runs/20261017_214905_5c874d97_walk_off/capture/raw_frames.npz": "2042f146705f24efaa49d43df29a8ad655810f41eb812fef93f444cf88df2ac5",
+    "experiments/native_stack_capture/field_reviews/20261017_214905_5c874d97_walk_off/review01.json": "b8e1ab6705ee016191b047c8708eb0e3ed535c3262ad9c4b7c3d0903009d7699",
+    "experiments/single_usb_human_etw/runs/20261017_220528_012bb590_walk_off/capture/measurement.json": "cb048704337ff601f2571e2331035f636ad88d20c34a7656a249142fd77ed30a",
+    "experiments/single_usb_human_etw/runs/20261017_220528_012bb590_walk_off/capture/state.json": "3de7bd05ac59cb5126ee5d8ef9337690534a7eae01d30ea6a0facadb073a586c",
+    "experiments/single_usb_human_etw/runs/20261017_220528_012bb590_walk_off/capture/raw_frames.npz": "8659e2e6015c5b7c96b34fec1b7752c2026f44e69ad9ac940c8fa9530ff0d7f8",
+    "experiments/native_stack_capture/field_reviews/20261017_220528_012bb590_walk_off/review01.json": "6316ea714df90a5d78d9b4cdde223cd07ad8530c8a2a75259e65577f1d17d16d"
+  },
+  "trials": [
+    {
+      "case": "20261017_213018_48007d13_walk_off",
+      "native_profile": "OFF; external observer missed",
+      "pid": 5968,
+      "frozen_sources_sha256": "e81e6a013c1feef532124204ff77768f33ac9adeb8512f7bf4490a28f4017aa0",
+      "archive_first_frame_and_sample": [
+        0,
+        0
+      ],
+      "outward_samples_inclusive": [
+        32048,
+        38724
+      ],
+      "nominal_counter_span_s": 6.676,
+      "host_receipt_span_s": 6.6759761,
+      "receipt_minus_nominal_span_ms": -0.0239,
+      "receipt_residual_relative_to_first_ms": {
+        "min": -0.167,
+        "p50": 0.5512,
+        "p95": 16.33338,
+        "max": 29.0795
+      },
+      "successive_receipt_gap_ms": {
+        "min": 0.0458,
+        "p50": 0.8139,
+        "p95": 2.436325,
+        "max": 19.0993
+      },
+      "usable_blocked_beams_per_sample": {
+        "min": 1.0,
+        "p50": 20.0,
+        "p95": 24.0,
+        "max": 46.0
+      },
+      "usable_active_sample_fraction": 1.0,
+      "usable_bit_transitions": 1474,
+      "receipt_to_paint_ms": {
+        "count": 11,
+        "p95": 803.24305,
+        "max": 835.2699
+      },
+      "last_input_receipt_to_batch_completion_bounds_ms": [
+        731.9230999999995,
+        825.7191000000006
+      ]
+    },
+    {
+      "case": "20261017_214905_5c874d97_walk_off",
+      "native_profile": "CSwitch wait stacks",
+      "pid": 17752,
+      "frozen_sources_sha256": "e81e6a013c1feef532124204ff77768f33ac9adeb8512f7bf4490a28f4017aa0",
+      "archive_first_frame_and_sample": [
+        0,
+        0
+      ],
+      "outward_samples_inclusive": [
+        27535,
+        33871
+      ],
+      "nominal_counter_span_s": 6.336,
+      "host_receipt_span_s": 6.2913522,
+      "receipt_minus_nominal_span_ms": -44.6478,
+      "receipt_residual_relative_to_first_ms": {
+        "min": -46.3436,
+        "p50": -44.1353,
+        "p95": 26.3751,
+        "max": 233.5963
+      },
+      "successive_receipt_gap_ms": {
+        "min": 0.0389,
+        "p50": 0.64255,
+        "p95": 2.696375,
+        "max": 267.5586
+      },
+      "usable_blocked_beams_per_sample": {
+        "min": 1.0,
+        "p50": 20.0,
+        "p95": 23.0,
+        "max": 44.0
+      },
+      "usable_active_sample_fraction": 1.0,
+      "usable_bit_transitions": 1690,
+      "receipt_to_paint_ms": {
+        "count": 11,
+        "p95": 1071.75005,
+        "max": 1380.2746
+      },
+      "last_input_receipt_to_batch_completion_bounds_ms": [
+        1162.7465000000009,
+        1233.3824
+      ]
+    },
+    {
+      "case": "20261017_220528_012bb590_walk_off",
+      "native_profile": "100 Hz CPU stacks",
+      "pid": 11948,
+      "frozen_sources_sha256": "e81e6a013c1feef532124204ff77768f33ac9adeb8512f7bf4490a28f4017aa0",
+      "archive_first_frame_and_sample": [
+        0,
+        0
+      ],
+      "outward_samples_inclusive": [
+        29955,
+        36025
+      ],
+      "nominal_counter_span_s": 6.07,
+      "host_receipt_span_s": 6.0896631,
+      "receipt_minus_nominal_span_ms": 19.6631,
+      "receipt_residual_relative_to_first_ms": {
+        "min": -0.192,
+        "p50": 0.7886,
+        "p95": 16.979750000000003,
+        "max": 32.0851
+      },
+      "successive_receipt_gap_ms": {
+        "min": 0.0418,
+        "p50": 0.74895,
+        "p95": 2.80093,
+        "max": 21.1021
+      },
+      "usable_blocked_beams_per_sample": {
+        "min": 1.0,
+        "p50": 20.0,
+        "p95": 24.0,
+        "max": 41.0
+      },
+      "usable_active_sample_fraction": 1.0,
+      "usable_bit_transitions": 1474,
+      "receipt_to_paint_ms": {
+        "count": 11,
+        "p95": 479.45795,
+        "max": 479.5654
+      },
+      "last_input_receipt_to_batch_completion_bounds_ms": [
+        336.65000000000055,
+        412.3758000000013
+      ]
+    }
+  ],
+  "method_limits": [
+    "1000Hz is the nominal frame-counter cadence, not an independently synchronized device clock.",
+    "Receipt timestamps follow Python USB reading and assembly; residuals include reader scheduling and nominal clock drift. Constant upstream age is invisible.",
+    "Raw beam counts/transitions are input geometry descriptors, not Processor cost or physical-contact/step counts.",
+    "Completion bounds use prior queue_common/queue_final evidence; independent queue_samples do not establish completion bounds.",
+    "First trial excludes kicked segment8 tail. Original failed protocol, traces and calibration decisions are preserved.",
+    "No causal comparison of tracing overhead, power duration, temperature or GIL percentages is valid from these three unmatched trials."
+  ]
+}
