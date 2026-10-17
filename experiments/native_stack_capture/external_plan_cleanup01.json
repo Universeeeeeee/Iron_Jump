@@ -1,0 +1,81 @@
+{
+  "base_commit": "93c2815b5c69b28439ae42b7b240f86df1042f4a",
+  "scope": "Final external observer; two synthetic processes only, no real GUI/SDK/device/human load",
+  "capture_seconds": 6,
+  "processes": [
+    "gui",
+    "sdk"
+  ],
+  "workers_per_process": [
+    "cpu_a",
+    "cpu_b",
+    "qt_wait",
+    "system_wait"
+  ],
+  "progress_period_s": 0.05,
+  "calibration_orders": {
+    "cpu": [
+      [
+        "off",
+        "cpu"
+      ],
+      [
+        "cpu",
+        "off"
+      ],
+      [
+        "off",
+        "cpu"
+      ]
+    ],
+    "wait": [
+      [
+        "off",
+        "wait"
+      ],
+      [
+        "wait",
+        "off"
+      ],
+      [
+        "off",
+        "wait"
+      ]
+    ]
+  },
+  "quality_gate_plan_sha256": "2a0ec4593a07e65bda0c329e094480775b4bc3574af3853bd9d86b8532196178",
+  "pair_limits": {
+    "work": 0.15,
+    "cpu_s": 0.15,
+    "cycles": 0.15
+  },
+  "work_comparison": "Use monotone progress bounds at both counter brackets; all possible ON/OFF changes must lie within symmetric limits",
+  "no_retries_to_replace_failed_pairs": true,
+  "quantitative_field_attribution_ready": false,
+  "source_sha256": {
+    "external_fixture.py": "7a370154e85a14e5fdf6a853bb55fd7beac1979ed1ea5c6ee1976b7e8ad6283e",
+    "external_calibration.py": "9c223685f254ac5b4ab85155203e788bb61956fb0e5b376d355b11fc8c0c3a94",
+    "record.py": "c6d963a249ad10c78cb8a0dba1f9be03889683a2852f1ddb96038f9f53f38d81",
+    "observe.py": "f33c6b2da48593b28e1748417ded306632b7997bbaf7f608e8baef5e3c391777",
+    "winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+    "split_field.py": "624f3c3dd935f12c818324f5c37c3aa69b034d3ecef13ffbd98b62bc386ac9e0",
+    "align_clock.py": "d49f54563591d23e9fc8e08b7d8eab028b65fbaa7dcb329e12b6ac58c2c893f1",
+    "ReadStacks.cs": "fb20ca77da7dfb4a26167ef3b54a75ee94633cc6b6d88c79a69220a9088d2476",
+    "symbolize.py": "e45766dc0177d105769a9afe6c411025dcefe376a516920d0c56a33cf6fe79c8",
+    "analyze.py": "e99d90dc65b29daaf7e75fbb8f60d45f4a53af48b3bdaa7cbae8b929807d1808",
+    "report.py": "10decf431f79fd75f1595638ab14381f9f99957e608947ca82dfb340d1348043",
+    "cpu.wprp": "949d5973ba665469586cc48ee5a0e3dbb5043ca847f4eb396bca29f6d4bef9fb",
+    "wait.wprp": "d584fc8c90595bf5f2bf4e9cdf8b2595908b5c1dbd931f9c885cc0dd08c1bcf8",
+    "plan.json": "2a0ec4593a07e65bda0c329e094480775b4bc3574af3853bd9d86b8532196178",
+    "external_report.py": "105776b8544e4d0e8b2e663e1116c7394defea4bb9588b85c20a0b80fcf9901d",
+    "test_record_cleanup.py": "a8efd3d9a05e42cddf020d72c21e059e3af7b27066cb4512c2e21c49bc1d2e40"
+  },
+  "cross_process_time_check": "Intersect independently measured parent/gui/sdk QPC-perf anchor bounds before work comparisons",
+  "version": 3,
+  "previous_plan_sha256": "9675c1c92ceb3a333d55905a011d0f1eda9980fb25c5648aacffe93fe6c795a2",
+  "protocol_repair": "Append one progress snapshot after the external observer has ended; preserve the initial series and its failed trace gates; no change inside the measured workload loop or to any acceptance threshold",
+  "previous_plan_file": "external_plan.json",
+  "controller_cleanup_repair": "Mark interval restoration pending before setting; independently attempt owned WPR stop and interval restore; retain each failure and lock unless cleanup is confirmed and record.json is written",
+  "calibration_status": "New source freeze for future capture only; no new capture or calibration performed. Historical CPU 2/3 and wait 3/3 results and every failed window remain unchanged",
+  "development_status": "Paused after cleanup fix; wait for real single-USB Walk backlog reproduction"
+}

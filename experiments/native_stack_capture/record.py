@@ -12,11 +12,23 @@ HERE = Path(__file__).resolve().parent
 
 
 def main(a):
+    lock = HERE / '.capture.lock'
+    with lock.open('x') as stream:
+        stream.write(str(a.output))
+    cleanup = dict(complete=False)
+    try:
+        _record(a, cleanup)
+    finally:
+        if cleanup['complete']:
+            lock.unlink()
+
+
+def _record(a, cleanup):
     if not 0 < a.seconds <= 10:
         raise ValueError('Use a short window in (0,10] seconds')
     a.output.mkdir(parents=True, exist_ok=False)
     session = 'IJNative_' + uuid.uuid4().hex
-    log = dict(mode=a.mode, instance=session, start=anchor(), commands=[],
+    log = dict(mode=a.mode, instance=session, start=anchor(), commands=[], cleanup_complete=False,
                human_test_started_by_tool=False, external_targets=bool(a.targets))
     log['source_sha256'] = {p.name:hashlib.sha256(p.read_bytes()).hexdigest()
                             for p in HERE.iterdir() if p.suffix in ('.py','.wprp','.json','.cs')}
@@ -44,8 +56,9 @@ def main(a):
             started = True
             if a.mode == 'cpu':
                 log['interval_requested_100ns'] = 100000  # 10 ms / 100 Hz, verify actual events independently
-                log['interval_readback_100ns'] = profile_interval(100000)
+                # The setter may succeed before its readback raises: restore even then.
                 changed = True
+                log['interval_readback_100ns'] = profile_interval(100000)
             call(['wpr', '-status', '-instancename', session])
         if a.targets:
             from observe import observe
@@ -55,24 +68,42 @@ def main(a):
             log['external_observation'] = observe(targets,a.seconds)
         else:
             call([sys.executable, str(HERE / 'fixture.py'), str(a.output / 'fixture'), '--seconds', str(a.seconds)])
-    except Exception as error:
+    except BaseException as error:
         log['failure'] = repr(error)
         raise
     finally:
-        try:
-            if started:
+        errors = []
+        if started:
+            log['stop_ok'] = False
+            try:
                 # Stop only the uniquely owned instance. Preserve failure and partial ETL.
                 stopped = call(['wpr', '-stop', str(a.output / 'trace.etl'), '-instancename', session], check=False)
                 log['stop_ok'] = stopped.returncode == 0
                 if not log['stop_ok']:
                     raise RuntimeError('Owned WPR stop failed; inspect record.json and this instance')
-        finally:
+            except BaseException as error:
+                log['stop_error'] = repr(error)
+                errors.append(log['stop_error'])
+        if changed:
+            log['interval_restore_ok'] = False
             try:
-                if changed:
-                    log['interval_restored_100ns'] = profile_interval(original)
-            finally:
-                log['end'] = anchor()
-                (a.output / 'record.json').write_text(json.dumps(log, indent=2) + '\n')
+                log['interval_restored_100ns'] = profile_interval(original)
+                log['interval_restore_ok'] = log['interval_restored_100ns'] == original
+                if not log['interval_restore_ok']:
+                    raise RuntimeError('Sampling interval restore readback differs from original')
+            except BaseException as error:
+                log['interval_restore_error'] = repr(error)
+                errors.append(log['interval_restore_error'])
+        log['cleanup_complete'] = (not started or log['stop_ok']) and (not changed or log['interval_restore_ok'])
+        try:
+            log['end'] = anchor()
+        except BaseException as error:
+            log['end_error'] = repr(error)
+            errors.append(log['end_error'])
+        (a.output / 'record.json').write_text(json.dumps(log, indent=2) + '\n')
+        cleanup['complete'] = log['cleanup_complete']
+        if errors and 'failure' not in log:
+            raise RuntimeError('Controller finalization failed: ' + '; '.join(errors))
 
 
 if __name__ == '__main__':
@@ -82,10 +113,4 @@ if __name__ == '__main__':
     p.add_argument('--seconds', type=float, default=6)
     p.add_argument('--targets', type=Path, help='Existing GUI/SDK PID/TID manifest; no target is launched')
     args = p.parse_args()
-    lock = HERE / '.capture.lock'
-    with lock.open('x') as stream:
-        stream.write(str(args.output))
-    try:
-        main(args)
-    finally:
-        lock.unlink()
+    main(args)

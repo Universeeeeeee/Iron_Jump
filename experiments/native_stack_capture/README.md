@@ -99,6 +99,14 @@ D:/conda/python.exe split_field.py '<新目录>/wait_window' '<新目录>/wait_s
 
 ## 保存和复核
 
+### 基于 `93c2815` 的异常清理修复与暂停
+
+本次只修改采集控制器及其故障注入测试。调用采样间隔设置前即标记需要恢复，避免设置成功、回读失败时跳过恢复。WPR 停止和间隔恢复分别尝试，原采集异常、停止异常及恢复异常分别写入 `record.json`。`cleanup_complete` 只有在自有 WPR 停止返回成功、需要恢复的间隔回读等于原值时才为 true；日志写入成功后才允许删除 `.capture.lock`。停止非零/抛异常、恢复抛异常/回读不符时保留锁和故障记录，后续调用直接拒绝启动；日志写入失败也保留锁。遗留锁须先人工核对所指窗口、自有 instance 和原间隔，不能直接删锁后重试。
+
+新增 14 个 mock/故障注入用例，先在旧控制器复现漏恢复等失败，再验证修复。运行 `python3 -m unittest discover -s experiments/native_stack_capture -p 'test_*.py' -v`：共 47 项，43 项通过，4 项 Windows 专用测试在 macOS 跳过。本轮没有启动 WPR、合成采集或正式程序，未在 Windows 实机重新验证恢复行为。
+
+新的 [external_plan_cleanup01.json](external_plan_cleanup01.json) version 3 冻结当前全部所列源 SHA（含此前只读分析修正和本次清理测试），供后续采集核对；旧 `external_plan.json`、全部校准报告和失败窗口原样保留。新计划尚未采集或校准，不改变 CPU 用户栈闭合等任何门槛，也不覆盖外部 CPU 2/3、wait 3/3 的历史结论。至此暂停工具开发，等待真实单 USB Walk 积压复现；现场最小操作仍按上节执行，不增加人体、USB、Run 或优化 A/B 测试。
+
 Windows 独立根：`E:/OptoJump/IronJump-native-stack-capture-20261017-01`。原 ETL、解码原载荷、每地址解析、tracerpt 全扫描和失败尝试都保留该处；Mac 对应 `runs/`、zip/exe/ETL 忽略 Git。`scan_manifest.json` 保存八份合成 ETL 的路径、大小、SHA 和派生物 SHA，`results02.json` 保存详细验收、见证调用链和每对原值变化。缓存 PDB 沿用只读的上一阶段目录，没有网络自动换符号。
 
 ```sh
