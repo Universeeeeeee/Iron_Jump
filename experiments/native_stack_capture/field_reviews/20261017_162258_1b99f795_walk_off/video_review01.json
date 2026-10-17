@@ -1,0 +1,115 @@
+{
+  "case": "20261017_162258_1b99f795_walk_off",
+  "scope": "Read-only review of the user-provided cropped screen recording and retained SDK input/decision logs. No new capture, device access, human passage, source edit or tuning.",
+  "supplements_snapshot": "review01.json; prior snapshots and unresolved-path fields are retained as historical records",
+  "video": {
+    "path": "/Users/vae/Projects/Iron_Jump/现场测试/10.17/6a42de25514ec008ab459bf819cd42f5.mp4",
+    "location": "Mac user workspace; native camera originals remain on Windows",
+    "bytes": 473829,
+    "sha256": "87d586e34b808b5d3deefbad7c1088b7aa3b48490ac8dccff2f6bd00e74decd9",
+    "duration_s": 10,
+    "nominal_fps": 30,
+    "decoded_frame_size": [
+      1288,
+      688
+    ],
+    "cropped_to_walking_portion": true,
+    "review_method": "AVFoundation exact-time extraction at clip seconds 0 through 9; full-size visual review of 0,2,3,4 and overview of all ten samples",
+    "source_file_modified": false
+  },
+  "visual_observations": [
+    {
+      "clip_s": 0,
+      "observation": "Person stands fully within preview; lower-body skeleton is visible; the initial empty lead-in is ending."
+    },
+    {
+      "clip_s": 2,
+      "observation": "Person is moving toward the left of preview. Foot/ankle approaches or crosses the lower image boundary; visible UI prompts report missing foot landmarks and body filling the frame."
+    },
+    {
+      "clip_s": 3,
+      "observation": "Person is partly clipped at left/lower image edges; first footprint is visible. UI says SDK follow is paused pending a fresh reliable full-body target."
+    },
+    {
+      "clip_s": 4,
+      "observation": "Person has left the preview. Camera image continues to show the scene and footprints continue to accumulate."
+    },
+    {
+      "clip_s": [
+        5,
+        9
+      ],
+      "observation": "Preview remains on the empty scene while footstep metrics and footprint display continue to update. Final visible valid_steps=6 is distinct from ten published/painted contacts."
+    }
+  ],
+  "alignment_limit": "Clip begins near the end of the 5-second lead-in and its displayed elapsed labels progress approximately 6..14 seconds. No shared recorder-clock anchor is available; clip seconds are not equated precisely with host/QPC or physical movement time. Preview itself may be delayed.",
+  "SDK_log_sequence": {
+    "first_active_footprint_touch_raw_receipt_formal_s": 8.3385072,
+    "invalid_target_decision_formal_s": 8.4151047,
+    "preceding_pose_input_formal_s": 8.3993941,
+    "preceding_source_frame_index": 1825,
+    "failed_required_landmark": {
+      "index": 27,
+      "name": "left_ankle",
+      "point": {
+        "x": 0.20599141716957092,
+        "y": 1.0247029066085815,
+        "z": 0.004767443519085646,
+        "visibility": 0.9393147230148315,
+        "presence": 0.9797475337982178
+      },
+      "passes_frozen_checks": false,
+      "checks": {
+        "visibility": true,
+        "presence": true,
+        "in_frame": false
+      }
+    },
+    "other_required_landmarks_passed": true,
+    "first_zero_speed_after_invalid_target_gui_observed_formal_s": 8.4152448,
+    "zero_speed_args": [
+      0.0,
+      0.0
+    ],
+    "last_nonzero_speed_before_invalid_target_gui_observed_formal_s": 8.3544148,
+    "last_nonzero_speed_args": [
+      1.750895380973816,
+      -39.70659148693085
+    ],
+    "no_pose_decision_formal_s": 9.1077049,
+    "API_calls_scope": "Logged calls returned without an error; result None is the Python wrapper return. No gimbal-angle feedback or physical-motion delivery measurement is available."
+  },
+  "frozen_tracking_rule": {
+    "required_landmarks": [
+      11,
+      12,
+      23,
+      24,
+      27,
+      28
+    ],
+    "meaning": "Both shoulders, hips and ankles must have finite coordinates in [0,1] and visibility/presence at least 0.65. body_framing returns None otherwise; mailbox returns invalid_target and runtime requests zero speed. Missing pose then produces no_pose and zero speed.",
+    "source_sha256": {
+      "camera/pose_tracking.py": "ce477c35317c08741a7d62f67be3f0a696648580b82d53c729e63aa3814b87e7",
+      "camera/tracking_runtime.py": "e3f079bca732ebb8e642eb29183eb19a8e68e2d44f2e3ceca3ec0c07168b68e7",
+      "vision/gimbal_tracking.py": "e52b9f155ff6a78d96f6c82f5ffa8f80c0f03767c8054b56817263fd5fdc3c0e"
+    },
+    "source_matches_frozen_formal_baseline": true,
+    "thresholds_changed": false
+  },
+  "assessment": {
+    "immediate_pause_trigger_supported": "The preceding pose packet has model left-ankle y=1.0247029066, outside the image, with the other five required landmarks passing. This matches the frozen invalid-target rule and the subsequent zero-speed request.",
+    "initial_failure_to_keep_person_in_frame": "Unresolved: framing geometry, actual pan/pitch delivery, motion response and pose behavior have not been independently separated. SDK call completion alone does not verify physical camera movement.",
+    "continued_frame_and_footprint_updates": "Observed in sampled screen frames; no claim of zero capture/display latency or whole-system freedom from stalls.",
+    "screen_recording_caused_tracking_loss": "Not established",
+    "CPU_GIL_Qt_root_cause": "No attribution; no native stacks were captured in this OFF trial",
+    "full_pose_under_load_qualification_pass": false,
+    "quantitative_field_attribution_ready": false
+  },
+  "preservation": {
+    "existing_reports_and_failed_windows_unchanged": true,
+    "original_video_sha_frozen_by_this_record": true,
+    "source_changes": false
+  },
+  "next_step": "Review existing framing/physical-motion evidence before deciding on further field work; no additional human round or automatic parameter change is scheduled."
+}
