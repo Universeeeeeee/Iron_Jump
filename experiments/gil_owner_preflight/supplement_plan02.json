@@ -1,0 +1,73 @@
+{
+  "status": "冻结的补证设计，尚无采集控制器实现/部署，不可直接用于现场；本次不执行。",
+  "base_commit": "575e21b5d73c2fef2760e01aecc551c82b036d20",
+  "objective": "在原有积压证据之外定位同窗GIL持有者Python路径；不直接估计占比、锁持有时间或主因。",
+  "immutable_inputs_sha256": {
+    "experiments/gil_owner_preflight/fixture.py": "c3d20f6302d7d8eea14be896928af2745621fd3d1628a176127c8be03073d620",
+    "experiments/gil_owner_preflight/plan01.json": "4dffdeb0512d06cde17c613405462b9c09d6e321bf53fb95ea4af6a7614ec013",
+    "experiments/gil_owner_preflight/review01.json": "0ccf65adf5cb7a2462a61bb0f8bddcae2b3b5915e32cf493d37604a9676459e0",
+    "experiments/gil_owner_preflight/audit_time.py": "ef3ac4a2c0766b44741256db5be2f7d332a9df52b2acfc3cd5070d1d78fd9571",
+    "experiments/gil_owner_preflight/time_audit01.json": "5f9581ce3ea4767d0cc5570e538e91fc4053a4dfc2bef92c7462130229611bfa",
+    "experiments/gil_owner_preflight/format_review01.json": "81a440051b419d757f336f57d732bd148ed268655edd783cb200550500d00e55",
+    "experiments/single_usb_human_etw/frozen_sources.json": "e81e6a013c1feef532124204ff77768f33ac9adeb8512f7bf4490a28f4017aa0",
+    "experiments/runtime_single_frame_fusion/baseline_manifest.json": "6fb25b3c2cb9945c35340bc2d2e81bc593c35fefbffb6cc4fef61169f18ce5c6",
+    "experiments/native_stack_capture/plan.json": "2a0ec4593a07e65bda0c329e094480775b4bc3574af3853bd9d86b8532196178",
+    "experiments/native_stack_capture/external_plan.json": "9675c1c92ceb3a333d55905a011d0f1eda9980fb25c5648aacffe93fe6c795a2",
+    "experiments/native_stack_capture/field_reviews/20261017_field_wait01/round02/acceptance.json": "9e1fb7197d4b3e08ebe0459f49304b85e0e33d4734db963267593f392323bce6",
+    "experiments/native_stack_capture/field_reviews/20261017_field_cpu01/round01/acceptance.json": "02cbe3b66608c30db03a45ca7c052c39fbb237abeebb24f1b4f184e61fa15e40"
+  },
+  "sampler": {
+    "exe": "E:/OptoJump/IronJump-throughput-diagnosis-20261015/experiments/ground_throughput_diagnosis/tools/py-spy.exe",
+    "sha256": "6e83ab095f40453742d01a2719a178f308534015da519ec0659d2584139dc995",
+    "candidate_argv": [
+      "py-spy.exe",
+      "dump",
+      "--pid",
+      "<verified_GUI_PID>",
+      "--json",
+      "--full-filenames"
+    ],
+    "mode": "默认暂停目标的单次Python快照；不加nonblocking/native/subprocesses/locals；保留全部线程再离线筛选owns_gil。",
+    "mode_qualification_passed": false,
+    "tool_changed": false
+  },
+  "qualification_before_any_field_use": [
+    "另建唯一实验目录和新执行源SHA冻结计划；不能复用/覆盖plan01、run01或任何失败。候选模式变化需新计划。",
+    "沿用未修改fixture.py，在新合成进程中预先声明held/released各一次dump；保留ready、阶段、外部OS线程状态、共享内存心跳、完整输出/错误和所有失败，不因未通过补采。",
+    "held必须唯一owns_gil且os_thread_id等于sleeper，含held_sleep帧；released不得将released_sleep标为owner。零owner可表示此瞬间GIL空闲，不能算持有者阴性证明。",
+    "核实实际exe输出schema及默认暂停/恢复行为；用独立OS/心跳验证目标得到恢复，退出码0不替代恢复证据；并发帧修改一致性尚待专门验证。",
+    "源SHA、Python DLL SHA、PID创建时间/原生TID生命周期必须匹配。自身子进程故障只清理拥有的句柄；暂停/恢复状态不明必须保留锁与错误，禁止报告完成。",
+    "实际负载扰动仍未通过：未来另行授权且冻结后，以匹配输入/观察条件核验消费进度、GetThreadTimes和cycles。不能将不同人体轮次当严格A/B；原有对称15%限制及原生质量门槛保持不变。不可先采再挑低扰动窗口。"
+  ],
+  "future_field_window": {
+    "currently_authorized_or_armed": false,
+    "mode": "仅Walk，单USB，现有正式冻结基线；无Run、优化A/B或正式程序修改。",
+    "proposal": "将来合格且获准后，单独短窗使用此观察器；不与CPU或CSwitch栈采集叠加。一次窗口最多3个单次快照，至少间隔1s；一个失败即保留并停止，不补采替换。此数目不是覆盖率承诺。",
+    "SDK": "不将SDK子进程混入GUI GIL；SDK PID/计时与GUI分别保存、分别判断。",
+    "trigger": "只关联同轮已存在的armed/stop标记；本次未安装触发器、未修改桌面入口、未启动后台watcher。能否捕获积压事后验证，未命中记为缺证。"
+  },
+  "time_contract": [
+    "同一Windows启动时段记录QPC频率及perf_counter_ns/QPC映射和残差。每个dump从Popen之前到communicate/退出之后保存完整括号、stdout/stderr原始字节、退出码和PID身份。",
+    "调用链未知具体读取时刻，只能说观测发生在整个括号内；不能减去启动开销、按样本序号/中点收窄。超时或目标退出输出无效且必须保留。",
+    "与batch/队列时间窗比较时，将完整时钟不确定性加在括号两侧。仅有时间窗相交不能证明同时；必须全括号包含在已经证明的目标区间内，否则同窗未知。",
+    "若未来同时声称等待者被该owner阻塞，必须有同轮合格等待证据，且全括号落在guarded switch-out→ReadyThread之前；不得用switch-in替代Ready边界。单独owner快照仅证明一个候选Python路径。"
+  ],
+  "backlog_contract": [
+    "使用原始queue_common+queue_final作为批次完成上下界，queue_samples只作状态观察；禁止把后者当批次完成记录。对齐原始receipt、sample编号、接触区间及坏束576未知语义，不能把踢到第8段的尾部算有效接触。",
+    "未来如采用E_before-C_after-20的pending下界，须先证实连续单调帧、无issue/丢帧、仅一个消费者、无重入、整个区间仅正常max20 drain；排除arm/finish的无界批次。未逐项核验时该式不得用于实测结论。",
+    "E_before为完整括号之前已入队编号，C_after为括号之后已经完成的批次编号；20用于保守扣除在途内可能已处理的帧。该式不是当前已测pending，也不定位某一个batch。",
+    "若要声称同一20帧批次在途，必须以同轮标记/快照证实批次身份并覆盖全括号；缺少这些信息保留为未知，不插值。"
+  ],
+  "current_acceptance": {
+    "stable_nonblocking_record_correctness": true,
+    "blocking_dump_correctness": false,
+    "concurrent_frames_validated": false,
+    "actual_load_disturbance_pass": false,
+    "field_GIL_owner_identified": false,
+    "quantitative_attribution_ready": false,
+    "root_cause_or_fix_complete": false
+  },
+  "stop_condition": "本轮止于离线审计和冻结设计，不继续开发/启动采集器；真实补证需要独立执行冻结与必要授权。现有六个等待见证、CPU/CSwitch失败和全部历史计划不变。",
+  "supersedes_for_future_use": "supplement_plan01.json retained unchanged; auditor added verification of already frozen plan/records input SHA before reading. No collection or failed field evidence was repeated.",
+  "previous_plan_sha256": "4643055b9cdc29fb9c286f8dfe556d9fa41df1b11680498a8d64fc89014c5a7f"
+}

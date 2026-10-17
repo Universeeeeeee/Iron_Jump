@@ -1,0 +1,45 @@
+{
+  "scope": "Mac offline only; no target process, Windows operation, human/USB/Run/optimization trial or collector started.",
+  "checks": {
+    "audit_reproduced_exactly": true,
+    "existing_output_overwrite_rejected": true,
+    "modified_raw_profile_rejected": true,
+    "production_baseline_files_matching": 458,
+    "field_source_manifest_matches": true,
+    "selected_plan_sources_match": true
+  },
+  "tests": {
+    "gil_owner_existing": {
+      "run": 9,
+      "passed": 9
+    },
+    "native_capture_existing": {
+      "run": 47,
+      "passed": 43,
+      "skipped": 4,
+      "skip_reason": "Windows native fixture/handles required"
+    }
+  },
+  "selected_plan": "supplement_plan02.json",
+  "selected_plan_sha256": "b047576a5098de93d10234c6fb4b3011d0e356db1fc5567102121818fc2f22f2",
+  "preserved_superseded_plan_sha256": "4643055b9cdc29fb9c286f8dfe556d9fa41df1b11680498a8d64fc89014c5a7f",
+  "qualification": {
+    "blocking_dump_correctness": false,
+    "actual_load_disturbance": false,
+    "field_owner_identified": false,
+    "quantitative_field_attribution": false,
+    "root_cause_or_fix_complete": false
+  },
+  "preserved_inputs_sha256": {
+    "experiments/single_usb_human_etw/frozen_sources.json": "e81e6a013c1feef532124204ff77768f33ac9adeb8512f7bf4490a28f4017aa0",
+    "experiments/native_stack_capture/field_reviews/20261017_field_wait01/round02/acceptance.json": "9e1fb7197d4b3e08ebe0459f49304b85e0e33d4734db963267593f392323bce6",
+    "experiments/native_stack_capture/field_reviews/20261017_field_cpu01/round01/acceptance.json": "02cbe3b66608c30db03a45ca7c052c39fbb237abeebb24f1b4f184e61fa15e40"
+  },
+  "artifacts_sha256": {
+    "audit_time.py": "ef3ac4a2c0766b44741256db5be2f7d332a9df52b2acfc3cd5070d1d78fd9571",
+    "time_audit01.json": "5f9581ce3ea4767d0cc5570e538e91fc4053a4dfc2bef92c7462130229611bfa",
+    "format_review01.json": "81a440051b419d757f336f57d732bd148ed268655edd783cb200550500d00e55",
+    "supplement_plan01.json": "4643055b9cdc29fb9c286f8dfe556d9fa41df1b11680498a8d64fc89014c5a7f",
+    "supplement_plan02.json": "b047576a5098de93d10234c6fb4b3011d0e356db1fc5567102121818fc2f22f2"
+  }
+}

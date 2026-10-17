@@ -1,0 +1,31 @@
+{
+  "rows": [
+    {
+      "control": "held",
+      "thread": "Thread 2228 \"KnownSleepThread\"",
+      "samples": 97,
+      "displayed_seconds": 1.9795918367346939,
+      "external_process_bracket_seconds": 2.6638609,
+      "source_sha256": "2154ff07fd5fd0490787959a2c60e4c622aa6156c8584827e54fabed14487925"
+    },
+    {
+      "control": "released",
+      "thread": "Thread 3196 \"IndependentHeartbeat\"",
+      "samples": 9,
+      "displayed_seconds": 0.1836734693877551,
+      "external_process_bracket_seconds": 2.261739,
+      "source_sha256": "f095fcc9af50500848a914f176f9bcbb09cb6b1f87b3a46d1fe74251de6254a9"
+    }
+  ],
+  "absolute_sample_timestamps_available": false,
+  "interpolate_sample_index_to_QPC_allowed": false,
+  "explanation": "Each retained sample has weight 1/rate. Filtered gaps and observer startup are not represented. Only the entire externally recorded sampler bracket can bound these observations; weights do not locate a sample inside it or measure a continuous GIL hold.",
+  "held_released_correctness_results_changed": false,
+  "field_owner_identified": false,
+  "quantitative_field_attribution_ready": false,
+  "inputs_sha256": {
+    "plan01.json": "4dffdeb0512d06cde17c613405462b9c09d6e321bf53fb95ea4af6a7614ec013",
+    "records01.json": "d02d0d5ac9479013fe263a71bc362f45c29c3aac361dfb6b3630b11dcb87d9e8",
+    "review01.json": "0ccf65adf5cb7a2462a61bb0f8bddcae2b3b5915e32cf493d37604a9676459e0"
+  }
+}

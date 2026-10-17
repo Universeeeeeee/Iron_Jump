@@ -1,0 +1,125 @@
+{
+  "scope": "离线复核已保留控制输出与公开v0.4.2源码；不附加任何现场/合成目标。",
+  "source_manifest": {
+    "tag": "v0.4.2",
+    "commit": "d230d8208d652ba168256ffb66170d1c6cd8b650",
+    "files": {
+      "chrometrace.rs": {
+        "sha256": "84b230c82182c7ead9d6085e2a17c75e30e5525910c8b34577d2ba8694c5957b",
+        "url": "https://raw.githubusercontent.com/benfred/py-spy/d230d8208d652ba168256ffb66170d1c6cd8b650/src/chrometrace.rs"
+      },
+      "config.rs": {
+        "sha256": "441f4a7e79a6db80f5d39e95bf5a19ce86727c314a0faa0cc9144267bb421b47",
+        "url": "https://raw.githubusercontent.com/benfred/py-spy/d230d8208d652ba168256ffb66170d1c6cd8b650/src/config.rs"
+      },
+      "dump.rs": {
+        "sha256": "cc029d8411e868e7453a21edfae76eb0c91e5d8fee3eae31c4e2884110963786",
+        "url": "https://raw.githubusercontent.com/benfred/py-spy/d230d8208d652ba168256ffb66170d1c6cd8b650/src/dump.rs"
+      },
+      "python_spy.rs": {
+        "sha256": "21a9ff67759655329633db5022925dfac72a920d3b970bf5b8ec4b6866129793",
+        "url": "https://raw.githubusercontent.com/benfred/py-spy/d230d8208d652ba168256ffb66170d1c6cd8b650/src/python_spy.rs"
+      },
+      "sampler.rs": {
+        "sha256": "e329d315c91225198c2115d40d4e04e3d496f88adff548b8f214c64c4d0a774c",
+        "url": "https://raw.githubusercontent.com/benfred/py-spy/d230d8208d652ba168256ffb66170d1c6cd8b650/src/sampler.rs"
+      },
+      "speedscope.rs": {
+        "sha256": "0cb22d242ac7857e23e2205e70608d64158674a5c1e4033fd0f0604d8ba5d8de",
+        "url": "https://raw.githubusercontent.com/benfred/py-spy/d230d8208d652ba168256ffb66170d1c6cd8b650/src/speedscope.rs"
+      },
+      "stack_trace.rs": {
+        "sha256": "baa9e1f4401ad1d922edc4fea1bcac2186c196296a6165b063e182fa0facc7d8",
+        "url": "https://raw.githubusercontent.com/benfred/py-spy/d230d8208d652ba168256ffb66170d1c6cd8b650/src/stack_trace.rs"
+      }
+    },
+    "binary_build_provenance_verified": false
+  },
+  "source_build_limit": "固定commit源码用于格式/设计核查；未重建验证其与既有exe逐字节同源。二进制实际格式需在新模式正确性控制中核对。",
+  "references": [
+    {
+      "file": "speedscope.rs",
+      "sha256": "0cb22d242ac7857e23e2205e70608d64158674a5c1e4033fd0f0604d8ba5d8de",
+      "url": "https://raw.githubusercontent.com/benfred/py-spy/d230d8208d652ba168256ffb66170d1c6cd8b650/src/speedscope.rs#L139-L158",
+      "interpretation": "endValue由保留样本数/rate生成，每个权重固定为1/rate；不保留采样空档。",
+      "excerpt": "                let end_value = samples.len();\n                // we sample at 100 Hz, so scale the end value and weights to match the time unit\n                let scaled_end_value = end_value as f64 / sample_rate as f64;\n                let weights: Vec<f64> = samples\n                    .iter()\n                    .map(|_s| 1_f64 / sample_rate as f64)\n                    .collect();\n\n                Profile {\n                    profile_type: ProfileType::Sampled,\n                    name: thread_name_map\n                        .get(thread_id)\n                        .map_or_else(|| \"py-spy\".to_string(), |x| x.clone()),\n                    unit: ValueUnit::Seconds,\n                    start_value: 0.0,\n                    end_value: scaled_end_value,\n                    samples: samples.clone(),\n                    weights,\n                }\n            })"
+    },
+    {
+      "file": "chrometrace.rs",
+      "sha256": "84b230c82182c7ead9d6085e2a17c75e30e5525910c8b34577d2ba8694c5957b",
+      "url": "https://raw.githubusercontent.com/benfred/py-spy/d230d8208d652ba168256ffb66170d1c6cd8b650/src/chrometrace.rs#L34-L39",
+      "interpretation": "时间零点是导出器构造时的Instant，未输出绝对时钟锚。",
+      "excerpt": "}\n\nimpl Chrometrace {\n    pub fn new(show_linenumbers: bool) -> Chrometrace {\n        Chrometrace {\n            events: Vec::new(),"
+    },
+    {
+      "file": "chrometrace.rs",
+      "sha256": "84b230c82182c7ead9d6085e2a17c75e30e5525910c8b34577d2ba8694c5957b",
+      "url": "https://raw.githubusercontent.com/benfred/py-spy/d230d8208d652ba168256ffb66170d1c6cd8b650/src/chrometrace.rs#L75-L111",
+      "interpretation": "相同帧合并；没有GIL样本的空档不会自动关闭旧帧。",
+      "excerpt": "        let prev_frames = self\n            .prev_traces\n            .remove(&trace.thread_id)\n            .map(|t| t.frames)\n            .unwrap_or_default();\n\n        // Find the index where we first see new frames.\n        let new_idx = prev_frames\n            .iter()\n            .rev()\n            .zip(trace.frames.iter().rev())\n            .position(|(a, b)| !self.should_merge_frames(a, b))\n            .unwrap_or(min(prev_frames.len(), trace.frames.len()));\n\n        // Publish end events for the previous frames that got dropped in the\n        // most recent trace.\n        for frame in prev_frames.iter().rev().skip(new_idx).rev() {\n            self.events.push(self.event(trace, frame, \"E\", now));\n        }\n\n        // Publish start events for frames that got added in the most recent\n        // trace.\n        for frame in trace.frames.iter().rev().skip(new_idx) {\n            self.events.push(self.event(trace, frame, \"B\", now));\n        }\n\n        // Save this stack trace for the next iteration.\n        self.prev_traces.insert(trace.thread_id, trace.clone());\n\n        Ok(())\n    }\n\n    pub fn write(&self, w: &mut dyn Write) -> Result<(), Error> {\n        let mut events = Vec::new();\n        events.extend(self.events.to_vec());\n\n        // Add end events for any unfinished slices."
+    },
+    {
+      "file": "chrometrace.rs",
+      "sha256": "84b230c82182c7ead9d6085e2a17c75e30e5525910c8b34577d2ba8694c5957b",
+      "url": "https://raw.githubusercontent.com/benfred/py-spy/d230d8208d652ba168256ffb66170d1c6cd8b650/src/chrometrace.rs#L115-L127",
+      "interpretation": "剩余帧到写出时才补结束事件；切片长度不是连续持有时间。",
+      "excerpt": "                events.push(self.event(trace, frame, \"E\", now));\n            }\n        }\n\n        writeln!(w, \"{}\", serde_json::to_string(&events)?)?;\n        Ok(())\n    }\n}"
+    },
+    {
+      "file": "dump.rs",
+      "sha256": "cc029d8411e868e7453a21edfae76eb0c91e5d8fee3eae31c4e2884110963786",
+      "url": "https://raw.githubusercontent.com/benfred/py-spy/d230d8208d652ba168256ffb66170d1c6cd8b650/src/dump.rs#L24-L30",
+      "interpretation": "JSON输出一次get_stack_traces结果，不带时间戳。",
+      "excerpt": "    let mut process = PythonSpy::new(pid, config)?;\n    if config.dump_json {\n        let traces = process\n            .get_stack_traces()\n            .context(\"Failed to get stack traces\")?;\n        writeln!(out, \"{}\", serde_json::to_string_pretty(&traces)?)?;\n        return Ok(());"
+    },
+    {
+      "file": "stack_trace.rs",
+      "sha256": "baa9e1f4401ad1d922edc4fea1bcac2186c196296a6165b063e182fa0facc7d8",
+      "url": "https://raw.githubusercontent.com/benfred/py-spy/d230d8208d652ba168256ffb66170d1c6cd8b650/src/stack_trace.rs#L16-L34",
+      "interpretation": "保留pid、Python thread_id、os_thread_id、owns_gil和frames。",
+      "excerpt": "pub struct StackTrace {\n    /// The process id than generated this stack trace\n    pub pid: Pid,\n    /// The python thread id for this stack trace\n    pub thread_id: u64,\n    // The python thread name for this stack trace\n    pub thread_name: Option<String>,\n    /// The OS thread id for this stack tracee\n    pub os_thread_id: Option<u64>,\n    /// Whether or not the thread was active\n    pub active: bool,\n    /// Whether or not the thread held the GIL\n    pub owns_gil: bool,\n    /// The frames\n    pub frames: Vec<Frame>,\n    /// process commandline / parent process info\n    pub process_info: Option<Arc<ProcessInfo>>,\n}\n"
+    },
+    {
+      "file": "python_spy.rs",
+      "sha256": "21a9ff67759655329633db5022925dfac72a920d3b970bf5b8ec4b6866129793",
+      "url": "https://raw.githubusercontent.com/benfred/py-spy/d230d8208d652ba168256ffb66170d1c6cd8b650/src/python_spy.rs#L211-L222",
+      "interpretation": "默认Lock模式先暂停目标再读线程状态；非阻塞模式不走此锁。",
+      "excerpt": "        // Lock the process if appropriate. Note we have to lock AFTER getting the thread\n        // activity status from the OS (otherwise each thread would report being inactive always).\n        // This has the potential for race conditions (in that the thread activity could change\n        // between getting the status and locking the thread, but seems unavoidable right now\n        let _lock = if self.config.blocking == LockingStrategy::Lock {\n            Some(self.process.lock().context(\"Failed to suspend process\")?)\n        } else {\n            None\n        };\n\n        // Find PyThreadState, and loop over all the python threads\n        let threadstate_ptr_ptr = I::threadstate_ptr_ptr(self.interpreter_address);"
+    },
+    {
+      "file": "python_spy.rs",
+      "sha256": "21a9ff67759655329633db5022925dfac72a920d3b970bf5b8ec4b6866129793",
+      "url": "https://raw.githubusercontent.com/benfred/py-spy/d230d8208d652ba168256ffb66170d1c6cd8b650/src/python_spy.rs#L232-L247",
+      "interpretation": "先读GIL身份，再逐个线程读帧；非阻塞读取跨越状态变化的风险仍在。",
+      "excerpt": "        let mut traces = Vec::new();\n        let mut threads = threads_head;\n        while !threads.is_null() {\n            // Get the stack trace of the python thread\n            let thread = self\n                .process\n                .copy_pointer(threads)\n                .context(\"Failed to copy PyThreadState\")?;\n            threads = thread.next();\n\n            let python_thread_id = thread.thread_id();\n            let owns_gil = python_thread_id == gil_thread_id;\n\n            if self.config.gil_only && !owns_gil {\n                continue;\n            }"
+    },
+    {
+      "file": "config.rs",
+      "sha256": "441f4a7e79a6db80f5d39e95bf5a19ce86727c314a0faa0cc9144267bb421b47",
+      "url": "https://raw.githubusercontent.com/benfred/py-spy/d230d8208d652ba168256ffb66170d1c6cd8b650/src/config.rs#L319-L338",
+      "interpretation": "dump支持json、full-filenames；没有record的gil筛选参数。",
+      "excerpt": "                .long(\"locals\")\n                .action(ArgAction::Count)\n                .help(\"Show local variables for each frame. Passing multiple times (-ll) increases verbosity\"))\n            .arg(Arg::new(\"json\")\n                .short('j')\n                .long(\"json\")\n                .help(\"Format output as JSON\")\n                .action(ArgAction::SetTrue))\n            .arg(subprocesses.clone());\n\n        let completions = Command::new(\"completions\")\n            .about(\"Generate shell completions\")\n            .hide(true)\n            .arg(\n                Arg::new(\"shell\")\n                    .value_parser(value_parser!(clap_complete::Shell))\n                    .help(\"Shell type\")\n                    .required(true)\n                    .action(ArgAction::Set),\n            );"
+    },
+    {
+      "file": "config.rs",
+      "sha256": "441f4a7e79a6db80f5d39e95bf5a19ce86727c314a0faa0cc9144267bb421b47",
+      "url": "https://raw.githubusercontent.com/benfred/py-spy/d230d8208d652ba168256ffb66170d1c6cd8b650/src/config.rs#L344-L350",
+      "interpretation": "dump支持nonblocking。",
+      "excerpt": "        // Nonblocking isn't an option for freebsd, remove\n        #[cfg(not(target_os = \"freebsd\"))]\n        let record = record.arg(nonblocking.clone());\n        #[cfg(not(target_os = \"freebsd\"))]\n        let top = top.arg(nonblocking.clone());\n        #[cfg(not(target_os = \"freebsd\"))]\n        let dump = dump.arg(nonblocking.clone());"
+    },
+    {
+      "file": "config.rs",
+      "sha256": "441f4a7e79a6db80f5d39e95bf5a19ce86727c314a0faa0cc9144267bb421b47",
+      "url": "https://raw.githubusercontent.com/benfred/py-spy/d230d8208d652ba168256ffb66170d1c6cd8b650/src/config.rs#L465-L471",
+      "interpretation": "非阻塞模式不能合并原生栈。",
+      "excerpt": "        if matches.get_flag(\"nonblocking\") {\n            // disable native profiling if invalidly asked for\n            if config.native {\n                eprintln!(\"Can't get native stack traces with the --nonblocking option.\");\n                std::process::exit(1);\n            }\n            config.blocking = LockingStrategy::NonBlocking;"
+    }
+  ],
+  "decisions": [
+    "拒绝用Speedscope样本序号/权重重建QPC时间。",
+    "拒绝用Chrome Trace切片长度推断连续GIL持有。",
+    "候选采用单次dump JSON，并在外层保留完整perf_counter_ns括号；不取中点作为精确时刻。",
+    "候选默认暂停模式必须独立校准，不能继承非阻塞record控制通过结论。"
+  ],
+  "new_live_observation": false
+}
