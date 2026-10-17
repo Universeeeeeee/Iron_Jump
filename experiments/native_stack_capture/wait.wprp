@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WindowsPerformanceRecorder Version="1.0" Author="IronJump native stack experiment">
+  <Profiles>
+    <SystemCollector Id="Collector" Name="IronJumpNativewait">
+      <BufferSize Value="128" /><Buffers Value="256" />
+    </SystemCollector>
+    <SystemProvider Id="Provider">
+      <Keywords>
+        <Keyword Value="ProcessThread" />
+        <Keyword Value="Loader" />
+        <Keyword Value="CSwitch" />
+        <Keyword Value="ReadyThread" />
+      </Keywords>
+      <Stacks><Stack Value="CSwitch" /></Stacks>
+    </SystemProvider>
+    <Profile Id="Nativewait.Verbose.File" Name="Nativewait" Description="Isolated wait stacks" LoggingMode="File" DetailLevel="Verbose">
+      <Collectors><SystemCollectorId Value="Collector"><SystemProviderId Value="Provider" /></SystemCollectorId></Collectors>
+    </Profile>
+  </Profiles>
+</WindowsPerformanceRecorder>

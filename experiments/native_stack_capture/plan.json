@@ -1,0 +1,30 @@
+{
+  "base_commit": "c85612f0aa14b77e240b10485a1f88b40ebc6d26",
+  "scope": "synthetic tool qualification only; no human/device/Run tests or production changes",
+  "cpu_interval_100ns": 100000,
+  "capture_seconds": 6,
+  "profiles_exclusive": true,
+  "buffers": {"size_kib": 128, "count": 256},
+  "calibration_orders": {
+    "cpu": [["off", "cpu"], ["cpu", "off"], ["off", "cpu"]],
+    "wait": [["off", "wait"], ["wait", "off"], ["off", "wait"]]
+  },
+  "gates": {
+    "event_and_buffer_loss": 0,
+    "stack_association_min": 0.95,
+    "user_root_complete_min": 0.95,
+    "ambiguous_stack_association": 0,
+    "cpu_process_samples_min": 100,
+    "clock_residual_ms_max": 1.0,
+    "cpu_vs_threadtimes_relative_error_max": 0.20,
+    "cpu_vs_threadtimes_absolute_error_s_floor": 0.03,
+    "schedule_vs_threadtimes_relative_error_max": 0.10,
+    "schedule_vs_threadtimes_absolute_error_s_floor": 0.03,
+    "synthetic_pair_work_relative_change_max": 0.15,
+    "synthetic_pair_cpu_relative_change_max": 0.15,
+    "synthetic_pair_cycles_relative_change_max": 0.15
+  },
+  "field_gate": "Repeat separate perturbation calibration under actual fixed single-USB human load when backlog is reproducible; synthetic pass never licenses quantitative field attribution.",
+  "completeness_definition": "event-linked raw user stack, expected native chain, root RtlUserThreadStart/BaseThreadInitThunk; association, user root, kernel presence, unknown symbols and depth cap reported separately; no root means unproven/truncated, not full",
+  "attribution_gate": "Require matching PID/TID lifetime, exact image/PDB, complete chain, zero loss, clocks, counters and applicable perturbation calibration; otherwise evidence only. Unknown native kernels retain module+RVA; GIL owner and hold duration are not inferred from waiter stacks."
+}

@@ -1,0 +1,80 @@
+{
+  "scope": {
+    "synthetic_only": true,
+    "real_GUI_started": false,
+    "real_SDK_started": false,
+    "targets": [
+      {
+        "pid": 13808,
+        "tid": 20936,
+        "role": "gui"
+      },
+      {
+        "pid": 20076,
+        "tid": 6576,
+        "role": "sdk"
+      }
+    ]
+  },
+  "clock_mapping": {
+    "qpc_frequency": 10000000,
+    "host_ns_offset_lower": -10100,
+    "host_ns_offset_upper": 6000,
+    "uncertainty_ns": 16100,
+    "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+  },
+  "separate_pid_reports": {
+    "20076": {
+      "quality_checks": {
+        "loss_zero": true,
+        "clock": true,
+        "identity": true,
+        "cycles": true,
+        "association": true,
+        "user_root": true,
+        "unambiguous": true,
+        "events_present": true,
+        "counter": true,
+        "schedule_chain": true
+      },
+      "quality_pass": true,
+      "threads": {
+        "sdk": {
+          "tid": 6576,
+          "cpu_s": 0.015625,
+          "cycles": 44809200,
+          "association_rate": 1.0,
+          "user_root_complete_rate": 1.0,
+          "schedule_residency_s": 0.01920240000000001,
+          "stack_events_expected": 235
+        }
+      }
+    },
+    "13808": {
+      "quality_checks": {
+        "loss_zero": true,
+        "clock": true,
+        "identity": true,
+        "cycles": true,
+        "association": true,
+        "user_root": true,
+        "unambiguous": true,
+        "events_present": true,
+        "counter": true,
+        "schedule_chain": true
+      },
+      "quality_pass": true,
+      "threads": {
+        "gui": {
+          "tid": 20936,
+          "cpu_s": 0.03125,
+          "cycles": 45201360,
+          "association_rate": 1.0,
+          "user_root_complete_rate": 1.0,
+          "schedule_residency_s": 0.01954529999999999,
+          "stack_events_expected": 235
+        }
+      }
+    }
+  }
+}

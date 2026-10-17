@@ -1,0 +1,544 @@
+{
+  "mode": "cpu",
+  "pid": 17600,
+  "threads": {
+    "cpu_b": {
+      "tid": 2328,
+      "cpu_s": 3.046875,
+      "cycles": 6934301760,
+      "work": 18950000,
+      "sample_events": 296,
+      "joined": 296,
+      "root_complete": 295,
+      "kernel_present": 3,
+      "ambiguous": 0,
+      "user_frames": 5456,
+      "unknown_symbol_frames": 0,
+      "unmapped_frames": 0,
+      "max_user_depth": 24,
+      "families": {
+        "gil_wait_chain": 1
+      },
+      "witnesses": {
+        "gil_wait_chain": {
+          "qpc": 2123605528533,
+          "frames": [
+            {
+              "address": 140705335090644,
+              "module": "ntdll.dll",
+              "rva": 1449428,
+              "symbol": "NtWaitForSingleObject",
+              "pdb_matched": true,
+              "displacement": 20
+            },
+            {
+              "address": 140705291615903,
+              "module": "KernelBase.dll",
+              "rva": 114335,
+              "symbol": "WaitForSingleObjectEx",
+              "pdb_matched": true,
+              "displacement": 175
+            },
+            {
+              "address": 140703186292114,
+              "module": "python311.dll",
+              "rva": 2035090,
+              "symbol": "_PyCOND_WAIT_MS",
+              "pdb_matched": true,
+              "displacement": 50
+            },
+            {
+              "address": 140703186292737,
+              "module": "python311.dll",
+              "rva": 2035713,
+              "symbol": "take_gil",
+              "pdb_matched": true,
+              "displacement": 177
+            },
+            {
+              "address": 140703186297488,
+              "module": "python311.dll",
+              "rva": 2040464,
+              "symbol": "eval_frame_handle_pending",
+              "pdb_matched": true,
+              "displacement": 128
+            },
+            {
+              "address": 140703186322237,
+              "module": "python311.dll",
+              "rva": 2065213,
+              "symbol": "_PyEval_EvalFrameDefault",
+              "pdb_matched": true,
+              "displacement": 24221
+            },
+            {
+              "address": 140703186332238,
+              "module": "python311.dll",
+              "rva": 2075214,
+              "symbol": "_PyEval_Vector",
+              "pdb_matched": true,
+              "displacement": 190
+            },
+            {
+              "address": 140703185300909,
+              "module": "python311.dll",
+              "rva": 1043885,
+              "symbol": "_PyFunction_Vectorcall",
+              "pdb_matched": true,
+              "displacement": 61
+            },
+            {
+              "address": 140703185300302,
+              "module": "python311.dll",
+              "rva": 1043278,
+              "symbol": "_PyVectorcall_Call",
+              "pdb_matched": true,
+              "displacement": 206
+            },
+            {
+              "address": 140703185300575,
+              "module": "python311.dll",
+              "rva": 1043551,
+              "symbol": "_PyObject_Call",
+              "pdb_matched": true,
+              "displacement": 79
+            },
+            {
+              "address": 140703186339069,
+              "module": "python311.dll",
+              "rva": 2082045,
+              "symbol": "do_call_core",
+              "pdb_matched": true,
+              "displacement": 397
+            },
+            {
+              "address": 140703186320767,
+              "module": "python311.dll",
+              "rva": 2063743,
+              "symbol": "_PyEval_EvalFrameDefault",
+              "pdb_matched": true,
+              "displacement": 22751
+            },
+            {
+              "address": 140703186332238,
+              "module": "python311.dll",
+              "rva": 2075214,
+              "symbol": "_PyEval_Vector",
+              "pdb_matched": true,
+              "displacement": 190
+            },
+            {
+              "address": 140703185300909,
+              "module": "python311.dll",
+              "rva": 1043885,
+              "symbol": "_PyFunction_Vectorcall",
+              "pdb_matched": true,
+              "displacement": 61
+            },
+            {
+              "address": 140703185309942,
+              "module": "python311.dll",
+              "rva": 1052918,
+              "symbol": "method_vectorcall",
+              "pdb_matched": true,
+              "displacement": 262
+            },
+            {
+              "address": 140703185300302,
+              "module": "python311.dll",
+              "rva": 1043278,
+              "symbol": "_PyVectorcall_Call",
+              "pdb_matched": true,
+              "displacement": 206
+            },
+            {
+              "address": 140703185300575,
+              "module": "python311.dll",
+              "rva": 1043551,
+              "symbol": "_PyObject_Call",
+              "pdb_matched": true,
+              "displacement": 79
+            },
+            {
+              "address": 140703184948245,
+              "module": "python311.dll",
+              "rva": 691221,
+              "symbol": "thread_run",
+              "pdb_matched": true,
+              "displacement": 181
+            },
+            {
+              "address": 140703186875906,
+              "module": "python311.dll",
+              "rva": 2618882,
+              "symbol": "bootstrap",
+              "pdb_matched": true,
+              "displacement": 50
+            },
+            {
+              "address": 140705287949616,
+              "module": "ucrtbase.dll",
+              "rva": 183600,
+              "symbol": "thread_start<unsigned int (__cdecl*)(void *),1>",
+              "pdb_matched": true,
+              "displacement": 48
+            },
+            {
+              "address": 140705322753447,
+              "module": "kernel32.dll",
+              "rva": 187815,
+              "symbol": "BaseThreadInitThunk",
+              "pdb_matched": true,
+              "displacement": 23
+            },
+            {
+              "address": 140705334160972,
+              "module": "ntdll.dll",
+              "rva": 519756,
+              "symbol": "RtlUserThreadStart",
+              "pdb_matched": true,
+              "displacement": 44
+            }
+          ]
+        }
+      },
+      "lifecycle_ok": true,
+      "creation_unchanged": true,
+      "stack_events_expected": 296,
+      "association_rate": 1.0,
+      "user_root_complete_rate": 0.9966216216216216,
+      "sample_cpu_s": 2.96,
+      "cpu_error_s": -0.08687500000000004
+    },
+    "cpu_a": {
+      "tid": 21344,
+      "cpu_s": 2.953125,
+      "cycles": 7400125680,
+      "work": 20230000,
+      "sample_events": 312,
+      "joined": 312,
+      "root_complete": 310,
+      "kernel_present": 2,
+      "ambiguous": 0,
+      "user_frames": 5745,
+      "unknown_symbol_frames": 0,
+      "unmapped_frames": 0,
+      "max_user_depth": 24,
+      "families": {},
+      "witnesses": {},
+      "lifecycle_ok": true,
+      "creation_unchanged": true,
+      "stack_events_expected": 312,
+      "association_rate": 1.0,
+      "user_root_complete_rate": 0.9935897435897436,
+      "sample_cpu_s": 3.12,
+      "cpu_error_s": 0.1668750000000001
+    },
+    "qt_wait": {
+      "tid": 7208,
+      "cpu_s": 0.0,
+      "cycles": 23705520,
+      "work": 196,
+      "sample_events": 3,
+      "joined": 3,
+      "root_complete": 3,
+      "kernel_present": 0,
+      "ambiguous": 0,
+      "user_frames": 81,
+      "unknown_symbol_frames": 8,
+      "unmapped_frames": 0,
+      "max_user_depth": 38,
+      "families": {
+        "gil_wait_chain": 1
+      },
+      "witnesses": {
+        "gil_wait_chain": {
+          "qpc": 2123598063173,
+          "frames": [
+            {
+              "address": 140705335090644,
+              "module": "ntdll.dll",
+              "rva": 1449428,
+              "symbol": "NtWaitForSingleObject",
+              "pdb_matched": true,
+              "displacement": 20
+            },
+            {
+              "address": 140705291615903,
+              "module": "KernelBase.dll",
+              "rva": 114335,
+              "symbol": "WaitForSingleObjectEx",
+              "pdb_matched": true,
+              "displacement": 175
+            },
+            {
+              "address": 140703186292114,
+              "module": "python311.dll",
+              "rva": 2035090,
+              "symbol": "_PyCOND_WAIT_MS",
+              "pdb_matched": true,
+              "displacement": 50
+            },
+            {
+              "address": 140703186292737,
+              "module": "python311.dll",
+              "rva": 2035713,
+              "symbol": "take_gil",
+              "pdb_matched": true,
+              "displacement": 177
+            },
+            {
+              "address": 140703186293587,
+              "module": "python311.dll",
+              "rva": 2036563,
+              "symbol": "PyEval_RestoreThread",
+              "pdb_matched": true,
+              "displacement": 19
+            },
+            {
+              "address": 140703181146815,
+              "module": "QtCore.pyd",
+              "rva": 297663,
+              "symbol": null,
+              "pdb_matched": false
+            },
+            {
+              "address": 140703185582380,
+              "module": "python311.dll",
+              "rva": 1325356,
+              "symbol": "cfunction_call",
+              "pdb_matched": true,
+              "displacement": 156
+            },
+            {
+              "address": 140703185299985,
+              "module": "python311.dll",
+              "rva": 1042961,
+              "symbol": "_PyObject_MakeTpCall",
+              "pdb_matched": true,
+              "displacement": 289
+            },
+            {
+              "address": 140703185300433,
+              "module": "python311.dll",
+              "rva": 1043409,
+              "symbol": "PyObject_Vectorcall",
+              "pdb_matched": true,
+              "displacement": 33
+            },
+            {
+              "address": 140703186316378,
+              "module": "python311.dll",
+              "rva": 2059354,
+              "symbol": "_PyEval_EvalFrameDefault",
+              "pdb_matched": true,
+              "displacement": 18362
+            },
+            {
+              "address": 140703186332238,
+              "module": "python311.dll",
+              "rva": 2075214,
+              "symbol": "_PyEval_Vector",
+              "pdb_matched": true,
+              "displacement": 190
+            },
+            {
+              "address": 140703185300909,
+              "module": "python311.dll",
+              "rva": 1043885,
+              "symbol": "_PyFunction_Vectorcall",
+              "pdb_matched": true,
+              "displacement": 61
+            },
+            {
+              "address": 140703185300302,
+              "module": "python311.dll",
+              "rva": 1043278,
+              "symbol": "_PyVectorcall_Call",
+              "pdb_matched": true,
+              "displacement": 206
+            },
+            {
+              "address": 140703185300575,
+              "module": "python311.dll",
+              "rva": 1043551,
+              "symbol": "_PyObject_Call",
+              "pdb_matched": true,
+              "displacement": 79
+            },
+            {
+              "address": 140703186339069,
+              "module": "python311.dll",
+              "rva": 2082045,
+              "symbol": "do_call_core",
+              "pdb_matched": true,
+              "displacement": 397
+            },
+            {
+              "address": 140703186320767,
+              "module": "python311.dll",
+              "rva": 2063743,
+              "symbol": "_PyEval_EvalFrameDefault",
+              "pdb_matched": true,
+              "displacement": 22751
+            },
+            {
+              "address": 140703186332238,
+              "module": "python311.dll",
+              "rva": 2075214,
+              "symbol": "_PyEval_Vector",
+              "pdb_matched": true,
+              "displacement": 190
+            },
+            {
+              "address": 140703185300909,
+              "module": "python311.dll",
+              "rva": 1043885,
+              "symbol": "_PyFunction_Vectorcall",
+              "pdb_matched": true,
+              "displacement": 61
+            },
+            {
+              "address": 140703185309942,
+              "module": "python311.dll",
+              "rva": 1052918,
+              "symbol": "method_vectorcall",
+              "pdb_matched": true,
+              "displacement": 262
+            },
+            {
+              "address": 140703185300302,
+              "module": "python311.dll",
+              "rva": 1043278,
+              "symbol": "_PyVectorcall_Call",
+              "pdb_matched": true,
+              "displacement": 206
+            },
+            {
+              "address": 140703185300575,
+              "module": "python311.dll",
+              "rva": 1043551,
+              "symbol": "_PyObject_Call",
+              "pdb_matched": true,
+              "displacement": 79
+            },
+            {
+              "address": 140703184948245,
+              "module": "python311.dll",
+              "rva": 691221,
+              "symbol": "thread_run",
+              "pdb_matched": true,
+              "displacement": 181
+            },
+            {
+              "address": 140703186875906,
+              "module": "python311.dll",
+              "rva": 2618882,
+              "symbol": "bootstrap",
+              "pdb_matched": true,
+              "displacement": 50
+            },
+            {
+              "address": 140705287949616,
+              "module": "ucrtbase.dll",
+              "rva": 183600,
+              "symbol": "thread_start<unsigned int (__cdecl*)(void *),1>",
+              "pdb_matched": true,
+              "displacement": 48
+            },
+            {
+              "address": 140705322753447,
+              "module": "kernel32.dll",
+              "rva": 187815,
+              "symbol": "BaseThreadInitThunk",
+              "pdb_matched": true,
+              "displacement": 23
+            },
+            {
+              "address": 140705334160972,
+              "module": "ntdll.dll",
+              "rva": 519756,
+              "symbol": "RtlUserThreadStart",
+              "pdb_matched": true,
+              "displacement": 44
+            }
+          ]
+        }
+      },
+      "lifecycle_ok": true,
+      "creation_unchanged": true,
+      "stack_events_expected": 3,
+      "association_rate": 1.0,
+      "user_root_complete_rate": 1.0,
+      "sample_cpu_s": 0.03,
+      "cpu_error_s": 0.03
+    },
+    "system_wait": {
+      "tid": 4060,
+      "cpu_s": 0.0,
+      "cycles": 15164880,
+      "work": 201,
+      "sample_events": 0,
+      "joined": 0,
+      "root_complete": 0,
+      "kernel_present": 0,
+      "ambiguous": 0,
+      "user_frames": 0,
+      "unknown_symbol_frames": 0,
+      "unmapped_frames": 0,
+      "max_user_depth": 0,
+      "families": {},
+      "witnesses": {},
+      "lifecycle_ok": true,
+      "creation_unchanged": true,
+      "stack_events_expected": 0,
+      "association_rate": null,
+      "user_root_complete_rate": null,
+      "sample_cpu_s": 0.0,
+      "cpu_error_s": 0.0
+    }
+  },
+  "synthetic_only": true,
+  "loss": {
+    "header_events_lost": 0,
+    "consumer_events_lost": 0,
+    "buffers_lost": 0
+  },
+  "interval_events": [
+    {
+      "qpc": 2123584547781,
+      "source": 0,
+      "new": 100000,
+      "old": 10000
+    }
+  ],
+  "clock_type": 1,
+  "clock_max_residual_ms": 1.3248,
+  "anchor_width_us_max": 16395.0,
+  "pdb_matched_modules": [
+    "C:\\Windows\\System32\\ntdll.dll",
+    "C:\\Windows\\System32\\kernel32.dll",
+    "C:\\Windows\\System32\\KernelBase.dll",
+    "C:\\Windows\\System32\\ucrtbase.dll",
+    "D:\\conda\\python311.dll",
+    "D:\\conda\\Lib\\site-packages\\PySide6\\Qt6Core.dll",
+    "D:\\conda\\Lib\\site-packages\\PySide6\\Qt6Core.dll"
+  ],
+  "kernel_symbols_complete": false,
+  "sample_ip_not_in_linked_stack": 1,
+  "quality_checks": {
+    "loss_zero": true,
+    "clock": false,
+    "identity": true,
+    "cycles": true,
+    "association": true,
+    "user_root": true,
+    "unambiguous": true,
+    "interval_event": true,
+    "counter": true,
+    "sample_floor": true,
+    "ip_matches_stack": false
+  },
+  "quality_pass": false,
+  "quantitative_field_attribution_ready": false
+}

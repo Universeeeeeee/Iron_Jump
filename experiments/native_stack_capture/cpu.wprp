@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WindowsPerformanceRecorder Version="1.0" Author="IronJump native stack experiment">
+  <Profiles>
+    <SystemCollector Id="Collector" Name="IronJumpNativecpu">
+      <BufferSize Value="128" /><Buffers Value="256" />
+    </SystemCollector>
+    <SystemProvider Id="Provider">
+      <Keywords>
+        <Keyword Value="ProcessThread" />
+        <Keyword Value="Loader" />
+        <Keyword Value="SampledProfile" />
+      </Keywords>
+      <Stacks><Stack Value="SampledProfile" /></Stacks>
+    </SystemProvider>
+    <Profile Id="Nativecpu.Verbose.File" Name="Nativecpu" Description="Isolated cpu stacks" LoggingMode="File" DetailLevel="Verbose">
+      <Collectors><SystemCollectorId Value="Collector"><SystemProviderId Value="Provider" /></SystemCollectorId></Collectors>
+    </Profile>
+  </Profiles>
+</WindowsPerformanceRecorder>
