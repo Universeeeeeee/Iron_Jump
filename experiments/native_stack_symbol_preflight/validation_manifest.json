@@ -1,0 +1,62 @@
+{
+  "base_commit": "19acc2f",
+  "branch": "codex/native-stack-symbol-preflight",
+  "scope": "Offline preparation only; no new captures, ETW sessions, stacks, timings or optimization A/B.",
+  "accepted_Windows_root": "E:/OptoJump/IronJump-native-symbol-preflight-20261017-01",
+  "accepted_ETL_reader": "ReadImages_v4.exe",
+  "accepted_ETL_reader_sha256": "44aa50676a96bebe783f9e1b885e15de3e608527191081145e3e0deaff16de91",
+  "source_and_results_sha256": {
+    "20261017_112623_8416401b_walk_on_images03.json": "eccdca3983f182b0e107fc85e346408c1b1a900de9e2308962bbd27a48a9097d",
+    "20261017_113358_00ae9eca_walk_on_images03.json": "315a6cfe22719e4428d145ea5a1c88738ffb941ab21fc5aea7839c7645ddaef8",
+    "README.md": "88c402fb598f4a92ff2eb4274217ca8a83870cedae6ff4b5abc6be375d0f3cba",
+    "ReadImages.cs": "3f80daf25736b08cf4d8edb32f0651c6721d6a23b906a2b5f39e3c418d1ff2b8",
+    "deployment01.json": "d21ff47940cd3f605e8614dce7c21c893336d03d837019e4d0b19cd2f3c80543",
+    "downloaded_identity01.json": "f76a5283e9ccd827468dac3b5f3355e21175e63fcfecdc90271ac40a3f12e040",
+    "downloads01.json": "d89f06d7760ff4e1c8f09d126f339a157b1917756612a3e3d4499815db920363",
+    "fetch_symbols.py": "4426e53e9a8863910a8664c670e449ed269f0a668525abdffa457cdf69d31a20",
+    "historical.py": "b5ccc35eede6bc48db93a9aaad09141ac4adcfe67bf74805b5c4fe24b66df226",
+    "inventory.py": "23794e62b584f1a614b7aadd778eaa12601cc792b9bc1cc45dac0ac0096f4b61",
+    "inventory_compact01.json": "ccf58ceff2dfd317cead8d12791e9e4cb7623663d8079b53186f2208675aedb6",
+    "pe_identity.py": "fa7b76195d682200a0aab4d0122ddcd0954ec7f0b73af085f0b5f41ac3ce0294",
+    "readiness.py": "e613cc25dff24a54f11e613e2d86ebded9389861530497a46ebdd21963a2dace",
+    "readiness02.json": "50fcda146555c7ac4593210bde0cc248997b551cbfd5715d7df97d0b63212ee3",
+    "resolve.py": "4f0caf717788f96f7d9c7c294a1d6d261b17765c79fc47be1f6601b2031163ee",
+    "resolve_exports01.json": "3790c36b856ab1b59a7829d28ab866a3e48e9df8d54cb3067ab43a2dc11105f1",
+    "resolve_ready01.json": "cc18b70686a720e80d12660e3cf367b0611bae0df0a7f78cc2d957274756a54f",
+    "test_symbols.py": "41bdf0c417896dba4dea6d115c8bab11703fa2566de1261e7c58c7615b37f198",
+    "verification01.json": "ca882422cf21ac0075a80f597e53c6cd32897a5b0223a902e45911b567db22a8",
+    "verify_preflight.py": "09a4516894a65d8bf0331b3d3683e1f34ac8506905a28c19bdae573cf480dee8",
+    "windows.py": "49f6143f464846c00e473b72a865d1967f65d80b4dd102fa5a60856b25f80650"
+  },
+  "accepted_remote_source_hashes_match_local": true,
+  "original_ETLs_match_prior_backups": {
+    "20261017_112623_8416401b_walk_on": "d4547ab23a4d1e30eb0e016f1113eab00c65271f92ebb51bfeb6da364d92ffd9",
+    "20261017_113358_00ae9eca_walk_on": "ba1e6ba138ff17ed726f9585e7a82cad8d0683865a8df1102cad4af4f7eb68dc"
+  },
+  "runtime_binary_files_unchanged": 50,
+  "frozen_program_source_files_unchanged": 458,
+  "cached_PDBs": 10,
+  "resolver_matched_PDBs": 8,
+  "tests_passed": 4,
+  "compact_inventory_readiness_replay_byte_identical": true,
+  "GIL_Qt_system_wait_symbol_functions_resolve": true,
+  "NumPy_model_internal_kernel_symbols_complete": false,
+  "live_unwind_tested": false,
+  "new_tracking_perturbation_calibrated": false,
+  "quantitative_live_attribution_ready": false,
+  "no_formal_program_or_renderer_changes": true,
+  "preserved_rejected_attempts": [
+    "Initial compiler path and wrong ETL-copy path; no accepted output.",
+    "Image v2-only decoder returned zero while version-shape inventory showed v3; rejected, then verified stable v3 prefix against Microsoft implementation.",
+    "Intermediate C# local-name compilation failure and dependent missing-input failure; no accepted output.",
+    "Initial PDB Info-age-only check falsely rejected public system PDBs; corrected to DBI age and cross-checked via DbgHelp without editing symbols.",
+    "Unbounded prefix file crawl timed out; not used as absence evidence. Bounded search and real name/address resolution accepted instead."
+  ],
+  "identity_limit": "Historical rundown timestamps are zero; size/checksum/path compatibility does not prove historical byte identity. Freeze current SHA for the next run.",
+  "public_sources": {
+    "module_info": "https://learn.microsoft.com/en-us/windows/win32/api/dbghelp/ns-dbghelp-imagehlp_modulew64",
+    "image_load": "https://learn.microsoft.com/en-us/windows/win32/etw/image-load",
+    "Microsoft_decoder": "https://github.com/microsoft/perfview/blob/main/src/TraceEvent/Parsers/KernelTraceEventParser.cs",
+    "Qt_package": "https://download.qt.io/online/qtsdkrepository/windows_x86/desktop/qt6_6111/qt6_6111_msvc2022_64/qt.qt6.6111.debug_info.win64_msvc2022_64/"
+  }
+}

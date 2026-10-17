@@ -1,0 +1,3528 @@
+{
+  "scope": "Offline symbol and PE metadata readiness only; no live stack capture, performance calibration or causal diagnosis.",
+  "gil_and_ordinary_python_lock_functions_distinguishable_by_symbols": true,
+  "Qt_sync_functions_have_matching_symbols": true,
+  "Windows_wait_functions_have_matching_symbols": true,
+  "NumPy_MediaPipe_OpenCV_internal_kernel_symbols_ready": false,
+  "actual_recorded_unwind_completeness_verified": false,
+  "new_tracking_perturbation_calibrated": false,
+  "quantitative_live_attribution_ready": false,
+  "modules": [
+    {
+      "module": "kernelbase.dll",
+      "image_sha256": "5c29b73622ce0976e1ada566f31f2197ba0f8beaea89c3ec033366126172c3d0",
+      "matched_pdb": true,
+      "pdb_identity": {
+        "path": "symbols\\kernelbase.pdb",
+        "sha256": "81658a0fe06f313f0370a4bd988e763bcf791da9a20124b24c3f2db4e3b36b43",
+        "bytes": 12554240,
+        "guid": "79B50527-6F14-0450-EB83-DF0440BF06C6",
+        "age": 1,
+        "info_age": 2,
+        "age_source": "DBI header (not Info-stream rewrite age)",
+        "info_version": 20000404,
+        "dbi_version": 19990903,
+        "stream_count": 613
+      },
+      "source_lines": 0,
+      "function_symbols_enumerated": 15832,
+      "diagnostic_functions": [
+        {
+          "name": "WaitForSingleObjectEx$fin$0",
+          "rva": 1659584,
+          "size": 42,
+          "source": null,
+          "interior_roundtrip": {
+            "name": "WaitForSingleObjectEx$fin$0",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "WaitForMultipleObjectsEx$fin$0",
+          "rva": 1659728,
+          "size": 42,
+          "source": null,
+          "interior_roundtrip": {
+            "name": "WaitForMultipleObjectsEx$fin$0",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "GetDeviceMemoryKb",
+          "rva": 765104,
+          "size": 179,
+          "source": null,
+          "interior_roundtrip": {
+            "name": "GetDeviceMemoryKb",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "SleepConditionVariableSRW",
+          "rva": 141856,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "wil::details::ReleaseMutex",
+          "rva": 560280,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "RtlSleepConditionVariableSRW",
+          "rva": 1213917,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "K32GetDeviceDriverBaseNameW",
+          "rva": 973904,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "K32GetDeviceDriverBaseNameA",
+          "rva": 974224,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "wil::details::unique_storage<wil::details::resource_policy<void * __ptr64,void (__cdecl*)(void * __ptr64) noexcept,&wil::details::ReleaseMutex,wistd::integral_constant<unsigned __int64,2>,void * __ptr64,void * __ptr64,0,std::nullptr_t> >::~unique_storage<wil::details::resource_policy<void * __ptr64,void (__cdecl*)(void * __ptr64) noexcept,&wil::details::ReleaseMutex,wistd::integral_constant<unsigned __int64,2>,void * __ptr64,void * __ptr64,0,std::nullptr_t> >",
+          "rva": 559476,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "SleepConditionVariableCS",
+          "rva": 146064,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "WaitOnAddress",
+          "rva": 909600,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "WaitForSingleObjectEx",
+          "rva": 114160,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "fc::details::create_global_mutex<unsigned int>",
+          "rva": 1522996,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "fc::details::open_global_mutex<unsigned int>",
+          "rva": 1524572,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "WaitForMultipleObjectsEx",
+          "rva": 140880,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "wil::unique_any_t<wil::details::unique_storage<wil::details::resource_policy<void * __ptr64,void (__cdecl*)(void * __ptr64) noexcept,&wil::details::ReleaseMutex,wistd::integral_constant<unsigned __int64,2>,void * __ptr64,void * __ptr64,0,std::nullptr_t> > >::operator=",
+          "rva": 558656,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "api_ms_win_mm_mci_l1_1_0_mciGetDeviceIDA",
+          "rva": 1214848,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "WaitForMultipleObjects",
+          "rva": 140848,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "wil::details::unique_storage<wil::details::resource_policy<void * __ptr64,void (__cdecl*)(void * __ptr64) noexcept,&wil::details::ReleaseMutex,wistd::integral_constant<unsigned __int64,2>,void * __ptr64,void * __ptr64,0,std::nullptr_t> >::reset",
+          "rva": 558712,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "wil::unique_any_t<wil::mutex_t<wil::details::unique_storage<wil::details::resource_policy<void * __ptr64,void (__cdecl*)(void * __ptr64) noexcept,&wil::details::CloseHandle,wistd::integral_constant<unsigned __int64,0>,void * __ptr64,void * __ptr64,0,std::nullptr_t> >,wil::err_returncode_policy> >::operator=",
+          "rva": 1096156,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "SaveThreadHandle",
+          "rva": 1134516,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "CreateMutexA",
+          "rva": 498816,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "CreateDBWinMutex",
+          "rva": 496224,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "fc::details::create_global_mutex_name<unsigned int>",
+          "rva": 1523324,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "K32GetDeviceDriverFileNameA",
+          "rva": 974064,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "K32GetDeviceDriverFileNameW",
+          "rva": 973744,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "CreateMutexExW",
+          "rva": 499760,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "BasepOpenPendingRenameMutex",
+          "rva": 433072,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "WaitForSingleObject",
+          "rva": 787920,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "wil::mutex_t<wil::details::unique_storage<wil::details::resource_policy<void * __ptr64,void (__cdecl*)(void * __ptr64) noexcept,&wil::details::CloseHandle,wistd::integral_constant<unsigned __int64,0>,void * __ptr64,void * __ptr64,0,std::nullptr_t> >,wil::err_returncode_policy>::acquire",
+          "rva": 558176,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "CreateMutexExA",
+          "rva": 495520,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "RestoreThreadPreferredUILanguages",
+          "rva": 1035376,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "CreateMutexW",
+          "rva": 501040,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "RegisterWaitForSingleObjectEx",
+          "rva": 1010384,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "OpenMutexW",
+          "rva": 143664,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "ReleaseMutex",
+          "rva": 567632,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "ext_ms_win_ntuser_synch_l1_1_0_MsgWaitForMultipleObjects",
+          "rva": 1215648,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        }
+      ],
+      "fallback_symbol_type": 3,
+      "fallback_diagnostic_names": [
+        "mmdDevGetDeviceIdFromPnpInterface",
+        "DevObjGetDeviceRegistryProperty",
+        "DevObjGetDeviceInfoListDetail",
+        "SetupDiGetDeviceInfoListClass",
+        "PolicyManager_GetDeviceLockPolicy_AlphanumericDevicePasswordRequired",
+        "SetupDiGetDeviceRegistryPropertyW",
+        "SetupDiGetDeviceInterfacePropertyKeys",
+        "WFDGetDeviceDescriptorForPendingRequestInt",
+        "SyncGetDeviceUniqueID",
+        "DevObjGetDeviceInstanceId",
+        "GetDeviceStoreDefaultName",
+        "PolicyManager_GetDeviceLockPolicy_MinDevicePasswordLength",
+        "ClipGetDeviceHardwareData",
+        "WSAWaitForMultipleEvents",
+        "GetDeviceContainerIdByPerUserPrinterName",
+        "TF_CreateCicLoadWinStaMutex",
+        "TF_CreateCicLoadMutex",
+        "SetupDiGetDevicePropertyW",
+        "ShellReleaseLogonMutex",
+        "DevObjGetDeviceInterfaceProperty",
+        "WaitForSingleObjectEx$fin$0",
+        "SetupDiGetDeviceInfoListDetailW",
+        "ShellAcquireLogonMutex",
+        "DevObjGetDeviceInfoDetail",
+        "GetDeviceContainerIdByPrinterName",
+        "DevObjGetDeviceProperty",
+        "WaitForMultipleObjectsEx$fin$0",
+        "SetupDiGetDeviceInterfaceAlias",
+        "IsoSessionGetDeviceCapability",
+        "PolicyManager_GetDeviceLockPolicy_MaxInactivityTimeDeviceLock",
+        "PolicyManager_GetDeviceLockPolicy_MaxDevicePasswordFailedAttempts",
+        "InternalGetDeviceGammaCapability",
+        "GetDeviceCaps",
+        "MsgWaitForMultipleObjects",
+        "LsaGetDeviceRegistrationInfo",
+        "GetDeviceMemoryKb",
+        "PolicyManager_GetDeviceLockPolicy_AllowIdleReturnWithoutPassword",
+        "PolicyManager_GetDeviceLockPolicy_MinDevicePasswordComplexCharacters",
+        "DevObjGetDeviceInfoListClass",
+        "RasGetDeviceConfigInfo",
+        "SetupDiGetDeviceInterfaceDetailW",
+        "DevObjGetDeviceInterfaceDetail",
+        "GetDeviceGammaRamp",
+        "PolicyManager_GetDeviceLockPolicy_DevicePasswordEnabled",
+        "GetIESqmMutex",
+        "MsgWaitForMultipleObjectsEx",
+        "SetupDiGetDeviceInterfacePropertyW",
+        "SetupDiGetDeviceInstallParamsW",
+        "SetupDiGetDeviceInterfaceDetailA",
+        "PolicyManager_GetDeviceLockPolicy_DevicePasswordExpiration",
+        "DevObjGetDeviceInterfaceAlias",
+        "SetupDiGetDevicePropertyKeys",
+        "CoWaitForMultipleHandles",
+        "SetupDiGetDeviceInstanceIdW",
+        "ColorProfileGetDeviceCapabilities",
+        "SCardGetDeviceTypeIdA",
+        "DevObjGetDeviceInterfacePropertyKeys",
+        "SCardGetDeviceTypeIdW",
+        "PolicyManager_GetDeviceLockPolicy_AllowSimpleDevicePassword",
+        "WinStationGetDeviceId",
+        "DevObjGetDevicePropertyKeys",
+        "MMDeviceGetDeviceEnumerator",
+        "PolicyManager_GetDeviceLockPolicy_DevicePasswordHistory",
+        "ext_ms_win_gdi_internal_desktop_l1_1_0_GetDeviceGammaRamp",
+        "ext_ms_win_msa_user_l1_1_1_MsaUser_GetDeviceTelemetryInformation",
+        "ext_ms_win_gdi_internal_desktop_l1_1_1_NtGdiMakeObjectUnXferable",
+        "SleepConditionVariableSRW",
+        "ext_ms_win_sensors_core_private_l1_1_6_SensorGetDeviceId",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_6_D3DKMTOpenKeyedMutex2",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_0_D3DKMTReleaseKeyedMutex",
+        "api_ms_win_core_com_l1_1_2_CoWaitForMultipleHandles",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_0_D3DKMTReleaseKeyedMutex2",
+        "ext_ms_win_ntuser_rim_l1_2_0_RIMGetDevicePropertiesLockfree",
+        "wil::details::ReleaseMutex",
+        "ext_ms_win_gdi_internal_desktop_l1_1_5_NtGdiGetDeviceWidth",
+        "api_ms_win_core_kernel32_legacy_l1_1_5_RegisterWaitForSingleObject",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_5_D3DKMTDestroyKeyedMutex",
+        "api_ms_win_mm_mci_l1_1_0_mciGetDeviceIDW",
+        "ext_ms_win_devmgmt_dm_l1_1_2_DMCSP_DevDetail_GetDeviceName",
+        "api_ms_win_core_kernel32_legacy_l1_1_1_WaitForMultipleObjects",
+        "api_ms_win_core_com_l1_1_1_CoWaitForMultipleObjects",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_6_D3DKMTAcquireKeyedMutex2",
+        "ext_ms_win_setupapi_devobj_l1_1_0_SetupDiGetDevicePropertyKeys",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_6_D3DKMTAcquireKeyedMutex",
+        "RtlSleepConditionVariableSRW",
+        "ext_ms_win_gdi_internal_desktop_l1_1_1_GetDeviceGammaRamp",
+        "ext_ms_win_setupapi_devobj_l1_1_0_SetupDiGetDeviceInfoListDetailW",
+        "ext_ms_win_setupapi_devobj_l1_1_0_SetupDiGetDeviceInfoListDetailA",
+        "ext_ms_win_gdi_internal_desktop_l1_1_0_NtGdiMakeObjectUnXferable",
+        "ext_ms_win_sensors_core_private_l1_1_7_SensorGetDeviceId",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_1_D3DKMTReleaseKeyedMutex",
+        "api_ms_win_core_com_l1_1_3_CoWaitForMultipleHandles",
+        "ext_ms_win_setupapi_classinstallers_l1_1_2_SetupDiGetDeviceInstanceIdW",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_1_D3DKMTReleaseKeyedMutex2",
+        "K32GetDeviceDriverBaseNameW",
+        "ext_ms_win_ntuser_rim_l1_1_2_RIMGetDevicePropertiesLockfree",
+        "ext_ms_win_ntuser_rim_l1_2_1_RIMGetDevicePropertiesLockfree",
+        "K32GetDeviceDriverBaseNameA",
+        "ext_ms_win_gdi_internal_desktop_l1_1_4_NtGdiGetDeviceWidth",
+        "api_ms_win_core_kernel32_legacy_l1_1_4_RegisterWaitForSingleObject",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_4_D3DKMTDestroyKeyedMutex",
+        "ext_ms_win_devmgmt_dm_l1_1_3_DMCSP_DevDetail_GetDeviceName",
+        "api_ms_win_core_kernel32_legacy_l1_1_0_WaitForMultipleObjects",
+        "api_ms_win_core_com_l1_1_0_CoWaitForMultipleObjects",
+        "ext_ms_win_gdi_internal_desktop_l1_1_6_NtGdiMakeObjectXferable",
+        "ext_ms_win_setupapi_devobj_l1_1_0_SetupDiGetDeviceInterfaceDetailA",
+        "wil::details::unique_storage<wil::details::resource_policy<void * __ptr64,void (__cdecl*)(void * __ptr64) noexcept,&wil::details::ReleaseMutex,wistd::integral_constant<unsigned __int64,2>,void * __ptr64,void * __ptr64,0,std::nullptr_t> >::~unique_storage<wil::details::resource_policy<void * __ptr64,void (__cdecl*)(void * __ptr64) noexcept,&wil::details::ReleaseMutex,wistd::integral_constant<unsigned __int64,2>,void * __ptr64,void * __ptr64,0,std::nullptr_t> >",
+        "ext_ms_win_gdi_internal_desktop_l1_1_2_GetDeviceGammaRamp",
+        "api_ms_win_dx_d3dkmt_l1_1_7_D3DKMTAcquireKeyedMutex2",
+        "api_ms_win_dx_d3dkmt_l1_1_1_D3DKMTDestroyKeyedMutex",
+        "ext_ms_win_gdi_internal_desktop_l1_1_3_NtGdiMakeObjectUnXferable",
+        "ext_ms_win_sensors_core_private_l1_1_4_SensorGetDeviceId",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_4_D3DKMTOpenKeyedMutex2",
+        "api_ms_win_dx_d3dkmt_l1_1_6_D3DKMTAcquireKeyedMutex2",
+        "api_ms_win_dx_d3dkmt_l1_1_0_D3DKMTDestroyKeyedMutex",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_2_D3DKMTReleaseKeyedMutex",
+        "api_ms_win_rtcore_ntuser_synch_l1_1_0_MsgWaitForMultipleObjects",
+        "api_ms_win_core_com_l1_1_0_CoWaitForMultipleHandles",
+        "ext_ms_win_setupapi_classinstallers_l1_1_1_SetupDiGetDeviceInstanceIdW",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_2_D3DKMTReleaseKeyedMutex2",
+        "ext_ms_win_ntuser_rim_l1_1_1_RIMGetDevicePropertiesLockfree",
+        "api_ms_win_dx_d3dkmt_l1_1_5_D3DKMTAcquireKeyedMutex2",
+        "api_ms_win_dx_d3dkmt_l1_1_3_D3DKMTDestroyKeyedMutex",
+        "api_ms_win_dx_d3dkmt_l1_1_4_D3DKMTAcquireKeyedMutex2",
+        "api_ms_win_dx_d3dkmt_l1_1_2_D3DKMTDestroyKeyedMutex",
+        "api_ms_win_core_kernel32_legacy_l1_1_7_RegisterWaitForSingleObject",
+        "api_ms_win_dx_d3dkmt_l1_1_5_D3DKMTDestroyKeyedMutex",
+        "api_ms_win_dx_d3dkmt_l1_1_3_D3DKMTAcquireKeyedMutex2",
+        "ext_ms_win_devmgmt_dm_l1_1_0_DMCSP_DevDetail_GetDeviceName",
+        "api_ms_win_dx_d3dkmt_l1_1_4_D3DKMTDestroyKeyedMutex",
+        "_imp_RtlSleepConditionVariableCS",
+        "api_ms_win_dx_d3dkmt_l1_1_2_D3DKMTAcquireKeyedMutex2",
+        "api_ms_win_core_kernel32_legacy_l1_1_3_WaitForMultipleObjects",
+        "ext_ms_win_setupapi_devobj_l1_1_0_SetupDiGetDeviceInterfaceAlias",
+        "api_ms_win_core_com_l1_1_3_CoWaitForMultipleObjects",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_4_D3DKMTAcquireKeyedMutex2",
+        "api_ms_win_dx_d3dkmt_l1_1_7_D3DKMTDestroyKeyedMutex",
+        "api_ms_win_dx_d3dkmt_l1_1_1_D3DKMTAcquireKeyedMutex2",
+        "api_ms_win_mm_mci_l1_1_0_mciGetDeviceIDFromElementIDW",
+        "api_ms_win_mm_mci_l1_1_0_mciGetDeviceIDFromElementIDA",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_4_D3DKMTAcquireKeyedMutex",
+        "ext_ms_win_gdi_internal_desktop_l1_1_5_NtGdiMakeObjectXferable",
+        "api_ms_win_dx_d3dkmt_l1_1_6_D3DKMTDestroyKeyedMutex",
+        "api_ms_win_dx_d3dkmt_l1_1_0_D3DKMTAcquireKeyedMutex2",
+        "ext_ms_win_gdi_internal_desktop_l1_1_3_GetDeviceGammaRamp",
+        "api_ms_win_dx_d3dkmt_l1_1_9_D3DKMTDestroyKeyedMutex",
+        "ext_ms_win_gdi_internal_desktop_l1_1_2_NtGdiMakeObjectUnXferable",
+        "ext_ms_win_sensors_core_private_l1_1_5_SensorGetDeviceId",
+        "DeviceCredentialGetDeviceInfo",
+        "api_ms_win_dx_d3dkmt_l1_1_8_D3DKMTDestroyKeyedMutex",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_5_D3DKMTOpenKeyedMutex2",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_3_D3DKMTReleaseKeyedMutex",
+        "_imp_NtWaitForSingleObject",
+        "api_ms_win_core_com_l1_1_1_CoWaitForMultipleHandles",
+        "ext_ms_win_setupapi_classinstallers_l1_1_0_SetupDiGetDeviceInstanceIdW",
+        "ext_ms_win_ntuser_sysparams_ext_l1_1_1_DisplayConfigGetDeviceInfo",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_3_D3DKMTReleaseKeyedMutex2",
+        "ext_ms_win_ntuser_rim_l1_1_0_RIMGetDevicePropertiesLockfree",
+        "SleepConditionVariableCS",
+        "ext_ms_win_rtcore_ntuser_synch_ext_l1_1_0_MsgWaitForMultipleObjects",
+        "ext_ms_win_gdi_internal_desktop_l1_1_6_NtGdiGetDeviceWidth",
+        "api_ms_win_core_kernel32_legacy_l1_1_6_RegisterWaitForSingleObject",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_6_D3DKMTDestroyKeyedMutex",
+        "ext_ms_win_devmgmt_dm_l1_1_1_DMCSP_DevDetail_GetDeviceName",
+        "api_ms_win_core_synch_ansi_l1_1_0_OpenMutexA",
+        "api_ms_win_core_kernel32_legacy_l1_1_2_WaitForMultipleObjects",
+        "_imp_NtSignalAndWaitForSingleObject",
+        "api_ms_win_core_com_l1_1_2_CoWaitForMultipleObjects",
+        "api_ms_win_dx_d3dkmt_l1_1_9_D3DKMTAcquireKeyedMutex2",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_5_D3DKMTAcquireKeyedMutex2",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_5_D3DKMTAcquireKeyedMutex",
+        "WaitOnAddress",
+        "ext_ms_win_gdi_internal_desktop_l1_1_4_NtGdiMakeObjectXferable",
+        "api_ms_win_dx_d3dkmt_l1_1_8_D3DKMTAcquireKeyedMutex2",
+        "ext_ms_win_gdi_internal_desktop_l1_1_4_GetDeviceGammaRamp",
+        "ext_ms_win_devmgmt_policy_l1_1_3_PolicyManager_GetDeviceLockPolicy_AllowIdleReturnWithoutPassword",
+        "ext_ms_win_devmgmt_dm_l1_1_1_DMCSP_DevDetail_GetDeviceHardwareData",
+        "api_ms_win_ntuser_sysparams_l1_1_0_DisplayConfigGetDeviceInfo",
+        "ext_ms_win_gdi_internal_desktop_l1_1_5_NtGdiMakeObjectUnXferable",
+        "ext_ms_win_sensors_core_private_l1_1_2_SensorGetDeviceId",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_2_D3DKMTOpenKeyedMutex2",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_4_D3DKMTReleaseKeyedMutex",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_4_D3DKMTReleaseKeyedMutex2",
+        "ext_ms_win_gdi_internal_desktop_l1_1_1_NtGdiGetDeviceWidth",
+        "api_ms_win_core_kernel32_legacy_l1_1_1_RegisterWaitForSingleObject",
+        "api_ms_win_dx_d3dkmt_l1_1_5_D3DKMTOpenKeyedMutexFromNtHandle",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_1_D3DKMTDestroyKeyedMutex",
+        "api_ms_win_core_kernel32_legacy_l1_1_5_WaitForMultipleObjects",
+        "api_ms_win_dx_d3dkmt_l1_1_4_D3DKMTOpenKeyedMutexFromNtHandle",
+        "ext_ms_win_devmgmt_policy_l1_1_0_PolicyManager_GetDeviceLockPolicy_MinDevicePasswordComplexCharacters",
+        "ext_ms_win_setupapi_classinstallers_l1_1_2_SetupDiGetDeviceInterfacePropertyW",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_2_D3DKMTAcquireKeyedMutex2",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_2_D3DKMTAcquireKeyedMutex",
+        "api_ms_win_dx_d3dkmt_l1_1_7_D3DKMTOpenKeyedMutexFromNtHandle",
+        "ext_ms_win_gdi_internal_desktop_l1_1_3_NtGdiMakeObjectXferable",
+        "api_ms_win_dx_d3dkmt_l1_1_6_D3DKMTOpenKeyedMutexFromNtHandle",
+        "ext_ms_win_gdi_internal_desktop_l1_1_5_GetDeviceGammaRamp",
+        "ext_ms_win_devmgmt_policy_l1_1_2_PolicyManager_GetDeviceLockPolicy_AllowIdleReturnWithoutPassword",
+        "WaitForSingleObjectEx",
+        "api_ms_win_dx_d3dkmt_l1_1_9_D3DKMTOpenKeyedMutexFromNtHandle",
+        "ext_ms_win_gdi_internal_desktop_l1_1_4_NtGdiMakeObjectUnXferable",
+        "ext_ms_win_sensors_core_private_l1_1_3_SensorGetDeviceId",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_3_D3DKMTOpenKeyedMutex2",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_5_D3DKMTReleaseKeyedMutex",
+        "api_ms_win_dx_d3dkmt_l1_1_8_D3DKMTOpenKeyedMutexFromNtHandle",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_5_D3DKMTReleaseKeyedMutex2",
+        "ext_ms_win_gdi_internal_desktop_l1_1_0_NtGdiGetDeviceWidth",
+        "api_ms_win_core_kernel32_legacy_l1_1_0_RegisterWaitForSingleObject",
+        "fc::details::create_global_mutex<unsigned int>",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_0_D3DKMTDestroyKeyedMutex",
+        "_imp_RtlSleepConditionVariableSRW",
+        "api_ms_win_core_kernel32_legacy_l1_1_4_WaitForMultipleObjects",
+        "ext_ms_win_devmgmt_policy_l1_1_1_PolicyManager_GetDeviceLockPolicy_MinDevicePasswordComplexCharacters",
+        "ext_ms_win_rtcore_ntuser_sysparams_l1_1_0_DisplayConfigGetDeviceInfo",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_3_D3DKMTAcquireKeyedMutex2",
+        "fc::details::open_global_mutex<unsigned int>",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_3_D3DKMTAcquireKeyedMutex",
+        "ext_ms_win_gdi_internal_desktop_l1_1_2_NtGdiMakeObjectXferable",
+        "ext_ms_win_gdi_internal_desktop_l1_1_6_GetDeviceGammaRamp",
+        "api_ms_win_dx_d3dkmt_l1_1_2_D3DKMTOpenKeyedMutex2",
+        "ext_ms_win_devmgmt_policy_l1_1_1_PolicyManager_GetDeviceLockPolicy_AllowIdleReturnWithoutPassword",
+        "ext_ms_win_devmgmt_dm_l1_1_3_DMCSP_DevDetail_GetDeviceHardwareData",
+        "api_ms_win_dx_d3dkmt_l1_1_4_D3DKMTReleaseKeyedMutex2",
+        "api_ms_win_dx_d3dkmt_l1_1_2_D3DKMTOpenKeyedMutex",
+        "ext_ms_win_sensors_core_private_l1_1_0_SensorGetDeviceId",
+        "api_ms_win_dx_d3dkmt_l1_1_3_D3DKMTOpenKeyedMutex2",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_0_D3DKMTOpenKeyedMutex2",
+        "api_ms_win_dx_d3dkmt_l1_1_5_D3DKMTReleaseKeyedMutex2",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_6_D3DKMTReleaseKeyedMutex",
+        "_imp_RtlGetDeviceFamilyInfoEnum",
+        "api_ms_win_dx_d3dkmt_l1_1_3_D3DKMTOpenKeyedMutex",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_6_D3DKMTReleaseKeyedMutex2",
+        "api_ms_win_dx_d3dkmt_l1_1_0_D3DKMTOpenKeyedMutex2",
+        "WaitForMultipleObjectsEx",
+        "api_ms_win_dx_d3dkmt_l1_1_6_D3DKMTReleaseKeyedMutex2",
+        "api_ms_win_dx_d3dkmt_l1_1_0_D3DKMTOpenKeyedMutex",
+        "api_ms_win_dx_d3dkmt_l1_1_1_D3DKMTOpenKeyedMutex2",
+        "api_ms_win_dx_d3dkmt_l1_1_7_D3DKMTReleaseKeyedMutex2",
+        "ext_ms_win_gdi_internal_desktop_l1_1_3_NtGdiGetDeviceWidth",
+        "wil::unique_any_t<wil::details::unique_storage<wil::details::resource_policy<void * __ptr64,void (__cdecl*)(void * __ptr64) noexcept,&wil::details::ReleaseMutex,wistd::integral_constant<unsigned __int64,2>,void * __ptr64,void * __ptr64,0,std::nullptr_t> > >::operator=",
+        "api_ms_win_dx_d3dkmt_l1_1_1_D3DKMTOpenKeyedMutex",
+        "api_ms_win_core_kernel32_legacy_l1_1_3_RegisterWaitForSingleObject",
+        "api_ms_win_dx_d3dkmt_l1_1_6_D3DKMTOpenKeyedMutex2",
+        "api_ms_win_dx_d3dkmt_l1_1_0_D3DKMTReleaseKeyedMutex2",
+        "api_ms_win_dx_d3dkmt_l1_1_6_D3DKMTOpenKeyedMutex",
+        "api_ms_win_dx_d3dkmt_l1_1_7_D3DKMTOpenKeyedMutex2",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_3_D3DKMTDestroyKeyedMutex",
+        "api_ms_win_mm_mci_l1_1_0_mciGetDeviceIDA",
+        "WaitForMultipleObjects",
+        "api_ms_win_dx_d3dkmt_l1_1_1_D3DKMTReleaseKeyedMutex2",
+        "api_ms_win_core_kernel32_legacy_l1_1_7_WaitForMultipleObjects",
+        "api_ms_win_dx_d3dkmt_l1_1_7_D3DKMTOpenKeyedMutex",
+        "api_ms_win_core_kernel32_legacy_l1_1_6_GetDevicePowerState",
+        "ext_ms_win_devmgmt_policy_l1_1_2_PolicyManager_GetDeviceLockPolicy_MinDevicePasswordComplexCharacters",
+        "api_ms_win_dx_d3dkmt_l1_1_4_D3DKMTOpenKeyedMutex2",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_0_D3DKMTAcquireKeyedMutex2",
+        "api_ms_win_dx_d3dkmt_l1_1_2_D3DKMTReleaseKeyedMutex2",
+        "api_ms_win_dx_d3dkmt_l1_1_4_D3DKMTOpenKeyedMutex",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_0_D3DKMTAcquireKeyedMutex",
+        "api_ms_win_dx_d3dkmt_l1_1_5_D3DKMTOpenKeyedMutex2",
+        "ext_ms_win_gdi_internal_desktop_l1_1_1_NtGdiMakeObjectXferable",
+        "api_ms_win_dx_d3dkmt_l1_1_3_D3DKMTReleaseKeyedMutex2",
+        "api_ms_win_dx_d3dkmt_l1_1_5_D3DKMTOpenKeyedMutex",
+        "api_ms_win_downlevel_kernel32_l2_1_0_RegisterWaitForSingleObject",
+        "ext_ms_win_devmgmt_policy_l1_1_0_PolicyManager_GetDeviceLockPolicy_AllowIdleReturnWithoutPassword",
+        "ext_ms_win_devmgmt_dm_l1_1_2_DMCSP_DevDetail_GetDeviceHardwareData",
+        "ext_ms_win_gdi_internal_desktop_l1_1_6_NtGdiMakeObjectUnXferable",
+        "ext_ms_win_sensors_core_private_l1_1_1_SensorGetDeviceId",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_1_D3DKMTOpenKeyedMutex2",
+        "ext_ms_win_msa_user_l1_1_1_MsaUser_GetDeviceTypeParameterValue",
+        "api_ms_win_dx_d3dkmt_l1_1_8_D3DKMTOpenKeyedMutex2",
+        "api_ms_win_dx_d3dkmt_l1_1_8_D3DKMTOpenKeyedMutex",
+        "api_ms_win_dx_d3dkmt_l1_1_9_D3DKMTOpenKeyedMutex2",
+        "ext_ms_win_gdi_internal_desktop_l1_1_2_NtGdiGetDeviceWidth",
+        "api_ms_win_core_kernel32_legacy_l1_1_2_RegisterWaitForSingleObject",
+        "api_ms_win_dx_d3dkmt_l1_1_9_D3DKMTOpenKeyedMutex",
+        "api_ms_win_dx_d3dkmt_l1_1_8_D3DKMTReleaseKeyedMutex2",
+        "_imp_RtlWaitOnAddress",
+        "ext_ms_win_ntuser_synch_l1_1_0_MsgWaitForMultipleObjectsEx",
+        "api_ms_win_dx_d3dkmt_l1_1_9_D3DKMTReleaseKeyedMutex2",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_2_D3DKMTDestroyKeyedMutex",
+        "api_ms_win_core_kernel32_legacy_l1_1_6_WaitForMultipleObjects",
+        "api_ms_win_core_kernel32_legacy_l1_1_7_GetDevicePowerState",
+        "ext_ms_win_devmgmt_policy_l1_1_3_PolicyManager_GetDeviceLockPolicy_MinDevicePasswordComplexCharacters",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_1_D3DKMTAcquireKeyedMutex2",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_1_D3DKMTAcquireKeyedMutex",
+        "ext_ms_win_gdi_internal_desktop_l1_1_0_NtGdiMakeObjectXferable",
+        "ext_ms_win_setupapi_devobj_l1_1_0_SetupDiGetDeviceInterfaceDetailW",
+        "api_ms_win_dx_d3dkmt_l1_1_4_D3DKMTGetDeviceState",
+        "wil::details::unique_storage<wil::details::resource_policy<void * __ptr64,void (__cdecl*)(void * __ptr64) noexcept,&wil::details::ReleaseMutex,wistd::integral_constant<unsigned __int64,2>,void * __ptr64,void * __ptr64,0,std::nullptr_t> >::reset",
+        "api_ms_win_dx_d3dkmt_l1_1_5_D3DKMTGetDeviceState",
+        "ext_ms_win_setupapi_classinstallers_l1_1_2_SetupDiGetDeviceInstallParamsW",
+        "wil::unique_any_t<wil::mutex_t<wil::details::unique_storage<wil::details::resource_policy<void * __ptr64,void (__cdecl*)(void * __ptr64) noexcept,&wil::details::CloseHandle,wistd::integral_constant<unsigned __int64,0>,void * __ptr64,void * __ptr64,0,std::nullptr_t> >,wil::err_returncode_policy> >::operator=",
+        "ext_ms_win_setupapi_classinstallers_l1_1_2_SetupDiGetDeviceInstallParamsA",
+        "ext_ms_win_devmgmt_policy_l1_1_0_PolicyManager_GetDeviceLockPolicy_MinDevicePasswordLength",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_2_D3DKMTGetDeviceState",
+        "api_ms_win_dx_d3dkmt_l1_1_6_D3DKMTGetDeviceState",
+        "api_ms_win_core_kernel32_legacy_l1_1_5_OpenMutexA",
+        "ext_ms_win_wpn_phoneext_l1_1_0_GetDeviceName",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_6_D3DKMTSetSyncRefreshCountWaitTarget",
+        "api_ms_win_dx_d3dkmt_l1_1_7_D3DKMTGetDeviceState",
+        "api_ms_win_dx_d3dkmt_l1_1_0_D3DKMTGetDeviceState",
+        "api_ms_win_dx_d3dkmt_l1_1_1_D3DKMTGetDeviceState",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_6_D3DKMTCreateKeyedMutex2",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_4_D3DKMTCreateKeyedMutex",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_0_D3DKMTOpenKeyedMutexFromNtHandle",
+        "ext_ms_win_devmgmt_policy_l1_1_0_PolicyManager_GetDeviceLockPolicy_DevicePasswordExpiration",
+        "api_ms_win_dx_d3dkmt_l1_1_2_D3DKMTGetDeviceState",
+        "ext_ms_win_devmgmt_dm_l1_1_1_DMCSP_DevDetail_GetDeviceType",
+        "api_ms_win_dx_d3dkmt_l1_1_3_D3DKMTGetDeviceState",
+        "ext_ms_win_devmgmt_policy_l1_1_3_PolicyManager_GetDeviceLockPolicy_MaxInactivityTimeDeviceLock",
+        "ext_ms_win_devmgmt_policy_l1_1_1_PolicyManager_GetDeviceLockPolicy_DevicePasswordHistory",
+        "ext_ms_win_devmgmt_policy_l1_1_2_PolicyManager_GetDeviceLockPolicy_DevicePasswordEnabled",
+        "ext_ms_win_devmgmt_policy_l1_1_3_PolicyManager_GetDeviceLockPolicy_AlphanumericDevicePasswordRequired",
+        "ext_ms_win_appmodel_usercontext_l1_1_0_GetDeviceIdForCurrentKeyEvent",
+        "SaveThreadHandle",
+        "CreateMutexA",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_6_D3DKMTOpenKeyedMutex",
+        "ext_ms_win_setupapi_devobj_l1_1_0_SetupDiGetDeviceInstanceIdA",
+        "ext_ms_win_devmgmt_policy_l1_1_1_PolicyManager_GetDeviceLockPolicy_MinDevicePasswordLength",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_3_D3DKMTGetDeviceState",
+        "ext_ms_win_setupapi_devobj_l1_1_0_SetupDiGetDeviceInstanceIdW",
+        "api_ms_win_core_kernel32_legacy_l1_1_4_OpenMutexA",
+        "CreateDBWinMutex",
+        "api_ms_win_dx_d3dkmt_l1_1_8_D3DKMTGetDeviceState",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_5_D3DKMTCreateKeyedMutex",
+        "api_ms_win_dx_d3dkmt_l1_1_9_D3DKMTGetDeviceState",
+        "fc::details::create_global_mutex_name<unsigned int>",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_1_D3DKMTOpenKeyedMutexFromNtHandle",
+        "ext_ms_win_setupapi_devobj_l1_1_0_SetupDiGetDeviceInterfacePropertyW",
+        "ext_ms_win_devmgmt_policy_l1_1_1_PolicyManager_GetDeviceLockPolicy_DevicePasswordExpiration",
+        "K32GetDeviceDriverFileNameA",
+        "api_ms_win_downlevel_kernel32_l2_1_0_WaitForMultipleObjects",
+        "K32GetDeviceDriverFileNameW",
+        "ext_ms_win_devmgmt_dm_l1_1_0_DMCSP_DevDetail_GetDeviceType",
+        "ext_ms_win_devmgmt_policy_l1_1_2_PolicyManager_GetDeviceLockPolicy_MaxInactivityTimeDeviceLock",
+        "ext_ms_win_devmgmt_policy_l1_1_0_PolicyManager_GetDeviceLockPolicy_DevicePasswordHistory",
+        "ext_ms_win_devmgmt_policy_l1_1_3_PolicyManager_GetDeviceLockPolicy_DevicePasswordEnabled",
+        "ext_ms_win_devmgmt_policy_l1_1_2_PolicyManager_GetDeviceLockPolicy_AlphanumericDevicePasswordRequired",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_5_D3DKMTOpenKeyedMutex",
+        "ext_ms_win_setupapi_classinstallers_l1_1_0_SetupDiGetDeviceInstallParamsW",
+        "ext_ms_win_setupapi_classinstallers_l1_1_0_SetupDiGetDeviceInstallParamsA",
+        "ext_ms_win_devmgmt_policy_l1_1_2_PolicyManager_GetDeviceLockPolicy_MinDevicePasswordLength",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_0_D3DKMTGetDeviceState",
+        "CreateMutexExW",
+        "api_ms_win_core_kernel32_legacy_l1_1_7_OpenMutexA",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_4_D3DKMTSetSyncRefreshCountWaitTarget",
+        "BasepOpenPendingRenameMutex",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_4_D3DKMTCreateKeyedMutex2",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_6_D3DKMTCreateKeyedMutex",
+        "ext_ms_win_msa_device_l1_1_0_MsaDevice_GetDeviceAuthXToken",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_2_D3DKMTOpenKeyedMutexFromNtHandle",
+        "ext_ms_win_devmgmt_policy_l1_1_2_PolicyManager_GetDeviceLockPolicy_DevicePasswordExpiration",
+        "api_ms_win_dx_d3dkmt_l1_1_9_D3DKMTAcquireKeyedMutex",
+        "WaitForSingleObject",
+        "ext_ms_win_devmgmt_dm_l1_1_3_DMCSP_DevDetail_GetDeviceType",
+        "api_ms_win_dx_d3dkmt_l1_1_8_D3DKMTAcquireKeyedMutex",
+        "ext_ms_win_devmgmt_policy_l1_1_1_PolicyManager_GetDeviceLockPolicy_MaxInactivityTimeDeviceLock",
+        "ext_ms_win_devmgmt_policy_l1_1_3_PolicyManager_GetDeviceLockPolicy_DevicePasswordHistory",
+        "ext_ms_win_devmgmt_policy_l1_1_0_PolicyManager_GetDeviceLockPolicy_DevicePasswordEnabled",
+        "ext_ms_win_devmgmt_policy_l1_1_1_PolicyManager_GetDeviceLockPolicy_AlphanumericDevicePasswordRequired",
+        "api_ms_win_dx_d3dkmt_l1_1_7_D3DKMTAcquireKeyedMutex",
+        "wil::mutex_t<wil::details::unique_storage<wil::details::resource_policy<void * __ptr64,void (__cdecl*)(void * __ptr64) noexcept,&wil::details::CloseHandle,wistd::integral_constant<unsigned __int64,0>,void * __ptr64,void * __ptr64,0,std::nullptr_t> >,wil::err_returncode_policy>::acquire",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_4_D3DKMTOpenKeyedMutex",
+        "ext_ms_win_setupapi_classinstallers_l1_1_1_SetupDiGetDeviceInstallParamsW",
+        "api_ms_win_dx_d3dkmt_l1_1_6_D3DKMTAcquireKeyedMutex",
+        "ext_ms_win_setupapi_classinstallers_l1_1_1_SetupDiGetDeviceInstallParamsA",
+        "ext_ms_win_devmgmt_policy_l1_1_3_PolicyManager_GetDeviceLockPolicy_MinDevicePasswordLength",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_1_D3DKMTGetDeviceState",
+        "api_ms_win_dx_d3dkmt_l1_1_5_D3DKMTAcquireKeyedMutex",
+        "api_ms_win_core_kernel32_legacy_l1_1_6_OpenMutexA",
+        "ext_ms_win_setupapi_classinstallers_l1_1_2_SetupDiGetDeviceRegistryPropertyW",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_5_D3DKMTSetSyncRefreshCountWaitTarget",
+        "api_ms_win_dx_d3dkmt_l1_1_4_D3DKMTAcquireKeyedMutex",
+        "api_ms_win_ntuser_ie_message_l1_1_0_MsgWaitForMultipleObjects",
+        "ext_ms_win_gdi_devcaps_l1_1_0_GetDeviceCaps",
+        "api_ms_win_dx_d3dkmt_l1_1_3_D3DKMTAcquireKeyedMutex",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_5_D3DKMTCreateKeyedMutex2",
+        "ext_ms_win_advapi32_lsa_l1_1_4_LsaGetDeviceRegistrationInfo",
+        "api_ms_win_dx_d3dkmt_l1_1_2_D3DKMTAcquireKeyedMutex",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_3_D3DKMTOpenKeyedMutexFromNtHandle",
+        "_imp_RtlRestoreThreadPreferredUILanguages",
+        "ext_ms_win_devmgmt_policy_l1_1_3_PolicyManager_GetDeviceLockPolicy_DevicePasswordExpiration",
+        "api_ms_win_dx_d3dkmt_l1_1_1_D3DKMTAcquireKeyedMutex",
+        "ext_ms_win_devmgmt_dm_l1_1_2_DMCSP_DevDetail_GetDeviceType",
+        "ext_ms_win_devmgmt_policy_l1_1_0_PolicyManager_GetDeviceLockPolicy_MaxInactivityTimeDeviceLock",
+        "ext_ms_win_devmgmt_policy_l1_1_2_PolicyManager_GetDeviceLockPolicy_DevicePasswordHistory",
+        "ext_ms_win_devmgmt_policy_l1_1_1_PolicyManager_GetDeviceLockPolicy_DevicePasswordEnabled",
+        "api_ms_win_dx_d3dkmt_l1_1_0_D3DKMTAcquireKeyedMutex",
+        "ext_ms_win_devmgmt_policy_l1_1_0_PolicyManager_GetDeviceLockPolicy_AlphanumericDevicePasswordRequired",
+        "ext_ms_win_setupapi_classinstallers_l1_1_2_SetupDiGetDeviceInterfaceDetailW",
+        "ext_ms_win_rtcore_gdi_devcaps_l1_1_0_GetDeviceCaps",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_3_D3DKMTOpenKeyedMutex",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_6_D3DKMTGetDeviceState",
+        "ext_ms_win_rtcore_ntuser_synch_ext_l1_1_0_MsgWaitForMultipleObjectsEx",
+        "CreateMutexExA",
+        "ext_ms_win_devmgmt_policy_l1_1_2_PolicyManager_GetDeviceLockPolicy_MaxDevicePasswordFailedAttempts",
+        "ext_ms_win_ntuser_rim_l1_1_0_RIMGetDeviceProperties",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_2_D3DKMTSetSyncRefreshCountWaitTarget",
+        "ext_ms_win_fsutilext_ifsutil_l1_1_0_GetDeviceIDDiskFromDeviceIDVolumeWorker",
+        "ext_ms_win_ntuser_rim_l1_1_0_RIMGetDevicePreparsedData",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_2_D3DKMTCreateKeyedMutex2",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_0_D3DKMTCreateKeyedMutex",
+        "ext_ms_win_setupapi_devobj_l1_1_0_SetupDiGetDeviceInterfacePropertyKeys",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_4_D3DKMTOpenKeyedMutexFromNtHandle",
+        "RestoreThreadPreferredUILanguages",
+        "api_ms_win_dx_d3dkmt_l1_1_8_D3DKMTSetSyncRefreshCountWaitTarget",
+        "api_ms_win_dx_d3dkmt_l1_1_8_D3DKMTCreateKeyedMutex",
+        "ext_ms_win_ntuser_rim_l1_1_2_RIMGetDevicePreparsedDataLockfree",
+        "ext_ms_win_ntuser_rim_l1_2_1_RIMGetDevicePreparsedDataLockfree",
+        "api_ms_win_dx_d3dkmt_l1_1_8_D3DKMTCreateKeyedMutex2",
+        "api_ms_win_dx_d3dkmt_l1_1_9_D3DKMTSetSyncRefreshCountWaitTarget",
+        "api_ms_win_dx_d3dkmt_l1_1_9_D3DKMTCreateKeyedMutex",
+        "ext_ms_win_devmgmt_policy_l1_1_2_PolicyManager_GetDeviceLockPolicy_AllowSimpleDevicePassword",
+        "api_ms_win_dx_d3dkmt_l1_1_9_D3DKMTCreateKeyedMutex2",
+        "api_ms_win_dx_d3dkmt_l1_1_6_D3DKMTCreateKeyedMutex",
+        "api_ms_win_dx_d3dkmt_l1_1_6_D3DKMTSetSyncRefreshCountWaitTarget",
+        "api_ms_win_dx_d3dkmt_l1_1_6_D3DKMTCreateKeyedMutex2",
+        "ext_ms_win_rtcore_gdi_devcaps_l1_1_1_GetDeviceCaps",
+        "api_ms_win_rtcore_ntuser_synch_l1_1_0_MsgWaitForMultipleObjectsEx",
+        "api_ms_win_dx_d3dkmt_l1_1_7_D3DKMTCreateKeyedMutex",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_2_D3DKMTOpenKeyedMutex",
+        "api_ms_win_dx_d3dkmt_l1_1_7_D3DKMTSetSyncRefreshCountWaitTarget",
+        "api_ms_win_dx_d3dkmt_l1_1_7_D3DKMTCreateKeyedMutex2",
+        "api_ms_win_dx_d3dkmt_l1_1_4_D3DKMTCreateKeyedMutex",
+        "ext_ms_win_bluetooth_apis_l1_1_0_BluetoothGetDeviceInfo",
+        "api_ms_win_dx_d3dkmt_l1_1_4_D3DKMTSetSyncRefreshCountWaitTarget",
+        "ext_ms_win_devmgmt_policy_l1_1_3_PolicyManager_GetDeviceLockPolicy_MaxDevicePasswordFailedAttempts",
+        "api_ms_win_dx_d3dkmt_l1_1_4_D3DKMTCreateKeyedMutex2",
+        "ext_ms_win_ntuser_rim_l1_1_1_RIMGetDeviceProperties",
+        "api_ms_win_dx_d3dkmt_l1_1_5_D3DKMTCreateKeyedMutex",
+        "ext_ms_win_setupapi_classinstallers_l1_1_2_SetupDiGetDevicePropertyW",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_3_D3DKMTSetSyncRefreshCountWaitTarget",
+        "api_ms_win_dx_d3dkmt_l1_1_5_D3DKMTSetSyncRefreshCountWaitTarget",
+        "api_ms_win_dx_d3dkmt_l1_1_5_D3DKMTCreateKeyedMutex2",
+        "api_ms_win_dx_d3dkmt_l1_1_2_D3DKMTCreateKeyedMutex",
+        "api_ms_win_dx_d3dkmt_l1_1_2_D3DKMTCreateKeyedMutex2",
+        "ext_ms_win_ntuser_rim_l1_1_1_RIMGetDevicePreparsedData",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_3_D3DKMTCreateKeyedMutex2",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_1_D3DKMTCreateKeyedMutex",
+        "api_ms_win_dx_d3dkmt_l1_1_3_D3DKMTCreateKeyedMutex",
+        "api_ms_win_dx_d3dkmt_l1_1_3_D3DKMTSetSyncRefreshCountWaitTarget",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_5_D3DKMTOpenKeyedMutexFromNtHandle",
+        "api_ms_win_dx_d3dkmt_l1_1_3_D3DKMTCreateKeyedMutex2",
+        "ext_ms_win_provisioning_platform_l1_1_2_GetDeviceId",
+        "ext_ms_onecore_service_devicedirectory_claims_l1_1_0_DdcGetDeviceClaimsForUser",
+        "api_ms_win_dx_d3dkmt_l1_1_0_D3DKMTCreateKeyedMutex",
+        "ext_ms_win_ntuser_rim_l1_2_0_RIMGetDevicePreparsedDataLockfree",
+        "api_ms_win_dx_d3dkmt_l1_1_0_D3DKMTCreateKeyedMutex2",
+        "ext_ms_win_provisioning_platform_l1_1_1_GetDeviceId",
+        "api_ms_win_dx_d3dkmt_l1_1_1_D3DKMTCreateKeyedMutex",
+        "ext_ms_win_devmgmt_policy_l1_1_3_PolicyManager_GetDeviceLockPolicy_AllowSimpleDevicePassword",
+        "api_ms_win_dx_d3dkmt_l1_1_1_D3DKMTCreateKeyedMutex2",
+        "ext_ms_win_provisioning_platform_l1_1_0_GetDeviceId",
+        "ext_ms_win_sensors_core_private_l1_1_8_SensorGetDeviceId",
+        "api_ms_win_ntuser_ie_message_l1_1_0_MsgWaitForMultipleObjectsEx",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_1_D3DKMTOpenKeyedMutex",
+        "ext_ms_win_gaming_devicefamily_l1_1_0_GetDeviceFamilyInfo",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_4_D3DKMTGetDeviceState",
+        "ext_ms_win_security_winscard_l1_1_0_SCardGetDeviceTypeIdW",
+        "ext_ms_win_devmgmt_policy_l1_1_0_PolicyManager_GetDeviceLockPolicy_MaxDevicePasswordFailedAttempts",
+        "ext_ms_win_ntuser_rim_l1_1_2_RIMGetDeviceProperties",
+        "ext_ms_win_ntuser_rim_l1_2_1_RIMGetDeviceProperties",
+        "api_ms_win_core_kernel32_legacy_l1_1_3_OpenMutexA",
+        "ext_ms_win_setupapi_classinstallers_l1_1_1_SetupDiGetDevicePropertyW",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_0_D3DKMTSetSyncRefreshCountWaitTarget",
+        "ext_ms_win_security_winscard_l1_1_1_SCardGetDeviceTypeIdW",
+        "api_ms_win_dx_d3dkmt_l1_1_8_D3DKMTReleaseKeyedMutex",
+        "ext_ms_win_ntuser_rim_l1_1_2_RIMGetDevicePreparsedData",
+        "ext_ms_win_ntuser_rim_l1_2_1_RIMGetDevicePreparsedData",
+        "api_ms_win_dx_d3dkmt_l1_1_9_D3DKMTReleaseKeyedMutex",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_0_D3DKMTCreateKeyedMutex2",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_2_D3DKMTCreateKeyedMutex",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_6_D3DKMTOpenKeyedMutexFromNtHandle",
+        "ext_ms_win_setupapi_devobj_l1_1_0_SetupDiGetDeviceRegistryPropertyA",
+        "ext_ms_win_ntuser_rim_l1_1_0_RIMGetDevicePreparsedDataLockfree",
+        "ext_ms_win_setupapi_devobj_l1_1_0_SetupDiGetDeviceRegistryPropertyW",
+        "ext_ms_win_devmgmt_policy_l1_1_0_PolicyManager_GetDeviceLockPolicy_AllowSimpleDevicePassword",
+        "api_ms_win_downlevel_ole32_l1_1_0_CoWaitForMultipleHandles",
+        "api_ms_win_dx_d3dkmt_l1_1_4_D3DKMTReleaseKeyedMutex",
+        "CreateMutexW",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_0_D3DKMTOpenKeyedMutex",
+        "api_ms_win_dx_d3dkmt_l1_1_5_D3DKMTReleaseKeyedMutex",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_5_D3DKMTGetDeviceState",
+        "RegisterWaitForSingleObjectEx",
+        "ext_ms_win_devmgmt_policy_l1_1_1_PolicyManager_GetDeviceLockPolicy_MaxDevicePasswordFailedAttempts",
+        "api_ms_win_dx_d3dkmt_l1_1_6_D3DKMTReleaseKeyedMutex",
+        "_imp_NtWaitForMultipleObjects",
+        "ext_ms_win_ntuser_rim_l1_2_0_RIMGetDeviceProperties",
+        "api_ms_win_core_kernel32_legacy_l1_1_2_OpenMutexA",
+        "OpenMutexW",
+        "ext_ms_win_setupapi_classinstallers_l1_1_0_SetupDiGetDevicePropertyW",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_1_D3DKMTSetSyncRefreshCountWaitTarget",
+        "api_ms_win_dx_d3dkmt_l1_1_7_D3DKMTReleaseKeyedMutex",
+        "ReleaseMutex",
+        "api_ms_win_dx_d3dkmt_l1_1_0_D3DKMTReleaseKeyedMutex",
+        "ext_ms_win_setupapi_devobj_l1_1_0_SetupDiGetDeviceInfoListClass",
+        "ext_ms_win_ntuser_rim_l1_2_0_RIMGetDevicePreparsedData",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_1_D3DKMTCreateKeyedMutex2",
+        "ext_ms_win_dx_d3dkmt_dxcore_l1_1_3_D3DKMTCreateKeyedMutex",
+        "api_ms_win_dx_d3dkmt_l1_1_1_D3DKMTReleaseKeyedMutex",
+        "FaxGetDeviceStatusA",
+        "api_ms_win_dx_d3dkmt_l1_1_2_D3DKMTReleaseKeyedMutex",
+        "FaxGetDeviceStatusW",
+        "ext_ms_win_ntuser_synch_l1_1_0_MsgWaitForMultipleObjects",
+        "ext_ms_win_ntuser_rim_l1_1_1_RIMGetDevicePreparsedDataLockfree",
+        "ext_ms_win_fsutilext_ifsutil_l1_1_0_GetDeviceInstanceWorker",
+        "api_ms_win_dx_d3dkmt_l1_1_3_D3DKMTReleaseKeyedMutex",
+        "ext_ms_win_setupapi_devobj_l1_1_0_SetupDiGetDevicePropertyW",
+        "ext_ms_win_devmgmt_policy_l1_1_1_PolicyManager_GetDeviceLockPolicy_AllowSimpleDevicePassword"
+      ],
+      "coff_symbol_table_count": 0,
+      "unwind_table": {
+        "entries": 6410,
+        "ranges_in_image": true,
+        "sorted_by_start": true,
+        "scope": "PE table structure only; no actual recorded-stack unwind completeness proven."
+      }
+    },
+    {
+      "module": "ntdll.dll",
+      "image_sha256": "651ac9041af8e6b5ebd331d53163244c0a27d36d1433f0f15cac1f28c5f2e82c",
+      "matched_pdb": true,
+      "pdb_identity": {
+        "path": "symbols\\ntdll.pdb",
+        "sha256": "c93f4614aa6f40fe370d40eb7ee9589ca0eda170ef2d704b5d278da71c02c249",
+        "bytes": 1912832,
+        "guid": "C031D45B-0DA1-8A6E-74D0-6ED6AB2DD9E1",
+        "age": 1,
+        "info_age": 4,
+        "age_source": "DBI header (not Info-stream rewrite age)",
+        "info_version": 20000404,
+        "dbi_version": 19990903,
+        "stream_count": 129
+      },
+      "source_lines": 0,
+      "function_symbols_enumerated": 427,
+      "diagnostic_functions": [
+        {
+          "name": "PsspQueryVmBulkMode",
+          "rva": 1425568,
+          "size": 397,
+          "source": null,
+          "interior_roundtrip": {
+            "name": "PsspQueryVmBulkMode",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "TpCallbackReleaseMutexOnCompletion",
+          "rva": 1423664,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "NtWaitForWorkViaWorkerFactory",
+          "rva": 1464848,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "RtlSleepConditionVariableSRW",
+          "rva": 366048,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "NtWaitForDebugEvent",
+          "rva": 1464784,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "RtlWaitOnAddress",
+          "rva": 444512,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "NtWaitHighEventPair",
+          "rva": 1464880,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "RtlpWaitOnAddressWithTimeout",
+          "rva": 443248,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "NtWaitForKeyedEvent",
+          "rva": 1464816,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "NtWaitForSingleObject",
+          "rva": 1449408,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "NtPssCaptureVaSpaceBulk",
+          "rva": 1459760,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "RtlpWaitOnAddressWakeEntireList",
+          "rva": 443184,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "RtlGetDeviceFamilyInfoEnum",
+          "rva": 1018576,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "NtGetDevicePowerState",
+          "rva": 1457392,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "NtWaitForMultipleObjects32",
+          "rva": 1450112,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "RtlpOptimizeWaitOnAddressWaitList",
+          "rva": 445872,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "NtWaitForMultipleObjects",
+          "rva": 1452176,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "RtlpGetDeviceFamilyInfoEnum",
+          "rva": 20016,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "RtlRestoreThreadPreferredUILanguages",
+          "rva": 953888,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "RtlSleepConditionVariableCS",
+          "rva": 112864,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "NtSignalAndWaitForSingleObject",
+          "rva": 1463888,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "RtlpWaitOnAddressRemoveWaitBlock",
+          "rva": 445968,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "RtlpWaitOnAddress",
+          "rva": 445184,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "NtWaitForAlertByThreadId",
+          "rva": 1464752,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "NtWaitLowEventPair",
+          "rva": 1464912,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        }
+      ],
+      "fallback_symbol_type": 3,
+      "fallback_diagnostic_names": [
+        "PsspQueryVmBulkMode",
+        "TpCallbackReleaseMutexOnCompletion",
+        "NtWaitForWorkViaWorkerFactory",
+        "RtlSleepConditionVariableSRW",
+        "NtWaitForDebugEvent",
+        "RtlWaitOnAddress",
+        "NtWaitHighEventPair",
+        "ZwWaitForSingleObject",
+        "RtlpWaitOnAddressWithTimeout",
+        "ZwPssCaptureVaSpaceBulk",
+        "NtWaitForKeyedEvent",
+        "NtWaitForSingleObject",
+        "NtPssCaptureVaSpaceBulk",
+        "RtlpWaitOnAddressWakeEntireList",
+        "RtlGetDeviceFamilyInfoEnum",
+        "ZwWaitForMultipleObjects",
+        "NtGetDevicePowerState",
+        "NtWaitForMultipleObjects32",
+        "RtlpWaitOnAddressSpinCycleCount",
+        "ZwGetDevicePowerState",
+        "ZwWaitForMultipleObjects32",
+        "RtlpOptimizeWaitOnAddressWaitList",
+        "NtWaitForMultipleObjects",
+        "RtlpGetDeviceFamilyInfoEnum",
+        "RtlRestoreThreadPreferredUILanguages",
+        "RtlSleepConditionVariableCS",
+        "NtSignalAndWaitForSingleObject",
+        "RtlpWaitOnAddressRemoveWaitBlock",
+        "RtlpWaitOnAddress",
+        "NtWaitForAlertByThreadId",
+        "ZwSignalAndWaitForSingleObject",
+        "NtWaitLowEventPair",
+        "RtlConstructCrossVmMutexPath"
+      ],
+      "coff_symbol_table_count": 0,
+      "unwind_table": {
+        "entries": 5648,
+        "ranges_in_image": true,
+        "sorted_by_start": true,
+        "scope": "PE table structure only; no actual recorded-stack unwind completeness proven."
+      }
+    },
+    {
+      "module": "_multiarray_umath.cp311-win_amd64.pyd",
+      "image_sha256": "4fb4c5d62a6bd766eea716350eaf5396580e33cf7dc159e305488d1b7d72dad2",
+      "matched_pdb": false,
+      "pdb_identity": null,
+      "source_lines": 0,
+      "function_symbols_enumerated": 0,
+      "diagnostic_functions": [],
+      "fallback_symbol_type": 4,
+      "fallback_diagnostic_names": [
+        "PyInit__multiarray_umath"
+      ],
+      "coff_symbol_table_count": 0,
+      "unwind_table": {
+        "entries": 10991,
+        "ranges_in_image": true,
+        "sorted_by_start": true,
+        "scope": "PE table structure only; no actual recorded-stack unwind completeness proven."
+      }
+    },
+    {
+      "module": "pyside6.abi3.dll",
+      "image_sha256": "d4072be872b31f3748de5e6c28cb2976dafbf063d3ccfa38e5dabda29babcdaf",
+      "matched_pdb": false,
+      "pdb_identity": null,
+      "source_lines": 0,
+      "function_symbols_enumerated": 0,
+      "diagnostic_functions": [],
+      "fallback_symbol_type": 4,
+      "fallback_diagnostic_names": [
+        "PySide::Numpy::xyDataToQPointFList",
+        "PySide::Numpy::xyDataToQPointList",
+        "PySide::nextQObjectMemoryAddrMutex"
+      ],
+      "coff_symbol_table_count": 0,
+      "unwind_table": {
+        "entries": 646,
+        "ranges_in_image": true,
+        "sorted_by_start": true,
+        "scope": "PE table structure only; no actual recorded-stack unwind completeness proven."
+      }
+    },
+    {
+      "module": "qt6core.dll",
+      "image_sha256": "65fe6224b6c47a15b058738031d31dce9928c4d7a58e1b8db6434f6f5cddd702",
+      "matched_pdb": true,
+      "pdb_identity": {
+        "path": "symbols\\Qt6Core.pdb",
+        "sha256": "8c24ee9c64e7c074f65f33edea3262ff95ae300504bb4054095aa60487d92f0b",
+        "bytes": 54202368,
+        "guid": "D97C1245-6CFF-482A-B9A3-59B12274EEF9",
+        "age": 1,
+        "info_age": 1,
+        "age_source": "DBI header (not Info-stream rewrite age)",
+        "info_version": 20000404,
+        "dbi_version": 19990903,
+        "stream_count": 420
+      },
+      "source_lines": 1,
+      "function_symbols_enumerated": 25223,
+      "diagnostic_functions": [
+        {
+          "name": "QBasicMutex::destroyInternal",
+          "rva": 2572976,
+          "size": 61,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qmutex.cpp",
+            "line": 106,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QBasicMutex::destroyInternal",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QBasicMutex::destroyInternal",
+          "rva": 84032,
+          "size": 5,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\compat\\removed_api.cpp",
+            "line": 1292,
+            "displacement": 0
+          },
+          "interior_roundtrip": null
+        },
+        {
+          "name": "QBasicMutex::lock",
+          "rva": 96976,
+          "size": 26,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qmutex.h",
+            "line": 41,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QBasicMutex::lock",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QMutex::tryLock",
+          "rva": 113616,
+          "size": 97,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qmutex.h",
+            "line": 148,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QMutex::tryLock",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QMutex::tryLock",
+          "rva": 113728,
+          "size": 57,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qmutex.h",
+            "line": 153,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QMutex::tryLock",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QRecursiveMutex::~QRecursiveMutex",
+          "rva": 2572896,
+          "size": 66,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qmutex.cpp",
+            "line": 270,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QRecursiveMutex::~QRecursiveMutex",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QBasicMutex::fastTryLock",
+          "rva": 86240,
+          "size": 27,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qmutex.h",
+            "line": 87,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QBasicMutex::fastTryLock",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QRecursiveMutex::try_lock",
+          "rva": 114928,
+          "size": 49,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qmutex.h",
+            "line": 217,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QRecursiveMutex::try_lock",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QMutexLocker<QMutex>::~QMutexLocker<QMutex>",
+          "rva": 58848,
+          "size": 44,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qmutex.h",
+            "line": 270,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QMutexLocker<QMutex>::~QMutexLocker<QMutex>",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "`getDevice'::`1'::dtor$6",
+          "rva": 4100640,
+          "size": 12,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "`QGlobalStatic<QtGlobalStatic::Holder<`anonymous namespace'::Q_QGS_fileEngineHandlerMutex> >::instance'::`2'::`dynamic atexit destructor for 'holder''",
+          "rva": 4126704,
+          "size": 30,
+          "source": null,
+          "interior_roundtrip": {
+            "name": "`QGlobalStatic<QtGlobalStatic::Holder<`anonymous namespace'::Q_QGS_fileEngineHandlerMutex> >::instance'::`2'::`dynamic atexit destructor for 'holder''",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QBasicMutex::unlockInternalFutex",
+          "rva": 2573664,
+          "size": 5,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qmutex.cpp",
+            "line": 827,
+            "displacement": 0
+          },
+          "interior_roundtrip": null
+        },
+        {
+          "name": "QOrderedMutexLocker::~QOrderedMutexLocker",
+          "rva": 294720,
+          "size": 87,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qorderedmutexlocker_p.h",
+            "line": 63,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QOrderedMutexLocker::~QOrderedMutexLocker",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "`getDevice'::`1'::dtor$5",
+          "rva": 4100656,
+          "size": 12,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "QRecursiveMutex::unlock",
+          "rva": 2573584,
+          "size": 36,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qmutex.cpp",
+            "line": 408,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QRecursiveMutex::unlock",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "std::_Ref_count_obj2<QRecursiveMutex>::`scalar deleting destructor'",
+          "rva": 2584432,
+          "size": 43,
+          "source": null,
+          "interior_roundtrip": {
+            "name": "std::_Ref_count_obj2<QRecursiveMutex>::`scalar deleting destructor'",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QMutexLocker<QRecursiveMutex>::~QMutexLocker<QRecursiveMutex>",
+          "rva": 686464,
+          "size": 33,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qmutex.h",
+            "line": 270,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QMutexLocker<QRecursiveMutex>::~QMutexLocker<QRecursiveMutex>",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QThread::exec",
+          "rva": 1726016,
+          "size": 493,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qthread.cpp",
+            "line": 658,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QThread::exec",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "getDevice",
+          "rva": 2440608,
+          "size": 891,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\io\\qstorageinfo_win.cpp",
+            "line": 67,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "getDevice",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QRecursiveMutex::QRecursiveMutex",
+          "rva": 55920,
+          "size": 16,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qmutex.h",
+            "line": 200,
+            "displacement": 0
+          },
+          "interior_roundtrip": null
+        },
+        {
+          "name": "std::scoped_lock<QRecursiveMutex>::~scoped_lock<QRecursiveMutex>",
+          "rva": 504128,
+          "size": 8,
+          "source": {
+            "file": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\VC\\Tools\\MSVC\\14.39.33519\\include\\mutex",
+            "line": 513,
+            "displacement": 0
+          },
+          "interior_roundtrip": null
+        },
+        {
+          "name": "QWaitCondition::~QWaitCondition",
+          "rva": 2384272,
+          "size": 340,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qwaitcondition_win.cpp",
+            "line": 122,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QWaitCondition::~QWaitCondition",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QBasicMutex::unlock",
+          "rva": 115184,
+          "size": 16,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qmutex.h",
+            "line": 51,
+            "displacement": 0
+          },
+          "interior_roundtrip": null
+        },
+        {
+          "name": "std::scoped_lock<QBasicMutex>::~scoped_lock<QBasicMutex>",
+          "rva": 198432,
+          "size": 19,
+          "source": {
+            "file": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\VC\\Tools\\MSVC\\14.39.33519\\include\\mutex",
+            "line": 513,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "std::scoped_lock<QBasicMutex>::~scoped_lock<QBasicMutex>",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QWaitCondition::wait",
+          "rva": 2385392,
+          "size": 504,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qwaitcondition_win.cpp",
+            "line": 133,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QWaitCondition::wait",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QWaitCondition::wait",
+          "rva": 2385904,
+          "size": 241,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qwaitcondition_win.cpp",
+            "line": 140,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QWaitCondition::wait",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QWaitCondition::wait",
+          "rva": 2386160,
+          "size": 109,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qwaitcondition_win.cpp",
+            "line": 156,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QWaitCondition::wait",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QWaitCondition::wait",
+          "rva": 2386272,
+          "size": 452,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qwaitcondition_win.cpp",
+            "line": 163,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QWaitCondition::wait",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QRecursiveMutex::lock",
+          "rva": 97008,
+          "size": 50,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qmutex.h",
+            "line": 207,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QRecursiveMutex::lock",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QWaitCondition::wakeOne",
+          "rva": 2386928,
+          "size": 154,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qwaitcondition_win.cpp",
+            "line": 191,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QWaitCondition::wakeOne",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QWaitCondition::notify_all",
+          "rva": 99328,
+          "size": 5,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qwaitcondition.h",
+            "line": 36,
+            "displacement": 0
+          },
+          "interior_roundtrip": null
+        },
+        {
+          "name": "std::_Mutex_base::lock",
+          "rva": 2575680,
+          "size": 62,
+          "source": {
+            "file": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\VC\\Tools\\MSVC\\14.39.33519\\include\\mutex",
+            "line": 55,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "std::_Mutex_base::lock",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QRecursiveMutex::tryLock",
+          "rva": 2573408,
+          "size": 169,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qmutex.cpp",
+            "line": 322,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QRecursiveMutex::tryLock",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QRecursiveMutex::tryLock",
+          "rva": 113792,
+          "size": 55,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qmutex.h",
+            "line": 236,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QRecursiveMutex::tryLock",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QWaitCondition::wakeAll",
+          "rva": 2386736,
+          "size": 179,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qwaitcondition_win.cpp",
+            "line": 204,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QWaitCondition::wakeAll",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QWaitConditionPrivate::post",
+          "rva": 2384848,
+          "size": 216,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qwaitcondition_win.cpp",
+            "line": 94,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QWaitConditionPrivate::post",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "std::unique_lock<QBasicMutex>::~unique_lock<QBasicMutex>",
+          "rva": 198464,
+          "size": 25,
+          "source": {
+            "file": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\VC\\Tools\\MSVC\\14.39.33519\\include\\mutex",
+            "line": 193,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "std::unique_lock<QBasicMutex>::~unique_lock<QBasicMutex>",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QBasicMutex::unlockInternal",
+          "rva": 2573632,
+          "size": 17,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qmutex.cpp",
+            "line": 806,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QBasicMutex::unlockInternal",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "std::unique_lock<std::mutex>::~unique_lock<std::mutex>",
+          "rva": 2573920,
+          "size": 15,
+          "source": {
+            "file": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\VC\\Tools\\MSVC\\14.39.33519\\include\\mutex",
+            "line": 193,
+            "displacement": 0
+          },
+          "interior_roundtrip": null
+        },
+        {
+          "name": "QWaitConditionPrivate::pre",
+          "rva": 2385072,
+          "size": 311,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qwaitcondition_win.cpp",
+            "line": 52,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QWaitConditionPrivate::pre",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QWaitCondition::QWaitCondition",
+          "rva": 2384192,
+          "size": 65,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qwaitcondition_win.cpp",
+            "line": 117,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QWaitCondition::QWaitCondition",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "`QThread::exec'::`1'::dtor$1",
+          "rva": 4091328,
+          "size": 12,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "QMutex::~QMutex",
+          "rva": 59584,
+          "size": 23,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qmutex.h",
+            "line": 130,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QMutex::~QMutex",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QBasicMutex::lockInternal",
+          "rva": 2573040,
+          "size": 85,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qmutex.cpp",
+            "line": 631,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QBasicMutex::lockInternal",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QBasicMutex::lockInternal",
+          "rva": 2573136,
+          "size": 67,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qmutex.cpp",
+            "line": 652,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QBasicMutex::lockInternal",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QBasicMutex::lockInternal",
+          "rva": 2573216,
+          "size": 185,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qmutex.cpp",
+            "line": 665,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QBasicMutex::lockInternal",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QOrderedMutexLocker::QOrderedMutexLocker",
+          "rva": 993184,
+          "size": 136,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qorderedmutexlocker_p.h",
+            "line": 40,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QOrderedMutexLocker::QOrderedMutexLocker",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "std::_Ref_count_obj2<QRecursiveMutex>::_Destroy",
+          "rva": 2584880,
+          "size": 9,
+          "source": {
+            "file": "C:\\Program Files\\Microsoft Visual Studio\\2022\\Professional\\VC\\Tools\\MSVC\\14.39.33519\\include\\memory",
+            "line": 2079,
+            "displacement": 0
+          },
+          "interior_roundtrip": null
+        },
+        {
+          "name": "QWaitCondition::notify_one",
+          "rva": 99344,
+          "size": 5,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qwaitcondition.h",
+            "line": 35,
+            "displacement": 0
+          },
+          "interior_roundtrip": null
+        },
+        {
+          "name": "QBasicMutex::fastTryUnlock",
+          "rva": 86272,
+          "size": 16,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\corelib\\thread\\qmutex.h",
+            "line": 93,
+            "displacement": 0
+          },
+          "interior_roundtrip": null
+        },
+        {
+          "name": "WaitOnAddress",
+          "rva": 3624247,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        }
+      ],
+      "fallback_symbol_type": 3,
+      "fallback_diagnostic_names": [
+        "_q_ObjectMutexPool",
+        "sharedDataMutex",
+        "globalRoutinesMutex",
+        "registeredInterpolatorsMutex",
+        "qt_library_mutex",
+        "QRecursiveMutex::LockIsNoexcept",
+        "destructorsMutex",
+        "settingsGlobalMutex",
+        "QBasicMutex::FutexAlwaysAvailable",
+        "std::_Ref_count_obj2<QRecursiveMutex>::`vftable'",
+        "registrationMutex",
+        "QMessagePattern::mutex",
+        "environmentMutex",
+        "QtGlobalStatic::Holder<Q_QGS_fileEngineHandlerMutex>::guard",
+        "QBasicMutex::destroyInternal",
+        "QBasicMutex::destroyInternal",
+        "QFutureInterfaceBase::mutex",
+        "QBasicMutex::lock",
+        "QMutex::tryLock",
+        "QMutex::tryLock",
+        "QRecursiveMutex::~QRecursiveMutex",
+        "QBasicMutex::fastTryLock",
+        "QRecursiveMutex::try_lock",
+        "QMutexLocker<QMutex>::~QMutexLocker<QMutex>",
+        "std::_Ref_count_obj2<QRecursiveMutex>::_Delete_this",
+        "`getDevice'::`1'::dtor$6",
+        "`QGlobalStatic<QtGlobalStatic::Holder<`anonymous namespace'::Q_QGS_fileEngineHandlerMutex> >::instance'::`2'::`dynamic atexit destructor for 'holder''",
+        "QBasicMutex::unlockInternalFutex",
+        "std::unique_lock<QMutex>::~unique_lock<QMutex>",
+        "QOrderedMutexLocker::~QOrderedMutexLocker",
+        "`getDevice'::`1'::dtor$5",
+        "QRecursiveMutex::unlock",
+        "std::_Ref_count_obj2<QRecursiveMutex>::`scalar deleting destructor'",
+        "QMutexLocker<QBasicMutex>::~QMutexLocker<QBasicMutex>",
+        "QMutexLocker<QRecursiveMutex>::~QMutexLocker<QRecursiveMutex>",
+        "QThread::exec",
+        "std::scoped_lock<QMutex>::~scoped_lock<QMutex>",
+        "`getDevice'::`1'::dtor$4",
+        "getDevice",
+        "QRecursiveMutex::QRecursiveMutex",
+        "std::scoped_lock<QRecursiveMutex>::~scoped_lock<QRecursiveMutex>",
+        "QWaitCondition::~QWaitCondition",
+        "QBasicMutex::unlock",
+        "QtPrivate::sequential_erase_if<QList<QWaitConditionEvent *>,`QtPrivate::sequential_erase<QList<QWaitConditionEvent *>,QWaitConditionEvent *>'::`2'::<lambda_1> >",
+        "`getDevice'::`1'::dtor$2",
+        "std::scoped_lock<QBasicMutex>::~scoped_lock<QBasicMutex>",
+        "QBasicMutex::QBasicMutex",
+        "`getDevice'::`1'::dtor$1",
+        "QBasicMutex::try_lock",
+        "QWaitCondition::wait",
+        "QWaitCondition::wait",
+        "QWaitCondition::wait",
+        "QWaitCondition::wait",
+        "QArrayDataPointer<QWaitConditionEvent *>::allocateGrow",
+        "QRecursiveMutex::lock",
+        "`getDevice'::`1'::dtor$0",
+        "std::shared_ptr<QRecursiveMutex>::~shared_ptr<QRecursiveMutex>",
+        "QWaitCondition::wakeOne",
+        "QWaitCondition::notify_all",
+        "QArrayDataPointer<QWaitConditionEvent *>::reallocateAndGrow",
+        "`QArrayDataPointer<QWaitConditionEvent *>::reallocateAndGrow'::`1'::dtor$0",
+        "QArrayDataPointer<QWaitConditionEvent *>::~QArrayDataPointer<QWaitConditionEvent *>",
+        "std::_Mutex_base::lock",
+        "QArrayDataPointer<QWaitConditionEvent *>::tryReadjustFreeSpace",
+        "QRecursiveMutex::tryLock",
+        "QRecursiveMutex::tryLock",
+        "QWaitCondition::wakeAll",
+        "QWaitConditionPrivate::post",
+        "std::unique_lock<QBasicMutex>::~unique_lock<QBasicMutex>",
+        "QBasicMutex::unlockInternal",
+        "QBasicMutex::unlockInternal",
+        "std::unique_lock<std::mutex>::~unique_lock<std::mutex>",
+        "QWaitConditionPrivate::pre",
+        "QtPrivate::QPodArrayOps<QWaitConditionEvent *>::emplace<QWaitConditionEvent * &>",
+        "`QThread::exec'::`1'::dtor$0",
+        "QMutex::try_lock",
+        "QMutex::QMutex",
+        "QBasicMutex::dummyLocked",
+        "QWaitCondition::QWaitCondition",
+        "`QThread::exec'::`1'::dtor$1",
+        "QBasicMutex::tryLock",
+        "QMutex::~QMutex",
+        "QBasicMutex::lockInternal",
+        "QBasicMutex::lockInternal",
+        "QBasicMutex::lockInternal",
+        "QOrderedMutexLocker::QOrderedMutexLocker",
+        "std::_Ref_count_obj2<QRecursiveMutex>::_Destroy",
+        "QWaitCondition::notify_one",
+        "QBasicMutex::fastTryUnlock",
+        "_imp_MsgWaitForMultipleObjectsEx",
+        "std::_Ref_count_obj2<QRecursiveMutex>::`RTTI Base Class Array'",
+        "std::_Ref_count_obj2<QRecursiveMutex>::`RTTI Class Hierarchy Descriptor'",
+        "_imp_WaitForSingleObjectEx",
+        "_imp_WaitForMultipleObjectsEx",
+        "WaitOnAddress",
+        "std::_Ref_count_obj2<QRecursiveMutex> `RTTI Type Descriptor'",
+        "_imp_WaitOnAddress",
+        "_imp_SleepConditionVariableSRW",
+        "_imp_WaitForSingleObject",
+        "std::_Ref_count_obj2<QRecursiveMutex>::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+        "_imp_CreateMutexW",
+        "_imp_ReleaseMutex",
+        "_imp_WaitForMultipleObjects",
+        "std::_Ref_count_obj2<QRecursiveMutex>::`RTTI Complete Object Locator'"
+      ],
+      "coff_symbol_table_count": 0,
+      "unwind_table": {
+        "entries": 13642,
+        "ranges_in_image": true,
+        "sorted_by_start": true,
+        "scope": "PE table structure only; no actual recorded-stack unwind completeness proven."
+      }
+    },
+    {
+      "module": "qt6gui.dll",
+      "image_sha256": "cd071161ad325ff2de92b0e33d71334ef20712544796949623ce92dfb3957e90",
+      "matched_pdb": true,
+      "pdb_identity": {
+        "path": "symbols\\Qt6Gui.pdb",
+        "sha256": "49cd733fcf58d4a2d99aa9232d196c88f35e40bbfdb6c599412cd79bc5426426",
+        "bytes": 80891904,
+        "guid": "45FA036D-A4EE-4A9D-ACD3-C2986B8864FF",
+        "age": 1,
+        "info_age": 1,
+        "age_source": "DBI header (not Info-stream rewrite age)",
+        "info_version": 20000404,
+        "dbi_version": 19990903,
+        "stream_count": 464
+      },
+      "source_lines": 1,
+      "function_symbols_enumerated": 22678,
+      "diagnostic_functions": [
+        {
+          "name": "`QGlobalStatic<QtGlobalStatic::Holder<`anonymous namespace'::Q_QGS_fontDatabaseMutex> >::instance'::`2'::`dynamic atexit destructor for 'holder''",
+          "rva": 6986736,
+          "size": 31,
+          "source": null,
+          "interior_roundtrip": {
+            "name": "`QGlobalStatic<QtGlobalStatic::Holder<`anonymous namespace'::Q_QGS_fontDatabaseMutex> >::instance'::`2'::`dynamic atexit destructor for 'holder''",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QOpenGLExtraFunctions::glClientWaitSync",
+          "rva": 3794480,
+          "size": 32,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\gui\\opengl\\qopenglextrafunctions.h",
+            "line": 824,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QOpenGLExtraFunctions::glClientWaitSync",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QVulkanDeviceFunctions::vkGetDeviceQueue",
+          "rva": 5474800,
+          "size": 48,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase_build\\src\\gui\\vulkan\\qvulkanfunctions_p.cpp",
+            "line": 236,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QVulkanDeviceFunctions::vkGetDeviceQueue",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QVulkanDeviceFunctions::vkGetDeviceQueue2",
+          "rva": 5474768,
+          "size": 32,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase_build\\src\\gui\\vulkan\\qvulkanfunctions_p.cpp",
+            "line": 1038,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QVulkanDeviceFunctions::vkGetDeviceQueue2",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "`QGlobalStatic<QtGlobalStatic::Holder<QImageReaderWriterHelpers::`anonymous namespace'::Q_QGS_irhLoaderMutex> >::instance'::`2'::`dynamic atexit destructor for 'holder''",
+          "rva": 6983936,
+          "size": 31,
+          "source": null,
+          "interior_roundtrip": {
+            "name": "`QGlobalStatic<QtGlobalStatic::Holder<QImageReaderWriterHelpers::`anonymous namespace'::Q_QGS_irhLoaderMutex> >::instance'::`2'::`dynamic atexit destructor for 'holder''",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QVulkanDeviceFunctions::vkGetDeviceMemoryCommitment",
+          "rva": 5474160,
+          "size": 29,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase_build\\src\\gui\\vulkan\\qvulkanfunctions_p.cpp",
+            "line": 82,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QVulkanDeviceFunctions::vkGetDeviceMemoryCommitment",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "`QOpenGLContext::globalShareContext'::`2'::`dynamic atexit destructor for 'mutex''",
+          "rva": 6987232,
+          "size": 14,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "QVulkanDeviceFunctions::vkGetDeviceMemoryOpaqueCaptureAddress",
+          "rva": 5474704,
+          "size": 26,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase_build\\src\\gui\\vulkan\\qvulkanfunctions_p.cpp",
+            "line": 1126,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QVulkanDeviceFunctions::vkGetDeviceMemoryOpaqueCaptureAddress",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "QVulkanFunctions::vkGetDeviceProcAddr",
+          "rva": 5474736,
+          "size": 23,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase_build\\src\\gui\\vulkan\\qvulkanfunctions_p.cpp",
+            "line": 22,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QVulkanFunctions::vkGetDeviceProcAddr",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "`dynamic atexit destructor for 'QWindowSystemInterfacePrivate::flushEventMutex''",
+          "rva": 4400,
+          "size": 12,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\gui\\kernel\\qwindowsysteminterface.cpp",
+            "line": 33,
+            "displacement": 0
+          },
+          "interior_roundtrip": null
+        },
+        {
+          "name": "`dynamic atexit destructor for 'QWindowSystemInterfacePrivate::flushEventMutex''",
+          "rva": 6985680,
+          "size": 14,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "QVulkanDeviceFunctions::vkGetDeviceGroupPeerMemoryFeatures",
+          "rva": 5474640,
+          "size": 61,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase_build\\src\\gui\\vulkan\\qvulkanfunctions_p.cpp",
+            "line": 960,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "QVulkanDeviceFunctions::vkGetDeviceGroupPeerMemoryFeatures",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "qt_fontdatabase_mutex",
+          "rva": 2905664,
+          "size": 156,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\gui\\text\\qfontdatabase.cpp",
+            "line": 538,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "qt_fontdatabase_mutex",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "wrap_vkGetDeviceProcAddr",
+          "rva": 5401536,
+          "size": 52,
+          "source": {
+            "file": "C:\\Users\\qt\\work\\qt\\qtbase\\src\\gui\\rhi\\qrhivulkan.cpp",
+            "line": 385,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "wrap_vkGetDeviceProcAddr",
+            "displacement": 16
+          }
+        }
+      ],
+      "fallback_symbol_type": 3,
+      "fallback_diagnostic_names": [
+        "applicationFontMutex",
+        "QtGlobalStatic::Holder<Q_QGS_fontDatabaseMutex>::guard",
+        "devicesMutex",
+        "QWindowSystemInterfacePrivate::flushEventMutex",
+        "QtGlobalStatic::Holder<QImageReaderWriterHelpers::Q_QGS_irhLoaderMutex>::guard",
+        "`QGlobalStatic<QtGlobalStatic::Holder<`anonymous namespace'::Q_QGS_fontDatabaseMutex> >::instance'::`2'::`dynamic atexit destructor for 'holder''",
+        "QOpenGLExtraFunctions::glClientWaitSync",
+        "QVulkanDeviceFunctions::vkGetDeviceQueue",
+        "QVulkanDeviceFunctions::vkGetDeviceQueue2",
+        "`QGlobalStatic<QtGlobalStatic::Holder<QImageReaderWriterHelpers::`anonymous namespace'::Q_QGS_irhLoaderMutex> >::instance'::`2'::`dynamic atexit destructor for 'holder''",
+        "QVulkanDeviceFunctions::vkGetDeviceMemoryCommitment",
+        "`QOpenGLContext::globalShareContext'::`2'::`dynamic atexit destructor for 'mutex''",
+        "QVulkanDeviceFunctions::vkGetDeviceMemoryOpaqueCaptureAddress",
+        "QVulkanFunctions::vkGetDeviceProcAddr",
+        "`dynamic atexit destructor for 'QWindowSystemInterfacePrivate::flushEventMutex''",
+        "`dynamic atexit destructor for 'QWindowSystemInterfacePrivate::flushEventMutex''",
+        "QVulkanDeviceFunctions::vkGetDeviceGroupPeerMemoryFeatures",
+        "qt_fontdatabase_mutex",
+        "wrap_vkGetDeviceProcAddr",
+        "_imp_??1QWaitConditionQEAAXZ",
+        "_imp_??0QWaitConditionQEAAXZ",
+        "_imp_WaitForSingleObjectEx",
+        "_imp_?translateQLineFQEAAXNNZ",
+        "_imp_SleepConditionVariableSRW",
+        "_imp_WaitForSingleObject",
+        "_imp_??1QMutexQEAAXZ",
+        "_imp_??0QMutexQEAAXZ",
+        "_imp_??1QRecursiveMutexQEAAXZ",
+        "_imp_??0QRecursiveMutexQEAAXZ",
+        "_imp_?unlockQBasicMutexQEAAXXZ",
+        "_imp_?wakeOneQWaitConditionQEAAXXZ",
+        "_imp_?lockQRecursiveMutexQEAAXXZ",
+        "_imp_?waitQWaitConditionQEAA_NPEAVQMutexVQDeadlineTimerZ",
+        "_imp_?lockQBasicMutexQEAAXXZ",
+        "_imp_?wakeAllQWaitConditionQEAAXXZ",
+        "_imp_?unlockQRecursiveMutexQEAAXXZ",
+        "_imp_DisplayConfigGetDeviceInfo",
+        "_imp_GetDeviceCaps"
+      ],
+      "coff_symbol_table_count": 0,
+      "unwind_table": {
+        "entries": 31242,
+        "ranges_in_image": true,
+        "sorted_by_start": true,
+        "scope": "PE table structure only; no actual recorded-stack unwind completeness proven."
+      }
+    },
+    {
+      "module": "qt6widgets.dll",
+      "image_sha256": "5a9f37dedd3dc5bcc1a4bb8ea919c49fc62df751a1450accc34379eb6710eab6",
+      "matched_pdb": true,
+      "pdb_identity": {
+        "path": "symbols\\Qt6Widgets.pdb",
+        "sha256": "8368da386cea533e522cecd7a3cc6466d7098babf92b0a5bdb1732b88eaf94f6",
+        "bytes": 54071296,
+        "guid": "C12A21DE-BA0C-4EBF-B5FA-C0B6292E4E45",
+        "age": 1,
+        "info_age": 1,
+        "age_source": "DBI header (not Info-stream rewrite age)",
+        "info_version": 20000404,
+        "dbi_version": 19990903,
+        "stream_count": 264
+      },
+      "source_lines": 1,
+      "function_symbols_enumerated": 16430,
+      "diagnostic_functions": [
+        {
+          "name": "`QColormap::instance'::`2'::`dynamic atexit destructor for 'mutex''",
+          "rva": 4228640,
+          "size": 14,
+          "source": null,
+          "interior_roundtrip": null
+        }
+      ],
+      "fallback_symbol_type": 3,
+      "fallback_diagnostic_names": [
+        "`QColormap::instance'::`2'::`dynamic atexit destructor for 'mutex''",
+        "_imp_?translateQPainterPathQEAAXNNZ",
+        "_imp_?lineToQPainterPathQEAAXNNZ",
+        "_imp_?scaleQPainterQEAAXNNZ",
+        "_imp_?setFinalStopQLinearGradientQEAAXNNZ",
+        "_imp_SleepConditionVariableSRW",
+        "_imp_??1QMutexQEAAXZ",
+        "_imp_??0QMutexQEAAXZ",
+        "_imp_?moveToQPainterPathQEAAXNNZ",
+        "_imp_?unlockQBasicMutexQEAAXXZ",
+        "_imp_?setStartQLinearGradientQEAAXNNZ",
+        "_imp_?lockQBasicMutexQEAAXXZ",
+        "_imp_?translateQPainterQEAAXNNZ"
+      ],
+      "coff_symbol_table_count": 0,
+      "unwind_table": {
+        "entries": 20549,
+        "ranges_in_image": true,
+        "sorted_by_start": true,
+        "scope": "PE table structure only; no actual recorded-stack unwind completeness proven."
+      }
+    },
+    {
+      "module": "qtcore.pyd",
+      "image_sha256": "be52341a5df1f76ecca2fb1e94eb429dfa46f0b659ed6536f25119b565b21ea8",
+      "matched_pdb": false,
+      "pdb_identity": null,
+      "source_lines": 0,
+      "function_symbols_enumerated": 0,
+      "diagnostic_functions": [],
+      "fallback_symbol_type": 4,
+      "fallback_diagnostic_names": [],
+      "coff_symbol_table_count": 0,
+      "unwind_table": {
+        "entries": 8596,
+        "ranges_in_image": true,
+        "sorted_by_start": true,
+        "scope": "PE table structure only; no actual recorded-stack unwind completeness proven."
+      }
+    },
+    {
+      "module": "python311.dll",
+      "image_sha256": "162e8557fbed5f39ae24983ee62b2d435b4796c937d9c1a34371888c7e43af00",
+      "matched_pdb": true,
+      "pdb_identity": {
+        "path": "symbols\\python311.pdb",
+        "sha256": "65d8f5bc09d2df4acedd4e1164be2859a0fb9afe59510ef0fa4a28d355c1d277",
+        "bytes": 14184448,
+        "guid": "0E3943E6-7A68-4C05-BF0A-BAD24BF14D1E",
+        "age": 2,
+        "info_age": 2,
+        "age_source": "DBI header (not Info-stream rewrite age)",
+        "info_version": 20000404,
+        "dbi_version": 19990903,
+        "stream_count": 268
+      },
+      "source_lines": 1,
+      "function_symbols_enumerated": 7731,
+      "diagnostic_functions": [
+        {
+          "name": "_PyGILState_NoteThreadState",
+          "rva": 2410384,
+          "size": 133,
+          "source": {
+            "file": "\\python\\pystate.c",
+            "line": 1608,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "_PyGILState_NoteThreadState",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "_winapi_WaitForMultipleObjects",
+          "rva": 900928,
+          "size": 97,
+          "source": {
+            "file": "\\modules\\clinic\\_winapi.c.h",
+            "line": 1071,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "_winapi_WaitForMultipleObjects",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "_winapi_WaitForMultipleObjects_impl",
+          "rva": 908272,
+          "size": 662,
+          "source": {
+            "file": "\\modules\\_winapi.c",
+            "line": 1816,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "_winapi_WaitForMultipleObjects_impl",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "_PyGILState_GetThisThreadState",
+          "rva": 2410528,
+          "size": 71,
+          "source": {
+            "file": "\\python\\pystate.c",
+            "line": 1641,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "_PyGILState_GetThisThreadState",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "EnterNonRecursiveMutex",
+          "rva": 2618416,
+          "size": 414,
+          "source": {
+            "file": "\\python\\thread_nt.h",
+            "line": 66,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "EnterNonRecursiveMutex",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "lock_PyThread_acquire_lock",
+          "rva": 685584,
+          "size": 102,
+          "source": {
+            "file": "\\modules\\_threadmodule.c",
+            "line": 174,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "lock_PyThread_acquire_lock",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "PyGILState_Ensure",
+          "rva": 2410784,
+          "size": 168,
+          "source": {
+            "file": "\\python\\pystate.c",
+            "line": 1675,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "PyGILState_Ensure",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "PyEval_SaveThread",
+          "rva": 2036464,
+          "size": 72,
+          "source": {
+            "file": "\\python\\ceval.c",
+            "line": 518,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "PyEval_SaveThread",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "_PyGILState_GetInterpreterStateUnsafe",
+          "rva": 2410368,
+          "size": 8,
+          "source": {
+            "file": "\\python\\pystate.c",
+            "line": 1562,
+            "displacement": 0
+          },
+          "interior_roundtrip": null
+        },
+        {
+          "name": "PyThread_acquire_lock_timed",
+          "rva": 2619472,
+          "size": 112,
+          "source": {
+            "file": "\\python\\thread_nt.h",
+            "line": 309,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "PyThread_acquire_lock_timed",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "PyGILState_Release",
+          "rva": 2410960,
+          "size": 174,
+          "source": {
+            "file": "\\python\\pystate.c",
+            "line": 1723,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "PyGILState_Release",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "_PyEval_EvalFrameDefault",
+          "rva": 2040992,
+          "size": 28392,
+          "source": {
+            "file": "\\python\\ceval.c",
+            "line": 1636,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "_PyEval_EvalFrameDefault",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "take_gil",
+          "rva": 2035536,
+          "size": 531,
+          "source": {
+            "file": "\\python\\ceval_gil.h",
+            "line": 214,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "take_gil",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "PyGILState_GetThisThreadState",
+          "rva": 2410608,
+          "size": 80,
+          "source": {
+            "file": "\\python\\pystate.c",
+            "line": 1649,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "PyGILState_GetThisThreadState",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "_imp_acquire_lock",
+          "rva": 2277168,
+          "size": 28,
+          "source": {
+            "file": "\\python\\clinic\\import.c.h",
+            "line": 42,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "_imp_acquire_lock",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "_winapi_WaitForSingleObject",
+          "rva": 901040,
+          "size": 263,
+          "source": {
+            "file": "\\modules\\clinic\\_winapi.c.h",
+            "line": 1106,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "_winapi_WaitForSingleObject",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "drop_gil",
+          "rva": 2035232,
+          "size": 302,
+          "source": {
+            "file": "\\python\\ceval_gil.h",
+            "line": 148,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "drop_gil",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "PyThread_acquire_lock",
+          "rva": 2619584,
+          "size": 13,
+          "source": {
+            "file": "\\python\\thread_nt.h",
+            "line": 354,
+            "displacement": 0
+          },
+          "interior_roundtrip": null
+        },
+        {
+          "name": "PyEval_RestoreThread",
+          "rva": 2036544,
+          "size": 60,
+          "source": {
+            "file": "\\python\\ceval.c",
+            "line": 532,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "PyEval_RestoreThread",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "PyGILState_Check",
+          "rva": 2410688,
+          "size": 93,
+          "source": {
+            "file": "\\python\\pystate.c",
+            "line": 1655,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "PyGILState_Check",
+            "displacement": 16
+          }
+        }
+      ],
+      "fallback_symbol_type": 3,
+      "fallback_diagnostic_names": [
+        "const_str_acquire_lock",
+        "_winapi_WaitForSingleObject__doc__",
+        "_imp_acquire_lock__doc__",
+        "_winapi_WaitForMultipleObjects__doc__",
+        "_PyGILState_NoteThreadState",
+        "_winapi_WaitForMultipleObjects",
+        "_winapi_WaitForMultipleObjects_impl",
+        "_PyGILState_GetThisThreadState",
+        "EnterNonRecursiveMutex",
+        "lock_PyThread_acquire_lock",
+        "PyGILState_Ensure",
+        "PyEval_SaveThread",
+        "_PyGILState_GetInterpreterStateUnsafe",
+        "PyThread_acquire_lock_timed",
+        "PyGILState_Release",
+        "_PyEval_EvalFrameDefault",
+        "take_gil",
+        "PyGILState_GetThisThreadState",
+        "_imp_acquire_lock",
+        "_winapi_WaitForSingleObject",
+        "drop_gil",
+        "PyThread_acquire_lock",
+        "PyEval_RestoreThread",
+        "PyGILState_Check",
+        "_imp_WaitForSingleObjectEx",
+        "_imp_WaitForSingleObject",
+        "_imp_WaitForMultipleObjects"
+      ],
+      "coff_symbol_table_count": 0,
+      "unwind_table": {
+        "entries": 11979,
+        "ranges_in_image": true,
+        "sorted_by_start": true,
+        "scope": "PE table structure only; no actual recorded-stack unwind completeness proven."
+      }
+    },
+    {
+      "module": "libdev.dll",
+      "image_sha256": "e2648a930fdefe033efe8284fe56f04a55cbef45c0a47763ccca25663b0d66df",
+      "matched_pdb": true,
+      "pdb_identity": {
+        "path": "symbols\\vendor\\libdev.pdb",
+        "sha256": "ed80e18961189ddc2b99d6ebcf7d897ebc765c6bfe90fcbb2f376297ea7cd3d6",
+        "bytes": 13651968,
+        "guid": "FE837F20-7AC6-50C4-7778-7CA8D8D1940C",
+        "age": 1,
+        "info_age": 1,
+        "age_source": "DBI header (not Info-stream rewrite age)",
+        "info_version": 20000404,
+        "dbi_version": 19990903,
+        "stream_count": 204
+      },
+      "source_lines": 1,
+      "function_symbols_enumerated": 3996,
+      "diagnostic_functions": [
+        {
+          "name": "Device::cameraGetUSBModeR",
+          "rva": 1009456,
+          "size": 222,
+          "source": {
+            "file": "D:\\workspace\\obsbot_device\\libdev\\dev\\dev-protocol-camera.cpp",
+            "line": 5450,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "Device::cameraGetUSBModeR",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "DShow::`dynamic atexit destructor for 'enumMutex''",
+          "rva": 1657760,
+          "size": 14,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "SyncCondMutexData::~SyncCondMutexData",
+          "rva": 26544,
+          "size": 35,
+          "source": null,
+          "interior_roundtrip": {
+            "name": "SyncCondMutexData::~SyncCondMutexData",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "DShow::GetDeviceCallback",
+          "rva": 1478752,
+          "size": 186,
+          "source": {
+            "file": "D:\\workspace\\obsbot_device\\libdev\\dshow\\source\\dshow-base.cpp",
+            "line": 109,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "DShow::GetDeviceCallback",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "DShow::GetDeviceFilter",
+          "rva": 1478944,
+          "size": 99,
+          "source": {
+            "file": "D:\\workspace\\obsbot_device\\libdev\\dshow\\source\\dshow-base.cpp",
+            "line": 124,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "DShow::GetDeviceFilter",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "Device::sysMgGetDeviceNameR",
+          "rva": 1063776,
+          "size": 487,
+          "source": {
+            "file": "D:\\workspace\\obsbot_device\\libdev\\dev\\dev-protocol-sysmg.cpp",
+            "line": 303,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "Device::sysMgGetDeviceNameR",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "std::unique_lock<std::mutex>::lock",
+          "rva": 1374304,
+          "size": 117,
+          "source": {
+            "file": "D:\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\include\\mutex",
+            "line": 202,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "std::unique_lock<std::mutex>::lock",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "DShow::`dynamic initializer for 'enumMutex''",
+          "rva": 12336,
+          "size": 38,
+          "source": {
+            "file": "D:\\workspace\\obsbot_device\\libdev\\dshow\\source\\dshow-enum.cpp",
+            "line": 508,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "DShow::`dynamic initializer for 'enumMutex''",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "DataGuard<std::shared_ptr<std::thread>,std::recursive_mutex>::~DataGuard<std::shared_ptr<std::thread>,std::recursive_mutex>",
+          "rva": 1362976,
+          "size": 88,
+          "source": null,
+          "interior_roundtrip": {
+            "name": "DataGuard<std::shared_ptr<std::thread>,std::recursive_mutex>::~DataGuard<std::shared_ptr<std::thread>,std::recursive_mutex>",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "std::_Func_impl_no_alloc<`SyncCondMutexData::wait_for_data'::`2'::<lambda_1>,bool,bool const &>::_Delete_this",
+          "rva": 85040,
+          "size": 15,
+          "source": {
+            "file": "D:\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\include\\functional",
+            "line": 828,
+            "displacement": 0
+          },
+          "interior_roundtrip": null
+        },
+        {
+          "name": "std::_Func_impl_no_alloc<`SyncCondMutexData::wait_for_data'::`2'::<lambda_1>,bool,bool const &>::_Do_call",
+          "rva": 85088,
+          "size": 4,
+          "source": {
+            "file": "D:\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\include\\functional",
+            "line": 806,
+            "displacement": 0
+          },
+          "interior_roundtrip": null
+        },
+        {
+          "name": "PkgUg::getDeviceType",
+          "rva": 1354000,
+          "size": 355,
+          "source": {
+            "file": "D:\\workspace\\obsbot_device\\libdev\\package\\pkg-ug.cpp",
+            "line": 937,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "PkgUg::getDeviceType",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "std::_Func_impl_no_alloc<`SyncCondMutexData::wait_for_data'::`2'::<lambda_1>,bool,bool const &>::_Copy",
+          "rva": 85104,
+          "size": 14,
+          "source": {
+            "file": "D:\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\include\\functional",
+            "line": 790,
+            "displacement": 0
+          },
+          "interior_roundtrip": null
+        },
+        {
+          "name": "Device::cameraGetUsbPlugEnabledR",
+          "rva": 1013984,
+          "size": 222,
+          "source": {
+            "file": "D:\\workspace\\obsbot_device\\libdev\\dev\\dev-protocol-camera.cpp",
+            "line": 5735,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "Device::cameraGetUsbPlugEnabledR",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "std::_Mutex_base::lock",
+          "rva": 16880,
+          "size": 65,
+          "source": {
+            "file": "D:\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\include\\mutex",
+            "line": 55,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "std::_Mutex_base::lock",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "std::_Func_impl_no_alloc<`SyncCondMutexData::wait_for_data'::`2'::<lambda_1>,bool,bool const &>::_Target_type",
+          "rva": 85072,
+          "size": 8,
+          "source": {
+            "file": "D:\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\include\\functional",
+            "line": 815,
+            "displacement": 0
+          },
+          "interior_roundtrip": null
+        },
+        {
+          "name": "`boost::w32_regex_traits<char>::get_mutex_inst'::`2'::`dynamic atexit destructor for 's_mutex''",
+          "rva": 1657152,
+          "size": 14,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "MutexCond<bool>::~MutexCond<bool>",
+          "rva": 17376,
+          "size": 35,
+          "source": null,
+          "interior_roundtrip": {
+            "name": "MutexCond<bool>::~MutexCond<bool>",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "std::_Func_impl_no_alloc<`SyncCondMutexData::wait_for_data'::`2'::<lambda_1>,bool,bool const &>::_Get",
+          "rva": 85056,
+          "size": 5,
+          "source": {
+            "file": "D:\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\include\\functional",
+            "line": 824,
+            "displacement": 0
+          },
+          "interior_roundtrip": null
+        },
+        {
+          "name": "std::mutex::~mutex",
+          "rva": 17360,
+          "size": 7,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "std::unique_lock<std::mutex>::~unique_lock<std::mutex>",
+          "rva": 74640,
+          "size": 17,
+          "source": {
+            "file": "D:\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\include\\mutex",
+            "line": 193,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "std::unique_lock<std::mutex>::~unique_lock<std::mutex>",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "DevicePrivate::getDeviceStatusCache",
+          "rva": 157776,
+          "size": 812,
+          "source": {
+            "file": "D:\\workspace\\obsbot_device\\libdev\\dev\\dev-protocol-camera.cpp",
+            "line": 1458,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "DevicePrivate::getDeviceStatusCache",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "std::unique_ptr<std::lock_guard<std::recursive_mutex>,std::default_delete<std::lock_guard<std::recursive_mutex> > >::~unique_ptr<std::lock_guard<std::recursive_mutex>,std::default_delete<std::lock_guard<std::recursive_mutex> > >",
+          "rva": 1373312,
+          "size": 47,
+          "source": {
+            "file": "D:\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\include\\memory",
+            "line": 3278,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "std::unique_ptr<std::lock_guard<std::recursive_mutex>,std::default_delete<std::lock_guard<std::recursive_mutex> > >::~unique_ptr<std::lock_guard<std::recursive_mutex>,std::default_delete<std::lock_guard<std::recursive_mutex> > >",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "SyncCondMutexData::SyncCondMutexData",
+          "rva": 17056,
+          "size": 190,
+          "source": {
+            "file": "D:\\workspace\\obsbot_device\\libdev\\dev\\mutex_cond.hpp",
+            "line": 111,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "SyncCondMutexData::SyncCondMutexData",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "ftplib::FtpXfer",
+          "rva": 1219488,
+          "size": 582,
+          "source": {
+            "file": "D:\\workspace\\obsbot_device\\libdev\\ftp\\ftplib.cpp",
+            "line": 1230,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "ftplib::FtpXfer",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "Device::cameraTXGetDeviceNameR",
+          "rva": 1024432,
+          "size": 398,
+          "source": {
+            "file": "D:\\workspace\\obsbot_device\\libdev\\dev\\dev-protocol-camera.cpp",
+            "line": 6386,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "Device::cameraTXGetDeviceNameR",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "std::condition_variable::_Wait_until1<std::chrono::steady_clock,std::chrono::duration<__int64,std::ratio<1,1000000000> >,`MutexCond<bool>::wait_for'::`2'::<lambda_1> >",
+          "rva": 84288,
+          "size": 528,
+          "source": {
+            "file": "D:\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\include\\mutex",
+            "line": 664,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "std::condition_variable::_Wait_until1<std::chrono::steady_clock,std::chrono::duration<__int64,std::ratio<1,1000000000> >,`MutexCond<bool>::wait_for'::`2'::<lambda_1> >",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "SyncCondMutexData::setDataNotify",
+          "rva": 17248,
+          "size": 103,
+          "source": {
+            "file": "D:\\workspace\\obsbot_device\\libdev\\dev\\mutex_cond.hpp",
+            "line": 126,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "SyncCondMutexData::setDataNotify",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "`SyncCondMutexData::SyncCondMutexData'::`1'::dtor$0",
+          "rva": 1632544,
+          "size": 16,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "`DevicePrivate::getDeviceStatusCache'::`1'::dtor$0",
+          "rva": 1634816,
+          "size": 38,
+          "source": null,
+          "interior_roundtrip": {
+            "name": "`DevicePrivate::getDeviceStatusCache'::`1'::dtor$0",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "`DShow::GetDeviceFilter'::`1'::dtor$0",
+          "rva": 1650128,
+          "size": 12,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "std::lock_guard<std::mutex>::~lock_guard<std::mutex>",
+          "rva": 72096,
+          "size": 10,
+          "source": {
+            "file": "D:\\Microsoft Visual Studio\\2022\\Community\\VC\\Tools\\MSVC\\14.38.33130\\include\\mutex",
+            "line": 468,
+            "displacement": 0
+          },
+          "interior_roundtrip": null
+        }
+      ],
+      "fallback_symbol_type": 3,
+      "fallback_diagnostic_names": [
+        "std::_Func_impl_no_alloc<`SyncCondMutexData::wait_for_data'::`2'::<lambda_1>,bool,bool const &>::`vftable'",
+        "DShow::enumMutex",
+        "DShow::enumMutex$initializer$",
+        "Device::cameraGetUSBModeR",
+        "std::lock_guard<std::recursive_mutex>::~lock_guard<std::recursive_mutex>",
+        "DShow::`dynamic atexit destructor for 'enumMutex''",
+        "SyncCondMutexData::~SyncCondMutexData",
+        "DShow::GetDeviceCallback",
+        "DShow::GetDeviceFilter",
+        "Device::sysMgGetDeviceNameR",
+        "std::_Func_impl_no_alloc<`SyncCondMutexData::wait_for_data'::`2'::<lambda_1>,bool,bool const &>::_Move",
+        "std::unique_lock<std::mutex>::lock",
+        "DShow::`dynamic initializer for 'enumMutex''",
+        "DataGuard<std::shared_ptr<std::thread>,std::recursive_mutex>::~DataGuard<std::shared_ptr<std::thread>,std::recursive_mutex>",
+        "std::_Func_impl_no_alloc<`SyncCondMutexData::wait_for_data'::`2'::<lambda_1>,bool,bool const &>::_Delete_this",
+        "std::_Func_impl_no_alloc<`SyncCondMutexData::wait_for_data'::`2'::<lambda_1>,bool,bool const &>::_Do_call",
+        "PkgUg::getDeviceType",
+        "std::recursive_mutex::~recursive_mutex",
+        "std::_Func_impl_no_alloc<`SyncCondMutexData::wait_for_data'::`2'::<lambda_1>,bool,bool const &>::_Copy",
+        "Device::cameraGetUsbPlugEnabledR",
+        "std::_Mutex_base::lock",
+        "std::_Func_impl_no_alloc<`SyncCondMutexData::wait_for_data'::`2'::<lambda_1>,bool,bool const &>::_Target_type",
+        "`boost::w32_regex_traits<char>::get_mutex_inst'::`2'::`dynamic atexit destructor for 's_mutex''",
+        "MutexCond<bool>::~MutexCond<bool>",
+        "std::_Func_impl_no_alloc<`SyncCondMutexData::wait_for_data'::`2'::<lambda_1>,bool,bool const &>::_Get",
+        "std::mutex::~mutex",
+        "std::unique_lock<std::mutex>::~unique_lock<std::mutex>",
+        "DevicePrivate::getDeviceStatusCache",
+        "std::unique_ptr<std::lock_guard<std::recursive_mutex>,std::default_delete<std::lock_guard<std::recursive_mutex> > >::~unique_ptr<std::lock_guard<std::recursive_mutex>,std::default_delete<std::lock_guard<std::recursive_mutex> > >",
+        "SyncCondMutexData::SyncCondMutexData",
+        "ftplib::FtpXfer",
+        "Device::cameraTXGetDeviceNameR",
+        "`Device::sysMgGetDeviceNameR'::`1'::dtor$0",
+        "std::condition_variable::_Wait_until1<std::chrono::steady_clock,std::chrono::duration<__int64,std::ratio<1,1000000000> >,`MutexCond<bool>::wait_for'::`2'::<lambda_1> >",
+        "SyncCondMutexData::setDataNotify",
+        "`SyncCondMutexData::SyncCondMutexData'::`1'::dtor$0",
+        "`DevicePrivate::getDeviceStatusCache'::`1'::dtor$0",
+        "`DShow::GetDeviceFilter'::`1'::dtor$0",
+        "std::lock_guard<std::mutex>::~lock_guard<std::mutex>",
+        "_imp_SetupDiGetDeviceInstanceIdW",
+        "`boost::w32_regex_traits<char>::get_mutex_inst'::`2'::s_mutex",
+        "std::_Func_impl_no_alloc<`SyncCondMutexData::wait_for_data'::`2'::<lambda_1>,bool,bool const & __ptr64>::`RTTI Complete Object Locator'",
+        "`boost::w32_regex_traits<char>::get_mutex_inst'::`2'::$TSS0",
+        "_imp_SleepConditionVariableSRW",
+        "_imp_WaitForSingleObject",
+        "_imp_CreateMutexW",
+        "std::_Func_impl_no_alloc<`SyncCondMutexData::wait_for_data'::`2'::<lambda_1>,bool,bool const & __ptr64>::`RTTI Class Hierarchy Descriptor'",
+        "_imp_ReleaseMutex",
+        "std::_Func_impl_no_alloc<`SyncCondMutexData::wait_for_data'::`2'::<lambda_1>,bool,bool const & __ptr64>::`RTTI Base Class Array'",
+        "`SyncCondMutexData::wait_for_data'::`2'::<lambda_1> `RTTI Type Descriptor'",
+        "_imp_SetupDiGetDeviceInterfaceDetailW",
+        "std::_Func_impl_no_alloc<`SyncCondMutexData::wait_for_data'::`2'::<lambda_1>,bool,bool const & __ptr64> `RTTI Type Descriptor'",
+        "std::_Func_impl_no_alloc<`SyncCondMutexData::wait_for_data'::`2'::<lambda_1>,bool,bool const & __ptr64>::`RTTI Base Class Descriptor at (0,-1,0,64)'"
+      ],
+      "coff_symbol_table_count": 0,
+      "unwind_table": {
+        "entries": 2602,
+        "ranges_in_image": true,
+        "sorted_by_start": true,
+        "scope": "PE table structure only; no actual recorded-stack unwind completeness proven."
+      }
+    },
+    {
+      "module": "tinyse_capture_v2.dll",
+      "image_sha256": "c6ce28c3af8d40fcab0a281fa2f0a3cad2b00b839ae8b5b3575ac04df2b53d27",
+      "matched_pdb": false,
+      "pdb_identity": null,
+      "source_lines": 0,
+      "function_symbols_enumerated": 0,
+      "diagnostic_functions": [],
+      "fallback_symbol_type": 4,
+      "fallback_diagnostic_names": [
+        "tinyse_capture_create",
+        "tinyse_capture_destroy",
+        "tinyse_capture_get_record_stats",
+        "tinyse_capture_get_stats",
+        "tinyse_capture_last_error",
+        "tinyse_capture_start",
+        "tinyse_capture_start_record",
+        "tinyse_capture_stop",
+        "tinyse_capture_stop_record"
+      ],
+      "coff_symbol_table_count": 0,
+      "unwind_table": {
+        "entries": 119,
+        "ranges_in_image": true,
+        "sorted_by_start": true,
+        "scope": "PE table structure only; no actual recorded-stack unwind completeness proven."
+      }
+    },
+    {
+      "module": "cyusbinterface.dll",
+      "image_sha256": "c81bb211c332a009badce7e421d032711dcbd9cd078a69f76788a836a309b7d0",
+      "matched_pdb": true,
+      "pdb_identity": {
+        "path": "symbols\\CyUsbInterface.pdb",
+        "sha256": "7d1a07677231a8d46ce962f7ee3b4e2f30cc2b50c92a3aca146860ad3ea271ed",
+        "bytes": 9121792,
+        "guid": "D093CA29-0DE6-4166-BFEB-BBC1134991A1",
+        "age": 4,
+        "info_age": 4,
+        "age_source": "DBI header (not Info-stream rewrite age)",
+        "info_version": 20000404,
+        "dbi_version": 19990903,
+        "stream_count": 464
+      },
+      "source_lines": 1,
+      "function_symbols_enumerated": 4450,
+      "diagnostic_functions": [
+        {
+          "name": "GetDeviceCount",
+          "rva": 659344,
+          "size": 310,
+          "source": {
+            "file": "E:\\�ж���\\MFCOptojumpLedStatus\\CyUsbInterface.",
+            "line": 309,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "GetDeviceCount",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "GetDeviceCount$catch$5",
+          "rva": 1733600,
+          "size": 132,
+          "source": {
+            "file": "E:\\�ж���\\MFCOptojumpLedStatus\\CyUsbInterface.",
+            "line": 318,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "GetDeviceCount$catch$5",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "GetDeviceCount$catch$4",
+          "rva": 1733280,
+          "size": 246,
+          "source": {
+            "file": "E:\\�ж���\\MFCOptojumpLedStatus\\CyUsbInterface.",
+            "line": 315,
+            "displacement": 0
+          },
+          "interior_roundtrip": {
+            "name": "GetDeviceCount$catch$4",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "GetDeviceCount$dtor$2",
+          "rva": 1733232,
+          "size": 39,
+          "source": null,
+          "interior_roundtrip": {
+            "name": "GetDeviceCount$dtor$2",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "GetDeviceCount$dtor$0",
+          "rva": 1733136,
+          "size": 36,
+          "source": null,
+          "interior_roundtrip": {
+            "name": "GetDeviceCount$dtor$0",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "GetDeviceCount$dtor$1",
+          "rva": 1733184,
+          "size": 36,
+          "source": null,
+          "interior_roundtrip": {
+            "name": "GetDeviceCount$dtor$1",
+            "displacement": 16
+          }
+        },
+        {
+          "name": "CCyUSBEndPoint::SetXferSize",
+          "rva": 601656,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "CCyIsocEndPoint::BeginDataXfer",
+          "rva": 602516,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "CCyUSBEndPoint::BeginBufferedXfer",
+          "rva": 600828,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "CCyBulkEndPoint::CCyBulkEndPoint",
+          "rva": 603352,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "CCyUSBEndPoint::XferData",
+          "rva": 606128,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "CCyBulkEndPoint::CCyBulkEndPoint",
+          "rva": 604928,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "CCyUSBDevice::GetUSBAddress",
+          "rva": 604400,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "CCyUSBDevice::GetDeviceDescriptor",
+          "rva": 597848,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "CCyUSBEndPoint::FinishDataXfer",
+          "rva": 600520,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "WaitForSingleObject",
+          "rva": 682518,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "CCyUSBDevice::GetDeviceName",
+          "rva": 604208,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "CCyBulkEndPoint::CCyBulkEndPoint",
+          "rva": 603316,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "CCyControlEndPoint::BeginDataXfer",
+          "rva": 602040,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "CCyIsocEndPoint::BeginDirectXfer",
+          "rva": 602896,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "CCyUSBEndPoint::WaitForXfer",
+          "rva": 601324,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "SetupDiGetDeviceInterfaceDetailA",
+          "rva": 664007,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "CCyUSBEndPoint::XferData",
+          "rva": 606388,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "CCyIsocEndPoint::BeginBufferedXfer",
+          "rva": 602564,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "CCyUSBEndPoint::BeginDirectXfer",
+          "rva": 601096,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "CCyInterruptEndPoint::BeginDataXfer",
+          "rva": 603524,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "CCyUSBDevice::GetUSBConfig",
+          "rva": 608116,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "CCyUSBEndPoint::GetXferSize",
+          "rva": 601520,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "CCyBulkEndPoint::BeginDataXfer",
+          "rva": 603396,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        },
+        {
+          "name": "CCyUSBDevice::GetUSBDIVer",
+          "rva": 604604,
+          "size": 0,
+          "source": null,
+          "interior_roundtrip": null
+        }
+      ],
+      "fallback_symbol_type": 3,
+      "fallback_diagnostic_names": [
+        "GetDeviceCount",
+        "GetDeviceCount$catch$5",
+        "GetDeviceCount$catch$4",
+        "GetDeviceCount$dtor$2",
+        "GetDeviceCount$dtor$0",
+        "GetDeviceCount$dtor$1",
+        "CCyUSBEndPoint::SetXferSize",
+        "CCyIsocEndPoint::BeginDataXfer",
+        "CCyUSBEndPoint::BeginBufferedXfer",
+        "CCyBulkEndPoint::CCyBulkEndPoint",
+        "CCyUSBEndPoint::XferData",
+        "CCyBulkEndPoint::CCyBulkEndPoint",
+        "CCyBulkEndPoint::`RTTI Base Class Array'",
+        "CCyBulkEndPoint::`RTTI Class Hierarchy Descriptor'",
+        "CCyBulkEndPoint::`RTTI Complete Object Locator'",
+        "CCyBulkEndPoint::`vftable'",
+        "_imp_WaitForSingleObject",
+        "CCyUSBDevice::GetUSBAddress",
+        "CCyUSBDevice::GetDeviceDescriptor",
+        "CCyBulkEndPoint::`RTTI Base Class Descriptor at (0,-1,0,64)'",
+        "_imp_SetupDiGetDeviceInterfaceDetailA",
+        "CCyUSBEndPoint::FinishDataXfer",
+        "WaitForSingleObject",
+        "CCyUSBDevice::GetDeviceName",
+        "CCyBulkEndPoint::CCyBulkEndPoint",
+        "CCyControlEndPoint::BeginDataXfer",
+        "CCyIsocEndPoint::BeginDirectXfer",
+        "CCyUSBEndPoint::WaitForXfer",
+        "CCyBulkEndPoint `RTTI Type Descriptor'",
+        "SetupDiGetDeviceInterfaceDetailA",
+        "CCyUSBEndPoint::XferData",
+        "CCyIsocEndPoint::BeginBufferedXfer",
+        "CCyUSBEndPoint::BeginDirectXfer",
+        "CCyInterruptEndPoint::BeginDataXfer",
+        "CCyUSBDevice::GetUSBConfig",
+        "CCyUSBEndPoint::GetXferSize",
+        "CCyBulkEndPoint::BeginDataXfer",
+        "CCyUSBDevice::GetUSBDIVer"
+      ],
+      "coff_symbol_table_count": 0,
+      "unwind_table": {
+        "entries": 3783,
+        "ranges_in_image": true,
+        "sorted_by_start": true,
+        "scope": "PE table structure only; no actual recorded-stack unwind completeness proven."
+      }
+    },
+    {
+      "module": "libmediapipe.dll",
+      "image_sha256": "aa8e6c1b618c30cd3a6ad584dee1b2f2c99c3f3025d683bada36e1566d9092b7",
+      "matched_pdb": false,
+      "pdb_identity": null,
+      "source_lines": 0,
+      "function_symbols_enumerated": 0,
+      "diagnostic_functions": [],
+      "fallback_symbol_type": 4,
+      "fallback_diagnostic_names": [
+        "TfLiteTensorData",
+        "MpLlmConverterGenerateCpuTfLite",
+        "MpLlmConverterGenerateGpuTfLite",
+        "TfLiteTensorType",
+        "TfLiteOpaqueNodeGetUserData",
+        "TfLiteModelDelete",
+        "TfLiteInterpreterResetVariableTensors",
+        "TfLiteInterpreterGetVariableTensorCount",
+        "TfLiteInterpreterGetVariableTensor",
+        "TfLiteInterpreterOptionsAddBuiltinOp",
+        "TfLiteInterpreterCreateWithSelectedOps",
+        "TfLiteInterpreterOptionsAddCustomOp",
+        "TfLiteInterpreterOptionsSetUseNNAPI",
+        "TfLiteInterpreterOptionsSetEnableDelegateFallback",
+        "TfLiteInterpreterModifyGraphWithDelegate",
+        "TfLiteInterpreterGetInputTensorIndex",
+        "TfLiteInterpreterGetOutputTensorIndex",
+        "TfLiteInterpreterSetBufferHandle",
+        "TfLiteInterpreterGetBufferHandle",
+        "TfLiteSetAllowBufferHandleOutput",
+        "TfLiteInterpreterSetCustomAllocationForTensor",
+        "TfLiteInterpreterEnsureTensorDataIsReadable",
+        "TfLiteInterpreterOptionsSetTelemetryProfiler",
+        "TfLiteOpaqueTensorType",
+        "TfLiteOpaqueTensorNumDims",
+        "TfLiteOpaqueTensorDim",
+        "TfLiteOpaqueTensorGetNumDimsSignature",
+        "TfLiteOpaqueTensorGetDimSignature",
+        "TfLiteOpaqueTensorIsVariable",
+        "TfLiteOpaqueTensorByteSize",
+        "TfLiteOpaqueTensorData",
+        "TfLiteOpaqueTensorGetAllocationType",
+        "TfLiteOpaqueTensorGetAllocationStrategy",
+        "TfLiteOpaqueTensorGetBufferAddressStability",
+        "TfLiteOpaqueTensorGetDataStability",
+        "TfLiteOpaqueTensorGetDataKnownStep",
+        "TfLiteOpaqueTensorGetShapeKnownStep",
+        "TfLiteOpaqueTensorName",
+        "TfLiteOpaqueTensorGetQuantization",
+        "TfLiteOpaqueTensorGetQuantizationParams",
+        "TfLiteTensorQuantizationParams",
+        "TfLiteOpaqueTensorCopyFromBuffer",
+        "TfLiteOpaqueTensorCopyToBuffer",
+        "TfLiteOpaqueNodeGetInput",
+        "TfLiteOpaqueNodeGetOutput",
+        "TfLiteOpaqueNodeNumberOfInputs",
+        "TfLiteOpaqueNodeNumberOfOutputs",
+        "TfLiteOpaqueNodeGetBuiltinData",
+        "TfLiteTensorByteSize",
+        "TfLiteOpaqueNodeGetCustomInitialData",
+        "TfLiteOpaqueNodeInputs",
+        "TfLiteOpaqueNodeOutputs",
+        "TfLiteOpaqueNodeTemporaries",
+        "TfLiteOpaqueNodeSetTemporaries",
+        "TfLiteOpaqueNodeGetInputTensorIndex",
+        "TfLiteOpaqueNodeGetOutputTensorIndex",
+        "TfLiteOpaqueContextGetExecutionPlan",
+        "TfLiteOpaqueContextGetExternalContext",
+        "TfLiteOpaqueContextGetNodeAndRegistration",
+        "TfLiteOpaqueContextReplaceNodeSubsetsWithDelegateKernels",
+        "TfLiteOpaqueContextGetOpaqueTensor",
+        "TfLiteOpaqueContextGetInputs",
+        "TfLiteOpaqueContextGetOutputs",
+        "TfLiteOpaqueContextGetVariables",
+        "TfLiteOpaqueContextGetNumNodes",
+        "TfLiteOpaqueContextGetNumTensors",
+        "TfLiteOpaqueContextGetName",
+        "TfLiteOpaqueContextResizeTensor",
+        "TfLiteOpaqueContextAcquireSubgraphContext",
+        "TfLiteOpaqueContextReleaseSubgraphContext",
+        "TfLiteOpaqueContextMarkSubgraphAsDelegationSkippable",
+        "TfLiteOpaqueContextGetNodeInitDataMmapInfo",
+        "TfLiteOpaqueContextAddTensor",
+        "TfLiteOpaqueContextReportError",
+        "TfLiteOpaqueContextGetSizeOfType",
+        "TfLiteOpaqueContextGetMetadata",
+        "TfLiteOpaqueContextReportErrorVa",
+        "TfLiteVersion",
+        "TfLiteExtensionApisVersion",
+        "TfLiteSchemaVersion",
+        "TfLiteModelCreate",
+        "TfLiteModelCreateWithErrorReporter",
+        "TfLiteModelCreateFromFile",
+        "TfLiteModelCreateFromFileWithErrorReporter",
+        "TfLiteInterpreterOptionsCreate",
+        "TfLiteInterpreterOptionsCopy",
+        "TfLiteInterpreterOptionsDelete",
+        "TfLiteInterpreterOptionsSetNumThreads",
+        "TfLiteInterpreterOptionsAddDelegate",
+        "TfLiteInterpreterOptionsSetErrorReporter",
+        "TfLiteInterpreterOptionsAddOperator",
+        "TfLiteInterpreterOptionsEnableCancellation",
+        "TfLiteInterpreterCreate",
+        "TfLiteInterpreterDelete",
+        "TfLiteInterpreterGetInputTensorCount",
+        "TfLiteInterpreterInputTensorIndices",
+        "TfLiteInterpreterGetInputTensor",
+        "TfLiteInterpreterResizeInputTensor",
+        "TfLiteInterpreterAllocateTensors",
+        "TfLiteInterpreterInvoke",
+        "TfLiteInterpreterGetOutputTensorCount",
+        "TfLiteInterpreterGetTensor",
+        "TfLiteInterpreterOutputTensorIndices",
+        "TfLiteInterpreterGetOutputTensor",
+        "TfLiteInterpreterCancel",
+        "TfLiteTensorNumDims",
+        "TfLiteTensorDim",
+        "TfLiteTensorName",
+        "TfLiteTensorCopyFromBuffer",
+        "TfLiteTensorCopyToBuffer",
+        "TfLiteInterpreterGetSignatureCount",
+        "TfLiteInterpreterGetSignatureKey",
+        "TfLiteInterpreterGetSignatureRunner",
+        "TfLiteSignatureRunnerGetInputCount",
+        "TfLiteSignatureRunnerGetInputName",
+        "TfLiteSignatureRunnerResizeInputTensor",
+        "TfLiteSignatureRunnerAllocateTensors",
+        "TfLiteSignatureRunnerGetInputTensor",
+        "TfLiteSignatureRunnerInvoke",
+        "TfLiteSignatureRunnerGetOutputCount",
+        "TfLiteSignatureRunnerGetOutputName",
+        "TfLiteSignatureRunnerGetOutputTensor",
+        "TfLiteSignatureRunnerDelete",
+        "TfLiteOperatorCreate",
+        "TfLiteOperatorDelete",
+        "TfLiteOperatorSetInit",
+        "TfLiteOperatorSetInitWithData",
+        "TfLiteOperatorSetFree",
+        "TfLiteOperatorSetFreeWithData",
+        "TfLiteOperatorSetPrepare",
+        "TfLiteOperatorSetPrepareWithData",
+        "TfLiteOperatorSetInvoke",
+        "TfLiteOperatorSetInvokeWithData",
+        "TfLiteOperatorSetAsyncKernel",
+        "TfLiteOperatorSetAsyncKernelWithData",
+        "TfLiteOperatorSetInplaceOperator",
+        "TfLiteOperatorGetBuiltInCode",
+        "TfLiteOperatorGetCustomName",
+        "TfLiteOperatorGetVersion",
+        "TfLiteOperatorGetUserData",
+        "TfLiteXNNPackDelegateWeightsCacheCreate",
+        "TfLiteXNNPackDelegateWeightsCacheCreateWithSize",
+        "TfLiteXNNPackDelegateWeightsCacheFinalizeSoft",
+        "TfLiteXNNPackDelegateWeightsCacheFinalizeHard",
+        "TfLiteXNNPackDelegateWeightsCacheDelete",
+        "TfLiteXNNPackDelegateCanUseInMemoryWeightCacheProvider",
+        "TfLiteXNNPackDelegateInMemoryFilePath",
+        "TfLiteXNNPackDelegateOptionsDefault",
+        "TfLiteXNNPackDelegateCreate",
+        "TfLiteXNNPackDelegateGetThreadPool",
+        "TfLiteXNNPackDelegateGetOptions",
+        "TfLiteXNNPackDelegateGetFlags",
+        "TfLiteXNNPackDelegateDelete"
+      ],
+      "coff_symbol_table_count": 0,
+      "unwind_table": {
+        "entries": 70185,
+        "ranges_in_image": true,
+        "sorted_by_start": true,
+        "scope": "PE table structure only; no actual recorded-stack unwind completeness proven."
+      }
+    },
+    {
+      "module": "cv2.pyd",
+      "image_sha256": "ae833b9b5771f5932200bd3b8ad0f483f4fbec92cbdbd26d21d38fe524c60e66",
+      "matched_pdb": false,
+      "pdb_identity": null,
+      "source_lines": 0,
+      "function_symbols_enumerated": 0,
+      "diagnostic_functions": [],
+      "fallback_symbol_type": 4,
+      "fallback_diagnostic_names": [
+        "cv::cuda::GpuMatND::getDevicePtr"
+      ],
+      "coff_symbol_table_count": 0,
+      "unwind_table": {
+        "entries": 216957,
+        "ranges_in_image": true,
+        "sorted_by_start": true,
+        "scope": "PE table structure only; no actual recorded-stack unwind completeness proven."
+      }
+    }
+  ],
+  "future_gates": [
+    "Recheck exact image/PDB identities and process/thread ownership before any future recording.",
+    "Calibrate low-frequency CPU-stack profile and necessary wait-stack profile independently; do not proceed with quantitative attribution after failed calibration.",
+    "Require actual complete caller chains and report unknown/truncated coverage; exported names or module presence are insufficient to claim GIL.",
+    "Align to existing consumer batch state and completed filtered-contact brackets, not merely input density.",
+    "Keep opaque NumPy/MediaPipe/OpenCV internal PCs as module+RVA; do not label a specific compute kernel or infer algorithm-exclusive CPU."
+  ]
+}
