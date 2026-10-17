@@ -1,0 +1,69 @@
+{
+  "scope": "现有等待栈ETL的离线线程覆盖扩展。使用原ReadStacks.exe和新的输出目录，不修改采集器或采集配置，不启用任何跟踪。",
+  "case": "20261017_214905_5c874d97_walk_off",
+  "export": {
+    "etl_sha256": "0e0c71ccd8f77f09075d35bdc1936a5d02290624f6765a6acd14d42881067523",
+    "reader_sha256": "edfb9e4f9f6c9ffdc51ff0aa5513d33f585efe0558b596c45bd14ca73c6cd1df",
+    "source_etl_unchanged_before_after": true,
+    "thread_lifecycle_TIDs": 73,
+    "TIDs_with_stack_records": 32,
+    "decoded_selected_records": 656062,
+    "loss_zero": true,
+    "clock_type": 1,
+    "qpc_frequency": 10000000,
+    "raw_remote_root": "E:/OptoJump/IronJump-native-stack-field-d47e067-20261017-01/field_reviews/gil_contenders01",
+    "raw_local_root": "/Users/vae/.codex/worktrees/native-stack-capture/Iron_Jump/experiments/native_stack_capture/runs/gil_contenders01",
+    "files_sha256": {
+      "schedule01.jsonl.gz": "b361ae9a10b027497f1771bf8fad4dad04a450de50321873d79dd2494f6283f7",
+      "decoded/events.jsonl": "5af067d922e79ef26fd6279160c72344cbee25f0ddef96e9ae8382586973fbaf",
+      "decoded/metadata.json": "f486ea8ec15341007dca90b0aa6e14795335fa02e83b4fd4b6d675b6e4d0895c"
+    },
+    "export_manifest_sha256": "b35e15561b695ede3b571c0c10a5095e5a8c9a4828946b677ab9dca9fafaa032"
+  },
+  "findings": [
+    "完整、无歧义、配对Waiting/out→ReadyThread→in的GIL等待调用链覆盖8个GUI进程线程：5376、7332、12532、13080、17196、17236、20420、20732。不是8个同时等待的声明，也不是等待比例。",
+    "7332的完整链经tinyse_capture_v2.dll→ffi/_ctypes回调→PyGILState_Ensure→take_gil→系统等待，可定位到本进程相机原生回调重新进入Python的边界。没有把它误称为OBSBOT SDK子进程线程。",
+    "13080/17236的现有闭合栈还出现OpenCV路径；其他闭合栈见Python锁等待恢复以及MediaPipe相关路径。线程的Python函数名、精确业务身份和GIL持有者尚不可由此确定，保留模块/RVA。",
+    "在formal13.8641344s、pending672的既有20帧在途见证处，5376/13080/17236/7332均被保守匹配到ReadyThread之前的完整GIL等待区间，保留全部QPC映射不确定性与100us边界保护。",
+    "formal13.2200252s同时匹配消费者与USB读取线程等待GIL；formal14.1321266s同时匹配消费者、USB读取和相机回调。证明不止一条输入/显示路径在竞争中等待，不构成谁导致谁、损失多少吞吐的量化因果。",
+    "部分观测点能看到GUI20420或另一线程13080被调度运行；它们只是同刻运行者。运行中的原生代码可能没有GIL，持有GIL的线程也可能被抢占，因此禁止把co-scheduled列表当GIL owner。"
+  ],
+  "evidence": "joined01.json",
+  "native_role_links": {
+    "gui": 20420,
+    "consumer": 5376,
+    "usb_reader": 20732,
+    "native_camera_callback_path": 7332,
+    "other_roles_not_confirmed": [
+      12532,
+      13080,
+      17196,
+      17236
+    ]
+  },
+  "limits": [
+    "新加入线程没有同步GetThreadTimes/cycles观测；不补造计数、不将它们宣称通过原生整体验收。",
+    "原reader驻留/计费差额、SDK完整率以及实际负载扰动校准失败全部保留；不改变门槛，不计算GIL/Qt/CPU占比。",
+    "ReadyThread只提供目标线程就绪证据，现有header不用于标记唤醒者；没有锁所有权事件。",
+    "只报告新覆盖中的质性闭合见证；100us保护会遗漏短区间和边界，不能反推没有被列出的线程或时间没有竞争。",
+    "这里没有证明主导根因，尚不足以验证正式程序的性能修复。"
+  ],
+  "next_reasoning_requirement": "明确区分等待者与持有者。下一阶段先利用既有CPU/源码检查其余处理链和可用身份线索；若仍缺锁所有权或有效校准，再提出最小补证方案，不重复人体采样来替换失败窗口。",
+  "verification": {
+    "original_ETL_hash_unchanged": true,
+    "new_schedule_gzip_hash_checked": true,
+    "old_stack_export_matches_symbol_input_hash": true,
+    "73_lifecycle_TIDs_matched": true,
+    "no_thread_ID_reuse_in_selected_lifecycle": true,
+    "running_switch_pairs_keep_same_CPU": true,
+    "guarded_running_and_GIL_wait_sets_disjoint": true,
+    "formal_source_edits": false,
+    "capture_profile_edits": false,
+    "new_human_or_device_test": false
+  },
+  "artifact_sha256": {
+    "joined01.json": "1dbe51e645234e4469dc7ca6f0fb5fc87bd638d7d6e105dbb1abe3e779e68989",
+    "export_schedule.py": "41de2ecf4c16920e904876d6dcce532dfe20b73b683eb1fd780d9541bc79c629",
+    "join_threads.py": "5858147f22cd04567fd286b7a5236402389e2808691212b75566ec6bfa5a1945"
+  }
+}
