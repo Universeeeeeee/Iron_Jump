@@ -1,0 +1,115 @@
+{
+  "previous_goal_turn": "progress: retained new field evidence and missing-publication finding",
+  "this_turn": "progress: reconstructed per-logical-processor residency from original historical scheduler data",
+  "validation": {
+    "synthetic_clipping_and_conservation": true,
+    "uncovered_window_rejected": true,
+    "broken_cpu_chain_rejected": true,
+    "original_export_sha256_verified": true,
+    "all_cpu_chains_continuous": true,
+    "independent_per_thread_reconstruction_comparison": [
+      {
+        "case": "20261017_112623_8416401b_walk_on",
+        "window": "outer",
+        "role": "gui",
+        "seconds": 6.116277699999999,
+        "difference_seconds": -1.7763568394002505e-15
+      },
+      {
+        "case": "20261017_112623_8416401b_walk_on",
+        "window": "outer",
+        "role": "consumer",
+        "seconds": 4.790501,
+        "difference_seconds": 0.0
+      },
+      {
+        "case": "20261017_112623_8416401b_walk_on",
+        "window": "outer",
+        "role": "reader",
+        "seconds": 2.5089322999999997,
+        "difference_seconds": -4.440892098500626e-16
+      },
+      {
+        "case": "20261017_112623_8416401b_walk_on",
+        "window": "inner",
+        "role": "gui",
+        "seconds": 6.0059473,
+        "difference_seconds": 0.0
+      },
+      {
+        "case": "20261017_112623_8416401b_walk_on",
+        "window": "inner",
+        "role": "consumer",
+        "seconds": 4.699245400000001,
+        "difference_seconds": 8.881784197001252e-16
+      },
+      {
+        "case": "20261017_112623_8416401b_walk_on",
+        "window": "inner",
+        "role": "reader",
+        "seconds": 2.4613335999999997,
+        "difference_seconds": -4.440892098500626e-16
+      },
+      {
+        "case": "20261017_113358_00ae9eca_walk_on",
+        "window": "outer",
+        "role": "gui",
+        "seconds": 3.4513846,
+        "difference_seconds": 0.0
+      },
+      {
+        "case": "20261017_113358_00ae9eca_walk_on",
+        "window": "outer",
+        "role": "consumer",
+        "seconds": 2.726905,
+        "difference_seconds": 0.0
+      },
+      {
+        "case": "20261017_113358_00ae9eca_walk_on",
+        "window": "outer",
+        "role": "reader",
+        "seconds": 1.0074305000000001,
+        "difference_seconds": 2.220446049250313e-16
+      },
+      {
+        "case": "20261017_113358_00ae9eca_walk_on",
+        "window": "inner",
+        "role": "gui",
+        "seconds": 3.3172324,
+        "difference_seconds": 0.0
+      },
+      {
+        "case": "20261017_113358_00ae9eca_walk_on",
+        "window": "inner",
+        "role": "consumer",
+        "seconds": 2.6484649,
+        "difference_seconds": 0.0
+      },
+      {
+        "case": "20261017_113358_00ae9eca_walk_on",
+        "window": "inner",
+        "role": "reader",
+        "seconds": 0.9613292,
+        "difference_seconds": 0.0
+      }
+    ]
+  },
+  "findings": [
+    "慢轮内区间平均非空闲调度驻留比例为37.36%，较快轮为28.02%；各逻辑处理器平均比例均低于59%。不能以此排除瞬时饱和、物理核共享或中断开销。",
+    "消费者在两轮均分布于全部8个逻辑处理器，逻辑处理器7占其驻留时间约43.4%和40.4%。这不是大小核、CPU频率或缓存行为的证明。",
+    "未取得故障时函数栈、等待对象/持有者、频率及中断区间。已保存的无栈调度事件无法离线还原这些信息。",
+    "最近低延迟轮没有对应原生栈或逐逻辑处理器调度数据，不将历史ON轮比例外推到最新OFF轮。"
+  ],
+  "root_cause_confirmed": false,
+  "production_fix_applied": false,
+  "next_required_evidence": "在真实单USB Walk再次出现接触消费积压时，按已有门槛分别取得经过验收的CPU和CSwitch短窗，并与同轮接触消费完成括号对齐；CPU合成校准失败仍保留且不宣布通过。若目标栈仍不闭合，只能报告证据质量，不能定量归因或据此修改处理链。",
+  "boundaries": {
+    "new_human_trials": false,
+    "new_recording": false,
+    "production_changes": false,
+    "optimization_AB": false,
+    "threshold_changes": false
+  },
+  "source_sha256": "23a98be0138ad2ae41aff1bf115d0cc122be669f623b883202b0c04d3f1877ee",
+  "results_sha256": "e615c1419760b757ff818d8be77275fc8718f7c09e798e7b425def65bd9f250a"
+}
