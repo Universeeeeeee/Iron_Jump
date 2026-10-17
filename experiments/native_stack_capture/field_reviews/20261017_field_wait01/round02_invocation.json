@@ -1,0 +1,17 @@
+{
+  "scope": "Round02 operator invocation only; frozen record.py/observe.py/profiles and measurement gates unchanged",
+  "round": 2,
+  "mode": "wait",
+  "preparation_wait_seconds": 1800,
+  "reason": "User cannot view Mac while operating Windows; round01 watcher timed out before GUI creation. Arm this round before giving the complete start instruction.",
+  "requested_observation_seconds": 6,
+  "launch_requested_formal_s": 8,
+  "failed_round01_retained": true,
+  "failed_off_pair_not_replaced": true,
+  "calibration_complete": false,
+  "quantitative_attribution_allowed": false,
+  "selection": "Only a newly created WALK-ETW-OFF formal marker after watcher starts. No existing GUI now; verified before arming.",
+  "operator_script_sha256": "8f3de4be34be63fea015db580998a4b1d84dac3744394dda2baf431de1b11bf1",
+  "plan_sha256": "fad99da6f78d9ed118382695cb300420a490d18b649ecca8b04bbb9a0c08de9e",
+  "user_instruction": "Restore segment8 alignment, start recording before GUI, open WALK-ETW-OFF, confirm full body and skeleton, start, 5s empty lead-in, one outward Walk, operator-clear, 15s empty tail. Complete one round only and report afterward."
+}
