@@ -14,12 +14,21 @@ class HumanRun(BaseRun):
         self.pending_trace=False;self.arm_requested=False;self.request_ns=None;self.cpu_start=None;self.cpu_end=None;self.anchors=[];self.closing=False
         super().__init__(args,app)
         self.window.setWindowTitle('人体单 USB · '+args.mode+' · ETW '+self.case['trace'].upper())
+        old_confirm=self.confirm
+        self.confirm=QPushButton('未确认 · 点击确认：头到脚完整入镜，光栅已清空')
+        self.confirm.setCheckable(True)
+        self.confirm.setToolTip('目视核验后点击；程序仍会检查 USB、录像及全身/骨架就绪条件。')
+        self.confirm.setStyleSheet('QPushButton { background:#24364d; border:2px solid #b8cce5; border-radius:6px; padding:8px; text-align:left; font-weight:600; } QPushButton:hover { background:#304967; } QPushButton:checked { background:#166534; border-color:#86efac; color:white; } QPushButton:disabled { color:#c0cbd6; border-color:#778b9f; }')
+        self.confirm.toggled.connect(lambda checked:self.confirm.setText('✓ 已确认：头到脚完整入镜，光栅已清空（再次点击可取消）' if checked else '未确认 · 点击确认：头到脚完整入镜，光栅已清空'))
+        self.window.layout().replaceWidget(old_confirm,self.confirm)
+        old_confirm.hide();old_confirm.deleteLater()
         self.window.installEventFilter(self)
         self.cancel_button=QPushButton('取消本轮并关闭设备会话');self.cancel_button.clicked.connect(self.cancel)
         self.window.layout().insertWidget(4,self.cancel_button)
         self.watchdog.start(300000)
     def eventFilter(self,watched,event):
         if watched is self.window and event.type()==QEvent.Close:
+            if self.closing:return False
             event.ignore();self.cancel();return True
         return super().eventFilter(watched,event)
     def start(self):
@@ -33,8 +42,10 @@ class HumanRun(BaseRun):
         super().progress()
         if self.arm_ns is not None:
             age=(f.now()-self.last_valid_draw)/1e9
-            note='有效骨架正在绘制' if age<=1 else '骨架有效绘制已中断：照常完成本轮，不要返回补步'
-            self.banner.setText(self.banner.text()+'\n'+note)
+            cleared=any(v['name']=='operator_clear' for v in self.marks)
+            note='尾段空场：无人时无骨架属于预期' if cleared else '有效骨架正在绘制' if age<=1 else '骨架有效绘制已中断：照常完成本轮，不要返回补步'
+            phase=self.banner.text().split('\n',1)[0]
+            self.banner.setText(phase+'\n'+note)
         if self.arm_ns is None and self.pending_trace:
             ready=self.start_button.isEnabled()
             if acknowledged(self.control,self.case) and ready and not self.arm_requested:

@@ -1,0 +1,106 @@
+{
+  "scope": "UI fix and confirmation affordance; no performance/algorithm change.",
+  "frozen_sources_sha256": "e81e6a013c1feef532124204ff77768f33ac9adeb8512f7bf4490a28f4017aa0",
+  "legacy_two_failures_reproduced": true,
+  "windows_native_regression": {
+    "scope": "Hardware-blocked GUI regression only; no USB, SDK, video or ETW acquisition.",
+    "legacy_runtime": false,
+    "confirmation_visible_button": true,
+    "confirmation_toggle_reversible": true,
+    "confirmation_inside_screen": true,
+    "tail_status_ticks": 40,
+    "tail_text_bounded": true,
+    "tail_status_newlines_last": 1,
+    "tail_label_height_stable": true,
+    "tail_label_heights_first_last": [
+      44,
+      44
+    ],
+    "actual_QApplication_event_loop_exit_code": 0,
+    "cancel_shutdown_and_quit_completed": true,
+    "passed": true
+  },
+  "windows_confirmation_layout_and_handshake": {
+    "scope": "Hardware-blocked real Qt layout and handshake check, not a live field run.",
+    "qt_platform": "windows",
+    "screen": [
+      1536,
+      816
+    ],
+    "widgets": {
+      "confirm": {
+        "visible": true,
+        "inside_screen": true,
+        "rect": [
+          18,
+          69,
+          1158,
+          42
+        ]
+      },
+      "start_button": {
+        "visible": true,
+        "inside_screen": true,
+        "rect": [
+          18,
+          117,
+          1158,
+          32
+        ]
+      },
+      "cancel_button": {
+        "visible": true,
+        "inside_screen": true,
+        "rect": [
+          18,
+          193,
+          1158,
+          32
+        ]
+      }
+    },
+    "confirmation_waits_for_ETW": true,
+    "asynchronous_arm_requested_once": true,
+    "no_camera_recording_or_USB_reader": true,
+    "preview_start_intercepted": 1
+  },
+  "original_field_runner_and_probe_byte_identical": true,
+  "original_field_case": {
+    "case": "20261017_110109_a6595b80_walk_off",
+    "scope": "Archive integrity only; normal GUI exit failed. Original completion/report data are not rewritten.",
+    "checks": {
+      "counter_continuous": true,
+      "no_reported_raw_drops_or_issues": true,
+      "wire_matches_retained_bits": true,
+      "formal_archive_matches_raw": true,
+      "archive_sha_matches": true,
+      "event_order_preserved": true,
+      "event_audit_matches_report": true,
+      "quality_history_matches_report": true,
+      "queue_fully_drained": true,
+      "SDK_closed_no_readers": true,
+      "video_csv_complete": true,
+      "video_writer_closed_no_drops": true,
+      "captured_source_hash_matches": true
+    },
+    "archive_checks_passed": true,
+    "formal_frames": 45705,
+    "raw_frames_including_preparation": 96480,
+    "duration_s": 45.7021321,
+    "video_frames": 8661,
+    "video_bytes": 1304384653,
+    "report_touch_count": 10,
+    "normal_completion_marker_present": false,
+    "matched_load_calibration_baseline_accepted": false,
+    "exclusion_reason": "Unbounded tail status changed GUI workload; self-close interception prevented normal completion. Retain as failure evidence; restart OFF after UI-only fix."
+  },
+  "runtime_source_archive": "harness_versions/field01",
+  "normal_completion_not_forged": true,
+  "next_sequence": [
+    "OFF (new baseline)",
+    "ON",
+    "ON",
+    "OFF"
+  ],
+  "new_real_field_capture_started_by_assistant": false
+}

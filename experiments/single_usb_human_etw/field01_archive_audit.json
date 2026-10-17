@@ -1,0 +1,29 @@
+{
+  "case": "20261017_110109_a6595b80_walk_off",
+  "scope": "Archive integrity only; normal GUI exit failed. Original completion/report data are not rewritten.",
+  "checks": {
+    "counter_continuous": true,
+    "no_reported_raw_drops_or_issues": true,
+    "wire_matches_retained_bits": true,
+    "formal_archive_matches_raw": true,
+    "archive_sha_matches": true,
+    "event_order_preserved": true,
+    "event_audit_matches_report": true,
+    "quality_history_matches_report": true,
+    "queue_fully_drained": true,
+    "SDK_closed_no_readers": true,
+    "video_csv_complete": true,
+    "video_writer_closed_no_drops": true,
+    "captured_source_hash_matches": true
+  },
+  "archive_checks_passed": true,
+  "formal_frames": 45705,
+  "raw_frames_including_preparation": 96480,
+  "duration_s": 45.7021321,
+  "video_frames": 8661,
+  "video_bytes": 1304384653,
+  "report_touch_count": 10,
+  "normal_completion_marker_present": false,
+  "matched_load_calibration_baseline_accepted": false,
+  "exclusion_reason": "Unbounded tail status changed GUI workload; self-close interception prevented normal completion. Retain as failure evidence; restart OFF after UI-only fix."
+}
