@@ -1,0 +1,2214 @@
+{
+  "source_compute_sha256_note": "See compute.json and input/source manifests; no measured field discarded.",
+  "core_definition": "Full 1000-outer-input block with exactly 1000 processor outputs, all containing usable filtered contact. Includes periodic summary in processor scope. No final flush/report in core.",
+  "trials": [
+    {
+      "case": "20261017_111818_dc83b931_walk_off",
+      "strict_oracle_equal": true,
+      "report_sha256": "08df14c7a80a914cfdf208cbcd4d6f1602aaa0c7ccc397b2a605952c0402dfd5",
+      "contact_core_blocks": [
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "stages": {
+        "quality": {
+          "formal": {
+            "samples": 43224,
+            "repeats": [
+              {
+                "cpu_ms": 3328.125,
+                "wall_ms": 3427.4555,
+                "blocks": 44
+              },
+              {
+                "cpu_ms": 1968.75,
+                "wall_ms": 1977.311,
+                "blocks": 44
+              },
+              {
+                "cpu_ms": 1968.75,
+                "wall_ms": 1959.2028,
+                "blocks": 44
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 1968.75,
+              "min": 1968.75,
+              "max": 3328.125
+            },
+            "wall_us_per_raw_input": {
+              "median": 45.74567369979641,
+              "min": 45.326735147140475,
+              "max": 79.29519479918564
+            },
+            "cpu_us_per_raw_input": {
+              "median": 45.5476124375347,
+              "min": 45.5476124375347,
+              "max": 76.99715435868961
+            }
+          },
+          "contact_core": {
+            "samples": 5000,
+            "repeats": [
+              {
+                "cpu_ms": 406.25,
+                "wall_ms": 405.2286,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 234.375,
+                "wall_ms": 235.0891,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 234.375,
+                "wall_ms": 233.8099,
+                "blocks": 5
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 234.375,
+              "min": 234.375,
+              "max": 406.25
+            },
+            "wall_us_per_raw_input": {
+              "median": 47.01782,
+              "min": 46.76198,
+              "max": 81.04571999999999
+            },
+            "cpu_us_per_raw_input": {
+              "median": 46.875,
+              "min": 46.875,
+              "max": 81.25
+            }
+          },
+          "initial_empty": {
+            "samples": 4000,
+            "repeats": [
+              {
+                "cpu_ms": 250.0,
+                "wall_ms": 262.4549,
+                "blocks": 4
+              },
+              {
+                "cpu_ms": 156.25,
+                "wall_ms": 157.7322,
+                "blocks": 4
+              },
+              {
+                "cpu_ms": 156.25,
+                "wall_ms": 150.8429,
+                "blocks": 4
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 156.25,
+              "min": 156.25,
+              "max": 250.0
+            },
+            "wall_us_per_raw_input": {
+              "median": 39.43305,
+              "min": 37.710725,
+              "max": 65.613725
+            },
+            "cpu_us_per_raw_input": {
+              "median": 39.0625,
+              "min": 39.0625,
+              "max": 62.5
+            }
+          },
+          "post_contact_empty_25_29": {
+            "samples": 5000,
+            "repeats": [
+              {
+                "cpu_ms": 390.625,
+                "wall_ms": 402.2927,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 218.75,
+                "wall_ms": 232.5224,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 234.375,
+                "wall_ms": 232.2696,
+                "blocks": 5
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 234.375,
+              "min": 218.75,
+              "max": 390.625
+            },
+            "wall_us_per_raw_input": {
+              "median": 46.50448,
+              "min": 46.453920000000004,
+              "max": 80.45854
+            },
+            "cpu_us_per_raw_input": {
+              "median": 46.875,
+              "min": 43.75,
+              "max": 78.125
+            }
+          }
+        },
+        "filter": {
+          "formal": {
+            "samples": 43224,
+            "repeats": [
+              {
+                "cpu_ms": 3375.0,
+                "wall_ms": 3403.1968,
+                "blocks": 44
+              },
+              {
+                "cpu_ms": 1593.75,
+                "wall_ms": 1594.6287,
+                "blocks": 44
+              },
+              {
+                "cpu_ms": 1515.625,
+                "wall_ms": 1541.7972,
+                "blocks": 44
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 1593.75,
+              "min": 1515.625,
+              "max": 3375.0
+            },
+            "wall_us_per_raw_input": {
+              "median": 36.89220571904497,
+              "min": 35.6699333703498,
+              "max": 78.73396261336295
+            },
+            "cpu_us_per_raw_input": {
+              "median": 36.87187673514714,
+              "min": 35.06443179714973,
+              "max": 78.08162132148806
+            }
+          },
+          "contact_core": {
+            "samples": 5000,
+            "repeats": [
+              {
+                "cpu_ms": 718.75,
+                "wall_ms": 723.3961,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 437.5,
+                "wall_ms": 444.5605,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 406.25,
+                "wall_ms": 405.7473,
+                "blocks": 5
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 437.5,
+              "min": 406.25,
+              "max": 718.75
+            },
+            "wall_us_per_raw_input": {
+              "median": 88.9121,
+              "min": 81.14945999999999,
+              "max": 144.67922000000002
+            },
+            "cpu_us_per_raw_input": {
+              "median": 87.5,
+              "min": 81.25,
+              "max": 143.75
+            }
+          },
+          "initial_empty": {
+            "samples": 4000,
+            "repeats": [
+              {
+                "cpu_ms": 171.875,
+                "wall_ms": 190.3535,
+                "blocks": 4
+              },
+              {
+                "cpu_ms": 125.0,
+                "wall_ms": 116.25,
+                "blocks": 4
+              },
+              {
+                "cpu_ms": 109.375,
+                "wall_ms": 109.9986,
+                "blocks": 4
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 125.0,
+              "min": 109.375,
+              "max": 171.875
+            },
+            "wall_us_per_raw_input": {
+              "median": 29.0625,
+              "min": 27.49965,
+              "max": 47.588375
+            },
+            "cpu_us_per_raw_input": {
+              "median": 31.25,
+              "min": 27.34375,
+              "max": 42.96875
+            }
+          },
+          "post_contact_empty_25_29": {
+            "samples": 5000,
+            "repeats": [
+              {
+                "cpu_ms": 234.375,
+                "wall_ms": 237.0554,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 140.625,
+                "wall_ms": 141.7557,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 140.625,
+                "wall_ms": 136.7519,
+                "blocks": 5
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 140.625,
+              "min": 140.625,
+              "max": 234.375
+            },
+            "wall_us_per_raw_input": {
+              "median": 28.351139999999997,
+              "min": 27.350379999999998,
+              "max": 47.41108
+            },
+            "cpu_us_per_raw_input": {
+              "median": 28.125,
+              "min": 28.125,
+              "max": 46.875
+            }
+          }
+        },
+        "processor": {
+          "formal": {
+            "samples": 43224,
+            "repeats": [
+              {
+                "cpu_ms": 4750.0,
+                "wall_ms": 4771.7311,
+                "blocks": 44
+              },
+              {
+                "cpu_ms": 3218.75,
+                "wall_ms": 3271.4565,
+                "blocks": 44
+              },
+              {
+                "cpu_ms": 2781.25,
+                "wall_ms": 2799.6045,
+                "blocks": 44
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 3218.75,
+              "min": 2781.25,
+              "max": 4750.0
+            },
+            "wall_us_per_raw_input": {
+              "median": 75.68611188228762,
+              "min": 64.76967656857302,
+              "max": 110.39540764390152
+            },
+            "cpu_us_per_raw_input": {
+              "median": 74.46673144549324,
+              "min": 64.34503979270775,
+              "max": 109.89265223024246
+            }
+          },
+          "contact_core": {
+            "samples": 5000,
+            "repeats": [
+              {
+                "cpu_ms": 1140.625,
+                "wall_ms": 1156.5108,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 671.875,
+                "wall_ms": 681.4076,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 687.5,
+                "wall_ms": 684.6583,
+                "blocks": 5
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 687.5,
+              "min": 671.875,
+              "max": 1140.625
+            },
+            "wall_us_per_raw_input": {
+              "median": 136.93166000000002,
+              "min": 136.28152,
+              "max": 231.30216000000001
+            },
+            "cpu_us_per_raw_input": {
+              "median": 137.5,
+              "min": 134.375,
+              "max": 228.125
+            }
+          },
+          "initial_empty": {
+            "samples": 4000,
+            "repeats": [
+              {
+                "cpu_ms": 140.625,
+                "wall_ms": 137.0521,
+                "blocks": 4
+              },
+              {
+                "cpu_ms": 78.125,
+                "wall_ms": 79.0158,
+                "blocks": 4
+              },
+              {
+                "cpu_ms": 93.75,
+                "wall_ms": 84.3969,
+                "blocks": 4
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 93.75,
+              "min": 78.125,
+              "max": 140.625
+            },
+            "wall_us_per_raw_input": {
+              "median": 21.099225,
+              "min": 19.75395,
+              "max": 34.263025
+            },
+            "cpu_us_per_raw_input": {
+              "median": 23.4375,
+              "min": 19.53125,
+              "max": 35.15625
+            }
+          },
+          "post_contact_empty_25_29": {
+            "samples": 5000,
+            "repeats": [
+              {
+                "cpu_ms": 562.5,
+                "wall_ms": 558.5989,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 312.5,
+                "wall_ms": 320.1416,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 312.5,
+                "wall_ms": 319.6013,
+                "blocks": 5
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 312.5,
+              "min": 312.5,
+              "max": 562.5
+            },
+            "wall_us_per_raw_input": {
+              "median": 64.02832,
+              "min": 63.92026,
+              "max": 111.71977999999999
+            },
+            "cpu_us_per_raw_input": {
+              "median": 62.5,
+              "min": 62.5,
+              "max": 112.5
+            }
+          }
+        }
+      },
+      "state_at_core_end": [
+        {
+          "raw_sample": 59650,
+          "processor": {
+            "contacts": 3,
+            "active": 1,
+            "timeline": 42,
+            "_ownership_groups": 2,
+            "_source_review_frames": 31,
+            "_narrow_candidates": 0,
+            "_narrow_unknown": 2,
+            "_candidate_decisions": 2,
+            "_touch_events": 3,
+            "event_audit": 14,
+            "contact_positions": 103,
+            "contact_position_samples": 102,
+            "contact_valid_sample_intervals": 3
+          },
+          "filter_queue": 10
+        },
+        {
+          "raw_sample": 60650,
+          "processor": {
+            "contacts": 9,
+            "active": 1,
+            "timeline": 68,
+            "_ownership_groups": 4,
+            "_source_review_frames": 31,
+            "_narrow_candidates": 0,
+            "_narrow_unknown": 5,
+            "_candidate_decisions": 8,
+            "_touch_events": 5,
+            "event_audit": 31,
+            "contact_positions": 175,
+            "contact_position_samples": 174,
+            "contact_valid_sample_intervals": 9
+          },
+          "filter_queue": 10
+        },
+        {
+          "raw_sample": 61650,
+          "processor": {
+            "contacts": 12,
+            "active": 1,
+            "timeline": 93,
+            "_ownership_groups": 5,
+            "_source_review_frames": 31,
+            "_narrow_candidates": 0,
+            "_narrow_unknown": 5,
+            "_candidate_decisions": 9,
+            "_touch_events": 7,
+            "event_audit": 37,
+            "contact_positions": 251,
+            "contact_position_samples": 250,
+            "contact_valid_sample_intervals": 12
+          },
+          "filter_queue": 10
+        },
+        {
+          "raw_sample": 62650,
+          "processor": {
+            "contacts": 14,
+            "active": 2,
+            "timeline": 118,
+            "_ownership_groups": 7,
+            "_source_review_frames": 31,
+            "_narrow_candidates": 0,
+            "_narrow_unknown": 7,
+            "_candidate_decisions": 11,
+            "_touch_events": 8,
+            "event_audit": 39,
+            "contact_positions": 317,
+            "contact_position_samples": 315,
+            "contact_valid_sample_intervals": 14
+          },
+          "filter_queue": 10
+        },
+        {
+          "raw_sample": 63650,
+          "processor": {
+            "contacts": 15,
+            "active": 1,
+            "timeline": 143,
+            "_ownership_groups": 7,
+            "_source_review_frames": 31,
+            "_narrow_candidates": 0,
+            "_narrow_unknown": 7,
+            "_candidate_decisions": 11,
+            "_touch_events": 9,
+            "event_audit": 41,
+            "contact_positions": 377,
+            "contact_position_samples": 375,
+            "contact_valid_sample_intervals": 16
+          },
+          "filter_queue": 10
+        }
+      ],
+      "final_state": {
+        "contacts": 16,
+        "active": 0,
+        "timeline": 838,
+        "_ownership_groups": 7,
+        "_source_review_frames": 31,
+        "_narrow_candidates": 0,
+        "_narrow_unknown": 7,
+        "_candidate_decisions": 11,
+        "_touch_events": 10,
+        "event_audit": 43,
+        "contact_positions": 433,
+        "contact_position_samples": 430,
+        "contact_valid_sample_intervals": 17
+      }
+    },
+    {
+      "case": "20261017_112623_8416401b_walk_on",
+      "strict_oracle_equal": true,
+      "report_sha256": "f37d0c835ff8bcb25c5d76d4db2748e0fd0c65b077878e27ebe33e328dc2426e",
+      "contact_core_blocks": [
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "stages": {
+        "quality": {
+          "formal": {
+            "samples": 40427,
+            "repeats": [
+              {
+                "cpu_ms": 2328.125,
+                "wall_ms": 2343.1004,
+                "blocks": 41
+              },
+              {
+                "cpu_ms": 2406.25,
+                "wall_ms": 2403.3445,
+                "blocks": 41
+              },
+              {
+                "cpu_ms": 1859.375,
+                "wall_ms": 1884.315,
+                "blocks": 41
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 2328.125,
+              "min": 1859.375,
+              "max": 2406.25
+            },
+            "wall_us_per_raw_input": {
+              "median": 57.95879981200682,
+              "min": 46.61030994137581,
+              "max": 59.44899448388453
+            },
+            "cpu_us_per_raw_input": {
+              "median": 57.58836915922527,
+              "min": 45.99339550300542,
+              "max": 59.520864768595246
+            }
+          },
+          "contact_core": {
+            "samples": 5000,
+            "repeats": [
+              {
+                "cpu_ms": 328.125,
+                "wall_ms": 326.5185,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 234.375,
+                "wall_ms": 234.3242,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 234.375,
+                "wall_ms": 238.9579,
+                "blocks": 5
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 234.375,
+              "min": 234.375,
+              "max": 328.125
+            },
+            "wall_us_per_raw_input": {
+              "median": 47.791579999999996,
+              "min": 46.864839999999994,
+              "max": 65.3037
+            },
+            "cpu_us_per_raw_input": {
+              "median": 46.875,
+              "min": 46.875,
+              "max": 65.625
+            }
+          },
+          "initial_empty": {
+            "samples": 4000,
+            "repeats": [
+              {
+                "cpu_ms": 171.875,
+                "wall_ms": 167.0351,
+                "blocks": 4
+              },
+              {
+                "cpu_ms": 140.625,
+                "wall_ms": 152.7627,
+                "blocks": 4
+              },
+              {
+                "cpu_ms": 140.625,
+                "wall_ms": 151.5152,
+                "blocks": 4
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 140.625,
+              "min": 140.625,
+              "max": 171.875
+            },
+            "wall_us_per_raw_input": {
+              "median": 38.190675,
+              "min": 37.8788,
+              "max": 41.758775
+            },
+            "cpu_us_per_raw_input": {
+              "median": 35.15625,
+              "min": 35.15625,
+              "max": 42.96875
+            }
+          },
+          "post_contact_empty_25_29": {
+            "samples": 5000,
+            "repeats": [
+              {
+                "cpu_ms": 234.375,
+                "wall_ms": 235.5951,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 234.375,
+                "wall_ms": 233.7122,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 265.625,
+                "wall_ms": 273.7448,
+                "blocks": 5
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 234.375,
+              "min": 234.375,
+              "max": 265.625
+            },
+            "wall_us_per_raw_input": {
+              "median": 47.11902,
+              "min": 46.742439999999995,
+              "max": 54.74896
+            },
+            "cpu_us_per_raw_input": {
+              "median": 46.875,
+              "min": 46.875,
+              "max": 53.125
+            }
+          }
+        },
+        "filter": {
+          "formal": {
+            "samples": 40427,
+            "repeats": [
+              {
+                "cpu_ms": 2515.625,
+                "wall_ms": 2510.0877,
+                "blocks": 41
+              },
+              {
+                "cpu_ms": 1468.75,
+                "wall_ms": 1476.9255,
+                "blocks": 41
+              },
+              {
+                "cpu_ms": 1468.75,
+                "wall_ms": 1476.562,
+                "blocks": 41
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 1468.75,
+              "min": 1468.75,
+              "max": 2515.625
+            },
+            "wall_us_per_raw_input": {
+              "median": 36.533146164691914,
+              "min": 36.52415464912064,
+              "max": 62.08938828010983
+            },
+            "cpu_us_per_raw_input": {
+              "median": 36.33091745615554,
+              "min": 36.33091745615554,
+              "max": 62.22635862171321
+            }
+          },
+          "contact_core": {
+            "samples": 5000,
+            "repeats": [
+              {
+                "cpu_ms": 812.5,
+                "wall_ms": 797.0458,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 421.875,
+                "wall_ms": 425.8409,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 421.875,
+                "wall_ms": 429.6557,
+                "blocks": 5
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 421.875,
+              "min": 421.875,
+              "max": 812.5
+            },
+            "wall_us_per_raw_input": {
+              "median": 85.93114,
+              "min": 85.16817999999999,
+              "max": 159.40915999999999
+            },
+            "cpu_us_per_raw_input": {
+              "median": 84.375,
+              "min": 84.375,
+              "max": 162.5
+            }
+          },
+          "initial_empty": {
+            "samples": 4000,
+            "repeats": [
+              {
+                "cpu_ms": 109.375,
+                "wall_ms": 113.2863,
+                "blocks": 4
+              },
+              {
+                "cpu_ms": 109.375,
+                "wall_ms": 112.7969,
+                "blocks": 4
+              },
+              {
+                "cpu_ms": 109.375,
+                "wall_ms": 111.0707,
+                "blocks": 4
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 109.375,
+              "min": 109.375,
+              "max": 109.375
+            },
+            "wall_us_per_raw_input": {
+              "median": 28.199225,
+              "min": 27.767675,
+              "max": 28.321575
+            },
+            "cpu_us_per_raw_input": {
+              "median": 27.34375,
+              "min": 27.34375,
+              "max": 27.34375
+            }
+          },
+          "post_contact_empty_25_29": {
+            "samples": 5000,
+            "repeats": [
+              {
+                "cpu_ms": 156.25,
+                "wall_ms": 163.9405,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 140.625,
+                "wall_ms": 135.8078,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 140.625,
+                "wall_ms": 135.4745,
+                "blocks": 5
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 140.625,
+              "min": 140.625,
+              "max": 156.25
+            },
+            "wall_us_per_raw_input": {
+              "median": 27.161559999999998,
+              "min": 27.0949,
+              "max": 32.7881
+            },
+            "cpu_us_per_raw_input": {
+              "median": 28.125,
+              "min": 28.125,
+              "max": 31.25
+            }
+          }
+        },
+        "processor": {
+          "formal": {
+            "samples": 40427,
+            "repeats": [
+              {
+                "cpu_ms": 3765.625,
+                "wall_ms": 3761.7474,
+                "blocks": 41
+              },
+              {
+                "cpu_ms": 2515.625,
+                "wall_ms": 2505.9032,
+                "blocks": 41
+              },
+              {
+                "cpu_ms": 2515.625,
+                "wall_ms": 2554.2991,
+                "blocks": 41
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 2515.625,
+              "min": 2515.625,
+              "max": 3765.625
+            },
+            "wall_us_per_raw_input": {
+              "median": 63.18299898582631,
+              "min": 61.985880723279,
+              "max": 93.0503722759542
+            },
+            "cpu_us_per_raw_input": {
+              "median": 62.22635862171321,
+              "min": 62.22635862171321,
+              "max": 93.14628837163282
+            }
+          },
+          "contact_core": {
+            "samples": 5000,
+            "repeats": [
+              {
+                "cpu_ms": 812.5,
+                "wall_ms": 805.783,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 609.375,
+                "wall_ms": 614.1491,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 656.25,
+                "wall_ms": 654.8728,
+                "blocks": 5
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 656.25,
+              "min": 609.375,
+              "max": 812.5
+            },
+            "wall_us_per_raw_input": {
+              "median": 130.97456,
+              "min": 122.82982,
+              "max": 161.1566
+            },
+            "cpu_us_per_raw_input": {
+              "median": 131.25,
+              "min": 121.875,
+              "max": 162.5
+            }
+          },
+          "initial_empty": {
+            "samples": 4000,
+            "repeats": [
+              {
+                "cpu_ms": 78.125,
+                "wall_ms": 81.8571,
+                "blocks": 4
+              },
+              {
+                "cpu_ms": 78.125,
+                "wall_ms": 80.4132,
+                "blocks": 4
+              },
+              {
+                "cpu_ms": 78.125,
+                "wall_ms": 79.2008,
+                "blocks": 4
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 78.125,
+              "min": 78.125,
+              "max": 78.125
+            },
+            "wall_us_per_raw_input": {
+              "median": 20.1033,
+              "min": 19.8002,
+              "max": 20.464275
+            },
+            "cpu_us_per_raw_input": {
+              "median": 19.53125,
+              "min": 19.53125,
+              "max": 19.53125
+            }
+          },
+          "post_contact_empty_25_29": {
+            "samples": 5000,
+            "repeats": [
+              {
+                "cpu_ms": 515.625,
+                "wall_ms": 500.8558,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 312.5,
+                "wall_ms": 314.2849,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 312.5,
+                "wall_ms": 314.3748,
+                "blocks": 5
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 312.5,
+              "min": 312.5,
+              "max": 515.625
+            },
+            "wall_us_per_raw_input": {
+              "median": 62.874959999999994,
+              "min": 62.85697999999999,
+              "max": 100.17116
+            },
+            "cpu_us_per_raw_input": {
+              "median": 62.5,
+              "min": 62.5,
+              "max": 103.125
+            }
+          }
+        }
+      },
+      "state_at_core_end": [
+        {
+          "raw_sample": 39674,
+          "processor": {
+            "contacts": 9,
+            "active": 1,
+            "timeline": 45,
+            "_ownership_groups": 3,
+            "_source_review_frames": 31,
+            "_narrow_candidates": 0,
+            "_narrow_unknown": 3,
+            "_candidate_decisions": 8,
+            "_touch_events": 4,
+            "event_audit": 23,
+            "contact_positions": 136,
+            "contact_position_samples": 135,
+            "contact_valid_sample_intervals": 9
+          },
+          "filter_queue": 10
+        },
+        {
+          "raw_sample": 40674,
+          "processor": {
+            "contacts": 11,
+            "active": 2,
+            "timeline": 70,
+            "_ownership_groups": 5,
+            "_source_review_frames": 31,
+            "_narrow_candidates": 0,
+            "_narrow_unknown": 7,
+            "_candidate_decisions": 12,
+            "_touch_events": 6,
+            "event_audit": 35,
+            "contact_positions": 200,
+            "contact_position_samples": 199,
+            "contact_valid_sample_intervals": 11
+          },
+          "filter_queue": 10
+        },
+        {
+          "raw_sample": 41674,
+          "processor": {
+            "contacts": 12,
+            "active": 1,
+            "timeline": 96,
+            "_ownership_groups": 5,
+            "_source_review_frames": 31,
+            "_narrow_candidates": 1,
+            "_narrow_unknown": 9,
+            "_candidate_decisions": 14,
+            "_touch_events": 7,
+            "event_audit": 41,
+            "contact_positions": 260,
+            "contact_position_samples": 259,
+            "contact_valid_sample_intervals": 12
+          },
+          "filter_queue": 10
+        },
+        {
+          "raw_sample": 42674,
+          "processor": {
+            "contacts": 14,
+            "active": 1,
+            "timeline": 122,
+            "_ownership_groups": 5,
+            "_source_review_frames": 31,
+            "_narrow_candidates": 0,
+            "_narrow_unknown": 9,
+            "_candidate_decisions": 14,
+            "_touch_events": 9,
+            "event_audit": 45,
+            "contact_positions": 327,
+            "contact_position_samples": 326,
+            "contact_valid_sample_intervals": 14
+          },
+          "filter_queue": 10
+        },
+        {
+          "raw_sample": 43674,
+          "processor": {
+            "contacts": 16,
+            "active": 1,
+            "timeline": 147,
+            "_ownership_groups": 6,
+            "_source_review_frames": 31,
+            "_narrow_candidates": 0,
+            "_narrow_unknown": 10,
+            "_candidate_decisions": 15,
+            "_touch_events": 11,
+            "event_audit": 53,
+            "contact_positions": 395,
+            "contact_position_samples": 393,
+            "contact_valid_sample_intervals": 16
+          },
+          "filter_queue": 10
+        }
+      ],
+      "final_state": {
+        "contacts": 16,
+        "active": 0,
+        "timeline": 772,
+        "_ownership_groups": 6,
+        "_source_review_frames": 31,
+        "_narrow_candidates": 0,
+        "_narrow_unknown": 10,
+        "_candidate_decisions": 15,
+        "_touch_events": 11,
+        "event_audit": 53,
+        "contact_positions": 419,
+        "contact_position_samples": 417,
+        "contact_valid_sample_intervals": 16
+      }
+    },
+    {
+      "case": "20261017_113358_00ae9eca_walk_on",
+      "strict_oracle_equal": true,
+      "report_sha256": "c82164c5eff31b93b681981798af8d0007af7dbd2ff51f7cfd6cd25d19daa443",
+      "contact_core_blocks": [
+        9,
+        10,
+        11,
+        12,
+        13
+      ],
+      "stages": {
+        "quality": {
+          "formal": {
+            "samples": 40546,
+            "repeats": [
+              {
+                "cpu_ms": 1859.375,
+                "wall_ms": 1860.6469,
+                "blocks": 41
+              },
+              {
+                "cpu_ms": 1843.75,
+                "wall_ms": 1859.3413,
+                "blocks": 41
+              },
+              {
+                "cpu_ms": 1890.625,
+                "wall_ms": 1893.6235,
+                "blocks": 41
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 1859.375,
+              "min": 1843.75,
+              "max": 1890.625
+            },
+            "wall_us_per_raw_input": {
+              "median": 45.88977704335816,
+              "min": 45.85757657968727,
+              "max": 46.70309031717062
+            },
+            "cpu_us_per_raw_input": {
+              "median": 45.8584077344251,
+              "min": 45.47304296354758,
+              "max": 46.62913727618014
+            }
+          },
+          "contact_core": {
+            "samples": 5000,
+            "repeats": [
+              {
+                "cpu_ms": 234.375,
+                "wall_ms": 235.2203,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 234.375,
+                "wall_ms": 234.6869,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 250.0,
+                "wall_ms": 244.6325,
+                "blocks": 5
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 234.375,
+              "min": 234.375,
+              "max": 250.0
+            },
+            "wall_us_per_raw_input": {
+              "median": 47.04406,
+              "min": 46.93738,
+              "max": 48.9265
+            },
+            "cpu_us_per_raw_input": {
+              "median": 46.875,
+              "min": 46.875,
+              "max": 50.0
+            }
+          },
+          "initial_empty": {
+            "samples": 4000,
+            "repeats": [
+              {
+                "cpu_ms": 156.25,
+                "wall_ms": 155.2577,
+                "blocks": 4
+              },
+              {
+                "cpu_ms": 171.875,
+                "wall_ms": 177.023,
+                "blocks": 4
+              },
+              {
+                "cpu_ms": 156.25,
+                "wall_ms": 162.1047,
+                "blocks": 4
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 156.25,
+              "min": 156.25,
+              "max": 171.875
+            },
+            "wall_us_per_raw_input": {
+              "median": 40.526175,
+              "min": 38.814425,
+              "max": 44.25575
+            },
+            "cpu_us_per_raw_input": {
+              "median": 39.0625,
+              "min": 39.0625,
+              "max": 42.96875
+            }
+          },
+          "post_contact_empty_25_29": {
+            "samples": 5000,
+            "repeats": [
+              {
+                "cpu_ms": 218.75,
+                "wall_ms": 233.6881,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 234.375,
+                "wall_ms": 232.5796,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 234.375,
+                "wall_ms": 233.8625,
+                "blocks": 5
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 234.375,
+              "min": 218.75,
+              "max": 234.375
+            },
+            "wall_us_per_raw_input": {
+              "median": 46.73762,
+              "min": 46.51592,
+              "max": 46.7725
+            },
+            "cpu_us_per_raw_input": {
+              "median": 46.875,
+              "min": 43.75,
+              "max": 46.875
+            }
+          }
+        },
+        "filter": {
+          "formal": {
+            "samples": 40546,
+            "repeats": [
+              {
+                "cpu_ms": 1953.125,
+                "wall_ms": 1950.1589,
+                "blocks": 41
+              },
+              {
+                "cpu_ms": 1468.75,
+                "wall_ms": 1452.6153,
+                "blocks": 41
+              },
+              {
+                "cpu_ms": 1421.875,
+                "wall_ms": 1440.3721,
+                "blocks": 41
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 1468.75,
+              "min": 1421.875,
+              "max": 1953.125
+            },
+            "wall_us_per_raw_input": {
+              "median": 35.82635278449169,
+              "min": 35.524394514872,
+              "max": 48.097442411088636
+            },
+            "cpu_us_per_raw_input": {
+              "median": 36.22428846248705,
+              "min": 35.068194149854484,
+              "max": 48.17059635969023
+            }
+          },
+          "contact_core": {
+            "samples": 5000,
+            "repeats": [
+              {
+                "cpu_ms": 437.5,
+                "wall_ms": 433.3712,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 421.875,
+                "wall_ms": 429.9813,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 437.5,
+                "wall_ms": 429.2104,
+                "blocks": 5
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 437.5,
+              "min": 421.875,
+              "max": 437.5
+            },
+            "wall_us_per_raw_input": {
+              "median": 85.99625999999999,
+              "min": 85.84208,
+              "max": 86.67424
+            },
+            "cpu_us_per_raw_input": {
+              "median": 87.5,
+              "min": 84.375,
+              "max": 87.5
+            }
+          },
+          "initial_empty": {
+            "samples": 4000,
+            "repeats": [
+              {
+                "cpu_ms": 109.375,
+                "wall_ms": 108.2213,
+                "blocks": 4
+              },
+              {
+                "cpu_ms": 109.375,
+                "wall_ms": 108.0985,
+                "blocks": 4
+              },
+              {
+                "cpu_ms": 109.375,
+                "wall_ms": 113.2089,
+                "blocks": 4
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 109.375,
+              "min": 109.375,
+              "max": 109.375
+            },
+            "wall_us_per_raw_input": {
+              "median": 27.055325,
+              "min": 27.024625,
+              "max": 28.302225
+            },
+            "cpu_us_per_raw_input": {
+              "median": 27.34375,
+              "min": 27.34375,
+              "max": 27.34375
+            }
+          },
+          "post_contact_empty_25_29": {
+            "samples": 5000,
+            "repeats": [
+              {
+                "cpu_ms": 140.625,
+                "wall_ms": 136.0198,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 140.625,
+                "wall_ms": 134.7667,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 140.625,
+                "wall_ms": 133.876,
+                "blocks": 5
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 140.625,
+              "min": 140.625,
+              "max": 140.625
+            },
+            "wall_us_per_raw_input": {
+              "median": 26.953339999999997,
+              "min": 26.7752,
+              "max": 27.203960000000002
+            },
+            "cpu_us_per_raw_input": {
+              "median": 28.125,
+              "min": 28.125,
+              "max": 28.125
+            }
+          }
+        },
+        "processor": {
+          "formal": {
+            "samples": 40546,
+            "repeats": [
+              {
+                "cpu_ms": 2468.75,
+                "wall_ms": 2464.9551,
+                "blocks": 41
+              },
+              {
+                "cpu_ms": 2328.125,
+                "wall_ms": 2355.1951,
+                "blocks": 41
+              },
+              {
+                "cpu_ms": 2421.875,
+                "wall_ms": 2421.6381,
+                "blocks": 41
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 2421.875,
+              "min": 2328.125,
+              "max": 2468.75
+            },
+            "wall_us_per_raw_input": {
+              "median": 59.72569673950575,
+              "min": 58.086990085335174,
+              "max": 60.79403886943225
+            },
+            "cpu_us_per_raw_input": {
+              "median": 59.73153948601588,
+              "min": 57.419350860750754,
+              "max": 60.88763379864845
+            }
+          },
+          "contact_core": {
+            "samples": 5000,
+            "repeats": [
+              {
+                "cpu_ms": 578.125,
+                "wall_ms": 583.5396,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 578.125,
+                "wall_ms": 583.9012,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 609.375,
+                "wall_ms": 597.3323,
+                "blocks": 5
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 578.125,
+              "min": 578.125,
+              "max": 609.375
+            },
+            "wall_us_per_raw_input": {
+              "median": 116.78024000000002,
+              "min": 116.70792,
+              "max": 119.46646000000001
+            },
+            "cpu_us_per_raw_input": {
+              "median": 115.625,
+              "min": 115.625,
+              "max": 121.875
+            }
+          },
+          "initial_empty": {
+            "samples": 4000,
+            "repeats": [
+              {
+                "cpu_ms": 93.75,
+                "wall_ms": 80.3546,
+                "blocks": 4
+              },
+              {
+                "cpu_ms": 62.5,
+                "wall_ms": 76.523,
+                "blocks": 4
+              },
+              {
+                "cpu_ms": 78.125,
+                "wall_ms": 80.3167,
+                "blocks": 4
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 78.125,
+              "min": 62.5,
+              "max": 93.75
+            },
+            "wall_us_per_raw_input": {
+              "median": 20.079175,
+              "min": 19.13075,
+              "max": 20.08865
+            },
+            "cpu_us_per_raw_input": {
+              "median": 19.53125,
+              "min": 15.625,
+              "max": 23.4375
+            }
+          },
+          "post_contact_empty_25_29": {
+            "samples": 5000,
+            "repeats": [
+              {
+                "cpu_ms": 296.875,
+                "wall_ms": 291.0282,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 296.875,
+                "wall_ms": 290.731,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 312.5,
+                "wall_ms": 308.8847,
+                "blocks": 5
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 296.875,
+              "min": 296.875,
+              "max": 312.5
+            },
+            "wall_us_per_raw_input": {
+              "median": 58.20564,
+              "min": 58.1462,
+              "max": 61.77694
+            },
+            "cpu_us_per_raw_input": {
+              "median": 59.375,
+              "min": 59.375,
+              "max": 62.5
+            }
+          }
+        }
+      },
+      "state_at_core_end": [
+        {
+          "raw_sample": 44686,
+          "processor": {
+            "contacts": 6,
+            "active": 1,
+            "timeline": 36,
+            "_ownership_groups": 2,
+            "_source_review_frames": 31,
+            "_narrow_candidates": 0,
+            "_narrow_unknown": 2,
+            "_candidate_decisions": 5,
+            "_touch_events": 3,
+            "event_audit": 18,
+            "contact_positions": 100,
+            "contact_position_samples": 100,
+            "contact_valid_sample_intervals": 6
+          },
+          "filter_queue": 10
+        },
+        {
+          "raw_sample": 45686,
+          "processor": {
+            "contacts": 8,
+            "active": 1,
+            "timeline": 62,
+            "_ownership_groups": 3,
+            "_source_review_frames": 31,
+            "_narrow_candidates": 0,
+            "_narrow_unknown": 4,
+            "_candidate_decisions": 7,
+            "_touch_events": 5,
+            "event_audit": 29,
+            "contact_positions": 167,
+            "contact_position_samples": 167,
+            "contact_valid_sample_intervals": 8
+          },
+          "filter_queue": 10
+        },
+        {
+          "raw_sample": 46686,
+          "processor": {
+            "contacts": 13,
+            "active": 1,
+            "timeline": 87,
+            "_ownership_groups": 5,
+            "_source_review_frames": 31,
+            "_narrow_candidates": 0,
+            "_narrow_unknown": 8,
+            "_candidate_decisions": 13,
+            "_touch_events": 7,
+            "event_audit": 41,
+            "contact_positions": 238,
+            "contact_position_samples": 238,
+            "contact_valid_sample_intervals": 14
+          },
+          "filter_queue": 10
+        },
+        {
+          "raw_sample": 47686,
+          "processor": {
+            "contacts": 16,
+            "active": 1,
+            "timeline": 113,
+            "_ownership_groups": 5,
+            "_source_review_frames": 31,
+            "_narrow_candidates": 0,
+            "_narrow_unknown": 8,
+            "_candidate_decisions": 14,
+            "_touch_events": 9,
+            "event_audit": 46,
+            "contact_positions": 308,
+            "contact_position_samples": 308,
+            "contact_valid_sample_intervals": 17
+          },
+          "filter_queue": 10
+        },
+        {
+          "raw_sample": 48686,
+          "processor": {
+            "contacts": 17,
+            "active": 1,
+            "timeline": 138,
+            "_ownership_groups": 5,
+            "_source_review_frames": 31,
+            "_narrow_candidates": 0,
+            "_narrow_unknown": 8,
+            "_candidate_decisions": 14,
+            "_touch_events": 10,
+            "event_audit": 48,
+            "contact_positions": 365,
+            "contact_position_samples": 365,
+            "contact_valid_sample_intervals": 18
+          },
+          "filter_queue": 10
+        }
+      ],
+      "final_state": {
+        "contacts": 17,
+        "active": 0,
+        "timeline": 791,
+        "_ownership_groups": 5,
+        "_source_review_frames": 31,
+        "_narrow_candidates": 0,
+        "_narrow_unknown": 8,
+        "_candidate_decisions": 14,
+        "_touch_events": 10,
+        "event_audit": 48,
+        "contact_positions": 378,
+        "contact_position_samples": 378,
+        "contact_valid_sample_intervals": 18
+      }
+    },
+    {
+      "case": "20261017_113916_32a7af0d_walk_off",
+      "strict_oracle_equal": true,
+      "report_sha256": "88cbb5cb0714e2abfaad703760d8b11022e76e6d2a5949138f22ee1645d5a0c3",
+      "contact_core_blocks": [
+        10,
+        11,
+        12,
+        13,
+        14
+      ],
+      "stages": {
+        "quality": {
+          "formal": {
+            "samples": 40956,
+            "repeats": [
+              {
+                "cpu_ms": 1875.0,
+                "wall_ms": 1869.2971,
+                "blocks": 41
+              },
+              {
+                "cpu_ms": 1953.125,
+                "wall_ms": 1951.5185,
+                "blocks": 41
+              },
+              {
+                "cpu_ms": 1843.75,
+                "wall_ms": 1882.2848,
+                "blocks": 41
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 1875.0,
+              "min": 1843.75,
+              "max": 1953.125
+            },
+            "wall_us_per_raw_input": {
+              "median": 45.95870690497119,
+              "min": 45.641593417325915,
+              "max": 47.64914786600254
+            },
+            "cpu_us_per_raw_input": {
+              "median": 45.78083797245825,
+              "min": 45.01782400625061,
+              "max": 47.688372887977344
+            }
+          },
+          "contact_core": {
+            "samples": 5000,
+            "repeats": [
+              {
+                "cpu_ms": 234.375,
+                "wall_ms": 234.9052,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 234.375,
+                "wall_ms": 235.9543,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 250.0,
+                "wall_ms": 240.201,
+                "blocks": 5
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 234.375,
+              "min": 234.375,
+              "max": 250.0
+            },
+            "wall_us_per_raw_input": {
+              "median": 47.19086,
+              "min": 46.98104,
+              "max": 48.0402
+            },
+            "cpu_us_per_raw_input": {
+              "median": 46.875,
+              "min": 46.875,
+              "max": 50.0
+            }
+          },
+          "initial_empty": {
+            "samples": 4000,
+            "repeats": [
+              {
+                "cpu_ms": 140.625,
+                "wall_ms": 151.639,
+                "blocks": 4
+              },
+              {
+                "cpu_ms": 156.25,
+                "wall_ms": 148.3581,
+                "blocks": 4
+              },
+              {
+                "cpu_ms": 125.0,
+                "wall_ms": 150.4438,
+                "blocks": 4
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 140.625,
+              "min": 125.0,
+              "max": 156.25
+            },
+            "wall_us_per_raw_input": {
+              "median": 37.61095,
+              "min": 37.089525,
+              "max": 37.90975
+            },
+            "cpu_us_per_raw_input": {
+              "median": 35.15625,
+              "min": 31.25,
+              "max": 39.0625
+            }
+          },
+          "post_contact_empty_25_29": {
+            "samples": 5000,
+            "repeats": [
+              {
+                "cpu_ms": 250.0,
+                "wall_ms": 238.7339,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 234.375,
+                "wall_ms": 231.2286,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 234.375,
+                "wall_ms": 233.1188,
+                "blocks": 5
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 234.375,
+              "min": 234.375,
+              "max": 250.0
+            },
+            "wall_us_per_raw_input": {
+              "median": 46.62376,
+              "min": 46.24572,
+              "max": 47.74678
+            },
+            "cpu_us_per_raw_input": {
+              "median": 46.875,
+              "min": 46.875,
+              "max": 50.0
+            }
+          }
+        },
+        "filter": {
+          "formal": {
+            "samples": 40956,
+            "repeats": [
+              {
+                "cpu_ms": 1484.375,
+                "wall_ms": 1476.4648,
+                "blocks": 41
+              },
+              {
+                "cpu_ms": 1453.125,
+                "wall_ms": 1466.7846,
+                "blocks": 41
+              },
+              {
+                "cpu_ms": 1468.75,
+                "wall_ms": 1458.9942,
+                "blocks": 41
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 1468.75,
+              "min": 1453.125,
+              "max": 1484.375
+            },
+            "wall_us_per_raw_input": {
+              "median": 35.81366832698505,
+              "min": 35.62345443891005,
+              "max": 36.05002441644692
+            },
+            "cpu_us_per_raw_input": {
+              "median": 35.86165641175896,
+              "min": 35.48014942865514,
+              "max": 36.243163394862776
+            }
+          },
+          "contact_core": {
+            "samples": 5000,
+            "repeats": [
+              {
+                "cpu_ms": 421.875,
+                "wall_ms": 432.2401,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 421.875,
+                "wall_ms": 421.9264,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 421.875,
+                "wall_ms": 415.559,
+                "blocks": 5
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 421.875,
+              "min": 421.875,
+              "max": 421.875
+            },
+            "wall_us_per_raw_input": {
+              "median": 84.38528000000001,
+              "min": 83.1118,
+              "max": 86.44802
+            },
+            "cpu_us_per_raw_input": {
+              "median": 84.375,
+              "min": 84.375,
+              "max": 84.375
+            }
+          },
+          "initial_empty": {
+            "samples": 4000,
+            "repeats": [
+              {
+                "cpu_ms": 109.375,
+                "wall_ms": 108.6324,
+                "blocks": 4
+              },
+              {
+                "cpu_ms": 109.375,
+                "wall_ms": 109.9834,
+                "blocks": 4
+              },
+              {
+                "cpu_ms": 109.375,
+                "wall_ms": 108.8234,
+                "blocks": 4
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 109.375,
+              "min": 109.375,
+              "max": 109.375
+            },
+            "wall_us_per_raw_input": {
+              "median": 27.20585,
+              "min": 27.1581,
+              "max": 27.49585
+            },
+            "cpu_us_per_raw_input": {
+              "median": 27.34375,
+              "min": 27.34375,
+              "max": 27.34375
+            }
+          },
+          "post_contact_empty_25_29": {
+            "samples": 5000,
+            "repeats": [
+              {
+                "cpu_ms": 140.625,
+                "wall_ms": 136.1725,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 125.0,
+                "wall_ms": 135.2157,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 140.625,
+                "wall_ms": 136.5277,
+                "blocks": 5
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 140.625,
+              "min": 125.0,
+              "max": 140.625
+            },
+            "wall_us_per_raw_input": {
+              "median": 27.2345,
+              "min": 27.04314,
+              "max": 27.30554
+            },
+            "cpu_us_per_raw_input": {
+              "median": 28.125,
+              "min": 25.0,
+              "max": 28.125
+            }
+          }
+        },
+        "processor": {
+          "formal": {
+            "samples": 40956,
+            "repeats": [
+              {
+                "cpu_ms": 2265.625,
+                "wall_ms": 2271.0401,
+                "blocks": 41
+              },
+              {
+                "cpu_ms": 2265.625,
+                "wall_ms": 2273.0206,
+                "blocks": 41
+              },
+              {
+                "cpu_ms": 2281.25,
+                "wall_ms": 2298.3163,
+                "blocks": 41
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 2265.625,
+              "min": 2265.625,
+              "max": 2281.25
+            },
+            "wall_us_per_raw_input": {
+              "median": 55.49908682488523,
+              "min": 55.45073005176287,
+              "max": 56.11671794120519
+            },
+            "cpu_us_per_raw_input": {
+              "median": 55.31851255005372,
+              "min": 55.31851255005372,
+              "max": 55.70001953315754
+            }
+          },
+          "contact_core": {
+            "samples": 5000,
+            "repeats": [
+              {
+                "cpu_ms": 593.75,
+                "wall_ms": 605.8346,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 625.0,
+                "wall_ms": 620.8853,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 593.75,
+                "wall_ms": 604.6393,
+                "blocks": 5
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 593.75,
+              "min": 593.75,
+              "max": 625.0
+            },
+            "wall_us_per_raw_input": {
+              "median": 121.16691999999999,
+              "min": 120.92786000000001,
+              "max": 124.17706000000001
+            },
+            "cpu_us_per_raw_input": {
+              "median": 118.75,
+              "min": 118.75,
+              "max": 125.0
+            }
+          },
+          "initial_empty": {
+            "samples": 4000,
+            "repeats": [
+              {
+                "cpu_ms": 93.75,
+                "wall_ms": 83.8338,
+                "blocks": 4
+              },
+              {
+                "cpu_ms": 78.125,
+                "wall_ms": 78.2087,
+                "blocks": 4
+              },
+              {
+                "cpu_ms": 78.125,
+                "wall_ms": 79.7893,
+                "blocks": 4
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 78.125,
+              "min": 78.125,
+              "max": 93.75
+            },
+            "wall_us_per_raw_input": {
+              "median": 19.947325,
+              "min": 19.552175,
+              "max": 20.95845
+            },
+            "cpu_us_per_raw_input": {
+              "median": 19.53125,
+              "min": 19.53125,
+              "max": 23.4375
+            }
+          },
+          "post_contact_empty_25_29": {
+            "samples": 5000,
+            "repeats": [
+              {
+                "cpu_ms": 265.625,
+                "wall_ms": 262.0603,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 265.625,
+                "wall_ms": 266.4701,
+                "blocks": 5
+              },
+              {
+                "cpu_ms": 265.625,
+                "wall_ms": 263.7009,
+                "blocks": 5
+              }
+            ],
+            "cumulative_cpu_ms": {
+              "median": 265.625,
+              "min": 265.625,
+              "max": 265.625
+            },
+            "wall_us_per_raw_input": {
+              "median": 52.740179999999995,
+              "min": 52.41206,
+              "max": 53.294019999999996
+            },
+            "cpu_us_per_raw_input": {
+              "median": 53.125,
+              "min": 53.125,
+              "max": 53.125
+            }
+          }
+        }
+      },
+      "state_at_core_end": [
+        {
+          "raw_sample": 35689,
+          "processor": {
+            "contacts": 5,
+            "active": 1,
+            "timeline": 47,
+            "_ownership_groups": 3,
+            "_source_review_frames": 31,
+            "_narrow_candidates": 0,
+            "_narrow_unknown": 4,
+            "_candidate_decisions": 5,
+            "_touch_events": 4,
+            "event_audit": 17,
+            "contact_positions": 118,
+            "contact_position_samples": 118,
+            "contact_valid_sample_intervals": 5
+          },
+          "filter_queue": 10
+        },
+        {
+          "raw_sample": 36689,
+          "processor": {
+            "contacts": 7,
+            "active": 1,
+            "timeline": 72,
+            "_ownership_groups": 4,
+            "_source_review_frames": 31,
+            "_narrow_candidates": 0,
+            "_narrow_unknown": 7,
+            "_candidate_decisions": 8,
+            "_touch_events": 6,
+            "event_audit": 25,
+            "contact_positions": 184,
+            "contact_position_samples": 184,
+            "contact_valid_sample_intervals": 7
+          },
+          "filter_queue": 10
+        },
+        {
+          "raw_sample": 37689,
+          "processor": {
+            "contacts": 9,
+            "active": 2,
+            "timeline": 97,
+            "_ownership_groups": 4,
+            "_source_review_frames": 31,
+            "_narrow_candidates": 0,
+            "_narrow_unknown": 7,
+            "_candidate_decisions": 8,
+            "_touch_events": 8,
+            "event_audit": 29,
+            "contact_positions": 247,
+            "contact_position_samples": 247,
+            "contact_valid_sample_intervals": 9
+          },
+          "filter_queue": 10
+        },
+        {
+          "raw_sample": 38689,
+          "processor": {
+            "contacts": 10,
+            "active": 1,
+            "timeline": 122,
+            "_ownership_groups": 4,
+            "_source_review_frames": 31,
+            "_narrow_candidates": 1,
+            "_narrow_unknown": 7,
+            "_candidate_decisions": 8,
+            "_touch_events": 9,
+            "event_audit": 31,
+            "contact_positions": 307,
+            "contact_position_samples": 307,
+            "contact_valid_sample_intervals": 10
+          },
+          "filter_queue": 10
+        },
+        {
+          "raw_sample": 39689,
+          "processor": {
+            "contacts": 12,
+            "active": 1,
+            "timeline": 147,
+            "_ownership_groups": 5,
+            "_source_review_frames": 31,
+            "_narrow_candidates": 0,
+            "_narrow_unknown": 10,
+            "_candidate_decisions": 11,
+            "_touch_events": 11,
+            "event_audit": 39,
+            "contact_positions": 374,
+            "contact_position_samples": 374,
+            "contact_valid_sample_intervals": 12
+          },
+          "filter_queue": 10
+        }
+      ],
+      "final_state": {
+        "contacts": 12,
+        "active": 0,
+        "timeline": 785,
+        "_ownership_groups": 5,
+        "_source_review_frames": 31,
+        "_narrow_candidates": 0,
+        "_narrow_unknown": 10,
+        "_candidate_decisions": 11,
+        "_touch_events": 11,
+        "event_audit": 39,
+        "contact_positions": 389,
+        "contact_position_samples": 389,
+        "contact_valid_sample_intervals": 12
+      }
+    }
+  ]
+}

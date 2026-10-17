@@ -1,0 +1,673 @@
+{
+  "scope": "Original full synchronous chain, no GUI/USB/SDK or tape wrappers. cycles are not instructions or converted time.",
+  "trials": [
+    {
+      "case": "20261017_111818_dc83b931_walk_off",
+      "phases": {
+        "formal": {
+          "repeats": [
+            {
+              "samples": 43224,
+              "cpu_ms": 11093.75,
+              "wall_ms": 11199.9167,
+              "thread_cycles": 26727935760
+            },
+            {
+              "samples": 43224,
+              "cpu_ms": 14578.125,
+              "wall_ms": 14694.8003,
+              "thread_cycles": 35103393120
+            },
+            {
+              "samples": 43224,
+              "cpu_ms": 14453.125,
+              "wall_ms": 14578.5168,
+              "thread_cycles": 34787446800
+            }
+          ],
+          "cpu_us_per_input": {
+            "median": 334.3773135295206,
+            "min": 256.65718119563206,
+            "max": 337.2692254303165
+          },
+          "wall_us_per_input": {
+            "median": 337.2782898389783,
+            "min": 259.1133791412178,
+            "max": 339.9685429391079
+          },
+          "cycles_per_input": {
+            "median": 804817.8511937812,
+            "min": 618358.6840644086,
+            "max": 812127.3625763465
+          }
+        },
+        "contact_core": {
+          "repeats": [
+            {
+              "samples": 5000,
+              "cpu_ms": 1609.375,
+              "wall_ms": 1640.3507,
+              "thread_cycles": 3928805520
+            },
+            {
+              "samples": 5000,
+              "cpu_ms": 2875.0,
+              "wall_ms": 2878.9288,
+              "thread_cycles": 6860835840
+            },
+            {
+              "samples": 5000,
+              "cpu_ms": 2843.75,
+              "wall_ms": 2878.3564,
+              "thread_cycles": 6871882080
+            }
+          ],
+          "cpu_us_per_input": {
+            "median": 568.75,
+            "min": 321.875,
+            "max": 575.0
+          },
+          "wall_us_per_input": {
+            "median": 575.67128,
+            "min": 328.07014,
+            "max": 575.7857600000001
+          },
+          "cycles_per_input": {
+            "median": 1372167.168,
+            "min": 785761.104,
+            "max": 1374376.416
+          }
+        },
+        "initial_empty": {
+          "repeats": [
+            {
+              "samples": 5000,
+              "cpu_ms": 546.875,
+              "wall_ms": 546.6066,
+              "thread_cycles": 1309542000
+            },
+            {
+              "samples": 5000,
+              "cpu_ms": 953.125,
+              "wall_ms": 961.8252,
+              "thread_cycles": 2299159200
+            },
+            {
+              "samples": 5000,
+              "cpu_ms": 953.125,
+              "wall_ms": 954.9407,
+              "thread_cycles": 2276373600
+            }
+          ],
+          "cpu_us_per_input": {
+            "median": 190.625,
+            "min": 109.375,
+            "max": 190.625
+          },
+          "wall_us_per_input": {
+            "median": 190.98814,
+            "min": 109.32132,
+            "max": 192.36504
+          },
+          "cycles_per_input": {
+            "median": 455274.72,
+            "min": 261908.4,
+            "max": 459831.84
+          }
+        },
+        "post_contact_empty": {
+          "repeats": [
+            {
+              "samples": 5000,
+              "cpu_ms": 1609.375,
+              "wall_ms": 1601.5405,
+              "thread_cycles": 3819562560
+            },
+            {
+              "samples": 5000,
+              "cpu_ms": 1625.0,
+              "wall_ms": 1647.8428,
+              "thread_cycles": 3940866000
+            },
+            {
+              "samples": 5000,
+              "cpu_ms": 1625.0,
+              "wall_ms": 1635.838,
+              "thread_cycles": 3892774320
+            }
+          ],
+          "cpu_us_per_input": {
+            "median": 325.0,
+            "min": 321.875,
+            "max": 325.0
+          },
+          "wall_us_per_input": {
+            "median": 327.1676,
+            "min": 320.3081,
+            "max": 329.56856
+          },
+          "cycles_per_input": {
+            "median": 778554.864,
+            "min": 763912.512,
+            "max": 788173.2
+          }
+        }
+      },
+      "terminal_repeats": [
+        {
+          "thread_cpu_ns": 46875000,
+          "wall_ns": 52237300
+        },
+        {
+          "thread_cpu_ns": 46875000,
+          "wall_ns": 54534200
+        },
+        {
+          "thread_cpu_ns": 46875000,
+          "wall_ns": 49370300
+        }
+      ]
+    },
+    {
+      "case": "20261017_112623_8416401b_walk_on",
+      "phases": {
+        "formal": {
+          "repeats": [
+            {
+              "samples": 40427,
+              "cpu_ms": 13281.25,
+              "wall_ms": 13351.7454,
+              "thread_cycles": 31765954560
+            },
+            {
+              "samples": 40427,
+              "cpu_ms": 14578.125,
+              "wall_ms": 14782.1594,
+              "thread_cycles": 35198668320
+            },
+            {
+              "samples": 40427,
+              "cpu_ms": 12187.5,
+              "wall_ms": 12293.0977,
+              "thread_cycles": 29345852880
+            }
+          ],
+          "cpu_us_per_input": {
+            "median": 328.52425359289583,
+            "min": 301.4693150617162,
+            "max": 360.6036807084374
+          },
+          "wall_us_per_input": {
+            "median": 330.2680238454498,
+            "min": 304.0813738343187,
+            "max": 365.650664160091
+          },
+          "cycles_per_input": {
+            "median": 785760.8667474708,
+            "min": 725897.3676008608,
+            "max": 870672.2813960967
+          }
+        },
+        "contact_core": {
+          "repeats": [
+            {
+              "samples": 5000,
+              "cpu_ms": 2718.75,
+              "wall_ms": 2776.6167,
+              "thread_cycles": 6589998720
+            },
+            {
+              "samples": 5000,
+              "cpu_ms": 3000.0,
+              "wall_ms": 3061.838,
+              "thread_cycles": 7291838400
+            },
+            {
+              "samples": 5000,
+              "cpu_ms": 2781.25,
+              "wall_ms": 2795.6675,
+              "thread_cycles": 6676465920
+            }
+          ],
+          "cpu_us_per_input": {
+            "median": 556.25,
+            "min": 543.75,
+            "max": 600.0
+          },
+          "wall_us_per_input": {
+            "median": 559.1335,
+            "min": 555.32334,
+            "max": 612.3676
+          },
+          "cycles_per_input": {
+            "median": 1335293.184,
+            "min": 1317999.744,
+            "max": 1458367.68
+          }
+        },
+        "initial_empty": {
+          "repeats": [
+            {
+              "samples": 5000,
+              "cpu_ms": 953.125,
+              "wall_ms": 946.7323,
+              "thread_cycles": 2258603040
+            },
+            {
+              "samples": 5000,
+              "cpu_ms": 1015.625,
+              "wall_ms": 1026.7502,
+              "thread_cycles": 2445123840
+            },
+            {
+              "samples": 5000,
+              "cpu_ms": 906.25,
+              "wall_ms": 945.6833,
+              "thread_cycles": 2259444000
+            }
+          ],
+          "cpu_us_per_input": {
+            "median": 190.625,
+            "min": 181.25,
+            "max": 203.125
+          },
+          "wall_us_per_input": {
+            "median": 189.34646,
+            "min": 189.13666,
+            "max": 205.35003999999998
+          },
+          "cycles_per_input": {
+            "median": 451888.8,
+            "min": 451720.608,
+            "max": 489024.768
+          }
+        },
+        "post_contact_empty": {
+          "repeats": [
+            {
+              "samples": 5000,
+              "cpu_ms": 1640.625,
+              "wall_ms": 1645.3939,
+              "thread_cycles": 3892465680
+            },
+            {
+              "samples": 5000,
+              "cpu_ms": 1984.375,
+              "wall_ms": 2027.6908,
+              "thread_cycles": 4834723200
+            },
+            {
+              "samples": 5000,
+              "cpu_ms": 1625.0,
+              "wall_ms": 1641.1342,
+              "thread_cycles": 3907310160
+            }
+          ],
+          "cpu_us_per_input": {
+            "median": 328.125,
+            "min": 325.0,
+            "max": 396.875
+          },
+          "wall_us_per_input": {
+            "median": 329.07878000000005,
+            "min": 328.22684,
+            "max": 405.53816
+          },
+          "cycles_per_input": {
+            "median": 781462.032,
+            "min": 778493.136,
+            "max": 966944.64
+          }
+        }
+      },
+      "terminal_repeats": [
+        {
+          "thread_cpu_ns": 46875000,
+          "wall_ns": 48040500
+        },
+        {
+          "thread_cpu_ns": 46875000,
+          "wall_ns": 47011100
+        },
+        {
+          "thread_cpu_ns": 31250000,
+          "wall_ns": 31932300
+        }
+      ]
+    },
+    {
+      "case": "20261017_113358_00ae9eca_walk_on",
+      "phases": {
+        "formal": {
+          "repeats": [
+            {
+              "samples": 40546,
+              "cpu_ms": 13281.25,
+              "wall_ms": 13363.1082,
+              "thread_cycles": 31871362080
+            },
+            {
+              "samples": 40546,
+              "cpu_ms": 13234.375,
+              "wall_ms": 13344.0282,
+              "thread_cycles": 31845238560
+            },
+            {
+              "samples": 40546,
+              "cpu_ms": 13265.625,
+              "wall_ms": 13410.5431,
+              "thread_cycles": 31960867920
+            }
+          ],
+          "cpu_us_per_input": {
+            "median": 327.174690475016,
+            "min": 326.403960933261,
+            "max": 327.5600552458936
+          },
+          "wall_us_per_input": {
+            "median": 329.57895230109017,
+            "min": 329.1083756720762,
+            "max": 330.74885562077645
+          },
+          "cycles_per_input": {
+            "median": 786054.4093128792,
+            "min": 785410.115917723,
+            "max": 788261.9227544024
+          }
+        },
+        "contact_core": {
+          "repeats": [
+            {
+              "samples": 5000,
+              "cpu_ms": 2906.25,
+              "wall_ms": 2930.5588,
+              "thread_cycles": 6981031440
+            },
+            {
+              "samples": 5000,
+              "cpu_ms": 2718.75,
+              "wall_ms": 2773.864,
+              "thread_cycles": 6615322320
+            },
+            {
+              "samples": 5000,
+              "cpu_ms": 2703.125,
+              "wall_ms": 2774.0999,
+              "thread_cycles": 6611279280
+            }
+          ],
+          "cpu_us_per_input": {
+            "median": 543.75,
+            "min": 540.625,
+            "max": 581.25
+          },
+          "wall_us_per_input": {
+            "median": 554.8199800000001,
+            "min": 554.7728,
+            "max": 586.11176
+          },
+          "cycles_per_input": {
+            "median": 1323064.464,
+            "min": 1322255.856,
+            "max": 1396206.288
+          }
+        },
+        "initial_empty": {
+          "repeats": [
+            {
+              "samples": 5000,
+              "cpu_ms": 953.125,
+              "wall_ms": 951.565,
+              "thread_cycles": 2276624640
+            },
+            {
+              "samples": 5000,
+              "cpu_ms": 937.5,
+              "wall_ms": 952.5515,
+              "thread_cycles": 2278449600
+            },
+            {
+              "samples": 5000,
+              "cpu_ms": 968.75,
+              "wall_ms": 995.8146,
+              "thread_cycles": 2376053280
+            }
+          ],
+          "cpu_us_per_input": {
+            "median": 190.625,
+            "min": 187.5,
+            "max": 193.75
+          },
+          "wall_us_per_input": {
+            "median": 190.5103,
+            "min": 190.313,
+            "max": 199.16292
+          },
+          "cycles_per_input": {
+            "median": 455689.92,
+            "min": 455324.928,
+            "max": 475210.656
+          }
+        },
+        "post_contact_empty": {
+          "repeats": [
+            {
+              "samples": 5000,
+              "cpu_ms": 1625.0,
+              "wall_ms": 1620.6874,
+              "thread_cycles": 3865576080
+            },
+            {
+              "samples": 5000,
+              "cpu_ms": 1734.375,
+              "wall_ms": 1747.4755,
+              "thread_cycles": 4163877360
+            },
+            {
+              "samples": 5000,
+              "cpu_ms": 1593.75,
+              "wall_ms": 1607.6491,
+              "thread_cycles": 3841226880
+            }
+          ],
+          "cpu_us_per_input": {
+            "median": 325.0,
+            "min": 318.75,
+            "max": 346.875
+          },
+          "wall_us_per_input": {
+            "median": 324.13748000000004,
+            "min": 321.52982000000003,
+            "max": 349.4951
+          },
+          "cycles_per_input": {
+            "median": 773115.216,
+            "min": 768245.376,
+            "max": 832775.472
+          }
+        }
+      },
+      "terminal_repeats": [
+        {
+          "thread_cpu_ns": 31250000,
+          "wall_ns": 47470200
+        },
+        {
+          "thread_cpu_ns": 46875000,
+          "wall_ns": 46058800
+        },
+        {
+          "thread_cpu_ns": 46875000,
+          "wall_ns": 45143200
+        }
+      ]
+    },
+    {
+      "case": "20261017_113916_32a7af0d_walk_off",
+      "phases": {
+        "formal": {
+          "repeats": [
+            {
+              "samples": 40956,
+              "cpu_ms": 13437.5,
+              "wall_ms": 13629.288,
+              "thread_cycles": 32276670240
+            },
+            {
+              "samples": 40956,
+              "cpu_ms": 12843.75,
+              "wall_ms": 12958.9575,
+              "thread_cycles": 30927025200
+            },
+            {
+              "samples": 40956,
+              "cpu_ms": 13171.875,
+              "wall_ms": 13272.404,
+              "thread_cycles": 31690738320
+            }
+          ],
+          "cpu_us_per_input": {
+            "median": 321.6103867565192,
+            "min": 313.598740111339,
+            "max": 328.09600546928414
+          },
+          "wall_us_per_input": {
+            "median": 324.0649477488036,
+            "min": 316.41169791971873,
+            "max": 332.77878699091707
+          },
+          "cycles_per_input": {
+            "median": 773775.2300029299,
+            "min": 755128.0691473776,
+            "max": 788081.6056255493
+          }
+        },
+        "contact_core": {
+          "repeats": [
+            {
+              "samples": 5000,
+              "cpu_ms": 2734.375,
+              "wall_ms": 2743.8695,
+              "thread_cycles": 6507117360
+            },
+            {
+              "samples": 5000,
+              "cpu_ms": 2718.75,
+              "wall_ms": 2747.2999,
+              "thread_cycles": 6557272560
+            },
+            {
+              "samples": 5000,
+              "cpu_ms": 2750.0,
+              "wall_ms": 2768.8366,
+              "thread_cycles": 6615494640
+            }
+          ],
+          "cpu_us_per_input": {
+            "median": 546.875,
+            "min": 543.75,
+            "max": 550.0
+          },
+          "wall_us_per_input": {
+            "median": 549.45998,
+            "min": 548.7739,
+            "max": 553.76732
+          },
+          "cycles_per_input": {
+            "median": 1311454.512,
+            "min": 1301423.472,
+            "max": 1323098.928
+          }
+        },
+        "initial_empty": {
+          "repeats": [
+            {
+              "samples": 5000,
+              "cpu_ms": 953.125,
+              "wall_ms": 961.1375,
+              "thread_cycles": 2278379760
+            },
+            {
+              "samples": 5000,
+              "cpu_ms": 937.5,
+              "wall_ms": 956.1609,
+              "thread_cycles": 2286028560
+            },
+            {
+              "samples": 5000,
+              "cpu_ms": 1062.5,
+              "wall_ms": 1067.9886,
+              "thread_cycles": 2547393360
+            }
+          ],
+          "cpu_us_per_input": {
+            "median": 190.625,
+            "min": 187.5,
+            "max": 212.5
+          },
+          "wall_us_per_input": {
+            "median": 192.2275,
+            "min": 191.23218,
+            "max": 213.59771999999998
+          },
+          "cycles_per_input": {
+            "median": 457205.712,
+            "min": 455675.952,
+            "max": 509478.672
+          }
+        },
+        "post_contact_empty": {
+          "repeats": [
+            {
+              "samples": 5000,
+              "cpu_ms": 1531.25,
+              "wall_ms": 1543.9702,
+              "thread_cycles": 3662040480
+            },
+            {
+              "samples": 5000,
+              "cpu_ms": 1531.25,
+              "wall_ms": 1534.1981,
+              "thread_cycles": 3664453200
+            },
+            {
+              "samples": 5000,
+              "cpu_ms": 1515.625,
+              "wall_ms": 1542.9785,
+              "thread_cycles": 3685131120
+            }
+          ],
+          "cpu_us_per_input": {
+            "median": 306.25,
+            "min": 303.125,
+            "max": 306.25
+          },
+          "wall_us_per_input": {
+            "median": 308.5957,
+            "min": 306.83962,
+            "max": 308.79404
+          },
+          "cycles_per_input": {
+            "median": 732890.64,
+            "min": 732408.096,
+            "max": 737026.224
+          }
+        }
+      },
+      "terminal_repeats": [
+        {
+          "thread_cpu_ns": 62500000,
+          "wall_ns": 70394100
+        },
+        {
+          "thread_cpu_ns": 46875000,
+          "wall_ns": 46362600
+        },
+        {
+          "thread_cpu_ns": 46875000,
+          "wall_ns": 46891400
+        }
+      ]
+    }
+  ]
+}
