@@ -1,0 +1,113 @@
+{
+  "scope": "继续离线核查已有CPU/等待栈，不新增人体、USB、Run、优化A/B或ETW；正式程序、NumPy/滤波/Processor/线程结构和绘图实现不变。",
+  "supplements": "../root_cause_matrix01/evidence_matrix01.json",
+  "exact_cv2_sha256": "ae833b9b5771f5932200bd3b8ad0f483f4fbec92cbdbd26d21d38fe524c60e66",
+  "mapping_method": "在全新无设备进程中读取四个cv2公开PyCFunction入口指针，与精确PE的.pdata范围相交；现场返回地址及部分IAT调用指针独立核对。没有执行resize、cvtColor、imdecode或flip，没有替换cv2或将未知PDB伪装匹配。",
+  "confirmed_public_boundaries": [
+    {
+      "entry": "cv2.resize",
+      "field_rvas": [
+        "0x1ae5f4c",
+        "0x1ae5f56"
+      ],
+      "interpretation": "公开包装入口范围覆盖这两个返回地址；后一地址前调用PyEval_RestoreThread。另轮GUI有效CPU见证含此调用链。"
+    },
+    {
+      "entry": "cv2.cvtColor",
+      "field_rvas": [
+        "0x1b822a2",
+        "0x1b822ac"
+      ],
+      "interpretation": "公开包装入口范围覆盖这两个返回地址；后一地址前调用PyEval_RestoreThread。"
+    },
+    {
+      "entry": "cv2.imdecode",
+      "field_rvas": [
+        "0x1b9ceb2",
+        "0x1b9cec0"
+      ],
+      "interpretation": "公开包装入口范围覆盖这两个返回地址；前一地址前调用PyEval_RestoreThread。"
+    }
+  ],
+  "internal_GIL_entry": {
+    "module_and_rva": "cv2.pyd+0x1ea260d",
+    "verified_import_call": "PyGILState_Ensure",
+    "internal_function_name": null,
+    "meaning": "在imdecode/resize/cvtColor公开包装调用尚未返回的部分完整链中，内部重新进入GIL并等待。不能把OpenCV整个原生调用一概视为连续持有GIL或连续无需GIL，也不据此命名内部工作（如分配）或计算成本。"
+  },
+  "same_backlog_point": {
+    "formal_s": 13.8641344,
+    "pending": 672,
+    "consumer_batch_size": 20,
+    "GUI_pid": 17752,
+    "consumer_tid": 5376,
+    "imdecode_wait_tid": 13080,
+    "guard": "两者均在含全部QPC映射不确定性的before-Ready区间内，保留100us保护。其他同时等待者沿用既有原记录。",
+    "interpretation": "在同一已保存积压观测点，消费者和cv2.imdecode返回者同时等待GIL；证明共享竞争现象，不识别持有者/唤醒者。"
+  },
+  "source_correspondence": [
+    {
+      "file": "ui/embedded_camera_panel.py",
+      "line": 703,
+      "code": "_render_frame: cv2.resize，接着cv2.cvtColor",
+      "level": "与GUI公开入口见证相容；现场Python帧未保存，不能唯一绑定。"
+    },
+    {
+      "file": "camera/tinyse_camera.py",
+      "line": 564,
+      "code": "_decode_preview_frame: cv2.imdecode",
+      "level": "与TID13080解码路径相容，未由现场Python线程角色marker唯一命名。"
+    },
+    {
+      "file": "vision/live_walking.py",
+      "line": 20,
+      "code": "_PreviewAdapter.infer_bgr: cv2.resize",
+      "level": "另一个Python线程的resize存在此候选来源，仍不能仅凭C入口指定业务函数。"
+    }
+  ],
+  "separate_CPU_witness": {
+    "pid": 11948,
+    "tid": 20448,
+    "qpc": 2417737611302,
+    "ip": 140735767007819,
+    "matched_public_entry": "cv2.resize",
+    "root_and_IP_match_rechecked": true
+  },
+  "limits": [
+    "所有内部未知函数继续保留模块+RVA。公开C入口命名不等于获得cv2内部PDB。",
+    "CPU执行见证来自另一轮低延迟测试，不能与等待轮拼成同一时刻的CPU/GIL持有栈。",
+    "这些公开函数目前是执行/等待边界，不是已经锁定的高成本责任函数。",
+    "原reader驻留计费差额、CPU栈闭合/IP匹配失败、SDK完整率及实际负载扰动校准失败保持原状。无等待/CPU比例，无根因贡献排序。",
+    "GIL所有权和现场Python函数仍未记录。更多同类等待者命名不会凭空补出该缺失数据；尚不能验证正式修复。"
+  ],
+  "verification": {
+    "map_script_matches_executing_hash": true,
+    "wait_examples_within_common_counter_window": true,
+    "paired_Waiting_out_Ready_in_and_complete_user_chains": true,
+    "same_backlog_point_matches_previous_raw_verification": true,
+    "CPU_root_and_sample_IP_match_rechecked": true,
+    "current_source_hashes_match_frozen_baseline": true,
+    "capture_acceptance_upgraded": false
+  },
+  "source_sha256": {
+    "ui/embedded_camera_panel.py": "dd03cb082d7d3c77071d1f47c208e8996dc7b489b0d21fc2e55b0a479269e936",
+    "camera/tinyse_camera.py": "8a3b29213bdaa2367bb8ba36c8f32486e287d23490dd7ca8e53ddad37208b1e9",
+    "vision/live_walking.py": "7f7ca4dd66bafe59ae43b2b2f25e528c9349faa8c5de20d177d5e2cd7642e228",
+    "vision/mediapipe_pose.py": "b4b771ce3e18d88c50fd1c698ac006bd0b87d2be9c5f50feb5f080a48f6c43e1",
+    "camera/tinyse_dshow_capture.py": "3917b0200a2104d074276023a35e0d14567a9b74d4e7e35ae46cb83ed8253ae4"
+  },
+  "reference_sha256": {
+    "experiments/native_stack_capture/field_reviews/root_cause_matrix01/verification01.json": "1f5761d18e917692be9ab9e57a4fd455feff89e8feea3944e293c9754f166b0b",
+    "experiments/native_stack_capture/field_reviews/gil_contenders01/joined01.json": "1dbe51e645234e4469dc7ca6f0fb5fc87bd638d7d6e105dbb1abe3e779e68989",
+    "experiments/native_stack_capture/field_reviews/20261017_field_cpu01/round01/cpu_witnesses01.json": "a16c023315d1715a85af907a4276756801cde20d0daa953d96bc19f51c6b0531",
+    "experiments/native_stack_capture/field_reviews/20261017_field_wait01/round02/acceptance.json": "9e1fb7197d4b3e08ebe0459f49304b85e0e33d4734db963267593f392323bce6",
+    "experiments/native_stack_capture/field_reviews/20261017_field_cpu01/round01/acceptance.json": "02cbe3b66608c30db03a45ca7c052c39fbb237abeebb24f1b4f184e61fa15e40"
+  },
+  "artifact_sha256": {
+    "map_entries.py": "041146686f4ffacd57f366e9ee93570f0cc4d94eb91584bc647c85fdd1ed4d07",
+    "join.py": "551e0133d2060025d74d3acee176cebbea24c35dba30ccea695841854147c88d",
+    "witnesses01.json": "d7f4cfaf7bacfab49662fec781f1a01ee22957e076266fd6baef10b55bb8de15",
+    "entry_map01.json": "ba54d921820f37b3282929e145881ca6318b5171afc1028748f2448c74000387"
+  },
+  "next_minimum_gap": "继续区分等待者与持有者；当前记录不能恢复这些时刻未采集的GIL所有权或精确Python帧。只在具备可靠同窗证据并完成既定校准后，才能进一步判断主导贡献；本次不启动补采。"
+}

@@ -1,0 +1,135 @@
+{
+  "path": "D:\\conda\\Lib\\site-packages\\cv2\\cv2.pyd",
+  "sha256": "ae833b9b5771f5932200bd3b8ad0f483f4fbec92cbdbd26d21d38fe524c60e66",
+  "opencv_version": "5.0.0",
+  "entries": [
+    {
+      "name": "cv2.resize",
+      "rva": 28204064,
+      "unwind_range": [
+        28204064,
+        28206116
+      ]
+    },
+    {
+      "name": "cv2.cvtColor",
+      "rva": 28844032,
+      "unwind_range": [
+        28844032,
+        28845800
+      ]
+    },
+    {
+      "name": "cv2.imdecode",
+      "rva": 28953904,
+      "unwind_range": [
+        28953904,
+        28955065
+      ]
+    },
+    {
+      "name": "cv2.flip",
+      "rva": 27947888,
+      "unwind_range": [
+        27947888,
+        27949229
+      ]
+    }
+  ],
+  "targets": [
+    {
+      "rva": 28204876,
+      "unwind_range": [
+        28204064,
+        28206116
+      ],
+      "matching_public_entries": [
+        "cv2.resize"
+      ],
+      "preceding_32_bytes": "9c24a80000004c8b442468488d9424b0000000488d8c24e8000000e85498b000",
+      "preceding_indirect_call": null
+    },
+    {
+      "rva": 28204886,
+      "unwind_range": [
+        28204064,
+        28206116
+      ],
+      "matching_public_entries": [
+        "cv2.resize"
+      ],
+      "preceding_32_bytes": "68488d9424b0000000488d8c24e8000000e85498b00090488bcbff15ea7b6d03",
+      "preceding_indirect_call": "PyEval_RestoreThread"
+    },
+    {
+      "rva": 28844706,
+      "unwind_range": [
+        28844032,
+        28845800
+      ],
+      "matching_public_entries": [
+        "cv2.cvtColor"
+      ],
+      "preceding_32_bytes": "20448b4c2464448b442468488d942498000000488d8c24d0000000e8ae4db800",
+      "preceding_indirect_call": null
+    },
+    {
+      "rva": 28844716,
+      "unwind_range": [
+        28844032,
+        28845800
+      ],
+      "matching_public_entries": [
+        "cv2.cvtColor"
+      ],
+      "preceding_32_bytes": "68488d942498000000488d8c24d0000000e8ae4db80090488bcbff1594b86303",
+      "preceding_indirect_call": "PyEval_RestoreThread"
+    },
+    {
+      "rva": 28954290,
+      "unwind_range": [
+        28953904,
+        28955065
+      ],
+      "matching_public_entries": [
+        "cv2.imdecode"
+      ],
+      "preceding_32_bytes": "000000e8c61a330090488d8c2440020000e8981a330090488bcbff158e0c6203",
+      "preceding_indirect_call": "PyEval_RestoreThread"
+    },
+    {
+      "rva": 28954304,
+      "unwind_range": [
+        28953904,
+        28955065
+      ],
+      "matching_public_entries": [
+        "cv2.imdecode"
+      ],
+      "preceding_32_bytes": "020000e8981a330090488bcbff158e0c620390488d8c24a0000000e8a0703000",
+      "preceding_indirect_call": null
+    },
+    {
+      "rva": 32122381,
+      "unwind_range": [
+        32122240,
+        32122998
+      ],
+      "matching_public_entries": [],
+      "preceding_32_bytes": "4c894c24284889542420458bce4c8bc78bd6ff5010e90f020000ff1583b53103",
+      "preceding_indirect_call": "PyGILState_Ensure"
+    },
+    {
+      "rva": 32129199,
+      "unwind_range": [
+        32128864,
+        32129288
+      ],
+      "matching_public_entries": [],
+      "preceding_32_bytes": "800000004889442458488d542450488bcfe82b38070090488bcbff15919a3103",
+      "preceding_indirect_call": "PyEval_RestoreThread"
+    }
+  ],
+  "script_sha256": "041146686f4ffacd57f366e9ee93570f0cc4d94eb91584bc647c85fdd1ed4d07",
+  "scope": "Fresh process, public PyCFunction pointers + exact PE .pdata and import-call checks only. No cv2 operation, GUI, camera, USB, process attachment or tracing. Internal functions remain module+RVA; no PDB match asserted."
+}

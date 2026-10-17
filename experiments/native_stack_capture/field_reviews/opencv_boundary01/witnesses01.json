@@ -1,0 +1,2623 @@
+{
+  "wait_examples": [
+    {
+      "pid": 17752,
+      "tid": 13080,
+      "switch_out_qpc": 2407895364743,
+      "ready_qpc": 2407895365185,
+      "switch_in_qpc": 2407895365452,
+      "public_entry_names": [
+        "cv2.imdecode"
+      ],
+      "GIL_boundary": "PyGILState_Ensure",
+      "frames": [
+        {
+          "module": "ntdll.dll",
+          "rva": 1449428,
+          "symbol": "NtWaitForSingleObject",
+          "pdb_matched": true
+        },
+        {
+          "module": "KernelBase.dll",
+          "rva": 114335,
+          "symbol": "WaitForSingleObjectEx",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2035090,
+          "symbol": "_PyCOND_WAIT_MS",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2035713,
+          "symbol": "take_gil",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2410908,
+          "symbol": "PyGILState_Ensure",
+          "pdb_matched": true
+        },
+        {
+          "module": "cv2.pyd",
+          "rva": 32122381,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "cv2.pyd",
+          "rva": 32309989,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "cv2.pyd",
+          "rva": 32497437,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "cv2.pyd",
+          "rva": 32603098,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "cv2.pyd",
+          "rva": 32129189,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "cv2.pyd",
+          "rva": 28954304,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1325356,
+          "symbol": "cfunction_call",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1042961,
+          "symbol": "_PyObject_MakeTpCall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043409,
+          "symbol": "PyObject_Vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2059354,
+          "symbol": "_PyEval_EvalFrameDefault",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2075214,
+          "symbol": "_PyEval_Vector",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043885,
+          "symbol": "_PyFunction_Vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1051529,
+          "symbol": "_PyObject_VectorcallTstate",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1053073,
+          "symbol": "method_vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043278,
+          "symbol": "_PyVectorcall_Call",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043551,
+          "symbol": "_PyObject_Call",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2082045,
+          "symbol": "do_call_core",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2063743,
+          "symbol": "_PyEval_EvalFrameDefault",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2075214,
+          "symbol": "_PyEval_Vector",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043885,
+          "symbol": "_PyFunction_Vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1052918,
+          "symbol": "method_vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043278,
+          "symbol": "_PyVectorcall_Call",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043551,
+          "symbol": "_PyObject_Call",
+          "pdb_matched": true
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 70395,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 69683,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 102800,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 103480,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "QtCore.pyd",
+          "rva": 1027798,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 759825,
+          "symbol": "QMetaObject::metacall",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 988757,
+          "symbol": "doActivate<0>",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 1000020,
+          "symbol": "QMetaObject::activate",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 1730655,
+          "symbol": "QThread::started",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 2545721,
+          "symbol": "QThreadPrivate::start",
+          "pdb_matched": true
+        },
+        {
+          "module": "kernel32.dll",
+          "rva": 187815,
+          "symbol": "BaseThreadInitThunk",
+          "pdb_matched": true
+        },
+        {
+          "module": "ntdll.dll",
+          "rva": 519756,
+          "symbol": "RtlUserThreadStart",
+          "pdb_matched": true
+        }
+      ]
+    },
+    {
+      "pid": 17752,
+      "tid": 13080,
+      "switch_out_qpc": 2407895385349,
+      "ready_qpc": 2407895385772,
+      "switch_in_qpc": 2407895385826,
+      "public_entry_names": [
+        "cv2.imdecode"
+      ],
+      "GIL_boundary": "PyEval_RestoreThread",
+      "frames": [
+        {
+          "module": "ntdll.dll",
+          "rva": 1449428,
+          "symbol": "NtWaitForSingleObject",
+          "pdb_matched": true
+        },
+        {
+          "module": "KernelBase.dll",
+          "rva": 114335,
+          "symbol": "WaitForSingleObjectEx",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2035090,
+          "symbol": "_PyCOND_WAIT_MS",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2035713,
+          "symbol": "take_gil",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2036563,
+          "symbol": "PyEval_RestoreThread",
+          "pdb_matched": true
+        },
+        {
+          "module": "cv2.pyd",
+          "rva": 32129199,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "cv2.pyd",
+          "rva": 28954304,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1325356,
+          "symbol": "cfunction_call",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1042961,
+          "symbol": "_PyObject_MakeTpCall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043409,
+          "symbol": "PyObject_Vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2059354,
+          "symbol": "_PyEval_EvalFrameDefault",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2075214,
+          "symbol": "_PyEval_Vector",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043885,
+          "symbol": "_PyFunction_Vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1051529,
+          "symbol": "_PyObject_VectorcallTstate",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1053073,
+          "symbol": "method_vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043278,
+          "symbol": "_PyVectorcall_Call",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043551,
+          "symbol": "_PyObject_Call",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2082045,
+          "symbol": "do_call_core",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2063743,
+          "symbol": "_PyEval_EvalFrameDefault",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2075214,
+          "symbol": "_PyEval_Vector",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043885,
+          "symbol": "_PyFunction_Vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1052918,
+          "symbol": "method_vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043278,
+          "symbol": "_PyVectorcall_Call",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043551,
+          "symbol": "_PyObject_Call",
+          "pdb_matched": true
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 70395,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 69683,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 102800,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 103480,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "QtCore.pyd",
+          "rva": 1027798,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 759825,
+          "symbol": "QMetaObject::metacall",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 988757,
+          "symbol": "doActivate<0>",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 1000020,
+          "symbol": "QMetaObject::activate",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 1730655,
+          "symbol": "QThread::started",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 2545721,
+          "symbol": "QThreadPrivate::start",
+          "pdb_matched": true
+        },
+        {
+          "module": "kernel32.dll",
+          "rva": 187815,
+          "symbol": "BaseThreadInitThunk",
+          "pdb_matched": true
+        },
+        {
+          "module": "ntdll.dll",
+          "rva": 519756,
+          "symbol": "RtlUserThreadStart",
+          "pdb_matched": true
+        }
+      ]
+    },
+    {
+      "pid": 17752,
+      "tid": 17236,
+      "switch_out_qpc": 2407895418947,
+      "ready_qpc": 2407895419231,
+      "switch_in_qpc": 2407895419247,
+      "public_entry_names": [
+        "cv2.resize"
+      ],
+      "GIL_boundary": "PyEval_RestoreThread",
+      "frames": [
+        {
+          "module": "ntdll.dll",
+          "rva": 1449428,
+          "symbol": "NtWaitForSingleObject",
+          "pdb_matched": true
+        },
+        {
+          "module": "KernelBase.dll",
+          "rva": 114335,
+          "symbol": "WaitForSingleObjectEx",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2035090,
+          "symbol": "_PyCOND_WAIT_MS",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2035713,
+          "symbol": "take_gil",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2036563,
+          "symbol": "PyEval_RestoreThread",
+          "pdb_matched": true
+        },
+        {
+          "module": "cv2.pyd",
+          "rva": 28204886,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1325356,
+          "symbol": "cfunction_call",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1042961,
+          "symbol": "_PyObject_MakeTpCall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043409,
+          "symbol": "PyObject_Vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2059354,
+          "symbol": "_PyEval_EvalFrameDefault",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1213514,
+          "symbol": "gen_send_ex2",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1216475,
+          "symbol": "gen_iternext",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2056594,
+          "symbol": "_PyEval_EvalFrameDefault",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2075214,
+          "symbol": "_PyEval_Vector",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043885,
+          "symbol": "_PyFunction_Vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1052918,
+          "symbol": "method_vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043278,
+          "symbol": "_PyVectorcall_Call",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043551,
+          "symbol": "_PyObject_Call",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2082045,
+          "symbol": "do_call_core",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2063743,
+          "symbol": "_PyEval_EvalFrameDefault",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2075214,
+          "symbol": "_PyEval_Vector",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043885,
+          "symbol": "_PyFunction_Vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1052918,
+          "symbol": "method_vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043278,
+          "symbol": "_PyVectorcall_Call",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043551,
+          "symbol": "_PyObject_Call",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 691221,
+          "symbol": "thread_run",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2618882,
+          "symbol": "bootstrap",
+          "pdb_matched": true
+        },
+        {
+          "module": "ucrtbase.dll",
+          "rva": 183600,
+          "symbol": "thread_start<unsigned int (__cdecl*)(void *),1>",
+          "pdb_matched": true
+        },
+        {
+          "module": "kernel32.dll",
+          "rva": 187815,
+          "symbol": "BaseThreadInitThunk",
+          "pdb_matched": true
+        },
+        {
+          "module": "ntdll.dll",
+          "rva": 519756,
+          "symbol": "RtlUserThreadStart",
+          "pdb_matched": true
+        }
+      ]
+    },
+    {
+      "pid": 17752,
+      "tid": 20420,
+      "switch_out_qpc": 2407895622961,
+      "ready_qpc": 2407895623611,
+      "switch_in_qpc": 2407895623701,
+      "public_entry_names": [
+        "cv2.resize"
+      ],
+      "GIL_boundary": "PyEval_RestoreThread",
+      "frames": [
+        {
+          "module": "ntdll.dll",
+          "rva": 1449428,
+          "symbol": "NtWaitForSingleObject",
+          "pdb_matched": true
+        },
+        {
+          "module": "KernelBase.dll",
+          "rva": 114335,
+          "symbol": "WaitForSingleObjectEx",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2035090,
+          "symbol": "_PyCOND_WAIT_MS",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2035713,
+          "symbol": "take_gil",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2036563,
+          "symbol": "PyEval_RestoreThread",
+          "pdb_matched": true
+        },
+        {
+          "module": "cv2.pyd",
+          "rva": 28204886,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1325356,
+          "symbol": "cfunction_call",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1042961,
+          "symbol": "_PyObject_MakeTpCall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043409,
+          "symbol": "PyObject_Vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2059354,
+          "symbol": "_PyEval_EvalFrameDefault",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2075214,
+          "symbol": "_PyEval_Vector",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043885,
+          "symbol": "_PyFunction_Vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1052918,
+          "symbol": "method_vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043278,
+          "symbol": "_PyVectorcall_Call",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043551,
+          "symbol": "_PyObject_Call",
+          "pdb_matched": true
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 70395,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 69683,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 102800,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 103480,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "QtWidgets.pyd",
+          "rva": 2708314,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 759825,
+          "symbol": "QMetaObject::metacall",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 988757,
+          "symbol": "doActivate<0>",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 1000020,
+          "symbol": "QMetaObject::activate",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 1105486,
+          "symbol": "QTimer::timerEvent",
+          "pdb_matched": true
+        },
+        {
+          "module": "QtCore.pyd",
+          "rva": 545520,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 1031064,
+          "symbol": "QObject::event",
+          "pdb_matched": true
+        },
+        {
+          "module": "QtCore.pyd",
+          "rva": 525648,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Widgets.dll",
+          "rva": 78929,
+          "symbol": "QApplicationPrivate::notify_helper",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Widgets.dll",
+          "rva": 74795,
+          "symbol": "QApplication::notify",
+          "pdb_matched": true
+        },
+        {
+          "module": "QtWidgets.pyd",
+          "rva": 3382599,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 706161,
+          "symbol": "QCoreApplication::notifyInternal2",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 2491694,
+          "symbol": "QEventDispatcherWin32Private::sendTimerEvent",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 2487331,
+          "symbol": "qt_internal_proc",
+          "pdb_matched": true
+        },
+        {
+          "module": "user32.dll",
+          "rva": 86758,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "user32.dll",
+          "rva": 89533,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 2485619,
+          "symbol": "QEventDispatcherWin32::processEvents",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Gui.dll",
+          "rva": 3985177,
+          "symbol": "QWindowsGuiEventDispatcher::processEvents",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 733588,
+          "symbol": "QEventLoop::exec",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 699130,
+          "symbol": "QCoreApplication::exec",
+          "pdb_matched": true
+        },
+        {
+          "module": "QtWidgets.pyd",
+          "rva": 3167747,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1324903,
+          "symbol": "cfunction_vectorcall_NOARGS",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1042009,
+          "symbol": "_PyObject_VectorcallTstate",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043409,
+          "symbol": "PyObject_Vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2059354,
+          "symbol": "_PyEval_EvalFrameDefault",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2075214,
+          "symbol": "_PyEval_Vector",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2040192,
+          "symbol": "PyEval_EvalCode",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2019225,
+          "symbol": "builtin_exec_impl",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2009598,
+          "symbol": "builtin_exec",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1324456,
+          "symbol": "cfunction_vectorcall_FASTCALL_KEYWORDS",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1042009,
+          "symbol": "_PyObject_VectorcallTstate",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043409,
+          "symbol": "PyObject_Vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2059354,
+          "symbol": "_PyEval_EvalFrameDefault",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2075214,
+          "symbol": "_PyEval_Vector",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2040192,
+          "symbol": "PyEval_EvalCode",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2563614,
+          "symbol": "run_eval_code_obj",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2563832,
+          "symbol": "run_mod",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2562600,
+          "symbol": "pyrun_file",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2553333,
+          "symbol": "_PyRun_SimpleFileObject",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2549860,
+          "symbol": "_PyRun_AnyFileObject",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 527036,
+          "symbol": "pymain_run_file_obj",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 529555,
+          "symbol": "pymain_run_python",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 530480,
+          "symbol": "Py_Main",
+          "pdb_matched": true
+        },
+        {
+          "module": "python.exe",
+          "rva": 5268,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "kernel32.dll",
+          "rva": 187815,
+          "symbol": "BaseThreadInitThunk",
+          "pdb_matched": true
+        },
+        {
+          "module": "ntdll.dll",
+          "rva": 519756,
+          "symbol": "RtlUserThreadStart",
+          "pdb_matched": true
+        }
+      ]
+    },
+    {
+      "pid": 17752,
+      "tid": 20420,
+      "switch_out_qpc": 2407895626345,
+      "ready_qpc": 2407895626447,
+      "switch_in_qpc": 2407895626518,
+      "public_entry_names": [
+        "cv2.cvtColor"
+      ],
+      "GIL_boundary": "PyEval_RestoreThread",
+      "frames": [
+        {
+          "module": "ntdll.dll",
+          "rva": 1449428,
+          "symbol": "NtWaitForSingleObject",
+          "pdb_matched": true
+        },
+        {
+          "module": "KernelBase.dll",
+          "rva": 114335,
+          "symbol": "WaitForSingleObjectEx",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2035090,
+          "symbol": "_PyCOND_WAIT_MS",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2035713,
+          "symbol": "take_gil",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2036563,
+          "symbol": "PyEval_RestoreThread",
+          "pdb_matched": true
+        },
+        {
+          "module": "cv2.pyd",
+          "rva": 28844716,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1325356,
+          "symbol": "cfunction_call",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1042961,
+          "symbol": "_PyObject_MakeTpCall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043409,
+          "symbol": "PyObject_Vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2059354,
+          "symbol": "_PyEval_EvalFrameDefault",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2075214,
+          "symbol": "_PyEval_Vector",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043885,
+          "symbol": "_PyFunction_Vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1052918,
+          "symbol": "method_vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043278,
+          "symbol": "_PyVectorcall_Call",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043551,
+          "symbol": "_PyObject_Call",
+          "pdb_matched": true
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 70395,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 69683,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 102800,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 103480,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "QtWidgets.pyd",
+          "rva": 2708314,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 759825,
+          "symbol": "QMetaObject::metacall",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 988757,
+          "symbol": "doActivate<0>",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 1000020,
+          "symbol": "QMetaObject::activate",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 1105486,
+          "symbol": "QTimer::timerEvent",
+          "pdb_matched": true
+        },
+        {
+          "module": "QtCore.pyd",
+          "rva": 545520,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 1031064,
+          "symbol": "QObject::event",
+          "pdb_matched": true
+        },
+        {
+          "module": "QtCore.pyd",
+          "rva": 525648,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Widgets.dll",
+          "rva": 78929,
+          "symbol": "QApplicationPrivate::notify_helper",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Widgets.dll",
+          "rva": 74795,
+          "symbol": "QApplication::notify",
+          "pdb_matched": true
+        },
+        {
+          "module": "QtWidgets.pyd",
+          "rva": 3382599,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 706161,
+          "symbol": "QCoreApplication::notifyInternal2",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 2491694,
+          "symbol": "QEventDispatcherWin32Private::sendTimerEvent",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 2487331,
+          "symbol": "qt_internal_proc",
+          "pdb_matched": true
+        },
+        {
+          "module": "user32.dll",
+          "rva": 86758,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "user32.dll",
+          "rva": 89533,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 2485619,
+          "symbol": "QEventDispatcherWin32::processEvents",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Gui.dll",
+          "rva": 3985177,
+          "symbol": "QWindowsGuiEventDispatcher::processEvents",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 733588,
+          "symbol": "QEventLoop::exec",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 699130,
+          "symbol": "QCoreApplication::exec",
+          "pdb_matched": true
+        },
+        {
+          "module": "QtWidgets.pyd",
+          "rva": 3167747,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1324903,
+          "symbol": "cfunction_vectorcall_NOARGS",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1042009,
+          "symbol": "_PyObject_VectorcallTstate",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043409,
+          "symbol": "PyObject_Vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2059354,
+          "symbol": "_PyEval_EvalFrameDefault",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2075214,
+          "symbol": "_PyEval_Vector",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2040192,
+          "symbol": "PyEval_EvalCode",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2019225,
+          "symbol": "builtin_exec_impl",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2009598,
+          "symbol": "builtin_exec",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1324456,
+          "symbol": "cfunction_vectorcall_FASTCALL_KEYWORDS",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1042009,
+          "symbol": "_PyObject_VectorcallTstate",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043409,
+          "symbol": "PyObject_Vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2059354,
+          "symbol": "_PyEval_EvalFrameDefault",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2075214,
+          "symbol": "_PyEval_Vector",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2040192,
+          "symbol": "PyEval_EvalCode",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2563614,
+          "symbol": "run_eval_code_obj",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2563832,
+          "symbol": "run_mod",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2562600,
+          "symbol": "pyrun_file",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2553333,
+          "symbol": "_PyRun_SimpleFileObject",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2549860,
+          "symbol": "_PyRun_AnyFileObject",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 527036,
+          "symbol": "pymain_run_file_obj",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 529555,
+          "symbol": "pymain_run_python",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 530480,
+          "symbol": "Py_Main",
+          "pdb_matched": true
+        },
+        {
+          "module": "python.exe",
+          "rva": 5268,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "kernel32.dll",
+          "rva": 187815,
+          "symbol": "BaseThreadInitThunk",
+          "pdb_matched": true
+        },
+        {
+          "module": "ntdll.dll",
+          "rva": 519756,
+          "symbol": "RtlUserThreadStart",
+          "pdb_matched": true
+        }
+      ]
+    },
+    {
+      "pid": 17752,
+      "tid": 20420,
+      "switch_out_qpc": 2407897918226,
+      "ready_qpc": 2407897918904,
+      "switch_in_qpc": 2407897918980,
+      "public_entry_names": [
+        "cv2.cvtColor"
+      ],
+      "GIL_boundary": "PyGILState_Ensure",
+      "frames": [
+        {
+          "module": "ntdll.dll",
+          "rva": 1449428,
+          "symbol": "NtWaitForSingleObject",
+          "pdb_matched": true
+        },
+        {
+          "module": "KernelBase.dll",
+          "rva": 114335,
+          "symbol": "WaitForSingleObjectEx",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2035090,
+          "symbol": "_PyCOND_WAIT_MS",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2035713,
+          "symbol": "take_gil",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2410908,
+          "symbol": "PyGILState_Ensure",
+          "pdb_matched": true
+        },
+        {
+          "module": "cv2.pyd",
+          "rva": 32122381,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "cv2.pyd",
+          "rva": 32309989,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "cv2.pyd",
+          "rva": 32310630,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "cv2.pyd",
+          "rva": 32516998,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "cv2.pyd",
+          "rva": 44095061,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "cv2.pyd",
+          "rva": 44147737,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "cv2.pyd",
+          "rva": 40923640,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "cv2.pyd",
+          "rva": 28844706,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1325356,
+          "symbol": "cfunction_call",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1042961,
+          "symbol": "_PyObject_MakeTpCall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043409,
+          "symbol": "PyObject_Vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2059354,
+          "symbol": "_PyEval_EvalFrameDefault",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2075214,
+          "symbol": "_PyEval_Vector",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043885,
+          "symbol": "_PyFunction_Vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1052918,
+          "symbol": "method_vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043278,
+          "symbol": "_PyVectorcall_Call",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043551,
+          "symbol": "_PyObject_Call",
+          "pdb_matched": true
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 70395,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 69683,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 102800,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 103480,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "QtWidgets.pyd",
+          "rva": 2708314,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 759825,
+          "symbol": "QMetaObject::metacall",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 988757,
+          "symbol": "doActivate<0>",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 1000020,
+          "symbol": "QMetaObject::activate",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 1105486,
+          "symbol": "QTimer::timerEvent",
+          "pdb_matched": true
+        },
+        {
+          "module": "QtCore.pyd",
+          "rva": 545520,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 1031064,
+          "symbol": "QObject::event",
+          "pdb_matched": true
+        },
+        {
+          "module": "QtCore.pyd",
+          "rva": 525648,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Widgets.dll",
+          "rva": 78929,
+          "symbol": "QApplicationPrivate::notify_helper",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Widgets.dll",
+          "rva": 74795,
+          "symbol": "QApplication::notify",
+          "pdb_matched": true
+        },
+        {
+          "module": "QtWidgets.pyd",
+          "rva": 3382599,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 706161,
+          "symbol": "QCoreApplication::notifyInternal2",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 2491694,
+          "symbol": "QEventDispatcherWin32Private::sendTimerEvent",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 2487331,
+          "symbol": "qt_internal_proc",
+          "pdb_matched": true
+        },
+        {
+          "module": "user32.dll",
+          "rva": 86758,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "user32.dll",
+          "rva": 89533,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 2485619,
+          "symbol": "QEventDispatcherWin32::processEvents",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Gui.dll",
+          "rva": 3985177,
+          "symbol": "QWindowsGuiEventDispatcher::processEvents",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 733588,
+          "symbol": "QEventLoop::exec",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 699130,
+          "symbol": "QCoreApplication::exec",
+          "pdb_matched": true
+        },
+        {
+          "module": "QtWidgets.pyd",
+          "rva": 3167747,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1324903,
+          "symbol": "cfunction_vectorcall_NOARGS",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1042009,
+          "symbol": "_PyObject_VectorcallTstate",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043409,
+          "symbol": "PyObject_Vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2059354,
+          "symbol": "_PyEval_EvalFrameDefault",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2075214,
+          "symbol": "_PyEval_Vector",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2040192,
+          "symbol": "PyEval_EvalCode",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2019225,
+          "symbol": "builtin_exec_impl",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2009598,
+          "symbol": "builtin_exec",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1324456,
+          "symbol": "cfunction_vectorcall_FASTCALL_KEYWORDS",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1042009,
+          "symbol": "_PyObject_VectorcallTstate",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043409,
+          "symbol": "PyObject_Vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2059354,
+          "symbol": "_PyEval_EvalFrameDefault",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2075214,
+          "symbol": "_PyEval_Vector",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2040192,
+          "symbol": "PyEval_EvalCode",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2563614,
+          "symbol": "run_eval_code_obj",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2563832,
+          "symbol": "run_mod",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2562600,
+          "symbol": "pyrun_file",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2553333,
+          "symbol": "_PyRun_SimpleFileObject",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2549860,
+          "symbol": "_PyRun_AnyFileObject",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 527036,
+          "symbol": "pymain_run_file_obj",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 529555,
+          "symbol": "pymain_run_python",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 530480,
+          "symbol": "Py_Main",
+          "pdb_matched": true
+        },
+        {
+          "module": "python.exe",
+          "rva": 5268,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "kernel32.dll",
+          "rva": 187815,
+          "symbol": "BaseThreadInitThunk",
+          "pdb_matched": true
+        },
+        {
+          "module": "ntdll.dll",
+          "rva": 519756,
+          "symbol": "RtlUserThreadStart",
+          "pdb_matched": true
+        }
+      ]
+    },
+    {
+      "pid": 17752,
+      "tid": 20420,
+      "switch_out_qpc": 2407903529854,
+      "ready_qpc": 2407903530429,
+      "switch_in_qpc": 2407903530486,
+      "public_entry_names": [
+        "cv2.resize"
+      ],
+      "GIL_boundary": "PyGILState_Ensure",
+      "frames": [
+        {
+          "module": "ntdll.dll",
+          "rva": 1449428,
+          "symbol": "NtWaitForSingleObject",
+          "pdb_matched": true
+        },
+        {
+          "module": "KernelBase.dll",
+          "rva": 114335,
+          "symbol": "WaitForSingleObjectEx",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2035090,
+          "symbol": "_PyCOND_WAIT_MS",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2035713,
+          "symbol": "take_gil",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2410908,
+          "symbol": "PyGILState_Ensure",
+          "pdb_matched": true
+        },
+        {
+          "module": "cv2.pyd",
+          "rva": 32122381,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "cv2.pyd",
+          "rva": 32309989,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "cv2.pyd",
+          "rva": 32310630,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "cv2.pyd",
+          "rva": 32516998,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "cv2.pyd",
+          "rva": 39778958,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "cv2.pyd",
+          "rva": 28204876,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1325356,
+          "symbol": "cfunction_call",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1042961,
+          "symbol": "_PyObject_MakeTpCall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043409,
+          "symbol": "PyObject_Vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2059354,
+          "symbol": "_PyEval_EvalFrameDefault",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2075214,
+          "symbol": "_PyEval_Vector",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043885,
+          "symbol": "_PyFunction_Vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1052918,
+          "symbol": "method_vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043278,
+          "symbol": "_PyVectorcall_Call",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043551,
+          "symbol": "_PyObject_Call",
+          "pdb_matched": true
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 70395,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 69683,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 102800,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 103480,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "QtWidgets.pyd",
+          "rva": 2708314,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 759825,
+          "symbol": "QMetaObject::metacall",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 988757,
+          "symbol": "doActivate<0>",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 1000020,
+          "symbol": "QMetaObject::activate",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 1105486,
+          "symbol": "QTimer::timerEvent",
+          "pdb_matched": true
+        },
+        {
+          "module": "QtCore.pyd",
+          "rva": 545520,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 1031064,
+          "symbol": "QObject::event",
+          "pdb_matched": true
+        },
+        {
+          "module": "QtCore.pyd",
+          "rva": 525648,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Widgets.dll",
+          "rva": 78929,
+          "symbol": "QApplicationPrivate::notify_helper",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Widgets.dll",
+          "rva": 74795,
+          "symbol": "QApplication::notify",
+          "pdb_matched": true
+        },
+        {
+          "module": "QtWidgets.pyd",
+          "rva": 3382599,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 706161,
+          "symbol": "QCoreApplication::notifyInternal2",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 2491694,
+          "symbol": "QEventDispatcherWin32Private::sendTimerEvent",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 2487331,
+          "symbol": "qt_internal_proc",
+          "pdb_matched": true
+        },
+        {
+          "module": "user32.dll",
+          "rva": 86758,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "user32.dll",
+          "rva": 89533,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 2485619,
+          "symbol": "QEventDispatcherWin32::processEvents",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Gui.dll",
+          "rva": 3985177,
+          "symbol": "QWindowsGuiEventDispatcher::processEvents",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 733588,
+          "symbol": "QEventLoop::exec",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 699130,
+          "symbol": "QCoreApplication::exec",
+          "pdb_matched": true
+        },
+        {
+          "module": "QtWidgets.pyd",
+          "rva": 3167747,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1324903,
+          "symbol": "cfunction_vectorcall_NOARGS",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1042009,
+          "symbol": "_PyObject_VectorcallTstate",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043409,
+          "symbol": "PyObject_Vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2059354,
+          "symbol": "_PyEval_EvalFrameDefault",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2075214,
+          "symbol": "_PyEval_Vector",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2040192,
+          "symbol": "PyEval_EvalCode",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2019225,
+          "symbol": "builtin_exec_impl",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2009598,
+          "symbol": "builtin_exec",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1324456,
+          "symbol": "cfunction_vectorcall_FASTCALL_KEYWORDS",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1042009,
+          "symbol": "_PyObject_VectorcallTstate",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043409,
+          "symbol": "PyObject_Vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2059354,
+          "symbol": "_PyEval_EvalFrameDefault",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2075214,
+          "symbol": "_PyEval_Vector",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2040192,
+          "symbol": "PyEval_EvalCode",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2563614,
+          "symbol": "run_eval_code_obj",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2563832,
+          "symbol": "run_mod",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2562600,
+          "symbol": "pyrun_file",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2553333,
+          "symbol": "_PyRun_SimpleFileObject",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2549860,
+          "symbol": "_PyRun_AnyFileObject",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 527036,
+          "symbol": "pymain_run_file_obj",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 529555,
+          "symbol": "pymain_run_python",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 530480,
+          "symbol": "Py_Main",
+          "pdb_matched": true
+        },
+        {
+          "module": "python.exe",
+          "rva": 5268,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "kernel32.dll",
+          "rva": 187815,
+          "symbol": "BaseThreadInitThunk",
+          "pdb_matched": true
+        },
+        {
+          "module": "ntdll.dll",
+          "rva": 519756,
+          "symbol": "RtlUserThreadStart",
+          "pdb_matched": true
+        }
+      ]
+    }
+  ],
+  "pending_overlap": {
+    "formal_s": 13.8641344,
+    "pending": 672,
+    "batch_size": 20,
+    "before_ready_participants": [
+      "5376",
+      "13080",
+      "17236",
+      "7332"
+    ],
+    "imdecode_wait": {
+      "pid": 17752,
+      "tid": 13080,
+      "switch_out_qpc": 2407922790102,
+      "ready_qpc": 2407922813873,
+      "switch_in_qpc": 2407922814152,
+      "public_entry_names": [
+        "cv2.imdecode"
+      ],
+      "GIL_boundary": "PyEval_RestoreThread",
+      "frames": [
+        {
+          "module": "ntdll.dll",
+          "rva": 1449428,
+          "symbol": "NtWaitForSingleObject",
+          "pdb_matched": true
+        },
+        {
+          "module": "KernelBase.dll",
+          "rva": 114335,
+          "symbol": "WaitForSingleObjectEx",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2035090,
+          "symbol": "_PyCOND_WAIT_MS",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2035713,
+          "symbol": "take_gil",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2036563,
+          "symbol": "PyEval_RestoreThread",
+          "pdb_matched": true
+        },
+        {
+          "module": "cv2.pyd",
+          "rva": 28954290,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1325356,
+          "symbol": "cfunction_call",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1042961,
+          "symbol": "_PyObject_MakeTpCall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043409,
+          "symbol": "PyObject_Vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2059354,
+          "symbol": "_PyEval_EvalFrameDefault",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2075214,
+          "symbol": "_PyEval_Vector",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043885,
+          "symbol": "_PyFunction_Vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1051529,
+          "symbol": "_PyObject_VectorcallTstate",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1053073,
+          "symbol": "method_vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043278,
+          "symbol": "_PyVectorcall_Call",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043551,
+          "symbol": "_PyObject_Call",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2082045,
+          "symbol": "do_call_core",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2063743,
+          "symbol": "_PyEval_EvalFrameDefault",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2075214,
+          "symbol": "_PyEval_Vector",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043885,
+          "symbol": "_PyFunction_Vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1052918,
+          "symbol": "method_vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043278,
+          "symbol": "_PyVectorcall_Call",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043551,
+          "symbol": "_PyObject_Call",
+          "pdb_matched": true
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 70395,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 69683,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 102800,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 103480,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "QtCore.pyd",
+          "rva": 1027798,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 759825,
+          "symbol": "QMetaObject::metacall",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 988757,
+          "symbol": "doActivate<0>",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 1000020,
+          "symbol": "QMetaObject::activate",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 1730655,
+          "symbol": "QThread::started",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 2545721,
+          "symbol": "QThreadPrivate::start",
+          "pdb_matched": true
+        },
+        {
+          "module": "kernel32.dll",
+          "rva": 187815,
+          "symbol": "BaseThreadInitThunk",
+          "pdb_matched": true
+        },
+        {
+          "module": "ntdll.dll",
+          "rva": 519756,
+          "symbol": "RtlUserThreadStart",
+          "pdb_matched": true
+        }
+      ]
+    },
+    "qpc_bounds": [
+      2407922811989,
+      2407922812077
+    ],
+    "guard_qpc_ticks": 1000
+  },
+  "separate_CPU_round_example": {
+    "pid": 11948,
+    "tid": 20448,
+    "qpc": 2417737611302,
+    "ip": 140735767007819,
+    "matched_public_entry": "cv2.resize",
+    "root_and_IP_match_rechecked": true
+  },
+  "input_sha256": {
+    "experiments/native_stack_capture/runs/field_wait01_round02/split01/17752/decoded/events.jsonl": "cb31e0fffd46629402bcbe488c47f7f784c4b92130947913f832c8b21b22d9cf",
+    "experiments/native_stack_capture/runs/field_wait01_round02/split01/17752/symbols03.json": "1a572258fd92ffe2a8cac42525e842de59eea9001263ca90eedbb16045fe4f97",
+    "experiments/native_stack_capture/runs/gil_contenders01/schedule01.jsonl.gz": "b361ae9a10b027497f1771bf8fad4dad04a450de50321873d79dd2494f6283f7",
+    "experiments/native_stack_capture/runs/field_cpu01_round01/split01/11948/decoded/events.jsonl": "da787c81949a353ed092fee8c5fab83a341360ee2eb3c41de11092a3384f1c4d",
+    "experiments/native_stack_capture/runs/field_cpu01_round01/split01/11948/symbols03.json": "91560a452640cef249031780a12ac6f4cdd5e56ac5e3fe8f2e9163c6eae351c6",
+    "experiments/native_stack_capture/field_reviews/opencv_boundary01/entry_map01.json": "ba54d921820f37b3282929e145881ca6318b5171afc1028748f2448c74000387"
+  },
+  "limits": [
+    "Public entry annotations are independent of PDB naming; all unknown internal frames retain module+RVA.",
+    "Wait paths establish reacquisition at return and within native OpenCV calls, not GIL ownership or exclusive native execution cost.",
+    "CPU and wait examples are different trials and cannot be combined into synchronous attribution or shares. Original rejected acceptance remains unchanged."
+  ]
+}
