@@ -1,0 +1,72 @@
+{
+  "tool_source_commit": "d47e0679fffbe34022a8061e8f34a71a74531227",
+  "windows_root": "E:/OptoJump/IronJump-native-stack-field-d47e067-20261017-01",
+  "scope": "Static field preparation and controller mocks only; no GUI, USB stream, camera capture, SDK service, synthetic workload or ETW recording started",
+  "ready_for_preparation": true,
+  "windows_checks": {
+    "utc": "2026-10-17T07:51:25.637310+00:00",
+    "admin": true,
+    "locks": {
+      ".capture.lock": false,
+      "E:\\OptoJump\\IronJump-native-stack-capture-20261017-01\\.capture.lock": false,
+      "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\experiments\\single_usb_human_etw\\active.lock": false
+    },
+    "wpr_status": "\r\nMicrosoft Windows Performance Recorder Version 10.0.26100 (CoreSystem)\r\nCopyright (c) 2024 Microsoft Corporation. All rights reserved.\r\n\r\nWPR is not recording\r\n",
+    "interval_100ns": 10000,
+    "source_files_verified": 30,
+    "frozen_sources_verified": 16,
+    "artifact_sha256": {
+      "deployment_manifest.json": "4ec80d5efb924aaf1e78938181b0348b2103147979a0c5d96496bfe40d4345d3",
+      "external_plan_cleanup01.json": "d5ce999e4875cbfec5d011955cf82a545404b79fe60637f1d282985bf03194c2",
+      "ReadStacks.exe": "edfb9e4f9f6c9ffdc51ff0aa5513d33f585efe0558b596c45bd14ca73c6cd1df",
+      "runtime_preflight.json": "ca882422cf21ac0075a80f597e53c6cd32897a5b0223a902e45911b567db22a8",
+      "cleanup_mock_result.json": "d6b2b79db8f3bd12c3a9fabb30f99a3ab86adc50f857063c85fcf9b21760bd3e"
+    },
+    "mock_tests": {
+      "tests_run": 14,
+      "failures": 0,
+      "errors": 0,
+      "skipped": 0,
+      "pass_all": true,
+      "scope": "Mocks only; no native APIs, WPR or workload launched"
+    }
+  },
+  "present_devices": [
+    {
+      "Class": "Camera",
+      "FriendlyName": "OBSBOT Tiny SE StreamCamera",
+      "Status": "OK",
+      "InstanceId": "USB\\VID_3564&PID_FEFF&MI_00\\6&B63DCBC&1&0000"
+    },
+    {
+      "Class": "USB",
+      "FriendlyName": "Cypress FX2LP Sample Device",
+      "Status": "OK",
+      "InstanceId": "USB\\VID_04B4&PID_1004\\5&18439411&0&1"
+    }
+  ],
+  "desktop_entry": "C:/Users/86150/Desktop/IronJump-ETW-20261017/WALK-ETW-OFF.lnk",
+  "desktop_entry_arguments_verified": "-NoProfile -ExecutionPolicy Bypass -File \"E:/OptoJump/IronJump-single-usb-human-etw-20261017/experiments/single_usb_human_etw/launch.ps1\" -Mode walk -Trace off",
+  "field_controller_static_check": {
+    "admin": true,
+    "original_and_frozen_hashes_match": true,
+    "wpr_profile_available": true,
+    "dependency_files_verified": 25
+  },
+  "runtime_preflight": {
+    "runtime_images_unchanged": 50,
+    "frozen_field_sources_unchanged": 458,
+    "cached_pdb_sha_guid_age_rechecked": 10,
+    "source_etl_sha256_verified": {
+      "20261017_112623_8416401b_walk_on": "d4547ab23a4d1e30eb0e016f1113eab00c65271f92ebb51bfeb6da364d92ffd9",
+      "20261017_113358_00ae9eca_walk_on": "ba1e6ba138ff17ed726f9585e7a82cad8d0683865a8df1102cad4af4f7eb68dc"
+    },
+    "cached_pdb_identity_comparison": "All 10 SHA/GUID/DBI-age tuples equal runtime_preservation02.json"
+  },
+  "historical_windows_tool_directory_preserved": true,
+  "old_windows_record_sha256": "2f2b2cfd0a5860fcfd2dce6706d8f3439cd8e4ce6cc1fe2078a5474cf9ed85d8",
+  "initial_mock_attempt": "PowerShell treated unittest stderr as NativeCommandError after the first reported passing test; cleanup_mock_tests.txt retained. Confirmed run used a file stream and passed 14/14. Both were mock-only; no recording.",
+  "quantitative_field_attribution_ready": false,
+  "actual_load_calibration_status": "Pending; historical CPU 2/3 and wait 3/3 conclusions and failed windows remain unchanged",
+  "next_user_action": "Open WALK-ETW-OFF; visually verify full body and valid skeleton, keep beams clear, confirm the preparation checkbox; wait before pressing start. Existing single-passage protocol: 5-second empty lead-in, one outward Walk, leave beams, operator-clear, 15-second empty tail; no return passage."
+}
