@@ -1,0 +1,151 @@
+{
+  "date": "2026-10-17",
+  "base_commit": "dd14a78",
+  "branch": "codex/walk-etw-offline-diagnosis",
+  "accepted_reader_source_sha256": "35d4a583d8e14806f3aca4ac31e8c517ed019430e38ebe37a78730dac098678a",
+  "accepted_Windows_reader_binary_sha256": "2f48002c11a520eea10ef3872e592df24f07e5c5d1ed6c62b0ffc8748cc5497b",
+  "accepted_Windows_reader": "E:/OptoJump/IronJump-walk-etw-offline-20261017-01/ReadSchedule_v3.exe",
+  "accepted_Windows_exports": "E:/OptoJump/IronJump-walk-etw-offline-20261017-01/decode_v2",
+  "source_reference_sha256": "2245ccc62b0d933190068a18344bc64749a2893bd9740a79706ba7fe5e86c778",
+  "source_files_and_results": {
+    "ReadSchedule.cs": {
+      "bytes": 8864,
+      "sha256": "35d4a583d8e14806f3aca4ac31e8c517ed019430e38ebe37a78730dac098678a"
+    },
+    "raw_load_features.py": {
+      "bytes": 2287,
+      "sha256": "9afbc4cd584ec4f05a8f274d2135ffe6176923879ae9ca37cbb6920a81b0c64f"
+    },
+    "latency_bounds.py": {
+      "bytes": 3943,
+      "sha256": "5ba087fc72528b0253d79ba29d01de645e1c4adc7dbfdc7255f2eb3e2b559c14"
+    },
+    "plot_schedule.py": {
+      "bytes": 3596,
+      "sha256": "365c9ca4e63dd1a0f4e34d3cf89fb170c4fcd1c40b5af6b704d4e063c231cdb4"
+    },
+    "analyze_schedule.py": {
+      "bytes": 18844,
+      "sha256": "5eba193c71c6e09fd21a5e064e5ce36728e790d2331574fa2c2c223553eb0f01"
+    },
+    "schema_reference_excerpt.txt": {
+      "bytes": 5039,
+      "sha256": "1969069cb3d1c209a8ec2cc4b5f009a9f34a4c6ecce908188873afbb04c4a0be"
+    },
+    "test_schedule_analysis.py": {
+      "bytes": 1996,
+      "sha256": "08140de85ec6bb809f8a6e4563a0b1fac7cb2eeacb77f6b8d9a8e17d3b3277f5"
+    },
+    "README.md": {
+      "bytes": 13963,
+      "sha256": "68eb95563221fa1d7de6047c7db148a823ff6fb9e6cb820e05889f75b99214d9"
+    },
+    "results02/diagnosis.json": {
+      "bytes": 578955,
+      "sha256": "f5979ba3b5ed23fb3f94588d3c66e1bfc29eaccd1e37cfe7a6db8526c9444aa0"
+    },
+    "results02/latency_bounds.json": {
+      "bytes": 32195,
+      "sha256": "af1319277112076ab57a0e3ad55a3642442a660c39ef67f031bb3b792c684bb7"
+    },
+    "results02/raw_load_features_verified.json": {
+      "bytes": 2342,
+      "sha256": "ce8fb7ca8027a7b90e989eac38041b70e7f8674f9b67cf0be24b3e9718b47e36"
+    },
+    "results02/timeline_final.png": {
+      "bytes": 364121,
+      "sha256": "588430789332d28b690c73ffe13bb08f1f8bc9924b0be8cd3905e01b0b258afa"
+    }
+  },
+  "evidence": [
+    {
+      "case": "20261017_112623_8416401b_walk_on",
+      "files": {
+        "source_schedule.etl": {
+          "bytes": 114032640,
+          "sha256": "d4547ab23a4d1e30eb0e016f1113eab00c65271f92ebb51bfeb6da364d92ffd9"
+        },
+        "schedule.bin": {
+          "bytes": 115920144,
+          "sha256": "704e5d4b482a5763f0bd55fc0c9a303e0a4235fc0912c9eca74259f0cf5f0abb"
+        },
+        "metadata.json": {
+          "bytes": 33270,
+          "sha256": "b37e6db8eb1877124fe34f629171de3c3ffe3fcadfcd331daa875cd05fe14aaf"
+        },
+        "thread_lifecycle.csv": {
+          "bytes": 221403,
+          "sha256": "6917e4c495aa98a6fdd115e2509a7b7999bab0e4cf394144131d9b2b2ac19f21"
+        }
+      },
+      "raw_scheduler_event_count": 2415003,
+      "payload_examples": {
+        "50/v2/len8": {
+          "payload_hex": "d050000001010000",
+          "header_flags": 848
+        },
+        "36/v5/len28": {
+          "payload_hex": "d0500000000000000b000002000c02040000000005cac31102000000",
+          "header_flags": 848
+        }
+      }
+    },
+    {
+      "case": "20261017_113358_00ae9eca_walk_on",
+      "files": {
+        "source_schedule.etl": {
+          "bytes": 95158272,
+          "sha256": "ba1e6ba138ff17ed726f9585e7a82cad8d0683865a8df1102cad4af4f7eb68dc"
+        },
+        "schedule.bin": {
+          "bytes": 94345392,
+          "sha256": "7ac32abe14a8f69e28c2622a75355d0369b1620d3a346e5f70c19ee2ff986f42"
+        },
+        "metadata.json": {
+          "bytes": 27208,
+          "sha256": "5c1cb7a7fe04b8efe146be53932789c82023f4ad4a1f561a154224333a1db5b3"
+        },
+        "thread_lifecycle.csv": {
+          "bytes": 208480,
+          "sha256": "731c426f0a5f45cd7efdc78ed6b7079c8a42c16c592eb0039070098510c2e2ff"
+        }
+      },
+      "raw_scheduler_event_count": 1965529,
+      "payload_examples": {
+        "50/v2/len8": {
+          "payload_hex": "7c41000001000000",
+          "header_flags": 848
+        },
+        "36/v5/len28": {
+          "payload_hex": "7c410000000000000c000100000c020301000000d03d1e2b02000000",
+          "header_flags": 848
+        }
+      }
+    }
+  ],
+  "validation": {
+    "four_measurement_unit_tests_passed": true,
+    "final_source_recompute_results02_equals_results03_byte_for_byte": true,
+    "ETL_source_hash_matches_prior_capture_validation": true,
+    "native_raw_and_Windows_standard_UTC_passes_event_counts_and_samples_equal": true,
+    "all_CPU_CSwitch_chains_consistent": true,
+    "target_thread_owner_and_lifetime_verified": true,
+    "formal_state_unknown_seconds": 0,
+    "CPU_residency_vs_execution_accounting_equality": "Not established; all six comparisons disclosed. Four exceed the 5% offline audit flag. No correction factor applied."
+  },
+  "rejected_attempts_preserved": {
+    "Windows_root": "E:/OptoJump/IronJump-walk-etw-offline-20261017-01",
+    "notes": [
+      "First compile failed on absolute forward-slash compiler argument; second compile exposed ambiguous Math.Min overload, fixed with explicit int cast.",
+      "First native read used erroneous 0x100 REAL_TIME flag instead of 0x10000000 EVENT_RECORD and failed. Output schedule.bin remained 0 bytes, no metadata was accepted.",
+      "Corrected v3 reader wrote a new decode_v2 directory; no rejected artifacts or original inputs were overwritten."
+    ]
+  },
+  "boundaries": {
+    "new_acquisition": false,
+    "new_WPR_sessions": false,
+    "production_changes": false,
+    "optimization_AB": false,
+    "app_data_semantics_changed": false
+  }
+}

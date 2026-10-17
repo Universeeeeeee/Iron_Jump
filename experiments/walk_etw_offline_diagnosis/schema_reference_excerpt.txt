@@ -1,0 +1,109 @@
+Cached Microsoft TraceEvent reference, local SHA256 2245ccc62b0d933190068a18344bc64749a2893bd9740a79706ba7fe5e86c778
+Source location: https://github.com/microsoft/perfview/blob/main/src/TraceEvent/Parsers/KernelTraceEventParser.cs
+Only prefix layout is used; these excerpts do not establish exclusive CPU semantics.
+
+//     Copyright (c) Microsoft Corporation.  All rights reserved.
+//
+using FastSerialization;
+using Microsoft.Diagnostics.Tracing.Etlx;
+using Microsoft.Diagnostics.Tracing.Parsers.Kernel;
+using Microsoft.Diagnostics.Tracing.Session;
+using Microsoft.Diagnostics.Tracing.Utilities;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Runtime.CompilerServices;
+
+CSwitch prefix excerpt (original lines 4310-4359):
+    public sealed class CSwitchTraceData : TraceEvent
+    {
+        public enum ThreadWaitMode
+        {
+            NonSwap = 0,
+            Swappable = 1,
+        };
+
+        /// <summary>
+        /// We report a context switch from from the new thread.  Thus NewThreadID == ThreadID.  
+        /// </summary>
+        public int NewThreadID { get { return ThreadID; } }
+        public int NewProcessID { get { return ProcessID; } }
+        public string NewProcessName { get { return ProcessName; } }
+        public int OldThreadID { get { return GetInt32At(4); } }
+        public int NewThreadPriority { get { return GetByteAt(8); } }
+        public int OldThreadPriority { get { return GetByteAt(9); } }
+        public int OldProcessID { get { return state.ThreadIDToProcessID(OldThreadID, TimeStampQPC); } }
+        public string OldProcessName { get { return traceEventSource.ProcessName(OldProcessID, TimeStampQPC); } }
+        // TODO figure out which one of these are right
+        public int NewThreadQuantum { get { return GetByteAt(10); } }
+        public int OldThreadQuantum { get { return GetByteAt(11); } }
+
+        // public int PreviousCState { get { return GetByteAt(10); } }
+        // public int SpareByte { get { return GetByteAt(11); } }
+
+        public ThreadWaitReason OldThreadWaitReason { get { return (ThreadWaitReason)GetByteAt(0xc); } }
+        public ThreadWaitMode OldThreadWaitMode { get { return (ThreadWaitMode)GetByteAt(0xd); } }
+        public ThreadState OldThreadState { get { return (ThreadState)GetByteAt(0xe); } }
+        public int OldThreadWaitIdealProcessor { get { return GetByteAt(15); } }
+        public int NewThreadWaitTime { get { return GetInt32At(16); } }
+        // Skipping Reserved
+
+        #region Private
+        internal CSwitchTraceData(Action<CSwitchTraceData> action, int eventID, int task, string taskName, Guid taskGuid, int opcode, string opcodeName, Guid providerGuid, string providerName, KernelTraceEventParserState state)
+            : base(eventID, task, taskName, taskGuid, opcode, opcodeName, providerGuid, providerName)
+        {
+            NeedsFixup = true;
+            Action = action;
+            this.state = state;
+        }
+        protected internal override Delegate Target
+        {
+            get { return Action; }
+            set { Action = (Action<CSwitchTraceData>)value; }
+        }
+        protected internal override void Dispatch()
+        {
+            Debug.Assert(!(Version == 2 && EventDataLength != 24));
+            Debug.Assert(!(Version > 2 && EventDataLength < 24));
+
+ReadyThread prefix excerpt (original lines 11326-11364):
+    public sealed class DispatcherReadyThreadTraceData : TraceEvent
+    {
+        public enum AdjustReasonEnum
+        {
+            None = 0,
+            Unwait = 1,
+            Boost = 2,
+        };
+
+        [Flags]
+        public enum ReadyThreadFlags : byte
+        {
+            ReadiedFromDPC = 1,     // The thread has been readied from DPC (deferred procedure call).
+            KernelSwappedOut = 2,   // The kernel stack is currently swapped out.
+            ProcessSwappedOut = 4   // The process address space is swapped out.
+        }
+
+        public int AwakenedThreadID { get { return GetInt32At(0); } }
+        public int AwakenedProcessID { get { return state.ThreadIDToProcessID(AwakenedThreadID, TimeStampQPC); } }
+        public AdjustReasonEnum AdjustReason { get { return (AdjustReasonEnum)GetByteAt(4); } }
+        public int AdjustIncrement { get { return GetByteAt(5); } }
+        public ReadyThreadFlags Flags { get { return (ReadyThreadFlags)GetByteAt(6); } }
+        // There is a reserved byte after Flags
+        public override unsafe int ProcessID
+        {
+            get
+            {
+                // We try to fix up the process ID 'on the fly' however in the case of a circular buffer,
+                // We simply don't know the process ID until the end of the trace.  Thus you to check and
+                // possibly try again.  
+                var ret = eventRecord->EventHeader.ProcessId;
+                if (ret == -1)
+                {
+                    ret = state.ThreadIDToProcessID(ThreadID, TimeStampQPC);
+                }
+
+                return ret;
+            }
+        }
