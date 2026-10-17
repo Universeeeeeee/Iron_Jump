@@ -1,0 +1,17 @@
+{
+    "utc":  "2026-10-17T08:04:58.3038894Z",
+    "before":  {
+                   "ProcessId":  20176,
+                   "ParentProcessId":  19008,
+                   "CreationDate":  "\/Date(1792223721441)\/",
+                   "CommandLine":  "\"D:\\conda\\python.exe\" E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\experiments\\single_usb_human_etw\\controller.py --mode walk --trace off"
+               },
+    "capture_saved_and_devices_closed_before_cleanup":  true,
+    "first_attempt":  "Stop-Process raised NullReferenceException; independent WMI and tasklist confirmed PID still alive",
+    "action":  "taskkill /PID 20176 /F after rechecking identity and no children",
+    "action_exitcode":  0,
+    "action_output":  "SUCCESS: The process with PID 20176 has been terminated.\r\n",
+    "controller_absent_after":  true,
+    "independent_tasklist_after":  "INFO: No tasks are running which match the specified criteria.\r\n",
+    "original_controller_result_unchanged":  true
+}

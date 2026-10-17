@@ -1,0 +1,608 @@
+{
+  "case": "20261017_155522_68978862_walk_off",
+  "scope": "One completed Walk OFF baseline, offline integrity and observed queue review only; no new capture, replay benchmark, optimization A/B or formal-program changes",
+  "original_windows_case": "E:/OptoJump/IronJump-single-usb-human-etw-20261017/experiments/single_usb_human_etw/runs/20261017_155522_68978862_walk_off",
+  "windows_review_root": "E:/OptoJump/IronJump-native-stack-field-d47e067-20261017-01/field_reviews/20261017_155522_68978862_walk_off",
+  "original_manifest_sha256": "84ebb68db5e813d5430f82e7fcdd3f189716379d00778df5f39165af63a16ab1",
+  "structured_originals_sha_verified": true,
+  "original_video_retained_on_windows": true,
+  "human_observation": {
+    "case": "20261017_155522_68978862_walk_off",
+    "source": "User self-report in this chat",
+    "physical_steps": 11,
+    "first_entering_foot": "left",
+    "skeleton_interruption_reported": false,
+    "perceived_display_delay": "Not observed; user did not look at the screen",
+    "video_review_by_assistant": false,
+    "original_report_starting_foot": "Not defined",
+    "original_report_not_rewritten": true
+  },
+  "integrity": {
+    "name": "20261017_155522_68978862_walk_off",
+    "mode": "walk",
+    "integrity_passed": true,
+    "queue_invariant_snapshots": 1901,
+    "raw_frames_with_preparation": 74573,
+    "formal_archived_frames": 39917,
+    "formal_usable_contact_fraction": 0.1614511562648761,
+    "device_and_frame_counters_contiguous": true,
+    "wire_decodes_to_retained_bits": true,
+    "original_archive_equals_raw_sensorframes": true,
+    "event_audit_equals_report": true,
+    "quality_snapshot_equals_report": true,
+    "quality_history_untruncated": true,
+    "report_timeline_equals_original_quality_masked_history": true,
+    "active_publications": 11,
+    "painted_contact_ids": 11,
+    "report_touch_count": 11,
+    "report_valid_steps": 8,
+    "camera_csv_contiguous": true,
+    "native_video_bytes": 980479550,
+    "native_video_frames": 6505,
+    "one_reader_final_drained_sdk_stopped": true,
+    "scope": "Integrity and original report transformation checks, not cross-run algorithm equivalence or observer-overhead calibration."
+  },
+  "original_controller_result": {
+    "valid_capture": true,
+    "errors": [],
+    "terminated_after_child_cleanup": true,
+    "child_returncode": 1,
+    "trace_owned_remaining": false,
+    "scope": "Capture/cleanup status only. ETL event validation, under-load overhead, density and actual skeleton coverage remain offline decisions."
+  },
+  "clean_process_exit": false,
+  "cleanup_interpretation": "Saved data and SDK/reader shutdown checks passed, but controller valid_capture=true is not accepted as proof of clean exit: child_returncode=1 and terminated_after_child_cleanup=true. Residual parent PID 20176 was ended after independently verifying save, shutdown, identity and absence of children. Original failure evidence unchanged.",
+  "residual_controller_cleanup_sha256": "a29744791f00b98709c68b699eb7f7ca9f7ed724099149f29eb1769a64696d1f",
+  "formal_duration_s": 39.9036051,
+  "field_protocol_check": {
+    "valid_field_protocol": true,
+    "continuous_device_samples": true,
+    "quality_acquisition_failures": [],
+    "scene_protocol_valid": true,
+    "contact_pose_present_in_each_observed_interval": true
+  },
+  "pose_evidence_limit": "Positive valid-pose counts in observed intervals plus user report; no claim of continuous video-reviewed coverage",
+  "windows": {
+    "whole_formal": {
+      "observations": 1017,
+      "observed_s": 39.8714746,
+      "enqueued_fps": 999.9880967532613,
+      "consumer_fps": 999.9880967532613,
+      "throughput_gap_to_actual_fps": 0.0,
+      "pending": {
+        "count": 1017,
+        "p95": 99.19999999999993,
+        "max": 191.0
+      },
+      "oldest_pending_ms": {
+        "count": 1017,
+        "p95": 96.23183999999995,
+        "max": 196.3539
+      },
+      "completed_receipt_age_ms": {
+        "count": 1017,
+        "p95": 108.39537999999997,
+        "max": 217.3694
+      },
+      "age_slope_ms_per_device_second": -0.6645740828157153,
+      "heavy_observed_span_s": 1.0040295,
+      "max_observation_gap_ms": 175.6916,
+      "sustained_shortage": false,
+      "start_ns": 219571568667300,
+      "end_ns": 219611472272400,
+      "raw_frames": 39913,
+      "usable_contact_fraction": 0.1614511562648761
+    },
+    "initial_empty": {
+      "observations": 128,
+      "observed_s": 4.9624168,
+      "enqueued_fps": 999.9160086673897,
+      "consumer_fps": 999.3114645267202,
+      "throughput_gap_to_actual_fps": 0.6045441406695318,
+      "pending": {
+        "count": 128,
+        "p95": 4.0,
+        "max": 6.0
+      },
+      "oldest_pending_ms": {
+        "count": 128,
+        "p95": 3.7032399999999988,
+        "max": 4.6165
+      },
+      "completed_receipt_age_ms": {
+        "count": 128,
+        "p95": 4.932194999999997,
+        "max": 6.7123
+      },
+      "age_slope_ms_per_device_second": 0.01959780078329913,
+      "heavy_observed_span_s": 0.0,
+      "max_observation_gap_ms": 68.1141,
+      "sustained_shortage": false,
+      "start_ns": 219571568667300,
+      "end_ns": 219576568667300,
+      "raw_frames": 5010,
+      "usable_contact_fraction": 0.0
+    },
+    "contact_span": {
+      "observations": 686,
+      "observed_s": 27.0217502,
+      "enqueued_fps": 997.233702500884,
+      "consumer_fps": 995.1983051046043,
+      "throughput_gap_to_actual_fps": 2.035397396279677,
+      "pending": {
+        "count": 686,
+        "p95": 115.0,
+        "max": 191.0
+      },
+      "oldest_pending_ms": {
+        "count": 686,
+        "p95": 113.30595,
+        "max": 196.3539
+      },
+      "completed_receipt_age_ms": {
+        "count": 686,
+        "p95": 121.053825,
+        "max": 217.3694
+      },
+      "age_slope_ms_per_device_second": -3.0413190860805575,
+      "heavy_observed_span_s": 1.0040295,
+      "max_observation_gap_ms": 175.6916,
+      "sustained_shortage": false,
+      "start_ns": 219580077315800,
+      "end_ns": 219607157935300,
+      "raw_frames": 27069,
+      "usable_contact_fraction": 0.23805829546713952
+    },
+    "operator_tail": {
+      "observations": 382,
+      "observed_s": 14.9767234,
+      "enqueued_fps": 999.9516983801677,
+      "consumer_fps": 999.9516983801677,
+      "throughput_gap_to_actual_fps": 0.0,
+      "pending": {
+        "count": 382,
+        "p95": 9.949999999999989,
+        "max": 117.0
+      },
+      "oldest_pending_ms": {
+        "count": 382,
+        "p95": 8.170334999999998,
+        "max": 111.4596
+      },
+      "completed_receipt_age_ms": {
+        "count": 382,
+        "p95": 17.379165,
+        "max": 123.2593
+      },
+      "age_slope_ms_per_device_second": -0.03209606075075588,
+      "heavy_observed_span_s": 0.0,
+      "max_observation_gap_ms": 175.6916,
+      "sustained_shortage": false,
+      "start_ns": 219596470651900,
+      "end_ns": 219611472272400,
+      "raw_frames": 15001,
+      "usable_contact_fraction": 0.0007332844477034864
+    }
+  },
+  "visual_formal": {
+    "renders": 826,
+    "pose_draw_calls": 755,
+    "valid_pose_draws": 742,
+    "valid_nodes_drawn": 5420,
+    "valid_links_drawn": 4758
+  },
+  "footprint_receipt_to_paint_ms": {
+    "count": 11,
+    "p95": 257.84215,
+    "max": 269.273
+  },
+  "queue_maxima": {
+    "pending": {
+      "value": 191,
+      "witness": [
+        219583197666300,
+        46080,
+        219582980296900,
+        191,
+        219583001312400,
+        46291,
+        219583197602900,
+        211,
+        20,
+        "batch",
+        46081,
+        46100,
+        20
+      ]
+    },
+    "unfinished": {
+      "value": 211,
+      "witness": [
+        219583197666300,
+        46080,
+        219582980296900,
+        191,
+        219583001312400,
+        46291,
+        219583197602900,
+        211,
+        20,
+        "batch",
+        46081,
+        46100,
+        20
+      ]
+    },
+    "popped_inflight": {
+      "value": 20,
+      "witness": [
+        219580286496600,
+        43284,
+        219580192993100,
+        68,
+        219580224955000,
+        43372,
+        219580275563500,
+        88,
+        20,
+        "batch",
+        43285,
+        43304,
+        20
+      ]
+    }
+  },
+  "raw_contact_completion_scope": "Raw usable-contact samples after the frozen preflight bad-bit mask; not a replay of filtered Processor input. Completion bounds use only consumer queue_common plus queue_final, never queue_samples. No stack attribution.",
+  "raw_active_samples": 6444,
+  "raw_contact_spans": [
+    {
+      "raw_samples": [
+        43177,
+        43180
+      ],
+      "active_samples": 4,
+      "start_completion_bounds_formal_s": [
+        8.4693799,
+        8.5346377
+      ],
+      "end_completion_bounds_formal_s": [
+        8.4693799,
+        8.5346377
+      ]
+    },
+    {
+      "raw_samples": [
+        43182,
+        49601
+      ],
+      "active_samples": 6420,
+      "start_completion_bounds_formal_s": [
+        8.4693799,
+        8.5346377
+      ],
+      "end_completion_bounds_formal_s": [
+        14.9134987,
+        14.9437792
+      ]
+    },
+    {
+      "raw_samples": [
+        49660,
+        49660
+      ],
+      "active_samples": 1,
+      "start_completion_bounds_formal_s": [
+        14.9437792,
+        15.0190689
+      ],
+      "end_completion_bounds_formal_s": [
+        14.9437792,
+        15.0190689
+      ]
+    },
+    {
+      "raw_samples": [
+        50470,
+        50470
+      ],
+      "active_samples": 1,
+      "start_completion_bounds_formal_s": [
+        15.7641288,
+        15.9281935
+      ],
+      "end_completion_bounds_formal_s": [
+        15.7641288,
+        15.9281935
+      ]
+    },
+    {
+      "raw_samples": [
+        50500,
+        50500
+      ],
+      "active_samples": 1,
+      "start_completion_bounds_formal_s": [
+        15.7641288,
+        15.9281935
+      ],
+      "end_completion_bounds_formal_s": [
+        15.7641288,
+        15.9281935
+      ]
+    },
+    {
+      "raw_samples": [
+        50530,
+        50530
+      ],
+      "active_samples": 1,
+      "start_completion_bounds_formal_s": [
+        15.9281935,
+        15.9431734
+      ],
+      "end_completion_bounds_formal_s": [
+        15.9281935,
+        15.9431734
+      ]
+    },
+    {
+      "raw_samples": [
+        50560,
+        50560
+      ],
+      "active_samples": 1,
+      "start_completion_bounds_formal_s": [
+        15.9281935,
+        15.9431734
+      ],
+      "end_completion_bounds_formal_s": [
+        15.9281935,
+        15.9431734
+      ]
+    },
+    {
+      "raw_samples": [
+        56710,
+        56710
+      ],
+      "active_samples": 1,
+      "start_completion_bounds_formal_s": [
+        21.9726631,
+        22.1586207
+      ],
+      "end_completion_bounds_formal_s": [
+        21.9726631,
+        22.1586207
+      ]
+    },
+    {
+      "raw_samples": [
+        56740,
+        56740
+      ],
+      "active_samples": 1,
+      "start_completion_bounds_formal_s": [
+        22.1586207,
+        22.1750744
+      ],
+      "end_completion_bounds_formal_s": [
+        22.1586207,
+        22.1750744
+      ]
+    },
+    {
+      "raw_samples": [
+        56770,
+        56770
+      ],
+      "active_samples": 1,
+      "start_completion_bounds_formal_s": [
+        22.1586207,
+        22.1750744
+      ],
+      "end_completion_bounds_formal_s": [
+        22.1586207,
+        22.1750744
+      ]
+    },
+    {
+      "raw_samples": [
+        56800,
+        56800
+      ],
+      "active_samples": 1,
+      "start_completion_bounds_formal_s": [
+        22.1750744,
+        22.1926988
+      ],
+      "end_completion_bounds_formal_s": [
+        22.1750744,
+        22.1926988
+      ]
+    },
+    {
+      "raw_samples": [
+        63340,
+        63340
+      ],
+      "active_samples": 1,
+      "start_completion_bounds_formal_s": [
+        28.6318205,
+        28.8165122
+      ],
+      "end_completion_bounds_formal_s": [
+        28.6318205,
+        28.8165122
+      ]
+    },
+    {
+      "raw_samples": [
+        63370,
+        63370
+      ],
+      "active_samples": 1,
+      "start_completion_bounds_formal_s": [
+        28.8165122,
+        28.8442792
+      ],
+      "end_completion_bounds_formal_s": [
+        28.8165122,
+        28.8442792
+      ]
+    },
+    {
+      "raw_samples": [
+        63400,
+        63400
+      ],
+      "active_samples": 1,
+      "start_completion_bounds_formal_s": [
+        28.8165122,
+        28.8442792
+      ],
+      "end_completion_bounds_formal_s": [
+        28.8165122,
+        28.8442792
+      ]
+    },
+    {
+      "raw_samples": [
+        63430,
+        63430
+      ],
+      "active_samples": 1,
+      "start_completion_bounds_formal_s": [
+        28.8442792,
+        28.863381
+      ],
+      "end_completion_bounds_formal_s": [
+        28.8442792,
+        28.863381
+      ]
+    },
+    {
+      "raw_samples": [
+        63460,
+        63460
+      ],
+      "active_samples": 1,
+      "start_completion_bounds_formal_s": [
+        28.8442792,
+        28.863381
+      ],
+      "end_completion_bounds_formal_s": [
+        28.8442792,
+        28.863381
+      ]
+    },
+    {
+      "raw_samples": [
+        70090,
+        70090
+      ],
+      "active_samples": 1,
+      "start_completion_bounds_formal_s": [
+        35.3522552,
+        35.5563879
+      ],
+      "end_completion_bounds_formal_s": [
+        35.3522552,
+        35.5563879
+      ]
+    },
+    {
+      "raw_samples": [
+        70120,
+        70120
+      ],
+      "active_samples": 1,
+      "start_completion_bounds_formal_s": [
+        35.5563879,
+        35.6023034
+      ],
+      "end_completion_bounds_formal_s": [
+        35.5563879,
+        35.6023034
+      ]
+    },
+    {
+      "raw_samples": [
+        70150,
+        70150
+      ],
+      "active_samples": 1,
+      "start_completion_bounds_formal_s": [
+        35.5563879,
+        35.6023034
+      ],
+      "end_completion_bounds_formal_s": [
+        35.5563879,
+        35.6023034
+      ]
+    },
+    {
+      "raw_samples": [
+        70180,
+        70180
+      ],
+      "active_samples": 1,
+      "start_completion_bounds_formal_s": [
+        35.6023034,
+        35.6169427
+      ],
+      "end_completion_bounds_formal_s": [
+        35.6023034,
+        35.6169427
+      ]
+    },
+    {
+      "raw_samples": [
+        70210,
+        70210
+      ],
+      "active_samples": 1,
+      "start_completion_bounds_formal_s": [
+        35.6023034,
+        35.6169427
+      ],
+      "end_completion_bounds_formal_s": [
+        35.6023034,
+        35.6169427
+      ]
+    },
+    {
+      "raw_samples": [
+        70240,
+        70240
+      ],
+      "active_samples": 1,
+      "start_completion_bounds_formal_s": [
+        35.6169427,
+        35.6303538
+      ],
+      "end_completion_bounds_formal_s": [
+        35.6169427,
+        35.6303538
+      ]
+    }
+  ],
+  "sustained_shortage_reproduced": false,
+  "findings": [
+    "No prior multi-second backlog reproduced under the existing window checks; short backlog remains in the evidence (max pending 191, unfinished 211, oldest pending 196.3539 ms).",
+    "11 active publications, 11 painted contact IDs and report touch_count=11 agree with the reported physical count at this aggregate level; report valid_steps=8 is a separate output and no full gait-correctness conclusion is made.",
+    "Raw contact consumption brackets use only consumer batch-completion witnesses; they do not reconstruct filtered Processor input or individual function costs.",
+    "No native CPU or CSwitch stack recording was taken in this OFF trial, and no CPU/GIL/Qt cause is assigned."
+  ],
+  "quantitative_field_attribution_ready": false,
+  "next_trial_user_authorization": {
+    "reason": "User offered one more Walk with video to observe delay",
+    "mode": "WALK-ETW-OFF",
+    "video": "Windows software screen recording",
+    "load_equivalence": "Changed by screen recorder; preserve separately, not an equivalent calibration pair and not a replacement for this trial or historical failed windows",
+    "instructions": "Include camera preview, footprints and top status; single outward passage only; preserve empty lead-in and tail. No CPU/CSwitch automatically armed."
+  },
+  "analysis_source_sha256": {
+    "single_usb_field/analyze.py": "5fa16df3e598b83e7b0628cdfd65a0446ea603fb4a22c2142d7206b19cf9dbfa",
+    "single_usb_human_etw/verify_trial.py": "f1deb18bf65391c87a82ff22c8a91dd073fd730d981549d04811d11f4a037ad0"
+  }
+}
