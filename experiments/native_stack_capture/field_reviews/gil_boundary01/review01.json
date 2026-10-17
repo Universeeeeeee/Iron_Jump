@@ -1,0 +1,99 @@
+{
+  "question": "积压中的GIL等待能否从模块缩小到原始调用边界？",
+  "scope": "既有现场ETL和原始输入的离线分析；只读同SHA二进制和独立原链路回放。未启动人体、USB、Run、优化A/B、相机或新ETW采集。",
+  "field_case": "20261017_214905_5c874d97_walk_off",
+  "evidence_chain": [
+    {
+      "layer": "现场",
+      "facts": "原有六个带100us安全边界的pending/20帧批次在途见证仍有效。三条含NumPy归约返回路径，一条含另一未命名NumPy路径，两条经PyGILState_Ensure进入PySide回调；均有低级等待、take_gil和完整线程入口。",
+      "source": "../20261017_field_wait01/round02/batch_wait_witnesses01.json"
+    },
+    {
+      "layer": "独立公开入口映射",
+      "facts": "在新的无设备进程读取PyCFunction_GetFunction、PyVectorcall_Function和NumPy公开API胶囊指针，并与该PE的.pdata范围核对。现场NumPy SHA=4fb4c5d62a6bd766eea716350eaf5396580e33cf7dc159e305488d1b7d72dad2；没有用同版本不同构建替代。",
+      "source": "numpy_entry_map03.json"
+    },
+    {
+      "layer": "机器码",
+      "facts": "NumPy+0x17ae9e与+0x100417的间接调用均指向PyEval_RestoreThread；配对路径+0x17ad60与+0x1002cc指向PyEval_SaveThread。两处SaveThread前都调用公开NpyIter_GetIterSize(+0x113cb0)，比较0x1f4(500)，规模<=500跳过该释放；另有执行条件，不能从数组长度推算实际释放次数。内部函数继续保留RVA。",
+      "source": "numpy_disassembly02.txt"
+    },
+    {
+      "layer": "可命名调用边界",
+      "facts": "现场+0x173161落于ufunc.reduce公开C入口范围[0x173150,0x173166)，+0x103145落于ndarray.all公开入口范围[0x103070,0x103162)。这些是独立注释，不给原未匹配PDB字段改名，也不补造内部符号。",
+      "source": "numpy_entry_map03.json"
+    },
+    {
+      "layer": "原链路调用来源",
+      "facts": "对同一现场输入执行原实现，只在五个预列20帧区间记录两个C入口族的调用来源，不计时、不比较候选。全部完整报告、质量历史/滚动状态、事件审计和timeline精确一致，输入及正式源SHA前后不变。",
+      "source": "original_callers01.json"
+    },
+    {
+      "layer": "Python源位置",
+      "facts": "积压对应的四个20帧区间中，DeviceQualitySession.on_frame:168的np.array_equal每帧进入768元素bool ndarray.all，再调用logical_and.reduce。GroundStabilityFilter._feed:121/122/138/145/146/150的多处np.all/np.any也进入归约族，分支次数不同。这解释了原程序为何存在这些边界，但离线Python调用栈不能冒充某一现场时刻丢失的Python帧。",
+      "source": "original_callers01.json"
+    },
+    {
+      "layer": "另一信号桥边界",
+      "facts": "同SHA的pyside6.abi3.dll中，公开SignalInstance.emit入口RVA=0x6adc，范围[0x6adc,0x6d0a)包含现场返回地址0x6ca3。确认等待链跨过Python emit→Qt→Python回调桥；不能据此辨认具体信号实例或锁持有者。",
+      "source": "qt_emit_entry01.json"
+    }
+  ],
+  "interpretation": {
+    "established": "积压批次内发生的部分GIL等待，已能对应NumPy归约完成后的重新获取边界，以及PySide信号桥回调入口。排查不再仅停留于笼统消费能力不足或模块名称。",
+    "priority_hypothesis": "原始768束处理中的NumPy原生操作和Qt信号桥反复让出/重新获取GIL，与同进程并发执行竞争，可能放大单位样本服务时间；需要继续区分等待者、持有者及计算本身。",
+    "not_established": [
+      "尚未确定GIL持有线程、持有代码或主导等待来源。",
+      "原生整体质量与实际负载扰动校准仍失败，不推导GIL比例、每帧等待成本、CPU函数占比或唯一根因。",
+      "不把归约调用次数当GIL释放/等待次数；ndarray.all与其嵌套reduce不能相加。",
+      "不从此结论实施NumPy替换、跳过质量检查、滤波/Processor重构或绘图A/B。",
+      "尚不能将断电前后差异归因于GIL、温升或设备缓存。"
+    ],
+    "preserved_acceptance": "../20261017_field_wait01/round02/acceptance.json及既有CPU失败证据不变；未知内核继续保留模块/地址偏移。",
+    "next_offline_action": "现有导出已保留同GUI PID的全部线程StackWalk，调度事件目前只筛选三个目标线程。可用原ETL与既有reader扩展离线调度覆盖，继续检查其他同进程线程是否构成GIL竞争者；不需要重新人体采集。"
+  },
+  "preservation": {
+    "formal_sources_changed": false,
+    "capture_controller_changed": false,
+    "frozen_plans_changed": false,
+    "bad576_policy_changed": false,
+    "historical_windows_or_reports_overwritten": false
+  },
+  "verification": {
+    "original_replay_full_equality": true,
+    "native_unit_tests": {
+      "run": 47,
+      "passed": 43,
+      "skipped_windows_only": 4
+    },
+    "python_compile": true,
+    "post_analysis_state": "post_analysis_state01.json"
+  },
+  "analysis_attempts": [
+    {
+      "name": "map_numpy_entries initial",
+      "outcome": "Failed before output creation: enumerating ndarray properties accessed mT on a1D empty array, ValueError(matrix transpose with ndim <2). No target process/device affected. Replaced property enumeration with explicit method descriptors.",
+      "retained_remote_script": "E:/OptoJump/IronJump-native-stack-field-d47e067-20261017-01/field_reviews/gil_boundary01/map_numpy_entries.py",
+      "retained_local_script": "experiments/native_stack_capture/runs/gil_boundary01/map_numpy_entries_initial01.py",
+      "sha256": "c63f2ce0c519994f0094dd4ca74ea79f0280c74c14d68833ec0bc3236d0919f2"
+    },
+    {
+      "name": "entry map02",
+      "outcome": "Successful public entry map; full raw output retained in ignored runs and remote numpy_entries02.json. Map03 adds leaf-API and SaveThread identities; no collection repeated."
+    },
+    {
+      "name": "disassembly01",
+      "outcome": "Start at0x1002a0 was not an instruction boundary and exposed an irrelevant partial instruction. Original text retained in ignored runs; revision02 starts at verified boundary0x1002b5. Conclusions use complete function and verified call sites."
+    }
+  ],
+  "artifact_sha256": {
+    "profile_original.py": "846a5f325d103cee6f81eb0d76056678102d2f05605d14688c556f8321f3f109",
+    "post_analysis_state01.json": "4088b6e3f7fbc1bbd22c7ff4d9786986e47c26f92958de008b1ee45226a66eff",
+    "original_callers01.json": "12f116300608d283cb7aab96845486c9a5b8596de0800d2f612261a21af6121d",
+    "numpy_disassembly02.txt": "8a0e258d9215475fc8bc08c7148f7f91b3ca2bc51415c04be478cf396dbb578a",
+    "qt_emit_entry01.json": "872eaf9e2e223aa7d8b8294b6e1ef99c0024bfb9066fa3fc53d132b5d6d33712",
+    "numpy_entry_map03.json": "e2b94a7ed98e4d4192eeee622506e1250aab3f1af1d001eae16246ef5eeb5896",
+    "map_numpy_entries.py": "c996530d4566ca615728ce15370d99126495b51ddf78b85613392c800045547f"
+  },
+  "remaining_goal": "数据积压根因与修复尚未完成；继续离线核查，不宣称已解决。"
+}

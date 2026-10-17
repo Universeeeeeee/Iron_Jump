@@ -1,0 +1,964 @@
+{
+  "case": "20261017_214905_5c874d97_walk_off",
+  "profiled_batches": [
+    [
+      20666,
+      20685
+    ],
+    [
+      31968,
+      31987
+    ],
+    [
+      32368,
+      32387
+    ],
+    [
+      32568,
+      32587
+    ],
+    [
+      32668,
+      32687
+    ]
+  ],
+  "full_report_quality_audit_timeline_exact": true,
+  "input_sha256": {
+    "raw_frames.npz": "2042f146705f24efaa49d43df29a8ad655810f41eb812fef93f444cf88df2ac5",
+    "raw_archive.npz": "4d15117be4a2035d8775a549b0fa500a51d8eab044579cbaf71693b3f7fbfc68",
+    "acquisition.json": "83f2911ea7bfe37f89e3952b51b375901b48128bef6faec159a8b7be89b25aef",
+    "report.json": "73b70921e611785bcb57258c0d9fbd92d5b7fdbf37756c67e40222df6ab7842c",
+    "state.json": "7376b4b8f38fa0bc8453b66bf488cc54c6a3d0bcc8ba950b6b60edc5c69169ef"
+  },
+  "source_sha256": {
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\experiments\\single_usb_human_etw\\field_runner.py": "6a049bca29b66aa3061e1a1fd5b07e1746c9f9a555d446378b66bb24cb31bd9b",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\experiments\\single_usb_human_etw\\queue_probe.py": "b3b5715ac2d4c191098499458528ff2d9f5495bd5bb6966dc1776ecb0e5105b3",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\experiments\\single_usb_human_etw\\native_clock.py": "419173273b5869d2d416da1e69099731824905a4f312b612352287918ff7e5ae",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\experiments\\single_usb_human_etw\\protocol.py": "c49e77ae47cf16dcfb9837ee2a21116ec366327732099ad8ea1a34868647282b",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\experiments\\single_usb_human_etw\\human_runner.py": "893cbef159aa95e37aa98d40e8f9df788f47405427c87bfd6e0960b8d609ea3e",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\experiments\\single_usb_human_etw\\entry.py": "317ebf97fad372ae49280b68c7aecee9f4ca27ace576c533c7a7f0194fd5e0cb",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\experiments\\single_usb_human_etw\\controller.py": "263c504b5b960d791867947c795fee5eb1c043996292d9324069c3b921862dff",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\experiments\\single_usb_human_etw\\schedule.wprp": "f22c929b96a3bf4460e834d1828aef8afe49e479df32ff0c09d2cf264907d9e0",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\experiments\\single_usb_human_etw\\launch.ps1": "11fcf1d4a036a30afe81b08d3b113a88f7cd1411d5b4b2d7269600ffbf5b47bd",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\experiments\\single_usb_human_etw\\plan.json": "fe444e5a52c32dffa66e4732ef77aa6c2f9dfb80c093158705a9a65a7413bf45",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\experiments\\single_usb_human_etw\\dependencies.json": "522f787ed162bf944d3a18f46825667b3d6d043f6bd2e669a9b905075799747a",
+    "E:\\OptoJump\\IronJump-walk-compute-offline-20261017-01\\config\\__init__.py": "4a58ed84d8cf67636ec087530a2544afa5ec215a1ae355696ea074ab82ce03bb",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\config\\__init__.py": "4a58ed84d8cf67636ec087530a2544afa5ec215a1ae355696ea074ab82ce03bb",
+    "E:\\OptoJump\\IronJump-walk-compute-offline-20261017-01\\config\\walking_config.py": "5da14757e547be8615836a5b632eb84a3ccb917f3428d44be5680cd20fd1ae3e",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\config\\walking_config.py": "5da14757e547be8615836a5b632eb84a3ccb917f3428d44be5680cd20fd1ae3e",
+    "E:\\OptoJump\\IronJump-walk-compute-offline-20261017-01\\hardware\\protocol.py": "9a0bde3b581bc9580369b15c26d0b47d0ca121865f37be2e73c5230ead480d63",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\hardware\\protocol.py": "9a0bde3b581bc9580369b15c26d0b47d0ca121865f37be2e73c5230ead480d63",
+    "E:\\OptoJump\\IronJump-walk-compute-offline-20261017-01\\hardware\\receive.py": "90d0179663717c14be902b571af64555f53dccfe90694224412338e63842ae28",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\hardware\\receive.py": "90d0179663717c14be902b571af64555f53dccfe90694224412338e63842ae28",
+    "E:\\OptoJump\\IronJump-walk-compute-offline-20261017-01\\hardware\\sensor_frame.py": "87ed38175e80e56a7a586372357701c5ba879cd1fdb4ea2ea00c7b7c6bd6a95d",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\hardware\\sensor_frame.py": "87ed38175e80e56a7a586372357701c5ba879cd1fdb4ea2ea00c7b7c6bd6a95d",
+    "E:\\OptoJump\\IronJump-walk-compute-offline-20261017-01\\hardware\\payload_mirror.py": "ac7a5f2e30ae4b731299a33a2840bc596b462d0bfa6a0d84570849000f3a5295",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\hardware\\payload_mirror.py": "ac7a5f2e30ae4b731299a33a2840bc596b462d0bfa6a0d84570849000f3a5295",
+    "E:\\OptoJump\\IronJump-walk-compute-offline-20261017-01\\hardware\\beam_filter.py": "3b4e9a1b1ac278eb4b7011cd54b4bbce49b4346fb65ee2371aa21a06807bb846",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\hardware\\beam_filter.py": "3b4e9a1b1ac278eb4b7011cd54b4bbce49b4346fb65ee2371aa21a06807bb846",
+    "E:\\OptoJump\\IronJump-walk-compute-offline-20261017-01\\hardware\\usb_worker.py": "57ca85b42401f242026fdfded5d4002d06e85d5da866980dcc2ab99771a9041d",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\hardware\\usb_worker.py": "57ca85b42401f242026fdfded5d4002d06e85d5da866980dcc2ab99771a9041d",
+    "E:\\OptoJump\\IronJump-walk-compute-offline-20261017-01\\hardware\\__init__.py": "a043fd526b004215bffa86888a5dd0969fc572fb7dd65a5911fc7fc80748d589",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\hardware\\__init__.py": "a043fd526b004215bffa86888a5dd0969fc572fb7dd65a5911fc7fc80748d589",
+    "E:\\OptoJump\\IronJump-walk-compute-offline-20261017-01\\engine\\spatial_clusterer.py": "49a9290f71f645a41c7491d52b9c83f86b1c30ac92347ddfe457cd9033f22f1c",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\engine\\spatial_clusterer.py": "49a9290f71f645a41c7491d52b9c83f86b1c30ac92347ddfe457cd9033f22f1c",
+    "E:\\OptoJump\\IronJump-walk-compute-offline-20261017-01\\engine\\single_foot_tracker.py": "0dfe8cb9ae00151e751a69ceb69bb852fb629e8506b81ebbc71cadcb521440f2",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\engine\\single_foot_tracker.py": "0dfe8cb9ae00151e751a69ceb69bb852fb629e8506b81ebbc71cadcb521440f2",
+    "E:\\OptoJump\\IronJump-walk-compute-offline-20261017-01\\engine\\extra_parameter.py": "b31be74eb01821d0d3dd46994336748f84bb67688dfde1ec6abd34dc81ba13c9",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\engine\\extra_parameter.py": "b31be74eb01821d0d3dd46994336748f84bb67688dfde1ec6abd34dc81ba13c9",
+    "E:\\OptoJump\\IronJump-walk-compute-offline-20261017-01\\engine\\contact_tracker.py": "db999522a7d7d73508d18c769b01264916d7dab297566854689865b84aa138a4",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\engine\\contact_tracker.py": "db999522a7d7d73508d18c769b01264916d7dab297566854689865b84aa138a4",
+    "E:\\OptoJump\\IronJump-walk-compute-offline-20261017-01\\config\\overground_running_config.py": "db4624716c2b01890030a79cfc9aceb313a941a239041bfeb3cba3a517b050f3",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\config\\overground_running_config.py": "db4624716c2b01890030a79cfc9aceb313a941a239041bfeb3cba3a517b050f3",
+    "E:\\OptoJump\\IronJump-walk-compute-offline-20261017-01\\config\\treadmill_config.py": "8d5e404c9961a5c86ed6f69104b6603ad887b0acfd920b47b85a263b463fc568",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\config\\treadmill_config.py": "8d5e404c9961a5c86ed6f69104b6603ad887b0acfd920b47b85a263b463fc568",
+    "E:\\OptoJump\\IronJump-walk-compute-offline-20261017-01\\config\\test_config.py": "03b037d3163050f336852a9ca1a68a5473228f8951606de9f4cacd2051fe5d53",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\config\\test_config.py": "03b037d3163050f336852a9ca1a68a5473228f8951606de9f4cacd2051fe5d53",
+    "E:\\OptoJump\\IronJump-walk-compute-offline-20261017-01\\engine\\footprint_visualization.py": "bd00effa30b8381adf2a02174710401a65c96914446b9ecee3f837c9b5b95453",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\engine\\footprint_visualization.py": "bd00effa30b8381adf2a02174710401a65c96914446b9ecee3f837c9b5b95453",
+    "E:\\OptoJump\\IronJump-walk-compute-offline-20261017-01\\engine\\modes\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\engine\\modes\\__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "E:\\OptoJump\\IronJump-walk-compute-offline-20261017-01\\config\\treadmill_report.py": "c9ae2e136491305b09770c493b519122a567ec72f78b586f22f28de83a0bda3e",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\config\\treadmill_report.py": "c9ae2e136491305b09770c493b519122a567ec72f78b586f22f28de83a0bda3e",
+    "E:\\OptoJump\\IronJump-walk-compute-offline-20261017-01\\config\\overground_running_report.py": "fb6342efd92843b0edbda2876cad78e1eab753d88cde83a90ef0736c582f8e39",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\config\\overground_running_report.py": "fb6342efd92843b0edbda2876cad78e1eab753d88cde83a90ef0736c582f8e39",
+    "E:\\OptoJump\\IronJump-walk-compute-offline-20261017-01\\config\\test_report.py": "54f13aca41ac4041b2589443c65e5515de0297610df7200b29f40d37113b534b",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\config\\test_report.py": "54f13aca41ac4041b2589443c65e5515de0297610df7200b29f40d37113b534b",
+    "E:\\OptoJump\\IronJump-walk-compute-offline-20261017-01\\engine\\modes\\jump_processor.py": "2dddef71cfd46fdbfdc330945c015ebd6a97971e0e05546e95c0e40469ecaae2",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\engine\\modes\\jump_processor.py": "2dddef71cfd46fdbfdc330945c015ebd6a97971e0e05546e95c0e40469ecaae2",
+    "E:\\OptoJump\\IronJump-walk-compute-offline-20261017-01\\engine\\gait_engine.py": "063f13a5b1bc14dbaba54febaf835746dc1758a6104d2b5ecb8276d42e344075",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\engine\\gait_engine.py": "063f13a5b1bc14dbaba54febaf835746dc1758a6104d2b5ecb8276d42e344075",
+    "E:\\OptoJump\\IronJump-walk-compute-offline-20261017-01\\engine\\__init__.py": "21b8cfbe2492e2d99508869a8d72874710ad2c49c81d361b39ce0cb18ec8c48e",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\engine\\__init__.py": "21b8cfbe2492e2d99508869a8d72874710ad2c49c81d361b39ce0cb18ec8c48e",
+    "E:\\OptoJump\\IronJump-walk-compute-offline-20261017-01\\hardware\\beam_quality.py": "98e7129a4491e48a3111216ecf316ec8a548769ec6e15977b872118a539940b5",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\hardware\\beam_quality.py": "98e7129a4491e48a3111216ecf316ec8a548769ec6e15977b872118a539940b5",
+    "E:\\OptoJump\\IronJump-walk-compute-offline-20261017-01\\hardware\\walking_preflight.py": "d708f2fee134a837527e54f8a577c6b395fb7eee77d73c3c636244212bb89ea4",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\hardware\\walking_preflight.py": "d708f2fee134a837527e54f8a577c6b395fb7eee77d73c3c636244212bb89ea4",
+    "E:\\OptoJump\\IronJump-walk-compute-offline-20261017-01\\hardware\\active_segments.py": "5039b99f099bb67de6568f481c1a7ec3bad3770db541026b890213e0c560155e",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\hardware\\active_segments.py": "5039b99f099bb67de6568f481c1a7ec3bad3770db541026b890213e0c560155e",
+    "E:\\OptoJump\\IronJump-walk-compute-offline-20261017-01\\engine\\device_quality_session.py": "60bcda47899b3bd320e2f4870103d14202e15ad905cbd502a376195f91e6d2cb",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\engine\\device_quality_session.py": "60bcda47899b3bd320e2f4870103d14202e15ad905cbd502a376195f91e6d2cb",
+    "E:\\OptoJump\\IronJump-walk-compute-offline-20261017-01\\engine\\ground_source_review.py": "4e12322e717ef8b18796e0dfb2ffdf798b5231078a0637550a9aef26bd5cedfa",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\engine\\ground_source_review.py": "4e12322e717ef8b18796e0dfb2ffdf798b5231078a0637550a9aef26bd5cedfa",
+    "E:\\OptoJump\\IronJump-walk-compute-offline-20261017-01\\engine\\ground_metric_evidence.py": "5d57cc0ad3ab0514583d026df5684ef87c24bc55f18ac76c92f9e3e6327a70a4",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\engine\\ground_metric_evidence.py": "5d57cc0ad3ab0514583d026df5684ef87c24bc55f18ac76c92f9e3e6327a70a4",
+    "E:\\OptoJump\\IronJump-walk-compute-offline-20261017-01\\engine\\ground_position_evidence.py": "261edcac218b43b9e63e8178b6cb4aeb7786f98e52c92efe97f58e31063ca2f3",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\engine\\ground_position_evidence.py": "261edcac218b43b9e63e8178b6cb4aeb7786f98e52c92efe97f58e31063ca2f3",
+    "E:\\OptoJump\\IronJump-walk-compute-offline-20261017-01\\engine\\modes\\walking_processor.py": "c71a9e657142966c6036cc1f8090e26a7731cefde2b4f80393f8e06ed37829ba",
+    "E:\\OptoJump\\IronJump-single-usb-human-etw-20261017\\engine\\modes\\walking_processor.py": "c71a9e657142966c6036cc1f8090e26a7731cefde2b4f80393f8e06ed37829ba"
+  },
+  "helper_sha256": "fcde26dd2e707cc457623a971a97e68ebd9f49630126c51bd6ce83072a0d40a8",
+  "script_sha256": "846a5f325d103cee6f81eb0d76056678102d2f05605d14688c556f8321f3f109",
+  "numpy_sha256": "4fb4c5d62a6bd766eea716350eaf5396580e33cf7dc159e305488d1b7d72dad2",
+  "limits": [
+    "Single-thread original replay identifies possible original caller paths, not the live waiting call at a particular native timestamp.",
+    "Profiling is intrusive and records no elapsed time. Counts are not GIL wait counts, durations or field CPU shares.",
+    "Only two public C entry families are profiled; other Python/NumPy/Qt operations are not excluded. No device, camera, trace or GUI started."
+  ],
+  "calls": [
+    {
+      "batch": [
+        31968,
+        31987
+      ],
+      "count": 20,
+      "entry": "ndarray.all",
+      "owner": "ndarray",
+      "arrays": [
+        [
+          "self",
+          [
+            768
+          ],
+          "bool"
+        ],
+        [
+          "a1",
+          [
+            768
+          ],
+          "bool"
+        ],
+        [
+          "a2",
+          [
+            768
+          ],
+          "bool"
+        ]
+      ],
+      "nearest_app_caller": [
+        "app",
+        "engine/device_quality_session.py",
+        "on_frame",
+        168
+      ]
+    },
+    {
+      "batch": [
+        31968,
+        31987
+      ],
+      "count": 20,
+      "entry": "ufunc.reduce",
+      "owner": "logical_and",
+      "arrays": [
+        [
+          "a",
+          [
+            768
+          ],
+          "bool"
+        ]
+      ],
+      "nearest_app_caller": [
+        "app",
+        "engine/device_quality_session.py",
+        "on_frame",
+        168
+      ]
+    },
+    {
+      "batch": [
+        31968,
+        31987
+      ],
+      "count": 20,
+      "entry": "ufunc.reduce",
+      "owner": "logical_and",
+      "arrays": [
+        [
+          "obj",
+          [
+            8,
+            96
+          ],
+          "uint8"
+        ]
+      ],
+      "nearest_app_caller": [
+        "app",
+        "hardware/beam_filter.py",
+        "_feed",
+        121
+      ]
+    },
+    {
+      "batch": [
+        31968,
+        31987
+      ],
+      "count": 20,
+      "entry": "ufunc.reduce",
+      "owner": "logical_and",
+      "arrays": [
+        [
+          "obj",
+          [
+            8,
+            96
+          ],
+          "bool"
+        ]
+      ],
+      "nearest_app_caller": [
+        "app",
+        "hardware/beam_filter.py",
+        "_feed",
+        122
+      ]
+    },
+    {
+      "batch": [
+        31968,
+        31987
+      ],
+      "count": 20,
+      "entry": "ufunc.reduce",
+      "owner": "logical_or",
+      "arrays": [
+        [
+          "obj",
+          [
+            768
+          ],
+          "bool"
+        ]
+      ],
+      "nearest_app_caller": [
+        "app",
+        "hardware/beam_filter.py",
+        "_feed",
+        138
+      ]
+    },
+    {
+      "batch": [
+        31968,
+        31987
+      ],
+      "count": 20,
+      "entry": "ufunc.reduce",
+      "owner": "logical_or",
+      "arrays": [
+        [
+          "obj",
+          [
+            8
+          ],
+          "bool"
+        ]
+      ],
+      "nearest_app_caller": [
+        "app",
+        "hardware/beam_filter.py",
+        "_feed",
+        145
+      ]
+    },
+    {
+      "batch": [
+        31968,
+        31987
+      ],
+      "count": 20,
+      "entry": "ufunc.reduce",
+      "owner": "logical_or",
+      "arrays": [
+        [
+          "obj",
+          [
+            768
+          ],
+          "uint8"
+        ]
+      ],
+      "nearest_app_caller": [
+        "app",
+        "hardware/beam_filter.py",
+        "_feed",
+        146
+      ]
+    },
+    {
+      "batch": [
+        31968,
+        31987
+      ],
+      "count": 20,
+      "entry": "ufunc.reduce",
+      "owner": "logical_or",
+      "arrays": [
+        [
+          "obj",
+          [
+            768
+          ],
+          "uint8"
+        ]
+      ],
+      "nearest_app_caller": [
+        "app",
+        "hardware/beam_filter.py",
+        "_feed",
+        150
+      ]
+    },
+    {
+      "batch": [
+        32368,
+        32387
+      ],
+      "count": 20,
+      "entry": "ndarray.all",
+      "owner": "ndarray",
+      "arrays": [
+        [
+          "self",
+          [
+            768
+          ],
+          "bool"
+        ],
+        [
+          "a1",
+          [
+            768
+          ],
+          "bool"
+        ],
+        [
+          "a2",
+          [
+            768
+          ],
+          "bool"
+        ]
+      ],
+      "nearest_app_caller": [
+        "app",
+        "engine/device_quality_session.py",
+        "on_frame",
+        168
+      ]
+    },
+    {
+      "batch": [
+        32368,
+        32387
+      ],
+      "count": 20,
+      "entry": "ufunc.reduce",
+      "owner": "logical_and",
+      "arrays": [
+        [
+          "a",
+          [
+            768
+          ],
+          "bool"
+        ]
+      ],
+      "nearest_app_caller": [
+        "app",
+        "engine/device_quality_session.py",
+        "on_frame",
+        168
+      ]
+    },
+    {
+      "batch": [
+        32368,
+        32387
+      ],
+      "count": 9,
+      "entry": "ufunc.reduce",
+      "owner": "logical_and",
+      "arrays": [
+        [
+          "obj",
+          [
+            8,
+            96
+          ],
+          "uint8"
+        ]
+      ],
+      "nearest_app_caller": [
+        "app",
+        "hardware/beam_filter.py",
+        "_feed",
+        121
+      ]
+    },
+    {
+      "batch": [
+        32368,
+        32387
+      ],
+      "count": 9,
+      "entry": "ufunc.reduce",
+      "owner": "logical_and",
+      "arrays": [
+        [
+          "obj",
+          [
+            8,
+            96
+          ],
+          "bool"
+        ]
+      ],
+      "nearest_app_caller": [
+        "app",
+        "hardware/beam_filter.py",
+        "_feed",
+        122
+      ]
+    },
+    {
+      "batch": [
+        32368,
+        32387
+      ],
+      "count": 9,
+      "entry": "ufunc.reduce",
+      "owner": "logical_or",
+      "arrays": [
+        [
+          "obj",
+          [
+            768
+          ],
+          "bool"
+        ]
+      ],
+      "nearest_app_caller": [
+        "app",
+        "hardware/beam_filter.py",
+        "_feed",
+        138
+      ]
+    },
+    {
+      "batch": [
+        32368,
+        32387
+      ],
+      "count": 9,
+      "entry": "ufunc.reduce",
+      "owner": "logical_or",
+      "arrays": [
+        [
+          "obj",
+          [
+            8
+          ],
+          "bool"
+        ]
+      ],
+      "nearest_app_caller": [
+        "app",
+        "hardware/beam_filter.py",
+        "_feed",
+        145
+      ]
+    },
+    {
+      "batch": [
+        32368,
+        32387
+      ],
+      "count": 11,
+      "entry": "ufunc.reduce",
+      "owner": "logical_or",
+      "arrays": [
+        [
+          "obj",
+          [
+            768
+          ],
+          "uint8"
+        ]
+      ],
+      "nearest_app_caller": [
+        "app",
+        "hardware/beam_filter.py",
+        "_feed",
+        146
+      ]
+    },
+    {
+      "batch": [
+        32368,
+        32387
+      ],
+      "count": 9,
+      "entry": "ufunc.reduce",
+      "owner": "logical_or",
+      "arrays": [
+        [
+          "obj",
+          [
+            768
+          ],
+          "uint8"
+        ]
+      ],
+      "nearest_app_caller": [
+        "app",
+        "hardware/beam_filter.py",
+        "_feed",
+        150
+      ]
+    },
+    {
+      "batch": [
+        32568,
+        32587
+      ],
+      "count": 20,
+      "entry": "ndarray.all",
+      "owner": "ndarray",
+      "arrays": [
+        [
+          "self",
+          [
+            768
+          ],
+          "bool"
+        ],
+        [
+          "a1",
+          [
+            768
+          ],
+          "bool"
+        ],
+        [
+          "a2",
+          [
+            768
+          ],
+          "bool"
+        ]
+      ],
+      "nearest_app_caller": [
+        "app",
+        "engine/device_quality_session.py",
+        "on_frame",
+        168
+      ]
+    },
+    {
+      "batch": [
+        32568,
+        32587
+      ],
+      "count": 20,
+      "entry": "ufunc.reduce",
+      "owner": "logical_and",
+      "arrays": [
+        [
+          "a",
+          [
+            768
+          ],
+          "bool"
+        ]
+      ],
+      "nearest_app_caller": [
+        "app",
+        "engine/device_quality_session.py",
+        "on_frame",
+        168
+      ]
+    },
+    {
+      "batch": [
+        32568,
+        32587
+      ],
+      "count": 20,
+      "entry": "ufunc.reduce",
+      "owner": "logical_and",
+      "arrays": [
+        [
+          "obj",
+          [
+            8,
+            96
+          ],
+          "uint8"
+        ]
+      ],
+      "nearest_app_caller": [
+        "app",
+        "hardware/beam_filter.py",
+        "_feed",
+        121
+      ]
+    },
+    {
+      "batch": [
+        32568,
+        32587
+      ],
+      "count": 20,
+      "entry": "ufunc.reduce",
+      "owner": "logical_and",
+      "arrays": [
+        [
+          "obj",
+          [
+            8,
+            96
+          ],
+          "bool"
+        ]
+      ],
+      "nearest_app_caller": [
+        "app",
+        "hardware/beam_filter.py",
+        "_feed",
+        122
+      ]
+    },
+    {
+      "batch": [
+        32568,
+        32587
+      ],
+      "count": 20,
+      "entry": "ufunc.reduce",
+      "owner": "logical_or",
+      "arrays": [
+        [
+          "obj",
+          [
+            768
+          ],
+          "bool"
+        ]
+      ],
+      "nearest_app_caller": [
+        "app",
+        "hardware/beam_filter.py",
+        "_feed",
+        138
+      ]
+    },
+    {
+      "batch": [
+        32568,
+        32587
+      ],
+      "count": 20,
+      "entry": "ufunc.reduce",
+      "owner": "logical_or",
+      "arrays": [
+        [
+          "obj",
+          [
+            8
+          ],
+          "bool"
+        ]
+      ],
+      "nearest_app_caller": [
+        "app",
+        "hardware/beam_filter.py",
+        "_feed",
+        145
+      ]
+    },
+    {
+      "batch": [
+        32568,
+        32587
+      ],
+      "count": 20,
+      "entry": "ufunc.reduce",
+      "owner": "logical_or",
+      "arrays": [
+        [
+          "obj",
+          [
+            768
+          ],
+          "uint8"
+        ]
+      ],
+      "nearest_app_caller": [
+        "app",
+        "hardware/beam_filter.py",
+        "_feed",
+        146
+      ]
+    },
+    {
+      "batch": [
+        32568,
+        32587
+      ],
+      "count": 20,
+      "entry": "ufunc.reduce",
+      "owner": "logical_or",
+      "arrays": [
+        [
+          "obj",
+          [
+            768
+          ],
+          "uint8"
+        ]
+      ],
+      "nearest_app_caller": [
+        "app",
+        "hardware/beam_filter.py",
+        "_feed",
+        150
+      ]
+    },
+    {
+      "batch": [
+        32668,
+        32687
+      ],
+      "count": 20,
+      "entry": "ndarray.all",
+      "owner": "ndarray",
+      "arrays": [
+        [
+          "self",
+          [
+            768
+          ],
+          "bool"
+        ],
+        [
+          "a1",
+          [
+            768
+          ],
+          "bool"
+        ],
+        [
+          "a2",
+          [
+            768
+          ],
+          "bool"
+        ]
+      ],
+      "nearest_app_caller": [
+        "app",
+        "engine/device_quality_session.py",
+        "on_frame",
+        168
+      ]
+    },
+    {
+      "batch": [
+        32668,
+        32687
+      ],
+      "count": 20,
+      "entry": "ufunc.reduce",
+      "owner": "logical_and",
+      "arrays": [
+        [
+          "a",
+          [
+            768
+          ],
+          "bool"
+        ]
+      ],
+      "nearest_app_caller": [
+        "app",
+        "engine/device_quality_session.py",
+        "on_frame",
+        168
+      ]
+    },
+    {
+      "batch": [
+        32668,
+        32687
+      ],
+      "count": 14,
+      "entry": "ufunc.reduce",
+      "owner": "logical_and",
+      "arrays": [
+        [
+          "obj",
+          [
+            8,
+            96
+          ],
+          "uint8"
+        ]
+      ],
+      "nearest_app_caller": [
+        "app",
+        "hardware/beam_filter.py",
+        "_feed",
+        121
+      ]
+    },
+    {
+      "batch": [
+        32668,
+        32687
+      ],
+      "count": 14,
+      "entry": "ufunc.reduce",
+      "owner": "logical_and",
+      "arrays": [
+        [
+          "obj",
+          [
+            8,
+            96
+          ],
+          "bool"
+        ]
+      ],
+      "nearest_app_caller": [
+        "app",
+        "hardware/beam_filter.py",
+        "_feed",
+        122
+      ]
+    },
+    {
+      "batch": [
+        32668,
+        32687
+      ],
+      "count": 14,
+      "entry": "ufunc.reduce",
+      "owner": "logical_or",
+      "arrays": [
+        [
+          "obj",
+          [
+            768
+          ],
+          "bool"
+        ]
+      ],
+      "nearest_app_caller": [
+        "app",
+        "hardware/beam_filter.py",
+        "_feed",
+        138
+      ]
+    },
+    {
+      "batch": [
+        32668,
+        32687
+      ],
+      "count": 13,
+      "entry": "ufunc.reduce",
+      "owner": "logical_or",
+      "arrays": [
+        [
+          "obj",
+          [
+            8
+          ],
+          "bool"
+        ]
+      ],
+      "nearest_app_caller": [
+        "app",
+        "hardware/beam_filter.py",
+        "_feed",
+        145
+      ]
+    },
+    {
+      "batch": [
+        32668,
+        32687
+      ],
+      "count": 15,
+      "entry": "ufunc.reduce",
+      "owner": "logical_or",
+      "arrays": [
+        [
+          "obj",
+          [
+            768
+          ],
+          "uint8"
+        ]
+      ],
+      "nearest_app_caller": [
+        "app",
+        "hardware/beam_filter.py",
+        "_feed",
+        146
+      ]
+    },
+    {
+      "batch": [
+        32668,
+        32687
+      ],
+      "count": 14,
+      "entry": "ufunc.reduce",
+      "owner": "logical_or",
+      "arrays": [
+        [
+          "obj",
+          [
+            768
+          ],
+          "uint8"
+        ]
+      ],
+      "nearest_app_caller": [
+        "app",
+        "hardware/beam_filter.py",
+        "_feed",
+        150
+      ]
+    }
+  ],
+  "profiled_batches_without_selected_C_calls": [
+    [
+      20666,
+      20685
+    ]
+  ],
+  "counting_caveat": "ndarray.all invokes logical_and.reduce in the same call chain; their counts must not be added as independent reductions or GIL transitions. Zero selected calls does not mean zero processing or no GIL transitions.",
+  "raw_file": {
+    "local": "experiments/native_stack_capture/runs/gil_boundary01/original_profile01.json",
+    "remote": "E:/OptoJump/IronJump-native-stack-field-d47e067-20261017-01/field_reviews/gil_boundary01/profile01/result.json",
+    "sha256": "9832b67368437873f6f350283ea3fa9f44c78691e9ba1e0c5f7378eb94dd4ba4"
+  }
+}

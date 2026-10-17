@@ -1,0 +1,207 @@
+Binary SHA256: 4fb4c5d62a6bd766eea716350eaf5396580e33cf7dc159e305488d1b7d72dad2
+
+Preferred image base: 0x180000000. Unnamed functions retain module+RVA. Nearest-export labels omitted; no PDB is asserted. Revision01 misaligned start at0x1002a0 retained in ignored runs; use instruction boundary0x1002b5 here.
+
+RVA range: 0x17acf0..0x17aec7
+
+Command: /Library/Developer/CommandLineTools/usr/bin/llvm-objdump --disassemble --x86-asm-syntax=intel --start-address=0x18017acf0 --stop-address=0x18017aec7 experiments/native_stack_capture/runs/gil_boundary01/_multiarray_umath.cp311-win_amd64.pyd
+
+
+experiments/native_stack_capture/runs/gil_boundary01/_multiarray_umath.cp311-win_amd64.pyd:	file format coff-x86-64
+
+Disassembly of section .text:
+
+18017acf0: 40 55                       	push	rbp
+18017acf2: 53                          	push	rbx
+18017acf3: 56                          	push	rsi
+18017acf4: 57                          	push	rdi
+18017acf5: 41 54                       	push	r12
+18017acf7: 41 55                       	push	r13
+18017acf9: 41 56                       	push	r14
+18017acfb: 41 57                       	push	r15
+18017acfd: 48 8d 6c 24 f9              	lea	rbp, [rsp - 0x7]
+18017ad02: 48 81 ec b8 00 00 00        	sub	rsp, 0xb8
+18017ad09: 48 8b 05 30 ca 1e 00        	mov	rax, qword ptr [rip + 0x1eca30] # 0x180367740
+18017ad10: 48 33 c4                    	xor	rax, rsp
+18017ad13: 48 89 45 ef                 	mov	qword ptr [rbp - 0x11], rax
+18017ad17: 48 8b 75 6f                 	mov	rsi, qword ptr [rbp + 0x6f]
+18017ad1b: 45 33 f6                    	xor	r14d, r14d
+18017ad1e: 4c 8b 6d 7f                 	mov	r13, qword ptr [rbp + 0x7f]
+18017ad22: 4d 8b f9                    	mov	r15, r9
+18017ad25: 4c 8b a5 87 00 00 00        	mov	r12, qword ptr [rbp + 0x87]
+18017ad2c: 48 89 4d 97                 	mov	qword ptr [rbp - 0x69], rcx
+18017ad30: 49 8b c9                    	mov	rcx, r9
+18017ad33: 4c 89 75 a7                 	mov	qword ptr [rbp - 0x59], r14
+18017ad37: 4c 89 45 8f                 	mov	qword ptr [rbp - 0x71], r8
+18017ad3b: 48 89 55 9f                 	mov	qword ptr [rbp - 0x61], rdx
+18017ad3f: e8 3c 91 f9 ff              	call	0x180113e80
+18017ad44: 89 45 87                    	mov	dword ptr [rbp - 0x79], eax
+18017ad47: 44 39 b5 8f 00 00 00        	cmp	dword ptr [rbp + 0x8f], r14d
+18017ad4e: 75 1a                       	jne	0x18017ad6a
+18017ad50: 49 8b cf                    	mov	rcx, r15
+18017ad53: e8 58 8f f9 ff              	call	0x180113cb0
+18017ad58: 48 3d f4 01 00 00           	cmp	rax, 0x1f4
+18017ad5e: 7e 0a                       	jle	0x18017ad6a
+18017ad60: ff 15 da 81 13 00           	call	qword ptr [rip + 0x1381da] # 0x1802b2f40
+18017ad66: 48 89 45 a7                 	mov	qword ptr [rbp - 0x59], rax
+18017ad6a: 48 8b 9d 97 00 00 00        	mov	rbx, qword ptr [rbp + 0x97]
+18017ad71: 48 8b 7d 77                 	mov	rdi, qword ptr [rbp + 0x77]
+18017ad75: 48 85 db                    	test	rbx, rbx
+18017ad78: 0f 8e ab 00 00 00           	jle	0x18017ae29
+18017ad7e: 66 90                       	nop
+18017ad80: 49 8b 45 00                 	mov	rax, qword ptr [r13]
+18017ad84: 33 d2                       	xor	edx, edx
+18017ad86: 49 8b cf                    	mov	rcx, r15
+18017ad89: 48 89 44 24 30              	mov	qword ptr [rsp + 0x30], rax
+18017ad8e: e8 dd 98 f9 ff              	call	0x180114670
+18017ad93: 84 c0                       	test	al, al
+18017ad95: 74 30                       	je	0x18017adc7
+18017ad97: 48 83 3f 00                 	cmp	qword ptr [rdi], 0x0
+18017ad9b: 75 1a                       	jne	0x18017adb7
+18017ad9d: 48 8b 4c 24 30              	mov	rcx, qword ptr [rsp + 0x30]
+18017ada2: 48 ff cb                    	dec	rbx
+18017ada5: 48 8b 47 08                 	mov	rax, qword ptr [rdi + 0x8]
+18017ada9: 48 ff c9                    	dec	rcx
+18017adac: 48 01 46 08                 	add	qword ptr [rsi + 0x8], rax
+18017adb0: 48 89 4c 24 30              	mov	qword ptr [rsp + 0x30], rcx
+18017adb5: eb 15                       	jmp	0x18017adcc
+18017adb7: 48 2b 5c 24 30              	sub	rbx, qword ptr [rsp + 0x30]
+18017adbc: 48 c7 44 24 30 00 00 00 00  	mov	qword ptr [rsp + 0x30], 0x0
+18017adc5: eb 4f                       	jmp	0x18017ae16
+18017adc7: 48 8b 4c 24 30              	mov	rcx, qword ptr [rsp + 0x30]
+18017adcc: 48 85 c9                    	test	rcx, rcx
+18017adcf: 7e 45                       	jle	0x18017ae16
+18017add1: 48 8b 0e                    	mov	rcx, qword ptr [rsi]
+18017add4: 4c 8d 4d cf                 	lea	r9, [rbp - 0x31]
+18017add8: 48 8b 46 08                 	mov	rax, qword ptr [rsi + 0x8]
+18017addc: 4c 8d 44 24 30              	lea	r8, [rsp + 0x30]
+18017ade1: 0f 10 07                    	movups	xmm0, xmmword ptr [rdi]
+18017ade4: 48 89 45 b7                 	mov	qword ptr [rbp - 0x49], rax
+18017ade8: 48 8d 55 af                 	lea	rdx, [rbp - 0x51]
+18017adec: 48 8b 07                    	mov	rax, qword ptr [rdi]
+18017adef: 48 89 45 df                 	mov	qword ptr [rbp - 0x21], rax
+18017adf3: 48 8b 45 8f                 	mov	rax, qword ptr [rbp - 0x71]
+18017adf7: 48 89 4d af                 	mov	qword ptr [rbp - 0x51], rcx
+18017adfb: 48 89 4d bf                 	mov	qword ptr [rbp - 0x41], rcx
+18017adff: 48 8b 4d 97                 	mov	rcx, qword ptr [rbp - 0x69]
+18017ae03: 48 89 44 24 20              	mov	qword ptr [rsp + 0x20], rax
+18017ae08: 0f 11 45 cf                 	movups	xmmword ptr [rbp - 0x31], xmm0
+18017ae0c: ff 55 9f                    	call	qword ptr [rbp - 0x61]
+18017ae0f: 44 8b f0                    	mov	r14d, eax
+18017ae12: 85 c0                       	test	eax, eax
+18017ae14: 78 7c                       	js	0x18017ae92
+18017ae16: 49 8b cf                    	mov	rcx, r15
+18017ae19: 41 ff d4                    	call	r12
+18017ae1c: 85 c0                       	test	eax, eax
+18017ae1e: 74 72                       	je	0x18017ae92
+18017ae20: 48 85 db                    	test	rbx, rbx
+18017ae23: 0f 85 57 ff ff ff           	jne	0x18017ad80
+18017ae29: 8b 5d 87                    	mov	ebx, dword ptr [rbp - 0x79]
+18017ae2c: 0f 1f 40 00                 	nop	dword ptr [rax]
+18017ae30: 48 8b 46 08                 	mov	rax, qword ptr [rsi + 0x8]
+18017ae34: 48 8b 0e                    	mov	rcx, qword ptr [rsi]
+18017ae37: 48 89 45 b7                 	mov	qword ptr [rbp - 0x49], rax
+18017ae3b: 48 8b 07                    	mov	rax, qword ptr [rdi]
+18017ae3e: 48 89 45 df                 	mov	qword ptr [rbp - 0x21], rax
+18017ae42: 48 89 4d af                 	mov	qword ptr [rbp - 0x51], rcx
+18017ae46: 48 89 4d bf                 	mov	qword ptr [rbp - 0x41], rcx
+18017ae4a: 0f 10 07                    	movups	xmm0, xmmword ptr [rdi]
+18017ae4d: 0f 11 45 cf                 	movups	xmmword ptr [rbp - 0x31], xmm0
+18017ae51: 83 fb 03                    	cmp	ebx, 0x3
+18017ae54: 75 10                       	jne	0x18017ae66
+18017ae56: 48 8b 46 10                 	mov	rax, qword ptr [rsi + 0x10]
+18017ae5a: 48 89 45 c7                 	mov	qword ptr [rbp - 0x39], rax
+18017ae5e: 48 8b 47 10                 	mov	rax, qword ptr [rdi + 0x10]
+18017ae62: 48 89 45 e7                 	mov	qword ptr [rbp - 0x19], rax
+18017ae66: 48 8b 45 8f                 	mov	rax, qword ptr [rbp - 0x71]
+18017ae6a: 4c 8d 4d cf                 	lea	r9, [rbp - 0x31]
+18017ae6e: 48 8b 4d 97                 	mov	rcx, qword ptr [rbp - 0x69]
+18017ae72: 48 8d 55 af                 	lea	rdx, [rbp - 0x51]
+18017ae76: 4d 8b c5                    	mov	r8, r13
+18017ae79: 48 89 44 24 20              	mov	qword ptr [rsp + 0x20], rax
+18017ae7e: ff 55 9f                    	call	qword ptr [rbp - 0x61]
+18017ae81: 44 8b f0                    	mov	r14d, eax
+18017ae84: 85 c0                       	test	eax, eax
+18017ae86: 78 0a                       	js	0x18017ae92
+18017ae88: 49 8b cf                    	mov	rcx, r15
+18017ae8b: 41 ff d4                    	call	r12
+18017ae8e: 85 c0                       	test	eax, eax
+18017ae90: 75 9e                       	jne	0x18017ae30
+18017ae92: 48 8b 45 a7                 	mov	rax, qword ptr [rbp - 0x59]
+18017ae96: 48 85 c0                    	test	rax, rax
+18017ae99: 74 09                       	je	0x18017aea4
+18017ae9b: 48 8b c8                    	mov	rcx, rax
+18017ae9e: ff 15 94 80 13 00           	call	qword ptr [rip + 0x138094] # 0x1802b2f38
+18017aea4: 41 8b c6                    	mov	eax, r14d
+18017aea7: 48 8b 4d ef                 	mov	rcx, qword ptr [rbp - 0x11]
+18017aeab: 48 33 cc                    	xor	rcx, rsp
+18017aeae: e8 0d 53 13 00              	call	0x1802b01c0
+18017aeb3: 48 81 c4 b8 00 00 00        	add	rsp, 0xb8
+18017aeba: 41 5f                       	pop	r15
+18017aebc: 41 5e                       	pop	r14
+18017aebe: 41 5d                       	pop	r13
+18017aec0: 41 5c                       	pop	r12
+18017aec2: 5f                          	pop	rdi
+18017aec3: 5e                          	pop	rsi
+18017aec4: 5b                          	pop	rbx
+18017aec5: 5d                          	pop	rbp
+18017aec6: c3                          	ret
+
+RVA range: 0x1002b5..0x1002d6
+
+Command: /Library/Developer/CommandLineTools/usr/bin/llvm-objdump --disassemble --x86-asm-syntax=intel --start-address=0x1801002b5 --stop-address=0x1801002d6 experiments/native_stack_capture/runs/gil_boundary01/_multiarray_umath.cp311-win_amd64.pyd
+
+
+experiments/native_stack_capture/runs/gil_boundary01/_multiarray_umath.cp311-win_amd64.pyd:	file format coff-x86-64
+
+Disassembly of section .text:
+
+1801002b5: f6 44 24 58 01              	test	byte ptr [rsp + 0x58], 0x1
+1801002ba: 75 1a                       	jne	0x1801002d6
+1801002bc: 49 8b cf                    	mov	rcx, r15
+1801002bf: e8 ec 39 01 00              	call	0x180113cb0
+1801002c4: 48 3d f4 01 00 00           	cmp	rax, 0x1f4
+1801002ca: 7e 0a                       	jle	0x1801002d6
+1801002cc: ff 15 6e 2c 1b 00           	call	qword ptr [rip + 0x1b2c6e] # 0x1802b2f40
+1801002d2: 48 89 45 88                 	mov	qword ptr [rbp - 0x78], rax
+
+RVA range: 0x100406..0x100425
+
+Command: /Library/Developer/CommandLineTools/usr/bin/llvm-objdump --disassemble --x86-asm-syntax=intel --start-address=0x180100406 --stop-address=0x180100425 experiments/native_stack_capture/runs/gil_boundary01/_multiarray_umath.cp311-win_amd64.pyd
+
+
+experiments/native_stack_capture/runs/gil_boundary01/_multiarray_umath.cp311-win_amd64.pyd:	file format coff-x86-64
+
+Disassembly of section .text:
+
+180100406: 48 8b 45 88                 	mov	rax, qword ptr [rbp - 0x78]
+18010040a: 4c 8b 64 24 60              	mov	r12, qword ptr [rsp + 0x60]
+18010040f: 48 85 c0                    	test	rax, rax
+180100412: 74 09                       	je	0x18010041d
+180100414: 48 8b c8                    	mov	rcx, rax
+180100417: ff 15 1b 2b 1b 00           	call	qword ptr [rip + 0x1b2b1b] # 0x1802b2f38
+18010041d: 49 8b cf                    	mov	rcx, r15
+180100420: e8 5b 6e 01 00              	call	0x180117280
+
+RVA range: 0x113cb0..0x113cc0
+
+Command: /Library/Developer/CommandLineTools/usr/bin/llvm-objdump --disassemble --x86-asm-syntax=intel --start-address=0x180113cb0 --stop-address=0x180113cc0 experiments/native_stack_capture/runs/gil_boundary01/_multiarray_umath.cp311-win_amd64.pyd
+
+
+experiments/native_stack_capture/runs/gil_boundary01/_multiarray_umath.cp311-win_amd64.pyd:	file format coff-x86-64
+
+Disassembly of section .text:
+
+180113cb0: 48 8b 41 10                 	mov	rax, qword ptr [rcx + 0x10]
+180113cb4: c3                          	ret
+180113cb5: cc                          	int3
+180113cb6: cc                          	int3
+180113cb7: cc                          	int3
+180113cb8: cc                          	int3
+180113cb9: cc                          	int3
+180113cba: cc                          	int3
+180113cbb: cc                          	int3
+180113cbc: cc                          	int3
+180113cbd: cc                          	int3
+180113cbe: cc                          	int3
+180113cbf: cc                          	int3
