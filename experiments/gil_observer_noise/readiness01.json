@@ -1,0 +1,41 @@
+{
+  "offline_preparation_complete": true,
+  "offline_review_plan_sha256": "8b57d8af50b5c040119d9c839169cbe42adfecf09ec842b08317f6241569c73b",
+  "same_branch": "codex/native-stack-capture-calibration",
+  "deterministic_waiter_4hz_5s_pass": true,
+  "deterministic_closed_samples": 40,
+  "deterministic_unknown_samples": 0,
+  "off_aa_pairs": 8,
+  "on_aa_pairs": 8,
+  "confirmation_pairs": 24,
+  "confirmation_cases_protocol_pass": 48,
+  "offline_3pct_equivalence_pass": false,
+  "simultaneous_precision_1pct_pass": false,
+  "legacy_15pct_per_trial_guard_pass": false,
+  "whole_wall_ci_relative": [
+    -0.09012287238420517,
+    0.04642325760781883
+  ],
+  "gc_diagnostic_cases": 4,
+  "cpu_delivery_diagnostic_cases": 4,
+  "raw_manifest_files_verified": 988,
+  "preservation_pass": true,
+  "distinct_tests": 226,
+  "mac_pass": 221,
+  "mac_skipped": 5,
+  "windows_remaining_pass": 5,
+  "all_distinct_tests_pass_on_applicable_platform": true,
+  "production_changed": false,
+  "numpy_changed": false,
+  "devices_human_live_gui_sdk_run_or_optimization_started": false,
+  "field_entry_deployed": false,
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "root_cause_or_fix_complete": false,
+  "blockers": [
+    "Cannot establish3% observer equivalence/1% precision on the fixed unchanged-chain cohort. All24 pairs retained; no extension, trimming, normalization or replacement.",
+    "GUI/vision/SDK concurrency and actual pending are absent from offline replay; field20 samples is not qualified by replay8 samples.",
+    "Historical CPU/CSwitch failed closure/quality remains failed. Quantitative CPU/GIL/Qt attribution and responsibility function remain unknown."
+  ],
+  "next_user_action": "Return and say现场就绪; do not begin walking or reopen an old failed entry. First inspect current state, freeze a calibration-only comparable actual-load protocol and qualify measurement. Human Walk only after a new explicit start instruction. No questions or field start while user is away."
+}

@@ -1,0 +1,84 @@
+{
+  "experiments/native_stack_capture": {
+    "tests": 47,
+    "skipped": [
+      {
+        "test": "test_progress_saved_after_observer_end (test_external_fixture_windows.FixtureTests.test_progress_saved_after_observer_end)",
+        "reason": "Windows native fixture required"
+      },
+      {
+        "test": "test_multiple_sdk_thread_handles_remain_separate (test_windows_observer.ObserverTests.test_multiple_sdk_thread_handles_remain_separate)",
+        "reason": "Windows native handles required"
+      },
+      {
+        "test": "test_pid_tid_mismatch_rejected (test_windows_observer.ObserverTests.test_pid_tid_mismatch_rejected)",
+        "reason": "Windows native handles required"
+      },
+      {
+        "test": "test_sdk_same_pid_as_gui_rejected (test_windows_observer.ObserverTests.test_sdk_same_pid_as_gui_rejected)",
+        "reason": "Windows native handles required"
+      }
+    ],
+    "success": true,
+    "log": "s...........................................sss\n----------------------------------------------------------------------\nRan 47 tests in 0.019s\n\nOK (skipped=4)\n"
+  },
+  "experiments/gil_owner_preflight": {
+    "tests": 25,
+    "skipped": [],
+    "success": true,
+    "log": ".........................\n----------------------------------------------------------------------\nRan 25 tests in 0.006s\n\nOK\n"
+  },
+  "experiments/gil_timestamped": {
+    "tests": 35,
+    "skipped": [],
+    "success": true,
+    "log": "...................................\n----------------------------------------------------------------------\nRan 35 tests in 0.010s\n\nOK\n"
+  },
+  "experiments/gil_coherent_native": {
+    "tests": 16,
+    "skipped": [],
+    "success": true,
+    "log": "................\n----------------------------------------------------------------------\nRan 16 tests in 0.001s\n\nOK\n"
+  },
+  "experiments/gil_coherent_dynamic": {
+    "tests": 15,
+    "skipped": [],
+    "success": true,
+    "log": "...............\n----------------------------------------------------------------------\nRan 15 tests in 0.010s\n\nOK\n"
+  },
+  "experiments/gil_waiter_control": {
+    "tests": 19,
+    "skipped": [],
+    "success": true,
+    "log": "...................\n----------------------------------------------------------------------\nRan 19 tests in 0.002s\n\nOK\n"
+  },
+  "experiments/gil_replay_disturbance": {
+    "tests": 20,
+    "skipped": [
+      {
+        "test": "test_destination_appearing_during_write_is_retained (test_atomic03.WindowsPublicationChecks.test_destination_appearing_during_write_is_retained)",
+        "reason": "NTFS rename collision contract"
+      }
+    ],
+    "success": true,
+    "log": ".......s............\n----------------------------------------------------------------------\nRan 20 tests in 0.003s\n\nOK (skipped=1)\n"
+  },
+  "experiments/gil_observer_noise": {
+    "tests": 39,
+    "skipped": [],
+    "success": true,
+    "log": ".......................................\n----------------------------------------------------------------------\nRan 39 tests in 0.033s\n\nOK\n"
+  },
+  "experiments/gil_observer_noise/field_rate01": {
+    "tests": 4,
+    "skipped": [],
+    "success": true,
+    "log": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n"
+  },
+  "experiments/gil_observer_noise/cpu_delivery01": {
+    "tests": 6,
+    "skipped": [],
+    "success": true,
+    "log": "......\n----------------------------------------------------------------------\nRan 6 tests in 0.000s\n\nOK\n"
+  }
+}

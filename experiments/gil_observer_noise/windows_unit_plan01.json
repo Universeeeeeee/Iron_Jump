@@ -1,0 +1,19 @@
+{
+  "scope": "Only5 Windows-specific tests skipped on Mac: synthetic native handles/progress target and NTFS collision fault injection. No real application, camera, devices, USB, SDK, human, ETW, Run or optimization.",
+  "sources": {
+    "test_windows_observer.py": "f3596aeb5876ddc773770aeaaf4163a6bc140758b36ac89d884585e92ca977ce",
+    "test_external_fixture_windows.py": "d5e116795c033f09a850b39f9513665e6f45e3dd4146099133e51f2df7b8de1a",
+    "observe.py": "f33c6b2da48593b28e1748417ded306632b7997bbaf7f608e8baef5e3c391777",
+    "winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+    "align_clock.py": "d49f54563591d23e9fc8e08b7d8eab028b65fbaa7dcb329e12b6ac58c2c893f1",
+    "external_fixture.py": "7a370154e85a14e5fdf6a853bb55fd7beac1979ed1ea5c6ee1976b7e8ad6283e",
+    "external_report.py": "105776b8544e4d0e8b2e663e1116c7394defea4bb9588b85c20a0b80fcf9901d",
+    "test_atomic03.py": "5d9954c38d075c8acb12a743d1f1530594a42b58f89aa608c145ee895118fbc6",
+    "atomic_io03.py": "33cabfa4e3a3a61fb33cd45bab8e1c61d0ceeb5d52486c395f1707ae93701e7c"
+  },
+  "tests": [
+    "test_windows_observer.ObserverTests",
+    "test_external_fixture_windows.FixtureTests",
+    "test_atomic03.WindowsPublicationChecks"
+  ]
+}

@@ -18,12 +18,12 @@ __declspec(dllexport) DWORD __cdecl CpuSets(void *buffer, DWORD bytes, DWORD *ne
 
 __declspec(dllexport) void __cdecl CpuSetLayout(DWORD *out)
 {
-    out[0] = sizeof(SYSTEM_CPU_SET_INFORMATION);
-    out[1] = offsetof(SYSTEM_CPU_SET_INFORMATION, CpuSet.Id);
-    out[2] = offsetof(SYSTEM_CPU_SET_INFORMATION, CpuSet.Group);
-    out[3] = offsetof(SYSTEM_CPU_SET_INFORMATION, CpuSet.LogicalProcessorIndex);
-    out[4] = offsetof(SYSTEM_CPU_SET_INFORMATION, CpuSet.CoreIndex);
-    out[5] = offsetof(SYSTEM_CPU_SET_INFORMATION, CpuSet.EfficiencyClass);
+    out[0] = (DWORD)sizeof(SYSTEM_CPU_SET_INFORMATION);
+    out[1] = (DWORD)offsetof(SYSTEM_CPU_SET_INFORMATION, CpuSet.Id);
+    out[2] = (DWORD)offsetof(SYSTEM_CPU_SET_INFORMATION, CpuSet.Group);
+    out[3] = (DWORD)offsetof(SYSTEM_CPU_SET_INFORMATION, CpuSet.LogicalProcessorIndex);
+    out[4] = (DWORD)offsetof(SYSTEM_CPU_SET_INFORMATION, CpuSet.CoreIndex);
+    out[5] = (DWORD)offsetof(SYSTEM_CPU_SET_INFORMATION, CpuSet.EfficiencyClass);
 }
 
 __declspec(dllexport) DWORD __cdecl PowerState(DWORD *out)

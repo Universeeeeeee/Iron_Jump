@@ -1,0 +1,122 @@
+{
+  "formal_count": 458,
+  "formal_mismatches": [],
+  "replay_mismatches": [],
+  "old_field_mismatches": [],
+  "old_waiter_mismatches": [],
+  "old_dynamic_mismatches": [],
+  "old_failure_mismatches": [],
+  "plan_sources": {
+    "off_aa_plan01.json": {
+      "plan_sha256": "504577293b41457c100804c37749cb0fd6a196e61b5022d78f8dd7825b284c71",
+      "mismatches": []
+    },
+    "on_aa_plan01.json": {
+      "plan_sha256": "1b97b385150a181cc9c11447b5c5cb668e2fca6facacbb6eede0f40715732dd8",
+      "mismatches": []
+    },
+    "confirmation_plan01.json": {
+      "plan_sha256": "c715ec643471c43ca1998543ecc5454991619f3576869cdedfdbdd1b54a28ccc",
+      "mismatches": []
+    },
+    "gc_plan01.json": {
+      "plan_sha256": "ccc60105190e5620e2f6ce33e47b704be8dbf7a42fcb74bcd2f3bf990e8744cd",
+      "mismatches": []
+    },
+    "field_rate01/plan01.json": {
+      "plan_sha256": "45bd9d5c734b2ebde541b21c2edcd7b02ba3a511fca77fc928064b25376ade11",
+      "mismatches": []
+    },
+    "cpu_delivery01/plan01.json": {
+      "plan_sha256": "c79b317ce0e82ef67fd79cf7a4ec934ddbbc5cea624554541e8ae285c06042a4",
+      "mismatches": []
+    }
+  },
+  "raw_manifests": {
+    "off_aa01_manifest.json": {
+      "sha256": "76fc2ef495f75ac20243213d5d04f06d9f010d20309cbc9758465089d76540ec",
+      "mismatches": []
+    },
+    "on_aa01_manifest.json": {
+      "sha256": "955361b0f45f148c82dd260beb299e229ba5ceff946ba7557f2b0d28727d1e76",
+      "mismatches": []
+    },
+    "confirmation01_manifest.json": {
+      "sha256": "9f6247a0273a09b67b71f92616700d0d2527227d7e901287837ac7e0792de6fa",
+      "mismatches": []
+    },
+    "gc_diagnostic01_manifest.json": {
+      "sha256": "6966be15db8c3f8c7454b383d771727d5a7a7750661f8fef67e5dedea52239be",
+      "mismatches": []
+    },
+    "cpu_delivery01_diagnostic01_manifest.json": {
+      "sha256": "9e8e6abc155c8752906eeb5dbe7db80d3eb6a8500ab3d0d1ebfadc493100ed3c",
+      "mismatches": []
+    },
+    "field_rate01/manifest01.json": {
+      "sha256": "663424daa88f2016169cb779a9f9f1a38ca80563f9062409c46d91c5a92999bf",
+      "mismatches": []
+    }
+  },
+  "locks": {
+    "old_field": {
+      "path": "E:\\OptoJump\\IronJump-gil-timestamped-20261018-01\\field01\\active.lock",
+      "retained": true
+    },
+    "old_python_marker": {
+      "path": "E:\\OptoJump\\IronJump-gil-timestamped-20261018-01\\changing01\\active.lock",
+      "retained": true
+    },
+    "old_native_constant": {
+      "path": "E:\\OptoJump\\IronJump-gil-coherent-native-20261018-01\\fault01\\active.lock",
+      "retained": true
+    },
+    "old_dynamic": {
+      "path": "E:\\OptoJump\\IronJump-gil-coherent-dynamic-20261018-01\\active.lock",
+      "retained": true
+    },
+    "old_waiter": {
+      "path": "E:\\OptoJump\\IronJump-gil-waiter-control-20261018-01\\active.lock",
+      "retained": true
+    },
+    "old_replay_failure": {
+      "path": "E:\\OptoJump\\IronJump-gil-replay-disturbance-20261018-01\\active.lock",
+      "retained": true
+    },
+    "old_replay_cohort": {
+      "path": "E:\\OptoJump\\IronJump-gil-replay-disturbance-20261018-01\\cohort03\\active.lock",
+      "retained": true
+    },
+    "off_aa": {
+      "path": "E:\\OptoJump\\IronJump-gil-observer-noise-20261018-01\\off_aa01\\active.lock",
+      "retained": true
+    },
+    "on_aa": {
+      "path": "E:\\OptoJump\\IronJump-gil-observer-noise-20261018-01\\on_aa01\\active.lock",
+      "retained": true
+    },
+    "confirmation": {
+      "path": "E:\\OptoJump\\IronJump-gil-observer-noise-20261018-01\\confirmation01\\active.lock",
+      "retained": true
+    },
+    "gc": {
+      "path": "E:\\OptoJump\\IronJump-gil-observer-noise-20261018-01\\gc_diagnostic01\\active.lock",
+      "retained": true
+    },
+    "field_rate": {
+      "path": "E:\\OptoJump\\IronJump-gil-observer-noise-20261018-01\\field_rate01\\active.lock",
+      "retained": true
+    },
+    "cpu": {
+      "path": "E:\\OptoJump\\IronJump-gil-observer-noise-20261018-01\\cpu_delivery01\\diagnostic01\\active.lock",
+      "retained": true
+    }
+  },
+  "sampling_interval_100ns": 10000,
+  "observer_sha256": "02e367c7ca0b1cda5f1067b03125a770a502f10fcabb99fa5925b4265050d615",
+  "numpy_pyd_sha256": "4fb4c5d62a6bd766eea716350eaf5396580e33cf7dc159e305488d1b7d72dad2",
+  "replay_helper_sha256": "fcde26dd2e707cc457623a971a97e68ebd9f49630126c51bd6ce83072a0d40a8",
+  "remaining_diagnostic_processes": [],
+  "audit_source_sha256": "2bd9329eb3010f94e23137b24e8b61615a48d05d0d135138d05850f0436a7a1d",
+  "preservation_pass": true
+}

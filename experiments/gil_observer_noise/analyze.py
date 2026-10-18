@@ -9,6 +9,21 @@ import noise_stats as stats
 ROOT=Path(__file__).resolve().parents[2]
 
 
+
+def ordered_pairs(specs,cases):
+    pairs=[]
+    for i in sorted({s['pair'] for s in specs}):
+        group=[s for s in specs if s['pair']==i]
+        if len(group)!=2:raise ValueError('A pair needs exactly two cases')
+        if {s['mode'] for s in group}=={'off','on'}:
+            group=sorted(group,key=lambda s:s['mode']!='off')
+        elif len({s['mode'] for s in group})==1 and {s['side'] for s in group}=={'a','b'}:
+            group=sorted(group,key=lambda s:s['side'])
+        else:raise ValueError('Ambiguous pair orientation')
+        pairs.append(tuple(cases[s['id']] for s in group))
+    return pairs
+
+
 def stage(raw,plan_name,stage_name):
     manifest=read(raw/'manifest.json');assert all(sha(raw/n)==h for n,h in manifest.items())
     plan=read(raw/plan_name);result=read(raw/stage_name/'run01/result.json')
@@ -21,9 +36,7 @@ def stage(raw,plan_name,stage_name):
         if rows:
             first=rows[0];samples=[s for s in rows if s['kind']=='sample'];f=first['qpc_frequency'];gaps=[(b['qpc_begin']-a['qpc_begin'])*1000/f for a,b in zip(samples,samples[1:])]
             cadence[spec['id']]=dict(requested=first['period_ms']==plan['period_ms'] and first['requested_count']==plan['count'] and first['requested_tid']==record['ready']['tid'],actual_gap_ms=gaps,within_predeclared_pacing_budget=all(plan['period_ms']-1<=x<=plan['period_ms']+50 for x in gaps))
-    ids=sorted({s['pair'] for s in plan['cases']});pairs=[]
-    for i in ids:
-        a,b=[cases[s['id']] for s in plan['cases'] if s['pair']==i];pairs.append((a,b))
+    pairs=ordered_pairs(plan['cases'],cases)
     estimate=stats.contrast(pairs)
     return dict(scope=plan['scope'],stage=stage_name,cases=len(cases),all_recomputed=True,estimate=estimate,drift=stats.drift(list(cases.values())),cadence=cadence,all_cadence_checks=all(c['requested'] and c['within_predeclared_pacing_budget'] for c in cadence.values()),actual_load_disturbance_pass=False,field_attribution_ready=False)
 

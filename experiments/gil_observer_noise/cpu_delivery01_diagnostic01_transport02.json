@@ -1,0 +1,8 @@
+{
+  "archive_sha256": "485b4f41373814d5727b6b4df88124462a4fc7e5f861cc2dc00deee2fe5137f1",
+  "manifest_files": 65,
+  "all_verified": true,
+  "original_manifest_sha256": "9e8e6abc155c8752906eeb5dbe7db80d3eb6a8500ab3d0d1ebfadc493100ed3c",
+  "initial_local_check_failed": "FileNotFoundError: collector02 manifest used Windows backslashes while ZIP member names use forward slashes. Archive SHA matched before extraction; no capture or archive repeated. Original archive/manifest/collector02 retained byte-for-byte.",
+  "offline_repair": "archive_review01.verify_manifest canonicalizes only separators, rejects absolute/traversal/case/path collisions, then hashes every extracted original file."
+}

@@ -1,0 +1,851 @@
+{
+  "scope": "One fixed24-pair balanced OFF/ON confirmation at4Hz, selected once from both8-pair A/A pilots with insufficient predicted precision at the cap. All outcomes kept. No optional extension/retry, no field/human/hardware/USB/GUI/SDK/Run/optimization.",
+  "stage": "confirmation01",
+  "cases": 48,
+  "all_recomputed": true,
+  "estimate": {
+    "metrics": {
+      "wall_ns": {
+        "n": 24,
+        "mean_log_ratio": -0.024533892702473935,
+        "sd_log_ratio": 0.11034049917438851,
+        "geometric_relative_change": -0.024235382941887405,
+        "simultaneous_ci_relative": [
+          -0.09012287238420517,
+          0.04642325760781883
+        ],
+        "raw_relative_changes": [
+          -0.41298772851703025,
+          0.017614223893477554,
+          -0.024273449460537888,
+          -0.018652403601350342,
+          -0.0048752919637578,
+          -0.0008107709547066078,
+          0.04934564311414125,
+          0.001741925144786105,
+          0.008948661560994609,
+          -0.0234524363527574,
+          -0.010410234253317217,
+          -0.001240754839551772,
+          0.023336944140982308,
+          -0.008437842449368405,
+          -0.012563429637193924,
+          0.0336207315835646,
+          -0.008654356311582845,
+          -0.025372505824069913,
+          -0.016601148370150587,
+          0.0010781949032376836,
+          0.023358119241180697,
+          0.0009748856964886254,
+          -0.0029217372107893658,
+          -0.05251672075033387
+        ],
+        "absolute_change_max": 0.41298772851703025
+      },
+      "thread_cpu_ns": {
+        "n": 24,
+        "mean_log_ratio": -0.04099265862407267,
+        "sd_log_ratio": 0.10698921959212385,
+        "geometric_relative_change": -0.040163823559866696,
+        "simultaneous_ci_relative": [
+          -0.10307327204450412,
+          0.027158024048679567
+        ],
+        "raw_relative_changes": [
+          -0.40909090909090906,
+          -0.02898550724637683,
+          -0.07042253521126762,
+          -0.04225352112676062,
+          -0.03597122302158273,
+          -0.029197080291970767,
+          0.014705882352941124,
+          0.0,
+          0.014705882352941124,
+          -0.04895104895104896,
+          -0.021126760563380254,
+          -0.06474820143884896,
+          -0.021739130434782598,
+          -0.01449275362318836,
+          -0.007194244604316501,
+          0.01449275362318847,
+          0.0,
+          -0.04255319148936165,
+          -0.014285714285714235,
+          0.0,
+          0.022058823529411686,
+          0.007092198581560184,
+          -0.007194244604316501,
+          -0.06849315068493156
+        ],
+        "absolute_change_max": 0.40909090909090906
+      },
+      "cycles": {
+        "n": 24,
+        "mean_log_ratio": -0.04069542500065209,
+        "sd_log_ratio": 0.1089829931125095,
+        "geometric_relative_change": -0.03987848557133187,
+        "simultaneous_ci_relative": [
+          -0.10393930527814987,
+          0.02876214513007877
+        ],
+        "raw_relative_changes": [
+          -0.4184787512239224,
+          0.004891271882109027,
+          -0.04141781420785329,
+          -0.035277847686492225,
+          -0.01986364305811472,
+          -0.014905397496834727,
+          0.03144046896542041,
+          -0.016953994286091678,
+          -0.007194830295835452,
+          -0.041129716913667624,
+          -0.024170404989151795,
+          -0.016419470189628527,
+          0.009313806134558789,
+          -0.02585801516477504,
+          -0.025973187401950315,
+          0.014131010086092077,
+          -0.021955156118724006,
+          -0.0404937334333052,
+          -0.031571953070014924,
+          -0.01802069101367354,
+          0.004379442115660881,
+          -0.01724857215590037,
+          -0.019881827515936482,
+          -0.07100654903901926
+        ],
+        "absolute_change_max": 0.4184787512239224
+      },
+      "block_42237": {
+        "n": 24,
+        "mean_log_ratio": -0.012660356862078094,
+        "sd_log_ratio": 0.10604556158208227,
+        "geometric_relative_change": -0.012580551686495056,
+        "simultaneous_ci_relative": [
+          -0.0767460083343744,
+          0.05604435584272098
+        ],
+        "raw_relative_changes": [
+          -0.3922012924442435,
+          -0.008486486046568431,
+          -0.012314673001880383,
+          -0.01138568220767977,
+          0.04537430349786953,
+          0.011735811401744511,
+          0.042404597941292366,
+          -0.004315947845124124,
+          -0.021532312209419535,
+          0.030639169916255593,
+          -0.009946922871279518,
+          0.015441389917548731,
+          -0.00319483852633351,
+          0.01602233160858124,
+          -0.0020711216571538404,
+          0.07747759365111873,
+          0.01120439942247553,
+          0.02035842407370958,
+          -8.649002900518177e-05,
+          -0.004812742345494336,
+          0.03589574593591727,
+          -0.0017627611671096055,
+          0.005739771902626201,
+          -0.030925214040935404
+        ],
+        "absolute_change_max": 0.3922012924442435
+      },
+      "block_43237": {
+        "n": 24,
+        "mean_log_ratio": -0.04391434115504756,
+        "sd_log_ratio": 0.11863132267233435,
+        "geometric_relative_change": -0.042964067445388235,
+        "simultaneous_ci_relative": [
+          -0.11226254051156323,
+          0.031743976117080464
+        ],
+        "raw_relative_changes": [
+          -0.43320541568167625,
+          -0.014832690223947953,
+          -0.07243079452427381,
+          0.007208567537744237,
+          -0.0068304007019979185,
+          -0.030192765698835666,
+          0.053421735248311064,
+          -0.019059427314989663,
+          -0.00023057866073106226,
+          0.01713790355077571,
+          -0.05185733536596149,
+          -0.02937375467631753,
+          -0.028000112679086087,
+          -0.019570238168438614,
+          -0.023913599737361735,
+          0.022432830681289095,
+          -0.007111631799372797,
+          0.011955611633293506,
+          -0.025576009697244162,
+          -0.009315211180458638,
+          0.008942854651507794,
+          -0.07729190534435082,
+          -0.027784715404978066,
+          -0.14084251400852965
+        ],
+        "absolute_change_max": 0.43320541568167625
+      },
+      "block_44237": {
+        "n": 24,
+        "mean_log_ratio": -0.031668711062448715,
+        "sd_log_ratio": 0.1412816436021775,
+        "geometric_relative_change": -0.03117250925040278,
+        "simultaneous_ci_relative": [
+          -0.11412982029386647,
+          0.05955333900451202
+        ],
+        "raw_relative_changes": [
+          -0.4669414978769958,
+          0.008797417100444349,
+          -0.010385512424556875,
+          -0.02871808895462391,
+          -0.040501392554483484,
+          0.03549383663669525,
+          0.23990951018441728,
+          -0.03917548374559976,
+          0.001283187269971675,
+          0.03927029249035274,
+          -0.0477451427528961,
+          -0.018716378927460586,
+          -0.01992717716529202,
+          0.022602614279815914,
+          -0.0013200144855640694,
+          -0.05607497740954892,
+          -0.03786140792196979,
+          -0.024307687124739852,
+          -0.0201050530387461,
+          0.014738281595443548,
+          0.059361516322060215,
+          -0.01893950119268517,
+          -0.010054144757294159,
+          -0.13363481701416602
+        ],
+        "absolute_change_max": 0.4669414978769958
+      },
+      "block_45237": {
+        "n": 24,
+        "mean_log_ratio": -0.03225411436902926,
+        "sd_log_ratio": 0.11491798881747974,
+        "geometric_relative_change": -0.03173949809223021,
+        "simultaneous_ci_relative": [
+          -0.09973510898973599,
+          0.041391715834442566
+        ],
+        "raw_relative_changes": [
+          -0.4189243235965445,
+          0.14892933467917094,
+          -0.04724193488635686,
+          -0.01641957297478458,
+          -0.03200715902863782,
+          -0.01044416590932895,
+          0.012034481796699303,
+          -0.02127842130673574,
+          0.0013196673097377598,
+          -0.007642551275668263,
+          -0.035711569846683,
+          0.003817262167947977,
+          -0.015052622575573717,
+          -0.014076669634431771,
+          -0.0458454605078602,
+          -0.02012326592899416,
+          -0.026628869678596345,
+          -0.00926940591672365,
+          -0.035154883555762795,
+          -0.03321475106098348,
+          -0.01243560887867634,
+          0.03916132521459792,
+          -0.005610540229738503,
+          -0.030936268239839193
+        ],
+        "absolute_change_max": 0.4189243235965445
+      },
+      "block_46237": {
+        "n": 24,
+        "mean_log_ratio": -0.017135474808978937,
+        "sd_log_ratio": 0.11797325669659298,
+        "geometric_relative_change": -0.01698949754634615,
+        "simultaneous_ci_relative": [
+          -0.08778850739547228,
+          0.05930440009607567
+        ],
+        "raw_relative_changes": [
+          -0.4223312227670971,
+          -0.0015538936396414238,
+          -0.008886592538990268,
+          -0.027810916582657996,
+          -0.004607336740553358,
+          0.0026678943257245624,
+          0.004620801878605807,
+          0.024284194022601513,
+          0.006318560695816933,
+          -0.0475125923088171,
+          0.0801635951261459,
+          0.008194829780510561,
+          -0.006851006206828769,
+          -0.010095212120416752,
+          -0.02683313099119844,
+          0.11738412942677212,
+          -0.010588607969280295,
+          0.0012357479524800485,
+          -0.009191325493630885,
+          -0.013085358752305543,
+          0.04281738171058902,
+          0.011593288164000404,
+          0.02454018492598986,
+          -0.005987660339468959
+        ],
+        "absolute_change_max": 0.4223312227670971
+      },
+      "block_47237": {
+        "n": 24,
+        "mean_log_ratio": -0.018143079643388283,
+        "sd_log_ratio": 0.09495442383368352,
+        "geometric_relative_change": -0.017979484839144005,
+        "simultaneous_ci_relative": [
+          -0.07531882042015602,
+          0.042915453989211934
+        ],
+        "raw_relative_changes": [
+          -0.32123392052465416,
+          -0.004705582446118961,
+          0.0055300762241137225,
+          -0.04765651905448154,
+          -0.005922030744086593,
+          -0.002662326633597001,
+          0.001488543288278743,
+          0.04287406251972836,
+          0.052401167970321794,
+          -0.14795660139973876,
+          -0.015901495142724653,
+          0.006810326508840392,
+          0.04743724323607989,
+          -0.004822368007863065,
+          0.009737852935321145,
+          0.09872412638081784,
+          -0.012312655182983412,
+          -0.12302572493348995,
+          -0.021431781287415408,
+          0.035326307715834115,
+          0.021852436998508695,
+          0.04137784967745528,
+          0.00024170366132580945,
+          0.006378121541375847
+        ],
+        "absolute_change_max": 0.32123392052465416
+      },
+      "block_48237": {
+        "n": 24,
+        "mean_log_ratio": -0.016966480806778338,
+        "sd_log_ratio": 0.13114577567995922,
+        "geometric_relative_change": -0.016823360629655445,
+        "simultaneous_ci_relative": [
+          -0.0952173588080848,
+          0.06836300808132925
+        ],
+        "raw_relative_changes": [
+          -0.4438800042887048,
+          -0.002283906421929216,
+          -0.028231547833308612,
+          0.0070499274911952625,
+          0.01750188532216468,
+          -0.01547889117476986,
+          -0.01623106060606061,
+          0.03186572101726548,
+          0.022693975407461542,
+          0.010178283791268061,
+          0.003823388605106226,
+          0.006132038691514463,
+          0.2427396883452959,
+          -0.059234370414720905,
+          0.005697086056427159,
+          -0.027916686396379897,
+          0.034985238152704046,
+          -0.031163622763622167,
+          -0.0015462333292188821,
+          0.02022118589796218,
+          -0.002128749602515634,
+          0.014591395719802502,
+          -0.013083148118601784,
+          -0.009738383758925107
+        ],
+        "absolute_change_max": 0.4438800042887048
+      }
+    },
+    "independent_pairs": 24,
+    "df": 23,
+    "family_size": 10,
+    "family_alpha": 0.05,
+    "critical_t": 3.1039969631246,
+    "method": "Two-sided Student t on whole-pair log ratios, Bonferroni family interval. No outlier removal; block metrics are correlated endpoints, not independent replicates. Requires adequately stationary independent pair errors; small pilot is not a distribution-free guarantee."
+  },
+  "drift": {
+    "n": 48,
+    "rank_rho": -0.18562744246634824,
+    "pvalue": 0.20652580703484727,
+    "flag": false,
+    "wall_range_relative": 0.7942225848810516,
+    "limits": "Screen for monotone drift; absence of a flag does not prove stationarity. Do not post-hoc correct timing or infer CPU frequency from cycles."
+  },
+  "cadence": {
+    "pair01_on": {
+      "requested": true,
+      "actual_gap_ms": [
+        250.4775,
+        250.1031,
+        250.3379,
+        250.2265,
+        250.0942,
+        250.1507,
+        250.5466
+      ],
+      "within_predeclared_pacing_budget": true
+    },
+    "pair02_on": {
+      "requested": true,
+      "actual_gap_ms": [
+        250.6109,
+        250.0422,
+        250.0724,
+        250.0784,
+        250.4821,
+        250.5544,
+        250.5603
+      ],
+      "within_predeclared_pacing_budget": true
+    },
+    "pair03_on": {
+      "requested": true,
+      "actual_gap_ms": [
+        250.5267,
+        250.3388,
+        250.1048,
+        250.518,
+        250.4703,
+        250.2505,
+        250.2624
+      ],
+      "within_predeclared_pacing_budget": true
+    },
+    "pair04_on": {
+      "requested": true,
+      "actual_gap_ms": [
+        250.56,
+        250.5043,
+        250.3196,
+        250.1172,
+        250.2289,
+        250.4746,
+        250.0536
+      ],
+      "within_predeclared_pacing_budget": true
+    },
+    "pair05_on": {
+      "requested": true,
+      "actual_gap_ms": [
+        250.4507,
+        250.5149,
+        250.2931,
+        250.1051,
+        250.3432,
+        250.2994,
+        250.123
+      ],
+      "within_predeclared_pacing_budget": true
+    },
+    "pair06_on": {
+      "requested": true,
+      "actual_gap_ms": [
+        250.4196,
+        250.4687,
+        250.2624,
+        250.5651,
+        250.3088,
+        250.1724,
+        250.0833
+      ],
+      "within_predeclared_pacing_budget": true
+    },
+    "pair07_on": {
+      "requested": true,
+      "actual_gap_ms": [
+        250.1461,
+        250.4286,
+        250.3831,
+        250.1416,
+        250.3378,
+        250.1831,
+        250.5379
+      ],
+      "within_predeclared_pacing_budget": true
+    },
+    "pair08_on": {
+      "requested": true,
+      "actual_gap_ms": [
+        250.5028,
+        250.0834,
+        250.1537,
+        250.0968,
+        250.1385,
+        250.1373,
+        250.2086
+      ],
+      "within_predeclared_pacing_budget": true
+    },
+    "pair09_on": {
+      "requested": true,
+      "actual_gap_ms": [
+        250.4609,
+        250.5634,
+        250.1769,
+        250.5905,
+        250.1071,
+        250.5717,
+        250.3088
+      ],
+      "within_predeclared_pacing_budget": true
+    },
+    "pair10_on": {
+      "requested": true,
+      "actual_gap_ms": [
+        250.4152,
+        250.5267,
+        250.5393,
+        250.0859,
+        250.4297,
+        250.2657,
+        250.2423
+      ],
+      "within_predeclared_pacing_budget": true
+    },
+    "pair11_on": {
+      "requested": true,
+      "actual_gap_ms": [
+        250.4757,
+        250.278,
+        250.1948,
+        250.6587,
+        250.4993,
+        250.0797,
+        250.1783
+      ],
+      "within_predeclared_pacing_budget": true
+    },
+    "pair12_on": {
+      "requested": true,
+      "actual_gap_ms": [
+        250.4389,
+        250.2391,
+        250.2245,
+        250.0931,
+        250.1393,
+        250.2444,
+        250.5743
+      ],
+      "within_predeclared_pacing_budget": true
+    },
+    "pair13_on": {
+      "requested": true,
+      "actual_gap_ms": [
+        250.2242,
+        250.452,
+        250.5272,
+        250.0512,
+        250.344,
+        250.4993,
+        250.5741
+      ],
+      "within_predeclared_pacing_budget": true
+    },
+    "pair14_on": {
+      "requested": true,
+      "actual_gap_ms": [
+        250.5894,
+        250.0384,
+        250.1495,
+        250.2095,
+        250.0602,
+        250.0932,
+        250.4701
+      ],
+      "within_predeclared_pacing_budget": true
+    },
+    "pair15_on": {
+      "requested": true,
+      "actual_gap_ms": [
+        250.3809,
+        250.0907,
+        250.462,
+        250.3867,
+        250.0487,
+        250.1062,
+        250.4031
+      ],
+      "within_predeclared_pacing_budget": true
+    },
+    "pair16_on": {
+      "requested": true,
+      "actual_gap_ms": [
+        250.2392,
+        250.3978,
+        250.4761,
+        250.2898,
+        250.5227,
+        250.0973,
+        250.3697
+      ],
+      "within_predeclared_pacing_budget": true
+    },
+    "pair17_on": {
+      "requested": true,
+      "actual_gap_ms": [
+        250.449,
+        250.0904,
+        250.4121,
+        250.4185,
+        250.1123,
+        250.0963,
+        250.1051
+      ],
+      "within_predeclared_pacing_budget": true
+    },
+    "pair18_on": {
+      "requested": true,
+      "actual_gap_ms": [
+        250.533,
+        250.5419,
+        250.3561,
+        250.1075,
+        250.3114,
+        250.2122,
+        250.5255
+      ],
+      "within_predeclared_pacing_budget": true
+    },
+    "pair19_on": {
+      "requested": true,
+      "actual_gap_ms": [
+        250.3248,
+        250.1608,
+        250.1223,
+        250.1836,
+        250.5114,
+        250.1625,
+        250.1189
+      ],
+      "within_predeclared_pacing_budget": true
+    },
+    "pair20_on": {
+      "requested": true,
+      "actual_gap_ms": [
+        250.053,
+        250.0565,
+        250.1051,
+        250.1231,
+        250.4855,
+        250.5362,
+        250.5098
+      ],
+      "within_predeclared_pacing_budget": true
+    },
+    "pair21_on": {
+      "requested": true,
+      "actual_gap_ms": [
+        250.3444,
+        250.5455,
+        250.3775,
+        250.4708,
+        250.5119,
+        250.1113,
+        250.3492
+      ],
+      "within_predeclared_pacing_budget": true
+    },
+    "pair22_on": {
+      "requested": true,
+      "actual_gap_ms": [
+        250.0478,
+        250.0536,
+        250.077,
+        250.3314,
+        250.0809,
+        250.5287,
+        250.2414
+      ],
+      "within_predeclared_pacing_budget": true
+    },
+    "pair23_on": {
+      "requested": true,
+      "actual_gap_ms": [
+        250.392,
+        250.1332,
+        250.1739,
+        250.0962,
+        250.1474,
+        250.2054,
+        250.225
+      ],
+      "within_predeclared_pacing_budget": true
+    },
+    "pair24_on": {
+      "requested": true,
+      "actual_gap_ms": [
+        250.4441,
+        250.4526,
+        250.5013,
+        250.1199,
+        250.1572,
+        250.1119,
+        250.0923
+      ],
+      "within_predeclared_pacing_budget": true
+    }
+  },
+  "all_cadence_checks": true,
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "acceptance": {
+    "equivalence_limit": 0.03,
+    "all_simultaneous_intervals_inside": false,
+    "every_original_trial_inside_legacy_hard_limit": false,
+    "statistical_equivalence_pass": false,
+    "limits": "This is a new3% family-equivalence requirement plus the retained15% per-trial hard bound; does not rewrite earlier failed gates or qualify GUI/SDK/field load."
+  },
+  "precision": {
+    "log_halfwidths": {
+      "wall_ns": 0.06991182048343675,
+      "thread_cpu_ns": 0.06778844730406766,
+      "cycles": 0.06905170365585862,
+      "block_42237": 0.06719054490296,
+      "block_43237": 0.07516489227833749,
+      "block_44237": 0.08951615208401165,
+      "block_45237": 0.07281212124867804,
+      "block_46237": 0.07474794119775939,
+      "block_47237": 0.06016319196342298,
+      "block_48237": 0.08309405880072851
+    },
+    "target": 0.009950330853168083,
+    "all_at_or_below_target": false
+  },
+  "drift_by_mode": {
+    "off": {
+      "n": 24,
+      "rank_rho": -0.09304347826086956,
+      "pvalue": 0.6654325452454303,
+      "flag": false,
+      "wall_range_relative": 0.7942225848810516,
+      "limits": "Screen for monotone drift; absence of a flag does not prove stationarity. Do not post-hoc correct timing or infer CPU frequency from cycles."
+    },
+    "on": {
+      "n": 24,
+      "rank_rho": -0.2904347826086956,
+      "pvalue": 0.1685835887354832,
+      "flag": false,
+      "wall_range_relative": 0.046008299727424484,
+      "limits": "Screen for monotone drift; absence of a flag does not prove stationarity. Do not post-hoc correct timing or infer CPU frequency from cycles."
+    }
+  },
+  "sensitivity": {
+    "wall_ns": {
+      "power_for_positive_effect": {
+        "0.02": 0.02290984880277872,
+        "0.03": 0.054499485517171105,
+        "0.1": 0.8546701084471311
+      },
+      "minimum_positive_relative_effect_80pct": 0.09414177032716425,
+      "limits": "Noncentral-t sensitivity under the same parametric independent-pair assumptions; describes precision, not measured GUI/GIL effect."
+    },
+    "thread_cpu_ns": {
+      "power_for_positive_effect": {
+        "0.02": 0.0242943704658823,
+        "0.03": 0.05877604454929484,
+        "0.1": 0.8803697652688515
+      },
+      "minimum_positive_relative_effect_80pct": 0.09115600844867851,
+      "limits": "Noncentral-t sensitivity under the same parametric independent-pair assumptions; describes precision, not measured GUI/GIL effect."
+    },
+    "cycles": {
+      "power_for_positive_effect": {
+        "0.02": 0.02345188722777149,
+        "0.03": 0.05616956932334441,
+        "0.1": 0.8653042835104626
+      },
+      "minimum_positive_relative_effect_80pct": 0.09293134169348247,
+      "limits": "Noncentral-t sensitivity under the same parametric independent-pair assumptions; describes precision, not measured GUI/GIL effect."
+    },
+    "block_42237": {
+      "power_for_positive_effect": {
+        "0.02": 0.02471364974798878,
+        "0.03": 0.06007781163956785,
+        "0.1": 0.8872501840104193
+      },
+      "minimum_positive_relative_effect_80pct": 0.09031674452266858,
+      "limits": "Noncentral-t sensitivity under the same parametric independent-pair assumptions; describes precision, not measured GUI/GIL effect."
+    },
+    "block_43237": {
+      "power_for_positive_effect": {
+        "0.02": 0.020069764429764506,
+        "0.03": 0.045848292997567104,
+        "0.1": 0.7847662833042071
+      },
+      "minimum_positive_relative_effect_80pct": 0.10156348426577032,
+      "limits": "Noncentral-t sensitivity under the same parametric independent-pair assumptions; describes precision, not measured GUI/GIL effect."
+    },
+    "block_44237": {
+      "power_for_positive_effect": {
+        "0.02": 0.015054882020675986,
+        "0.03": 0.031093398614227125,
+        "0.1": 0.5851577559420856
+      },
+      "minimum_positive_relative_effect_80pct": 0.1220970635958557,
+      "limits": "Noncentral-t sensitivity under the same parametric independent-pair assumptions; describes precision, not measured GUI/GIL effect."
+    },
+    "block_45237": {
+      "power_for_positive_effect": {
+        "0.02": 0.021250114487984948,
+        "0.03": 0.04942219100999555,
+        "0.1": 0.8169484977385164
+      },
+      "minimum_positive_relative_effect_80pct": 0.09823320722009413,
+      "limits": "Noncentral-t sensitivity under the same parametric independent-pair assumptions; describes precision, not measured GUI/GIL effect."
+    },
+    "block_46237": {
+      "power_for_positive_effect": {
+        "0.02": 0.020269214174232428,
+        "0.03": 0.04644987394024176,
+        "0.1": 0.7905460828566865
+      },
+      "minimum_positive_relative_effect_80pct": 0.10097256709981348,
+      "limits": "Noncentral-t sensitivity under the same parametric independent-pair assumptions; describes precision, not measured GUI/GIL effect."
+    },
+    "block_47237": {
+      "power_for_positive_effect": {
+        "0.02": 0.03088467037551134,
+        "0.03": 0.07952338646647755,
+        "0.1": 0.9532994420293572
+      },
+      "minimum_positive_relative_effect_80pct": 0.08050083327825827,
+      "limits": "Noncentral-t sensitivity under the same parametric independent-pair assumptions; describes precision, not measured GUI/GIL effect."
+    },
+    "block_48237": {
+      "power_for_positive_effect": {
+        "0.02": 0.01692391358421164,
+        "0.03": 0.036500936614895285,
+        "0.1": 0.6726741053408359
+      },
+      "minimum_positive_relative_effect_80pct": 0.1128615275888538,
+      "limits": "Noncentral-t sensitivity under the same parametric independent-pair assumptions; describes precision, not measured GUI/GIL effect."
+    }
+  },
+  "offline_3pct_equivalence_ready": false,
+  "root_cause_or_fix_complete": false,
+  "limits": [
+    "All24 fixed pairs retained, including first slow OFF; no trimming, normalization, re-sampling or extension.",
+    "AA vs confirmation has an explicit20ms phase change; AA supplies an approximate planning prior, not an exact phase-matched qualification.",
+    "Sparse samples do not yield GIL hold/wait shares. GUI/vision/SDK/USB concurrency and real pending are absent; field qualification remains false."
+  ]
+}
