@@ -1,0 +1,294 @@
+{
+  "title": "暂停前后等待顺序的合成反例：事后闭合栈不足以证明事前等待",
+  "conclusion": "独立原生标记证明：在最早的显式持有者暂停之前没有GIL获取请求；随后人为放行请求，原采集二进制仍可输出闭合的GIL等待链。该合成反例支持保留暂停前证据这一要求，尚未证明采集器内部竞态或现场主因。",
+  "scope": "两个事先冻结的独立合成进程窗口，各一份快照；无正式程序、GUI、SDK、人体、USB、Run或优化A/B启动。",
+  "verified": true,
+  "native_proof": {
+    "baseline01": {
+      "pid": 17264,
+      "tids": {
+        "waiter": 12644,
+        "native_beat": 16116,
+        "owner": 21724
+      },
+      "before_intervention": {
+        "epoch": 2,
+        "phase": 1,
+        "owner_tid": 21724,
+        "native_heartbeat": 175,
+        "requested": 0,
+        "acquired": 0,
+        "gate": 0,
+        "owner_heartbeat": 3
+      },
+      "before_snapshot": {
+        "epoch": 2,
+        "phase": 1,
+        "owner_tid": 21724,
+        "native_heartbeat": 175,
+        "requested": 0,
+        "acquired": 0,
+        "gate": 0,
+        "owner_heartbeat": 3
+      },
+      "after_snapshot": {
+        "epoch": 2,
+        "phase": 1,
+        "owner_tid": 21724,
+        "native_heartbeat": 198,
+        "requested": 0,
+        "acquired": 0,
+        "gate": 0,
+        "owner_heartbeat": 27
+      },
+      "final_request_acquire": [
+        0,
+        0
+      ]
+    },
+    "early_owner_pause01": {
+      "pid": 13692,
+      "tids": {
+        "waiter": 3044,
+        "native_beat": 2248,
+        "owner": 10040
+      },
+      "before_intervention": {
+        "epoch": 2,
+        "phase": 1,
+        "owner_tid": 10040,
+        "native_heartbeat": 166,
+        "requested": 0,
+        "acquired": 0,
+        "gate": 0,
+        "owner_heartbeat": 4
+      },
+      "before_snapshot": {
+        "epoch": 2,
+        "phase": 1,
+        "owner_tid": 10040,
+        "native_heartbeat": 212,
+        "requested": 1,
+        "acquired": 0,
+        "gate": 1,
+        "owner_heartbeat": 4
+      },
+      "after_snapshot": {
+        "epoch": 2,
+        "phase": 1,
+        "owner_tid": 10040,
+        "native_heartbeat": 233,
+        "requested": 1,
+        "acquired": 0,
+        "gate": 1,
+        "owner_heartbeat": 4
+      },
+      "final_request_acquire": [
+        1,
+        1
+      ],
+      "delivered_pause_owner_heartbeat": [
+        4,
+        4,
+        4,
+        4,
+        4
+      ],
+      "delivered_pause_independent_heartbeat": [
+        166,
+        169,
+        172,
+        174,
+        178
+      ],
+      "suspend_previous": 0,
+      "resume_previous": 1
+    }
+  },
+  "strongest_supported_claim": "暂停后的完整等待栈与准确持有者身份，不能单独回推最早暂停干预前已存在同一等待。",
+  "intervention_limit": "对抗窗口同时实施了持有者暂停和请求放行；基线未放行请求。这不是相同请求下的暂停/不暂停因果对照，不能证明暂停单独造成等待，也不能计算误判率。",
+  "collector_limit": "对抗窗口的显式SuspendThread发生在原观察器go之前。没有将干预嵌入原NtSuspendProcess内部，未测得其内部逐线程暂停顺序。因此不能宣称原工具自动制造了历史等待。",
+  "historical_evidence": "此前六个自然ETW等待见证继续独立有效；不能跨轮拼接为本合成持有者或GUI绘制的责任证据。此前3.30–3.37秒和0.88–1.00秒FIFO位置边界不变。",
+  "code_boundary_evidence": [
+    {
+      "position": "PauseOracle.c::request",
+      "role": "原生线程在gate为1后才设置requested并调用PyGILState_Ensure；gate为0时仅Sleep。"
+    },
+    {
+      "position": "PauseOracle.c::HoldNative",
+      "role": "PyDLL持有GIL并递增持有者原生心跳。"
+    },
+    {
+      "position": "control.py::case",
+      "role": "外部保留线程句柄、确认暂停交付后写gate；Observer结束后确认恢复，再释放持有者。"
+    }
+  ],
+  "missing": [
+    "正式消费者在任何持有者暂停前的独立原生等待证据。",
+    "从暂停前消费者到暂停后持有者的稳定关联及GIL切换/ABA排除。",
+    "改变采集二进制后重新冻结、正负控制、实际负载扰动校准。"
+  ],
+  "next_actions": [
+    "实现先保留并暂停消费者线程、保存其原生context，再暂停其余进程的候选读取顺序；符号解析和结果构建移出采集窗。",
+    "先以已有确定等待者正控制和无请求/转移中负控制验证；闭合栈、PDB、生命周期和失败保留要求不变。",
+    "只有上述控制与扰动验收通过后，补充严重积压固定输入窗口；当前不需要新增真人Walk。"
+  ],
+  "tests": {
+    "groups": {
+      "new_control": {
+        "ran": 16,
+        "passed": 16,
+        "skipped": [],
+        "failures": [],
+        "errors": [],
+        "identities": [
+          "test_control.ControlTests.test_baseline_and_adversarial",
+          "test_control.ControlTests.test_incomplete_capture",
+          "test_control.ControlTests.test_live_observer_never_clean",
+          "test_control.ControlTests.test_mismatched_pdb_guid",
+          "test_control.ControlTests.test_missing_take_gil",
+          "test_control.ControlTests.test_owner_switch",
+          "test_control.ControlTests.test_preexisting_request_cannot_certify_manufactured_wait",
+          "test_control.ControlTests.test_request_already_acquired",
+          "test_control.ControlTests.test_resume_unconfirmed",
+          "test_control.ControlTests.test_snapshot_outside_oracle_bracket",
+          "test_control.ControlTests.test_suspend_not_delivered",
+          "test_control.ControlTests.test_tid_reuse",
+          "test_control.ControlTests.test_unclosed_native_stack",
+          "test_control.ControlTests.test_unmatched_python_symbols",
+          "test_control.ControlTests.test_whole_process_stalled_is_not_owner_only_pause",
+          "test_control.ControlTests.test_wrong_suspend_count"
+        ],
+        "unique": 16,
+        "successful": true,
+        "returncode": 0,
+        "stderr": "................\n----------------------------------------------------------------------\nRan 16 tests in 0.001s\n\nOK\n",
+        "cwd": "experiments/gil_pause_entry_control"
+      },
+      "native_regression": {
+        "ran": 47,
+        "passed": 43,
+        "skipped": [
+          [
+            "test_external_fixture_windows.FixtureTests.test_progress_saved_after_observer_end",
+            "Windows native fixture required"
+          ],
+          [
+            "test_windows_observer.ObserverTests.test_multiple_sdk_thread_handles_remain_separate",
+            "Windows native handles required"
+          ],
+          [
+            "test_windows_observer.ObserverTests.test_pid_tid_mismatch_rejected",
+            "Windows native handles required"
+          ],
+          [
+            "test_windows_observer.ObserverTests.test_sdk_same_pid_as_gui_rejected",
+            "Windows native handles required"
+          ]
+        ],
+        "failures": [],
+        "errors": [],
+        "identities": [
+          "test_external_fixture_windows.FixtureTests.test_progress_saved_after_observer_end",
+          "test_external_report.ExternalReportTests.test_failed_trace_blocks_pair",
+          "test_external_report.ExternalReportTests.test_midpoint_pass_does_not_hide_wide_failed_bound",
+          "test_external_report.ExternalReportTests.test_missing_progress_bracket_rejected",
+          "test_external_report.ExternalReportTests.test_missing_work_is_failed_evidence_not_a_success",
+          "test_external_report.ExternalReportTests.test_regressing_progress_rejected",
+          "test_external_report.ExternalReportTests.test_work_retains_both_boundary_uncertainties",
+          "test_quality.QualityTests.test_clock_mismatch_rejected",
+          "test_quality.QualityTests.test_clock_uses_brackets_not_wide_midpoint",
+          "test_quality.QualityTests.test_host_mapping_rejects_one_sided_anchor",
+          "test_quality.QualityTests.test_host_mapping_retains_uncertainty",
+          "test_quality.QualityTests.test_interval_must_cover_whole_window",
+          "test_quality.QualityTests.test_missing_clock_evidence_rejected",
+          "test_quality.QualityTests.test_multiple_user_stacks_not_complete",
+          "test_quality.QualityTests.test_profiles_do_not_enable_each_other",
+          "test_quality.QualityTests.test_qt_and_system_witnesses",
+          "test_quality.QualityTests.test_restore_thread_without_gil_is_not_gil",
+          "test_quality.QualityTests.test_split_kernel_and_user_are_not_ambiguous",
+          "test_quality.QualityTests.test_truncated_gil_chain_rejected",
+          "test_quality.QualityTests.test_unknown_frame_remains_unknown",
+          "test_record_cleanup.RecordCleanupTests.test_capture_and_both_cleanup_failures_are_retained",
+          "test_record_cleanup.RecordCleanupTests.test_capture_failure_with_confirmed_cleanup_releases_lock",
+          "test_record_cleanup.RecordCleanupTests.test_end_anchor_failure_cannot_hide_cleanup_fault_log",
+          "test_record_cleanup.RecordCleanupTests.test_existing_lock_is_preserved_without_actions",
+          "test_record_cleanup.RecordCleanupTests.test_interrupt_during_set_still_restores",
+          "test_record_cleanup.RecordCleanupTests.test_log_write_failure_keeps_lock",
+          "test_record_cleanup.RecordCleanupTests.test_restore_mismatch_keeps_log_and_lock",
+          "test_record_cleanup.RecordCleanupTests.test_restore_query_failure_keeps_log_and_lock",
+          "test_record_cleanup.RecordCleanupTests.test_set_and_restore_readback_failures_keep_original_failure_and_lock",
+          "test_record_cleanup.RecordCleanupTests.test_set_success_query_failure_still_restores",
+          "test_record_cleanup.RecordCleanupTests.test_stop_exception_still_restores_and_keeps_log_and_lock",
+          "test_record_cleanup.RecordCleanupTests.test_stop_nonzero_still_restores_and_keeps_lock",
+          "test_record_cleanup.RecordCleanupTests.test_success_releases_lock_and_only_stops_owned_instance",
+          "test_record_cleanup.RecordCleanupTests.test_wait_cleanup_failure_keeps_lock_without_interval_change",
+          "test_schedule_boundary.ScheduleBoundaryTests.test_initial_out_inside_window_still_rejected",
+          "test_schedule_boundary.ScheduleBoundaryTests.test_internal_duplicate_out_still_rejected",
+          "test_schedule_boundary.ScheduleBoundaryTests.test_new_thread_missing_switch_in_still_rejected",
+          "test_schedule_boundary.ScheduleBoundaryTests.test_preexisting_out_before_window_retained_as_boundary",
+          "test_schedule_boundary.ScheduleBoundaryTests.test_running_cpu_migration_still_rejected",
+          "test_split_field.SplitTests.test_changed_thread_identity_rejected",
+          "test_split_field.SplitTests.test_failed_scan_cannot_leave_a_success_report",
+          "test_split_field.SplitTests.test_independent_count_gate_never_licenses_field_attribution",
+          "test_split_field.SplitTests.test_missing_after_row_rejected",
+          "test_split_field.SplitTests.test_one_sided_host_clock_rejected",
+          "test_windows_observer.ObserverTests.test_multiple_sdk_thread_handles_remain_separate",
+          "test_windows_observer.ObserverTests.test_pid_tid_mismatch_rejected",
+          "test_windows_observer.ObserverTests.test_sdk_same_pid_as_gui_rejected"
+        ],
+        "unique": 47,
+        "successful": true,
+        "returncode": 0,
+        "stderr": "s...........................................sss\n----------------------------------------------------------------------\nRan 47 tests in 0.020s\n\nOK (skipped=4)\n",
+        "cwd": "experiments/native_stack_capture"
+      },
+      "known_waiter_regression": {
+        "ran": 19,
+        "passed": 19,
+        "skipped": [],
+        "failures": [],
+        "errors": [],
+        "identities": [
+          "test_waiter.WaiterChecks.test_acquired_marker_inside_window_rejected",
+          "test_waiter.WaiterChecks.test_foreign_counter_tid_rejected",
+          "test_waiter.WaiterChecks.test_lost_lock_rejected",
+          "test_waiter.WaiterChecks.test_missing_recovery_rejected",
+          "test_waiter.WaiterChecks.test_native_heartbeat_motion_rejected",
+          "test_waiter.WaiterChecks.test_native_waiter_is_not_python_heartbeat",
+          "test_waiter.WaiterChecks.test_owner_function_mismatch_rejected",
+          "test_waiter.WaiterChecks.test_pass_is_control_only",
+          "test_waiter.WaiterChecks.test_reused_tid_rejected",
+          "test_waiter.WaiterChecks.test_root_truncation_rejected",
+          "test_waiter.WaiterChecks.test_stuck_negative_control_rejected",
+          "test_waiter.WaiterChecks.test_take_gil_missing_rejected",
+          "test_waiter.WaiterChecks.test_unmatched_pdb_rejected",
+          "test_waiter.WaiterChecks.test_unrequested_native_wait_rejected",
+          "test_recovery.RecoveryBoundaryChecks.test_acquisition_not_completed_rejected",
+          "test_recovery.RecoveryBoundaryChecks.test_complete_before_end_rejected",
+          "test_recovery.RecoveryBoundaryChecks.test_equal_post_stop_reads_are_valid",
+          "test_recovery.RecoveryBoundaryChecks.test_no_progress_after_capture_rejected",
+          "test_recovery.RecoveryBoundaryChecks.test_other_frozen_failure_still_fails"
+        ],
+        "unique": 19,
+        "successful": true,
+        "returncode": 0,
+        "stderr": "...................\n----------------------------------------------------------------------\nRan 19 tests in 0.002s\n\nOK\n",
+        "cwd": "experiments/gil_waiter_control"
+      }
+    },
+    "total_ran": 82,
+    "total_pass": 78,
+    "total_skip": 4,
+    "scope": "Mac regression checks; Windows synthetic windows are verified separately. An earlier discovery loaded imported WaiterChecks twice; final accounting uses explicit classes and unique IDs."
+  },
+  "audit_correction": "audit01错误假定Mac端最终派生报告已部署Windows，因文件不存在而中止。源文件和错误保留；audit02对Windows冻结栈计划及其全部源进行校验，Mac报告在本机按冻结SHA核对。未重复采集或降低采集验收。",
+  "old_failures_and_locks_preserved": true,
+  "formal_program_changed": false,
+  "actual_load_disturbance_pass": false,
+  "natural_wait_owner_association_qualified": false,
+  "field_attribution_ready": false,
+  "root_cause_or_fix_complete": false,
+  "raw_archive_sha256": "c62bc544bc8363ac41742b69cf6ed993bd58cab83cb443087380170fc5a8f35c",
+  "raw_files_verified": 46
+}

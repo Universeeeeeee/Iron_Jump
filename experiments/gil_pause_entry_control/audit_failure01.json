@@ -1,0 +1,9 @@
+{
+  "failed_source": "audit01.py",
+  "exception": "FileNotFoundError",
+  "missing": "E:/OptoJump/IronJump-gil-gui-calibration-20261018-01/experiments/gil_gui_analysis/analysis_summary01.json",
+  "reason": "The final derived analysis is Mac-only; the first preservation audit incorrectly assumed a Windows copy.",
+  "correction": "audit02 checks the Windows frozen stack plan and its full sources. Mac-only derived analysis is checked locally against the pre-capture plan hash.",
+  "no_capture_repeated": true,
+  "old_audit_source_preserved": true
+}

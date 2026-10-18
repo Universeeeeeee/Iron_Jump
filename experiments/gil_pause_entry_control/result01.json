@@ -1,0 +1,87 @@
+{
+  "cases": [
+    {
+      "case": "baseline01",
+      "checks": {
+        "stream": true,
+        "order": true,
+        "no_request_before_intervention": true,
+        "symbol_identities": true,
+        "raw_contexts": true,
+        "both_roots_closed": true,
+        "owner_python": true,
+        "native_pause": true,
+        "stable_owner": true,
+        "identities": true,
+        "clean": true,
+        "no_forced_pause": true,
+        "no_GIL_request": true,
+        "no_GIL_chain": true,
+        "recovered": true
+      },
+      "passed": true,
+      "waiter_symbols": [
+        "NtDelayExecution",
+        "NtDelayExecution",
+        "RtlDelayExecution",
+        "SleepEx",
+        "request",
+        "BaseThreadInitThunk",
+        "RtlUserThreadStart"
+      ],
+      "natural_wait_before_explicit_intervention": false,
+      "post_suspension_GIL_wait_chain": false,
+      "scope": "Explicit early-owner-pause synthetic counterexample, not reproduction of NtSuspendProcess internal ordering or actual application causality."
+    },
+    {
+      "case": "early_owner_pause01",
+      "checks": {
+        "stream": true,
+        "order": true,
+        "no_request_before_intervention": true,
+        "symbol_identities": true,
+        "raw_contexts": true,
+        "both_roots_closed": true,
+        "owner_python": true,
+        "native_pause": true,
+        "stable_owner": true,
+        "identities": true,
+        "clean": true,
+        "suspension_order": true,
+        "delivered_owner_pause": true,
+        "request_after_pause": true,
+        "closed_induced_GIL_chain": true,
+        "recovered": true
+      },
+      "passed": true,
+      "waiter_symbols": [
+        "NtWaitForSingleObject",
+        "NtWaitForSingleObject",
+        "WaitForSingleObjectEx",
+        "_PyCOND_WAIT_MS",
+        "take_gil",
+        "PyGILState_Ensure",
+        "request",
+        "BaseThreadInitThunk",
+        "RtlUserThreadStart"
+      ],
+      "natural_wait_before_explicit_intervention": false,
+      "post_suspension_GIL_wait_chain": true,
+      "scope": "Explicit early-owner-pause synthetic counterexample, not reproduction of NtSuspendProcess internal ordering or actual application causality."
+    }
+  ],
+  "explicit_early_owner_pause_mechanism_demonstrated": true,
+  "exact_NtSuspendProcess_race_reproduced": false,
+  "actual_application_pause_artifact_proven": false,
+  "natural_wait_owner_association_qualified": false,
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "root_cause_or_fix_complete": false,
+  "limitations": [
+    "One baseline and one separately frozen adversarial case; no rates, durations or false-positive percentages.",
+    "The original binary was unchanged. Extra owner-only suspension was an explicit external intervention, not observed internal NtSuspendProcess ordering.",
+    "No new application, human, optical/camera/USB, Run, or optimization AB window. Old failed windows and gates retained."
+  ],
+  "plan_sha256": "eb0283dc907ec402813246d3bdf7626b1e62e3b099bd2630f71af1e8eaaf710b",
+  "manifest_sha256": "9bb33f534af3b0ad0865f856f7c3a084b39cee016284ca8fb67d60de36fa1796"
+}

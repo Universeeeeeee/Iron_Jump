@@ -1,0 +1,42 @@
+{
+  "scope": "One no-request baseline, one explicit external early-owner-pause counterexample. Does not reproduce internal NtSuspendProcess ordering or certify natural application waiting.",
+  "cases": [
+    "baseline01",
+    "early_owner_pause01"
+  ],
+  "count_per_case": 1,
+  "period_ms": 250,
+  "observer_path": "E:/OptoJump/IronJump-gil-observer-noise-20261018-01/observer.exe",
+  "observer_sha256": "02e367c7ca0b1cda5f1067b03125a770a502f10fcabb99fa5925b4265050d615",
+  "oracle_dll_sha256": "fec69319420f1e3220bf918dafd49b73657470edba6ff512fbb73c987901fa40",
+  "oracle_pdb_sha256": "199f07d12c411b5e1ca8a1f8b65bdd8bb5d9e10687d18dd290a268498fe4ad00",
+  "python_dll_sha256": "162e8557fbed5f39ae24983ee62b2d435b4796c937d9c1a34371888c7e43af00",
+  "dbghelp_sha256": "2d2ec94891162a61d86789133623b47d64d74c15d6be99473b25ad7a6468cf39",
+  "native_helpers": "E:/OptoJump/IronJump-gil-timestamped-20261018-01/field01/experiments/native_stack_capture",
+  "symbol_search_path": "E:/OptoJump/IronJump-native-symbol-preflight-20261017-01/symbols;E:/OptoJump/IronJump-native-symbol-preflight-20261017-01/symbols/vendor",
+  "sources": {
+    "fixture.py": "b0f0118fae1ed8817db1d3c7159cc8bb3e774ddeefca3e4ff09d6a2a4dbfffc3",
+    "collect01.py": "9704e3eaa26e44c1d832490c460fdb79458d79f53157624d7d97634ab9948f63",
+    "build.cmd": "84a1ef2a42ae390d2920e303265919fba82d5b03f6222f377705d28da3e2f6a8",
+    "control.py": "bcf105064aab438e60bc7eeffcf521ba95747cb3dfdf9628c16fdb9944c175cc",
+    "PauseOracle.c": "bec6830ca3e9681b8033fab905becc5d60dac0b548ff6326c32ca63189e2fb66",
+    "test_control.py": "1127f5c00906154d61b8d7511ed42f0ad9c1a51f74b61711bb3f9f9be0c2dd71",
+    "deploy01.py": "ee8d7ae6dbe5d79042994008e5172f7354e46b31b7fd34265b96a4dd1de3c4d3",
+    "resolve_raw.py": "3fe093e064e7e73b986f994b2dbd7ed59245f86e827cef359782ea2e4accc64b",
+    "verify.py": "7bd9dc1872d86c2276089ae06bc470fc3f1b755d536dc29d5c9ebff2c2b5e144"
+  },
+  "source_archive_sha256": "2e5e9f3f2b5fd7617da185b90b537bcb6a22baa0a1223ccf6f8b2cd6d88fd0c1",
+  "original_waiter_plan_sha256": "6bd6f72ea84b2b91bd765dce452ebf6b04fde24b11186588d953be6298e3f8e7",
+  "original_gui_analysis_sha256": "b32de6e7e16309e082c4cf36f3d608f45e0d21f7e132122088f013cf6231af92",
+  "checks": [
+    "Both native stacks close to independently matched thread roots; requested context IP retained.",
+    "Native requested/acquired/gate markers are zero before intervention; holder identity stable.",
+    "Owner-only pause actually delivered: five owner-heartbeat readings equal, independent native heartbeat progresses; SuspendThread previous0 and ResumeThread previous1.",
+    "Adversarial request begins only after owner suspension; closed native take_gil acquisition chain occurs before owner resume; request acquires after cleanup.",
+    "Baseline has no GIL request/acquisition chain and completes through native skip gate.",
+    "All source/binary identities, lifecycle counters, clean exits and locks confirmed. No retry or altered old acceptance gates."
+  ],
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "root_cause_or_fix_complete": false
+}
