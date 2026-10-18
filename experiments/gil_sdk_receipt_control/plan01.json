@@ -1,0 +1,30 @@
+{
+  "scope": "Four synthetic interleavings using exact original serve AST and real TrackingRuntime body; injected fake hardware/stdin/output, no GUI/model/replay/human/device/Run/optimization AB.",
+  "sources": {
+    "control.py": "38a5c3874fff1e2174f0dc7107fcf1809d6e3544a182e48638b045e8ab24c424",
+    "test_control.py": "6fc8ad419ee11ddcf7a8e6a9c040d2822ca89d578bb4cc037af25314cb66b44c",
+    "verify.py": "e38a8e5edf5107d70cbe06629e031ffc92fab0ef1d38cc6c4cd7db864e2b55c9"
+  },
+  "existing_sources": {
+    "camera/control_service.py": "d3a786f0483b53ba2a28345381df51fff9a96a9f214076ca75310abe9331afe0",
+    "camera/tracking_runtime.py": "e3f079bca732ebb8e642eb29183eb19a8e68e2d44f2e3ceca3ec0c07168b68e7",
+    "camera/pose_tracking.py": "ce477c35317c08741a7d62f67be3f0a696648580b82d53c729e63aa3814b87e7",
+    "camera/pose_transport.py": "16ac0b1b610ee3fea7a771c2262c34cfb1abf098370b8cf5ff9e1633484675f8"
+  },
+  "cases": [
+    "before_runtime",
+    "constructor_gap",
+    "inactive_runtime",
+    "wrong_generation"
+  ],
+  "checks": [
+    "Every fed pose line independently appears at the stdin iterator; processing of a line is witnessed by the original reader requesting its next line.",
+    "Same payload before runtime creation is consumed but not runtime-logged; same payload after start ACK is runtime-logged.",
+    "Constructor gate demonstrates tracking_start enqueued/being processed does not imply runtime already exists.",
+    "Inactive and wrong-generation updates are runtime-logged before being ignored; receipt stage is not acceptance.",
+    "Hardware calls remain on serve owner; fake control closes; source bytes and all old failed artifacts remain untouched."
+  ],
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "primary_root_identified": false
+}

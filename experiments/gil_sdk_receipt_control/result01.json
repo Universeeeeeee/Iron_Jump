@@ -1,0 +1,58 @@
+{
+  "checks": {
+    "before_runtime_complete": true,
+    "before_runtime_wire_reader_identity": true,
+    "before_runtime_sdk_owner": true,
+    "before_runtime_read_without_runtime_log": true,
+    "constructor_gap_complete": true,
+    "constructor_gap_wire_reader_identity": true,
+    "constructor_gap_sdk_owner": true,
+    "constructor_gap_read_without_runtime_log": true,
+    "inactive_runtime_complete": true,
+    "inactive_runtime_wire_reader_identity": true,
+    "inactive_runtime_sdk_owner": true,
+    "inactive_runtime_receipt_before_acceptance": true,
+    "wrong_generation_complete": true,
+    "wrong_generation_wire_reader_identity": true,
+    "wrong_generation_sdk_owner": true,
+    "wrong_generation_receipt_before_acceptance": true,
+    "same_original_serve_body": true
+  },
+  "synthetic_receipt_stage_control_pass": true,
+  "counts": {
+    "before_runtime": {
+      "sent_pose_lines": 2,
+      "independent_stdin_pose_reads": 2,
+      "runtime_pose_input_logs": 1,
+      "runtime_submit_calls": 1
+    },
+    "constructor_gap": {
+      "sent_pose_lines": 2,
+      "independent_stdin_pose_reads": 2,
+      "runtime_pose_input_logs": 1,
+      "runtime_submit_calls": 1
+    },
+    "inactive_runtime": {
+      "sent_pose_lines": 1,
+      "independent_stdin_pose_reads": 1,
+      "runtime_pose_input_logs": 1,
+      "runtime_submit_calls": 1
+    },
+    "wrong_generation": {
+      "sent_pose_lines": 1,
+      "independent_stdin_pose_reads": 1,
+      "runtime_pose_input_logs": 1,
+      "runtime_submit_calls": 1
+    }
+  },
+  "actual_case_specific_missing_occurrence_identified": false,
+  "old_protocol_qualification_pass": false,
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "primary_root_identified": false,
+  "limits": [
+    "Exact original serve body is compiled with injected I/O and fake hardware; the real TrackingRuntime methods execute beneath a state-observation wrapper. No GUI/model/replay/human/device test.",
+    "These cases establish possible receipt-stage omissions, not which occurrence is absent in the saved540/539 record.",
+    "Existing global identity/clock gate stays failed. No duplicate-payload endpoint or occurrence is removed to obtain qualification."
+  ]
+}

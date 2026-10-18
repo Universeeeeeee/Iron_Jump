@@ -1,0 +1,53 @@
+{
+  "title": "SDK接收阶段合成核查：stdin读入、runtime记录与业务接受是三个阶段",
+  "verified": true,
+  "counts": {
+    "before_runtime": {
+      "sent_pose_lines": 2,
+      "independent_stdin_pose_reads": 2,
+      "runtime_pose_input_logs": 1,
+      "runtime_submit_calls": 1
+    },
+    "constructor_gap": {
+      "sent_pose_lines": 2,
+      "independent_stdin_pose_reads": 2,
+      "runtime_pose_input_logs": 1,
+      "runtime_submit_calls": 1
+    },
+    "inactive_runtime": {
+      "sent_pose_lines": 1,
+      "independent_stdin_pose_reads": 1,
+      "runtime_pose_input_logs": 1,
+      "runtime_submit_calls": 1
+    },
+    "wrong_generation": {
+      "sent_pose_lines": 1,
+      "independent_stdin_pose_reads": 1,
+      "runtime_pose_input_logs": 1,
+      "runtime_submit_calls": 1
+    }
+  },
+  "established": [
+    "未修改的serve函数体在runtime=None时会读完pose行，但不调用TrackingRuntime.submit_packet，因此没有pose_input记录。",
+    "tracking_start已排队、甚至正在建立SDK通道时，runtime仍可能尚未赋值。",
+    "runtime存在后，submit_packet先记pose_input，再检查active/generation；所以日志出现也不证明更新被接受。"
+  ],
+  "consequence": "540个GUI发送记录与539个pose_input记录之间的差额，不能直接称作stdin/管道丢包。当前记录没有独立stdin收据或wire occurrence ID，无法唯一定位73个同载荷候选中的哪个。",
+  "not_established": [
+    "没有证明旧严重窗口实际执行了runtime=None分支；本合成结果只是证明该路径存在。",
+    "没有确定4386..4435帧积压的主要CPU/GIL/Qt责任函数；旧消息/时钟验收继续失败。",
+    "没有新增实际回放、人体、USB采集、Run或优化A/B；没有改变正式服务、协议、线程或库。"
+  ],
+  "required_next": "为后续诊断设计保留原始wire字节且能逐次计数的接收前收据；先用同载荷重复/启动交错/异常行合成验证。旧失败记录不能补造收据或删除候选来过关。",
+  "tests": {
+    "ran": 96,
+    "passed": 92,
+    "platform_skips": 4
+  },
+  "old_global_qualification_pass": false,
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "primary_root_identified": false,
+  "raw_archive_sha256": "72613c18325f1274b954a9df010ce50d86b57534d8178eb0a2475845a54d9a36",
+  "previous_review_sha256": "3827e41cb2c12a6673a5b7e364e8ec3a10e528885d5b32d41de5c0a6f4502e23"
+}
