@@ -1,0 +1,71 @@
+{
+  "actual_build_registry_sources": {
+    "python_spy.rs": {
+      "sha256": "21a9ff67759655329633db5022925dfac72a920d3b970bf5b8ec4b6866129793",
+      "references": [
+        {
+          "first": 211,
+          "last": 230,
+          "excerpt": "        // Lock the process if appropriate. Note we have to lock AFTER getting the thread\n        // activity status from the OS (otherwise each thread would report being inactive always).\n        // This has the potential for race conditions (in that the thread activity could change\n        // between getting the status and locking the thread, but seems unavoidable right now\n        let _lock = if self.config.blocking == LockingStrategy::Lock {\n            Some(self.process.lock().context(\"Failed to suspend process\")?)\n        } else {\n            None\n        };\n\n        // Find PyThreadState, and loop over all the python threads\n        let threadstate_ptr_ptr = I::threadstate_ptr_ptr(self.interpreter_address);\n        let threads_head = self\n            .process\n            .copy_pointer(threadstate_ptr_ptr)\n            .context(\"Failed to copy PyThreadState head pointer\")?;\n\n        // get the threadid of the gil if appropriate\n        let gil_thread_id = get_gil_threadid::<I, Process>(self.threadstate_address, &self.process)\n            .context(\"failed to get gil_thread_id\")?;"
+        },
+        {
+          "first": 237,
+          "last": 287,
+          "excerpt": "                .process\n                .copy_pointer(threads)\n                .context(\"Failed to copy PyThreadState\")?;\n            threads = thread.next();\n\n            let python_thread_id = thread.thread_id();\n            let owns_gil = python_thread_id == gil_thread_id;\n\n            if self.config.gil_only && !owns_gil {\n                continue;\n            }\n\n            let mut trace = get_stack_trace(\n                &thread,\n                &self.process,\n                self.config.dump_locals > 0,\n                self.config.lineno,\n            )\n            .with_context(|| {\n                format!(\n                    \"Failed to call get_stack_trace for thread {}\",\n                    python_thread_id\n                )\n            })?;\n\n            // Try getting the native thread id\n\n            // python 3.11+ has the native thread id directly on the PyThreadState object,\n            // for older versions of python, try using OS specific code to get the native\n            // thread id (doesn't work on freebsd, or on arm/i686 processors on linux)\n            if trace.os_thread_id.is_none() {\n                let mut os_thread_id =\n                    self._get_os_thread_id::<I>(python_thread_id, threads_head)?;\n\n                // linux can see issues where pthread_ids get recycled for new OS threads,\n                // which totally breaks the caching we were doing here. Detect this and retry\n                if let Some(tid) = os_thread_id {\n                    if !thread_activity.is_empty() && !thread_activity.contains_key(&tid) {\n                        info!(\"clearing away thread id caches, thread {} has exited\", tid);\n                        self.python_thread_ids.clear();\n                        self.python_thread_names.clear();\n                        os_thread_id =\n                            self._get_os_thread_id::<I>(python_thread_id, threads_head)?;\n                    }\n                }\n\n                trace.os_thread_id = os_thread_id.map(|id| id as u64);\n            }\n\n            trace.thread_name = self._get_python_thread_name(python_thread_id);\n            trace.owns_gil = owns_gil;"
+        },
+        {
+          "first": 343,
+          "last": 357,
+          "excerpt": "                return Err(format_err!(\"Max thread recursion depth reached\"));\n            }\n\n            if self.config.gil_only {\n                // There's only one GIL thread and we've captured it, so we can\n                // stop now\n                break;\n            }\n        }\n        Ok(traces)\n    }\n\n    // heuristic fallback for determining if a thread is active, used\n    // when we don't have the ability to get the thread information from the OS\n    fn _heuristic_is_thread_idle(&self, trace: &StackTrace) -> bool {"
+        }
+      ]
+    },
+    "stack_trace.rs": {
+      "sha256": "baa9e1f4401ad1d922edc4fea1bcac2186c196296a6165b063e182fa0facc7d8",
+      "references": [
+        {
+          "first": 122,
+          "last": 145,
+          "excerpt": "{\n    // TODO: just return frames here? everything else probably should be returned out of scope\n    let mut frames = Vec::new();\n\n    // python 3.11+ has an extra level of indirection to get the Frame from the threadstate\n    let mut frame_address = thread.frame_address();\n    if let Some(addr) = frame_address {\n        frame_address = Some(process.copy_struct(addr)?);\n    }\n\n    let mut frame_ptr = thread.frame(frame_address);\n\n    // We are iterating in reverse, i.e. from last call to first call.\n    // Since Python 3.12, there are shim frames inserted before a block\n    // of Python frames. When we encounter one, update the last frame.\n    let set_last_frame_as_shim_entry = &mut |frames: &mut Vec<Frame>| {\n        if let Some(frame) = frames.last_mut() {\n            frame.is_shim_entry = true;\n        }\n    };\n\n    while !frame_ptr.is_null() {\n        let frame = process\n            .copy_pointer(frame_ptr)"
+        },
+        {
+          "first": 150,
+          "last": 165,
+          "excerpt": "            .context(\"Failed to copy PyCodeObject\")?;\n\n        let filename = copy_string(code.filename(), process).context(\"Failed to copy filename\");\n        let name = copy_string(code.name(), process).context(\"Failed to copy function name\");\n\n        // just skip processing the current frame if we can't load the filename or function name.\n        // this can happen in python 3.13+ since the f_executable isn't guaranteed to be\n        // a PyCodeObject. We could check the type (and mimic the logic of PyCode_Check here)\n        // but that would require extra overhead of reading the ob_type per frame - and we\n        // would also have to figure out what the address of PyCode_Type is (which will be\n        // easier if something like https://github.com/python/cpython/issues/100987#issuecomment-1487227139\n        // is merged )\n        if filename.is_err() || name.is_err() {\n            frame_ptr = frame.back();\n            set_last_frame_as_shim_entry(&mut frames);\n            continue;"
+        },
+        {
+          "first": 314,
+          "last": 343,
+          "excerpt": "pub fn get_gil_threadid<I: InterpreterState, P: ProcessMemory>(\n    threadstate_address: usize,\n    process: &P,\n) -> Result<u64, Error> {\n    // happens during initialization when checking to see if we have a valid interpreter (before we've figured out the threadstate_address)\n    if threadstate_address == 0 {\n        return Ok(0);\n    }\n\n    let addr = if I::HAS_GIL_RUNTIME_STATE {\n        // get the gilruntimestate - note that this struct is identical between 3.12/3.13/3.14\n        let gil_state: crate::python_bindings::v3_13_0::_gil_runtime_state =\n            process.copy_struct(threadstate_address)?;\n        // check to see if the GIL is locked already\n        if gil_state.locked != 0 {\n            gil_state.last_holder as usize\n        } else {\n            0\n        }\n    } else {\n        process.copy_struct::<usize>(threadstate_address)?\n    };\n\n    // if the addr is 0, no thread is currently holding the GIL\n    let threadid = if addr != 0 {\n        let threadstate: I::ThreadState = process.copy_struct(addr)?;\n        threadstate.thread_id()\n    } else {\n        0\n    };"
+        }
+      ]
+    },
+    "python_interpreters.rs": {
+      "sha256": "12477dae28fbebaffcc29e99f05447184a5b39b6497777c2c4f7f8af0c31fcac",
+      "references": [
+        {
+          "first": 699,
+          "last": 723,
+          "excerpt": "impl ThreadState for v3_11_0::PyThreadState {\n    type FrameObject = v3_11_0::_PyInterpreterFrame;\n    type InterpreterState = v3_11_0::PyInterpreterState;\n    fn frame_address(&self) -> Option<usize> {\n        // There must be a way to get the offset here without actually creating the object\n        let cframe: v3_11_0::_PyCFrame = Default::default();\n        let current_frame_offset = offset_of(&cframe, &cframe.current_frame);\n        Some(self.cframe as usize + current_frame_offset)\n    }\n    fn frame(&self, addr: Option<usize>) -> *mut Self::FrameObject {\n        addr.unwrap() as *mut Self::FrameObject\n    }\n    fn thread_id(&self) -> u64 {\n        self.thread_id as u64\n    }\n    fn native_thread_id(&self) -> Option<u64> {\n        Some(self.native_thread_id as u64)\n    }\n    fn next(&self) -> *mut Self {\n        self.next\n    }\n    fn interp(&self) -> *mut Self::InterpreterState {\n        self.interp\n    }\n}"
+        }
+      ]
+    },
+    "python_process_info.rs": {
+      "sha256": "da5175fdcfe6c05fcc7595806b1b094c4f6da009c4560177c2fb835ad7b889ee",
+      "references": [
+        {
+          "first": 688,
+          "last": 706,
+          "excerpt": "        Version {\n            major: 3,\n            minor: 7..=11,\n            ..\n        } => match python_info.get_symbol(\"_PyRuntime\") {\n            Some(&addr) => {\n                if let Some(offset) = pyruntime::get_tstate_current_offset(version) {\n                    info!(\"Found _PyRuntime @ 0x{:016x}, getting gilstate.tstate_current from offset 0x{:x}\",\n                            addr, offset);\n                    addr as usize + offset\n                } else {\n                    error_if_gil(\n                        config,\n                        version,\n                        \"unknown pyruntime.gilstate.tstate_current offset\",\n                    )?;\n                    0\n                }\n            }"
+        }
+      ]
+    }
+  },
+  "interpretation": [
+    "Python3.11 GIL identity comes from gilstate.tstate_current; Python frames come separately from tstate.cframe.current_frame.",
+    "A null initial frame pointer produces a successful empty frame vector; name/filename copy failures can also skip frames. Raw field output does not retain enough information to distinguish them.",
+    "The stored wrapper has default-features=false and does not enable config.native. This read path cannot reveal a native-only owner function.",
+    "Independent synthetic C code calls PyGILState_Ensure on a new native thread, marks the owned interval in C and sleeps without evaluating a Python frame.",
+    "Correct synthetic identity with empty frames does not identify fieldTID3816, establish a field hold/wait share, or pass original full-stack/perturbation gates."
+  ]
+}

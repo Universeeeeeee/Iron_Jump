@@ -1,0 +1,639 @@
+{
+  "case": "20261018_131910_3eef864f_walk_off",
+  "input_sha256": {
+    "raw_frames.npz": "8ee4a9ea9ac835f5dc083d014eeaef9d337ee8c140f1cdc3a11f1be6fece2d47",
+    "raw_archive.npz": "6ec340e2ca62742235d6602cf38c4470a20cf5f29441c8387be9bb85522cdcd5",
+    "acquisition.json": "e84e6bd481eeadd408a61c377950cc878bf8d989b92f58596fccf6eee62c62cb",
+    "report.json": "0ae1bf2d9277c1e3d95d629e071cb3ff61d249c78c6d0b6d0901773f4fb68747",
+    "state.json": "bfb63086da795427cc2fbd5985a4ff56bcd1cdb964908dcc4a9408a79a6d914f"
+  },
+  "mapping_sha256": "e9e7bacfb25c30d7be29484b9add6e9ac649f0d35868ff139933b0cdafc6f078",
+  "checks_sha256": "56a663f382bf63e7885868355af39fb56796842325a0e95ccff1d917877b39ce",
+  "prior_review_sha256": "71d2f5e85ca2dd074b7247bf5b13185223a94de1cc11dce77905e29afa0a472c",
+  "correction": "published_sample is a filtered Processor index, not its outer raw consume call. Prior review01 publication bounds are superseded here; original receipt-to-paint, raw continuity, backlog and failed protocol are unchanged.",
+  "footprints": [
+    {
+      "contact_id": 0,
+      "touch_sample": 42237,
+      "processor_publication_sample": 42311,
+      "outer_raw_that_delivers_publication_sample": 42321,
+      "filter_forwarding_samples": 10,
+      "completion_before": [
+        296641825600600,
+        42305,
+        296641800857900,
+        24,
+        296641802220500,
+        42329,
+        296641825310700,
+        24,
+        0,
+        "pending",
+        null,
+        null,
+        0
+      ],
+      "completion_after": [
+        296641986778200,
+        42380,
+        296641902500500,
+        110,
+        296641902547000,
+        42490,
+        296641986074900,
+        110,
+        0,
+        "pending",
+        null,
+        null,
+        0
+      ],
+      "publication_host_bounds_ns": [
+        296641825600600,
+        296641986778200
+      ],
+      "touch_receipt_to_paint_ms": 174.6832,
+      "touch_to_processor_sample_receipt_ms": 73.9504,
+      "additional_raw_forwarding_receipt_ms": 10.0127,
+      "touch_to_required_outer_receipt_ms": 83.9631,
+      "required_outer_receipt_to_publication_bounds_ms": [
+        8.6836,
+        169.8612
+      ],
+      "publication_to_paint_bounds_ms": [
+        0,
+        82.0365
+      ],
+      "required_outer_receipt_to_paint_ms": 90.7201,
+      "old_upper_bound_changed": false
+    },
+    {
+      "contact_id": 2,
+      "touch_sample": 42916,
+      "processor_publication_sample": 42975,
+      "outer_raw_that_delivers_publication_sample": 42985,
+      "filter_forwarding_samples": 10,
+      "completion_before": [
+        296642538443000,
+        42960,
+        296642473004200,
+        82,
+        296642473172300,
+        43042,
+        296642538003500,
+        82,
+        0,
+        "pending",
+        null,
+        null,
+        0
+      ],
+      "completion_after": [
+        296642666089300,
+        43020,
+        296642515950400,
+        149,
+        296642517105800,
+        43169,
+        296642664944900,
+        149,
+        0,
+        "pending",
+        null,
+        null,
+        0
+      ],
+      "publication_host_bounds_ns": [
+        296642538443000,
+        296642666089300
+      ],
+      "touch_receipt_to_paint_ms": 187.3675,
+      "touch_to_processor_sample_receipt_ms": 62.754,
+      "additional_raw_forwarding_receipt_ms": 7.2953,
+      "touch_to_required_outer_receipt_ms": 70.0493,
+      "required_outer_receipt_to_publication_bounds_ms": [
+        56.4951,
+        184.1414
+      ],
+      "publication_to_paint_bounds_ms": [
+        0,
+        60.8231
+      ],
+      "required_outer_receipt_to_paint_ms": 117.3182,
+      "old_upper_bound_changed": false
+    },
+    {
+      "contact_id": 3,
+      "touch_sample": 43506,
+      "processor_publication_sample": 43574,
+      "outer_raw_that_delivers_publication_sample": 43584,
+      "filter_forwarding_samples": 10,
+      "completion_before": [
+        296643136106400,
+        43520,
+        296643015841100,
+        117,
+        296643016860300,
+        43637,
+        296643135292300,
+        117,
+        0,
+        "pending",
+        null,
+        null,
+        0
+      ],
+      "completion_after": [
+        296643221826900,
+        43600,
+        296643109572500,
+        125,
+        296643109629300,
+        43725,
+        296643220931100,
+        125,
+        0,
+        "pending",
+        null,
+        null,
+        0
+      ],
+      "publication_host_bounds_ns": [
+        296643136106400,
+        296643221826900
+      ],
+      "touch_receipt_to_paint_ms": 202.8191,
+      "touch_to_processor_sample_receipt_ms": 60.7005,
+      "additional_raw_forwarding_receipt_ms": 9.3604,
+      "touch_to_required_outer_receipt_ms": 70.0609,
+      "required_outer_receipt_to_publication_bounds_ms": [
+        53.4006,
+        139.1211
+      ],
+      "publication_to_paint_bounds_ms": [
+        0,
+        79.3576
+      ],
+      "required_outer_receipt_to_paint_ms": 132.7582,
+      "old_upper_bound_changed": false
+    },
+    {
+      "contact_id": 4,
+      "touch_sample": 44065,
+      "processor_publication_sample": 44154,
+      "outer_raw_that_delivers_publication_sample": 44164,
+      "filter_forwarding_samples": 10,
+      "completion_before": [
+        296643720273800,
+        44160,
+        296643660184000,
+        64,
+        296643660877900,
+        44224,
+        296643719912600,
+        64,
+        0,
+        "pending",
+        null,
+        null,
+        0
+      ],
+      "completion_after": [
+        296643845906300,
+        44240,
+        296643740648000,
+        109,
+        296643740710400,
+        44349,
+        296643845256500,
+        109,
+        0,
+        "pending",
+        null,
+        null,
+        0
+      ],
+      "publication_host_bounds_ns": [
+        296643720273800,
+        296643845906300
+      ],
+      "touch_receipt_to_paint_ms": 198.1864,
+      "touch_to_processor_sample_receipt_ms": 86.8031,
+      "additional_raw_forwarding_receipt_ms": 11.6157,
+      "touch_to_required_outer_receipt_ms": 98.4188,
+      "required_outer_receipt_to_publication_bounds_ms": [
+        58.5195,
+        184.152
+      ],
+      "publication_to_paint_bounds_ms": [
+        0,
+        41.2481
+      ],
+      "required_outer_receipt_to_paint_ms": 99.7676,
+      "old_upper_bound_changed": true
+    },
+    {
+      "contact_id": 5,
+      "touch_sample": 44639,
+      "processor_publication_sample": 44715,
+      "outer_raw_that_delivers_publication_sample": 44725,
+      "filter_forwarding_samples": 10,
+      "completion_before": [
+        296644212973400,
+        44686,
+        296644181867800,
+        30,
+        296644182939800,
+        44716,
+        296644212247800,
+        30,
+        0,
+        "pending",
+        null,
+        null,
+        0
+      ],
+      "completion_after": [
+        296644302076600,
+        44745,
+        296644246248900,
+        58,
+        296644247127800,
+        44803,
+        296644299233400,
+        58,
+        0,
+        "pending",
+        null,
+        null,
+        0
+      ],
+      "publication_host_bounds_ns": [
+        296644220898100,
+        296644302076600
+      ],
+      "touch_receipt_to_paint_ms": 144.1451,
+      "touch_to_processor_sample_receipt_ms": 76.611,
+      "additional_raw_forwarding_receipt_ms": 9.3322,
+      "touch_to_required_outer_receipt_ms": 85.9432,
+      "required_outer_receipt_to_publication_bounds_ms": [
+        0.0,
+        81.1785
+      ],
+      "publication_to_paint_bounds_ms": [
+        0,
+        58.2019
+      ],
+      "required_outer_receipt_to_paint_ms": 58.2019,
+      "old_upper_bound_changed": false
+    },
+    {
+      "contact_id": 8,
+      "touch_sample": 45225,
+      "processor_publication_sample": 45301,
+      "outer_raw_that_delivers_publication_sample": 45311,
+      "filter_forwarding_samples": 10,
+      "completion_before": [
+        296644848638800,
+        45265,
+        296644761630800,
+        87,
+        296644763671500,
+        45352,
+        296644847962700,
+        87,
+        0,
+        "pending",
+        null,
+        null,
+        0
+      ],
+      "completion_after": [
+        296644933159800,
+        45325,
+        296644831988900,
+        105,
+        296644832503100,
+        45430,
+        296644932525100,
+        105,
+        0,
+        "pending",
+        null,
+        null,
+        0
+      ],
+      "publication_host_bounds_ns": [
+        296644848638800,
+        296644933159800
+      ],
+      "touch_receipt_to_paint_ms": 192.8043,
+      "touch_to_processor_sample_receipt_ms": 76.3033,
+      "additional_raw_forwarding_receipt_ms": 13.1364,
+      "touch_to_required_outer_receipt_ms": 89.4397,
+      "required_outer_receipt_to_publication_bounds_ms": [
+        37.8693,
+        122.3903
+      ],
+      "publication_to_paint_bounds_ms": [
+        0,
+        65.4953
+      ],
+      "required_outer_receipt_to_paint_ms": 103.3646,
+      "old_upper_bound_changed": false
+    },
+    {
+      "contact_id": 9,
+      "touch_sample": 45775,
+      "processor_publication_sample": 45857,
+      "outer_raw_that_delivers_publication_sample": 45867,
+      "filter_forwarding_samples": 10,
+      "completion_before": [
+        296645406713900,
+        45825,
+        296645321198700,
+        85,
+        296645322149700,
+        45910,
+        296645406032800,
+        85,
+        0,
+        "pending",
+        null,
+        null,
+        0
+      ],
+      "completion_after": [
+        296645552471100,
+        45905,
+        296645401482500,
+        151,
+        296645402011900,
+        46056,
+        296645551928600,
+        151,
+        0,
+        "pending",
+        null,
+        null,
+        0
+      ],
+      "publication_host_bounds_ns": [
+        296645406713900,
+        296645552471100
+      ],
+      "touch_receipt_to_paint_ms": 269.2682,
+      "touch_to_processor_sample_receipt_ms": 85.2512,
+      "additional_raw_forwarding_receipt_ms": 7.7964,
+      "touch_to_required_outer_receipt_ms": 93.0476,
+      "required_outer_receipt_to_publication_bounds_ms": [
+        42.64,
+        188.3972
+      ],
+      "publication_to_paint_bounds_ms": [
+        0,
+        133.5806
+      ],
+      "required_outer_receipt_to_paint_ms": 176.2206,
+      "old_upper_bound_changed": false
+    },
+    {
+      "contact_id": 10,
+      "touch_sample": 46345,
+      "processor_publication_sample": 46410,
+      "outer_raw_that_delivers_publication_sample": 46420,
+      "filter_forwarding_samples": 10,
+      "completion_before": [
+        296646045697700,
+        46405,
+        296645901831600,
+        144,
+        296645901959600,
+        46549,
+        296646044985900,
+        144,
+        0,
+        "pending",
+        null,
+        null,
+        0
+      ],
+      "completion_after": [
+        296646178676400,
+        46465,
+        296645963772300,
+        217,
+        296645971620100,
+        46682,
+        296646178121500,
+        217,
+        0,
+        "pending",
+        null,
+        null,
+        0
+      ],
+      "publication_host_bounds_ns": [
+        296646045697700,
+        296646178676400
+      ],
+      "touch_receipt_to_paint_ms": 259.9561,
+      "touch_to_processor_sample_receipt_ms": 65.1165,
+      "additional_raw_forwarding_receipt_ms": 12.6477,
+      "touch_to_required_outer_receipt_ms": 77.7642,
+      "required_outer_receipt_to_publication_bounds_ms": [
+        127.0438,
+        260.0225
+      ],
+      "publication_to_paint_bounds_ms": [
+        0,
+        55.1481
+      ],
+      "required_outer_receipt_to_paint_ms": 182.1919,
+      "old_upper_bound_changed": false
+    },
+    {
+      "contact_id": 11,
+      "touch_sample": 46918,
+      "processor_publication_sample": 46983,
+      "outer_raw_that_delivers_publication_sample": 46993,
+      "filter_forwarding_samples": 10,
+      "completion_before": [
+        296646718184700,
+        46985,
+        296646490163000,
+        236,
+        296646490208900,
+        47221,
+        296646716972500,
+        236,
+        0,
+        "pending",
+        null,
+        null,
+        0
+      ],
+      "completion_after": [
+        296646808515500,
+        47045,
+        296646548050300,
+        259,
+        296646549247800,
+        47304,
+        296646807866100,
+        259,
+        0,
+        "pending",
+        null,
+        null,
+        0
+      ],
+      "publication_host_bounds_ns": [
+        296646718184700,
+        296646808515500
+      ],
+      "touch_receipt_to_paint_ms": 347.909,
+      "touch_to_processor_sample_receipt_ms": 75.2751,
+      "additional_raw_forwarding_receipt_ms": 2.6921,
+      "touch_to_required_outer_receipt_ms": 77.9672,
+      "required_outer_receipt_to_publication_bounds_ms": [
+        225.4362,
+        315.767
+      ],
+      "publication_to_paint_bounds_ms": [
+        0,
+        44.5056
+      ],
+      "required_outer_receipt_to_paint_ms": 269.9418,
+      "old_upper_bound_changed": true
+    },
+    {
+      "contact_id": 12,
+      "touch_sample": 47488,
+      "processor_publication_sample": 47561,
+      "outer_raw_that_delivers_publication_sample": 47571,
+      "filter_forwarding_samples": 10,
+      "completion_before": [
+        296647416459400,
+        47565,
+        296647062856600,
+        355,
+        296647063925300,
+        47920,
+        296647415925800,
+        355,
+        0,
+        "pending",
+        null,
+        null,
+        0
+      ],
+      "completion_after": [
+        296647497937000,
+        47625,
+        296647121724900,
+        376,
+        296647125199700,
+        48001,
+        296647497185100,
+        376,
+        0,
+        "pending",
+        null,
+        null,
+        0
+      ],
+      "publication_host_bounds_ns": [
+        296647416459400,
+        296647497937000
+      ],
+      "touch_receipt_to_paint_ms": 475.4695,
+      "touch_to_processor_sample_receipt_ms": 77.2496,
+      "additional_raw_forwarding_receipt_ms": 5.5303,
+      "touch_to_required_outer_receipt_ms": 82.7799,
+      "required_outer_receipt_to_publication_bounds_ms": [
+        349.5748,
+        431.0524
+      ],
+      "publication_to_paint_bounds_ms": [
+        0,
+        43.1148
+      ],
+      "required_outer_receipt_to_paint_ms": 392.6896,
+      "old_upper_bound_changed": true
+    },
+    {
+      "contact_id": 13,
+      "touch_sample": 48113,
+      "processor_publication_sample": 48176,
+      "outer_raw_that_delivers_publication_sample": 48186,
+      "filter_forwarding_samples": 10,
+      "completion_before": [
+        296648114546600,
+        48145,
+        296647648316500,
+        473,
+        296647648368600,
+        48618,
+        296648114033400,
+        473,
+        0,
+        "pending",
+        null,
+        null,
+        0
+      ],
+      "completion_after": [
+        296648251442000,
+        48205,
+        296647701910900,
+        550,
+        296647702312800,
+        48755,
+        296648250921900,
+        550,
+        0,
+        "pending",
+        null,
+        null,
+        0
+      ],
+      "publication_host_bounds_ns": [
+        296648114546600,
+        296648251442000
+      ],
+      "touch_receipt_to_paint_ms": 636.9176,
+      "touch_to_processor_sample_receipt_ms": 72.6325,
+      "additional_raw_forwarding_receipt_ms": 5.7439,
+      "touch_to_required_outer_receipt_ms": 78.3764,
+      "required_outer_receipt_to_publication_bounds_ms": [
+        427.208,
+        564.1034
+      ],
+      "publication_to_paint_bounds_ms": [
+        0,
+        131.3332
+      ],
+      "required_outer_receipt_to_paint_ms": 558.5412,
+      "old_upper_bound_changed": false
+    }
+  ],
+  "changed_completion_brackets": [
+    4,
+    11,
+    12
+  ],
+  "all_11_forwarding_lags_samples": [
+    10
+  ],
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "root_cause_complete": false,
+  "limits": [
+    "Exact original-chain semantic replay gives an index mapping only, never field execution timestamps. Completion times still come only from consumer queue_common/queue_final.",
+    "Availability is an observed receipt boundary, not exact algorithm confirmation latency; it includes shape confirmation, filter lookahead and upstream reading/assembly timing.",
+    "The remaining host delay is queue/processing/dispatch, not exclusive CPU, GIL waiting or a particular function.",
+    "Do not sum independent upper bounds; the intervals describe one publication instant.",
+    "Earlier report and failed owner stream remain preserved and failed."
+  ]
+}
