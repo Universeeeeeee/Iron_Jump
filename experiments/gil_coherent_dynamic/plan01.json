@@ -1,0 +1,37 @@
+{
+  "scope": "One new changing owner/frame synthetic control with GIL-independent native heartbeat. No human/device/USB/GUI/Run/ETW/optimization; no replacement repeats.",
+  "count": 40,
+  "period_ms": 50,
+  "eligible_floor": 30,
+  "per_holder_floor": 10,
+  "free_running_count": 16,
+  "free_running_ms": 4,
+  "clock_uncertainty_ns_max": 1000000,
+  "observer_sha256": "a2891161b030525f7486ca47088085a19312d96fbbd0d42a12b920e07ae23c59",
+  "oracle_dll_sha256": "cc6dcfdb0d6d5c610eef40fdda657fb35dff1a1161dccbf8d005fcb7b8c74023",
+  "python_dll_sha256": "162e8557fbed5f39ae24983ee62b2d435b4796c937d9c1a34371888c7e43af00",
+  "dbghelp_sha256": "2d2ec94891162a61d86789133623b47d64d74c15d6be99473b25ad7a6468cf39",
+  "native_helpers": "E:/OptoJump/IronJump-gil-timestamped-20261018-01/field01/experiments/native_stack_capture",
+  "symbol_search_path": "E:/OptoJump/IronJump-native-symbol-preflight-20261017-01/symbols;E:/OptoJump/IronJump-native-symbol-preflight-20261017-01/symbols/vendor",
+  "sources": {
+    "Cargo.toml": "82038c71f236549944b41eb19dcdd3fee4c3cfaf70db4f2884773fb85f1a5953",
+    "Cargo.lock": "44579c26eb1de50b324c158007b98a236d6d576fb19b3957e60b1de4637a1807",
+    "src/main.rs": "a0a84675444ba2c5fc3886fee6816e58e31b992a219228c6e30bc162e104c64f",
+    "DynamicOracle.c": "1d1830f0284f66d69ee1e75632e353ac0d02abd84d94582c9382dffd164fe757",
+    "build.cmd": "014892075c3bdff2a368a4d82b21d53e18f767ceee6ef710e70c240005c5e85f",
+    "fixture.py": "dc9eb03f01c072152724913b08499f28fd94c3b9c639ba96769ec900f5384a60",
+    "control.py": "d9ccc7c39ff444d791c4804f65bd5b87d260cd969bd938b95229dfac06e7e42c",
+    "verify.py": "32876a93075f1c117a80485c74eebaf35feea2663812baf568fc9d433eec9c42",
+    "test_dynamic.py": "642eb4ab8d1b7b2d655386cbd429b939c0a3ff0a3c4771f3b5c5936a314ca74e",
+    "resolve_raw.py": "3fe093e064e7e73b986f994b2dbd7ed59245f86e827cef359782ea2e4accc64b"
+  },
+  "checks": [
+    "40 complete ordered full QPC read brackets, retained identity/CPU/cycles and successful target recovery.",
+    "All40 inner native heartbeat reads unchanged,16 no-suspension controls progress, heartbeat resumes and is monotone; no midpoint or sample-number time reconstruction.",
+    "At least30 externally full-bracket stable epoch joins with at least10 each holder. Every eligible owner/Python frame and both preserved raw native contexts agree; unmatched DLL stays SHA/module+RVA, roots use independently matching PDBs.",
+    "Unknown transition samples preserved; no quantitative GIL/scheduling/field interpretation.",
+    "Errors or pending offline acceptance retain lock; preserve build failure/source/log and never replace failed sampling window."
+  ],
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false
+}

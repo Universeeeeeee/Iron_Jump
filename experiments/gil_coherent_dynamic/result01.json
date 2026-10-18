@@ -1,0 +1,682 @@
+{
+  "checks": {
+    "stream_complete": true,
+    "ordered": true,
+    "clock": true,
+    "running_negative_controls": true,
+    "inner_native_heartbeat_still": true,
+    "native_heartbeat_progress": true,
+    "oracle_epochs": true,
+    "coverage": true,
+    "every_eligible_matches": false,
+    "symbol_identity": true,
+    "native_lifetimes": true,
+    "recovered": true,
+    "activity_not_interpreted": true,
+    "clean": true
+  },
+  "dynamic_synthetic_control_pass": false,
+  "samples": 40,
+  "eligible_counts": {
+    "1": 12,
+    "2": 22
+  },
+  "unknown": [
+    {
+      "ordinal": 2,
+      "reason": "transition or idle"
+    },
+    {
+      "ordinal": 5,
+      "reason": "transition or idle"
+    },
+    {
+      "ordinal": 13,
+      "reason": "transition or idle"
+    },
+    {
+      "ordinal": 16,
+      "reason": "transition or idle"
+    },
+    {
+      "ordinal": 27,
+      "reason": "transition or idle"
+    },
+    {
+      "ordinal": 37,
+      "reason": "transition or idle"
+    }
+  ],
+  "joins": [
+    {
+      "ordinal": 0,
+      "phase": 1,
+      "epoch": 26,
+      "expected_tid": 2480,
+      "full_read_bracket_ns": [
+        302903073192100,
+        302903079464700
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": true,
+      "external_oracle_agrees": true,
+      "matches": true
+    },
+    {
+      "ordinal": 1,
+      "phase": 2,
+      "epoch": 30,
+      "expected_tid": 9340,
+      "full_read_bracket_ns": [
+        302903123291000,
+        302903128816400
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": true,
+      "external_oracle_agrees": true,
+      "matches": true
+    },
+    {
+      "ordinal": 3,
+      "phase": 2,
+      "epoch": 38,
+      "expected_tid": 9340,
+      "full_read_bracket_ns": [
+        302903224123100,
+        302903229503600
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": true,
+      "external_oracle_agrees": true,
+      "matches": true
+    },
+    {
+      "ordinal": 4,
+      "phase": 2,
+      "epoch": 46,
+      "expected_tid": 9340,
+      "full_read_bracket_ns": [
+        302903274513000,
+        302903279669100
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": false,
+      "external_oracle_agrees": true,
+      "matches": false
+    },
+    {
+      "ordinal": 6,
+      "phase": 2,
+      "epoch": 54,
+      "expected_tid": 9340,
+      "full_read_bracket_ns": [
+        302903375137500,
+        302903380626500
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": true,
+      "external_oracle_agrees": true,
+      "matches": true
+    },
+    {
+      "ordinal": 7,
+      "phase": 1,
+      "epoch": 58,
+      "expected_tid": 2480,
+      "full_read_bracket_ns": [
+        302903425547500,
+        302903430682500
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": false,
+      "external_oracle_agrees": true,
+      "matches": false
+    },
+    {
+      "ordinal": 8,
+      "phase": 2,
+      "epoch": 62,
+      "expected_tid": 9340,
+      "full_read_bracket_ns": [
+        302903475909300,
+        302903481216300
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": true,
+      "external_oracle_agrees": true,
+      "matches": true
+    },
+    {
+      "ordinal": 9,
+      "phase": 1,
+      "epoch": 66,
+      "expected_tid": 2480,
+      "full_read_bracket_ns": [
+        302903526193200,
+        302903531546300
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": true,
+      "external_oracle_agrees": true,
+      "matches": true
+    },
+    {
+      "ordinal": 10,
+      "phase": 2,
+      "epoch": 70,
+      "expected_tid": 9340,
+      "full_read_bracket_ns": [
+        302903576713800,
+        302903582098100
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": true,
+      "external_oracle_agrees": true,
+      "matches": true
+    },
+    {
+      "ordinal": 11,
+      "phase": 1,
+      "epoch": 74,
+      "expected_tid": 2480,
+      "full_read_bracket_ns": [
+        302903627163000,
+        302903632681500
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": true,
+      "external_oracle_agrees": true,
+      "matches": true
+    },
+    {
+      "ordinal": 12,
+      "phase": 2,
+      "epoch": 78,
+      "expected_tid": 9340,
+      "full_read_bracket_ns": [
+        302903677610500,
+        302903684295800
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": true,
+      "external_oracle_agrees": true,
+      "matches": true
+    },
+    {
+      "ordinal": 14,
+      "phase": 2,
+      "epoch": 86,
+      "expected_tid": 9340,
+      "full_read_bracket_ns": [
+        302903778436100,
+        302903783848000
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": true,
+      "external_oracle_agrees": true,
+      "matches": true
+    },
+    {
+      "ordinal": 15,
+      "phase": 2,
+      "epoch": 94,
+      "expected_tid": 9340,
+      "full_read_bracket_ns": [
+        302903828518900,
+        302903833774200
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": false,
+      "external_oracle_agrees": true,
+      "matches": false
+    },
+    {
+      "ordinal": 17,
+      "phase": 2,
+      "epoch": 102,
+      "expected_tid": 9340,
+      "full_read_bracket_ns": [
+        302903929321000,
+        302903934792100
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": true,
+      "external_oracle_agrees": true,
+      "matches": true
+    },
+    {
+      "ordinal": 18,
+      "phase": 1,
+      "epoch": 106,
+      "expected_tid": 2480,
+      "full_read_bracket_ns": [
+        302903979538900,
+        302903984771300
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": false,
+      "external_oracle_agrees": true,
+      "matches": false
+    },
+    {
+      "ordinal": 19,
+      "phase": 2,
+      "epoch": 110,
+      "expected_tid": 9340,
+      "full_read_bracket_ns": [
+        302904029869300,
+        302904035316800
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": true,
+      "external_oracle_agrees": true,
+      "matches": true
+    },
+    {
+      "ordinal": 20,
+      "phase": 1,
+      "epoch": 114,
+      "expected_tid": 2480,
+      "full_read_bracket_ns": [
+        302904080267700,
+        302904085764200
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": true,
+      "external_oracle_agrees": true,
+      "matches": true
+    },
+    {
+      "ordinal": 21,
+      "phase": 2,
+      "epoch": 118,
+      "expected_tid": 9340,
+      "full_read_bracket_ns": [
+        302904130738300,
+        302904136531400
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": true,
+      "external_oracle_agrees": true,
+      "matches": true
+    },
+    {
+      "ordinal": 22,
+      "phase": 1,
+      "epoch": 122,
+      "expected_tid": 2480,
+      "full_read_bracket_ns": [
+        302904180900500,
+        302904187552200
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": true,
+      "external_oracle_agrees": true,
+      "matches": true
+    },
+    {
+      "ordinal": 23,
+      "phase": 2,
+      "epoch": 126,
+      "expected_tid": 9340,
+      "full_read_bracket_ns": [
+        302904231114900,
+        302904236621500
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": true,
+      "external_oracle_agrees": true,
+      "matches": true
+    },
+    {
+      "ordinal": 24,
+      "phase": 1,
+      "epoch": 130,
+      "expected_tid": 2480,
+      "full_read_bracket_ns": [
+        302904281673400,
+        302904287257500
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": true,
+      "external_oracle_agrees": true,
+      "matches": true
+    },
+    {
+      "ordinal": 25,
+      "phase": 2,
+      "epoch": 134,
+      "expected_tid": 9340,
+      "full_read_bracket_ns": [
+        302904332230500,
+        302904337730200
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": true,
+      "external_oracle_agrees": true,
+      "matches": true
+    },
+    {
+      "ordinal": 26,
+      "phase": 2,
+      "epoch": 142,
+      "expected_tid": 9340,
+      "full_read_bracket_ns": [
+        302904382666600,
+        302904388179900
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": true,
+      "external_oracle_agrees": true,
+      "matches": true
+    },
+    {
+      "ordinal": 28,
+      "phase": 2,
+      "epoch": 150,
+      "expected_tid": 9340,
+      "full_read_bracket_ns": [
+        302904483297400,
+        302904488716400
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": true,
+      "external_oracle_agrees": true,
+      "matches": true
+    },
+    {
+      "ordinal": 29,
+      "phase": 1,
+      "epoch": 154,
+      "expected_tid": 2480,
+      "full_read_bracket_ns": [
+        302904533721100,
+        302904538820700
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": false,
+      "external_oracle_agrees": true,
+      "matches": false
+    },
+    {
+      "ordinal": 30,
+      "phase": 2,
+      "epoch": 158,
+      "expected_tid": 9340,
+      "full_read_bracket_ns": [
+        302904583845900,
+        302904589288800
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": true,
+      "external_oracle_agrees": true,
+      "matches": true
+    },
+    {
+      "ordinal": 31,
+      "phase": 1,
+      "epoch": 162,
+      "expected_tid": 2480,
+      "full_read_bracket_ns": [
+        302904634321900,
+        302904639709000
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": true,
+      "external_oracle_agrees": true,
+      "matches": true
+    },
+    {
+      "ordinal": 32,
+      "phase": 2,
+      "epoch": 166,
+      "expected_tid": 9340,
+      "full_read_bracket_ns": [
+        302904684428500,
+        302904691028000
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": true,
+      "external_oracle_agrees": true,
+      "matches": true
+    },
+    {
+      "ordinal": 33,
+      "phase": 1,
+      "epoch": 170,
+      "expected_tid": 2480,
+      "full_read_bracket_ns": [
+        302904734714100,
+        302904740112900
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": true,
+      "external_oracle_agrees": true,
+      "matches": true
+    },
+    {
+      "ordinal": 34,
+      "phase": 2,
+      "epoch": 174,
+      "expected_tid": 9340,
+      "full_read_bracket_ns": [
+        302904784819100,
+        302904790270100
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": true,
+      "external_oracle_agrees": true,
+      "matches": true
+    },
+    {
+      "ordinal": 35,
+      "phase": 1,
+      "epoch": 178,
+      "expected_tid": 2480,
+      "full_read_bracket_ns": [
+        302904834999700,
+        302904840472900
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": true,
+      "external_oracle_agrees": true,
+      "matches": true
+    },
+    {
+      "ordinal": 36,
+      "phase": 2,
+      "epoch": 182,
+      "expected_tid": 9340,
+      "full_read_bracket_ns": [
+        302904885426500,
+        302904890971300
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": true,
+      "external_oracle_agrees": true,
+      "matches": true
+    },
+    {
+      "ordinal": 38,
+      "phase": 2,
+      "epoch": 190,
+      "expected_tid": 9340,
+      "full_read_bracket_ns": [
+        302904986400100,
+        302904991831900
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": true,
+      "external_oracle_agrees": true,
+      "matches": true
+    },
+    {
+      "ordinal": 39,
+      "phase": 2,
+      "epoch": 198,
+      "expected_tid": 9340,
+      "full_read_bracket_ns": [
+        302905036929500,
+        302905042287000
+      ],
+      "owner_and_python_frame": true,
+      "raw_contexts": true,
+      "both_roots_closed": true,
+      "owner_path": true,
+      "waiter_path": true,
+      "external_oracle_agrees": true,
+      "matches": true
+    }
+  ],
+  "clock": {
+    "qpc_frequency": 10000000,
+    "host_ns_offset_lower": -6200,
+    "host_ns_offset_upper": 3600,
+    "uncertainty_ns": 9800,
+    "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+  },
+  "full_read_us": {
+    "min": 2977.7,
+    "median": 5435.4,
+    "max": 6675.5
+  },
+  "inner_heartbeat_probe_interval_us": {
+    "min": 2951.8,
+    "median": 5404.25,
+    "max": 6649.0
+  },
+  "actual_start_gap_ms": {
+    "min": 50.0828,
+    "median": 50.3899,
+    "max": 50.5924
+  },
+  "counter_deltas": [
+    {
+      "tid": 7248,
+      "user_100ns": 20781250,
+      "kernel_100ns": 2656250,
+      "cycles": 5631395280
+    },
+    {
+      "tid": 2480,
+      "user_100ns": 0,
+      "kernel_100ns": 0,
+      "cycles": 3156240
+    },
+    {
+      "tid": 9340,
+      "user_100ns": 156250,
+      "kernel_100ns": 156250,
+      "cycles": 3255840
+    },
+    {
+      "tid": 20772,
+      "user_100ns": 0,
+      "kernel_100ns": 0,
+      "cycles": 6847680
+    }
+  ],
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "root_cause_or_fix_complete": false,
+  "scope": "One synthetic dynamic control. Heartbeat independently checks this native thread stopped across the measured inner interval; no all-thread scheduling states, GIL time shares, field owner identity or actual-load readiness inferred. Transition samples stay unknown."
+}
