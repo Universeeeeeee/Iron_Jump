@@ -1,0 +1,26 @@
+{
+  "title": "真实QProcess文本管道合成验证：按字节流核对分块、重复行、异常JSON及缓冲关闭",
+  "controls_pass": true,
+  "facts": [
+    "原CameraControlService类与真实QtCore/QProcess连接只回显收据的子进程；未加载真实SDK或模型。",
+    "整行、分块、异常JSON、缓冲区有数据时closeWriteChannel四场景均按独立子进程收据核对。",
+    "分块场景5次write对应4个文本行；必须按完整流重组，不能用write调用数代替消息数。",
+    "异常JSON有文本收据但解析失败；收据只证明读入，不证明业务接受。"
+  ],
+  "buffered_close_pending_bytes": 131179,
+  "limits": [
+    "仅当前合成ASCII LF文本合同及成功退出echo子进程的交付被验证。不能推广为真实SDK所有关闭/崩溃/缓冲场景不会丢失。",
+    "观测开销、实际负载3%/1%门槛和自然持有者关联仍未通过。",
+    "没有把新收据回填到旧540/539记录，也没有移除未匹配候选；其整体资格保持失败。"
+  ],
+  "tests": {
+    "ran": 116,
+    "passed": 112,
+    "platform_skips": 4
+  },
+  "next": "在新的诊断SDK入口中保留原消息内容，分别记录QProcess接受、SDK解析前文本收据、runtime入口和业务接受；先验证新增入口自身，再按新冻结计划测扰动。",
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "primary_root_identified": false,
+  "raw_archive_sha256": "6f708897bc193f1a675704f507818e4a0f01021463473ca87dfcae73f4009d94"
+}

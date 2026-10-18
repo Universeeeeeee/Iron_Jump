@@ -1,0 +1,28 @@
+{
+  "scope": "Original CameraControlService with explicit echo command, real QtCore/QProcess and independent child text receipts; no actual SDK/model/optical/camera acquisition/replay/human/Run/optimization AB.",
+  "sources": {
+    "control.py": "f0f245c13f1876ae79caa0129ddd1060056fbbd79a837d849a365a97119fa4ae",
+    "test_transport.py": "ab3dbdeba4cc26cd28670f9920c85ed16afa757710eae23f5b8df2b08dc64be0",
+    "child.py": "8163a84be69278be28fc19a4757957a67a64775fc6a35ef01f5ed4bd0f5bb06f",
+    "verify.py": "098c1e9711b54a09251fe4db1125b3851ac1c13fbc2a68f6e15ec2a0946237a9"
+  },
+  "existing_sources": {
+    "camera/control_service.py": "d3a786f0483b53ba2a28345381df51fff9a96a9f214076ca75310abe9331afe0",
+    "experiments/gil_wire_receipts/receipts.py": "f05d0cd232ce893bee3aef669e7f0e4d8b87a47e57e1c3831b219ae16eff6f8f"
+  },
+  "cases": [
+    "lines",
+    "split",
+    "bad_json",
+    "close_buffered"
+  ],
+  "checks": [
+    "All actual Qt write calls preserve passed byte chunks and return accepted counts; no assumption one chunk equals one line.",
+    "Reconstruct the accepted ASCII LF stream and match every independent child line digest/ordinal, including bad JSON.",
+    "Echo EOF, native child exit0, original stop ACK and closed signal confirmed; missing lines, partial write reports, digest changes and unconfirmed stop remain rejected.",
+    "Buffered close case closes original QProcess write channel while bytes are pending; child independently confirms delivered lines in this fixed control.",
+    "No real SDK traffic or observer perturbation qualification; old540/539 global failure remains unchanged."
+  ],
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false
+}

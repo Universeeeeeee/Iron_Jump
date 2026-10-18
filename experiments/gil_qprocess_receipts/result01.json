@@ -1,0 +1,79 @@
+{
+  "cases": {
+    "lines": {
+      "checks": {
+        "all_writes_accepted": true,
+        "ASCII_LF_contract": true,
+        "complete_line_stream": true,
+        "read_ordinals": true,
+        "child_EOF": true,
+        "stopped_and_closed": true,
+        "command_acks": true,
+        "all_JSON_parsed": true
+      },
+      "synthetic_QProcess_receipt_pass": true,
+      "write_calls": 4,
+      "text_lines": 4,
+      "child_receipts": 4
+    },
+    "split": {
+      "checks": {
+        "all_writes_accepted": true,
+        "ASCII_LF_contract": true,
+        "complete_line_stream": true,
+        "read_ordinals": true,
+        "child_EOF": true,
+        "stopped_and_closed": true,
+        "command_acks": true,
+        "split_writes_not_line_count": true,
+        "all_JSON_parsed": true
+      },
+      "synthetic_QProcess_receipt_pass": true,
+      "write_calls": 5,
+      "text_lines": 4,
+      "child_receipts": 4
+    },
+    "bad_json": {
+      "checks": {
+        "all_writes_accepted": true,
+        "ASCII_LF_contract": true,
+        "complete_line_stream": true,
+        "read_ordinals": true,
+        "child_EOF": true,
+        "stopped_and_closed": true,
+        "command_acks": true,
+        "bad_JSON_still_receipted": true
+      },
+      "synthetic_QProcess_receipt_pass": true,
+      "write_calls": 4,
+      "text_lines": 4,
+      "child_receipts": 4
+    },
+    "close_buffered": {
+      "checks": {
+        "all_writes_accepted": true,
+        "ASCII_LF_contract": true,
+        "complete_line_stream": true,
+        "read_ordinals": true,
+        "child_EOF": true,
+        "stopped_and_closed": true,
+        "command_acks": true,
+        "all_JSON_parsed": true
+      },
+      "synthetic_QProcess_receipt_pass": true,
+      "write_calls": 4,
+      "text_lines": 4,
+      "child_receipts": 4
+    }
+  },
+  "QProcess_synthetic_controls_pass": true,
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "primary_root_identified": false,
+  "limits": [
+    "Original CameraControlService and real QCoreApplication/QProcess, but child is a protocol echo, not the real SDK.",
+    "Write return confirms acceptance into Qt buffering. Child independent receipts confirm delivered text only for these completed synthetic transcripts.",
+    "A split write is a stream chunk, not a complete message. Ordered accepted chunks are compared to child line receipts; no digest/line normalization.",
+    "No real SDK launcher/replay deployed; no model, sensor/camera acquisition, human, Run or optimization AB; old540/539 remains unresolved/failed."
+  ]
+}
