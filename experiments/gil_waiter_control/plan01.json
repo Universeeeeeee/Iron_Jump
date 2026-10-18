@@ -1,0 +1,36 @@
+{
+  "scope": "One independent deterministic native GIL waiter control in two predeclared holder phases. No repetition replacing prior failed evidence; no human/device/USB/GUI/Run/optimization/ETW.",
+  "count_per_phase": 20,
+  "period_ms": 50,
+  "settle_ms": 200,
+  "free_running_count": 16,
+  "free_running_ms": 4,
+  "clock_uncertainty_ns_max": 1000000,
+  "observer_sha256": "02e367c7ca0b1cda5f1067b03125a770a502f10fcabb99fa5925b4265050d615",
+  "oracle_dll_sha256": "3fbe246c8a0d9eb18dda4c7e5035504e50423adcd51dbb5c072ffa94d1ab1cf8",
+  "python_dll_sha256": "162e8557fbed5f39ae24983ee62b2d435b4796c937d9c1a34371888c7e43af00",
+  "dbghelp_sha256": "2d2ec94891162a61d86789133623b47d64d74c15d6be99473b25ad7a6468cf39",
+  "native_helpers": "E:/OptoJump/IronJump-gil-timestamped-20261018-01/field01/experiments/native_stack_capture",
+  "symbol_search_path": "E:/OptoJump/IronJump-native-symbol-preflight-20261017-01/symbols;E:/OptoJump/IronJump-native-symbol-preflight-20261017-01/symbols/vendor",
+  "sources": {
+    "Cargo.toml": "c81f53b13b6e3be867b8550b1038dfd765db6bd39fc3b1c56ebce0b64f62362e",
+    "Cargo.lock": "0c058cd1a976919f4fa00a7550d96bff308063c4f24cec6b3295ecaf12feb592",
+    "src/main.rs": "10238beb9656cf66754fbe87d97798d920322185411ab360d39b9771c8fae649",
+    "WaiterOracle.c": "8a0a3a5ef7af99f2a3ce72445e5e2d48fa4fdc19a6d105a74356d45982992592",
+    "build.cmd": "a23d560a196f1ba2feccc0753382b5240ebb7d957a636895af054835438c5bb6",
+    "fixture.py": "f4d00da8006c0dd8021a82b7809015a272292d2f0585bde114868f19b2fd7c77",
+    "control.py": "c1920f5858d2957af44399d0e089896da79898fc1a222e0a8d7225fa6aa40347",
+    "verify.py": "03d31072722529d6791a50cde7f4ea9d08241fc8292ef28d05bedb45e30a30ff",
+    "test_waiter.py": "6bba237e98d84c7bd4f281e33fb207428743614384e614a3de3ab573f983b4d5",
+    "resolve_raw.py": "3fe093e064e7e73b986f994b2dbd7ed59245f86e827cef359782ea2e4accc64b"
+  },
+  "checks": [
+    "All40 full external brackets lie inside a stable owner phase with requested marker=phase and acquired marker<phase. Zero unknown or missing joins accepted.",
+    "Every sample has correct owner TID/Python function, a native waiter with no Python evaluation frame, and independently PDB-matched take_gil+PyGILState_Ensure+NtWaitForSingleObject, without pysleep. Both raw stacks close to matched thread roots.",
+    "All40 inner native heartbeat pairs stable;16 no-suspension controls progress; waiter acquires after each owner releases. Retained native PID/TID creation, GetThreadTimes and cycles monotone.",
+    "New binary uses identical lock/read/native unwind path with optional synthetic heartbeat reads. ORACLE_ADDRESS=0 disables probes for later replay/field use; same binary hash must undergo perturbation calibration. No field entry deployed.",
+    "Preserve locks, source snapshots, old failed aggregate and all error evidence. Normal controller exit is not acceptance."
+  ],
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false
+}
