@@ -1,0 +1,105 @@
+{
+  "scope": "Explicitly authorized separate8-case repeat after user-reported unspecified device restart; exact same target/case/input/native counter ROI, no sampler or new human actions.",
+  "all_eight_cases_pass": true,
+  "first_case": {
+    "old_pending": 3391,
+    "new_pending": 1125,
+    "old_receipt_to_confirmed_paint_max_ms": 3472.6688,
+    "new_receipt_to_confirmed_paint_max_ms": 1209.0918,
+    "actual_arrival_fps": 999.9487607519495,
+    "dense_consumer_progress_fps": 939.9051086679392,
+    "max_oldest_pending_ms": 1121.8276
+  },
+  "other_seven": {
+    "pending_max_range": [
+      60,
+      76
+    ],
+    "receipt_to_confirmed_paint_max_ms_range": [
+      163.7066,
+      177.922
+    ]
+  },
+  "observation": "First-case backlog still occurred, smaller than the previous first case; later7 stayed relatively low. Preserve both first cases; no warm-up deletion or replacement.",
+  "causal_conclusion": "Cannot attribute the reduction to restarting a device. Scope/duration unspecified; archived optical data bypass live grating, real camera SDK present, session/time/warm-up/background differ. This is not an isolated causal A/B.",
+  "video_identity_matching_pairs": [
+    4
+  ],
+  "necessary_video_identity_gate": false,
+  "six_endpoint_statistics_scope": "Descriptive four whole-process pairs only; not3% equivalence or1% precision; no pooling with earlier cohort.",
+  "midcase_assistant_windows_status_polls": 0,
+  "completion_method": "Kernel terminal-event waiter created before first GUI, no status polling.",
+  "new_human_usb_frame_capture_run_optimization_or_observer_started": false,
+  "original_source_numpy_filters_processor_painter_unchanged": true,
+  "old_archive_result_plans_and_all_locks_preserved": true,
+  "remaining_gui_sdk_processes": [],
+  "native_clock_uncertainty_ns_max": 9200,
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "root_cause_or_fix_complete": false,
+  "repeat_result_sha256": "b147027486f4ef0dd6d73143aba5bec0e5dfe536d6beb7fee79bb4ec81a0e75d",
+  "repeat_capture_plan_sha256": "d006f4b9e9c0832602372d9b3556fca0be55590a83fc60d417d0432cdf603f31",
+  "repeat_analysis_plan_sha256": "386489c7d9c3d235a479c10b71dd45d27c62e93123f4774f6af7ed6478972266",
+  "new_archive_sha256": "dc2f1c41e5ae41671c58a7c6f6072e13f502e5349f8c72ab747d3a38bd3eca08",
+  "verified_manifest_files": 125,
+  "applicable_existing_analysis_tests_pass": 10,
+  "all_case_comparisons": [
+    {
+      "case": "pair01_a",
+      "old_max_pending": 3391,
+      "new_max_pending": 1125,
+      "old_paint_max_ms": 3472.6688,
+      "new_paint_max_ms": 1209.0918
+    },
+    {
+      "case": "pair01_b",
+      "old_max_pending": 81,
+      "new_max_pending": 63,
+      "old_paint_max_ms": 168.3523,
+      "new_paint_max_ms": 164.8217
+    },
+    {
+      "case": "pair02_a",
+      "old_max_pending": 62,
+      "new_max_pending": 60,
+      "old_paint_max_ms": 167.3231,
+      "new_paint_max_ms": 174.3976
+    },
+    {
+      "case": "pair02_b",
+      "old_max_pending": 74,
+      "new_max_pending": 69,
+      "old_paint_max_ms": 163.7884,
+      "new_paint_max_ms": 177.922
+    },
+    {
+      "case": "pair03_a",
+      "old_max_pending": 78,
+      "new_max_pending": 67,
+      "old_paint_max_ms": 166.4809,
+      "new_paint_max_ms": 165.7409
+    },
+    {
+      "case": "pair03_b",
+      "old_max_pending": 66,
+      "new_max_pending": 60,
+      "old_paint_max_ms": 166.3592,
+      "new_paint_max_ms": 163.7066
+    },
+    {
+      "case": "pair04_a",
+      "old_max_pending": 65,
+      "new_max_pending": 65,
+      "old_paint_max_ms": 160.9788,
+      "new_paint_max_ms": 164.0302
+    },
+    {
+      "case": "pair04_b",
+      "old_max_pending": 76,
+      "new_max_pending": 76,
+      "old_paint_max_ms": 159.989,
+      "new_paint_max_ms": 167.8341
+    }
+  ],
+  "next_action": "No further unrequested repetitions or human tests. Retain this new first slow case alongside the previous slow/fast cases for subsequent analysis; no function blame or program optimization from this comparison alone."
+}

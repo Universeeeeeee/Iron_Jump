@@ -1,0 +1,27 @@
+{
+  "scope": "Frozen before observing repeat outcomes; same previous metrics, full8-row comparison, no causal restart test.",
+  "created_utc": "2026-10-18T14:12:16.659490+00:00",
+  "capture_plan_sha256": "d006f4b9e9c0832602372d9b3556fca0be55590a83fc60d417d0432cdf603f31",
+  "reviewer_sha256": "fd72f70d1980d5dde58e146e97b0582bb0e7175dc0618b81b785e2580cb599d1",
+  "analysis_dependencies_sha256": {
+    "review_aa01.py": "691784949630b5371a03b17b9f09c1016074b73bad48e6fb2f808b245ad22e27",
+    "review_progress01.py": "a8cd981dc0e7f2c7268ca33793a6521cdd4c3fac9f6d9c42231c779814adcf75",
+    "align_clock.py": "d49f54563591d23e9fc8e08b7d8eab028b65fbaa7dcb329e12b6ac58c2c893f1"
+  },
+  "prior_progress_result_sha256": "5d0664616465ac92a24a971510a77c2de5b832594ff77d61ccac14f9fdb01663",
+  "prior_capture_result_sha256": "757f2d5d09e3114560a4983db03ef19fd0966eafa5e55a1098b381c37afff7a1",
+  "independent_unit": "Whole fresh-process pair;4 pairs in this repeat. Do not combine with the earlier4 pairs or use individual threads/frames as extra repeats.",
+  "endpoints": [
+    "consumer_cpu_ns",
+    "consumer_cycles",
+    "gui_cpu_ns",
+    "gui_cycles",
+    "sdk_cpu_ns",
+    "sdk_cycles"
+  ],
+  "comparison": "Report every original case against the same ordinal repeat case: whole-case max pending and input-receipt to first confirmed-paint max, plus dense queue/CPU/clock/video-ID/SDK work. Keep all8 outcomes and any not-attempted windows. First case is not a warm-up exclusion.",
+  "statistics": "Same paired B/A log ratios, Student t,6-endpoint Bonferroni family.05, zero deltas unavailable. Descriptive only; no3%/1% pass claim.",
+  "causal_limits": "User-reported device restart components/duration unspecified. Archived optical input, no extra smoke, changed session/time/background and preexisting kernel-event waiter. Cannot isolate restart, power, temperature or USB causality.",
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false
+}
