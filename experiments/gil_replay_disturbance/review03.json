@@ -1,0 +1,203 @@
+{
+  "scope": "Two separate preserved cohorts, not pooled. Initial cohort failed operationally; independent post-repair cohort completed and failed its unchanged block perturbation gate.",
+  "archive_manifest_files": 132,
+  "all_hashes_verified": true,
+  "same_final_observer_sha256": "02e367c7ca0b1cda5f1067b03125a770a502f10fcabb99fa5925b4265050d615",
+  "original_failed_plan_sha256": "105e005ae4f383901c241fe07c501106b72a2145af573742345ac308e098ed6c",
+  "post_repair_plan_sha256": "f7af88d2f6ec6030b845ce150c04b1b1a52dd9cf0d44c5e05283e4c5a3f18cd6",
+  "initial_analysis_failure_preserved": true,
+  "initial_file_handoff_failure_preserved": true,
+  "initial_pair2_off_terminal_reason": "No terminal complete record; after-counter missing; cannot be treated as a valid calibration case. No matching process remains at post-audit.",
+  "post_repair_cases": {
+    "pair1_off": {
+      "case_pass": true,
+      "wall_ms": 2113.6533,
+      "thread_cpu_ms": 2109.375,
+      "cycles": 5063094480,
+      "samples_inside_roi": 0,
+      "clock_uncertainty_ns": 10100
+    },
+    "pair1_on": {
+      "case_pass": true,
+      "wall_ms": 2269.9128,
+      "thread_cpu_ms": 2062.5,
+      "cycles": 5052849840,
+      "samples_inside_roi": 40,
+      "clock_uncertainty_ns": 9900
+    },
+    "pair2_on": {
+      "case_pass": true,
+      "wall_ms": 2246.6719,
+      "thread_cpu_ms": 2078.125,
+      "cycles": 5000481120,
+      "samples_inside_roi": 39,
+      "clock_uncertainty_ns": 9400
+    },
+    "pair2_off": {
+      "case_pass": true,
+      "wall_ms": 2107.4435,
+      "thread_cpu_ms": 2109.375,
+      "cycles": 5051194320,
+      "samples_inside_roi": 0,
+      "clock_uncertainty_ns": 9300
+    },
+    "pair3_off": {
+      "case_pass": true,
+      "wall_ms": 2164.4797,
+      "thread_cpu_ms": 2156.25,
+      "cycles": 5183014800,
+      "samples_inside_roi": 0,
+      "clock_uncertainty_ns": 9300
+    },
+    "pair3_on": {
+      "case_pass": true,
+      "wall_ms": 2265.9279,
+      "thread_cpu_ms": 2078.125,
+      "cycles": 5036311440,
+      "samples_inside_roi": 40,
+      "clock_uncertainty_ns": 10100
+    }
+  },
+  "post_repair_pairs": [
+    {
+      "pair": 1,
+      "relative_changes": {
+        "wall_ns": 0.07392863342346634,
+        "thread_cpu_ns": -0.022222222222222254,
+        "cycles": -0.0020233949890660075
+      },
+      "block_changes": [
+        {
+          "raw_first": 42237,
+          "wall_change": 0.05373696059901678
+        },
+        {
+          "raw_first": 43237,
+          "wall_change": 0.0618767861968168
+        },
+        {
+          "raw_first": 44237,
+          "wall_change": 0.10545308394551234
+        },
+        {
+          "raw_first": 45237,
+          "wall_change": 0.15600719134631635
+        },
+        {
+          "raw_first": 46237,
+          "wall_change": 0.07044353866849362
+        },
+        {
+          "raw_first": 47237,
+          "wall_change": 0.021168426388912698
+        },
+        {
+          "raw_first": 48237,
+          "wall_change": 0.0532173253592898
+        }
+      ],
+      "offline_contact_chain_pair_pass": false,
+      "actual_load_disturbance_pass": false
+    },
+    {
+      "pair": 2,
+      "relative_changes": {
+        "wall_ns": 0.06606506888559527,
+        "thread_cpu_ns": -0.014814814814814836,
+        "cycles": -0.01003984340875641
+      },
+      "block_changes": [
+        {
+          "raw_first": 42237,
+          "wall_change": 0.043575115118672736
+        },
+        {
+          "raw_first": 43237,
+          "wall_change": 0.10812722824759624
+        },
+        {
+          "raw_first": 44237,
+          "wall_change": 0.07866971319131055
+        },
+        {
+          "raw_first": 45237,
+          "wall_change": 0.07029103318777774
+        },
+        {
+          "raw_first": 46237,
+          "wall_change": 0.04112453820022721
+        },
+        {
+          "raw_first": 47237,
+          "wall_change": 0.08169643843601015
+        },
+        {
+          "raw_first": 48237,
+          "wall_change": 0.03498675321492706
+        }
+      ],
+      "offline_contact_chain_pair_pass": true,
+      "actual_load_disturbance_pass": false
+    },
+    {
+      "pair": 3,
+      "relative_changes": {
+        "wall_ns": 0.04686955484036193,
+        "thread_cpu_ns": -0.036231884057971064,
+        "cycles": -0.02830463845096487
+      },
+      "block_changes": [
+        {
+          "raw_first": 42237,
+          "wall_change": 0.07096553313362075
+        },
+        {
+          "raw_first": 43237,
+          "wall_change": 0.00853773448399453
+        },
+        {
+          "raw_first": 44237,
+          "wall_change": 0.07085103380052815
+        },
+        {
+          "raw_first": 45237,
+          "wall_change": 0.016209747789663886
+        },
+        {
+          "raw_first": 46237,
+          "wall_change": 0.05433205774917371
+        },
+        {
+          "raw_first": 47237,
+          "wall_change": -0.004328239031800796
+        },
+        {
+          "raw_first": 48237,
+          "wall_change": 0.14003685897504115
+        }
+      ],
+      "offline_contact_chain_pair_pass": true,
+      "actual_load_disturbance_pass": false
+    }
+  ],
+  "exceeded_blocks": [
+    {
+      "pair": 1,
+      "raw_first": 45237,
+      "wall_change": 0.15600719134631635,
+      "limit": 0.15
+    }
+  ],
+  "all_6_post_repair_cases_valid": true,
+  "post_repair_samples": 120,
+  "offline_contact_chain_perturbation_pass": false,
+  "original_and_new_failed_locks_retained": true,
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "root_cause_or_fix_complete": false,
+  "limits": [
+    "No GUI paint/event loop, vision callbacks, USB input queue/pending or real SDK child in this workload. Consumer-only original chain cannot qualify full actual load.",
+    "Raw trace stream checks do not turn StackWalk termination into PDB-proven closure or provide function attribution.",
+    "Do not average away the failing fixed block or use a passed partial pair to replace either failed cohort. No capture after the predeclared six-case cohort."
+  ]
+}

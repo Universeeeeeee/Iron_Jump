@@ -1,0 +1,54 @@
+{
+  "errors": [
+    "AssertionError({'mode': 'off', 'errors': [\"JSONDecodeError('Expecting value: line 1 column 1 (char 0)')\"], 'ready': {'pid': 20992, 'tid': 4068, 'raw_first': 42237, 'raw_after_last': 49061}, 'anchors': [{'qpc_before': 3048088697588, 'qpc_after': 3048088697636, 'frequency': 10000000, 'filetime_100ns': 134367826046864305, 'perf_ns': 304808869763900, 'perf_before_ns': 304808869755600, 'perf_after_ns': 304808869763900}], 'before': [{'pid': 20992, 'tid': 4068, 'role': 'consumer', 'name': 'original_chain', 'creation_100ns': 134367825981435888, 'kernel_100ns': 7656250, 'user_100ns': 56406250, 'cycles': 15487083840, 'active': True, 'start': {'qpc_before': 3048088698752, 'qpc_after': 3048088698792, 'frequency': 10000000, 'filetime_100ns': 134367826046865461, 'perf_ns': 304808869879400, 'perf_before_ns': 304808869872200, 'perf_after_ns': 304808869879400}, 'end': {'qpc_before': 3048088699391, 'qpc_after': 3048088699426, 'frequency': 10000000, 'filetime_100ns': 134367826046866096, 'perf_ns': 304808869942800, 'perf_before_ns': 304808869936300, 'perf_after_ns': 304808869942800}}], 'target_still_running': True, 'observer_still_running': False})"
+  ],
+  "pairs": [
+    {
+      "pair": 1,
+      "relative_changes": {
+        "wall_ns": 0.065306021744995,
+        "thread_cpu_ns": -0.03319502074688796,
+        "cycles": -0.004581959585408746
+      },
+      "block_changes": [
+        {
+          "raw_first": 42237,
+          "wall_change": 0.07551493748406735
+        },
+        {
+          "raw_first": 43237,
+          "wall_change": 0.12750653211619878
+        },
+        {
+          "raw_first": 44237,
+          "wall_change": 0.061025601715650746
+        },
+        {
+          "raw_first": 45237,
+          "wall_change": 0.12185862600619757
+        },
+        {
+          "raw_first": 46237,
+          "wall_change": 0.015155599714671064
+        },
+        {
+          "raw_first": 47237,
+          "wall_change": 0.03957570607921079
+        },
+        {
+          "raw_first": 48237,
+          "wall_change": 0.014954175276528536
+        }
+      ],
+      "offline_contact_chain_pair_pass": true,
+      "actual_load_disturbance_pass": false
+    }
+  ],
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "original_plan_sha256": "105e005ae4f383901c241fe07c501106b72a2145af573742345ac308e098ed6c",
+  "completion_plan_sha256": "4bafe3b153691ed005decbcb076160de862b7da8d22d60c31a6dc872d0c96c32",
+  "original_failure_retained": true,
+  "first_off_not_repeated": true,
+  "lock_retained": true
+}
