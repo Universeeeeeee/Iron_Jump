@@ -1,0 +1,1820 @@
+{
+  "scope": "Annotations of retained single-window samples. Do not pool with old6 severe native wait witnesses or infer time shares. Missing consumer Python entries are retained as missing, not fabricated.",
+  "rows": [
+    {
+      "ordinal": 0,
+      "closed_gil_pair": false,
+      "inside_requested_window": true,
+      "consumer_python_trace_present": true,
+      "consumer_project_callers": [
+        {
+          "file": "hardware/beam_filter.py",
+          "function": "_feed",
+          "line": 123,
+          "source_hash_matched": true
+        },
+        {
+          "file": "hardware/beam_filter.py",
+          "function": "<listcomp>",
+          "line": 88,
+          "source_hash_matched": true
+        },
+        {
+          "file": "hardware/beam_filter.py",
+          "function": "feed",
+          "line": 87,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/overground_session.py",
+          "function": "on_frame",
+          "line": 103,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/gait_engine.py",
+          "function": "process_quality_frame",
+          "line": 396,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/device_quality_session.py",
+          "function": "on_frame",
+          "line": 183,
+          "source_hash_matched": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "_consume",
+          "line": 69,
+          "source_hash_matched": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/queue_probe.py",
+          "function": "consume",
+          "line": 38,
+          "source_hash_matched": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "consume",
+          "line": 114,
+          "source_hash_matched": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "drain",
+          "line": 77,
+          "source_hash_matched": true
+        }
+      ],
+      "owner_project_callers": [
+        {
+          "file": "hardware/beam_filter.py",
+          "function": "_feed",
+          "line": 123,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "hardware/beam_filter.py",
+          "function": "<listcomp>",
+          "line": 88,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "hardware/beam_filter.py",
+          "function": "feed",
+          "line": 87,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "engine/overground_session.py",
+          "function": "on_frame",
+          "line": 103,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "engine/gait_engine.py",
+          "function": "process_quality_frame",
+          "line": 396,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "engine/device_quality_session.py",
+          "function": "on_frame",
+          "line": 183,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "_consume",
+          "line": 69,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/queue_probe.py",
+          "function": "consume",
+          "line": 38,
+          "source_hash_matched": true,
+          "production": false
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "consume",
+          "line": 114,
+          "source_hash_matched": true,
+          "production": false
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "drain",
+          "line": 77,
+          "source_hash_matched": true,
+          "production": true
+        }
+      ],
+      "pending_lower_bound": -70,
+      "severe_inflight_join_qualified": false
+    },
+    {
+      "ordinal": 1,
+      "closed_gil_pair": false,
+      "inside_requested_window": true,
+      "consumer_python_trace_present": true,
+      "consumer_project_callers": [
+        {
+          "file": "hardware/beam_filter.py",
+          "function": "_feed",
+          "line": 130,
+          "source_hash_matched": true
+        },
+        {
+          "file": "hardware/beam_filter.py",
+          "function": "<listcomp>",
+          "line": 88,
+          "source_hash_matched": true
+        },
+        {
+          "file": "hardware/beam_filter.py",
+          "function": "feed",
+          "line": 87,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/overground_session.py",
+          "function": "on_frame",
+          "line": 103,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/gait_engine.py",
+          "function": "process_quality_frame",
+          "line": 396,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/device_quality_session.py",
+          "function": "on_frame",
+          "line": 183,
+          "source_hash_matched": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "_consume",
+          "line": 69,
+          "source_hash_matched": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/queue_probe.py",
+          "function": "consume",
+          "line": 38,
+          "source_hash_matched": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "consume",
+          "line": 114,
+          "source_hash_matched": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "drain",
+          "line": 77,
+          "source_hash_matched": true
+        }
+      ],
+      "owner_project_callers": [
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "read",
+          "line": 57,
+          "source_hash_matched": true,
+          "production": false
+        }
+      ],
+      "pending_lower_bound": -124,
+      "severe_inflight_join_qualified": false
+    },
+    {
+      "ordinal": 2,
+      "closed_gil_pair": false,
+      "inside_requested_window": true,
+      "consumer_python_trace_present": true,
+      "consumer_project_callers": [
+        {
+          "file": "engine/modes/walking_processor.py",
+          "function": "process",
+          "line": 1023,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/overground_session.py",
+          "function": "_consume_frames",
+          "line": 125,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/overground_session.py",
+          "function": "on_frame",
+          "line": 103,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/gait_engine.py",
+          "function": "process_quality_frame",
+          "line": 396,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/device_quality_session.py",
+          "function": "on_frame",
+          "line": 183,
+          "source_hash_matched": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "_consume",
+          "line": 69,
+          "source_hash_matched": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/queue_probe.py",
+          "function": "consume",
+          "line": 38,
+          "source_hash_matched": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "consume",
+          "line": 114,
+          "source_hash_matched": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "drain",
+          "line": 77,
+          "source_hash_matched": true
+        }
+      ],
+      "owner_project_callers": [
+        {
+          "file": "engine/modes/walking_processor.py",
+          "function": "process",
+          "line": 1023,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "engine/overground_session.py",
+          "function": "_consume_frames",
+          "line": 125,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "engine/overground_session.py",
+          "function": "on_frame",
+          "line": 103,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "engine/gait_engine.py",
+          "function": "process_quality_frame",
+          "line": 396,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "engine/device_quality_session.py",
+          "function": "on_frame",
+          "line": 183,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "_consume",
+          "line": 69,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/queue_probe.py",
+          "function": "consume",
+          "line": 38,
+          "source_hash_matched": true,
+          "production": false
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "consume",
+          "line": 114,
+          "source_hash_matched": true,
+          "production": false
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "drain",
+          "line": 77,
+          "source_hash_matched": true,
+          "production": true
+        }
+      ],
+      "pending_lower_bound": -123,
+      "severe_inflight_join_qualified": false
+    },
+    {
+      "ordinal": 3,
+      "closed_gil_pair": true,
+      "inside_requested_window": true,
+      "consumer_python_trace_present": true,
+      "consumer_project_callers": [
+        {
+          "file": "hardware/beam_filter.py",
+          "function": "_feed",
+          "line": 130,
+          "source_hash_matched": true
+        },
+        {
+          "file": "hardware/beam_filter.py",
+          "function": "<listcomp>",
+          "line": 88,
+          "source_hash_matched": true
+        },
+        {
+          "file": "hardware/beam_filter.py",
+          "function": "feed",
+          "line": 87,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/overground_session.py",
+          "function": "on_frame",
+          "line": 103,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/gait_engine.py",
+          "function": "process_quality_frame",
+          "line": 396,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/device_quality_session.py",
+          "function": "on_frame",
+          "line": 183,
+          "source_hash_matched": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "_consume",
+          "line": 69,
+          "source_hash_matched": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/queue_probe.py",
+          "function": "consume",
+          "line": 38,
+          "source_hash_matched": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "consume",
+          "line": 114,
+          "source_hash_matched": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "drain",
+          "line": 77,
+          "source_hash_matched": true
+        }
+      ],
+      "owner_project_callers": [
+        {
+          "file": "ui/footprint_channel.py",
+          "function": "paintEvent",
+          "line": 244,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "ui/ground_track.py",
+          "function": "paintEvent",
+          "line": 68,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "paint",
+          "line": 139,
+          "source_hash_matched": true,
+          "production": false
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "main",
+          "line": 185,
+          "source_hash_matched": true,
+          "production": false
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "<module>",
+          "line": 210,
+          "source_hash_matched": true,
+          "production": false
+        },
+        {
+          "file": "experiments/gil_gui_calibration/entry02.py",
+          "function": "<module>",
+          "line": 9,
+          "source_hash_matched": true,
+          "production": false
+        }
+      ],
+      "pending_lower_bound": -111,
+      "severe_inflight_join_qualified": false
+    },
+    {
+      "ordinal": 4,
+      "closed_gil_pair": true,
+      "inside_requested_window": true,
+      "consumer_python_trace_present": true,
+      "consumer_project_callers": [
+        {
+          "file": "hardware/beam_filter.py",
+          "function": "_feed",
+          "line": 108,
+          "source_hash_matched": true
+        },
+        {
+          "file": "hardware/beam_filter.py",
+          "function": "<listcomp>",
+          "line": 88,
+          "source_hash_matched": true
+        },
+        {
+          "file": "hardware/beam_filter.py",
+          "function": "feed",
+          "line": 87,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/overground_session.py",
+          "function": "on_frame",
+          "line": 103,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/gait_engine.py",
+          "function": "process_quality_frame",
+          "line": 396,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/device_quality_session.py",
+          "function": "on_frame",
+          "line": 183,
+          "source_hash_matched": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "_consume",
+          "line": 69,
+          "source_hash_matched": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/queue_probe.py",
+          "function": "consume",
+          "line": 38,
+          "source_hash_matched": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "consume",
+          "line": 114,
+          "source_hash_matched": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "drain",
+          "line": 77,
+          "source_hash_matched": true
+        }
+      ],
+      "owner_project_callers": [
+        {
+          "file": "experiments/ground_throughput_diagnosis/enabled_replay.py",
+          "function": "replay_camera",
+          "line": 115,
+          "source_hash_matched": false,
+          "production": false
+        }
+      ],
+      "pending_lower_bound": -117,
+      "severe_inflight_join_qualified": false,
+      "independent_helper_source_match": true
+    },
+    {
+      "ordinal": 5,
+      "closed_gil_pair": false,
+      "inside_requested_window": true,
+      "consumer_python_trace_present": false,
+      "consumer_project_callers": [],
+      "owner_project_callers": [
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "read",
+          "line": 57,
+          "source_hash_matched": true,
+          "production": false
+        }
+      ],
+      "pending_lower_bound": -99,
+      "severe_inflight_join_qualified": false
+    },
+    {
+      "ordinal": 6,
+      "closed_gil_pair": false,
+      "inside_requested_window": true,
+      "consumer_python_trace_present": true,
+      "consumer_project_callers": [
+        {
+          "file": "hardware/walking_preflight.py",
+          "function": "observe",
+          "line": 51,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/device_quality_session.py",
+          "function": "on_frame",
+          "line": 159,
+          "source_hash_matched": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "_consume",
+          "line": 69,
+          "source_hash_matched": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/queue_probe.py",
+          "function": "consume",
+          "line": 38,
+          "source_hash_matched": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "consume",
+          "line": 114,
+          "source_hash_matched": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "drain",
+          "line": 77,
+          "source_hash_matched": true
+        }
+      ],
+      "owner_project_callers": [
+        {
+          "file": "hardware/walking_preflight.py",
+          "function": "observe",
+          "line": 51,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "engine/device_quality_session.py",
+          "function": "on_frame",
+          "line": 159,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "_consume",
+          "line": 69,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/queue_probe.py",
+          "function": "consume",
+          "line": 38,
+          "source_hash_matched": true,
+          "production": false
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "consume",
+          "line": 114,
+          "source_hash_matched": true,
+          "production": false
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "drain",
+          "line": 77,
+          "source_hash_matched": true,
+          "production": true
+        }
+      ],
+      "pending_lower_bound": -102,
+      "severe_inflight_join_qualified": false
+    },
+    {
+      "ordinal": 7,
+      "closed_gil_pair": false,
+      "inside_requested_window": true,
+      "consumer_python_trace_present": false,
+      "consumer_project_callers": [],
+      "owner_project_callers": [],
+      "pending_lower_bound": -104,
+      "severe_inflight_join_qualified": false
+    },
+    {
+      "ordinal": 8,
+      "closed_gil_pair": false,
+      "inside_requested_window": true,
+      "consumer_python_trace_present": true,
+      "consumer_project_callers": [
+        {
+          "file": "engine/modes/walking_processor.py",
+          "function": "_clusters",
+          "line": 590,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/modes/walking_processor.py",
+          "function": "process",
+          "line": 1014,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/overground_session.py",
+          "function": "_consume_frames",
+          "line": 125,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/overground_session.py",
+          "function": "on_frame",
+          "line": 103,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/gait_engine.py",
+          "function": "process_quality_frame",
+          "line": 396,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/device_quality_session.py",
+          "function": "on_frame",
+          "line": 183,
+          "source_hash_matched": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "_consume",
+          "line": 69,
+          "source_hash_matched": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/queue_probe.py",
+          "function": "consume",
+          "line": 38,
+          "source_hash_matched": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "consume",
+          "line": 114,
+          "source_hash_matched": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "drain",
+          "line": 77,
+          "source_hash_matched": true
+        }
+      ],
+      "owner_project_callers": [
+        {
+          "file": "engine/modes/walking_processor.py",
+          "function": "_clusters",
+          "line": 590,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "engine/modes/walking_processor.py",
+          "function": "process",
+          "line": 1014,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "engine/overground_session.py",
+          "function": "_consume_frames",
+          "line": 125,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "engine/overground_session.py",
+          "function": "on_frame",
+          "line": 103,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "engine/gait_engine.py",
+          "function": "process_quality_frame",
+          "line": 396,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "engine/device_quality_session.py",
+          "function": "on_frame",
+          "line": 183,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "_consume",
+          "line": 69,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/queue_probe.py",
+          "function": "consume",
+          "line": 38,
+          "source_hash_matched": true,
+          "production": false
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "consume",
+          "line": 114,
+          "source_hash_matched": true,
+          "production": false
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "drain",
+          "line": 77,
+          "source_hash_matched": true,
+          "production": true
+        }
+      ],
+      "pending_lower_bound": -55,
+      "severe_inflight_join_qualified": false
+    },
+    {
+      "ordinal": 9,
+      "closed_gil_pair": false,
+      "inside_requested_window": true,
+      "consumer_python_trace_present": false,
+      "consumer_project_callers": [],
+      "owner_project_callers": [],
+      "pending_lower_bound": -87,
+      "severe_inflight_join_qualified": false
+    },
+    {
+      "ordinal": 10,
+      "closed_gil_pair": false,
+      "inside_requested_window": true,
+      "consumer_python_trace_present": true,
+      "consumer_project_callers": [
+        {
+          "file": "engine/modes/walking_processor.py",
+          "function": "_associate_inner_fragments",
+          "line": 620,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/modes/walking_processor.py",
+          "function": "process",
+          "line": 1023,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/overground_session.py",
+          "function": "_consume_frames",
+          "line": 125,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/overground_session.py",
+          "function": "on_frame",
+          "line": 103,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/gait_engine.py",
+          "function": "process_quality_frame",
+          "line": 396,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/device_quality_session.py",
+          "function": "on_frame",
+          "line": 183,
+          "source_hash_matched": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "_consume",
+          "line": 69,
+          "source_hash_matched": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/queue_probe.py",
+          "function": "consume",
+          "line": 38,
+          "source_hash_matched": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "consume",
+          "line": 114,
+          "source_hash_matched": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "drain",
+          "line": 77,
+          "source_hash_matched": true
+        }
+      ],
+      "owner_project_callers": [
+        {
+          "file": "engine/modes/walking_processor.py",
+          "function": "_associate_inner_fragments",
+          "line": 620,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "engine/modes/walking_processor.py",
+          "function": "process",
+          "line": 1023,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "engine/overground_session.py",
+          "function": "_consume_frames",
+          "line": 125,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "engine/overground_session.py",
+          "function": "on_frame",
+          "line": 103,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "engine/gait_engine.py",
+          "function": "process_quality_frame",
+          "line": 396,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "engine/device_quality_session.py",
+          "function": "on_frame",
+          "line": 183,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "_consume",
+          "line": 69,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/queue_probe.py",
+          "function": "consume",
+          "line": 38,
+          "source_hash_matched": true,
+          "production": false
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "consume",
+          "line": 114,
+          "source_hash_matched": true,
+          "production": false
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "drain",
+          "line": 77,
+          "source_hash_matched": true,
+          "production": true
+        }
+      ],
+      "pending_lower_bound": -46,
+      "severe_inflight_join_qualified": false
+    },
+    {
+      "ordinal": 11,
+      "closed_gil_pair": false,
+      "inside_requested_window": true,
+      "consumer_python_trace_present": true,
+      "consumer_project_callers": [
+        {
+          "file": "engine/modes/walking_processor.py",
+          "function": "<listcomp>",
+          "line": 610,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/modes/walking_processor.py",
+          "function": "_associate_inner_fragments",
+          "line": 610,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/modes/walking_processor.py",
+          "function": "process",
+          "line": 1023,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/overground_session.py",
+          "function": "_consume_frames",
+          "line": 125,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/overground_session.py",
+          "function": "on_frame",
+          "line": 103,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/gait_engine.py",
+          "function": "process_quality_frame",
+          "line": 396,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/device_quality_session.py",
+          "function": "on_frame",
+          "line": 183,
+          "source_hash_matched": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "_consume",
+          "line": 69,
+          "source_hash_matched": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/queue_probe.py",
+          "function": "consume",
+          "line": 38,
+          "source_hash_matched": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "consume",
+          "line": 114,
+          "source_hash_matched": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "drain",
+          "line": 77,
+          "source_hash_matched": true
+        }
+      ],
+      "owner_project_callers": [
+        {
+          "file": "engine/modes/walking_processor.py",
+          "function": "<listcomp>",
+          "line": 610,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "engine/modes/walking_processor.py",
+          "function": "_associate_inner_fragments",
+          "line": 610,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "engine/modes/walking_processor.py",
+          "function": "process",
+          "line": 1023,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "engine/overground_session.py",
+          "function": "_consume_frames",
+          "line": 125,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "engine/overground_session.py",
+          "function": "on_frame",
+          "line": 103,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "engine/gait_engine.py",
+          "function": "process_quality_frame",
+          "line": 396,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "engine/device_quality_session.py",
+          "function": "on_frame",
+          "line": 183,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "_consume",
+          "line": 69,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/queue_probe.py",
+          "function": "consume",
+          "line": 38,
+          "source_hash_matched": true,
+          "production": false
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "consume",
+          "line": 114,
+          "source_hash_matched": true,
+          "production": false
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "drain",
+          "line": 77,
+          "source_hash_matched": true,
+          "production": true
+        }
+      ],
+      "pending_lower_bound": -76,
+      "severe_inflight_join_qualified": false
+    },
+    {
+      "ordinal": 12,
+      "closed_gil_pair": true,
+      "inside_requested_window": true,
+      "consumer_python_trace_present": true,
+      "consumer_project_callers": [
+        {
+          "file": "hardware/walking_preflight.py",
+          "function": "observe",
+          "line": 48,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/device_quality_session.py",
+          "function": "on_frame",
+          "line": 159,
+          "source_hash_matched": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "_consume",
+          "line": 69,
+          "source_hash_matched": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/queue_probe.py",
+          "function": "consume",
+          "line": 38,
+          "source_hash_matched": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "consume",
+          "line": 114,
+          "source_hash_matched": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "drain",
+          "line": 77,
+          "source_hash_matched": true
+        }
+      ],
+      "owner_project_callers": [
+        {
+          "file": "ui/footprint_channel.py",
+          "function": "_y_for_index",
+          "line": 149,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "ui/footprint_channel.py",
+          "function": "paintEvent",
+          "line": 242,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "ui/ground_track.py",
+          "function": "paintEvent",
+          "line": 68,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "paint",
+          "line": 139,
+          "source_hash_matched": true,
+          "production": false
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "main",
+          "line": 185,
+          "source_hash_matched": true,
+          "production": false
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "<module>",
+          "line": 210,
+          "source_hash_matched": true,
+          "production": false
+        },
+        {
+          "file": "experiments/gil_gui_calibration/entry02.py",
+          "function": "<module>",
+          "line": 9,
+          "source_hash_matched": true,
+          "production": false
+        }
+      ],
+      "pending_lower_bound": -68,
+      "severe_inflight_join_qualified": false
+    },
+    {
+      "ordinal": 13,
+      "closed_gil_pair": false,
+      "inside_requested_window": true,
+      "consumer_python_trace_present": false,
+      "consumer_project_callers": [],
+      "owner_project_callers": [
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "read",
+          "line": 59,
+          "source_hash_matched": true,
+          "production": false
+        }
+      ],
+      "pending_lower_bound": -118,
+      "severe_inflight_join_qualified": false
+    },
+    {
+      "ordinal": 14,
+      "closed_gil_pair": true,
+      "inside_requested_window": true,
+      "consumer_python_trace_present": true,
+      "consumer_project_callers": [
+        {
+          "file": "hardware/beam_filter.py",
+          "function": "_feed",
+          "line": 128,
+          "source_hash_matched": true
+        },
+        {
+          "file": "hardware/beam_filter.py",
+          "function": "<listcomp>",
+          "line": 88,
+          "source_hash_matched": true
+        },
+        {
+          "file": "hardware/beam_filter.py",
+          "function": "feed",
+          "line": 87,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/overground_session.py",
+          "function": "on_frame",
+          "line": 103,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/gait_engine.py",
+          "function": "process_quality_frame",
+          "line": 396,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/device_quality_session.py",
+          "function": "on_frame",
+          "line": 183,
+          "source_hash_matched": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "_consume",
+          "line": 69,
+          "source_hash_matched": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/queue_probe.py",
+          "function": "consume",
+          "line": 38,
+          "source_hash_matched": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "consume",
+          "line": 114,
+          "source_hash_matched": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "drain",
+          "line": 77,
+          "source_hash_matched": true
+        }
+      ],
+      "owner_project_callers": [
+        {
+          "file": "ui/footprint_channel.py",
+          "function": "<listcomp>",
+          "line": 161,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "ui/footprint_channel.py",
+          "function": "_rail_marker_rects",
+          "line": 160,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "ui/footprint_channel.py",
+          "function": "paintEvent",
+          "line": 239,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "ui/ground_track.py",
+          "function": "paintEvent",
+          "line": 68,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "paint",
+          "line": 139,
+          "source_hash_matched": true,
+          "production": false
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "main",
+          "line": 185,
+          "source_hash_matched": true,
+          "production": false
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "<module>",
+          "line": 210,
+          "source_hash_matched": true,
+          "production": false
+        },
+        {
+          "file": "experiments/gil_gui_calibration/entry02.py",
+          "function": "<module>",
+          "line": 9,
+          "source_hash_matched": true,
+          "production": false
+        }
+      ],
+      "pending_lower_bound": -68,
+      "severe_inflight_join_qualified": false
+    },
+    {
+      "ordinal": 15,
+      "closed_gil_pair": true,
+      "inside_requested_window": true,
+      "consumer_python_trace_present": true,
+      "consumer_project_callers": [
+        {
+          "file": "hardware/walking_preflight.py",
+          "function": "observe",
+          "line": 44,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/device_quality_session.py",
+          "function": "on_frame",
+          "line": 159,
+          "source_hash_matched": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "_consume",
+          "line": 69,
+          "source_hash_matched": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/queue_probe.py",
+          "function": "consume",
+          "line": 38,
+          "source_hash_matched": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "consume",
+          "line": 114,
+          "source_hash_matched": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "drain",
+          "line": 77,
+          "source_hash_matched": true
+        }
+      ],
+      "owner_project_callers": [
+        {
+          "file": "ui/footprint_channel.py",
+          "function": "paintEvent",
+          "line": 247,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "ui/ground_track.py",
+          "function": "paintEvent",
+          "line": 68,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "paint",
+          "line": 139,
+          "source_hash_matched": true,
+          "production": false
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "main",
+          "line": 185,
+          "source_hash_matched": true,
+          "production": false
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "<module>",
+          "line": 210,
+          "source_hash_matched": true,
+          "production": false
+        },
+        {
+          "file": "experiments/gil_gui_calibration/entry02.py",
+          "function": "<module>",
+          "line": 9,
+          "source_hash_matched": true,
+          "production": false
+        }
+      ],
+      "pending_lower_bound": -69,
+      "severe_inflight_join_qualified": false
+    },
+    {
+      "ordinal": 16,
+      "closed_gil_pair": false,
+      "inside_requested_window": true,
+      "consumer_python_trace_present": true,
+      "consumer_project_callers": [
+        {
+          "file": "engine/device_quality_session.py",
+          "function": "on_frame",
+          "line": 168,
+          "source_hash_matched": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "_consume",
+          "line": 69,
+          "source_hash_matched": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/queue_probe.py",
+          "function": "consume",
+          "line": 38,
+          "source_hash_matched": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "consume",
+          "line": 114,
+          "source_hash_matched": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "drain",
+          "line": 77,
+          "source_hash_matched": true
+        }
+      ],
+      "owner_project_callers": [
+        {
+          "file": "engine/device_quality_session.py",
+          "function": "on_frame",
+          "line": 168,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "_consume",
+          "line": 69,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/queue_probe.py",
+          "function": "consume",
+          "line": 38,
+          "source_hash_matched": true,
+          "production": false
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "consume",
+          "line": 114,
+          "source_hash_matched": true,
+          "production": false
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "drain",
+          "line": 77,
+          "source_hash_matched": true,
+          "production": true
+        }
+      ],
+      "pending_lower_bound": -198,
+      "severe_inflight_join_qualified": false
+    },
+    {
+      "ordinal": 17,
+      "closed_gil_pair": false,
+      "inside_requested_window": true,
+      "consumer_python_trace_present": true,
+      "consumer_project_callers": [
+        {
+          "file": "hardware/beam_filter.py",
+          "function": "_feed",
+          "line": 146,
+          "source_hash_matched": true
+        },
+        {
+          "file": "hardware/beam_filter.py",
+          "function": "<listcomp>",
+          "line": 88,
+          "source_hash_matched": true
+        },
+        {
+          "file": "hardware/beam_filter.py",
+          "function": "feed",
+          "line": 87,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/overground_session.py",
+          "function": "on_frame",
+          "line": 103,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/gait_engine.py",
+          "function": "process_quality_frame",
+          "line": 396,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/device_quality_session.py",
+          "function": "on_frame",
+          "line": 183,
+          "source_hash_matched": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "_consume",
+          "line": 69,
+          "source_hash_matched": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/queue_probe.py",
+          "function": "consume",
+          "line": 38,
+          "source_hash_matched": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "consume",
+          "line": 114,
+          "source_hash_matched": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "drain",
+          "line": 77,
+          "source_hash_matched": true
+        }
+      ],
+      "owner_project_callers": [
+        {
+          "file": "hardware/beam_filter.py",
+          "function": "_feed",
+          "line": 146,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "hardware/beam_filter.py",
+          "function": "<listcomp>",
+          "line": 88,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "hardware/beam_filter.py",
+          "function": "feed",
+          "line": 87,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "engine/overground_session.py",
+          "function": "on_frame",
+          "line": 103,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "engine/gait_engine.py",
+          "function": "process_quality_frame",
+          "line": 396,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "engine/device_quality_session.py",
+          "function": "on_frame",
+          "line": 183,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "_consume",
+          "line": 69,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/queue_probe.py",
+          "function": "consume",
+          "line": 38,
+          "source_hash_matched": true,
+          "production": false
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "consume",
+          "line": 114,
+          "source_hash_matched": true,
+          "production": false
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "drain",
+          "line": 77,
+          "source_hash_matched": true,
+          "production": true
+        }
+      ],
+      "pending_lower_bound": -107,
+      "severe_inflight_join_qualified": false
+    },
+    {
+      "ordinal": 18,
+      "closed_gil_pair": true,
+      "inside_requested_window": false,
+      "consumer_python_trace_present": true,
+      "consumer_project_callers": [
+        {
+          "file": "engine/device_quality_session.py",
+          "function": "on_frame",
+          "line": 168,
+          "source_hash_matched": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "_consume",
+          "line": 69,
+          "source_hash_matched": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/queue_probe.py",
+          "function": "consume",
+          "line": 38,
+          "source_hash_matched": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "consume",
+          "line": 114,
+          "source_hash_matched": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "drain",
+          "line": 77,
+          "source_hash_matched": true
+        }
+      ],
+      "owner_project_callers": [
+        {
+          "file": "camera/control_service.py",
+          "function": "_read",
+          "line": 108,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "main",
+          "line": 185,
+          "source_hash_matched": true,
+          "production": false
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "<module>",
+          "line": 210,
+          "source_hash_matched": true,
+          "production": false
+        },
+        {
+          "file": "experiments/gil_gui_calibration/entry02.py",
+          "function": "<module>",
+          "line": 9,
+          "source_hash_matched": true,
+          "production": false
+        }
+      ],
+      "pending_lower_bound": -102,
+      "severe_inflight_join_qualified": false
+    },
+    {
+      "ordinal": 19,
+      "closed_gil_pair": true,
+      "inside_requested_window": false,
+      "consumer_python_trace_present": true,
+      "consumer_project_callers": [
+        {
+          "file": "engine/overground_session.py",
+          "function": "publish_snapshot",
+          "line": 197,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/overground_session.py",
+          "function": "on_frame",
+          "line": 109,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/gait_engine.py",
+          "function": "process_quality_frame",
+          "line": 396,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/device_quality_session.py",
+          "function": "on_frame",
+          "line": 183,
+          "source_hash_matched": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "_consume",
+          "line": 69,
+          "source_hash_matched": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/queue_probe.py",
+          "function": "consume",
+          "line": 38,
+          "source_hash_matched": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "consume",
+          "line": 114,
+          "source_hash_matched": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "drain",
+          "line": 77,
+          "source_hash_matched": true
+        }
+      ],
+      "owner_project_callers": [
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "read",
+          "line": 57,
+          "source_hash_matched": true,
+          "production": false
+        }
+      ],
+      "pending_lower_bound": -104,
+      "severe_inflight_join_qualified": false
+    }
+  ],
+  "production_gui_paint_closed_pair_ordinals_inside_window": [
+    3,
+    12,
+    14,
+    15
+  ],
+  "out_of_window_sdk_reply_observation_ordinal": 18,
+  "pre_first_read_max_observed_pending": 85,
+  "max_observed_pending": 122,
+  "qualified_severe_inflight_witnesses": 0,
+  "window_quality_pass": false,
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "root_cause_or_fix_complete": false,
+  "stack_result_sha256": "fd96d38fabc9dec133d7511e09d92018f465c960ed3c79235f809e99a55dc7a0"
+}

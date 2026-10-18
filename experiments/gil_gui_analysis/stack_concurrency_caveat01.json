@@ -1,0 +1,28 @@
+{
+  "scope": "Interpretation correction after source audit; all raw samples/results and failed gates remain unchanged.",
+  "source": "experiments/gil_waiter_control/src/main.rs::snapshot",
+  "source_sha256": "10238beb9656cf66754fbe87d97798d920322185411ab360d39b9771c8fae649",
+  "observed_order": [
+    "process.lock (NtSuspendProcess)",
+    "record suspended QPC",
+    "Python stack/GIL-owner read",
+    "requested/owner native contexts",
+    "drop lock / NtResumeProcess"
+  ],
+  "missing_link": "The requested consumer native stack was not independently recorded before establishing the global suspension. No actual-application independent pre-suspension request marker exists.",
+  "risk": "A thread holding the GIL can be stopped before another native-running consumer returns toward Python; the consumer can enter take_gil while the rest of the suspension is being established. The current record does not rule this out. Do not claim this happened in a particular sample, but do not assume it did not.",
+  "what_remains_true": "Coherent post-suspension structure, PID/TID lifetimes, actual captured code positions, native roots and PDB identities. GUI painting is a candidate GIL-holding path seen in this scope.",
+  "not_proven": "That these consumer waits existed before suspension, that the shown owner caused natural waiting at that earlier time, or that painting caused the old severe OFF backlog.",
+  "control_limit": "The existing independent native oracle establishes a genuine preexisting request in the positive control; it does not by itself certify absence of pause-entry false positives under adversarial transitions.",
+  "legacy_evidence": "The six earlier ETW natural scheduling-stack witnesses remain separate evidence for GIL acquisition waiting. They must not be joined across runs to these owner positions.",
+  "required_next": [
+    "Frozen synthetic negative control with independent native request/acquire markers covering before and during pause establishment. Keep40/40 positive/root/lifetime gates unchanged.",
+    "Record requested-consumer native context before global suspension as an improvement candidate; independently verify its ordering and owner association, including ABA/switch changes, before causal use.",
+    "Defer live symbolication/result-building cost until after capture and requalify a fresh binary/configuration; preserve this failed window and old3%/1% gates."
+  ],
+  "unperturbed_consumer_wait_proven": false,
+  "severe_backlog_causal_owner_identified": false,
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "root_cause_or_fix_complete": false
+}

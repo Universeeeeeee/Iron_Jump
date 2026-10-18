@@ -1,0 +1,894 @@
+{
+  "checks": {
+    "both_phases": true,
+    "every_join_matches": true,
+    "no_unknowns": true,
+    "native_running_controls": true,
+    "native_oracle_monotone": true,
+    "symbols": true,
+    "recovered": true,
+    "clean": true,
+    "proposed_rate_delivered": true
+  },
+  "deterministic_waiter_control_pass": true,
+  "phase_checks": [
+    {
+      "phase": 1,
+      "checks": {
+        "stream": true,
+        "ordered": true,
+        "clock": true,
+        "all_samples_independently_joined": true,
+        "counter_identity": true,
+        "waiter_acquired_after_owner_release": true,
+        "clean": true,
+        "activity_not_used": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 2,
+      "checks": {
+        "stream": true,
+        "ordered": true,
+        "clock": true,
+        "all_samples_independently_joined": true,
+        "counter_identity": true,
+        "waiter_acquired_after_owner_release": true,
+        "clean": true,
+        "activity_not_used": true
+      },
+      "passed": true
+    }
+  ],
+  "joins": [
+    {
+      "phase": 1,
+      "ordinal": 0,
+      "bracket_host_ns": [
+        318354904332600,
+        318354911606400
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 1,
+      "ordinal": 1,
+      "bracket_host_ns": [
+        318355154753700,
+        318355163437100
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 1,
+      "ordinal": 2,
+      "bracket_host_ns": [
+        318355405187600,
+        318355412256700
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 1,
+      "ordinal": 3,
+      "bracket_host_ns": [
+        318355655681000,
+        318355664106500
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 1,
+      "ordinal": 4,
+      "bracket_host_ns": [
+        318355906157200,
+        318355913278200
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 1,
+      "ordinal": 5,
+      "bracket_host_ns": [
+        318356156734800,
+        318356165236400
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 1,
+      "ordinal": 6,
+      "bracket_host_ns": [
+        318356407133000,
+        318356414203000
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 1,
+      "ordinal": 7,
+      "bracket_host_ns": [
+        318356657328500,
+        318356665774600
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 1,
+      "ordinal": 8,
+      "bracket_host_ns": [
+        318356907738200,
+        318356914780800
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 1,
+      "ordinal": 9,
+      "bracket_host_ns": [
+        318357158084100,
+        318357166502500
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 1,
+      "ordinal": 10,
+      "bracket_host_ns": [
+        318357408609700,
+        318357415637200
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 1,
+      "ordinal": 11,
+      "bracket_host_ns": [
+        318357659137600,
+        318357667705700
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 1,
+      "ordinal": 12,
+      "bracket_host_ns": [
+        318357909553900,
+        318357916801800
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 1,
+      "ordinal": 13,
+      "bracket_host_ns": [
+        318358160109600,
+        318358168730000
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 1,
+      "ordinal": 14,
+      "bracket_host_ns": [
+        318358410269800,
+        318358417830400
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 1,
+      "ordinal": 15,
+      "bracket_host_ns": [
+        318358660493300,
+        318358669316300
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 1,
+      "ordinal": 16,
+      "bracket_host_ns": [
+        318358910631200,
+        318358917948700
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 1,
+      "ordinal": 17,
+      "bracket_host_ns": [
+        318359161011100,
+        318359168513100
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 1,
+      "ordinal": 18,
+      "bracket_host_ns": [
+        318359411633200,
+        318359418921100
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 1,
+      "ordinal": 19,
+      "bracket_host_ns": [
+        318359662165600,
+        318359669555100
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 2,
+      "ordinal": 0,
+      "bracket_host_ns": [
+        318362216000900,
+        318362223105700
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 2,
+      "ordinal": 1,
+      "bracket_host_ns": [
+        318362466315500,
+        318362474500700
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 2,
+      "ordinal": 2,
+      "bracket_host_ns": [
+        318362716479800,
+        318362723469900
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 2,
+      "ordinal": 3,
+      "bracket_host_ns": [
+        318362966960400,
+        318362975295800
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 2,
+      "ordinal": 4,
+      "bracket_host_ns": [
+        318363217581200,
+        318363224417800
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 2,
+      "ordinal": 5,
+      "bracket_host_ns": [
+        318363468187200,
+        318363476502500
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 2,
+      "ordinal": 6,
+      "bracket_host_ns": [
+        318363718351000,
+        318363726069900
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 2,
+      "ordinal": 7,
+      "bracket_host_ns": [
+        318363968857300,
+        318363977221300
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 2,
+      "ordinal": 8,
+      "bracket_host_ns": [
+        318364219234900,
+        318364226077200
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 2,
+      "ordinal": 9,
+      "bracket_host_ns": [
+        318364469322900,
+        318364477680300
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 2,
+      "ordinal": 10,
+      "bracket_host_ns": [
+        318364719855400,
+        318364726659900
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 2,
+      "ordinal": 11,
+      "bracket_host_ns": [
+        318364970300100,
+        318364978825000
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 2,
+      "ordinal": 12,
+      "bracket_host_ns": [
+        318365220593700,
+        318365227672200
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 2,
+      "ordinal": 13,
+      "bracket_host_ns": [
+        318365470795700,
+        318365479140500
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 2,
+      "ordinal": 14,
+      "bracket_host_ns": [
+        318365720985500,
+        318365728066400
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 2,
+      "ordinal": 15,
+      "bracket_host_ns": [
+        318365971051100,
+        318365979540700
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 2,
+      "ordinal": 16,
+      "bracket_host_ns": [
+        318366221236600,
+        318366228380600
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 2,
+      "ordinal": 17,
+      "bracket_host_ns": [
+        318366471427900,
+        318366478344700
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 2,
+      "ordinal": 18,
+      "bracket_host_ns": [
+        318366721493700,
+        318366728557000
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    },
+    {
+      "phase": 2,
+      "ordinal": 19,
+      "bracket_host_ns": [
+        318366971586000,
+        318366978542800
+      ],
+      "checks": {
+        "owner_python_identity": true,
+        "waiter_native_empty_python": true,
+        "raw_ips_preserved": true,
+        "both_roots_closed": true,
+        "owner_sleep_path": true,
+        "waiter_GIL_acquisition_path": true,
+        "external_pending_request_agrees": true,
+        "pause_heartbeat_still": true
+      },
+      "passed": true
+    }
+  ],
+  "unknown": [],
+  "clocks": [
+    {
+      "qpc_frequency": 10000000,
+      "host_ns_offset_lower": -10300,
+      "host_ns_offset_upper": 6000,
+      "uncertainty_ns": 16300,
+      "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+    },
+    {
+      "qpc_frequency": 10000000,
+      "host_ns_offset_lower": -14400,
+      "host_ns_offset_upper": 8400,
+      "uncertainty_ns": 22800,
+      "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+    }
+  ],
+  "full_read_us": {
+    "min": 6781.7,
+    "median": 7337.2,
+    "max": 8806.7
+  },
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "root_cause_or_fix_complete": false,
+  "scope": "New4Hz/count20 synthetic control only; no resampling of prior failures, no actual-load or field quantitative qualification.",
+  "recovery_boundary_correction": {
+    "original_recovered": false,
+    "corrected_recovered": true,
+    "reason": "The native heartbeat stops before complete.json. Multiple post-stop oracle reads may equal complete. Compare against externally bracketed capture-window observations, require complete after the window and both native acquired markers after owner release. All other frozen checks remain unchanged; no resampling."
+  },
+  "cadence": {
+    "1": {
+      "requested": true,
+      "actual_gap_ms": [
+        250.4211,
+        250.4339,
+        250.4934,
+        250.4762,
+        250.5776,
+        250.3982,
+        250.1955,
+        250.4097,
+        250.3459,
+        250.5256,
+        250.5279,
+        250.4163,
+        250.5557,
+        250.1602,
+        250.2235,
+        250.1379,
+        250.3799,
+        250.6221,
+        250.5324
+      ],
+      "within_pacing_budget": true
+    },
+    "2": {
+      "requested": true,
+      "actual_gap_ms": [
+        250.3146,
+        250.1643,
+        250.4806,
+        250.6208,
+        250.606,
+        250.1638,
+        250.5063,
+        250.3776,
+        250.088,
+        250.5325,
+        250.4447,
+        250.2936,
+        250.202,
+        250.1898,
+        250.0656,
+        250.1855,
+        250.1913,
+        250.0658,
+        250.0923
+      ],
+      "within_pacing_budget": true
+    }
+  },
+  "evidence": {
+    "plan_sha256": "45bd9d5c734b2ebde541b21c2edcd7b02ba3a511fca77fc928064b25376ade11",
+    "manifest_sha256": "663424daa88f2016169cb779a9f9f1a38ca80563f9062409c46d91c5a92999bf",
+    "reviewer_sha256": "23c3ac01cbda1fe20ac4f6faffef933cb81e4b4f8373d9e682b5717ae8726448"
+  }
+}

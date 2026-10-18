@@ -1,0 +1,23 @@
+{
+  "new_analysis_distinct": 28,
+  "new_analysis_pass": 28,
+  "native_regression_ran": 47,
+  "native_regression_pass": 43,
+  "native_windows_skipped": 4,
+  "existing_gui_analysis_pass": 10,
+  "existing_waiter_distinct_pass": 19,
+  "total_distinct_ran": 104,
+  "total_pass": 100,
+  "total_platform_skip": 4,
+  "limits": "No test result promotes data/calibration gates. All tests on Mac; the new actual Windows window is separately recorded.",
+  "development_notes": [
+    "The first temporal mismatch test mutated an aliased fixture object; fixture corrected to independently change the trigger. Verifier gates unchanged.",
+    "An initial native-suite invocation used the waiter subdirectory as cwd and discovered no tests; correct-root discovery subsequently ran47 with4 platform skips.",
+    "The first auxiliary stack annotation assumed every requested consumer had a Python trace. Missing entries are now explicitly retained, never synthesized."
+  ],
+  "source_sha256": {
+    "test_stack.py": "d039b2b34b74feab392a3dd2962a0d39da49ecf8548cb0633b714e43436b2e50",
+    "test_temporal.py": "dc9b2e7092b2bcb5dd6c60a149613ba09201fdc570bdeb03e8b5a64c0d09f058",
+    "test_cursors.py": "fad72a62a29fd3294b6deac7f5adc81548463005e928a699fad3490d7ea58570"
+  }
+}

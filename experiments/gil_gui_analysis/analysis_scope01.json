@@ -1,0 +1,29 @@
+{
+  "scope": "Exploratory analysis of already preserved16 cases only. Not a new prospective performance calibration; no GUI/SDK/USB/sampling/new human trials or production edits.",
+  "created_utc": "2026-10-18T14:51:37.577253+00:00",
+  "cohorts": {
+    "prior": "experiments/native_stack_capture/runs/gil_gui_calibration01/evidence01",
+    "repeat": "experiments/native_stack_capture/runs/gil_gui_restart_repeat01/evidence01"
+  },
+  "source_sha256": {
+    "engine/device_quality_session.py": "60bcda47899b3bd320e2f4870103d14202e15ad905cbd502a376195f91e6d2cb",
+    "engine/overground_session.py": "c5ceaf0d0f44818a6d3b077d4025249c0285b9666b41b15275f30d20c7759c67",
+    "engine/modes/walking_processor.py": "c71a9e657142966c6036cc1f8090e26a7731cefde2b4f80393f8e06ed37829ba",
+    "ui/session_controller.py": "548b7acfb92f7f622d07adf8dd46ab1bfb5e7f9c97f8e7de51e09558bba6d409",
+    "ui/ground_track.py": "9b902ace875bfb1b253e0b4653dd790d70b204385471578d0781498d77e5f527",
+    "experiments/gil_gui_calibration/queue_probe.py": "b3b5715ac2d4c191098499458528ff2d9f5495bd5bb6966dc1776ecb0e5105b3",
+    "experiments/gil_gui_calibration/replay02.py": "eb82e4fd23b6ca6ff9181f2d92264a689b411c8bda290431d547cc00a450f251"
+  },
+  "oracle_source_sha256": "354f19870dff0d42b5ade5296e74ffc03690b123a3ab0f3bac0a2fa8ebfe9d72",
+  "boundary_rules": [
+    "received_ns is a source-construction timestamp preceding actual enqueue; do not call it an exact enqueue timestamp. Queue pending and oldest-item data are independent locked witnesses.",
+    "Never substitute touched/published device sample time for a host publication timestamp. Determine raw release trigger through original synchronous processing plus full output/state verification.",
+    "Bound host processing/dispatch times by saved monotone common batch-completion witnesses; no interpolated timestamps. Keep filter lookahead,20-frame inflight uncertainty and missing/contradictory bounds.",
+    "Report source-input confirmation progression, pre-publication backlog, and downstream GUI interval bounds as temporal evidence, not CPU/GIL/Qt shares or exclusive function cost.",
+    "Native5s counters cover different work when backlog differs. Keep PID/TID lifetimes and clock uncertainty; no cycles-to-frequency inference.",
+    "All16 cases, old calibration failures and query caveat remain. No pooling to pass3%/1% gates or treating first cases as discardable warm-up."
+  ],
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "root_cause_or_fix_complete": false
+}

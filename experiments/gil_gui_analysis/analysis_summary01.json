@@ -1,0 +1,452 @@
+{
+  "title": "固定输入慢／快消费链分析：时间位置已收紧，责任函数仍未定案",
+  "scope": "Existing16 cases analyzed offline. One new separately frozen fixed-input snapshot case only; no human, Run, live optical/camera acquisition, optimization AB or production edits.",
+  "established": [
+    {
+      "finding": "FIFO residence explains the observed temporal location of the slow publication, without assigning CPU/GIL/Qt shares.",
+      "worst_per_case": {
+        "prior/pair01_a": {
+          "contact_id": 10,
+          "touch_sample": 64328,
+          "published_sample": 64397,
+          "raw_release_trigger": 64407,
+          "source_confirmation_sample_span": 79,
+          "source_confirmation_time_ms": 66.8363,
+          "enqueue_host_bounds_ns": [
+            326053832394800,
+            326053886269400
+          ],
+          "dequeue_host_bounds_ns": [
+            326057184270800,
+            326057197414900
+          ],
+          "queue_residence_bounds_ms": [
+            3298.0014,
+            3365.0201
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            83.4297
+          ],
+          "publication_host_bounds_ns": [
+            326057184270800,
+            326057267700500
+          ],
+          "source_trigger_to_publication_ms": [
+            3351.876,
+            3435.3057
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -29.4732,
+            53.9565
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            53.9565
+          ],
+          "source_touch_to_paint_ms": 3472.6688
+        },
+        "repeat/pair01_a": {
+          "contact_id": 5,
+          "touch_sample": 62050,
+          "published_sample": 62111,
+          "raw_release_trigger": 62121,
+          "source_confirmation_sample_span": 71,
+          "source_confirmation_time_ms": 81.4527,
+          "enqueue_host_bounds_ns": [
+            328470468861700,
+            328470540359400
+          ],
+          "dequeue_host_bounds_ns": [
+            328471419992500,
+            328471467574800
+          ],
+          "queue_residence_bounds_ms": [
+            879.6331,
+            998.7131
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            185.2123
+          ],
+          "publication_host_bounds_ns": [
+            328471419992500,
+            328471605204800
+          ],
+          "source_trigger_to_publication_ms": [
+            951.1308,
+            1136.3431
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -8.704,
+            176.5083
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            176.5083
+          ],
+          "source_touch_to_paint_ms": 1209.0918
+        }
+      },
+      "limits": "Each row is the worst contact in that case, not the same contact across sessions. Bounds are correlated, cannot be summed as independent costs or normalized to causal percentages. Source timestamp precedes construction/enqueue; E/P witnesses bound actual enqueue/dequeue."
+    },
+    {
+      "finding": "The initial empty source stage follows input; deficits begin with contact. Earlier slow case later catches up, repeated slow case recovers while contact input continues.",
+      "example": "Earlier case host12..13s completed-frame count bounds440..580 for1007 source-generated frames; repeat host15..16s completes1140..1280 against1004 generated. These are bounded counts, not interpolated exact FPS or capacity improvement."
+    },
+    {
+      "finding": "Original code has additional contact-dependent vector filtering; logical public-boundary counts were obtained without elapsed-time attribution.",
+      "example": "Per1000 raw samples: quality array_equal has1000 ndarray.all entries after runtime warmup; nested logical_and.reduce is not additive. Filter768-element reduction entries grow from0 in an empty bucket to3264 in one contact bucket. Missing indexing/in-place NumPy primitives are not counted by this selected profile.",
+      "verification": "Full serialized report and full saved state exact. Mac NumPy2.4.6/Qt6.11.0; logical mapping only, not Windows performance transfer."
+    },
+    {
+      "finding": "GUI painting source positions are GIL-holder candidates observed within closed suspended snapshots. They can motivate a concurrency hypothesis; they do not prove unperturbed blocking.",
+      "production_paint_samples_inside_requested_window": [
+        3,
+        12,
+        14,
+        15
+      ],
+      "caveat": "Global process suspension precedes both reads. Pause-entry ordering may create/amplify a consumer acquisition wait. Existing positive controls do not certify this false-positive mode.",
+      "sdk_note": "The GUI response JSON-decoding observation at camera/control_service.py:108 is outside the requested window. SDK child has separate PID/GIL. Experimental replay reader/video holders cannot be called formal USB/camera paths."
+    },
+    {
+      "finding": "Measurement limitations remain concrete, not solved by more human passages.",
+      "new_window_checks": {
+        "all20_inside_requested_window": false,
+        "counter_end_lateness_pass": false,
+        "cadence_pass": false
+      },
+      "counter_end_late_ms": 355.16,
+      "max_gap_ms": 534.3752,
+      "max_postresume_symbol_and_result_construction_ms": 495.4502,
+      "max_full_read_bracket_ms": 44.9422,
+      "counts": {
+        "samples": 20,
+        "closed_gil_pairs": 7,
+        "qualified_inflight_backlog_witnesses": 0
+      },
+      "new_case_max_pending": 122,
+      "new_case_pre_first_read_max_pending": 85,
+      "getThreadTimes_observed_positive_delta_step_ms": 15.625,
+      "limits": "No sampled occupancy/time percentages. The new case did not reproduce the severe3391/1125-frame episode and has zero qualified severe20-frame in-flight joins.100ns API units and microsecond QPC alignment do not imply equal effective CPU-time resolution."
+    }
+  ],
+  "code_evidence_table": [
+    {
+      "sample": 3,
+      "consumer_code": [
+        {
+          "file": "hardware/beam_filter.py",
+          "function": "_feed",
+          "line": 130,
+          "source_hash_matched": true
+        },
+        {
+          "file": "hardware/beam_filter.py",
+          "function": "<listcomp>",
+          "line": 88,
+          "source_hash_matched": true
+        }
+      ],
+      "candidate_holder": [
+        {
+          "file": "ui/footprint_channel.py",
+          "function": "paintEvent",
+          "line": 244,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "ui/ground_track.py",
+          "function": "paintEvent",
+          "line": 68,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "paint",
+          "line": 139,
+          "source_hash_matched": true,
+          "production": false
+        }
+      ],
+      "observation_scope": "Inside requested window, post-suspension structure only",
+      "evidence": "Frozen source position, retained lifetime and independently matched native roots within a suspended snapshot. Natural pre-pause waiting not proved.",
+      "severe_inflight_association": false,
+      "missing": "Natural pre-pause wait plus stable owner association in a severe window, and applicable disturbance qualification.",
+      "minimal_verification": "Independent before-suspension consumer wait evidence; adversarial pause-entry negative control before a new frozen runtime window."
+    },
+    {
+      "sample": 12,
+      "consumer_code": [
+        {
+          "file": "hardware/walking_preflight.py",
+          "function": "observe",
+          "line": 48,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/device_quality_session.py",
+          "function": "on_frame",
+          "line": 159,
+          "source_hash_matched": true
+        }
+      ],
+      "candidate_holder": [
+        {
+          "file": "ui/footprint_channel.py",
+          "function": "_y_for_index",
+          "line": 149,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "ui/footprint_channel.py",
+          "function": "paintEvent",
+          "line": 242,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "ui/ground_track.py",
+          "function": "paintEvent",
+          "line": 68,
+          "source_hash_matched": true,
+          "production": true
+        }
+      ],
+      "observation_scope": "Inside requested window, post-suspension structure only",
+      "evidence": "Frozen source position, retained lifetime and independently matched native roots within a suspended snapshot. Natural pre-pause waiting not proved.",
+      "severe_inflight_association": false,
+      "missing": "Natural pre-pause wait plus stable owner association in a severe window, and applicable disturbance qualification.",
+      "minimal_verification": "Independent before-suspension consumer wait evidence; adversarial pause-entry negative control before a new frozen runtime window."
+    },
+    {
+      "sample": 14,
+      "consumer_code": [
+        {
+          "file": "hardware/beam_filter.py",
+          "function": "_feed",
+          "line": 128,
+          "source_hash_matched": true
+        },
+        {
+          "file": "hardware/beam_filter.py",
+          "function": "<listcomp>",
+          "line": 88,
+          "source_hash_matched": true
+        }
+      ],
+      "candidate_holder": [
+        {
+          "file": "ui/footprint_channel.py",
+          "function": "<listcomp>",
+          "line": 161,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "ui/footprint_channel.py",
+          "function": "_rail_marker_rects",
+          "line": 160,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "ui/footprint_channel.py",
+          "function": "paintEvent",
+          "line": 239,
+          "source_hash_matched": true,
+          "production": true
+        }
+      ],
+      "observation_scope": "Inside requested window, post-suspension structure only",
+      "evidence": "Frozen source position, retained lifetime and independently matched native roots within a suspended snapshot. Natural pre-pause waiting not proved.",
+      "severe_inflight_association": false,
+      "missing": "Natural pre-pause wait plus stable owner association in a severe window, and applicable disturbance qualification.",
+      "minimal_verification": "Independent before-suspension consumer wait evidence; adversarial pause-entry negative control before a new frozen runtime window."
+    },
+    {
+      "sample": 15,
+      "consumer_code": [
+        {
+          "file": "hardware/walking_preflight.py",
+          "function": "observe",
+          "line": 44,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/device_quality_session.py",
+          "function": "on_frame",
+          "line": 159,
+          "source_hash_matched": true
+        }
+      ],
+      "candidate_holder": [
+        {
+          "file": "ui/footprint_channel.py",
+          "function": "paintEvent",
+          "line": 247,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "ui/ground_track.py",
+          "function": "paintEvent",
+          "line": 68,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "paint",
+          "line": 139,
+          "source_hash_matched": true,
+          "production": false
+        }
+      ],
+      "observation_scope": "Inside requested window, post-suspension structure only",
+      "evidence": "Frozen source position, retained lifetime and independently matched native roots within a suspended snapshot. Natural pre-pause waiting not proved.",
+      "severe_inflight_association": false,
+      "missing": "Natural pre-pause wait plus stable owner association in a severe window, and applicable disturbance qualification.",
+      "minimal_verification": "Independent before-suspension consumer wait evidence; adversarial pause-entry negative control before a new frozen runtime window."
+    },
+    {
+      "sample": 18,
+      "consumer_code": [
+        {
+          "file": "engine/device_quality_session.py",
+          "function": "on_frame",
+          "line": 168,
+          "source_hash_matched": true
+        },
+        {
+          "file": "ui/session_controller.py",
+          "function": "_consume",
+          "line": 69,
+          "source_hash_matched": true
+        }
+      ],
+      "candidate_holder": [
+        {
+          "file": "camera/control_service.py",
+          "function": "_read",
+          "line": 108,
+          "source_hash_matched": true,
+          "production": true
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "main",
+          "line": 185,
+          "source_hash_matched": true,
+          "production": false
+        },
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "<module>",
+          "line": 210,
+          "source_hash_matched": true,
+          "production": false
+        }
+      ],
+      "observation_scope": "Outside requested window; retained, excluded from its conclusions",
+      "evidence": "Frozen source position, retained lifetime and independently matched native roots within a suspended snapshot. Natural pre-pause waiting not proved.",
+      "severe_inflight_association": false,
+      "missing": "Natural pre-pause wait plus stable owner association in a severe window, and applicable disturbance qualification.",
+      "minimal_verification": "Independent before-suspension consumer wait evidence; adversarial pause-entry negative control before a new frozen runtime window."
+    },
+    {
+      "sample": 19,
+      "consumer_code": [
+        {
+          "file": "engine/overground_session.py",
+          "function": "publish_snapshot",
+          "line": 197,
+          "source_hash_matched": true
+        },
+        {
+          "file": "engine/overground_session.py",
+          "function": "on_frame",
+          "line": 109,
+          "source_hash_matched": true
+        }
+      ],
+      "candidate_holder": [
+        {
+          "file": "experiments/gil_gui_calibration/replay02.py",
+          "function": "read",
+          "line": 57,
+          "source_hash_matched": true,
+          "production": false
+        }
+      ],
+      "observation_scope": "Outside requested window; retained, excluded from its conclusions",
+      "evidence": "Frozen source position, retained lifetime and independently matched native roots within a suspended snapshot. Natural pre-pause waiting not proved.",
+      "severe_inflight_association": false,
+      "missing": "Natural pre-pause wait plus stable owner association in a severe window, and applicable disturbance qualification.",
+      "minimal_verification": "Independent before-suspension consumer wait evidence; adversarial pause-entry negative control before a new frozen runtime window."
+    }
+  ],
+  "not_established": [
+    "Primary root cause/unique responsible function or any fix.",
+    "Unperturbed owner association for severe OFF episodes. Never stitch the old6 ETW waiter witnesses to unrelated new suspended owner snapshots.",
+    "GIL waiting share/hold duration, CPU hotspots or Ready/Waiting shares. No kernel stack here; unknown native modules keep SHA/address/RVA.",
+    "Device power/temperature/USB causality, physical step-to-screen latency, actual CPU frequency/delivery, or zero common-probe overhead."
+  ],
+  "preserved_failures": [
+    "publication_map01 failed because in-memory tuples were compared to saved JSON arrays. Original source/result kept. Version02 verifies full real JSON serialization with no numeric tolerance/field omissions.",
+    "All3 new window timing/cadence checks failed. All20 samples and out-of-window observations retained. No retry or replacement.",
+    "All prior CPU/CSwitch/root/3%/1% acceptances, plans and raw manifests unchanged."
+  ],
+  "next_concrete_work": [
+    "First qualify absence of pause-entry false positives using an independent pre-request native marker negative control; preserve existing known-waiter positive/root/lifetime gates.",
+    "A waiter-first native context before global suspension and stable owner/switch validation are improvement candidates; do not assume their causal correctness without controls.",
+    "Defer expensive live symbol/name/result construction to after collection; freeze and requalify any changed binary rather than altering old cadence/time gates.",
+    "Use appropriate CPU exposure/precision and existing inference/publication metadata for workload alignment; keep SDK separate. Do not force frame selection, lower gates or delete endpoints to obtain passing results.",
+    "Only after applicable measurement qualification, capture the severe fixed-input episode with a natural pre-pause waiter and owner association. No current need for another human Walk."
+  ],
+  "formal_source_numpy_filter_processor_thread_paint_changed": false,
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "unperturbed_primary_root_identified": false,
+  "root_cause_or_fix_complete": false,
+  "tests": {
+    "new_analysis_distinct": 28,
+    "new_analysis_pass": 28,
+    "native_regression_ran": 47,
+    "native_regression_pass": 43,
+    "native_windows_skipped": 4,
+    "existing_gui_analysis_pass": 10,
+    "existing_waiter_distinct_pass": 19,
+    "total_distinct_ran": 104,
+    "total_pass": 100,
+    "total_platform_skip": 4,
+    "limits": "No test result promotes data/calibration gates. All tests on Mac; the new actual Windows window is separately recorded.",
+    "development_notes": [
+      "The first temporal mismatch test mutated an aliased fixture object; fixture corrected to independently change the trigger. Verifier gates unchanged.",
+      "An initial native-suite invocation used the waiter subdirectory as cwd and discovered no tests; correct-root discovery subsequently ran47 with4 platform skips.",
+      "The first auxiliary stack annotation assumed every requested consumer had a Python trace. Missing entries are now explicitly retained, never synthesized."
+    ],
+    "source_sha256": {
+      "test_stack.py": "d039b2b34b74feab392a3dd2962a0d39da49ecf8548cb0633b714e43436b2e50",
+      "test_temporal.py": "dc9b2e7092b2bcb5dd6c60a149613ba09201fdc570bdeb03e8b5a64c0d09f058",
+      "test_cursors.py": "fad72a62a29fd3294b6deac7f5adc81548463005e928a699fad3490d7ea58570"
+    }
+  },
+  "raw_archive_sha256": "902f40d70453171663c28f51324c29d6ca69ec92756f8a2aab04731e7f8f4ce4",
+  "figure": "temporal01.png",
+  "supporting_files": {
+    "temporal_result02.json": "aff3fc1b2f03d69b81fdc1cea16612653acaf4b304816dc91ee88ab37e072bc6",
+    "publication_map01.json": "545c53bd485958fdc55e1e7529c54459482521bd9cee4310510dc046880c341d",
+    "publication_map02.json": "793f136e4c8c35888d3a84551b1c7c9bc5fbdafa868a7a7128caade6c79471cc",
+    "logical_counts03.json": "985c4cf616049644421e893fe68563fa375fb6023371f4fe137b0fff5002c96d",
+    "stack_result01.json": "fd96d38fabc9dec133d7511e09d92018f465c960ed3c79235f809e99a55dc7a0",
+    "stack_concurrency_caveat01.json": "5aeec0fc31f9ae21e2cc3d099054a96c4afd9a2fd239d42f246fca573e4d33a9",
+    "counter_granularity01.json": "8515ce1df09b04c08a8e52c737fe5874a142c868027ee2134c868ec80917b0ab",
+    "final_windows01.json": "3aa3ce8a3324f27410ec8277f3279be78d65a761ac3c7d62f3615412eff6f394"
+  },
+  "interpretation_correction": "The GUI drawing positions are suspended-snapshot GIL-holder candidates. Pause establishment can alter the consumer state; this was not independently excluded. They are not identified unperturbed causes of the severe OFF backlog."
+}

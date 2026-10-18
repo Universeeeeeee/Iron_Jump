@@ -1,0 +1,73 @@
+{
+  "scope": "Empirical granularity of saved GetThreadTimes deltas; API100ns units are not a demonstrated100ns effective resolution. No CPU frequency/delivery/owner inference.",
+  "positive_thread_deltas": 94,
+  "gcd_positive_delta_100ns": 156250,
+  "observed_gcd_ms": 15.625,
+  "cases": {
+    "prior/pair01_a": {
+      "sdk_cpu_ms": 171.875,
+      "one_15_625ms_step_relative": 0.09090909090909091
+    },
+    "prior/pair01_b": {
+      "sdk_cpu_ms": 62.5,
+      "one_15_625ms_step_relative": 0.25
+    },
+    "prior/pair02_a": {
+      "sdk_cpu_ms": 62.5,
+      "one_15_625ms_step_relative": 0.25
+    },
+    "prior/pair02_b": {
+      "sdk_cpu_ms": 78.125,
+      "one_15_625ms_step_relative": 0.2
+    },
+    "prior/pair03_a": {
+      "sdk_cpu_ms": 78.125,
+      "one_15_625ms_step_relative": 0.2
+    },
+    "prior/pair03_b": {
+      "sdk_cpu_ms": 62.5,
+      "one_15_625ms_step_relative": 0.25
+    },
+    "prior/pair04_a": {
+      "sdk_cpu_ms": 62.5,
+      "one_15_625ms_step_relative": 0.25
+    },
+    "prior/pair04_b": {
+      "sdk_cpu_ms": 46.875,
+      "one_15_625ms_step_relative": 0.3333333333333333
+    },
+    "repeat/pair01_a": {
+      "sdk_cpu_ms": 187.5,
+      "one_15_625ms_step_relative": 0.08333333333333333
+    },
+    "repeat/pair01_b": {
+      "sdk_cpu_ms": 78.125,
+      "one_15_625ms_step_relative": 0.2
+    },
+    "repeat/pair02_a": {
+      "sdk_cpu_ms": 62.5,
+      "one_15_625ms_step_relative": 0.25
+    },
+    "repeat/pair02_b": {
+      "sdk_cpu_ms": 31.25,
+      "one_15_625ms_step_relative": 0.5
+    },
+    "repeat/pair03_a": {
+      "sdk_cpu_ms": 62.5,
+      "one_15_625ms_step_relative": 0.25
+    },
+    "repeat/pair03_b": {
+      "sdk_cpu_ms": 46.875,
+      "one_15_625ms_step_relative": 0.3333333333333333
+    },
+    "repeat/pair04_a": {
+      "sdk_cpu_ms": 78.125,
+      "one_15_625ms_step_relative": 0.2
+    },
+    "repeat/pair04_b": {
+      "sdk_cpu_ms": 78.125,
+      "one_15_625ms_step_relative": 0.2
+    }
+  },
+  "limits": "Observed15.625ms-multiple deltas in these records only. Do not infer all platforms use this resolution or silently remove CPU endpoints from old gates. QPC alignment precision is a different quantity."
+}
