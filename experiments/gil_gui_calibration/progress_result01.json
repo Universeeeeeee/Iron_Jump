@@ -1,0 +1,786 @@
+{
+  "scope": "Exploratory existing queue/paint/counter evidence only. No new gate, sampling, physical ground truth, scheduling labels, function shares or field qualification.",
+  "manifest_sha256": "88610d8745747b99d81775e4db91993764e77ed1d305fd080fa2a8f2b2803a21",
+  "reviewer_sha256": "a8cd981dc0e7f2c7268ca33793a6521cdd4c3fac9f6d9c42231c779814adcf75",
+  "cases": {
+    "pair01_a": {
+      "queue": {
+        "dense_raw_range": [
+          59904,
+          65904
+        ],
+        "common_points": 94,
+        "actual_arrival_fps": 999.7002565675133,
+        "consumer_fps": 649.8685711855026,
+        "max_pending": 3391,
+        "max_oldest_pending_ms": 3386.6807,
+        "heavy_observed_span_s": 8.6024083,
+        "whole_case_max_pending": 3391
+      },
+      "publication": {
+        "events": [
+          {
+            "contact_id": 0,
+            "touch_sample": 60188,
+            "receipt_to_first_paint_ms": 259.7827
+          },
+          {
+            "contact_id": 2,
+            "touch_sample": 60871,
+            "receipt_to_first_paint_ms": 848.128
+          },
+          {
+            "contact_id": 4,
+            "touch_sample": 61475,
+            "receipt_to_first_paint_ms": 1274.7369
+          },
+          {
+            "contact_id": 5,
+            "touch_sample": 62050,
+            "receipt_to_first_paint_ms": 1733.455
+          },
+          {
+            "contact_id": 6,
+            "touch_sample": 62626,
+            "receipt_to_first_paint_ms": 2236.3484
+          },
+          {
+            "contact_id": 7,
+            "touch_sample": 63199,
+            "receipt_to_first_paint_ms": 2675.4285
+          },
+          {
+            "contact_id": 8,
+            "touch_sample": 63747,
+            "receipt_to_first_paint_ms": 3123.9712
+          },
+          {
+            "contact_id": 10,
+            "touch_sample": 64328,
+            "receipt_to_first_paint_ms": 3472.6688
+          },
+          {
+            "contact_id": 11,
+            "touch_sample": 64883,
+            "receipt_to_first_paint_ms": 3385.3361
+          }
+        ],
+        "p95_ms": 3437.73572,
+        "max_ms": 3472.6688,
+        "limits": "Actual received-input to first saved confirmed paint, includes normal publication/processing latency. Not physical step-to-screen or GUI-only time."
+      },
+      "counter_work": {
+        "before": {
+          "host_bracket_ns": [
+            326050325676400,
+            326050325838900
+          ],
+          "completed_batch_sample_bounds": [
+            60495,
+            60555
+          ],
+          "possible_processed_sample_bounds": [
+            60495,
+            60575
+          ]
+        },
+        "after": {
+          "host_bracket_ns": [
+            326055328778100,
+            326055328998100
+          ],
+          "completed_batch_sample_bounds": [
+            63235,
+            63315
+          ],
+          "possible_processed_sample_bounds": [
+            63235,
+            63335
+          ]
+        }
+      }
+    },
+    "pair01_b": {
+      "queue": {
+        "dense_raw_range": [
+          59904,
+          65904
+        ],
+        "common_points": 94,
+        "actual_arrival_fps": 999.8370327303544,
+        "consumer_fps": 995.7073596513536,
+        "max_pending": 78,
+        "max_oldest_pending_ms": 76.4686,
+        "heavy_observed_span_s": 0,
+        "whole_case_max_pending": 81
+      },
+      "publication": {
+        "events": [
+          {
+            "contact_id": 0,
+            "touch_sample": 60188,
+            "receipt_to_first_paint_ms": 151.2631
+          },
+          {
+            "contact_id": 2,
+            "touch_sample": 60871,
+            "receipt_to_first_paint_ms": 168.3523
+          },
+          {
+            "contact_id": 4,
+            "touch_sample": 61475,
+            "receipt_to_first_paint_ms": 145.1648
+          },
+          {
+            "contact_id": 5,
+            "touch_sample": 62050,
+            "receipt_to_first_paint_ms": 130.1346
+          },
+          {
+            "contact_id": 6,
+            "touch_sample": 62626,
+            "receipt_to_first_paint_ms": 139.9765
+          },
+          {
+            "contact_id": 7,
+            "touch_sample": 63199,
+            "receipt_to_first_paint_ms": 132.6073
+          },
+          {
+            "contact_id": 8,
+            "touch_sample": 63747,
+            "receipt_to_first_paint_ms": 148.0404
+          },
+          {
+            "contact_id": 10,
+            "touch_sample": 64328,
+            "receipt_to_first_paint_ms": 157.7591
+          },
+          {
+            "contact_id": 11,
+            "touch_sample": 64883,
+            "receipt_to_first_paint_ms": 130.3632
+          }
+        ],
+        "p95_ms": 164.11502,
+        "max_ms": 168.3523,
+        "limits": "Actual received-input to first saved confirmed paint, includes normal publication/processing latency. Not physical step-to-screen or GUI-only time."
+      },
+      "counter_work": {
+        "before": {
+          "host_bracket_ns": [
+            326141990623000,
+            326141990751600
+          ],
+          "completed_batch_sample_bounds": [
+            60883,
+            60933
+          ],
+          "possible_processed_sample_bounds": [
+            60883,
+            60953
+          ]
+        },
+        "after": {
+          "host_bracket_ns": [
+            326146988982700,
+            326146989079500
+          ],
+          "completed_batch_sample_bounds": [
+            65865,
+            65939
+          ],
+          "possible_processed_sample_bounds": [
+            65865,
+            65959
+          ]
+        }
+      }
+    },
+    "pair02_a": {
+      "queue": {
+        "dense_raw_range": [
+          59904,
+          65904
+        ],
+        "common_points": 94,
+        "actual_arrival_fps": 996.9002037089706,
+        "consumer_fps": 1000.0455100475605,
+        "max_pending": 54,
+        "max_oldest_pending_ms": 56.7116,
+        "heavy_observed_span_s": 0,
+        "whole_case_max_pending": 62
+      },
+      "publication": {
+        "events": [
+          {
+            "contact_id": 0,
+            "touch_sample": 60188,
+            "receipt_to_first_paint_ms": 132.2852
+          },
+          {
+            "contact_id": 2,
+            "touch_sample": 60871,
+            "receipt_to_first_paint_ms": 167.3231
+          },
+          {
+            "contact_id": 4,
+            "touch_sample": 61475,
+            "receipt_to_first_paint_ms": 125.4407
+          },
+          {
+            "contact_id": 5,
+            "touch_sample": 62050,
+            "receipt_to_first_paint_ms": 150.4619
+          },
+          {
+            "contact_id": 6,
+            "touch_sample": 62626,
+            "receipt_to_first_paint_ms": 112.7642
+          },
+          {
+            "contact_id": 7,
+            "touch_sample": 63199,
+            "receipt_to_first_paint_ms": 130.9371
+          },
+          {
+            "contact_id": 8,
+            "touch_sample": 63747,
+            "receipt_to_first_paint_ms": 111.8429
+          },
+          {
+            "contact_id": 10,
+            "touch_sample": 64328,
+            "receipt_to_first_paint_ms": 124.2964
+          },
+          {
+            "contact_id": 11,
+            "touch_sample": 64883,
+            "receipt_to_first_paint_ms": 131.2192
+          }
+        ],
+        "p95_ms": 160.57862,
+        "max_ms": 167.3231,
+        "limits": "Actual received-input to first saved confirmed paint, includes normal publication/processing latency. Not physical step-to-screen or GUI-only time."
+      },
+      "counter_work": {
+        "before": {
+          "host_bracket_ns": [
+            326232674067200,
+            326232674138900
+          ],
+          "completed_batch_sample_bounds": [
+            60881,
+            60947
+          ],
+          "possible_processed_sample_bounds": [
+            60881,
+            60967
+          ]
+        },
+        "after": {
+          "host_bracket_ns": [
+            326237673277500,
+            326237673344400
+          ],
+          "completed_batch_sample_bounds": [
+            65859,
+            65933
+          ],
+          "possible_processed_sample_bounds": [
+            65859,
+            65953
+          ]
+        }
+      }
+    },
+    "pair02_b": {
+      "queue": {
+        "dense_raw_range": [
+          59904,
+          65904
+        ],
+        "common_points": 94,
+        "actual_arrival_fps": 999.7716140990229,
+        "consumer_fps": 995.7046519180815,
+        "max_pending": 54,
+        "max_oldest_pending_ms": 57.6411,
+        "heavy_observed_span_s": 0,
+        "whole_case_max_pending": 74
+      },
+      "publication": {
+        "events": [
+          {
+            "contact_id": 0,
+            "touch_sample": 60188,
+            "receipt_to_first_paint_ms": 139.6974
+          },
+          {
+            "contact_id": 2,
+            "touch_sample": 60871,
+            "receipt_to_first_paint_ms": 163.7884
+          },
+          {
+            "contact_id": 4,
+            "touch_sample": 61475,
+            "receipt_to_first_paint_ms": 123.7126
+          },
+          {
+            "contact_id": 5,
+            "touch_sample": 62050,
+            "receipt_to_first_paint_ms": 102.6524
+          },
+          {
+            "contact_id": 6,
+            "touch_sample": 62626,
+            "receipt_to_first_paint_ms": 130.8093
+          },
+          {
+            "contact_id": 7,
+            "touch_sample": 63199,
+            "receipt_to_first_paint_ms": 147.6158
+          },
+          {
+            "contact_id": 8,
+            "touch_sample": 63747,
+            "receipt_to_first_paint_ms": 121.8646
+          },
+          {
+            "contact_id": 10,
+            "touch_sample": 64328,
+            "receipt_to_first_paint_ms": 127.21
+          },
+          {
+            "contact_id": 11,
+            "touch_sample": 64883,
+            "receipt_to_first_paint_ms": 128.4066
+          }
+        ],
+        "p95_ms": 157.31936,
+        "max_ms": 163.7884,
+        "limits": "Actual received-input to first saved confirmed paint, includes normal publication/processing latency. Not physical step-to-screen or GUI-only time."
+      },
+      "counter_work": {
+        "before": {
+          "host_bracket_ns": [
+            326323096542100,
+            326323096648800
+          ],
+          "completed_batch_sample_bounds": [
+            60869,
+            60932
+          ],
+          "possible_processed_sample_bounds": [
+            60869,
+            60952
+          ]
+        },
+        "after": {
+          "host_bracket_ns": [
+            326328094597200,
+            326328094669900
+          ],
+          "completed_batch_sample_bounds": [
+            65856,
+            65936
+          ],
+          "possible_processed_sample_bounds": [
+            65856,
+            65956
+          ]
+        }
+      }
+    },
+    "pair03_a": {
+      "queue": {
+        "dense_raw_range": [
+          59904,
+          65904
+        ],
+        "common_points": 94,
+        "actual_arrival_fps": 999.6839805466396,
+        "consumer_fps": 997.8224445324593,
+        "max_pending": 65,
+        "max_oldest_pending_ms": 68.3626,
+        "heavy_observed_span_s": 0,
+        "whole_case_max_pending": 78
+      },
+      "publication": {
+        "events": [
+          {
+            "contact_id": 0,
+            "touch_sample": 60188,
+            "receipt_to_first_paint_ms": 138.176
+          },
+          {
+            "contact_id": 2,
+            "touch_sample": 60871,
+            "receipt_to_first_paint_ms": 166.4809
+          },
+          {
+            "contact_id": 4,
+            "touch_sample": 61475,
+            "receipt_to_first_paint_ms": 130.8673
+          },
+          {
+            "contact_id": 5,
+            "touch_sample": 62050,
+            "receipt_to_first_paint_ms": 118.2958
+          },
+          {
+            "contact_id": 6,
+            "touch_sample": 62626,
+            "receipt_to_first_paint_ms": 122.3508
+          },
+          {
+            "contact_id": 7,
+            "touch_sample": 63199,
+            "receipt_to_first_paint_ms": 155.4668
+          },
+          {
+            "contact_id": 8,
+            "touch_sample": 63747,
+            "receipt_to_first_paint_ms": 130.3591
+          },
+          {
+            "contact_id": 10,
+            "touch_sample": 64328,
+            "receipt_to_first_paint_ms": 138.0245
+          },
+          {
+            "contact_id": 11,
+            "touch_sample": 64883,
+            "receipt_to_first_paint_ms": 118.3085
+          }
+        ],
+        "p95_ms": 162.07526,
+        "max_ms": 166.4809,
+        "limits": "Actual received-input to first saved confirmed paint, includes normal publication/processing latency. Not physical step-to-screen or GUI-only time."
+      },
+      "counter_work": {
+        "before": {
+          "host_bracket_ns": [
+            326413804963100,
+            326413805029500
+          ],
+          "completed_batch_sample_bounds": [
+            60882,
+            60933
+          ],
+          "possible_processed_sample_bounds": [
+            60882,
+            60953
+          ]
+        },
+        "after": {
+          "host_bracket_ns": [
+            326418805717700,
+            326418805796800
+          ],
+          "completed_batch_sample_bounds": [
+            65867,
+            65936
+          ],
+          "possible_processed_sample_bounds": [
+            65867,
+            65956
+          ]
+        }
+      }
+    },
+    "pair03_b": {
+      "queue": {
+        "dense_raw_range": [
+          59904,
+          65904
+        ],
+        "common_points": 94,
+        "actual_arrival_fps": 999.9889149420164,
+        "consumer_fps": 996.8531553680609,
+        "max_pending": 66,
+        "max_oldest_pending_ms": 67.3923,
+        "heavy_observed_span_s": 0,
+        "whole_case_max_pending": 66
+      },
+      "publication": {
+        "events": [
+          {
+            "contact_id": 0,
+            "touch_sample": 60188,
+            "receipt_to_first_paint_ms": 141.476
+          },
+          {
+            "contact_id": 2,
+            "touch_sample": 60871,
+            "receipt_to_first_paint_ms": 166.3592
+          },
+          {
+            "contact_id": 4,
+            "touch_sample": 61475,
+            "receipt_to_first_paint_ms": 132.0132
+          },
+          {
+            "contact_id": 5,
+            "touch_sample": 62050,
+            "receipt_to_first_paint_ms": 115.7572
+          },
+          {
+            "contact_id": 6,
+            "touch_sample": 62626,
+            "receipt_to_first_paint_ms": 126.8121
+          },
+          {
+            "contact_id": 7,
+            "touch_sample": 63199,
+            "receipt_to_first_paint_ms": 151.3086
+          },
+          {
+            "contact_id": 8,
+            "touch_sample": 63747,
+            "receipt_to_first_paint_ms": 122.4679
+          },
+          {
+            "contact_id": 10,
+            "touch_sample": 64328,
+            "receipt_to_first_paint_ms": 121.18
+          },
+          {
+            "contact_id": 11,
+            "touch_sample": 64883,
+            "receipt_to_first_paint_ms": 121.6523
+          }
+        ],
+        "p95_ms": 160.33896,
+        "max_ms": 166.3592,
+        "limits": "Actual received-input to first saved confirmed paint, includes normal publication/processing latency. Not physical step-to-screen or GUI-only time."
+      },
+      "counter_work": {
+        "before": {
+          "host_bracket_ns": [
+            326504458172600,
+            326504458242900
+          ],
+          "completed_batch_sample_bounds": [
+            60883,
+            60933
+          ],
+          "possible_processed_sample_bounds": [
+            60883,
+            60953
+          ]
+        },
+        "after": {
+          "host_bracket_ns": [
+            326509459675200,
+            326509459742900
+          ],
+          "completed_batch_sample_bounds": [
+            65870,
+            65933
+          ],
+          "possible_processed_sample_bounds": [
+            65870,
+            65953
+          ]
+        }
+      }
+    },
+    "pair04_a": {
+      "queue": {
+        "dense_raw_range": [
+          59904,
+          65904
+        ],
+        "common_points": 94,
+        "actual_arrival_fps": 999.6727359083096,
+        "consumer_fps": 995.107607690435,
+        "max_pending": 65,
+        "max_oldest_pending_ms": 66.7097,
+        "heavy_observed_span_s": 0,
+        "whole_case_max_pending": 65
+      },
+      "publication": {
+        "events": [
+          {
+            "contact_id": 0,
+            "touch_sample": 60188,
+            "receipt_to_first_paint_ms": 149.9966
+          },
+          {
+            "contact_id": 2,
+            "touch_sample": 60871,
+            "receipt_to_first_paint_ms": 160.9788
+          },
+          {
+            "contact_id": 4,
+            "touch_sample": 61475,
+            "receipt_to_first_paint_ms": 127.2825
+          },
+          {
+            "contact_id": 5,
+            "touch_sample": 62050,
+            "receipt_to_first_paint_ms": 117.5852
+          },
+          {
+            "contact_id": 6,
+            "touch_sample": 62626,
+            "receipt_to_first_paint_ms": 135.7419
+          },
+          {
+            "contact_id": 7,
+            "touch_sample": 63199,
+            "receipt_to_first_paint_ms": 144.0139
+          },
+          {
+            "contact_id": 8,
+            "touch_sample": 63747,
+            "receipt_to_first_paint_ms": 123.4653
+          },
+          {
+            "contact_id": 10,
+            "touch_sample": 64328,
+            "receipt_to_first_paint_ms": 139.0263
+          },
+          {
+            "contact_id": 11,
+            "touch_sample": 64883,
+            "receipt_to_first_paint_ms": 123.2514
+          }
+        ],
+        "p95_ms": 156.58592,
+        "max_ms": 160.9788,
+        "limits": "Actual received-input to first saved confirmed paint, includes normal publication/processing latency. Not physical step-to-screen or GUI-only time."
+      },
+      "counter_work": {
+        "before": {
+          "host_bracket_ns": [
+            326594854732000,
+            326594854863700
+          ],
+          "completed_batch_sample_bounds": [
+            60864,
+            60930
+          ],
+          "possible_processed_sample_bounds": [
+            60864,
+            60950
+          ]
+        },
+        "after": {
+          "host_bracket_ns": [
+            326599851623300,
+            326599851726900
+          ],
+          "completed_batch_sample_bounds": [
+            65857,
+            65933
+          ],
+          "possible_processed_sample_bounds": [
+            65857,
+            65953
+          ]
+        }
+      }
+    },
+    "pair04_b": {
+      "queue": {
+        "dense_raw_range": [
+          59904,
+          65904
+        ],
+        "common_points": 94,
+        "actual_arrival_fps": 999.6537621958508,
+        "consumer_fps": 998.5814742608078,
+        "max_pending": 76,
+        "max_oldest_pending_ms": 61.5649,
+        "heavy_observed_span_s": 0,
+        "whole_case_max_pending": 76
+      },
+      "publication": {
+        "events": [
+          {
+            "contact_id": 0,
+            "touch_sample": 60188,
+            "receipt_to_first_paint_ms": 139.2141
+          },
+          {
+            "contact_id": 2,
+            "touch_sample": 60871,
+            "receipt_to_first_paint_ms": 159.989
+          },
+          {
+            "contact_id": 4,
+            "touch_sample": 61475,
+            "receipt_to_first_paint_ms": 121.5001
+          },
+          {
+            "contact_id": 5,
+            "touch_sample": 62050,
+            "receipt_to_first_paint_ms": 122.3408
+          },
+          {
+            "contact_id": 6,
+            "touch_sample": 62626,
+            "receipt_to_first_paint_ms": 118.3828
+          },
+          {
+            "contact_id": 7,
+            "touch_sample": 63199,
+            "receipt_to_first_paint_ms": 149.1995
+          },
+          {
+            "contact_id": 8,
+            "touch_sample": 63747,
+            "receipt_to_first_paint_ms": 121.255
+          },
+          {
+            "contact_id": 10,
+            "touch_sample": 64328,
+            "receipt_to_first_paint_ms": 133.4623
+          },
+          {
+            "contact_id": 11,
+            "touch_sample": 64883,
+            "receipt_to_first_paint_ms": 120.2948
+          }
+        ],
+        "p95_ms": 155.6732,
+        "max_ms": 159.989,
+        "limits": "Actual received-input to first saved confirmed paint, includes normal publication/processing latency. Not physical step-to-screen or GUI-only time."
+      },
+      "counter_work": {
+        "before": {
+          "host_bracket_ns": [
+            326685215821000,
+            326685215888500
+          ],
+          "completed_batch_sample_bounds": [
+            60880,
+            60936
+          ],
+          "possible_processed_sample_bounds": [
+            60880,
+            60956
+          ]
+        },
+        "after": {
+          "host_bracket_ns": [
+            326690213516700,
+            326690213599000
+          ],
+          "completed_batch_sample_bounds": [
+            65863,
+            65928
+          ],
+          "possible_processed_sample_bounds": [
+            65863,
+            65948
+          ]
+        }
+      }
+    }
+  },
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "root_cause_or_fix_complete": false
+}

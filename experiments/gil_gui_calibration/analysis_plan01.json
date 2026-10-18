@@ -1,0 +1,19 @@
+{
+  "scope": "Analysis rules frozen before inspecting pilot outcomes. No new capture or extension.",
+  "created_utc": "2026-10-18T13:33:53.792872+00:00",
+  "capture_plan_sha256": "846e93960622b01616e198f947133b73fc3a2f3f62737b5be3a1410b3672ac28",
+  "reviewer_sha256": "691784949630b5371a03b17b9f09c1016074b73bad48e6fb2f808b245ad22e27",
+  "independent_unit": "Whole fresh-process pair;4 fixed pairs only, not individual threads/samples/blocks.",
+  "metrics": [
+    "consumer_cpu_ns",
+    "consumer_cycles",
+    "gui_cpu_ns",
+    "gui_cycles",
+    "sdk_cpu_ns",
+    "sdk_cycles"
+  ],
+  "statistics": "B/A paired log ratios, Student t, Bonferroni family alpha.05; zero deltas unavailable. Descriptive only, no equivalence certification.",
+  "workload_gate": "All4 delivered video frame ID vectors equal is necessary, not sufficient. Include all cases/pairs regardless of video/SDK mismatch. No exclusions, epsilon, normalization, extra pairs or retrospective cutoff.",
+  "field_attribution_ready": false,
+  "actual_load_disturbance_pass": false
+}

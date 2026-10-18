@@ -1,0 +1,54 @@
+{
+  "scope": "Static mapping after this fixed GUI pilot; no new observation callbacks, software changes or capture. Existing pilot lacks the downstream per-inference/paint/SDK identity chain, so it cannot be reconstructed from aggregate counts.",
+  "sources_sha256": {
+    "vision/live_walking.py": "7f7ca4dd66bafe59ae43b2b2f25e528c9349faa8c5de20d177d5e2cd7642e228",
+    "vision/service.py": "d8f43d891a6162db79d04e78cc198452814bbcaf30a4566c16c7f5646ebc42dc",
+    "ui/embedded_camera_panel.py": "dd03cb082d7d3c77071d1f47c208e8996dc7b489b0d21fc2e55b0a479269e936",
+    "ui/annotation_canvas.py": "ab573f096bc859ce2550821973abd508e1484e8bf90494b048c42dd8cc162df4",
+    "camera/pose_transport.py": "16ac0b1b610ee3fea7a771c2262c34cfb1abf098370b8cf5ff9e1633484675f8",
+    "camera/control_service.py": "d3a786f0483b53ba2a28345381df51fff9a96a9f214076ca75310abe9331afe0",
+    "camera/tracking_runtime.py": "e3f079bca732ebb8e642eb29183eb19a8e68e2d44f2e3ceca3ec0c07168b68e7"
+  },
+  "boundaries": [
+    {
+      "position": "Submitted video",
+      "code": "replay02.py panel._submit_vision_frame wrapper",
+      "saved_now": "frame_index list only",
+      "missing": "Actual callback host bracket and downstream accepted/inferred identity per ROI."
+    },
+    {
+      "position": "Actual inference",
+      "code": "LiveWalkingVision uses FootVisionService(latest_frame_only=True); FootVisionService._frames maxlen1 and _run infer_pose",
+      "existing_fields": "pose_inference_ready emits frame_metadata plus inference_start_s/inference_end_s already measured by original code.",
+      "missing": "Pilot did not save this event. Submitted IDs need not equal inferred IDs; cannot infer from decoded counts."
+    },
+    {
+      "position": "Pose publication",
+      "code": "LiveWalkingVision.pose_updates / _publish",
+      "existing_fields": "LivePoseUpdate carries PoseInferenceRecord and clock epoch/status metadata.",
+      "missing": "Pilot saved aggregate valid draw count, not individual identity/timestamp publications."
+    },
+    {
+      "position": "Actual draw",
+      "code": "EmbeddedCameraPanel refresh -> AnnotationCanvas.set_live_pose / _draw_live_pose",
+      "existing_fields": "set_live_pose receives pose; canvas retains built overlay. Actual original draw method remains unchanged.",
+      "missing": "Do not reconstruct per-paint frame identity from only total count. Any future diagnostic must retain an unambiguous setter-to-draw association without changing painting."
+    },
+    {
+      "position": "SDK handoff",
+      "code": "CameraControlService._send_pose -> PoseRelay.packet -> QProcess.write",
+      "existing_fields": "Packet contains generation plus full serialized update/inference metadata; relay coalesces latest.",
+      "missing": "Current pilot counts do not save packets. GUI-side dataclass/asdict/JSON paths are candidates for later stack observation, not proved high-cost functions."
+    },
+    {
+      "position": "SDK decision",
+      "code": "TrackingRuntime.tick",
+      "existing_fields": "tracking_decision includes generation/captured_at/reason; this record alone has no frame_index.",
+      "missing": "Unique generation/captured_at match to a saved packet may associate identity; ambiguous/repeated keys remain unknown. SDK has separate PID/GIL and cannot be called the GUI process GIL owner."
+    }
+  ],
+  "minimal_next": "Use existing metadata/event boundaries in a new independently frozen experiment with bounded evidence and overflow/failure retention; qualify its added callbacks before any quantitative use. Preserve maxlen1, inference cadence, clock policies, GUI refresh and SDK coalescing. No automatic human test.",
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "root_cause_or_fix_complete": false
+}
