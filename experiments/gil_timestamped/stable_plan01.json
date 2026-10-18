@@ -1,0 +1,48 @@
+{
+  "scope": "Stable timestamped observer qualification only, two fresh stdlib fixtures. No field entry/GUI/device/human/Run/optimization/ETW/interval operations.",
+  "base_commit": "a82a3190f08de370d0aa147d790182e08b7d1cad",
+  "controls": [
+    "held",
+    "released"
+  ],
+  "count": 40,
+  "period_ms": 50,
+  "phase_margin_ns": 200000000,
+  "released_heartbeat_increment_floor": 20,
+  "clock_uncertainty_ns_max": 1000000,
+  "observer_sha256": "25cd4d9921df4229eaa35622f98727c035f38636d2e43ea1e899eac5ac5103aa",
+  "python_dll_sha256": "162e8557fbed5f39ae24983ee62b2d435b4796c937d9c1a34371888c7e43af00",
+  "source_sha256": {
+    "experiments/gil_timestamped/src/main.rs": "d3a319565d14b6861d5d342a792aa57e2c5132e60fd789b6be707df67eeb223b",
+    "experiments/gil_timestamped/Cargo.toml": "04602819b7f8d3832acaecb556a7fc183345bc56ad3c63f2093219457cc0275d",
+    "experiments/gil_timestamped/Cargo.lock": "185dc094610e632b670d516c25626dcd6b826b25325861dcac9158c54d7ec7cc",
+    "experiments/gil_timestamped/check_stable.py": "d521ca3113483b857a4d479950858432143883cc3606b40e66659393333dd351",
+    "experiments/gil_timestamped/test_stable.py": "426fbcb0022f33b6fd0ccd64b185625c515c46b75290e3a95ee53fc6b17113c5",
+    "experiments/gil_owner_preflight/fixture.py": "c3d20f6302d7d8eea14be896928af2745621fd3d1628a176127c8be03073d620",
+    "experiments/gil_owner_preflight/check.py": "39e8eade0aa5afb46d9ccc10da4095e0f1e6f1e738165142eee182cd95b3e36c",
+    "experiments/gil_owner_preflight/dump_check.py": "0038949a654f74b0f881974009c2165dab605e7a3b0a4de087c67c41c703b1d1"
+  },
+  "acceptance": "Every requested sample retained with real QPC begin/end after initialization; no read errors, gaps, reordered/extra records, PID/TID/owner mismatch or failed recovery. Full mapped brackets inside independently timed known phase and external controller bracket. Two anchors retain full clock uncertainty <=1ms. Zero owner is permitted only in released control. No time shares or point timestamps.",
+  "preservation": "One declared attempt per mode; stop on failure, keep raw and lock. No retries to replace a failed control. Build failures precede qualification and are preserved separately.",
+  "upstream": {
+    "py_spy": "0.4.2",
+    "remoteprocess": "0.5.2",
+    "reader_sources_match_previously_audited_commit": true,
+    "reader_commit": "d230d8208d652ba168256ffb66170d1c6cd8b650",
+    "build": {
+      "rustc": "1.85.0",
+      "cargo": "1.85.0",
+      "command": "cargo build --release --locked --offline",
+      "metadata": {
+        "observer_sha256": "25cd4d9921df4229eaa35622f98727c035f38636d2e43ea1e899eac5ac5103aa",
+        "source_sha256": "d3a319565d14b6861d5d342a792aa57e2c5132e60fd789b6be707df67eeb223b",
+        "lock_sha256": "185dc094610e632b670d516c25626dcd6b826b25325861dcac9158c54d7ec7cc"
+      }
+    }
+  },
+  "limits": [
+    "No concurrent mutating-workload qualification yet.",
+    "No actual-load perturbation calibration yet; cannot declare field-ready or quantitative attribution.",
+    "Read bracket includes pause/read/resume but is not GIL hold duration. Initialization/I/O/CPU contention effects also need qualification."
+  ]
+}

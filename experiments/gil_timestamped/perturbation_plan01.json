@@ -1,0 +1,54 @@
+{
+  "scope": "Three predeclared paired fixed synthetic GUI/SDK-like processes, observer OFF/ON only. No original program/SDK/device/USB/human/Run/optimization tests.",
+  "orders": [
+    [
+      "off",
+      "on"
+    ],
+    [
+      "on",
+      "off"
+    ],
+    [
+      "off",
+      "on"
+    ]
+  ],
+  "seconds": 6,
+  "count": 120,
+  "period_ms": 50,
+  "pair_limits": {
+    "work": 0.15,
+    "cpu_s": 0.15,
+    "cycles": 0.15
+  },
+  "clock_uncertainty_ns_max": 1000000,
+  "observer_sha256": "25cd4d9921df4229eaa35622f98727c035f38636d2e43ea1e899eac5ac5103aa",
+  "python_dll_sha256": "162e8557fbed5f39ae24983ee62b2d435b4796c937d9c1a34371888c7e43af00",
+  "source_sha256": {
+    "experiments/gil_timestamped/src/main.rs": "d3a319565d14b6861d5d342a792aa57e2c5132e60fd789b6be707df67eeb223b",
+    "experiments/gil_timestamped/Cargo.toml": "04602819b7f8d3832acaecb556a7fc183345bc56ad3c63f2093219457cc0275d",
+    "experiments/gil_timestamped/Cargo.lock": "185dc094610e632b670d516c25626dcd6b826b25325861dcac9158c54d7ec7cc",
+    "experiments/gil_timestamped/check_stable.py": "d521ca3113483b857a4d479950858432143883cc3606b40e66659393333dd351",
+    "experiments/gil_timestamped/test_stable.py": "426fbcb0022f33b6fd0ccd64b185625c515c46b75290e3a95ee53fc6b17113c5",
+    "experiments/gil_owner_preflight/fixture.py": "c3d20f6302d7d8eea14be896928af2745621fd3d1628a176127c8be03073d620",
+    "experiments/gil_owner_preflight/check.py": "39e8eade0aa5afb46d9ccc10da4095e0f1e6f1e738165142eee182cd95b3e36c",
+    "experiments/gil_owner_preflight/dump_check.py": "0038949a654f74b0f881974009c2165dab605e7a3b0a4de087c67c41c703b1d1",
+    "experiments/gil_timestamped/changing_fixture.py": "a53efdba8b24bf84506f7aef95dfc49f7f8d4411fc7777fdfb5287ba5e73b213",
+    "experiments/gil_timestamped/check_changing.py": "3449191ede6bedd17323e1a7a5e3c8024e0c3858311601ff32c3be1d506a33bb",
+    "experiments/gil_timestamped/test_changing.py": "46420b0895f91d803ff2408f735d267fe3278403eacc7f7caa3b3cdd299ea49a",
+    "experiments/gil_timestamped/NativeOracle.c": "c436153747dee69226c01235ed8867d8d8847892001afc2b0bcd7217f453410a",
+    "experiments/gil_timestamped/native_fixture.py": "352817a4062218be9410e3ffe7dfc0234a0a85eacc5c1310a73ed2794f8c2e33",
+    "experiments/gil_timestamped/build_native.cmd": "35248a678740ede5caf5a23530380ac2debbf69c0b32e59f0216efd67320c361",
+    "experiments/gil_timestamped/calibrate.py": "4d50061f2a91d8ed3d60ea785569877a32f29e904403adff1004133f122e32a2",
+    "experiments/native_stack_capture/observe.py": "f33c6b2da48593b28e1748417ded306632b7997bbaf7f608e8baef5e3c391777",
+    "experiments/native_stack_capture/winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+    "experiments/native_stack_capture/align_clock.py": "d49f54563591d23e9fc8e08b7d8eab028b65fbaa7dcb329e12b6ac58c2c893f1",
+    "experiments/native_stack_capture/external_fixture.py": "7a370154e85a14e5fdf6a853bb55fd7beac1979ed1ea5c6ee1976b7e8ad6283e",
+    "experiments/native_stack_capture/external_report.py": "105776b8544e4d0e8b2e663e1116c7394defea4bb9588b85c20a0b80fcf9901d",
+    "experiments/native_stack_capture/test_external_report.py": "7e84dbe8c6f641f15655743de5a0e9fc98b9430f7face5cb40ba34f7210e1126"
+  },
+  "preserve": "Every predeclared pair retained, no failed-pair replacement or lowered gates. Abort on capture/cleanup fault and keep lock. Performance gate failure still retains all predeclared cases and fails aggregate.",
+  "counters": "Retained OS thread handles, PID/TID ownership and creation identity, GetThreadTimes and QueryThreadCycleTime. Monotone work brackets from the unchanged synthetic fixture, full counter/clock uncertainty, symmetric15% bound. GUI-like and SDK-like processes separate; sampler attaches only GUI-like PID.",
+  "limitations": "Synthetic perturbation only. Existing CPU/CSwitch acceptance remains false; actual-load calibration and field/root-cause attribution remain unqualified. Zero GIL-owner observations for the whole busy synthetic window does not qualify the sensor."
+}

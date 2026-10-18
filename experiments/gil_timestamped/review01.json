@@ -1,0 +1,233 @@
+{
+  "scope": "已获准分阶段准备补证；用户确认现场可配合。当前只完成工具/合成校准/静态入口检查，没有启动新人体或USB采集。",
+  "why_new_observer": "旧逐次启动dump约123ms外部括号不能对齐毫秒级事件；新工具复用同版本同SHA上游Python读取逻辑，初始化一次，逐次保存真实QPC读起止，不插值、不删空档、不把区间当持锁时长。",
+  "observer_binary_sha256": "25cd4d9921df4229eaa35622f98727c035f38636d2e43ea1e899eac5ac5103aa",
+  "reader": {
+    "py_spy": "0.4.2",
+    "remoteprocess": "0.5.2",
+    "source_commit": "d230d8208d652ba168256ffb66170d1c6cd8b650",
+    "audited_reader_sources_match": true,
+    "locked_build": true
+  },
+  "stable_time_identity": {
+    "held": {
+      "min": 251.9,
+      "median": 297.25,
+      "max": 1310.7,
+      "max_observed_start_gap_ms": 257.7373,
+      "samples": 40,
+      "clock_offset_bounds_ns": [
+        -5000,
+        400
+      ]
+    },
+    "released": {
+      "min": 233.5,
+      "median": 291.8,
+      "max": 1377.9,
+      "max_observed_start_gap_ms": 51.103,
+      "samples": 40,
+      "clock_offset_bounds_ns": [
+        -4700,
+        400
+      ]
+    }
+  },
+  "changing_oracle": {
+    "original_python_marker_failed": true,
+    "original_failure_kept": true,
+    "original_heartbeat_contradiction_pairs": 15,
+    "explanation": "Python函数内可发生解释器调度，外层Python标记不能代表整个连续持GIL区间。原失败保持失败。新独立协议将标记放入PyDLL调用的C函数内部，并在返回前清除；未放松心跳/覆盖/身份门槛。",
+    "native_protocol_pass": true,
+    "eligible_counts": {
+      "1": 22,
+      "2": 32
+    },
+    "eligible_total": 54,
+    "unknown_transition_samples": 6,
+    "eligible_mismatches": 0,
+    "qualification_scope": "Only independently bracketed stable oracle epochs amid changing owners/frames. Transition samples remain unknown, not evidence of correctness or time shares."
+  },
+  "synthetic_perturbation": {
+    "passed": true,
+    "pairs": [
+      {
+        "pair": 1,
+        "processes": {
+          "gui": {
+            "work_relative_change_bounds": {
+              "lower": 0.03657799274486084,
+              "upper": 0.07960506016661517
+            },
+            "relative_changes": {
+              "cpu_s": 0.002631578947368318,
+              "cycles": 0.013073662224210247
+            },
+            "perturbation_pass": true,
+            "measurement_acceptance_pass": true
+          },
+          "sdk": {
+            "work_relative_change_bounds": {
+              "lower": 0.03295386458957461,
+              "upper": 0.0793018983466014
+            },
+            "relative_changes": {
+              "cpu_s": 0.023622047244094446,
+              "cycles": 0.022154559860280143
+            },
+            "perturbation_pass": true,
+            "measurement_acceptance_pass": true
+          }
+        },
+        "passed": true
+      },
+      {
+        "pair": 2,
+        "processes": {
+          "gui": {
+            "work_relative_change_bounds": {
+              "lower": -0.012429712932820358,
+              "upper": 0.038321167883211604
+            },
+            "relative_changes": {
+              "cpu_s": 0.021052631578947434,
+              "cycles": 0.011607869284216976
+            },
+            "perturbation_pass": true,
+            "measurement_acceptance_pass": true
+          },
+          "sdk": {
+            "work_relative_change_bounds": {
+              "lower": 0.013227513227513255,
+              "upper": 0.05679086538461542
+            },
+            "relative_changes": {
+              "cpu_s": 0.03430079155672816,
+              "cycles": 0.020724836707837646
+            },
+            "perturbation_pass": true,
+            "measurement_acceptance_pass": true
+          }
+        },
+        "passed": true
+      },
+      {
+        "pair": 3,
+        "processes": {
+          "gui": {
+            "work_relative_change_bounds": {
+              "lower": -0.014991181657848296,
+              "upper": 0.025818072650855672
+            },
+            "relative_changes": {
+              "cpu_s": 0.0,
+              "cycles": 0.012888650573520621
+            },
+            "perturbation_pass": true,
+            "measurement_acceptance_pass": true
+          },
+          "sdk": {
+            "work_relative_change_bounds": {
+              "lower": 0.0023522493384298127,
+              "upper": 0.048377403846153744
+            },
+            "relative_changes": {
+              "cpu_s": 0.04774535809018565,
+              "cycles": 0.022752955811075504
+            },
+            "perturbation_pass": true,
+            "measurement_acceptance_pass": true
+          }
+        },
+        "passed": true
+      }
+    ],
+    "limits": {
+      "work": 0.15,
+      "cpu_s": 0.15,
+      "cycles": 0.15
+    },
+    "scope": "固定合成工作负载，GUI-like/SDK-like进程分开。不是实际人体负载或优化A/B；不能把变化大小当现场工具开销或GIL占比。"
+  },
+  "source_preservation": {
+    "baseline_files_matching": 458,
+    "formal_frozen_sources_sha256": "e81e6a013c1feef532124204ff77768f33ac9adeb8512f7bf4490a28f4017aa0",
+    "python_dll_sha256": "162e8557fbed5f39ae24983ee62b2d435b4796c937d9c1a34371888c7e43af00",
+    "observer_sha256": "25cd4d9921df4229eaa35622f98727c035f38636d2e43ea1e899eac5ac5103aa",
+    "sampling_interval_100ns": 10000,
+    "stable_lock": false,
+    "retained_failed_python_marker_lock": true,
+    "native_oracle_lock": false,
+    "perturbation_lock": false
+  },
+  "tests": {
+    "Mac_new": 35,
+    "Windows_new": 35,
+    "Mac_existing_owner": 25,
+    "Mac_existing_native": {
+      "run": 47,
+      "passed": 43,
+      "skipped": 4
+    }
+  },
+  "raw_evidence": {
+    "local_root": "/Users/vae/.codex/worktrees/native-stack-capture/Iron_Jump/experiments/native_stack_capture/runs/gil_timestamped01",
+    "remote_root": "E:/OptoJump/IronJump-gil-timestamped-20261018-01",
+    "archive_sha256": "b1e56fb7364a4ab7ee1d4f0aa2c17f86e114aa96cbec293cb543c80d289e944c",
+    "failed_changing_archive_sha256": "6f539ec3cba602a254a487f5adf31476c4f285c3d690affe86cf5297c581f4aa",
+    "source_manifest_sha256": "c977d3b0450aedec131b3b469da4f4e951df2605fa263b11f115718167b76c10",
+    "offline_recomputed": "verification01.json"
+  },
+  "current_state": {
+    "stable_timestamp_contract_pass": true,
+    "controlled_native_oracle_pass": true,
+    "synthetic_perturbation_pass": true,
+    "static_field_entry_pass": true,
+    "actual_load_disturbance_pass": false,
+    "field_GIL_holder_identified": false,
+    "quantitative_root_cause_or_fix_complete": false
+  },
+  "prospective_field": {
+    "plan": "field_plan01.json",
+    "plan_sha256": "59a6ef99542aac86b998a3ad2cb9c4760735bc7901cf19f6d385ab0e9c8a0f86",
+    "manual_only": true,
+    "GUI_original_Walk_OFF": true,
+    "new_native_oracle_injected_into_field": false,
+    "expected_desktop_entry": "Walk - 持有者校准01",
+    "window": "formal12–18s;120 reads;50ms cadence; all actual gaps retained",
+    "purpose": "第一轮收集同窗持有者Python路径及实际负载资格证据。结束后按完整QPC括号、PID/TID、消费批次/接触/pending、nativeCPU/cycles逐项离线验收；成功落盘不等于校准通过。",
+    "instructions": [
+      "先启动Windows软件录屏，再双击新校准入口；原Walk OFF界面自动打开。",
+      "按原界面确认全身与骨架、清空光栅并等待倒计时；左脚迈入，按同一方式走11步，从跑道外返回，正常结束本轮。",
+      "记录延迟是否逐步增加、骨架是否连续、录像路径及走路片段；保持供电/USB状态，不做电源A/B。没有复现也保留本轮，不立即重采。"
+    ]
+  },
+  "artifacts_sha256": {
+    "field.py": "956b656e644990c836b28475dad3c7c75341db89ce0ab4de205540162cfb01ff",
+    "field_preflight01.json": "dfdbde513c257940d0dc73da2717216646f73065629c0a282413da615bf9fa90",
+    "Cargo.toml": "04602819b7f8d3832acaecb556a7fc183345bc56ad3c63f2093219457cc0275d",
+    "operator.ps1": "1f6a31358f64d5762ec2e05d0781f8a9bcda1e27f6c756bb11b92371568ea36e",
+    "check_changing.py": "3449191ede6bedd17323e1a7a5e3c8024e0c3858311601ff32c3be1d506a33bb",
+    "test_stable.py": "426fbcb0022f33b6fd0ccd64b185625c515c46b75290e3a95ee53fc6b17113c5",
+    "verify_offline.py": "0e19e9513e6082656b5e98136c465fe24507656ee2d729efd2d4c9c4f794289d",
+    "NativeOracle.c": "c436153747dee69226c01235ed8867d8d8847892001afc2b0bcd7217f453410a",
+    "stable_plan01.json": "2bdbad6c675334bbe4ac003a4594433ee235c00d95fff953191741949b317203",
+    "native_changing_plan01.json": "d32dd47bae083598c870407220f8d691c2d8d7f902aef09dba296dc7fa573f9d",
+    "build_native.cmd": "35248a678740ede5caf5a23530380ac2debbf69c0b32e59f0216efd67320c361",
+    "Cargo.lock": "185dc094610e632b670d516c25626dcd6b826b25325861dcac9158c54d7ec7cc",
+    "native_fixture.py": "352817a4062218be9410e3ffe7dfc0234a0a85eacc5c1310a73ed2794f8c2e33",
+    "test_field.py": "7c85ce0ba698424a4dc16ce9f36699e761407cfad4752249062191ac86b52b1e",
+    "test_changing.py": "46420b0895f91d803ff2408f735d267fe3278403eacc7f7caa3b3cdd299ea49a",
+    "changing_fixture.py": "a53efdba8b24bf84506f7aef95dfc49f7f8d4411fc7777fdfb5287ba5e73b213",
+    "verification01.json": "c5aa85c36143ff1137cb047bbc2b8c53566d535f669e9a64a61f76efd7ef2fb3",
+    "changing_plan01.json": "7cd799bfbdc183fa36c79547c3eb71b5fe10aa9e7c7d32be74c0012af961b181",
+    "calibrate.py": "4d50061f2a91d8ed3d60ea785569877a32f29e904403adff1004133f122e32a2",
+    "check_stable.py": "d521ca3113483b857a4d479950858432143883cc3606b40e66659393333dd351",
+    "field_plan01.json": "59a6ef99542aac86b998a3ad2cb9c4760735bc7901cf19f6d385ab0e9c8a0f86",
+    "perturbation_plan01.json": "1a3e5556c40c5d8875b81bc6f9b931eba14872a36ee00bb90dc45e52d5bb5d5a",
+    "qualification/stable01.json": "3024ca250ab11150b88b431e0a8c93a52b911e2b06cbf28ca10775fda6478fd5",
+    "qualification/perturbation01.json": "4d4ae741484da6d8d65042d1be9a78fcc3ae7e5a8a4b162c377495c3c22133c1",
+    "qualification/native_changing01.json": "1e634c84dd04a7d364de926b473b39f5be0e671b65f9284d22e11170217b5461",
+    "src/main.rs": "d3a319565d14b6861d5d342a792aa57e2c5132e60fd789b6be707df67eeb223b"
+  }
+}

@@ -1,0 +1,13 @@
+[package]
+name = "ironjump-gil-observer"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.85"
+publish = false
+
+[dependencies]
+anyhow = "1"
+py-spy = { version = "=0.4.2", default-features = false }
+# Keep the upstream-declared reader API; 0.5.4 rejects this py-spy version at build time.
+remoteprocess = "=0.5.2"
+serde_json = "1"

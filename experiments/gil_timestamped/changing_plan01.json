@@ -1,0 +1,27 @@
+{
+  "scope": "One six-second changing synthetic target, one sixty-read observer. No field/GUI/device/human/Run/optimization/ETW started.",
+  "count": 60,
+  "period_ms": 50,
+  "eligible_floor": 40,
+  "per_holder_floor": 8,
+  "clock_uncertainty_ns_max": 1000000,
+  "phase_margin_ns": 200000000,
+  "observer_sha256": "25cd4d9921df4229eaa35622f98727c035f38636d2e43ea1e899eac5ac5103aa",
+  "python_dll_sha256": "162e8557fbed5f39ae24983ee62b2d435b4796c937d9c1a34371888c7e43af00",
+  "source_sha256": {
+    "experiments/gil_timestamped/src/main.rs": "d3a319565d14b6861d5d342a792aa57e2c5132e60fd789b6be707df67eeb223b",
+    "experiments/gil_timestamped/Cargo.toml": "04602819b7f8d3832acaecb556a7fc183345bc56ad3c63f2093219457cc0275d",
+    "experiments/gil_timestamped/Cargo.lock": "185dc094610e632b670d516c25626dcd6b826b25325861dcac9158c54d7ec7cc",
+    "experiments/gil_timestamped/check_stable.py": "d521ca3113483b857a4d479950858432143883cc3606b40e66659393333dd351",
+    "experiments/gil_timestamped/test_stable.py": "426fbcb0022f33b6fd0ccd64b185625c515c46b75290e3a95ee53fc6b17113c5",
+    "experiments/gil_owner_preflight/fixture.py": "c3d20f6302d7d8eea14be896928af2745621fd3d1628a176127c8be03073d620",
+    "experiments/gil_owner_preflight/check.py": "39e8eade0aa5afb46d9ccc10da4095e0f1e6f1e738165142eee182cd95b3e36c",
+    "experiments/gil_owner_preflight/dump_check.py": "0038949a654f74b0f881974009c2165dab605e7a3b0a4de087c67c41c703b1d1",
+    "experiments/gil_timestamped/changing_fixture.py": "a53efdba8b24bf84506f7aef95dfc49f7f8d4411fc7777fdfb5287ba5e73b213",
+    "experiments/gil_timestamped/check_changing.py": "5eb1ca132704852f5839dce101c67b6b7ebceaa5c0cd9b74cff4d93da288ada8",
+    "experiments/gil_timestamped/test_changing.py": "46420b0895f91d803ff2408f735d267fe3278403eacc7f7caa3b3cdd299ea49a"
+  },
+  "oracle": "Two PyDLL Sleep holders alternate37/53ms; per-transition monotone even epoch and native TID in shared memory. External reader brackets every marker read; same coherent epoch before and after the entire mapped snapshot gives independent native holder/path truth. Epoch changes and idle remain explicitly unknown.",
+  "gates": "All records/errors retained, no retry; every eligible owner/path must match, >=40/60 independently bracketed windows with>=8 for each holder. Same-epoch heartbeat may not progress while held; marker/epoch consistency, complete chronology, zero errors/forced cleanup and post-observer target completion required. Original native stack gates unchanged.",
+  "limits": "Passing validates eligible controlled oracle epochs only; transition windows are unknown. Does not qualify arbitrary field frame changes or actual-load disturbance; no field attribution/time shares."
+}
