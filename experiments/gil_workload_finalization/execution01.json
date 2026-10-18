@@ -1,0 +1,5 @@
+{
+  "command": "if((Get-FileHash 'E:/OptoJump/IronJump-gil-gui-calibration-20261018-01/experiments/gil_workload_finalization/plan01.json').Hash.ToLower() -ne 'dfbba34af9ef48d3f10897b1b7fb2d47cf771bd9b3ee417799c83383fb483052'){throw 'Plan mismatch'};& powershell.exe -NoProfile -NonInteractive -ExecutionPolicy Bypass -File 'E:/OptoJump/IronJump-gil-gui-calibration-20261018-01/experiments/gil_workload_finalization/start01.ps1';if($LASTEXITCODE){throw 'Protocol case failed; preserve evidence'}",
+  "result": "{\r\n    \"target_pid\":  23008,\r\n    \"target_returncode\":  0,\r\n    \"protocol_case_pass\":  true,\r\n    \"application_return_model_confirmed\":  false,\r\n    \"errors\":  [\r\n\r\n               ],\r\n    \"target_still_running\":  false,\r\n    \"lock_retained\":  true,\r\n    \"plan_sha256\":  \"dfbba34af9ef48d3f10897b1b7fb2d47cf771bd9b3ee417799c83383fb483052\"\r\n}",
+  "completion_method": "Preexisting kernel terminal-event waiter; no mid-ROI status queries"
+}

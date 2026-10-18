@@ -1,0 +1,12 @@
+{
+  "scope": "Offline same failed protocol case; no new capture or acceptance change.",
+  "raw_manifest_sha256": "696f2868e669cf8fb9687debc5fa1733acbbde92caabd57558ee28fa7d8b6b02",
+  "reviewer_sha256": "c85a9f2fa224a93f91783544c423d52e4954d3669ee8c82d75a5f2d701203aa1",
+  "trigger_map_sha256": "793f136e4c8c35888d3a84551b1c7c9bc5fbdafa868a7a7128caade6c79471cc",
+  "rules": [
+    "Keep failed global message/clock gates and all repeated payload occurrences.",
+    "FIFO peak bounds use all saved observations and no interpolation.",
+    "Original-return unconfirmed state stays unconfirmed despite later observer completion.",
+    "No CPU/GIL/Qt attribution or observer-overhead promotion."
+  ]
+}

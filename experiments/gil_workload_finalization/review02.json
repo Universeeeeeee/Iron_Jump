@@ -1,0 +1,633 @@
+{
+  "title": "新协议失败窗口：严重队列积压重现，原返回状态保留，消息身份仍有歧义",
+  "official_protocol_qualification_pass": false,
+  "official_failed_checks": [
+    "saved_workload_links"
+  ],
+  "full_original_report_state_input_exact": true,
+  "queue_bounds": {
+    "combined_observed_deque_peak_lower_bound": 4386,
+    "continuous_deque_peak_upper_bound": 4435,
+    "observations": 854,
+    "first_observed_host_ns": 346507702488500,
+    "last_observed_host_ns": 346541790216600
+  },
+  "worst_publication_event": {
+    "contact_id": 11,
+    "touch_sample": 64883,
+    "published_sample": 64947,
+    "raw_release_trigger": 64957,
+    "source_confirmation_sample_span": 74,
+    "source_confirmation_time_ms": 87.2233,
+    "enqueue_host_bounds_ns": [
+      346527278012700,
+      346527299626900
+    ],
+    "dequeue_host_bounds_ns": [
+      346530494582800,
+      346530594682200
+    ],
+    "queue_residence_bounds_ms": [
+      3194.9559,
+      3316.6695
+    ],
+    "dequeue_to_publication_bounds_ms": [
+      0.0,
+      132.5873
+    ],
+    "publication_host_bounds_ns": [
+      346530406993300,
+      346530627170100
+    ],
+    "source_trigger_to_publication_ms": [
+      3128.9806,
+      3349.1574
+    ],
+    "publication_to_paint_raw_bounds_ms": [
+      -25.1024,
+      195.0744
+    ],
+    "publication_to_paint_nonnegative_bounds_ms": [
+      0,
+      195.0744
+    ],
+    "source_touch_to_paint_ms": 3411.2783
+  },
+  "all_publication_event_bounds": [
+    {
+      "contact_id": 0,
+      "touch_sample": 60188,
+      "published_sample": 60251,
+      "raw_release_trigger": 60261,
+      "source_confirmation_sample_span": 73,
+      "source_confirmation_time_ms": 74.3358,
+      "enqueue_host_bounds_ns": [
+        346522567378900,
+        346522584141200
+      ],
+      "dequeue_host_bounds_ns": [
+        346522608299000,
+        346522687612300
+      ],
+      "queue_residence_bounds_ms": [
+        24.1578,
+        120.2334
+      ],
+      "dequeue_to_publication_bounds_ms": [
+        0.0,
+        248.0861
+      ],
+      "publication_host_bounds_ns": [
+        346522608299000,
+        346522856385100
+      ],
+      "source_trigger_to_publication_ms": [
+        40.9201,
+        289.0062
+      ],
+      "publication_to_paint_raw_bounds_ms": [
+        -103.6239,
+        144.4622
+      ],
+      "publication_to_paint_nonnegative_bounds_ms": [
+        0,
+        144.4622
+      ],
+      "source_touch_to_paint_ms": 259.7181
+    },
+    {
+      "contact_id": 2,
+      "touch_sample": 60871,
+      "published_sample": 60960,
+      "raw_release_trigger": 60970,
+      "source_confirmation_sample_span": 99,
+      "source_confirmation_time_ms": 78.2277,
+      "enqueue_host_bounds_ns": [
+        346523273875400,
+        346523294516900
+      ],
+      "dequeue_host_bounds_ns": [
+        346523900623100,
+        346524003997100
+      ],
+      "queue_residence_bounds_ms": [
+        606.1062,
+        730.1217
+      ],
+      "dequeue_to_publication_bounds_ms": [
+        0.0,
+        172.5144
+      ],
+      "publication_host_bounds_ns": [
+        346523851831700,
+        346524073137500
+      ],
+      "source_trigger_to_publication_ms": [
+        577.9563,
+        799.2621
+      ],
+      "publication_to_paint_raw_bounds_ms": [
+        -29.6775,
+        191.6283
+      ],
+      "publication_to_paint_nonnegative_bounds_ms": [
+        0,
+        191.6283
+      ],
+      "source_touch_to_paint_ms": 847.8123
+    },
+    {
+      "contact_id": 4,
+      "touch_sample": 61475,
+      "published_sample": 61541,
+      "raw_release_trigger": 61551,
+      "source_confirmation_sample_span": 76,
+      "source_confirmation_time_ms": 63.6324,
+      "enqueue_host_bounds_ns": [
+        346523856466400,
+        346523900623100
+      ],
+      "dequeue_host_bounds_ns": [
+        346524860008500,
+        346524924201600
+      ],
+      "queue_residence_bounds_ms": [
+        959.3854,
+        1067.7352
+      ],
+      "dequeue_to_publication_bounds_ms": [
+        0.0,
+        141.5534
+      ],
+      "publication_host_bounds_ns": [
+        346524860008500,
+        346525001561900
+      ],
+      "source_trigger_to_publication_ms": [
+        1003.5421,
+        1145.0955
+      ],
+      "publication_to_paint_raw_bounds_ms": [
+        -45.7555,
+        95.7979
+      ],
+      "publication_to_paint_nonnegative_bounds_ms": [
+        0,
+        95.7979
+      ],
+      "source_touch_to_paint_ms": 1162.9724
+    },
+    {
+      "contact_id": 5,
+      "touch_sample": 62050,
+      "published_sample": 62111,
+      "raw_release_trigger": 62121,
+      "source_confirmation_sample_span": 71,
+      "source_confirmation_time_ms": 73.0932,
+      "enqueue_host_bounds_ns": [
+        346524440043500,
+        346524463671300
+      ],
+      "dequeue_host_bounds_ns": [
+        346525756076100,
+        346525846644800
+      ],
+      "queue_residence_bounds_ms": [
+        1292.4048,
+        1406.6013
+      ],
+      "dequeue_to_publication_bounds_ms": [
+        0.0,
+        139.2088
+      ],
+      "publication_host_bounds_ns": [
+        346525756076100,
+        346525895284900
+      ],
+      "source_trigger_to_publication_ms": [
+        1316.0326,
+        1455.2414
+      ],
+      "publication_to_paint_raw_bounds_ms": [
+        -47.7379,
+        91.4709
+      ],
+      "publication_to_paint_nonnegative_bounds_ms": [
+        0,
+        91.4709
+      ],
+      "source_touch_to_paint_ms": 1480.5967
+    },
+    {
+      "contact_id": 6,
+      "touch_sample": 62626,
+      "published_sample": 62693,
+      "raw_release_trigger": 62703,
+      "source_confirmation_sample_span": 77,
+      "source_confirmation_time_ms": 64.5208,
+      "enqueue_host_bounds_ns": [
+        346525011600500,
+        346525024325400
+      ],
+      "dequeue_host_bounds_ns": [
+        346526676905500,
+        346526779598700
+      ],
+      "queue_residence_bounds_ms": [
+        1652.5801,
+        1767.9982
+      ],
+      "dequeue_to_publication_bounds_ms": [
+        0.0,
+        209.6616
+      ],
+      "publication_host_bounds_ns": [
+        346526661710000,
+        346526886567100
+      ],
+      "source_trigger_to_publication_ms": [
+        1650.1095,
+        1874.9666
+      ],
+      "publication_to_paint_raw_bounds_ms": [
+        -34.037,
+        190.8201
+      ],
+      "publication_to_paint_nonnegative_bounds_ms": [
+        0,
+        190.8201
+      ],
+      "source_touch_to_paint_ms": 1905.4504
+    },
+    {
+      "contact_id": 7,
+      "touch_sample": 63199,
+      "published_sample": 63258,
+      "raw_release_trigger": 63268,
+      "source_confirmation_sample_span": 69,
+      "source_confirmation_time_ms": 79.5773,
+      "enqueue_host_bounds_ns": [
+        346525588771600,
+        346525610877300
+      ],
+      "dequeue_host_bounds_ns": [
+        346527665832000,
+        346527716653200
+      ],
+      "queue_residence_bounds_ms": [
+        2054.9547,
+        2127.8816
+      ],
+      "dequeue_to_publication_bounds_ms": [
+        0.0,
+        180.1989
+      ],
+      "publication_host_bounds_ns": [
+        346527665832000,
+        346527846030900
+      ],
+      "source_trigger_to_publication_ms": [
+        2077.0604,
+        2257.2593
+      ],
+      "publication_to_paint_raw_bounds_ms": [
+        -93.804,
+        86.3949
+      ],
+      "publication_to_paint_nonnegative_bounds_ms": [
+        0,
+        86.3949
+      ],
+      "source_touch_to_paint_ms": 2243.0326
+    },
+    {
+      "contact_id": 8,
+      "touch_sample": 63747,
+      "published_sample": 63806,
+      "raw_release_trigger": 63816,
+      "source_confirmation_sample_span": 69,
+      "source_confirmation_time_ms": 78.829,
+      "enqueue_host_bounds_ns": [
+        346526131083800,
+        346526167348100
+      ],
+      "dequeue_host_bounds_ns": [
+        346528540117900,
+        346528641087400
+      ],
+      "queue_residence_bounds_ms": [
+        2372.7698,
+        2510.0036
+      ],
+      "dequeue_to_publication_bounds_ms": [
+        0.0,
+        117.7092
+      ],
+      "publication_host_bounds_ns": [
+        346528521920100,
+        346528657827100
+      ],
+      "source_trigger_to_publication_ms": [
+        2390.8363,
+        2526.7433
+      ],
+      "publication_to_paint_raw_bounds_ms": [
+        54.5476,
+        190.4546
+      ],
+      "publication_to_paint_nonnegative_bounds_ms": [
+        54.5476,
+        190.4546
+      ],
+      "source_touch_to_paint_ms": 2660.1199
+    },
+    {
+      "contact_id": 10,
+      "touch_sample": 64328,
+      "published_sample": 64397,
+      "raw_release_trigger": 64407,
+      "source_confirmation_sample_span": 79,
+      "source_confirmation_time_ms": 69.7397,
+      "enqueue_host_bounds_ns": [
+        346526715273100,
+        346526779598700
+      ],
+      "dequeue_host_bounds_ns": [
+        346529652625100,
+        346529673017700
+      ],
+      "queue_residence_bounds_ms": [
+        2873.0264,
+        2957.7446
+      ],
+      "dequeue_to_publication_bounds_ms": [
+        0.0,
+        164.7237
+      ],
+      "publication_host_bounds_ns": [
+        346529652625100,
+        346529817348800
+      ],
+      "source_trigger_to_publication_ms": [
+        2937.352,
+        3102.0757
+      ],
+      "publication_to_paint_raw_bounds_ms": [
+        -61.4624,
+        103.2613
+      ],
+      "publication_to_paint_nonnegative_bounds_ms": [
+        0,
+        103.2613
+      ],
+      "source_touch_to_paint_ms": 3110.353
+    },
+    {
+      "contact_id": 11,
+      "touch_sample": 64883,
+      "published_sample": 64947,
+      "raw_release_trigger": 64957,
+      "source_confirmation_sample_span": 74,
+      "source_confirmation_time_ms": 87.2233,
+      "enqueue_host_bounds_ns": [
+        346527278012700,
+        346527299626900
+      ],
+      "dequeue_host_bounds_ns": [
+        346530494582800,
+        346530594682200
+      ],
+      "queue_residence_bounds_ms": [
+        3194.9559,
+        3316.6695
+      ],
+      "dequeue_to_publication_bounds_ms": [
+        0.0,
+        132.5873
+      ],
+      "publication_host_bounds_ns": [
+        346530406993300,
+        346530627170100
+      ],
+      "source_trigger_to_publication_ms": [
+        3128.9806,
+        3349.1574
+      ],
+      "publication_to_paint_raw_bounds_ms": [
+        -25.1024,
+        195.0744
+      ],
+      "publication_to_paint_nonnegative_bounds_ms": [
+        0,
+        195.0744
+      ],
+      "source_touch_to_paint_ms": 3411.2783
+    }
+  ],
+  "application_return_model_confirmed": false,
+  "observer_tail_model_complete": true,
+  "close_scope_wall_ms": [
+    {
+      "begin_arm_s": 30.6058504,
+      "end_arm_s": 72.6575295,
+      "wall_ms": 42051.6791
+    }
+  ],
+  "original_return_preserved": true,
+  "saved_counts": {
+    "submit": 754,
+    "inference": 383,
+    "ROI_inference": 65,
+    "relay": 540,
+    "SDK_input": 539
+  },
+  "ROI_API_wall_ms": {
+    "median": 42.281400004867464,
+    "max": 69.47069999296218
+  },
+  "unbalanced_metadata_payload_groups": [
+    {
+      "projected_payload": {
+        "barrier": {
+          "inference": null,
+          "status": "ready"
+        },
+        "barrier_sequence": 2,
+        "generation": 1,
+        "update": {
+          "inference": null,
+          "status": "ready"
+        }
+      },
+      "send_count": 73,
+      "receive_count": 72,
+      "sender_arm_relative_s": [
+        -4.5451835,
+        -4.4825142,
+        -4.4184813,
+        -4.3570955,
+        -4.2955593,
+        -4.232509,
+        -4.1704844,
+        -4.1065923,
+        -4.0443331,
+        -3.9821975,
+        -3.9202474,
+        -3.857815,
+        -3.7951705,
+        -3.7313429,
+        -3.6699269,
+        -3.6070237,
+        -3.5449861,
+        -3.4307162,
+        -3.3593335,
+        -3.3566936,
+        -3.2946192,
+        -3.2330173,
+        -3.1700992,
+        -3.105044,
+        -3.0447986,
+        -2.9830312,
+        -2.9196241,
+        -2.8566469,
+        -2.7947138,
+        -2.7328531,
+        -2.6648845,
+        -2.6064548,
+        -2.5450509,
+        -2.4815839,
+        -2.418198,
+        -2.3570499,
+        -2.294564,
+        -2.2314344,
+        -2.1705471,
+        -2.1069686,
+        -2.0440051,
+        -1.9817783,
+        -1.9192849,
+        -1.8568176,
+        -1.789115,
+        -1.7331284,
+        -1.6703394,
+        -1.6074389,
+        -1.5450607,
+        -1.4829864,
+        -1.4189405,
+        -1.3564031,
+        -1.2944397,
+        -1.2320024,
+        -1.1673845,
+        -1.106293,
+        -1.0438956,
+        -0.981394,
+        -0.9142477,
+        -0.8572267,
+        -0.7948629,
+        -0.7329295,
+        -0.6700575,
+        -0.6063049,
+        -0.5450324,
+        -0.4496495,
+        -0.4175889,
+        -0.3572868,
+        -0.2949098,
+        -0.2314689,
+        -0.1696379,
+        -0.1061909,
+        -0.0403238
+      ],
+      "receiver_host_arm_relative_s": [
+        -4.4795844,
+        -4.4165143,
+        -4.3565068,
+        -4.2949271,
+        -4.2304131,
+        -4.1700223,
+        -4.1060775,
+        -4.0428135,
+        -3.9812613,
+        -3.9197806,
+        -3.8563355,
+        -3.7946627,
+        -3.7308375,
+        -3.668495,
+        -3.6065135,
+        -3.5442459,
+        -3.4298163,
+        -3.3578646,
+        -3.3560341,
+        -3.2930634,
+        -3.23247,
+        -3.1695967,
+        -3.0970673,
+        -3.0443066,
+        -2.9825373,
+        -2.9189727,
+        -2.8560278,
+        -2.7942901,
+        -2.7313205,
+        -2.6615823,
+        -2.6059447,
+        -2.5436485,
+        -2.4811413,
+        -2.4176822,
+        -2.3543594,
+        -2.2940664,
+        -2.2281346,
+        -2.1700274,
+        -2.1064521,
+        -2.0434949,
+        -1.9795738,
+        -1.9187568,
+        -1.856297,
+        -1.7811471,
+        -1.7326,
+        -1.6698266,
+        -1.6069237,
+        -1.5440813,
+        -1.4824585,
+        -1.4174844,
+        -1.35149,
+        -1.2939002,
+        -1.2305791,
+        -1.1668973,
+        -1.1057364,
+        -1.042476,
+        -0.9809216,
+        -0.910137,
+        -0.8557998,
+        -0.7943911,
+        -0.7324025,
+        -0.6692806,
+        -0.6058896,
+        -0.544602,
+        -0.4466606,
+        -0.4171487,
+        -0.3567786,
+        -0.2933903,
+        -0.2309976,
+        -0.1691641,
+        -0.103866,
+        -0.037466
+      ],
+      "candidate_unreceived_sender_occurrences": 73,
+      "interpretation": "Identical payloads have no wire occurrence ID. Greedy FIFO leaves a final sender unmatched, but the missing occurrence is not uniquely located; preserve the entire candidate group."
+    }
+  ],
+  "qualification_limits": [
+    "New metadata copy/lock/retention and post-return observer tail differ from earlier observer configurations. This is not a controlled performance A/B or evidence that observation caused no backlog.",
+    "Per-event native roots were not collected in this case. No CPU/GIL/Qt percentage, primary responsible function or hold duration is inferred.",
+    "No exact claim that a particular pre-arm sender was dropped. RuntimeNone can ignore inputs in the unchanged SDK source, but this run has no unique receiver-stage marker proving that branch for a specific occurrence.",
+    "SDK global identity/clock acceptance remains failed; no endpoint or unmatched group was removed to make it pass.",
+    "Model close interval is after the walk-processing ROI, includes waits/scheduling, and is not a cause proved for its earlier backlog."
+  ],
+  "next_work": [
+    "Resolve projected-payload occurrence ambiguity using synthetic command/pose interleaving before any new acquisition; preserve this whole failure and all candidate occurrences.",
+    "Use this severe fixed-input record for source/batch/contact/pending temporal analysis; do not use it as an unperturbed GIL-holder witness.",
+    "Actual-load3%/1% perturbation, independent natural owner association and primary root remain incomplete. No new human Walk is currently needed."
+  ],
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "primary_root_identified": false,
+  "root_cause_or_fix_complete": false
+}
