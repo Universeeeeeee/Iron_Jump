@@ -1,0 +1,47 @@
+{
+  "parent_plan_sha256": "76a90373d5df1bdcca768f59575118196100eb581324e85c38c3bef065b807cd",
+  "scope": "Launch-only correction before any target or sample existed; sources/binary/counts/quality gates unchanged.",
+  "initial_failure": {
+    "exception": "FileNotFoundError",
+    "path": "runs/positive01",
+    "cause": "Parent runs directory not created before the unchanged positive controller mkdir.",
+    "runs_existed": false,
+    "target_started": false,
+    "sample_files": []
+  },
+  "create_directory": "E:/OptoJump/IronJump-gil-waiter-first-20261019-01/runs",
+  "positive_command": [
+    "D:/conda/python.exe",
+    "E:/OptoJump/IronJump-gil-waiter-first-20261019-01/positive_control.py",
+    "--plan",
+    "E:/OptoJump/IronJump-gil-waiter-first-20261019-01/plan01.json",
+    "--tool",
+    "E:/OptoJump/IronJump-gil-waiter-first-20261019-01/target/release/ironjump-gil-waiter-first.exe",
+    "--dll",
+    "E:/OptoJump/IronJump-gil-waiter-first-20261019-01/positive_oracle.dll",
+    "--output",
+    "E:/OptoJump/IronJump-gil-waiter-first-20261019-01/runs/positive01"
+  ],
+  "negative_command": [
+    "D:/conda/python.exe",
+    "E:/OptoJump/IronJump-gil-waiter-first-20261019-01/negative_control.py"
+  ],
+  "observer_sha256": "c21788d1470382dbf96b73759275a8c719f56033ee52bd296a6764e829681840",
+  "sources": {
+    "fixture.py": "f4d00da8006c0dd8021a82b7809015a272292d2f0585bde114868f19b2fd7c77",
+    "Cargo.toml": "62d24e3fdc4153158f4eb48320d23b1f97c191aa5765bf69b9ae88406fbe1dd8",
+    "freeze01.py": "ee895313d676d221abe4c932a722baf47377a8bb6d1b67493692c27330f0b916",
+    "test_first.py": "d874950e2cb5302a45cd1237447e294e75bbc10319872c12e830509db4cf6af1",
+    "collect01.py": "40c32eb148e942feec9b3eb06eaac9201771c545105a0951aa523842578b2d4a",
+    "build.cmd": "f5c0cc4072b40323e653d53488f1c6059a3407f4992b9118f813bfd27b3e61e2",
+    "Cargo.lock": "f9d0c5200019c2e652429c84aa8980b0bd16a52bd6a0e96621d5f2209e39e139",
+    "negative_control.py": "fe95ff23e6316f7b209a1228c69495e054d9c9f342cf520baae315e4c6dd1ac2",
+    "resolve_raw.py": "3fe093e064e7e73b986f994b2dbd7ed59245f86e827cef359782ea2e4accc64b",
+    "positive_control.py": "c1920f5858d2957af44399d0e089896da79898fc1a222e0a8d7225fa6aa40347",
+    "verify.py": "e1324b811be7c3c9ddb0682533628388c1fc59533482d198d6a0b3d6bec82fb5",
+    "negative_fixture.py": "b0f0118fae1ed8817db1d3c7159cc8bb3e774ddeefca3e4ff09d6a2a4dbfffc3",
+    "src/main.rs": "ec482e1ef88fc73dec8d50d58c2c7b3a81eb63bd730c8d46ce4729591ffad21b"
+  },
+  "failed_stderr": "positive_control01.stderr",
+  "retry_of_sampling": false
+}

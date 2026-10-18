@@ -1,0 +1,1483 @@
+{
+  "positive": {
+    "checks": {
+      "phase1_count": true,
+      "phase1_schema": true,
+      "phase1_complete": true,
+      "phase1_no_owner_promotion": true,
+      "phase1_activity_not_used": true,
+      "phase1_capture_order_0": true,
+      "phase1_deferred_resolution_0": true,
+      "phase1_capture_order_1": true,
+      "phase1_deferred_resolution_1": true,
+      "phase1_capture_order_2": true,
+      "phase1_deferred_resolution_2": true,
+      "phase1_capture_order_3": true,
+      "phase1_deferred_resolution_3": true,
+      "phase1_capture_order_4": true,
+      "phase1_deferred_resolution_4": true,
+      "phase1_capture_order_5": true,
+      "phase1_deferred_resolution_5": true,
+      "phase1_capture_order_6": true,
+      "phase1_deferred_resolution_6": true,
+      "phase1_capture_order_7": true,
+      "phase1_deferred_resolution_7": true,
+      "phase1_capture_order_8": true,
+      "phase1_deferred_resolution_8": true,
+      "phase1_capture_order_9": true,
+      "phase1_deferred_resolution_9": true,
+      "phase1_capture_order_10": true,
+      "phase1_deferred_resolution_10": true,
+      "phase1_capture_order_11": true,
+      "phase1_deferred_resolution_11": true,
+      "phase1_capture_order_12": true,
+      "phase1_deferred_resolution_12": true,
+      "phase1_capture_order_13": true,
+      "phase1_deferred_resolution_13": true,
+      "phase1_capture_order_14": true,
+      "phase1_deferred_resolution_14": true,
+      "phase1_capture_order_15": true,
+      "phase1_deferred_resolution_15": true,
+      "phase1_capture_order_16": true,
+      "phase1_deferred_resolution_16": true,
+      "phase1_capture_order_17": true,
+      "phase1_deferred_resolution_17": true,
+      "phase1_capture_order_18": true,
+      "phase1_deferred_resolution_18": true,
+      "phase1_capture_order_19": true,
+      "phase1_deferred_resolution_19": true,
+      "phase1_clock": true,
+      "phase1_counters": true,
+      "phase1_recover": true,
+      "phase2_count": true,
+      "phase2_schema": true,
+      "phase2_complete": true,
+      "phase2_no_owner_promotion": true,
+      "phase2_activity_not_used": true,
+      "phase2_capture_order_0": true,
+      "phase2_deferred_resolution_0": true,
+      "phase2_capture_order_1": true,
+      "phase2_deferred_resolution_1": true,
+      "phase2_capture_order_2": true,
+      "phase2_deferred_resolution_2": true,
+      "phase2_capture_order_3": true,
+      "phase2_deferred_resolution_3": true,
+      "phase2_capture_order_4": true,
+      "phase2_deferred_resolution_4": true,
+      "phase2_capture_order_5": true,
+      "phase2_deferred_resolution_5": true,
+      "phase2_capture_order_6": true,
+      "phase2_deferred_resolution_6": true,
+      "phase2_capture_order_7": true,
+      "phase2_deferred_resolution_7": true,
+      "phase2_capture_order_8": true,
+      "phase2_deferred_resolution_8": true,
+      "phase2_capture_order_9": true,
+      "phase2_deferred_resolution_9": true,
+      "phase2_capture_order_10": true,
+      "phase2_deferred_resolution_10": true,
+      "phase2_capture_order_11": true,
+      "phase2_deferred_resolution_11": true,
+      "phase2_capture_order_12": true,
+      "phase2_deferred_resolution_12": true,
+      "phase2_capture_order_13": true,
+      "phase2_deferred_resolution_13": true,
+      "phase2_capture_order_14": true,
+      "phase2_deferred_resolution_14": true,
+      "phase2_capture_order_15": true,
+      "phase2_deferred_resolution_15": true,
+      "phase2_capture_order_16": true,
+      "phase2_deferred_resolution_16": true,
+      "phase2_capture_order_17": true,
+      "phase2_deferred_resolution_17": true,
+      "phase2_capture_order_18": true,
+      "phase2_deferred_resolution_18": true,
+      "phase2_capture_order_19": true,
+      "phase2_deferred_resolution_19": true,
+      "phase2_clock": true,
+      "phase2_counters": true,
+      "phase2_recover": true,
+      "free_running": true,
+      "all40": true,
+      "clean": true
+    },
+    "proof": [
+      {
+        "phase": 1,
+        "ordinal": 0,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 1,
+        "ordinal": 1,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 1,
+        "ordinal": 2,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 1,
+        "ordinal": 3,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 1,
+        "ordinal": 4,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 1,
+        "ordinal": 5,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 1,
+        "ordinal": 6,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 1,
+        "ordinal": 7,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 1,
+        "ordinal": 8,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 1,
+        "ordinal": 9,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 1,
+        "ordinal": 10,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 1,
+        "ordinal": 11,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 1,
+        "ordinal": 12,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 1,
+        "ordinal": 13,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 1,
+        "ordinal": 14,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 1,
+        "ordinal": 15,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 1,
+        "ordinal": 16,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 1,
+        "ordinal": 17,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 1,
+        "ordinal": 18,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 1,
+        "ordinal": 19,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 2,
+        "ordinal": 0,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 2,
+        "ordinal": 1,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 2,
+        "ordinal": 2,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 2,
+        "ordinal": 3,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 2,
+        "ordinal": 4,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 2,
+        "ordinal": 5,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 2,
+        "ordinal": 6,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 2,
+        "ordinal": 7,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 2,
+        "ordinal": 8,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 2,
+        "ordinal": 9,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 2,
+        "ordinal": 10,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 2,
+        "ordinal": 11,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 2,
+        "ordinal": 12,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 2,
+        "ordinal": 13,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 2,
+        "ordinal": 14,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 2,
+        "ordinal": 15,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 2,
+        "ordinal": 16,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 2,
+        "ordinal": 17,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 2,
+        "ordinal": 18,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      },
+      {
+        "phase": 2,
+        "ordinal": 19,
+        "passed": true,
+        "pre_native": {
+          "checks": {
+            "requested_identity": true,
+            "unchanged_requested_context": true,
+            "roots": true,
+            "raw_ips": true,
+            "acquisition_location": true,
+            "symbol_identities": true
+          },
+          "passed": true,
+          "pre_global_GIL_acquisition_chain": true,
+          "pre_symbols": [
+            "NtWaitForSingleObject",
+            "NtWaitForSingleObject",
+            "WaitForSingleObjectEx",
+            "_PyCOND_WAIT_MS",
+            "take_gil",
+            "PyGILState_Ensure",
+            null,
+            "BaseThreadInitThunk",
+            "RtlUserThreadStart"
+          ]
+        },
+        "independent_pending_request": true,
+        "owner_fixed_by_native_oracle": true,
+        "holder_native_path": true,
+        "waiter_has_no_python_evaluation_frame": true,
+        "pause_heartbeat_stable": true
+      }
+    ],
+    "passed": true
+  },
+  "negative": {
+    "checks": {
+      "count": true,
+      "schema": true,
+      "complete": true,
+      "no_owner_promotion": true,
+      "activity_not_used": true,
+      "capture_order_0": true,
+      "deferred_resolution_0": true,
+      "native": true,
+      "transition_order": true,
+      "no_request_before": true,
+      "requester_frozen_with_request_ready": true,
+      "other_threads_run": true,
+      "counters": true,
+      "global_pause": true,
+      "acquired_after_cleanup": true,
+      "clean": true
+    },
+    "pre_native": {
+      "checks": {
+        "requested_identity": true,
+        "unchanged_requested_context": true,
+        "roots": true,
+        "raw_ips": true,
+        "acquisition_location": true,
+        "symbol_identities": true
+      },
+      "passed": true,
+      "pre_global_GIL_acquisition_chain": false,
+      "pre_symbols": [
+        "NtDelayExecution",
+        "NtDelayExecution",
+        "RtlDelayExecution",
+        "SleepEx",
+        "request",
+        "BaseThreadInitThunk",
+        "RtlUserThreadStart"
+      ]
+    },
+    "passed": true
+  },
+  "pre_global_wait_location_control_pass": true,
+  "natural_owner_association_qualified": false,
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "root_cause_or_fix_complete": false,
+  "limits": [
+    "A pre-global native acquisition chain is established only for the fixed native oracle. It is not a wait-time percentage or continuous wait-duration proof.",
+    "Current-tstate endpoint equality does not exclude intervening GIL release/reacquisition. Later owner frames are not certified as the original blocker.",
+    "Negative control deliberately waits at a named-event barrier while the requested thread is paused. Its latency is not a field overhead calibration.",
+    "ThreadLock resume failure panics; prior suspension counts are not emitted by remoteprocess0.5.2. No production entry has been deployed."
+  ],
+  "raw_manifest_sha256": "6c44347f206b6847d0e686c67fdc3fd4a7985aa04bb5426177805f226513586c",
+  "plan_sha256": "76a90373d5df1bdcca768f59575118196100eb581324e85c38c3bef065b807cd"
+}

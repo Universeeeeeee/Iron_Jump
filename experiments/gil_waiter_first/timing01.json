@@ -1,0 +1,56 @@
+{
+  "scope": "Descriptive QPC scopes in constant-native-holder positive controls only. Not GIL hold/wait time, application overhead, rate qualification, or comparison to GUI stack01.",
+  "phases": {
+    "1": {
+      "samples": 20,
+      "pre_context_unwind_ms": {
+        "min": 0.967,
+        "median": 1.005,
+        "max": 1.3703
+      },
+      "requested_suspend_scope_ms": {
+        "min": 7.7644,
+        "median": 7.9723500000000005,
+        "max": 9.3256
+      },
+      "global_pause_scope_ms": {
+        "min": 6.7804,
+        "median": 6.96885,
+        "max": 8.2752
+      },
+      "start_gap_ms": {
+        "min": 50.1032,
+        "median": 50.3706,
+        "max": 53.37
+      },
+      "explicit_resolution_after_collection_ms": 17.288500000000003
+    },
+    "2": {
+      "samples": 20,
+      "pre_context_unwind_ms": {
+        "min": 0.9649,
+        "median": 0.99875,
+        "max": 1.3497
+      },
+      "requested_suspend_scope_ms": {
+        "min": 7.643,
+        "median": 7.7029499999999995,
+        "max": 9.2153
+      },
+      "global_pause_scope_ms": {
+        "min": 6.6486,
+        "median": 6.69345,
+        "max": 8.2073
+      },
+      "start_gap_ms": {
+        "min": 50.1223,
+        "median": 50.3113,
+        "max": 50.6197
+      },
+      "explicit_resolution_after_collection_ms": 17.0675
+    }
+  },
+  "explicit_resolution_deferred": true,
+  "warning": "StackWalk64 still performs native unwinding/DbgHelp metadata work inside the pause. Moving explicit symbol/name formatting after collection does not remove all DbgHelp cost. Test-gate negative latency is excluded.",
+  "actual_load_disturbance_pass": false
+}

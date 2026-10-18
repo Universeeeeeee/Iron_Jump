@@ -1,0 +1,60 @@
+{
+  "title": "消费者原生上下文先于整进程暂停：40个正控制与请求到达负控制通过",
+  "conclusion": "新候选已通过合成读取顺序验证：先单独暂停并读取请求线程的原生上下文，再暂停进程读取Python及其余原生上下文。40/40确定请求的第一次原生栈均闭合，且在整进程暂停前已有GIL获取调用链；负控制第一次栈不含该链。正式积压主因仍未确定。",
+  "scope": "仅新候选与原有两个独立原生合成fixture。未启动正式程序、GUI、SDK、真人、USB、Run或优化A/B。",
+  "binary_sha256": "c21788d1470382dbf96b73759275a8c719f56033ee52bd296a6764e829681840",
+  "schema": 5,
+  "positive_sample_count": 40,
+  "positive_pass": true,
+  "negative_sample_count": 1,
+  "negative_pass": true,
+  "reading_order": [
+    "保留请求线程句柄；读取原生请求oracle及current-tstate端点。",
+    "只暂停请求线程；GetThreadContext取得完整原生上下文并展开。",
+    "之后才NtSuspendProcess；读取Python、请求线程与候选持有者原生栈；核对请求上下文未改变。",
+    "先恢复整进程范围，再恢复请求线程范围。显式符号名称解析及结果序列化在全部采样之后。"
+  ],
+  "negative_control": "在第一次上下文完成后，原生gate由0变1；八个外部读数显示requested/acquired仍为0，持有者与独立原生心跳持续增加。它独立证明请求线程已经暂停、其余线程仍运行。前后消费者原生上下文一致且没有GIL获取链；恢复及释放持有者后原生请求成功获取。",
+  "qualification_boundary": "通过的是合成正负控制下的暂停前调用位置验证，不是现场Ready/Waiting比例、等待时长、唯一持有者责任函数或实际负载扰动校准。",
+  "owner_limit": "第一次消费者上下文与之后持有者读取不是同一时刻。current-tstate端点相等不排除中间GIL释放/再获取或其他转移；本轮没有将该相等值提升为现场稳定关联。",
+  "source_audit": {
+    "requested_handle": "remoteprocess0.5.2::Thread::lock and Unwinder::cursor use the same retained Thread handle.",
+    "delivery": "Windows Cursor::new calls GetThreadContext. The synthetic negative control independently confirms only the requester is stopped at the barrier.",
+    "resume_limit": "ThreadLock Drop checks ResumeThread failure but does not emit prior/resumed suspend counts. No production controller deployed.",
+    "dependencies": {
+      "remoteprocess_windows.rs": "99fa42da4734ccac39a22990e084e0f2601f387889313b3545d15115bf78be7d",
+      "python_spy.rs": "21a9ff67759655329633db5022925dfac72a920d3b970bf5b8ec4b6866129793",
+      "pycore_gil.h": "cf455aacd5651e5b43547ebe69bb324eab84238d92665df53c1df32434bd0d9b",
+      "remoteprocess_unwinder.rs": "2b8afc9c5c57810c8947b89c85416b19efe51eb0dbe72deaf14077f762f9dc08"
+    }
+  },
+  "preserved_launch_failure": "初次控制启动缺失runs父目录，在目标启动前失败。目标未启动、无采样文件；原错误stderr已归档。launch02.json冻结了目录准备和绝对路径调用，二进制、源码、计数及门槛未改。之后是第一次实际40+1采集，没有重复采样替换失败窗口。",
+  "tests": {
+    "ran": 99,
+    "passed": 95,
+    "platform_skipped": 4,
+    "details": "tests01.json"
+  },
+  "preservation": {
+    "formal_files": 458,
+    "unchanged": true,
+    "locks_retained": 21,
+    "remaining_processes": [],
+    "sampling_interval_100ns": 10000,
+    "WPR_not_recording": true,
+    "old_failures_unchanged": true
+  },
+  "next_work": [
+    "保留当前新二进制及全部旧失败窗，先为实际负载补齐可比较的输入/SDK推理工作量与OFF/OFF方差边界。",
+    "针对新二进制重新冻结低频配置并做实际负载扰动验收；40+1控制不替代该步骤。",
+    "在适用门槛通过后，使用固定输入严重积压窗口取得暂停前消费者调用位置；稍后持有者仍只作候选，需独立时序证据。",
+    "当前不需要新增真人Walk；不修改正式程序、原NumPy、滤波、Processor、线程或绘图。"
+  ],
+  "actual_load_disturbance_pass": false,
+  "natural_owner_association_qualified": false,
+  "field_attribution_ready": false,
+  "root_cause_or_fix_complete": false,
+  "raw_archive_sha256": "8e55d1643b10b406fcd3d203f984f3818abde55aa4238990d147e59750c503a2",
+  "raw_manifest_files": 63,
+  "timing": "timing01.json"
+}
