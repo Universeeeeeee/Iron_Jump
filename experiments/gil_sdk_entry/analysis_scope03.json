@@ -1,0 +1,42 @@
+{
+  "question": "新增交付观测能否改变积压根因结论？",
+  "answer": "尚不能；它补足了下一轮观测的协议可验证性，未新增真实负载的因果证据。",
+  "evidence_table": [
+    {
+      "position": "自然ETW中消费者take_gil等待",
+      "code": "NumPy返回Python及PySide/Shiboken进入Python的边界；具体持有者仍未知",
+      "level": "既有自然栈见证有效；占比及主贡献未获资格",
+      "missing": "合格扰动控制、同一自然发生的等待者及持有者关联",
+      "minimum_validation": "保留采样前消费者上下文，再独立验证持有者关联；不拼接不同窗口"
+    },
+    {
+      "position": "SDK子进程stdin解析前到runtime",
+      "code": "camera/control_service.py::serve/read_requests -> TrackingRuntime.submit_packet",
+      "level": "新增真实QProcess假硬件合成验证，原函数体不变",
+      "missing": "真实SDK完整流及观测开销；旧未匹配消息的实际路径不可追回",
+      "minimum_validation": "新冻结离线计划中独立核对write字节流、文本收据、原runtime日志与推理身份"
+    },
+    {
+      "position": "runtime到mailbox提交",
+      "code": "camera/tracking_runtime.py::submit_packet/submit -> camera/pose_tracking.py::PoseTrackingMailbox.submit",
+      "level": "新增调用路径见证；没有把入口或返回作为业务接受",
+      "missing": "mailbox内部拒绝或状态提交的直接见证；不能推断SDK物理动作",
+      "minimum_validation": "若实际身份核验需要接受层，先单独验证对应原判定边界的可观测性及扰动"
+    },
+    {
+      "position": "GUI与消费者共享GIL的竞争候选",
+      "code": "原GUI绘制、Python回调与消费链；SDK在另一PID/GIL",
+      "level": "候选；全局暂停后的持有者快照不能证明自然时刻责任",
+      "missing": "等待发生前/自然发生时的所有权证据和实际负载资格",
+      "minimum_validation": "不得用SDK子进程的runtime/mailbox调用证据归因GUI进程内的GIL等待"
+    }
+  ],
+  "unchanged_findings": [
+    "主机消费链在接触阶段确有积压证据；原生计算、GIL与Qt/系统同步的主要贡献未确定。",
+    "原severe replay的队列/发布时间边界仍是受观测配置影响的相关边界，不能当作无扰动定量因果成本。",
+    "设备断电后低延迟现象未建立供电或温升因果关系。"
+  ],
+  "production_fix_authorized_by_evidence": false,
+  "new_human_test_needed_now": false,
+  "primary_root_identified": false
+}

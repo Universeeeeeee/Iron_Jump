@@ -1,0 +1,55 @@
+{
+  "title": "诊断SDK入口：真实QProcess、原serve及runtime/mailbox分层收据的假硬件验证",
+  "outcome": "修正Qt枚举观测后，Windows八个固定合成场景通过；旧失败窗口独立保留。尚未进行真实SDK或实际负载扰动资格验证。",
+  "implementation": [
+    "entry.py直接调用导入的原camera.control_service.serve；不复制或改写serve函数，不修改正式源文件。",
+    "解析前文本收据的本地行序号，通过读取线程的threading.local关联runtime_packet、runtime_submit和mailbox_submit调用起止及异常；不向原消息增加字段。",
+    "独立父进程保留QProcess接受的原字节流、原协议回复和实际子进程PID，并核对完整子进程文本流、原pose_input内容、线程身份及子进程内部嵌套时间边界。",
+    "只在原serve返回后等待观测到的reader退出；未确认退出、EOF或异常均保留失败，所有锁保留。"
+  ],
+  "confirmed_controls": [
+    "before_runtime及constructor_gap：相同ready包早期确实读入但无runtime入口，后期读入有runtime入口及两次mailbox提交。可区分重复内容的具体本地发生序号。",
+    "inactive_runtime及wrong_generation：各有一次runtime入口及原pose_input日志，没有runtime_submit/mailbox_submit调用。",
+    "old_barrier：第二个较旧序号包进入runtime并有pose_input，但没有新增mailbox提交。",
+    "bad_json：解析前收据存在，没有runtime入口；原错误回复及读取线程提前终止保留。",
+    "bad_packet：runtime入口保留KeyError；generation缺失发生于原pose_input日志之前，故有runtime入口不必有pose_input日志。",
+    "两类异常控制虽按预期通过，原始observation_complete及EOF仍为false。"
+  ],
+  "failed01": {
+    "preserved": true,
+    "reason": "首次Windows窗口因验证器将退出状态与字符串NormalExit比较而失败。Windows Qt的str(enum)是0；修正后的新计划直接比较QProcess.NormalExit枚举，未改变退出要求。",
+    "old_pass_remains_false": true,
+    "archive_sha256": "95a088759e8e6a6d535902357025439bb1a3038d6c8668268ce0938b9b2b84e6"
+  },
+  "tests": {
+    "Windows_fixed_cases": 8,
+    "Mac_regression_tests_run": 130,
+    "Mac_passed": 126,
+    "Windows_only_skipped_on_Mac": 4
+  },
+  "preservation": {
+    "formal_files_unchanged": 458,
+    "historical_lock_groups_retained": 30,
+    "related_processes_remaining": 0,
+    "WPR_not_recording": true,
+    "sampling_interval_100ns": 10000,
+    "original_Python_NumPy_native_files_and_inputs_unchanged": true
+  },
+  "limits": [
+    "mailbox_submit函数被调用或正常返回不等于业务接纳、状态改变、推理消费或实际SDK动作；此阶段不声称已具备业务接纳计数。",
+    "本地时间嵌套检查不证明父子进程的时钟对齐，不建立自然GIL等待者与持有者关联。",
+    "TextReceipts观测在TextIO解码后、JSON解析前，不是原始内核pipe字节。原始ASCII LF合成合同以外的编码/换行不能自动套用。",
+    "新增Python调用、摘要计算及收据保存均可能有扰动；尚无真实SDK、真实推理负载下的合格OFF/OFF及OFF/ON结果。",
+    "不能将新控制回填为旧540/539的发生路径，也不能消除旧未匹配候选或升级其整体资格。"
+  ],
+  "next": [
+    "在新的冻结离线计划中接入此入口与父进程write收据，先核对实际完整交付、解析前收据、runtime路径和原推理身份；所有差异独立保留。",
+    "业务接纳若需观测，必须单独验证原mailbox内部判定，不能以函数返回None或入口次数替代。",
+    "先量化固定输入的OFF/OFF方差，再按原3%/1%门槛进行实际负载扰动验收；共同存在的观测成本也须交代，不能仅证明增量采样成本。低SDK CPU的GetThreadTimes量化粒度继续作为限制。",
+    "只有质量门槛适用并通过后，才推进自然等待者上下文与独立持有者关联。当前无需用户重新走路。"
+  ],
+  "raw02_archive_sha256": "3a87a91dfb7c87a777062b683a20f0a446f0556633d80ebe1b6d990c47153818",
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "primary_root_identified": false
+}
