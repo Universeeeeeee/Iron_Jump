@@ -1,0 +1,39 @@
+{
+  "previous_review_sha256": "03219599c6cded2bf7fa42fc8f5b3293e384172f880ded76b86673de32c70116",
+  "preserved_previous_review": true,
+  "correction": "此前64仅是100ms周期探针保存点中的最大值，不能称作该窗口连续峰值。批次观测保存过83；按连续、仅含帧FIFO的单调前缀推导，真实deque峰值在83..136。所有历史原始点/旧报告保留，新推导不改失败验收。",
+  "scope": "Instrumented fixed-file replays only. Pending here is the deque and excludes already popped/inflight work.",
+  "new_window": {
+    "combined_observed_deque_peak_lower_bound": 83,
+    "continuous_deque_peak_upper_bound": 136,
+    "observations": 852,
+    "first_observed_host_ns": 341372184712400,
+    "last_observed_host_ns": 341405573322900,
+    "common_witness_peak": 83,
+    "periodic_probe_peak": 64,
+    "measurement_sha256": "680721dca95ac307552b5aded08f54ac931a70518093ded49733a562ca35789d"
+  },
+  "old_slow_windows": {
+    "prior/pair01_a": {
+      "combined_observed_deque_peak_lower_bound": 3391,
+      "continuous_deque_peak_upper_bound": 3435,
+      "observations": 849,
+      "first_observed_host_ns": 326034817052400,
+      "last_observed_host_ns": 326068259183300,
+      "common_witness_peak": 3391,
+      "periodic_probe_peak": 3375,
+      "measurement_sha256": "24936f38e4208d45d6b7f76a912cfebb468d6b09cad50a06134d5f236f37bfd7"
+    },
+    "repeat/pair01_a": {
+      "combined_observed_deque_peak_lower_bound": 1125,
+      "continuous_deque_peak_upper_bound": 1185,
+      "observations": 851,
+      "first_observed_host_ns": 328453731118600,
+      "last_observed_host_ns": 328487103678700,
+      "common_witness_peak": 1125,
+      "periodic_probe_peak": 1108,
+      "measurement_sha256": "2dd99a674745899b036f96c8658fe3e102629f60f2d598bc53dcbbd69afc4642"
+    }
+  },
+  "cause_attribution": false
+}

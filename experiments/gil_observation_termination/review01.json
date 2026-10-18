@@ -1,0 +1,55 @@
+{
+  "title": "诊断快照候选通过延迟关闭控制；固定回放队列峰值界限更正",
+  "previous_turn_classification": "progress: immutable old evidence and new actual workload records changed the next measurement action.",
+  "verified_recorder_issue": "旧Audit.finish返回仍会追加的rows别名。真实FootVisionService配合延迟关闭适配器后，首次返回对象序列化内容被晚到model_close/stopped事件改写，但running_services仍为旧值。已保存前后独立JSON及哈希。",
+  "proposed_fix": "新候选事件在提交时取得独立payload与全局序号，快照在同一锁内复制已提交前缀，返回独立数据；关闭入口与完成分开记录，线程存活读取保留单独时间界限。",
+  "windows_controls": {
+    "passed": true,
+    "cases": [
+      "旧别名重现",
+      "延迟close",
+      "stopped但线程未退出",
+      "close异常后线程退出"
+    ],
+    "original_default_stop_timeout_s": 2.0,
+    "native_verification": "同一保留原生线程句柄：PID/TID/creation匹配、释放前exit259、OS等待后exit0、GetThreadTimes/cycles单调。"
+  },
+  "correction": "上一阶段把周期保存点最大64简称峰值，表述不准确。本次使用全部已保存E/P观测和FIFO前缀给出范围，不删除端点、不插值、不重采。",
+  "queue_bounds": {
+    "prior/pair01_a": {
+      "observed_lower": 3391,
+      "conservative_upper": 3435
+    },
+    "repeat/pair01_a": {
+      "observed_lower": 1125,
+      "conservative_upper": 1185
+    },
+    "metadata_failed02/off_a": {
+      "observed_lower": 83,
+      "conservative_upper": 136
+    }
+  },
+  "significance": "在所述固定文件源/FIFO假设下，旧慢回放的千帧级队列确实存在；新窗口的连续上界136，不能替代旧慢轮作为严重积压补证。",
+  "constraints": [
+    "本轮只做合成关闭控制、单元/回归测试和已存数据的离线推导；没有新真人、USB采集、实际回放、Run、优化A/B或正式程序修改。",
+    "合成适配器没有加载MediaPipe模型，没有提交图像/触地事件；它不能定位实际窗口02模型结束时的原生执行位置。",
+    "新快照是稳定事件前缀；线程存活是有界独立读取，不是整个进程和原生池的一瞬间一致快照。",
+    "新增复制/锁/序号的实际负载扰动未校准，没有部署到回放或现场入口；不放宽旧3%/1%或栈门槛。",
+    "旧窗口02未被证明发生了别名混合；其不通过状态与全部失败检查原样保留。"
+  ],
+  "tests": {
+    "ran": 134,
+    "passed": 130,
+    "platform_skipped": 4
+  },
+  "next_actions": [
+    "先为新候选准备明确的终止/快照阶段：保留原应用返回时的未确认状态，不用后续事件改写它；任何后续采集另立冻结计划。",
+    "将所有队列比较明确标为观测下界/保守上界，并以实际推理身份和计数窗对齐工作量。",
+    "实际负载扰动和严重积压同窗自然等待/持有者关联仍未通过；当前不需要新增真人Walk。"
+  ],
+  "raw_control_archive_sha256": "a5f0c32ecae846f8bc26a1d4a584104982d5a91f0cbc046ada962bd93c22088b",
+  "primary_root_identified": false,
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "root_cause_or_fix_complete": false
+}

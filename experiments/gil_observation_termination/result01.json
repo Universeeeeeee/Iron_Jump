@@ -1,0 +1,39 @@
+{
+  "checks": {
+    "legacy_alias_independently_reproduced": true,
+    "legacy_alias_native_lifetime": true,
+    "legacy_alias_real_service_no_inputs": true,
+    "frozen_delay_native_lifetime": true,
+    "frozen_delay_real_service_no_inputs": true,
+    "frozen_delay_immutable_snapshot": true,
+    "frozen_delay_initial_not_complete": true,
+    "frozen_delay_prefix_order": true,
+    "frozen_delay_final_complete": true,
+    "stopped_but_alive_native_lifetime": true,
+    "stopped_but_alive_real_service_no_inputs": true,
+    "stopped_but_alive_immutable_snapshot": true,
+    "stopped_but_alive_initial_not_complete": true,
+    "stopped_but_alive_prefix_order": true,
+    "stopped_but_alive_final_complete": true,
+    "stopped_callback_not_exit": true,
+    "close_failure_native_lifetime": true,
+    "close_failure_real_service_no_inputs": true,
+    "close_failure_immutable_snapshot": true,
+    "close_failure_initial_not_complete": true,
+    "close_failure_prefix_order": true,
+    "close_failure_error_not_hidden": true
+  },
+  "synthetic_termination_and_snapshot_controls_pass": true,
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "primary_root_identified": false,
+  "limitations": [
+    "One controlled legacy alias reproduction and three frozen-recorder scenarios, no repeated actual replay or human/device inputs.",
+    "Production FootVisionService uses a Python-only fake adapter. This tests recorder/termination semantics, not the real MediaPipe close cause or native-pool teardown.",
+    "Event prefix is immutable; service liveness is separately bracketed, not a globally simultaneous native/OS snapshot.",
+    "New per-event copy/lock/sequence and close-entry hook have not undergone actual-load perturbation calibration. No replay/field entry deployed.",
+    "Failed workload windows01/02, prior plans, acceptance gates and locks remain unchanged."
+  ],
+  "raw_manifest_sha256": "8c321601f5ee1a9b15f75fb2bb41db429c689b01d2ee5be20f88e786c93e6555",
+  "plan_sha256": "6f24c40214261d81b18da4c5743281c79d8dd9dc7f839433946ce89fff70d0c1"
+}

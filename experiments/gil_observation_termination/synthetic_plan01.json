@@ -1,0 +1,35 @@
+{
+  "scope": "One frozen synthetic sequence only: real production FootVisionService, gated Python-only fake adapter, no frames/events/model/Qt/SDK/device/replay/human/Run/optimization AB.",
+  "cases": [
+    "legacy_alias",
+    "frozen_delay",
+    "stopped_but_alive",
+    "close_failure"
+  ],
+  "default_production_stop_timeout_s": 2.0,
+  "sources": {
+    "fixture.py": "80f1cf199d538edbe1a4a2b60daa2212a671ebdc69a9276aa0c5e59f1ebcabe8",
+    "test_snapshot.py": "e9eb534cb7b289d6a918f6004f8b3eaab7275d47be61dd46397a5256ad23cde4",
+    "verify.py": "3aa56db74cd4b14c472f2bb5d094656eb7009e35a6dfeaaddfd1b01e683b8efc",
+    "snapshot.py": "955c5ed1ef335043dc281674d591b066a2331f254e394b52817e0e1989a01e13"
+  },
+  "existing_sources": {
+    "experiments/gil_workload_observation/workload.py": "f01174dc72f3cd6b54b20c90ff7abeb6922bfd9dba79b06b11d7dc14455ccef6",
+    "vision/service.py": "d8f43d891a6162db79d04e78cc198452814bbcaf30a4566c16c7f5646ebc42dc",
+    "vision/foot_reference.py": "8ceafb540566f79856793b012af4a3088edcd0eb124246d36332114c65650ee9",
+    "vision/event_scheduler.py": "dc67f24a39a69e3f08da7c87d3666bbd843de4e427719c1ee6e64336df047246",
+    "vision/mediapipe_pose.py": "b4b771ce3e18d88c50fd1c698ac006bd0b87d2be9c5f50feb5f080a48f6c43e1"
+  },
+  "python_dll_sha256": "162e8557fbed5f39ae24983ee62b2d435b4796c937d9c1a34371888c7e43af00",
+  "numpy_pyd_sha256": "4fb4c5d62a6bd766eea716350eaf5396580e33cf7dc159e305488d1b7d72dad2",
+  "preserved_window02_plan_sha256": "1d4f566609e85ea229e18fa3879367c97d745251a58813ad2f8a47d1c1048901",
+  "checks": [
+    "Legacy: serialize the returned object before and after late close; independent bytes/JSON reveal live alias mutation with stale liveness.",
+    "New: freeze a contiguous, owned event prefix. Producer payload changes, late callbacks and snapshot-consumer mutation cannot rewrite it.",
+    "Delayed close: original default stop returns while actual Python/native service thread remains alive. Native handles validate PID/TID creation,259 before release,0 after an OS wait.",
+    "Stopped notification + close return without native thread exit is insufficient. Close exception + thread exit also remains failure.",
+    "No actual workload, stack, disturbance, owner association or primary-cause qualification; all previous failed windows/plans/locks untouched."
+  ],
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false
+}
