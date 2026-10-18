@@ -1,0 +1,400 @@
+{
+  "samples_sha256": "f66fe14b89693487d9af472b3470028a289a8603f9c5ac12722a371b5513ef36",
+  "scope": "Static image/PDB lookup after synthetic target exit. In-sample symbol strings are not used as proof; unmatched frames keep original module+RVA.",
+  "modules": [
+    {
+      "base": 140705333641216,
+      "path": "C:\\WINDOWS\\SYSTEM32\\ntdll.dll",
+      "image_sha256": "651ac9041af8e6b5ebd331d53163244c0a27d36d1433f0f15cac1f28c5f2e82c",
+      "image_size": 2523136,
+      "codeview": [
+        {
+          "guid": "C031D45B-0DA1-8A6E-74D0-6ED6AB2DD9E1",
+          "age": 1,
+          "pdb_path": "ntdll.pdb",
+          "symbol_key": "C031D45B0DA18A6E74D06ED6AB2DD9E11"
+        }
+      ],
+      "pdb_matched": true,
+      "lookup_base": 1099511627776,
+      "sym_type": 3,
+      "loaded_pdb": "E:\\OptoJump\\IronJump-native-symbol-preflight-20261017-01\\symbols\\ntdll.pdb",
+      "pdb_unmatched": false,
+      "pdb_identity": {
+        "path": "E:\\OptoJump\\IronJump-native-symbol-preflight-20261017-01\\symbols\\ntdll.pdb",
+        "sha256": "c93f4614aa6f40fe370d40eb7ee9589ca0eda170ef2d704b5d278da71c02c249",
+        "bytes": 1912832,
+        "guid": "C031D45B-0DA1-8A6E-74D0-6ED6AB2DD9E1",
+        "age": 1,
+        "info_age": 4,
+        "age_source": "DBI header (not Info-stream rewrite age)",
+        "info_version": 20000404,
+        "dbi_version": 19990903,
+        "stream_count": 129
+      },
+      "resolved": [
+        {
+          "address": 140705334160972,
+          "module_base": 140705333641216,
+          "module_offset": 519756,
+          "symbol": "RtlUserThreadStart",
+          "pdb_matched": true,
+          "displacement": 44
+        },
+        {
+          "address": 140705334497236,
+          "module_base": 140705333641216,
+          "module_offset": 856020,
+          "symbol": "RtlDelayExecution",
+          "pdb_matched": true,
+          "displacement": 52
+        },
+        {
+          "address": 140705335090644,
+          "module_base": 140705333641216,
+          "module_offset": 1449428,
+          "symbol": "NtWaitForSingleObject",
+          "pdb_matched": true,
+          "displacement": 20
+        },
+        {
+          "address": 140705335092180,
+          "module_base": 140705333641216,
+          "module_offset": 1450964,
+          "symbol": "NtDelayExecution",
+          "pdb_matched": true,
+          "displacement": 20
+        }
+      ]
+    },
+    {
+      "base": 140705291501568,
+      "path": "C:\\WINDOWS\\System32\\KERNELBASE.dll",
+      "image_sha256": "5c29b73622ce0976e1ada566f31f2197ba0f8beaea89c3ec033366126172c3d0",
+      "image_size": 4198400,
+      "codeview": [
+        {
+          "guid": "79B50527-6F14-0450-EB83-DF0440BF06C6",
+          "age": 1,
+          "pdb_path": "kernelbase.pdb",
+          "symbol_key": "79B505276F140450EB83DF0440BF06C61"
+        }
+      ],
+      "pdb_matched": true,
+      "lookup_base": 1103806595072,
+      "sym_type": 3,
+      "loaded_pdb": "E:\\OptoJump\\IronJump-native-symbol-preflight-20261017-01\\symbols\\kernelbase.pdb",
+      "pdb_unmatched": false,
+      "pdb_identity": {
+        "path": "E:\\OptoJump\\IronJump-native-symbol-preflight-20261017-01\\symbols\\kernelbase.pdb",
+        "sha256": "81658a0fe06f313f0370a4bd988e763bcf791da9a20124b24c3f2db4e3b36b43",
+        "bytes": 12554240,
+        "guid": "79B50527-6F14-0450-EB83-DF0440BF06C6",
+        "age": 1,
+        "info_age": 2,
+        "age_source": "DBI header (not Info-stream rewrite age)",
+        "info_version": 20000404,
+        "dbi_version": 19990903,
+        "stream_count": 613
+      },
+      "resolved": [
+        {
+          "address": 140705291615903,
+          "module_base": 140705291501568,
+          "module_offset": 114335,
+          "symbol": "WaitForSingleObjectEx",
+          "pdb_matched": true,
+          "displacement": 175
+        },
+        {
+          "address": 140705292073409,
+          "module_base": 140705291501568,
+          "module_offset": 571841,
+          "symbol": "SleepEx",
+          "pdb_matched": true,
+          "displacement": 145
+        }
+      ]
+    },
+    {
+      "base": 140704388218880,
+      "path": "E:\\OptoJump\\IronJump-gil-native-owner-20261018-01\\NativeOwner.dll",
+      "image_sha256": "d781948f1e96def5f69cb460ca463027f537f2ad470bb2b1f5e2388a52e87f97",
+      "image_size": 122880,
+      "codeview": [],
+      "pdb_matched": false,
+      "lookup_base": 1108101562368,
+      "sym_type": 0,
+      "loaded_pdb": "",
+      "pdb_unmatched": false,
+      "resolved": [
+        {
+          "address": 140704388223381,
+          "module_base": 140704388218880,
+          "module_offset": 4501,
+          "symbol": null,
+          "pdb_matched": false
+        }
+      ]
+    },
+    {
+      "base": 140705322565632,
+      "path": "C:\\WINDOWS\\System32\\KERNEL32.DLL",
+      "image_sha256": "e132eba4166256e2f414b91fe7d5386590bc5ea8626aee5af9c9738383cf2ae1",
+      "image_size": 831488,
+      "codeview": [
+        {
+          "guid": "E8C3A48C-AC7E-B60D-8781-D8C10020C44F",
+          "age": 1,
+          "pdb_path": "kernel32.pdb",
+          "symbol_key": "E8C3A48CAC7EB60D8781D8C10020C44F1"
+        }
+      ],
+      "pdb_matched": true,
+      "lookup_base": 1112396529664,
+      "sym_type": 3,
+      "loaded_pdb": "E:\\OptoJump\\IronJump-native-symbol-preflight-20261017-01\\symbols\\kernel32.pdb",
+      "pdb_unmatched": false,
+      "pdb_identity": {
+        "path": "E:\\OptoJump\\IronJump-native-symbol-preflight-20261017-01\\symbols\\kernel32.pdb",
+        "sha256": "c3127b30252d8a0249bf1ebf024f77e36b207123c41264905c807711a2dd659c",
+        "bytes": 1060864,
+        "guid": "E8C3A48C-AC7E-B60D-8781-D8C10020C44F",
+        "age": 1,
+        "info_age": 2,
+        "age_source": "DBI header (not Info-stream rewrite age)",
+        "info_version": 20000404,
+        "dbi_version": 19990903,
+        "stream_count": 60
+      },
+      "resolved": [
+        {
+          "address": 140705322753447,
+          "module_base": 140705322565632,
+          "module_offset": 187815,
+          "symbol": "BaseThreadInitThunk",
+          "pdb_matched": true,
+          "displacement": 23
+        }
+      ]
+    },
+    {
+      "base": 140703249334272,
+      "path": "D:\\conda\\python311.dll",
+      "image_sha256": "162e8557fbed5f39ae24983ee62b2d435b4796c937d9c1a34371888c7e43af00",
+      "image_size": 6324224,
+      "codeview": [
+        {
+          "guid": "0E3943E6-7A68-4C05-BF0A-BAD24BF14D1E",
+          "age": 2,
+          "pdb_path": "C:\\b\\abs_c5zthharfy\\croot\\python-split_1694437955844\\work\\PCbuild\\amd64\\python311.pdb",
+          "symbol_key": "0E3943E67A684C05BF0ABAD24BF14D1E2"
+        }
+      ],
+      "pdb_matched": true,
+      "lookup_base": 1116691496960,
+      "sym_type": 3,
+      "loaded_pdb": "E:\\OptoJump\\IronJump-native-symbol-preflight-20261017-01\\symbols\\python311.pdb",
+      "pdb_unmatched": false,
+      "pdb_identity": {
+        "path": "E:\\OptoJump\\IronJump-native-symbol-preflight-20261017-01\\symbols\\python311.pdb",
+        "sha256": "65d8f5bc09d2df4acedd4e1164be2859a0fb9afe59510ef0fa4a28d355c1d277",
+        "bytes": 14184448,
+        "guid": "0E3943E6-7A68-4C05-BF0A-BAD24BF14D1E",
+        "age": 2,
+        "info_age": 2,
+        "age_source": "DBI header (not Info-stream rewrite age)",
+        "info_version": 20000404,
+        "dbi_version": 19990903,
+        "stream_count": 268
+      },
+      "resolved": [
+        {
+          "address": 140703250025493,
+          "module_base": 140703249334272,
+          "module_offset": 691221,
+          "symbol": "thread_run",
+          "pdb_matched": true,
+          "displacement": 181
+        },
+        {
+          "address": 140703250040276,
+          "module_base": 140703249334272,
+          "module_offset": 706004,
+          "symbol": "time_sleep",
+          "pdb_matched": true,
+          "displacement": 164
+        },
+        {
+          "address": 140703250047994,
+          "module_base": 140703249334272,
+          "module_offset": 713722,
+          "symbol": "pysleep",
+          "pdb_matched": true,
+          "displacement": 602
+        },
+        {
+          "address": 140703250376281,
+          "module_base": 140703249334272,
+          "module_offset": 1042009,
+          "symbol": "_PyObject_VectorcallTstate",
+          "pdb_matched": true,
+          "displacement": 73
+        },
+        {
+          "address": 140703250377550,
+          "module_base": 140703249334272,
+          "module_offset": 1043278,
+          "symbol": "_PyVectorcall_Call",
+          "pdb_matched": true,
+          "displacement": 206
+        },
+        {
+          "address": 140703250377681,
+          "module_base": 140703249334272,
+          "module_offset": 1043409,
+          "symbol": "PyObject_Vectorcall",
+          "pdb_matched": true,
+          "displacement": 33
+        },
+        {
+          "address": 140703250377823,
+          "module_base": 140703249334272,
+          "module_offset": 1043551,
+          "symbol": "_PyObject_Call",
+          "pdb_matched": true,
+          "displacement": 79
+        },
+        {
+          "address": 140703250378157,
+          "module_base": 140703249334272,
+          "module_offset": 1043885,
+          "symbol": "_PyFunction_Vectorcall",
+          "pdb_matched": true,
+          "displacement": 61
+        },
+        {
+          "address": 140703250387190,
+          "module_base": 140703249334272,
+          "module_offset": 1052918,
+          "symbol": "method_vectorcall",
+          "pdb_matched": true,
+          "displacement": 262
+        },
+        {
+          "address": 140703250659466,
+          "module_base": 140703249334272,
+          "module_offset": 1325194,
+          "symbol": "cfunction_vectorcall_O",
+          "pdb_matched": true,
+          "displacement": 234
+        },
+        {
+          "address": 140703251369362,
+          "module_base": 140703249334272,
+          "module_offset": 2035090,
+          "symbol": "_PyCOND_WAIT_MS",
+          "pdb_matched": true,
+          "displacement": 50
+        },
+        {
+          "address": 140703251369985,
+          "module_base": 140703249334272,
+          "module_offset": 2035713,
+          "symbol": "take_gil",
+          "pdb_matched": true,
+          "displacement": 177
+        },
+        {
+          "address": 140703251370835,
+          "module_base": 140703249334272,
+          "module_offset": 2036563,
+          "symbol": "PyEval_RestoreThread",
+          "pdb_matched": true,
+          "displacement": 19
+        },
+        {
+          "address": 140703251393626,
+          "module_base": 140703249334272,
+          "module_offset": 2059354,
+          "symbol": "_PyEval_EvalFrameDefault",
+          "pdb_matched": true,
+          "displacement": 18362
+        },
+        {
+          "address": 140703251398015,
+          "module_base": 140703249334272,
+          "module_offset": 2063743,
+          "symbol": "_PyEval_EvalFrameDefault",
+          "pdb_matched": true,
+          "displacement": 22751
+        },
+        {
+          "address": 140703251409486,
+          "module_base": 140703249334272,
+          "module_offset": 2075214,
+          "symbol": "_PyEval_Vector",
+          "pdb_matched": true,
+          "displacement": 190
+        },
+        {
+          "address": 140703251416317,
+          "module_base": 140703249334272,
+          "module_offset": 2082045,
+          "symbol": "do_call_core",
+          "pdb_matched": true,
+          "displacement": 397
+        },
+        {
+          "address": 140703251953154,
+          "module_base": 140703249334272,
+          "module_offset": 2618882,
+          "symbol": "bootstrap",
+          "pdb_matched": true,
+          "displacement": 50
+        }
+      ]
+    },
+    {
+      "base": 140705287766016,
+      "path": "C:\\WINDOWS\\System32\\ucrtbase.dll",
+      "image_sha256": "dedb7611e1abc1ff3852dcac3d4c93a048d729e25b061973b9969f22698f14ca",
+      "image_size": 1359872,
+      "codeview": [
+        {
+          "guid": "66A3E8DF-B8B8-8614-6544-529E6A6DD4F4",
+          "age": 1,
+          "pdb_path": "ucrtbase.pdb",
+          "symbol_key": "66A3E8DFB8B886146544529E6A6DD4F41"
+        }
+      ],
+      "pdb_matched": true,
+      "lookup_base": 1120986464256,
+      "sym_type": 3,
+      "loaded_pdb": "E:\\OptoJump\\IronJump-native-symbol-preflight-20261017-01\\symbols\\ucrtbase.pdb",
+      "pdb_unmatched": false,
+      "pdb_identity": {
+        "path": "E:\\OptoJump\\IronJump-native-symbol-preflight-20261017-01\\symbols\\ucrtbase.pdb",
+        "sha256": "a50163c7ff628926c0d22c27d90d871d08e8bc1779aa8df4e7de86c990274c6f",
+        "bytes": 2748416,
+        "guid": "66A3E8DF-B8B8-8614-6544-529E6A6DD4F4",
+        "age": 1,
+        "info_age": 3,
+        "age_source": "DBI header (not Info-stream rewrite age)",
+        "info_version": 20000404,
+        "dbi_version": 19990903,
+        "stream_count": 325
+      },
+      "resolved": [
+        {
+          "address": 140705287949616,
+          "module_base": 140705287766016,
+          "module_offset": 183600,
+          "symbol": "thread_start<unsigned int (__cdecl*)(void *),1>",
+          "pdb_matched": true,
+          "displacement": 48
+        }
+      ]
+    }
+  ]
+}

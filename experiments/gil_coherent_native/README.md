@@ -1,0 +1,26 @@
+这是独立的同一暂停 Python/原生栈候选工具，当前仅完成恒定原生持有者合成控制，尚未部署现场入口。正式程序、原NumPy、滤波、Processor、线程和绘图均未改。没有启动人体、USB、GUI、Run、优化A/B或ETW/WPR。
+
+新工具在一个外层进程暂停作用域内读取GIL身份、全部Python帧、持有者和指定线程的原始上下文/调用链，恢复成功后才解析符号和写文件。PythonSpy的内部nonblocking在这里不代表目标正在运行：外层锁已暂停该进程。保留context IP以及StackWalk返回的重复首帧，不使用会过滤CPython内部帧与线程入口的合并栈；独立查验闭合，不能把StackWalk结束当成闭合证明。activity标志明确无效，不能用于Running/Ready/Waiting判断。
+
+本次新冻结计划只执行一轮40次合成控制。40/40完整读括号都被同一独立原生oracle epoch包围，心跳停止且随后恢复，保留句柄/创建时间、GetThreadTimes、cycles核对通过；目标和观察器都正常退出。每次都同时保留无Python帧owner与Python心跳线程，后者具备take_gil→PyEval_RestoreThread等待链。两条原生链每次都闭合到BaseThreadInitThunk→RtlUserThreadStart。该结果仅是新控制，不替代历史失败轮次，也不识别fieldTID3816。
+
+采后独立离线核对5个系统/Python模块的PE/PDB GUID+age：匹配者才保留函数名作为证据。没有PDB的NativeOwner.dll原始帧保留为同SHA模块+RVA0x1195，不编造具体符号。原始行内symbol字符串始终标记pdb_match_verified=false，独立认证见constant_symbols01.json。没有内核调用栈，不把用户态ntdll帧称为内核栈。
+
+完整读括号中位3.866ms、最大4.983ms；NtSuspendProcess成功返回至NtResumeProcess返回的内部括号中位3.852ms。内部括号不覆盖暂停调用开始，不能冒充总暂停或GIL持有时间。首次恢复后的符号处理造成实际首间隔155.091ms，全部保留，未按50ms序号插值，也未重采覆盖。动态owner/Python帧变化正确性及实际负载扰动仍未通过，field_attribution_ready继续false。
+
+源码冻结计划和全部原始证据分别保留在本目录及被忽略的experiments/native_stack_capture/runs/gil_coherent_native01。构建第一次因Windows PID类型不符失败，日志、原始源归档和快照保留；这是构建失败，尚未开始采样。第一次离线符号解析的基址返回值未通过验证，旧脚本保留；尚未单独区分地址冲突与路径规范化。新解析明确规范路径、使用独立虚拟地址作RVA映射，不重采或改写原地址。旧CPU/CSwitch验收与旧故障锁仍保留。
+
+复核：
+
+```sh
+python experiments/gil_coherent_native/verify.py --root "$PWD" --raw experiments/native_stack_capture/runs/gil_coherent_native01/evidence01 --resolved experiments/gil_coherent_native/constant_symbols01.json --output /tmp/coherent-native-fresh.json
+python -m unittest discover -s experiments/gil_coherent_native -p test_coherent.py
+```
+
+下一步在不同的冻结控制中检验owner/Python帧改变时的同窗一致性，再做带负载扰动校准；均先使用隔离合成目标。当前不要求新增现场Walk，不将此控制升级成现场归因通过，也不输出GIL等待占比或责任函数结论。
+
+额外的fault_plan01是单独冻结的缺失线程故障注入：请求不存在的TID，观察器返回1，仅init/error两行、无成功样本或complete；目标随后心跳恢复并正常退出。控制器保留AssertionError、stderr及fault01/active.lock，仍标为失败，不能把“目标恢复”写成“采集成功”。详情见fault_result01.json与post_fault01.json。
+
+恒定oracle验证的是完整读取括号内的身份与调用链一致性；暂停API返回不单独构成动态暂停交付校准。后续控制还需不依赖GIL的原生心跳，以及owner/Python帧变化，避免用被GIL本身阻塞的Python心跳证明所有线程都已暂停。
+
+补充离线身份审计见constant_symbols02.json及pdb_identity_crosscheck01.json：将PE CodeView、独立解析PDB及DbgHelp实际加载的GUID/age逐项交叉核对，5个匹配模块全部一致；原始地址、模块SHA和解析函数与constant_symbols01完全相同。新审计保留解析器与身份辅助源码SHA，没有重新采集，旧审计继续保留。

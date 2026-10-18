@@ -1,0 +1,12 @@
+[package]
+name = "ironjump-gil-coherent-native"
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.85"
+publish = false
+
+[dependencies]
+anyhow = "1"
+py-spy = { version = "=0.4.2", default-features = false }
+remoteprocess = { version = "=0.5.2", features = ["unwind"] }
+serde_json = "1"

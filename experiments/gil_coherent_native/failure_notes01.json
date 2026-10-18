@@ -1,0 +1,25 @@
+{
+  "build01": {
+    "returncode": 101,
+    "reason": "Windows Pid/Tid are u32, initial wrapper used i32",
+    "source_snapshot": "source_build01.rs",
+    "source_archive": "source01.zip",
+    "log": "build01.log",
+    "sampling_attempted": false
+  },
+  "build02": {
+    "returncode": 0,
+    "source": "src/main.rs",
+    "log": "build02.log"
+  },
+  "offline_resolver01": {
+    "result": "AssertionError at returned module base",
+    "reason": "Static loading at recorded process bases was not accepted; no output/capture was replaced",
+    "source": "resolve_raw.py"
+  },
+  "offline_resolver02": {
+    "result": "Static virtual lookup bases with explicit RVA conversion; independently checked PE size and PDB GUID/age",
+    "source": "resolve_raw02.py"
+  },
+  "scope": "Every build and raw observation remains retained; no field or sampling retry used to replace failure."
+}

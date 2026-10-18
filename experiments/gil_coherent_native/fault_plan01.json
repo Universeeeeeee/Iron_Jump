@@ -1,0 +1,30 @@
+{
+  "scope": "One distinct missing-native-thread fault injection into a fresh synthetic process. Must fail transport/protocol, retain fault lock, and demonstrate target recovery after external lock release. No field use or replacement sampling.",
+  "count": 1,
+  "period_ms": 50,
+  "eligible_floor": 1,
+  "clock_uncertainty_ns_max": 1000000,
+  "observer_sha256": "1a1ecfd3bc7ca46e44c12752b7a5fb39fa9d2b64ffc0b4e438446476a73dcd00",
+  "python_dll_sha256": "162e8557fbed5f39ae24983ee62b2d435b4796c937d9c1a34371888c7e43af00",
+  "oracle_dll_sha256": "d781948f1e96def5f69cb460ca463027f537f2ad470bb2b1f5e2388a52e87f97",
+  "dbghelp_sha256": "2d2ec94891162a61d86789133623b47d64d74c15d6be99473b25ad7a6468cf39",
+  "native_helpers": "E:/OptoJump/IronJump-gil-timestamped-20261018-01/field01/experiments/native_stack_capture",
+  "symbol_search_path": "E:/OptoJump/IronJump-native-symbol-preflight-20261017-01/symbols;E:/OptoJump/IronJump-native-symbol-preflight-20261017-01/symbols/vendor",
+  "sources": {
+    "Cargo.toml": "c8ef1927bb6fd4e62df286212fa0e5689129500e6a9592a506beab86cc941831",
+    "Cargo.lock": "8ccca4817f82d46ee1c66ff1751eb15b3a8f2e56ce2e5198c94efe66af64105b",
+    "src/main.rs": "176b7a77d6f9e921517451c36cb91d3fa5a52771284f279c67852c27636e25c7",
+    "fixture.py": "80b67741376b2c7a89c0750d5c52b8f632db41e370f9903914afcaed40d4b4a4",
+    "control_fault.py": "fbdfa1285dae601395161d62cd95d361f6e5dbbe636ecad7b028af7a08972207"
+  },
+  "checks": [
+    "40 chronological complete samples; zero errors or forced cleanup; native lifetime handles stable and heartbeat recovers.",
+    "Every eligible full-read bracket is contained by independent stable native epoch with no heartbeat progress; >=30 joins.",
+    "One external suspend scope contains Python read and raw native contexts for both GIL owner and independently identified heartbeat thread. Context IP equals preserved raw first address; no merge/filtering.",
+    "Native termination is not automatically closure. PDB matching/full roots and actual-load perturbation remain separate unpassed gates.",
+    "Activity flags are invalid for scheduling because PythonSpy OS enumeration occurs under external suspension."
+  ],
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "expected_error": "Requested/owner OS thread missing"
+}

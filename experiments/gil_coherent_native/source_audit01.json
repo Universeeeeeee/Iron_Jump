@@ -1,0 +1,17 @@
+{
+  "source_archive_sha256": "b819c109ceb1458bc07f073ce6c563396dc2391ae5b44b7c61370452f74e367a",
+  "source_sha256": {
+    "py-spy-0.4.2/src/native_stack_trace.rs": "069f912b7a5dda7b607138a6b2baea8b33754a4cece9d2be84cad4a97e603f1d",
+    "py-spy-0.4.2/src/python_spy.rs": "21a9ff67759655329633db5022925dfac72a920d3b970bf5b8ec4b6866129793",
+    "remoteprocess-0.5.2/src/windows/mod.rs": "99fa42da4734ccac39a22990e084e0f2601f387889313b3545d15115bf78be7d",
+    "remoteprocess-0.5.2/src/windows/unwinder.rs": "2b8afc9c5c57810c8947b89c85416b19efe51eb0dbe72deaf14077f762f9dc08"
+  },
+  "findings": [
+    "Built-in native merge can ignore CPython native frames, replace evaluation frames, append Python frames on missing native evaluation root, and filter thread roots. It cannot serve as the raw closure evidence.",
+    "Windows raw cursor uses GetThreadContext + StackWalk64. Cursor iteration can repeat initial IP, and termination alone does not distinguish a normal root from unwind failure.",
+    "New candidate holds exactly one external Process.lock, configures PythonSpy internal nonblocking only inside that scope, reads raw native owner and requested-thread contexts before dropping the same lock, then resolves/formats/writes after successful resume.",
+    "Original PythonSpy OS active flags are not valid scheduling labels when called under the external lock; records mark them invalid.",
+    "Process-owned thread handles are enumerated under the lock; independent fixture native TID/creation/time/cycle handles and native seqlock bracket the whole read.",
+    "No py-spy dependency fork or original observer source was changed."
+  ]
+}
