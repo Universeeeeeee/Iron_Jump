@@ -1,0 +1,354 @@
+{
+  "scope": "One fixed24-pair balanced OFF/ON confirmation at4Hz, selected once from both8-pair A/A pilots with insufficient predicted precision at the cap. All outcomes kept. No optional extension/retry, no field/human/hardware/USB/GUI/SDK/Run/optimization.",
+  "raw_first": 42237,
+  "raw_after_last": 49061,
+  "count": 8,
+  "period_ms": 250,
+  "minimum_samples_in_roi": 8,
+  "relative_limit": 0.03,
+  "cpu_crosscheck_tolerance_ns": 50000000,
+  "clock_uncertainty_ns_max": 1000000,
+  "observer_sha256": "02e367c7ca0b1cda5f1067b03125a770a502f10fcabb99fa5925b4265050d615",
+  "python_dll_sha256": "162e8557fbed5f39ae24983ee62b2d435b4796c937d9c1a34371888c7e43af00",
+  "symbol_search_path": "E:/OptoJump/IronJump-native-symbol-preflight-20261017-01/symbols;E:/OptoJump/IronJump-native-symbol-preflight-20261017-01/symbols/vendor",
+  "native_helpers": "E:/OptoJump/IronJump-gil-timestamped-20261018-01/field01/experiments/native_stack_capture",
+  "replay_root": "E:/OptoJump/IronJump-walk-compute-offline-20261017-01",
+  "input_root": "E:/OptoJump/IronJump-single-usb-human-etw-20261017/experiments/single_usb_human_etw/runs/20261018_131910_3eef864f_walk_off/capture",
+  "input_sha256": {
+    "raw_frames.npz": "8ee4a9ea9ac835f5dc083d014eeaef9d337ee8c140f1cdc3a11f1be6fece2d47",
+    "raw_archive.npz": "6ec340e2ca62742235d6602cf38c4470a20cf5f29441c8387be9bb85522cdcd5",
+    "acquisition.json": "e84e6bd481eeadd408a61c377950cc878bf8d989b92f58596fccf6eee62c62cb",
+    "report.json": "0ae1bf2d9277c1e3d95d629e071cb3ff61d249c78c6d0b6d0901773f4fb68747",
+    "state.json": "bfb63086da795427cc2fbd5985a4ff56bcd1cdb964908dcc4a9408a79a6d914f",
+    "measurement.json": "a2b441f1367dd3d5eb7204c75eeebf05c344e8dd69b632ba29f57a4eed6febe9"
+  },
+  "report_canonical_sha256": "f497b7901a79d5b902744ce4a4a87270862ec3f8d2409c6f8982ec9d4b909c68",
+  "waiter_qualification_sha256": "25dd9832b4dfcab9c43a150558b9c7fdbc9056e886c578f0332212f5e829d59c",
+  "sources": {
+    "target03.py": "0c91da35a376cf453f1759ffc3a05299700005fb66ae236f7ab9c4cb202e4b13",
+    "control_phase01.py": "3d45c7758001c5a60b50ac5e23e35c07e7cc9d423cf2f349946f280a4aba181f",
+    "runner_phase01.py": "c71d3f9fde1db90e8d78b190b591afc64685a5888a78226d929754ff594ff7bf",
+    "stream_driver01.py": "852470353eb2805a10a32fce3f31dd2f3caa6006aea8c4ff5beb3ff850a9d22f",
+    "atomic_io03.py": "33cabfa4e3a3a61fb33cd45bab8e1c61d0ceeb5d52486c395f1707ae93701e7c",
+    "verify.py": "a71eb4613facf2d827266388c6721ce1951afe4ceb50d159f5c4b87ff083155c",
+    "align_clock.py": "d49f54563591d23e9fc8e08b7d8eab028b65fbaa7dcb329e12b6ac58c2c893f1",
+    "waiter_qualification02.json": "25dd9832b4dfcab9c43a150558b9c7fdbc9056e886c578f0332212f5e829d59c"
+  },
+  "replay_helper_sha256": "fcde26dd2e707cc457623a971a97e68ebd9f49630126c51bd6ce83072a0d40a8",
+  "checks": [
+    "Retain all three predeclared pairs including any failing performance blocks; do not replace or lower15% limits. Abort on capture/cleanup errors and preserve locks/PIDs/logs.",
+    "All full original outputs and458 frozen source files and6 input hashes exact. Final binary hash matches deterministic control; address0 disables only synthetic probes, not the external lock/read/unwind path.",
+    "Separate full host/QPC brackets, actual sample count/order, native PID/TID handles, GetThreadTimes/thread_time and cycles. At least38/40 full sample brackets in contact ROI. No sample-index time reconstruction.",
+    "Absolute relative changes of total wall/CPU/cycles and every fixed1000-input wall block must stay <=15%. Root/PDB field quality is not implied by raw stream termination.",
+    "Only original consumer chain is measured. No reader queue/pending, GUI painting, visual callbacks or real SDK child is emulated or attributed. Full actual-load calibration remains false."
+  ],
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "prior_plan_sha256": "105e005ae4f383901c241fe07c501106b72a2145af573742345ac308e098ed6c",
+  "repair_preparation_sha256": "25a1c288d6704176fb8a1f1b732b875137988504ed4e31c8458741955fe7c528",
+  "source_change": "Only JSON output publication is staged+fsync+same-directory rename. No processing function, capture binary, workload, semantic check or performance threshold changed.",
+  "cases": [
+    {
+      "id": "pair01_off",
+      "pair": 1,
+      "side": "off",
+      "mode": "off"
+    },
+    {
+      "id": "pair01_on",
+      "pair": 1,
+      "side": "on",
+      "mode": "on"
+    },
+    {
+      "id": "pair02_on",
+      "pair": 2,
+      "side": "on",
+      "mode": "on"
+    },
+    {
+      "id": "pair02_off",
+      "pair": 2,
+      "side": "off",
+      "mode": "off"
+    },
+    {
+      "id": "pair03_off",
+      "pair": 3,
+      "side": "off",
+      "mode": "off"
+    },
+    {
+      "id": "pair03_on",
+      "pair": 3,
+      "side": "on",
+      "mode": "on"
+    },
+    {
+      "id": "pair04_on",
+      "pair": 4,
+      "side": "on",
+      "mode": "on"
+    },
+    {
+      "id": "pair04_off",
+      "pair": 4,
+      "side": "off",
+      "mode": "off"
+    },
+    {
+      "id": "pair05_off",
+      "pair": 5,
+      "side": "off",
+      "mode": "off"
+    },
+    {
+      "id": "pair05_on",
+      "pair": 5,
+      "side": "on",
+      "mode": "on"
+    },
+    {
+      "id": "pair06_on",
+      "pair": 6,
+      "side": "on",
+      "mode": "on"
+    },
+    {
+      "id": "pair06_off",
+      "pair": 6,
+      "side": "off",
+      "mode": "off"
+    },
+    {
+      "id": "pair07_off",
+      "pair": 7,
+      "side": "off",
+      "mode": "off"
+    },
+    {
+      "id": "pair07_on",
+      "pair": 7,
+      "side": "on",
+      "mode": "on"
+    },
+    {
+      "id": "pair08_on",
+      "pair": 8,
+      "side": "on",
+      "mode": "on"
+    },
+    {
+      "id": "pair08_off",
+      "pair": 8,
+      "side": "off",
+      "mode": "off"
+    },
+    {
+      "id": "pair09_off",
+      "pair": 9,
+      "side": "off",
+      "mode": "off"
+    },
+    {
+      "id": "pair09_on",
+      "pair": 9,
+      "side": "on",
+      "mode": "on"
+    },
+    {
+      "id": "pair10_on",
+      "pair": 10,
+      "side": "on",
+      "mode": "on"
+    },
+    {
+      "id": "pair10_off",
+      "pair": 10,
+      "side": "off",
+      "mode": "off"
+    },
+    {
+      "id": "pair11_off",
+      "pair": 11,
+      "side": "off",
+      "mode": "off"
+    },
+    {
+      "id": "pair11_on",
+      "pair": 11,
+      "side": "on",
+      "mode": "on"
+    },
+    {
+      "id": "pair12_on",
+      "pair": 12,
+      "side": "on",
+      "mode": "on"
+    },
+    {
+      "id": "pair12_off",
+      "pair": 12,
+      "side": "off",
+      "mode": "off"
+    },
+    {
+      "id": "pair13_off",
+      "pair": 13,
+      "side": "off",
+      "mode": "off"
+    },
+    {
+      "id": "pair13_on",
+      "pair": 13,
+      "side": "on",
+      "mode": "on"
+    },
+    {
+      "id": "pair14_on",
+      "pair": 14,
+      "side": "on",
+      "mode": "on"
+    },
+    {
+      "id": "pair14_off",
+      "pair": 14,
+      "side": "off",
+      "mode": "off"
+    },
+    {
+      "id": "pair15_off",
+      "pair": 15,
+      "side": "off",
+      "mode": "off"
+    },
+    {
+      "id": "pair15_on",
+      "pair": 15,
+      "side": "on",
+      "mode": "on"
+    },
+    {
+      "id": "pair16_on",
+      "pair": 16,
+      "side": "on",
+      "mode": "on"
+    },
+    {
+      "id": "pair16_off",
+      "pair": 16,
+      "side": "off",
+      "mode": "off"
+    },
+    {
+      "id": "pair17_off",
+      "pair": 17,
+      "side": "off",
+      "mode": "off"
+    },
+    {
+      "id": "pair17_on",
+      "pair": 17,
+      "side": "on",
+      "mode": "on"
+    },
+    {
+      "id": "pair18_on",
+      "pair": 18,
+      "side": "on",
+      "mode": "on"
+    },
+    {
+      "id": "pair18_off",
+      "pair": 18,
+      "side": "off",
+      "mode": "off"
+    },
+    {
+      "id": "pair19_off",
+      "pair": 19,
+      "side": "off",
+      "mode": "off"
+    },
+    {
+      "id": "pair19_on",
+      "pair": 19,
+      "side": "on",
+      "mode": "on"
+    },
+    {
+      "id": "pair20_on",
+      "pair": 20,
+      "side": "on",
+      "mode": "on"
+    },
+    {
+      "id": "pair20_off",
+      "pair": 20,
+      "side": "off",
+      "mode": "off"
+    },
+    {
+      "id": "pair21_off",
+      "pair": 21,
+      "side": "off",
+      "mode": "off"
+    },
+    {
+      "id": "pair21_on",
+      "pair": 21,
+      "side": "on",
+      "mode": "on"
+    },
+    {
+      "id": "pair22_on",
+      "pair": 22,
+      "side": "on",
+      "mode": "on"
+    },
+    {
+      "id": "pair22_off",
+      "pair": 22,
+      "side": "off",
+      "mode": "off"
+    },
+    {
+      "id": "pair23_off",
+      "pair": 23,
+      "side": "off",
+      "mode": "off"
+    },
+    {
+      "id": "pair23_on",
+      "pair": 23,
+      "side": "on",
+      "mode": "on"
+    },
+    {
+      "id": "pair24_on",
+      "pair": 24,
+      "side": "on",
+      "mode": "on"
+    },
+    {
+      "id": "pair24_off",
+      "pair": 24,
+      "side": "off",
+      "mode": "off"
+    }
+  ],
+  "analysis_rules": {
+    "independent_unit": "whole fresh replay pair; blocks correlated, not independent replicates",
+    "pilot_pairs": 8,
+    "no_optional_stopping": true,
+    "discard_outliers": false,
+    "changing_cpu_delivery": "Report drift/CPU/cycles; do not convert cycles to frequency or post-hoc normalize away wall changes.",
+    "future_sample_size": "Derived once after this pilot with explicit maximum; inconclusive if precision insufficient."
+  },
+  "start_delay_ms": 20,
+  "planning_sha256": "234d0ba9eea008e0b94137d960ff77ec48868ee4f18d20a173be376995613b6d",
+  "statistics_plan_sha256": "0a85b67595726c84585d14d933b653ebb1426037bc49f30500d89292ae0a8823",
+  "statistics_source_sha256": "08442982a9c0634095d21f138611803dd063072006e7a66eed9d52fa0a8311c8",
+  "phase_change": "A/A pilot had7 or8 full-ROI samples; confirmation waits20ms after target go and strictly requires all8 full brackets inside ROI. Same target, binary, period and count. Pilot ON variance is an approximate design prior for this phase; actual CI uses confirmation pairs themselves. No claim of exact phase-matched A/A.",
+  "quiet_protocol": "No assistant Windows metadata/status/archive/test processes during this cohort. Progress only from completed-case stdout of existing controller. Ordinary machine background is not controlled."
+}

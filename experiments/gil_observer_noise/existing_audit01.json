@@ -1,0 +1,43 @@
+{
+  "scope": "Descriptive audit only, existing3 OFF and3 ON runs are not predeclared A/A. No causal frequency or function attribution.",
+  "source_review_sha256": "0907bb57941d014f9e78558ac71b00cd6a49ca1136fb2cf7beef9787682aa780",
+  "groups": {
+    "off": {
+      "n": 3,
+      "wall_ms": [
+        2113.6533,
+        2107.4435,
+        2164.4797
+      ],
+      "cv_percent": 1.4701103017127934,
+      "range_relative_percent": 2.7064165658533756
+    },
+    "on": {
+      "n": 3,
+      "wall_ms": [
+        2269.9128,
+        2246.6719,
+        2265.9279
+      ],
+      "cv_percent": 0.5497318978770173,
+      "range_relative_percent": 1.034459014687461
+    }
+  },
+  "read_bracket_ms": {
+    "median": 3.8517,
+    "max": 7.0537
+  },
+  "post_resume_resolution_ms": {
+    "median": 0.33795,
+    "max": 125.92
+  },
+  "planning": {
+    "candidate_period_ms": 250,
+    "candidate_count_in_replay": 8,
+    "median_full_read_bracket_per_second_ms": 15.4068,
+    "max_observed_full_read_bracket_per_second_ms": 28.2148,
+    "limits": "Read bracket includes more than and differs from actual pause; this is a planning budget, not calibrated overhead. Lower frequency reduces evidence density; no time-share/root attribution is qualified."
+  },
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false
+}

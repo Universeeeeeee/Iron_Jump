@@ -1,0 +1,35 @@
+{
+  "scope": "Prospective analysis rules frozen while OFF/OFF pilot runs; no outcomes used for endpoints/limits. Statistics run in a separate temporary environment, original project/Windows NumPy untouched.",
+  "sources": {
+    "noise_stats.py": "08442982a9c0634095d21f138611803dd063072006e7a66eed9d52fa0a8311c8",
+    "test_noise_stats.py": "9923373f920c7e61ce6d0fb0f986eb8378867d8e7c2028a9dc987b68d7e16627",
+    "stats_requirements.txt": "c66c2760ef764b5dd41b56b89c266603ef27ec1a4f6895247801b2afd35fb7f7"
+  },
+  "AA_groups": [
+    "8 OFF/OFF whole fresh process pairs",
+    "8 ON/ON whole fresh process pairs at250ms/4Hz with8 reads"
+  ],
+  "confirmation_rule": {
+    "minimum_pairs": 8,
+    "maximum_pairs": 24,
+    "log_halfwidth_target_relative": 0.01,
+    "chosen_once": "Use precision_plan from both completed A/A groups; fixed cap and no outcome-driven extension"
+  },
+  "equivalence": {
+    "relative_bound": 0.03,
+    "independent_unit": "whole pair",
+    "family_alpha": 0.05,
+    "endpoints": [
+      "whole wall",
+      "whole thread CPU",
+      "whole cycles",
+      "7 prespecified1000-input wall blocks"
+    ],
+    "legacy_per_trial_absolute_bound": 0.15,
+    "outliers": "All retained; no post-hoc normalization, trimming, success replacement or adaptive optional stopping"
+  },
+  "drift": "Rank trend|rho|>=.7 and p<.05 is a warning that blocks readiness; absence of flag does not prove stationarity.",
+  "limits": "Student t assumes suitable pair-error stationarity and independence. Prospective A/A estimation does not prove Gaussian tails. Even passed offline equivalence cannot qualify GUI/vision/SDK/USB full field load or fine time shares below the error budget.",
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false
+}
