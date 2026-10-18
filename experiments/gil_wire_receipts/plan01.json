@@ -1,0 +1,30 @@
+{
+  "scope": "Four synthetic interleavings only, exact original serve body and real TrackingRuntime beneath fake native hardware. New text-before-parse/write receipts preserve original line/byte contents; no actual replay/model/device/human/Run/optimization AB.",
+  "sources": {
+    "receipts.py": "f05d0cd232ce893bee3aef669e7f0e4d8b87a47e57e1c3831b219ae16eff6f8f",
+    "control.py": "cc2ad742ded812eb4a90170a189e473d40d3fc30f6a0b9d20c7acea3a256ceb0",
+    "test_receipts.py": "c825f87698156e35a5ac5b23fec0a5772590e0a6d3a25416efd394f1efa99cdf",
+    "verify.py": "93f248152f4292cbba43de38fcfd36c900e32bf21e1c7951c103f22d27535166"
+  },
+  "existing_sources": {
+    "camera/control_service.py": "d3a786f0483b53ba2a28345381df51fff9a96a9f214076ca75310abe9331afe0",
+    "camera/tracking_runtime.py": "e3f079bca732ebb8e642eb29183eb19a8e68e2d44f2e3ceca3ec0c07168b68e7",
+    "camera/pose_tracking.py": "ce477c35317c08741a7d62f67be3f0a696648580b82d53c729e63aa3814b87e7",
+    "experiments/gil_sdk_receipt_control/control.py": "38a5c3874fff1e2174f0dc7107fcf1809d6e3544a182e48638b045e8ab24c424"
+  },
+  "cases": [
+    "before_runtime",
+    "constructor_gap",
+    "inactive_runtime",
+    "wrong_generation"
+  ],
+  "checks": [
+    "Every successful tested ASCII LF write retains its original byte object and return value, and pairs with an independently observed original stdin text line in order.",
+    "Repeated identical digests retain distinct observer-local sequence numbers. No wire occurrence ID is added.",
+    "Pre-runtime omission is distinguished at stdin vs runtime log; parse rejection can still have a text receipt.",
+    "Partial/negative writes, write/read exceptions, changed line endings and unpaired counts remain failures.",
+    "Original sources, all previous failure states/locks and CPU/stack/3%/1% gates unchanged. No performance or root attribution promotion."
+  ],
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false
+}

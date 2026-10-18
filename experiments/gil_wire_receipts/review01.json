@@ -1,0 +1,25 @@
+{
+  "title": "独立解析前文本行收据原型：重复事件可区分，旧缺失事件仍不可回填",
+  "synthetic_control_pass": true,
+  "observations": [
+    "不改原始消息，独立记录发送write的请求摘要、返回的接受字节数与错误；接收端在原json.loads之前记录文本行序号、摘要及读时界限。",
+    "同内容重复行摘要相同但观测序号不同；启动交错时，发送/文本行收据仍全匹配，而runtime日志少一条，可将缺记录定位在更晚阶段。",
+    "异常JSON先有接收收据再解析失败；部分/负返回写入、异常及CRLF归一化不被算作字节一致。"
+  ],
+  "limits": [
+    "接收位置在TextIO解码后，不是内核管道原始字节；仅当前ASCII+LF+每write一行的合成合同可比较字节摘要。",
+    "原型未部署实际QProcess/SDK入口，未证明QProcess缓冲接受等于OS交付。",
+    "哈希和记录本身有扰动且可能释放GIL，需要新的冻结与实际负载校准。",
+    "540/539旧记录没有这些独立收据，不能回填或缩小旧73次同载荷候选组；原失败判定保持。"
+  ],
+  "next": "先在合成QProcess/真实文本管道上验证分块、关闭、写失败和独立序号，之后才考虑新实验入口；不得移除旧失败点来取得通过。",
+  "tests": {
+    "ran": 107,
+    "passed": 103,
+    "platform_skips": 4
+  },
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "primary_root_identified": false,
+  "raw_archive_sha256": "4925844eb9f64ec13859bb3f2c58a44bdffd25287e888451ea4431ed26a9a6d9"
+}

@@ -1,0 +1,52 @@
+{
+  "checks": {
+    "before_runtime_independent_text_receipts": true,
+    "before_runtime_line_preserved": true,
+    "before_runtime_clean": true,
+    "before_runtime_runtime_omission_located": true,
+    "constructor_gap_independent_text_receipts": true,
+    "constructor_gap_line_preserved": true,
+    "constructor_gap_clean": true,
+    "constructor_gap_runtime_omission_located": true,
+    "inactive_runtime_independent_text_receipts": true,
+    "inactive_runtime_line_preserved": true,
+    "inactive_runtime_clean": true,
+    "wrong_generation_independent_text_receipts": true,
+    "wrong_generation_line_preserved": true,
+    "wrong_generation_clean": true
+  },
+  "synthetic_preparse_receipt_control_pass": true,
+  "counts": {
+    "before_runtime": {
+      "sender_writes": 4,
+      "preparse_text_receipts": 4,
+      "runtime_pose_input_logs": 1
+    },
+    "constructor_gap": {
+      "sender_writes": 3,
+      "preparse_text_receipts": 3,
+      "runtime_pose_input_logs": 1
+    },
+    "inactive_runtime": {
+      "sender_writes": 3,
+      "preparse_text_receipts": 3,
+      "runtime_pose_input_logs": 1
+    },
+    "wrong_generation": {
+      "sender_writes": 2,
+      "preparse_text_receipts": 2,
+      "runtime_pose_input_logs": 1
+    }
+  },
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "primary_root_identified": false,
+  "previous_540_539_occurrence_recovered": false,
+  "limits": [
+    "Observer-local sequence identifies repeated line occurrences in these complete synthetic transcripts; no sequence field is inserted in the original wire.",
+    "Text receipt is after TextIO decoding and before original JSON parsing. Only tested ASCII LF framing permits requested-byte and text-digest comparison; partial writes/CRLF translation remain failures.",
+    "QProcess acceptance/buffering and OS pipe delivery are different stages. This harness does not certify real QProcess buffering or delivery.",
+    "Hashing/recording adds work and can release the GIL. No actual replay entry/SDK launcher has been changed or deployed, and observer perturbation is unqualified.",
+    "Old missing occurrences cannot be reconstructed from new synthetic receipts. Old global identity/clock gates stay failed."
+  ]
+}

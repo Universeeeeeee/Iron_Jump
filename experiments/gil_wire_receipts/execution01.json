@@ -1,0 +1,6 @@
+{
+  "command": "if((Get-FileHash 'E:/OptoJump/IronJump-gil-gui-calibration-20261018-01/experiments/gil_wire_receipts/source01.zip').Hash.ToLower() -ne '24e3e5b650848d8fda4b0ee9f2a80c1297014b3509904b13b4e00b1bb8e60694'){throw 'Package mismatch'};& D:/conda/python.exe -m zipfile -e 'E:/OptoJump/IronJump-gil-gui-calibration-20261018-01/experiments/gil_wire_receipts/source01.zip' 'E:/OptoJump/IronJump-gil-gui-calibration-20261018-01/experiments/gil_wire_receipts';if($LASTEXITCODE){throw 'Extract failed'};$p=Start-Process D:/conda/python.exe -ArgumentList 'E:/OptoJump/IronJump-gil-gui-calibration-20261018-01/experiments/gil_wire_receipts/control.py' -WorkingDirectory 'E:/OptoJump/IronJump-gil-gui-calibration-20261018-01' -Wait -PassThru -RedirectStandardOutput 'E:/OptoJump/IronJump-gil-gui-calibration-20261018-01/experiments/gil_wire_receipts/control01.stdout' -RedirectStandardError 'E:/OptoJump/IronJump-gil-gui-calibration-20261018-01/experiments/gil_wire_receipts/control01.stderr';@{exit_code=$p.ExitCode}|ConvertTo-Json -Compress;if($p.ExitCode -ne 0){throw 'Synthetic receipt control failed; preserve all'}",
+  "result": {
+    "exit_code": 0
+  }
+}
