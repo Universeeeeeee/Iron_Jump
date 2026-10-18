@@ -1,0 +1,14 @@
+{
+  "scope": "Offline expansion of the same failed02 observation, no capture, no promotion of termination/calibration or causal attribution.",
+  "reviewer_sha256": "10bf0d50de1b450d0f248c199c8df792c11073d60caaad06e05f631988b99ba1",
+  "helper_sha256": "cedf2e8a224e14de15ed247ccf6456e3d3cd931e6ad40d84f7ab6d765a1d842d",
+  "raw_manifest_sha256": "b04f545373ec73ac08b3a54da0f2ef9af35b5a42fc27032c46ad41e222939ab2",
+  "reference_capture": "experiments/native_stack_capture/runs/gil_gui_calibration01/evidence01/experiments/gil_gui_calibration/runs/off_aa01/pair01_a/capture",
+  "rules": [
+    "Keep all original failed checks, abort and off_b not-attempted outcome.",
+    "Saved complete API calls are not a certified whole-process total; terminal callbacks can be missing.",
+    "Use all endpoints for independent child-clock bounds; do not crop to get a passing result.",
+    "API wall spans and logical cadence references are not CPU/GIL/Qt causal shares.",
+    "No new sampling, human, Run, optimization AB or production changes."
+  ]
+}

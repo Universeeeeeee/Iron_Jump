@@ -1,0 +1,52 @@
+{
+  "rows": [
+    {
+      "position": "消费者 FIFO",
+      "code": "ui/session_controller.py::_GroundFrameInbox.drain / _consume",
+      "candidate": "接触计算、GIL获取、Qt/系统调度",
+      "evidence": "本窗口输入/完整报告/状态与参考一致；pending最大64。旧3391/1125慢轮和六个自然ETW等待见证继续独立有效。",
+      "grade": "本窗口时序事实；严重积压责任未知",
+      "missing": "同一严重窗口的自然消费者栈与有依据的持有者关联，以及适用扰动验收。",
+      "minimal": "先保留失败验收；完成观测终止一致性及实际负载校准后，按新冻结计划补证。"
+    },
+    {
+      "position": "视觉推理",
+      "code": "vision/service.py::_run.infer_pose → vision/live_walking.py::_PreviewAdapter.infer_bgr → vision/mediapipe_pose.py::infer_bgr",
+      "candidate": "同GUI进程的视觉线程/原生池可参与资源竞争",
+      "evidence": "740提交中保存374条完整推理记录，ROI内65条；保存的帧号序列与50ms最小间隔参考一致。模型ready在arm前9.3334422秒。",
+      "grade": "保存的调用/输入身份已核对；未作CPU/GIL归因",
+      "missing": "旧慢轮实际推理ID未保存；本窗口未复现严重积压，结束观测也未通过。",
+      "minimal": "以真实推理帧号、VIDEO时间和API边界对齐曝光，不用视频提交数或缓存绘制数替代。"
+    },
+    {
+      "position": "GUI控制通信",
+      "code": "camera/control_service.py::_read / _send_pose；camera/pose_transport.py::packet",
+      "candidate": "JSON/asdict及Qt回调可能竞争GUI进程GIL",
+      "evidence": "本窗口ROI内记录到原方法墙钟边界；已保存SDK包与GUI relay逐次匹配。",
+      "grade": "路径边界见证，非独占CPU或GIL持有时间",
+      "missing": "严重积压同窗、自然持有者与实际负载扰动资格。",
+      "minimal": "保留现有边界和完整来源；不得把健康窗口的小跨度推广为旧慢轮排除结论。"
+    },
+    {
+      "position": "独立 SDK 子进程",
+      "code": "camera/tracking_runtime.py::submit_packet / tick → camera/gimbal_control.py::GimbalSdk",
+      "candidate": "控制接收/本进程调度，不能当作GUI进程GIL持有者",
+      "evidence": "GUI PID14620与SDK PID12600分开；550包均匹配，因果时钟界限[-100100,155100]ns。重复latest推理引用是被记录的通道行为。",
+      "grade": "PID/消息/时钟边界事实",
+      "missing": "本窗口不是旧慢轮，不给出旧SDK迟滞或USB/供电因果结论。",
+      "minimal": "继续独立生命周期和CPU计数验证，SDK的成功返回None与协议ACK结果0分开解释。"
+    },
+    {
+      "position": "记录写出时视觉服务仍存活",
+      "code": "vision/service.py::stop / _run finally；vision/mediapipe_pose.py::close（候选位置，未取得关闭栈）",
+      "candidate": "尚在推理、原生close或晚到回调；具体位置未知",
+      "evidence": "序列化时running_services=[0]，无model_close完成与stopped状态。目标随后已OS退出、SDK已关闭；全部结束检查仍失败。",
+      "grade": "结束状态/缺事件已证实，实际阻塞调用位置未知",
+      "missing": "关闭入口时标、原生调用栈、明确终止和快照一致性。稍后的Clearcut超时不是根因证明。",
+      "minimal": "只先做合成延迟关闭/并发写出验证；本轮日志和锁保留，不重采替换失败。"
+    }
+  ],
+  "primary_root_identified": false,
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false
+}

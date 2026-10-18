@@ -1,0 +1,23 @@
+{
+  "cases": {
+    "off_a": {
+      "observability_pass": false,
+      "capture_failed": true,
+      "errors": [
+        "AssertionError()"
+      ]
+    },
+    "off_b": {
+      "observability_pass": false,
+      "not_attempted": true
+    }
+  },
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "root_cause_or_fix_complete": false,
+  "all_observability_pass": false,
+  "limits": [
+    "One prospectively frozen OFF/OFF pair only; common metadata observer and old10Hz QueueProbe remain enabled. External stack sampler and ETW OFF. No statistical equivalence or zero overhead claim.",
+    "All failures and the earlier16-case cohorts remain. New metadata does not retrospectively reconstruct their inference choices, identify a causal owner, or replace3%/1% gates."
+  ]
+}

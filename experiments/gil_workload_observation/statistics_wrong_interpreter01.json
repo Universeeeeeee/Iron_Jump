@@ -1,0 +1,37 @@
+{
+  "ran": 10,
+  "passed": 7,
+  "skips": [],
+  "failures": [],
+  "errors": [
+    [
+      "test_review.FeasibilityStatisticsChecks.test_outlier_kept",
+      "Traceback (most recent call last):\n  File \"/Users/vae/.codex/worktrees/native-stack-capture/Iron_Jump/experiments/gil_gui_calibration/test_review.py\", line 43, in test_outlier_kept\n    v=summarize([(self.value(100),self.value(x)) for x in (100,100,100,200)]);self.assertEqual(len(v['gui_cpu_ns']['raw_relative_changes']),4);self.assertEqual(v['gui_cpu_ns']['raw_relative_changes'][-1],1)\n      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/vae/.codex/worktrees/native-stack-capture/Iron_Jump/experiments/gil_gui_calibration/review_aa01.py\", line 32, in summarize\n    from scipy.stats import t\nModuleNotFoundError: No module named 'scipy'\n"
+    ],
+    [
+      "test_review.FeasibilityStatisticsChecks.test_pairs_not_threads_are_independent",
+      "Traceback (most recent call last):\n  File \"/Users/vae/.codex/worktrees/native-stack-capture/Iron_Jump/experiments/gil_gui_calibration/test_review.py\", line 41, in test_pairs_not_threads_are_independent\n    v=summarize([(self.value(100),self.value(101))]*4);self.assertEqual(v['sdk_cpu_ns']['independent_pairs'],4)\n      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/vae/.codex/worktrees/native-stack-capture/Iron_Jump/experiments/gil_gui_calibration/review_aa01.py\", line 32, in summarize\n    from scipy.stats import t\nModuleNotFoundError: No module named 'scipy'\n"
+    ],
+    [
+      "test_review.FeasibilityStatisticsChecks.test_zero_delta_unavailable",
+      "Traceback (most recent call last):\n  File \"/Users/vae/.codex/worktrees/native-stack-capture/Iron_Jump/experiments/gil_gui_calibration/test_review.py\", line 45, in test_zero_delta_unavailable\n    v=summarize([(self.value(0),self.value(1))]*4);self.assertFalse(v['consumer_cpu_ns']['available'])\n      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/vae/.codex/worktrees/native-stack-capture/Iron_Jump/experiments/gil_gui_calibration/review_aa01.py\", line 32, in summarize\n    from scipy.stats import t\nModuleNotFoundError: No module named 'scipy'\n"
+    ]
+  ],
+  "unique": 10,
+  "identities": [
+    "test_review.CounterChecks.test_backward_counter_rejected",
+    "test_review.CounterChecks.test_duplicate_identity_rejected",
+    "test_review.CounterChecks.test_large_clock_uncertainty_rejected",
+    "test_review.CounterChecks.test_missing_sdk_rejected",
+    "test_review.CounterChecks.test_reused_tid_rejected",
+    "test_review.CounterChecks.test_sdk_same_pid_rejected",
+    "test_review.CounterChecks.test_separate_roles_preserved",
+    "test_review.FeasibilityStatisticsChecks.test_outlier_kept",
+    "test_review.FeasibilityStatisticsChecks.test_pairs_not_threads_are_independent",
+    "test_review.FeasibilityStatisticsChecks.test_zero_delta_unavailable"
+  ],
+  "successful": false,
+  "stderr": ".......EEE\n======================================================================\nERROR: test_outlier_kept (test_review.FeasibilityStatisticsChecks.test_outlier_kept)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/Users/vae/.codex/worktrees/native-stack-capture/Iron_Jump/experiments/gil_gui_calibration/test_review.py\", line 43, in test_outlier_kept\n    v=summarize([(self.value(100),self.value(x)) for x in (100,100,100,200)]);self.assertEqual(len(v['gui_cpu_ns']['raw_relative_changes']),4);self.assertEqual(v['gui_cpu_ns']['raw_relative_changes'][-1],1)\n      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/vae/.codex/worktrees/native-stack-capture/Iron_Jump/experiments/gil_gui_calibration/review_aa01.py\", line 32, in summarize\n    from scipy.stats import t\nModuleNotFoundError: No module named 'scipy'\n\n======================================================================\nERROR: test_pairs_not_threads_are_independent (test_review.FeasibilityStatisticsChecks.test_pairs_not_threads_are_independent)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/Users/vae/.codex/worktrees/native-stack-capture/Iron_Jump/experiments/gil_gui_calibration/test_review.py\", line 41, in test_pairs_not_threads_are_independent\n    v=summarize([(self.value(100),self.value(101))]*4);self.assertEqual(v['sdk_cpu_ns']['independent_pairs'],4)\n      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/vae/.codex/worktrees/native-stack-capture/Iron_Jump/experiments/gil_gui_calibration/review_aa01.py\", line 32, in summarize\n    from scipy.stats import t\nModuleNotFoundError: No module named 'scipy'\n\n======================================================================\nERROR: test_zero_delta_unavailable (test_review.FeasibilityStatisticsChecks.test_zero_delta_unavailable)\n----------------------------------------------------------------------\nTraceback (most recent call last):\n  File \"/Users/vae/.codex/worktrees/native-stack-capture/Iron_Jump/experiments/gil_gui_calibration/test_review.py\", line 45, in test_zero_delta_unavailable\n    v=summarize([(self.value(0),self.value(1))]*4);self.assertFalse(v['consumer_cpu_ns']['available'])\n      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^\n  File \"/Users/vae/.codex/worktrees/native-stack-capture/Iron_Jump/experiments/gil_gui_calibration/review_aa01.py\", line 32, in summarize\n    from scipy.stats import t\nModuleNotFoundError: No module named 'scipy'\n\n----------------------------------------------------------------------\nRan 10 tests in 0.001s\n\nFAILED (errors=3)\n",
+  "interpreter": "/Users/vae/Projects/Iron_Jump/.venv/bin/python",
+  "reason": "Project environment has no SciPy; old statistical tests require the existing isolated stats runtime. No package changes made."
+}

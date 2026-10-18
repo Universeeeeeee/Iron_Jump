@@ -1,0 +1,242 @@
+{
+  "title": "失败窗口02的离线工作量边界：保存的调用链路可核对，结束与扰动验收仍失败",
+  "official_capture_pass": false,
+  "official_errors": [
+    "AssertionError()"
+  ],
+  "off_b_not_attempted": true,
+  "full_original_report_state_input_exact": true,
+  "failed_checks": [
+    "capture_identity",
+    "complete_services",
+    "pipeline_health",
+    "model_lifetimes"
+  ],
+  "saved_row_checks": {
+    "capture_identity": false,
+    "no_callback_faults": true,
+    "complete_services": false,
+    "pipeline_health": false,
+    "model_lifetimes": false,
+    "all_adapter_inference_submit_links": true,
+    "GUI_roles": true,
+    "native_handle_identity": true,
+    "separate_SDK_PID": true,
+    "control_lifecycle": true,
+    "SDK_control_identity": true,
+    "inference_ROI_lifetimes": true,
+    "SDK_aggregate_counts": true,
+    "all_relay_SDK_metadata_links": true,
+    "independent_child_clock_bracket": true,
+    "SDK_calls_successful": true
+  },
+  "GUI_pid": 14620,
+  "SDK_pid": 12600,
+  "threads": {
+    "gui": 20380,
+    "consumer": 1488,
+    "inference": [
+      16456
+    ]
+  },
+  "saved_counts": {
+    "video_submits": 740,
+    "service_submit_calls": 740,
+    "completed_adapter_and_inference_rows": 374,
+    "SDK_pose_inputs": 550,
+    "SDK_calls": 556,
+    "GUI_valid_pose_draws": 626,
+    "ROI_saved_inferences": 65
+  },
+  "model_closed_before_metadata_snapshot": false,
+  "running_services_at_snapshot": [
+    0
+  ],
+  "scope_limits": [
+    "These are saved completed rows. In-flight/late terminal callbacks may be absent; do not treat374 as a certified whole-process exposure count.",
+    "The rows were serialized while the service was still alive. Complete-service/model-close gates stay failed; pipeline failure was not re-sampled or replaced.",
+    "No recorded close-entry marker or closing native stack. A later Clearcut network-timeout message does not identify the active worker location or prove the walking-backlog cause."
+  ],
+  "model_open_relative_arm_s": [
+    [
+      -11.1036825,
+      -9.3334579
+    ]
+  ],
+  "model_ready_relative_arm_s": [
+    -9.3334422
+  ],
+  "minimum_inference_VIDEO_timestamp_spacing_ms": {
+    "count": 373,
+    "min": 50,
+    "median": 80,
+    "max": 150
+  },
+  "cadence_reference": [
+    {
+      "service": 0,
+      "minimum_interval_only_reference_count": 374,
+      "saved_inference_count": 374,
+      "same_frame_sequence": true,
+      "warning": "Logical timestamp-only reference; ignores latest-only overwrites, worker scheduling, event-buffer pruning and unfinished/unsaved terminal calls. No endpoint removed to force equality."
+    }
+  ],
+  "recorded_ROI_api_wall_ms": {
+    "count": 65,
+    "min": 19.540200009942055,
+    "median": 24.629199993796647,
+    "max": 42.18140000011772
+  },
+  "saved_completion_coverage": {
+    "0": {
+      "first_saved_begin_ns": 341375712030400.0,
+      "last_saved_end_ns": 341405413047800.0,
+      "saved_completions_bracket_ROI": true
+    }
+  },
+  "actual_inference_counter_exposure": {
+    "16456": {
+      "guaranteed_counter_interval_ns": [
+        341387698710000,
+        341392693926500
+      ],
+      "possible_counter_interval_ns": [
+        341387698645700,
+        341392694092200
+      ],
+      "saved_API_calls_fully_inside_inner": 65,
+      "saved_API_calls_overlapping_outer": 65,
+      "note": "Counter reads are bounded and not simultaneous across threads. Does not assign native-pool CPU to inference calls or normalize CPU by these counts."
+    }
+  },
+  "SDK_update_reuse": {
+    "records_with_inference": 478,
+    "unique_saved_inference_references": 368,
+    "repeated_occurrences": 110,
+    "max_repeats": 3
+  },
+  "SDK_clock": {
+    "host_minus_child_ns_bounds": [
+      -100100.0,
+      155100.0
+    ],
+    "uncertainty_ns": 255200.0,
+    "zero_offset_compatible": true
+  },
+  "native_clock": {
+    "qpc_frequency": 10000000,
+    "host_ns_offset_lower": -5600,
+    "host_ns_offset_upper": 3300,
+    "uncertainty_ns": 8900,
+    "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+  },
+  "SDK_packet_latency": {
+    "packet_count": 550,
+    "maximum_latency_ms_bounds": [
+      1.6991,
+      1.9543
+    ],
+    "median_latency_ms_bounds": [
+      0.44525,
+      0.70045
+    ],
+    "meaning": "Parent relay metadata return to child pose_input received marker, causal clock bracket. Excludes any later mailbox/control delay; cannot be transferred to old slow runs."
+  },
+  "GUI_IO_ROI": {
+    "_read": {
+      "wall_span_ms": {
+        "count": 147,
+        "min": 0.0792,
+        "median": 0.2426,
+        "max": 2.6571
+      },
+      "longest": [
+        {
+          "begin_arm_s": 13.2753541,
+          "end_arm_s": 13.2780112,
+          "span_ms": 2.6571
+        },
+        {
+          "begin_arm_s": 12.3634762,
+          "end_arm_s": 12.3661149,
+          "span_ms": 2.6387
+        },
+        {
+          "begin_arm_s": 12.9258916,
+          "end_arm_s": 12.9274226,
+          "span_ms": 1.531
+        },
+        {
+          "begin_arm_s": 14.6141817,
+          "end_arm_s": 14.6155212,
+          "span_ms": 1.3395
+        },
+        {
+          "begin_arm_s": 15.1331719,
+          "end_arm_s": 15.1344811,
+          "span_ms": 1.3092
+        }
+      ],
+      "meaning": "Inclusive original method + nested callbacks + observer wall span. Not exclusive CPU, GIL hold time or quantitative causal share."
+    },
+    "_send_pose": {
+      "wall_span_ms": {
+        "count": 80,
+        "min": 0.66,
+        "median": 0.7273499999999999,
+        "max": 1.7619
+      },
+      "longest": [
+        {
+          "begin_arm_s": 13.0033236,
+          "end_arm_s": 13.0050855,
+          "span_ms": 1.7619
+        },
+        {
+          "begin_arm_s": 16.3430659,
+          "end_arm_s": 16.3447182,
+          "span_ms": 1.6523
+        },
+        {
+          "begin_arm_s": 15.1310735,
+          "end_arm_s": 15.1327095,
+          "span_ms": 1.636
+        },
+        {
+          "begin_arm_s": 15.8781559,
+          "end_arm_s": 15.8796791,
+          "span_ms": 1.5232
+        },
+        {
+          "begin_arm_s": 12.5105236,
+          "end_arm_s": 12.5117292,
+          "span_ms": 1.2056
+        }
+      ],
+      "meaning": "Inclusive original method + nested callbacks + observer wall span. Not exclusive CPU, GIL hold time or quantitative causal share."
+    }
+  },
+  "queue": {
+    "max_pending": 64,
+    "ROI_max_pending": 64,
+    "severe_backlog_reproduced": false
+  },
+  "root_evidence": [
+    "740 video/service submissions,374 saved completed inference records,626 cached-pose draws and550 SDK packet receipts are distinct stages, not interchangeable workload counters.",
+    "Saved inference-to-adapter-to-submit links and every relay-to-SDK metadata occurrence match. SDK PID is separate; causal child clock interval contains zero.",
+    "Model-ready marker is before this12..17s ROI; the model-open interval itself does not overlap this ROI. This does not exclude lazy initialization or runtime native work.",
+    "Pending peaked at64 in this window. It cannot replace the preserved3391/1125-frame slow episodes or identify their holder. No new production optimization occurred."
+  ],
+  "next_minimal_work": [
+    "Keep both failed plans/windows and abort status. No more captures to obtain a passing replacement.",
+    "First clarify metadata termination/snapshot consistency using synthetic delayed-close tests. Keep observer loops, source selection and production code unchanged.",
+    "Any future observation must use a fresh freeze and preserve whole-service failure separately from bounded saved-ROI facts. Actual-load3%/1% gates remain unchanged and failed.",
+    "After applicable qualification, obtain same-window natural pre-global consumer context plus separately justified owner association in severe fixed-input backlog; no current need for new human Walk."
+  ],
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "primary_root_identified": false,
+  "root_cause_or_fix_complete": false,
+  "raw_archive_sha256": "55a2177fea65383eee6ebff0951a591e21dd13653b7b3cd7cbd9020f54cda84e",
+  "analysis_plan_sha256": "db7d8f55a5baffaa54fca391ea49406d47c1e4f573c8d68bdc0169f264f24cc3"
+}
