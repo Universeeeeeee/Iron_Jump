@@ -1,0 +1,111 @@
+{
+  "rows": [
+    {
+      "blocking_position": "本轮未同时采集等待栈，阻塞者/持有者因果关系未建立",
+      "recorded_boundary": "hardware/beam_filter.py:121 → numpy.all → _wrapreduction_any_all",
+      "ordinal": 35,
+      "formal_bracket_s": [
+        14.0658901,
+        14.0685441
+      ],
+      "pending_lower_bound": 275,
+      "candidate": "消费链 NumPy 调用边界；原生内部函数未知",
+      "evidence_level": "未通过整轮验收的原始观测线索；仅用于候选定位",
+      "missing_evidence": "现场扰动验收、闭合原生执行/等待栈和配对持有者",
+      "minimal_validation": "先离线核对现有精确版本与调用边界；不能把 Python 叶帧当成原生执行证据"
+    },
+    {
+      "blocking_position": "本轮未同时采集等待栈，阻塞者/持有者因果关系未建立",
+      "recorded_boundary": "ui/annotation_canvas.py:223 paintEvent",
+      "ordinal": 23,
+      "formal_bracket_s": [
+        13.462282,
+        13.4648685
+      ],
+      "pending_lower_bound": 179,
+      "candidate": "GUI 绘图 Python 回调参与同进程竞争",
+      "evidence_level": "未通过整轮验收的原始观测线索；仅用于候选定位",
+      "missing_evidence": "未识别具体历史等待对应持有者；不能计算绘图占比",
+      "minimal_validation": "保留为候选，后续新冻结方案需要与原生等待在同一时间基准配对"
+    },
+    {
+      "blocking_position": "本轮未同时采集等待栈，阻塞者/持有者因果关系未建立",
+      "recorded_boundary": "ui/session_controller.py:529 _on_gait_snapshot",
+      "ordinal": 42,
+      "formal_bracket_s": [
+        14.4183487,
+        14.4216569
+      ],
+      "pending_lower_bound": 264,
+      "candidate": "GUI 转发信号边界",
+      "evidence_level": "未通过整轮验收的原始观测线索；仅用于候选定位",
+      "missing_evidence": "具体下游回调、原生等待/持有时长未知",
+      "minimal_validation": "静态检查真实接收路径；单次 Python 栈不等于该信号为主因"
+    },
+    {
+      "blocking_position": "本轮未同时采集等待栈，阻塞者/持有者因果关系未建立",
+      "recorded_boundary": "camera/control_service.py:72 _send_pose → json.dumps",
+      "ordinal": 47,
+      "formal_bracket_s": [
+        14.67004,
+        14.6725055
+      ],
+      "pending_lower_bound": 353,
+      "candidate": "GUI 向独立 SDK 进程发送姿态消息前的 Python 序列化",
+      "evidence_level": "未通过整轮验收的原始观测线索；仅用于候选定位",
+      "missing_evidence": "没有序列化耗时或阻塞证据",
+      "minimal_validation": "离线检查消息路径，不能因 SDK 子进程独立就排除 GUI 发送端，也不能指认其主导"
+    },
+    {
+      "blocking_position": "本轮未同时采集等待栈，阻塞者/持有者因果关系未建立",
+      "recorded_boundary": "vision/event_scheduler.py:294 _prune_frames",
+      "ordinal": 28,
+      "formal_bracket_s": [
+        13.7140273,
+        13.716655
+      ],
+      "pending_lower_bound": 221,
+      "candidate": "同 GUI 进程内视觉服务线程",
+      "evidence_level": "未通过整轮验收的原始观测线索；仅用于候选定位",
+      "missing_evidence": "缺少此额外线程的独立保留句柄/生命周期及同步等待配对",
+      "minimal_validation": "先确认线程生命周期观测方案，不用其它轮次身份替代"
+    },
+    {
+      "blocking_position": "本轮未同时采集等待栈，阻塞者/持有者因果关系未建立",
+      "recorded_boundary": "camera/tinyse_camera.py:564 _decode_preview_frame → cv2.imdecode",
+      "ordinal": 21,
+      "formal_bracket_s": [
+        13.3619639,
+        13.3645436
+      ],
+      "pending_lower_bound": 156,
+      "candidate": "同 GUI 进程相机回调边界；不是 SDK 子进程",
+      "evidence_level": "未通过整轮验收的原始观测线索；仅用于候选定位",
+      "missing_evidence": "无法区分 imdecode 内部计算、返回边界与确切 GIL 持有；缺少额外线程生命周期句柄",
+      "minimal_validation": "保留原生内部未知；不能用 Python 叶帧给 OpenCV 定量归因"
+    },
+    {
+      "blocking_position": "本轮未同时采集等待栈，阻塞者/持有者因果关系未建立",
+      "recorded_boundary": "hardware/protocol.py:90 crc8_poly_07",
+      "ordinal": 63,
+      "formal_bracket_s": [
+        15.4745565,
+        15.4769835
+      ],
+      "pending_lower_bound": 450,
+      "candidate": "USB 读取线程 Python 协议解析",
+      "evidence_level": "未通过整轮验收的原始观测线索；仅用于候选定位",
+      "missing_evidence": "缺少该时刻消费线程闭合等待栈和配对原因",
+      "minimal_validation": "现有 GetThreadTimes/cycles 仅约束实际 CPU 计数，不能推导 GIL 等待占比"
+    }
+  ],
+  "unresolved_owner": {
+    "ordinal": 31,
+    "tid": 3816,
+    "frames": [],
+    "decision": "保留原始故障和锁；不把空 Python 栈解释成任一具体函数或修补成成功"
+  },
+  "native_wait_and_cpu_quality": "历史两套原生验收仍失败，不改门槛；本轮无同时 CPU/CSwitch，PDB/内核模块偏移及 ETW 丢失不适用，不能写成通过。",
+  "actual_load_disturbance_pass": false,
+  "root_cause_complete": false
+}
