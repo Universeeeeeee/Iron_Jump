@@ -1,0 +1,150 @@
+{
+  "synthetic_component_gate_pass": true,
+  "normal_native_received_8_exact": true,
+  "closed_native_peer_retains_failure": true,
+  "native_unreturned_write_counted_in_limits": true,
+  "resume_read_does_not_clear_failure": true,
+  "all_preserved_packet_hashes_and_values_pass": true,
+  "actor_integrated": false,
+  "actual_actor_parent_process_death_checked": false,
+  "raw_preservation_after_actor_transport_failure_checked": false,
+  "gui_or_throughput_qualification": false,
+  "field_fix_verified": false,
+  "cases": {
+    "normal": {
+      "case": "normal",
+      "contract_pass": true,
+      "errors": [],
+      "transport_complete": true,
+      "independent_parent_received_sequences": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8
+      ],
+      "final_outbox": {
+        "accepted": 8,
+        "write_calls_returned": 8,
+        "last_write_returned_sequence": 8,
+        "accepting": false,
+        "failure": null,
+        "writer_alive": false,
+        "accepted_resident_messages": 0,
+        "accepted_resident_bytes": 0,
+        "high_accepted_messages": 8,
+        "high_accepted_bytes": 312,
+        "max_messages": 128,
+        "max_bytes": 8388608,
+        "pending_sequences": [],
+        "parent_application_receipt_confirmed": false
+      }
+    },
+    "disconnected_peer": {
+      "case": "disconnected_peer",
+      "contract_pass": true,
+      "errors": [],
+      "transport_complete": false,
+      "expected_transport_failure": true,
+      "final_outbox": {
+        "accepted": 1,
+        "write_calls_returned": 0,
+        "last_write_returned_sequence": 0,
+        "accepting": false,
+        "failure": {
+          "reason": "send_failed:BrokenPipeError",
+          "sequence": 1,
+          "packet_bytes": 49,
+          "packet_sha256": "03075185bfc8f96613cf1e5d0189157eef22c2c1f60222716ab6517532f7a2a2",
+          "detail": "BrokenPipeError(32, '\u7ba1\u9053\u6b63\u5728\u88ab\u5173\u95ed\u3002', None, 232, None)"
+        },
+        "writer_alive": false,
+        "accepted_resident_messages": 1,
+        "accepted_resident_bytes": 49,
+        "high_accepted_messages": 1,
+        "high_accepted_bytes": 49,
+        "max_messages": 128,
+        "max_bytes": 8388608,
+        "pending_sequences": [
+          1
+        ],
+        "parent_application_receipt_confirmed": false
+      }
+    },
+    "native_backpressure": {
+      "case": "native_backpressure",
+      "contract_pass": true,
+      "errors": [],
+      "native_pipe_data_observed_before_parent_read": true,
+      "native_write_call_unreturned_before_parent_read": true,
+      "producer_reached_bound_without_parent_read": true,
+      "state_before_parent_read": {
+        "accepted": 2,
+        "write_calls_returned": 0,
+        "last_write_returned_sequence": 0,
+        "accepting": false,
+        "failure": {
+          "reason": "message_limit",
+          "sequence": 3,
+          "packet_bytes": 2097197,
+          "packet_sha256": "323768660579323fa8f6771e804f1d45b33d99bc045d3889fd54829bfd34331d",
+          "detail": null
+        },
+        "writer_alive": true,
+        "accepted_resident_messages": 2,
+        "accepted_resident_bytes": 4194394,
+        "high_accepted_messages": 2,
+        "high_accepted_bytes": 4194394,
+        "max_messages": 2,
+        "max_bytes": 6291456,
+        "pending_sequences": [
+          1,
+          2
+        ],
+        "parent_application_receipt_confirmed": false
+      },
+      "transport_complete": false,
+      "independent_parent_received_sequences": [
+        1
+      ],
+      "expected_transport_failure": true,
+      "final_outbox": {
+        "accepted": 2,
+        "write_calls_returned": 1,
+        "last_write_returned_sequence": 1,
+        "accepting": false,
+        "failure": {
+          "reason": "message_limit",
+          "sequence": 3,
+          "packet_bytes": 2097197,
+          "packet_sha256": "323768660579323fa8f6771e804f1d45b33d99bc045d3889fd54829bfd34331d",
+          "detail": null
+        },
+        "writer_alive": false,
+        "accepted_resident_messages": 1,
+        "accepted_resident_bytes": 2097197,
+        "high_accepted_messages": 2,
+        "high_accepted_bytes": 4194394,
+        "max_messages": 2,
+        "max_bytes": 6291456,
+        "pending_sequences": [
+          2
+        ],
+        "parent_application_receipt_confirmed": false
+      }
+    }
+  },
+  "limits": [
+    "Native endpoint closure and stopped reader are channel controls, not a measurement-actor crash test.",
+    "Bounds apply to acceptedserialized bytes includinginflight, not caller objects, serialization temporaries orOS buffers.",
+    "A successful local write is never used as proof of parent application receipt."
+  ],
+  "bindings": {
+    "plan_sha256": "34811ca8d1d2942565ca722cda1c68d6c298863d34021d0faeff39b024b933dc",
+    "manifest_sha256": "dec45c16f22f0a2d13e5ce1244395f90c094760d3b0ce59299fc93e24c9790bd",
+    "review_sha256": "0002c8d25dfacfbfc114875ce23314486654356c498bb8f3874db03e347b598f"
+  }
+}

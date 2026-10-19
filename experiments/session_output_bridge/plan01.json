@@ -1,0 +1,41 @@
+{
+  "budget": "Exactly3 nativePipe synthetic cases, no optional extension, no model/Qt/GUI/input/device/ETW.",
+  "cases": [
+    "normal",
+    "disconnected_peer",
+    "native_backpressure"
+  ],
+  "limits": {
+    "normal": {
+      "messages": 128,
+      "bytes": 8388608
+    },
+    "disconnected_peer": {
+      "messages": 128,
+      "bytes": 8388608
+    },
+    "native_backpressure": {
+      "messages": 2,
+      "bytes": 6291456
+    }
+  },
+  "backpressure_payload_bytes": 2097152,
+  "sources": {
+    "outbox.py": "7cf95a6bf7dc5e26794e94636ca1fae8a31169eb5f13c8279628c6a6f3fb9614",
+    "test_outbox.py": "f5b05c565ced2ebbd73be7c7e77e5b444d4be888680047092f3d4dcc50fa11e5",
+    "windows_faults.py": "867e958a195eb4191f5a7f2dbdc44becf1faca05566cff2edbe41c73f998197f"
+  },
+  "checks": [
+    "Normal8 messages independently received in order, writer stopped.",
+    "Closed actualreadhandle yields retained senderror, pending output and transport_complete=false.",
+    "Native pipe has data while nativewrite not returned and reader has not consumed; inflight plusqueued total limited2; producer reacheslimit withoutreaderprogress.",
+    "Finish timeout cannot become success after read resumes. Preserve unconfirmed snapshot before read, verify all fileSHA.",
+    "Only own synthetic handles closed. No target termination, no changing thresholds ifcasefails."
+  ],
+  "scope_limits": [
+    "Accepted serialized buffer includinginflight bounded; caller objects, serialization temporaries andOSpipe buffers not included inthat bytebound.",
+    "Write call returning is not parent application receipt.",
+    "Fault states may exit writer later, but transport success never overwrites retained failure.",
+    "Not integrated into original measurement actor yet; no actualactor cleanup/parentdeath/GUI latency qualification."
+  ]
+}
