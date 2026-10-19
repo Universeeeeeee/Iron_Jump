@@ -1,0 +1,468 @@
+{
+  "original_same_process_gui_delivery_pass": true,
+  "original_controller_and_qthread": true,
+  "no_measurement_ipc": true,
+  "gui_and_measurement_pid": 18648,
+  "sdk_pid": 23052,
+  "thread_ids": {
+    "gui": 13472,
+    "consumer": 19852
+  },
+  "qpc": {
+    "common_qpc_frequency": 10000000,
+    "all_six_brackets_pass": true,
+    "max_bracket_ns": 22600,
+    "disturbance_qualified": false
+  },
+  "actual_model_calls": 414,
+  "actual_video_frames": 824,
+  "original_return_model_confirmed": false,
+  "final_model_cleanup_confirmed": true,
+  "matched_performance_comparison_pass": false,
+  "actual_load_disturbance_pass": false,
+  "field_fix_verified": false,
+  "full_semantic_comparison": {
+    "raw_frames_exact": 33188,
+    "full_original_report_and_state_exact": true
+  },
+  "descriptive_current_baseline": {
+    "queue": {
+      "combined_observed_deque_peak_lower_bound": 3983,
+      "continuous_deque_peak_upper_bound": 4043,
+      "observations": 520,
+      "first_observed_host_ns": 427796741884000,
+      "last_observed_host_ns": 427830996531700
+    },
+    "queue_crosscheck": {
+      "oldest_pending_receipts_independently_matched": 389,
+      "max_post_arm_inflight": 0,
+      "queue_common_monotone": true
+    },
+    "contacts": [
+      {
+        "contact_id": 0,
+        "touch_sample": 60188,
+        "published_sample": 60251,
+        "raw_release_trigger": 60261,
+        "source_confirmation_sample_span": 73,
+        "source_confirmation_time_ms": 90.272,
+        "enqueue_host_bounds_ns": [
+          427811620665500,
+          427811641174600
+        ],
+        "dequeue_host_bounds_ns": [
+          427811641174600,
+          427811852037000
+        ],
+        "queue_residence_bounds_ms": [
+          0.0,
+          231.3715
+        ],
+        "dequeue_to_publication_bounds_ms": [
+          0.0,
+          210.8624
+        ],
+        "publication_host_bounds_ns": [
+          427811641174600,
+          427811852037000
+        ],
+        "source_trigger_to_publication_ms": [
+          20.5091,
+          231.3715
+        ],
+        "publication_to_paint_raw_bounds_ms": [
+          -89.2066,
+          121.6558
+        ],
+        "publication_to_paint_nonnegative_bounds_ms": [
+          0,
+          121.6558
+        ],
+        "source_touch_to_paint_ms": 232.4369,
+        "scheduled_touch_to_paint_ms": 232.9009
+      },
+      {
+        "contact_id": 2,
+        "touch_sample": 60871,
+        "published_sample": 60960,
+        "raw_release_trigger": 60970,
+        "source_confirmation_sample_span": 99,
+        "source_confirmation_time_ms": 98.9108,
+        "enqueue_host_bounds_ns": [
+          427812311162000,
+          427812344440700
+        ],
+        "dequeue_host_bounds_ns": [
+          427812815654600,
+          427812994634100
+        ],
+        "queue_residence_bounds_ms": [
+          471.2139,
+          683.4721
+        ],
+        "dequeue_to_publication_bounds_ms": [
+          0.0,
+          178.9795
+        ],
+        "publication_host_bounds_ns": [
+          427812815654600,
+          427812994634100
+        ],
+        "source_trigger_to_publication_ms": [
+          504.4926,
+          683.4721
+        ],
+        "publication_to_paint_raw_bounds_ms": [
+          -44.3633,
+          134.6162
+        ],
+        "publication_to_paint_nonnegative_bounds_ms": [
+          0,
+          134.6162
+        ],
+        "source_touch_to_paint_ms": 738.0196,
+        "scheduled_touch_to_paint_ms": 738.3758
+      },
+      {
+        "contact_id": 4,
+        "touch_sample": 61475,
+        "published_sample": 61541,
+        "raw_release_trigger": 61551,
+        "source_confirmation_sample_span": 76,
+        "source_confirmation_time_ms": 72.3959,
+        "enqueue_host_bounds_ns": [
+          427812902989300,
+          427812994634100
+        ],
+        "dequeue_host_bounds_ns": [
+          427813726023300,
+          427813868202300
+        ],
+        "queue_residence_bounds_ms": [
+          731.3892,
+          965.213
+        ],
+        "dequeue_to_publication_bounds_ms": [
+          0.0,
+          142.179
+        ],
+        "publication_host_bounds_ns": [
+          427813726023300,
+          427813868202300
+        ],
+        "source_trigger_to_publication_ms": [
+          823.034,
+          965.213
+        ],
+        "publication_to_paint_raw_bounds_ms": [
+          -23.5284,
+          118.6506
+        ],
+        "publication_to_paint_nonnegative_bounds_ms": [
+          0,
+          118.6506
+        ],
+        "source_touch_to_paint_ms": 1014.0805,
+        "scheduled_touch_to_paint_ms": 1014.4267
+      },
+      {
+        "contact_id": 5,
+        "touch_sample": 62050,
+        "published_sample": 62111,
+        "raw_release_trigger": 62121,
+        "source_confirmation_sample_span": 71,
+        "source_confirmation_time_ms": 86.4325,
+        "enqueue_host_bounds_ns": [
+          427813483050200,
+          427813528784700
+        ],
+        "dequeue_host_bounds_ns": [
+          427814610309000,
+          427814797307100
+        ],
+        "queue_residence_bounds_ms": [
+          1081.5243,
+          1314.2569
+        ],
+        "dequeue_to_publication_bounds_ms": [
+          0.0,
+          186.9981
+        ],
+        "publication_host_bounds_ns": [
+          427814610309000,
+          427814797307100
+        ],
+        "source_trigger_to_publication_ms": [
+          1127.2588,
+          1314.2569
+        ],
+        "publication_to_paint_raw_bounds_ms": [
+          -101.218,
+          85.7801
+        ],
+        "publication_to_paint_nonnegative_bounds_ms": [
+          0,
+          85.7801
+        ],
+        "source_touch_to_paint_ms": 1299.4714,
+        "scheduled_touch_to_paint_ms": 1299.963
+      },
+      {
+        "contact_id": 6,
+        "touch_sample": 62626,
+        "published_sample": 62693,
+        "raw_release_trigger": 62703,
+        "source_confirmation_sample_span": 77,
+        "source_confirmation_time_ms": 73.09,
+        "enqueue_host_bounds_ns": [
+          427814045818100,
+          427814139187800
+        ],
+        "dequeue_host_bounds_ns": [
+          427815447399900,
+          427815673711300
+        ],
+        "queue_residence_bounds_ms": [
+          1308.2121,
+          1627.8932
+        ],
+        "dequeue_to_publication_bounds_ms": [
+          0.0,
+          226.3114
+        ],
+        "publication_host_bounds_ns": [
+          427815447399900,
+          427815673711300
+        ],
+        "source_trigger_to_publication_ms": [
+          1401.5818,
+          1627.8932
+        ],
+        "publication_to_paint_raw_bounds_ms": [
+          -46.8032,
+          179.5082
+        ],
+        "publication_to_paint_nonnegative_bounds_ms": [
+          0,
+          179.5082
+        ],
+        "source_touch_to_paint_ms": 1654.18,
+        "scheduled_touch_to_paint_ms": 1658.7006
+      },
+      {
+        "contact_id": 7,
+        "touch_sample": 63199,
+        "published_sample": 63258,
+        "raw_release_trigger": 63268,
+        "source_confirmation_sample_span": 69,
+        "source_confirmation_time_ms": 82.4532,
+        "enqueue_host_bounds_ns": [
+          427814626138400,
+          427814797307100
+        ],
+        "dequeue_host_bounds_ns": [
+          427816395288500,
+          427816513109900
+        ],
+        "queue_residence_bounds_ms": [
+          1597.9814,
+          1886.9715
+        ],
+        "dequeue_to_publication_bounds_ms": [
+          0.0,
+          117.8214
+        ],
+        "publication_host_bounds_ns": [
+          427816395288500,
+          427816513109900
+        ],
+        "source_trigger_to_publication_ms": [
+          1769.1501,
+          1886.9715
+        ],
+        "publication_to_paint_raw_bounds_ms": [
+          -27.4614,
+          90.36
+        ],
+        "publication_to_paint_nonnegative_bounds_ms": [
+          0,
+          90.36
+        ],
+        "source_touch_to_paint_ms": 1941.9633,
+        "scheduled_touch_to_paint_ms": 1943.5676
+      },
+      {
+        "contact_id": 8,
+        "touch_sample": 63747,
+        "published_sample": 63806,
+        "raw_release_trigger": 63816,
+        "source_confirmation_sample_span": 69,
+        "source_confirmation_time_ms": 67.0492,
+        "enqueue_host_bounds_ns": [
+          427815158498000,
+          427815229734700
+        ],
+        "dequeue_host_bounds_ns": [
+          427817232969200,
+          427817292036900
+        ],
+        "queue_residence_bounds_ms": [
+          2003.2345,
+          2133.5389
+        ],
+        "dequeue_to_publication_bounds_ms": [
+          0.0,
+          59.0677
+        ],
+        "publication_host_bounds_ns": [
+          427817232969200,
+          427817292036900
+        ],
+        "source_trigger_to_publication_ms": [
+          2074.4712,
+          2133.5389
+        ],
+        "publication_to_paint_raw_bounds_ms": [
+          71.4821,
+          130.5498
+        ],
+        "publication_to_paint_nonnegative_bounds_ms": [
+          71.4821,
+          130.5498
+        ],
+        "source_touch_to_paint_ms": 2272.0702,
+        "scheduled_touch_to_paint_ms": 2274.5108
+      },
+      {
+        "contact_id": 10,
+        "touch_sample": 64328,
+        "published_sample": 64397,
+        "raw_release_trigger": 64407,
+        "source_confirmation_sample_span": 79,
+        "source_confirmation_time_ms": 78.1908,
+        "enqueue_host_bounds_ns": [
+          427815762531200,
+          427815801817700
+        ],
+        "dequeue_host_bounds_ns": [
+          427818281800900,
+          427818486728100
+        ],
+        "queue_residence_bounds_ms": [
+          2479.9832,
+          2724.1969
+        ],
+        "dequeue_to_publication_bounds_ms": [
+          0.0,
+          204.9272
+        ],
+        "publication_host_bounds_ns": [
+          427818281800900,
+          427818486728100
+        ],
+        "source_trigger_to_publication_ms": [
+          2519.2697,
+          2724.1969
+        ],
+        "publication_to_paint_raw_bounds_ms": [
+          -125.986,
+          78.9412
+        ],
+        "publication_to_paint_nonnegative_bounds_ms": [
+          0,
+          78.9412
+        ],
+        "source_touch_to_paint_ms": 2676.4017,
+        "scheduled_touch_to_paint_ms": 2677.9459
+      },
+      {
+        "contact_id": 11,
+        "touch_sample": 64883,
+        "published_sample": 64947,
+        "raw_release_trigger": 64957,
+        "source_confirmation_sample_span": 74,
+        "source_confirmation_time_ms": 86.0508,
+        "enqueue_host_bounds_ns": [
+          427816314744600,
+          427816315435700
+        ],
+        "dequeue_host_bounds_ns": [
+          427819120069200,
+          427819276184500
+        ],
+        "queue_residence_bounds_ms": [
+          2804.6335,
+          2961.4399
+        ],
+        "dequeue_to_publication_bounds_ms": [
+          0.0,
+          156.1153
+        ],
+        "publication_host_bounds_ns": [
+          427819120069200,
+          427819276184500
+        ],
+        "source_trigger_to_publication_ms": [
+          2805.3246,
+          2961.4399
+        ],
+        "publication_to_paint_raw_bounds_ms": [
+          77.2722,
+          233.3875
+        ],
+        "publication_to_paint_nonnegative_bounds_ms": [
+          77.2722,
+          233.3875
+        ],
+        "source_touch_to_paint_ms": 3124.7629,
+        "scheduled_touch_to_paint_ms": 3126.4413
+      }
+    ],
+    "max_receipt_touch_to_paint_ms": 3124.7629,
+    "max_scheduled_touch_to_paint_ms": 3126.4413,
+    "max_formal_input_lateness_ms": 122.3908,
+    "severe_baseline_observed": true,
+    "matched_to_prior_isolated_window": false,
+    "intervention_effect_withheld": true
+  },
+  "actual_interactive_session": 1,
+  "parent_priority_class": 16384,
+  "active_publication_ids_painted": [
+    0,
+    2,
+    4,
+    5,
+    6,
+    7,
+    8,
+    10,
+    11
+  ],
+  "original_ground_paint_calls": 381,
+  "actual_overlay_draws": {
+    "all": 594,
+    "valid": 594,
+    "disabled_calls": 0
+  },
+  "actual_sdk_work": {
+    "start_success": true,
+    "stop_success": true,
+    "ready_events": [
+      {
+        "method": "tracking_start",
+        "code": 0,
+        "sdk_pid": 23052,
+        "gui_pid": 18648,
+        "observed_ns": 427795738576000
+      }
+    ],
+    "errors": [],
+    "tracking_decisions": 488,
+    "nonzero_speeds": 407
+  },
+  "bindings": {
+    "plan_sha256": "7e78ec5d479f86e3595c0bbe6bbcbea91d1f302f38d228ced76637630e34e420",
+    "archive_sha256": "9133278fc57f5cf4cbfed69f5988b5d8fc4ea681d871bde01e05de56de2238b0",
+    "review_sha256": "175c636cc3cda15b1d3aaf87db43e8729622991735df596c56fd42f88643d308"
+  }
+}
