@@ -1,0 +1,120 @@
+{
+  "replay_root": "E:/OptoJump/IronJump-walk-compute-offline-20261017-01",
+  "input_root": "E:/OptoJump/IronJump-single-usb-human-etw-20261017/experiments/single_usb_human_etw/runs/20261018_131910_3eef864f_walk_off/capture",
+  "input_sha256": {
+    "raw_frames.npz": "8ee4a9ea9ac835f5dc083d014eeaef9d337ee8c140f1cdc3a11f1be6fece2d47",
+    "raw_archive.npz": "6ec340e2ca62742235d6602cf38c4470a20cf5f29441c8387be9bb85522cdcd5",
+    "acquisition.json": "e84e6bd481eeadd408a61c377950cc878bf8d989b92f58596fccf6eee62c62cb",
+    "report.json": "0ae1bf2d9277c1e3d95d629e071cb3ff61d249c78c6d0b6d0901773f4fb68747",
+    "state.json": "bfb63086da795427cc2fbd5985a4ff56bcd1cdb964908dcc4a9408a79a6d914f",
+    "measurement.json": "a2b441f1367dd3d5eb7204c75eeebf05c344e8dd69b632ba29f57a4eed6febe9"
+  },
+  "raw_first": 42237,
+  "raw_after_last": 49061,
+  "replay_sha256": "fcde26dd2e707cc457623a971a97e68ebd9f49630126c51bd6ce83072a0d40a8",
+  "cases": [
+    "pair01_a",
+    "pair01_b",
+    "pair02_a",
+    "pair02_b",
+    "pair03_a",
+    "pair03_b",
+    "pair04_a",
+    "pair04_b"
+  ],
+  "media_root": "E:\\OptoJump\\IronJump-ground-backlog-measurement-20261016\\experiments\\ground_backlog_measurement\\inputs\\walk",
+  "media_sha256": {
+    "camera.csv": "cc911dfd8e7aadf4da9f7c1e604e65ef33a02a4f7f790ba1e0ad1dfa7e890d88",
+    "camera.mjpg": "64d887e0c2817e3594e3bbad4193ab97b4abc1d0c2eed0229ac3d092fad04e52"
+  },
+  "model_path": "E:/OptoJump/IronJump-gil-gui-calibration-20261018-01/models/pose_landmarker_full.task",
+  "model_sha256": "5134a3aad27a58b93da0088d431f366da362b44e3ccfbe3462b3827a839011b1",
+  "frame_ids": [
+    4151,
+    4155,
+    4159,
+    4163,
+    4167,
+    4171,
+    4175,
+    4179,
+    4183,
+    4187,
+    4191
+  ],
+  "model_calls": 220,
+  "python_dll_sha256": "162e8557fbed5f39ae24983ee62b2d435b4796c937d9c1a34371888c7e43af00",
+  "numpy_pyd_sha256": "4fb4c5d62a6bd766eea716350eaf5396580e33cf7dc159e305488d1b7d72dad2",
+  "sources": {
+    "freeze01.py": "adc73f544a20a66f45c5d6ee9e5aad7945e0d6650b347bc2a1cc3c03f349afdd",
+    "collect.py": "d5f7a34d2d0f11c6a4b2325daef233c919446da4dee7d3a0f60d17e51c4898a0",
+    "run.py": "eeb605c05bcad3f1ad7fa842fb16c97eb5adbea4cbf6a28b7b5f9fa93c020a1b",
+    "test_statistics.py": "259726f3a08fccdbcb3a61148a7b9ef3698474d753a51bb3c5daa75e72d84f71",
+    "launch01.py": "4bed75910477adc235d91013a74813dc2a90b7fc70416fb80a7826b023491264",
+    "pilot_stats.py": "9b36e8bbe723aefb856c2080c101a606d5dcc3eb3f27cbe589960f441d7eb3d1",
+    "analyze.py": "e0198ac4a6ec368917e432e67733d4c460b987e846ca0ab26483d93a50829b93"
+  },
+  "scope": "Exactly4 new fresh-process OFF/OFF pairs of qualified fixed consumer+model task bundle. Sampler/ETW OFF throughout, common recorder/counter/retention ON. No GUI, SDK, live camera/USB, human, Run or optimization AB.",
+  "checks": [
+    "Exact full-chain original report/state/raw archive; complete input/source/native hashes.",
+    "Model inputs/logical timestamps/call count/result contents exact across both runs; mismatch retained.",
+    "Logical sensor clock applies only to consumer thread; model and other native callbacks keep real clock.",
+    "Consumer and model span overlap must be observed, with separate TIDs; overlap alone is not a GIL ownership claim.",
+    "All220 model outputs retained until post-join hashing; this is synthetic controlled heap policy, not live latest-only behavior.",
+    "Close completion required but excluded from model-work span. No resampling, no speedup or field qualification claim.",
+    "Model work_done handshake blocks adapter.close until after process_after; counter brackets cover both complete task spans.",
+    "Same process identity, monotonic process times/cycles and <=1ms counter read brackets. Named-thread sum cross-check retains prior50ms tolerance, not an equivalence margin.",
+    "Both complete task identities and model result content must agree. Keep any fixed-consumer ROI model-overlap differences.",
+    "One pair validates boundaries only; no between-pair variance/3% equivalence/1% precision or root attribution. No retries replacing a failed case.",
+    "Every8 full input/model/report identities and complete process-accounting boundaries must pass; otherwise statistics withheld.",
+    "Original boundary-qualification pair is excluded. No matching subset, no reordering after results, no extra case on a failure.",
+    "Compute all4 raw pair differences including >15%; never interpret OFF/OFF variation as observer bias or claim controlled/dynamic field qualification."
+  ],
+  "actual_load_disturbance_pass": false,
+  "prior_fixed_bundle_plan_sha256": "7f0967253a585c9dc23257b0a800ad33118fc948c1808bee2b3e979b33e51ee3",
+  "pairs": [
+    [
+      "pair01_a",
+      "pair01_b"
+    ],
+    [
+      "pair02_a",
+      "pair02_b"
+    ],
+    [
+      "pair03_a",
+      "pair03_b"
+    ],
+    [
+      "pair04_a",
+      "pair04_b"
+    ]
+  ],
+  "dependency_sources": {
+    "experiments/fixed_work_accounting/run.py": "2cd5a0e2014ad1dc731b1cbcd87137405ad0d4205303982bc41d02bb69c884ba",
+    "experiments/fixed_work_accounting/counters.py": "504cd67a5bbb9691eb4c8bfdf5a2a1e71d454317e70eaff559713767c3236a0d",
+    "experiments/fixed_work_accounting/logical_clock.py": "309676131f0052886d8b32c1740ed461966cab39da98a625e5e23bd0b164c6e3",
+    "experiments/fixed_concurrent_work/verify.py": "cdbc318fd2f0854376d11190e875e45f60b8d18c5799342acb055add1c8a5c53"
+  },
+  "prior_boundary_plan_sha256": "40b872df166928bfa81145c8f79777c1f363493476de1e6b10a2217befa396ab",
+  "prior_boundary_result_sha256": "c5358ee9cd54270678956bf7ba4d863b069958e23d616ef6040cbdce02fc6e6a",
+  "statistics": {
+    "independent_unit": "Whole fresh-process pair, not individual threads/blocks/model calls.",
+    "endpoints": [
+      "wall_ns",
+      "cpu_ns",
+      "cycles"
+    ],
+    "wall_endpoint": "Midpoint of saved whole-bundle OS-read brackets; every pair bracket ratio retained separately.",
+    "family_alpha": 0.05,
+    "method": "Bonferroni simultaneous Student-t intervals of pair log ratios; descriptive four-pair pilot with parametric independence/stationarity assumptions.",
+    "retain_all_cases": true,
+    "optional_extension": false,
+    "outlier_removal": false,
+    "performance_detrending": false,
+    "cycle_normalization": false,
+    "future_planning": "Max endpoint log-ratio SD; once-only8..24 prospective pair count planning for log(1.01) half-width. Planning only, no ON run launched.",
+    "original_3pct_1pct_acceptance_unchanged": true,
+    "common_observer_absolute_cost_unknown": true
+  }
+}

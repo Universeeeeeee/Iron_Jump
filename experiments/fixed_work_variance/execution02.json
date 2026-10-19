@@ -1,0 +1,15 @@
+{
+  "script": "$ErrorActionPreference='Stop';$ProgressPreference='SilentlyContinue';[Console]::OutputEncoding=New-Object System.Text.UTF8Encoding;& D:/conda/python.exe -u 'E:/OptoJump/IronJump-gil-gui-calibration-20261018-01/experiments/fixed_work_variance/run.py' 2>&1 | Tee-Object -FilePath 'E:/OptoJump/IronJump-gil-gui-calibration-20261018-01/experiments/fixed_work_variance/controller02.stdout';if($LASTEXITCODE){throw 'Fixed cohort failed; preserve all'}",
+  "returncode": 0,
+  "controller_output": [
+    "{\"case\": \"pair01_a\", \"exit_code\": 0}",
+    "{\"case\": \"pair01_b\", \"exit_code\": 0}",
+    "{\"case\": \"pair02_a\", \"exit_code\": 0}",
+    "{\"case\": \"pair02_b\", \"exit_code\": 0}",
+    "{\"case\": \"pair03_a\", \"exit_code\": 0}",
+    "{\"case\": \"pair03_b\", \"exit_code\": 0}",
+    "{\"case\": \"pair04_a\", \"exit_code\": 0}",
+    "{\"case\": \"pair04_b\", \"exit_code\": 0}"
+  ],
+  "no_mid_task_queries": true
+}

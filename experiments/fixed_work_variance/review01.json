@@ -1,0 +1,32 @@
+{
+  "title": "完整固定任务组4对OFF/OFF：工作与边界通过，CPU精度仍不足",
+  "prospective_scope": "恰好4对、8个新进程；原边界验证对未纳入。采样器及ETW始终OFF，共同记录器/结果保留/计数读取ON。没有GUI、SDK、设备、人体、Run或优化A/B。",
+  "facts": [
+    "8轮均完成同一6824帧原处理链及220次真实模型调用。每轮原始输入、像素、逻辑时间、完整推理返回摘要和完整报告相同。",
+    "进程创建身份、单调CPU/cycles、<=1ms读取括号、完整工作覆盖、模型关闭晚于计量结束均通过。进程CPU包含模型原生线程池。",
+    "4个成对单位的全部原始变化保留，三个终点均没有超过15%的原始成对变化；这不等于3%等效或1%精度通过。",
+    "3终点家族95%同时Student-t log比值区间：墙钟约[-0.536%,+2.667%]、进程CPU[-3.783%,+7.733%]、cycles[-0.699%,+2.428%]。",
+    "成对log比值SD分别约0.653%、2.328%、0.638%。四对仅为描述性先导，独立性/平稳性和参数分布假设仍有实际限制。",
+    "按预声明的最大终点SD及8至24对规划，24对预测log半宽仍约1.227%，没有达到log(1.01)目标。没有追加试次，也没有启动ON。"
+  ],
+  "decision": "固定任务身份已可解释，但现有计量/执行波动不足以支持所需CPU终点精度。不能剔除CPU终点、以cycles归一化CPU，或追加同配置试次凑窄区间。24对是规划上限而非建议立即执行的合格确认。",
+  "next_evidence": {
+    "question": "CPU计费变化、实际执行工作变化与CPU交付条件仍需区分。",
+    "read_only_query": "全部任务结束后查询WPR -pmcsources：系统列出InstructionRetired、UnhaltedCoreCycles和UnhaltedReferenceCycles等。随后WPR -status确认未记录。",
+    "boundary": "可枚举不代表底层PMU已实际交付。下一步如使用这些源，先独立验证事件、源ID、计数增量、PID/TID、区间及丢失事件，不能由名称直接推物理频率或原现场贡献。",
+    "parallel_track": "自然GIL等待者/持有者的独立证据缺口继续保留；本pilot不确定持有者或主要责任函数。"
+  },
+  "preflight_failure": "首次启动在创建runs及任何目标工作前因缺少已冻结清单中的验证文件退出。只补传同SHA缺项，未覆盖既有文件；原错误、只读恢复记录和首计划保留。随后是首次实际8轮，未重采替换失败窗口。",
+  "limits": [
+    "同任务调用/返回身份不证明内部指令、分配或实际硬件执行量完全一致。",
+    "墙钟统计使用已保存计数括号的中点，所有成对上下界另列；这些描述性区间不提升为精度保证。",
+    "GetProcessTimes与thread_time同属OS计费体系，不是独立硬件交付证据；100ns单位不保证100ns精度。",
+    "共同观察开销未知。受控任务组与动态GUI/SDK、真实latest-only策略及现场窗口仍分别验收。",
+    "旧3%/1%失败、旧原生栈门槛及全部旧证据未改；根因和修复仍未完成。"
+  ],
+  "all_case_qualification_pass": true,
+  "ON_started": false,
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "primary_root_identified": false
+}
