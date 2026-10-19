@@ -1,6 +1,6 @@
 # 原GUI初始化/首次模型调用：固定四窗被动CPU账本
 
-承接 `b2e8af0` 的缺口。本阶段不再做隔离或优化A/B，也不重跑旧主动计算探针。当前plan01冻结4个同进程原版保存Walk窗口，已通过本地/Windows9项检查及源/输入/依赖哈希后唯一启动任务 `IronJump-session-startup-accounting01`。启动不代表数据或根因验收通过；目标仍在进行中。
+承接 `b2e8af0` 的缺口。本阶段不再做隔离或优化A/B，也不重跑旧主动计算探针。当前plan01冻结4个同进程原版保存Walk窗口，已通过本地/Windows9项检查及源/输入/依赖哈希后唯一启动任务 `IronJump-session-startup-accounting01`。现已完成全部4窗与独立复核，覆盖1个slow时序窗和3个fast时序窗。CPU账本也随慢态增加，但不提供GIL/CPU原因占比或正式修复资格。详见 [结果](results01.md)；目标仍在进行中。
 
 ## 仅补少数边界
 
