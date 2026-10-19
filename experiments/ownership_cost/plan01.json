@@ -1,0 +1,388 @@
+{
+  "replay_root": "E:/OptoJump/IronJump-walk-compute-offline-20261017-01",
+  "helper_sha256": "4e12322e717ef8b18796e0dfb2ffdf798b5231078a0637550a9aef26bd5cedfa",
+  "groups": [
+    {
+      "input": [
+        0,
+        [
+          0
+        ],
+        []
+      ],
+      "calls": 2,
+      "result": [
+        0
+      ]
+    },
+    {
+      "input": [
+        0,
+        [
+          0
+        ],
+        [
+          [
+            1,
+            "unresolved",
+            0
+          ]
+        ]
+      ],
+      "calls": 52,
+      "result": [
+        0
+      ]
+    },
+    {
+      "input": [
+        0,
+        [
+          0
+        ],
+        [
+          [
+            1,
+            "unresolved",
+            0
+          ],
+          [
+            2,
+            "pending",
+            0
+          ]
+        ]
+      ],
+      "calls": 12205,
+      "result": [
+        0
+      ]
+    },
+    {
+      "input": [
+        2,
+        [
+          3
+        ],
+        []
+      ],
+      "calls": 4,
+      "result": [
+        3
+      ]
+    },
+    {
+      "input": [
+        2,
+        [
+          3
+        ],
+        [
+          [
+            4,
+            "pending",
+            2
+          ]
+        ]
+      ],
+      "calls": 46,
+      "result": [
+        3
+      ]
+    },
+    {
+      "input": [
+        2,
+        [
+          3
+        ],
+        [
+          [
+            4,
+            "pending",
+            2
+          ],
+          [
+            4,
+            "associated",
+            2
+          ]
+        ]
+      ],
+      "calls": 9023,
+      "result": [
+        3,
+        4
+      ]
+    },
+    {
+      "input": null,
+      "calls": 34,
+      "result": []
+    },
+    {
+      "input": [
+        4,
+        [
+          5,
+          6,
+          7
+        ],
+        []
+      ],
+      "calls": 15,
+      "result": [
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "input": [
+        4,
+        [
+          5,
+          6,
+          7
+        ],
+        [
+          [
+            8,
+            "pending",
+            4
+          ]
+        ]
+      ],
+      "calls": 82,
+      "result": [
+        5,
+        6,
+        7
+      ]
+    },
+    {
+      "input": [
+        4,
+        [
+          5,
+          6,
+          7
+        ],
+        [
+          [
+            8,
+            "pending",
+            4
+          ],
+          [
+            8,
+            "associated",
+            4
+          ]
+        ]
+      ],
+      "calls": 7779,
+      "result": [
+        5,
+        6,
+        7,
+        8
+      ]
+    },
+    {
+      "input": [
+        5,
+        [
+          9
+        ],
+        []
+      ],
+      "calls": 2,
+      "result": [
+        9
+      ]
+    },
+    {
+      "input": [
+        5,
+        [
+          9
+        ],
+        [
+          [
+            10,
+            "unresolved",
+            5
+          ]
+        ]
+      ],
+      "calls": 279,
+      "result": [
+        9
+      ]
+    },
+    {
+      "input": [
+        5,
+        [
+          9
+        ],
+        [
+          [
+            10,
+            "unresolved",
+            5
+          ],
+          [
+            11,
+            "unresolved",
+            5
+          ]
+        ]
+      ],
+      "calls": 5284,
+      "result": [
+        9
+      ]
+    },
+    {
+      "input": [
+        10,
+        [
+          12,
+          13
+        ],
+        []
+      ],
+      "calls": 4105,
+      "result": [
+        12,
+        13
+      ]
+    },
+    {
+      "input": [
+        11,
+        [
+          14
+        ],
+        []
+      ],
+      "calls": 4,
+      "result": [
+        14
+      ]
+    },
+    {
+      "input": [
+        11,
+        [
+          14
+        ],
+        [
+          [
+            15,
+            "pending",
+            11
+          ]
+        ]
+      ],
+      "calls": 48,
+      "result": [
+        14
+      ]
+    },
+    {
+      "input": [
+        11,
+        [
+          14
+        ],
+        [
+          [
+            15,
+            "pending",
+            11
+          ],
+          [
+            15,
+            "associated",
+            11
+          ]
+        ]
+      ],
+      "calls": 4567,
+      "result": [
+        14,
+        15
+      ]
+    }
+  ],
+  "calls": 43531,
+  "cases": {
+    "a": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16
+    ],
+    "b": [
+      16,
+      15,
+      14,
+      13,
+      12,
+      11,
+      10,
+      9,
+      8,
+      7,
+      6,
+      5,
+      4,
+      3,
+      2,
+      1,
+      0
+    ],
+    "c": [
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7
+    ]
+  },
+  "sources": {
+    "run.py": "e425660119e84d409bfa002fd7e5e79dab9f603a3f41ff1c5166eda150de1f91",
+    "test_restore.py": "16df2f08951589d4d2bcaf4fb185578eed55c1ef74c94303ee44efd06729dc4d"
+  },
+  "evidence_sha256": "df63882c4efaca69d6bff7d5c603e3b939ce0f2f6bf3389a4960bd910b7ed229",
+  "scope": "Three fixed fresh processes with original helper only; no cached candidate or A/B. Use original input multiplicities but explicitly grouped order; priority screening only.",
+  "actual_load_disturbance_pass": false
+}
