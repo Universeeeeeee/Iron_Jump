@@ -1,0 +1,18 @@
+{
+  "cases": [
+    "stable_workers",
+    "exited_worker",
+    "transient_worker"
+  ],
+  "seconds": 2,
+  "per_read_ns": 1000000,
+  "group_ns": 10000000,
+  "sources": {
+    "inventory.py": "59a3ce5b0d796e2bcceb1bf04a3da002de5cdcf574fb3f00cbc8eb97250a11ef",
+    "run.py": "3d8a9e937a4fd056f46a5f42c6b2815f43c9e433c015474cfe1f1e70b85ff355",
+    "test_inventory.py": "33fa73700e101a3d324bd2000b160ac6667bfc2f877ab104ce556b8aeaf2f01e"
+  },
+  "probe_sha256": "559e3e4361281d7df4158e04a5dd467656dc2242dacaee9960d894ebc0561992",
+  "scope": "One fixed synthetic cohort; coarse accounting/lifetime controls only, no real model or GUI or actual-load qualification.",
+  "rules": "Retain every result and lock, abort on unexpected failure, no replacement. Stable endpoints never prove complete thread lifetime coverage."
+}
