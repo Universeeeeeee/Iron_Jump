@@ -1,0 +1,26 @@
+{
+  "title": "assigned_sources重复有效输入验证：原函数每次执行，未启用缓存",
+  "cases": {
+    "Windows": {"input": "20261018_131910固定raw42237..49060", "frames": 6824, "calls": 43531, "distinct_effective_inputs": 17, "repeated_input_calls": 43514},
+    "Mac": {"input": "20261017_213018完整formal区间", "frames": 41459, "calls": 165784, "distinct_effective_inputs": 19, "repeated_input_calls": 165765}
+  },
+  "evidence": [
+    "记录owner_id、source_ids和source_decisions读取字段组成的调用前签名；所有重复签名的原始返回集合一致。",
+    "覆盖ground_source_review、walking_processor、ground_position_evidence和ground_metric_evidence四个原函数导入位置；Windows43531次与之前该ROI调用清单一致。",
+    "每次仍执行原assigned_sources并返回该次新集合，未替换为缓存或共享返回对象。",
+    "两个不同平台/输入均通过原完整报告、质量、审计、时间线、镜像和原始归档核对；没有把两次称为严格A/B或相同负载。"
+  ],
+  "candidate_constraints": [
+    "若后续考虑复用，必须处理established_owner建立、recovery建立、source_decisions追加以及合并时extend四类变化；仅按group对象身份缓存会过期。",
+    "原函数返回新的可变set；共享缓存对象可能改变调用方修改隔离语义，不能未经验证直接替换。",
+    "完全输入签名本身也需遍历决策，构造签名未必比原集合计算便宜；本记录器不是建议的优化实现。"
+  ],
+  "limits": [
+    "大量重复不证明CPU/GIL贡献或值得优化。记录器增加哈希、遍历和保存开销，本轮不导出性能结论。",
+    "不能据此解释旧全链慢快轮、旧GUI积压或确定GIL持有者。",
+    "正式程序、Processor、滤波、NumPy、线程结构和绘图均未改。"
+  ],
+  "next": "先独立测量已保存有效输入下原helper工作的成本，保留与整链缓存/分配/同步环境不同的限制；若成本不足以解释主要效应，应降低其优化优先级，转回NumPy边界及原生执行证据。",
+  "actual_load_disturbance_pass": false,
+  "primary_root_identified": false
+}

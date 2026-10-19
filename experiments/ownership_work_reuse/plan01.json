@@ -1,0 +1,33 @@
+{
+  "cases": [
+    "local01"
+  ],
+  "replay_root": "/Users/vae/.codex/worktrees/native-stack-capture/Iron_Jump",
+  "input_root": "/Users/vae/.codex/worktrees/native-stack-capture/Iron_Jump/experiments/single_usb_human_etw/runs/20261017_213018_48007d13_walk_off/capture",
+  "raw_first": 22750,
+  "raw_after_last": 64209,
+  "run_sha256": "c9ff0b73f6d598acfcdc87b4a9d1d8e56f76c23160e6662ed894acc9ed7afc0f",
+  "replay_sha256": "fcde26dd2e707cc457623a971a97e68ebd9f49630126c51bd6ce83072a0d40a8",
+  "input_sha256": {
+    "raw_frames.npz": "9c78d84b9d3de94c1f97a712173f80f12efe0bd65f303bafebd3abc5cb9bf1da",
+    "raw_archive.npz": "6c3828da5545140ec78f290111d5c9cf635d6d744933bb2888cf124a1fb12279",
+    "acquisition.json": "7f821fb745e2297bbc28665b20d4dd2c0fed51eefd8a115e93f425c6b82abbdb",
+    "report.json": "7d46bfda236ac2dfcff21b93df13f00d493fd42572a685632cf76491f12064fa",
+    "state.json": "6cc12cbb6b3117e613c4d7c45664e93108c29d5c821454332239ec10e58d48d1",
+    "measurement.json": "aca4ddb469b985b71163fbe42c75fab8013681e8fb73a470262ac7b008aa9abb"
+  },
+  "sources": {
+    "observer.py": "e11a61f620cc039bbb7b296206b850d8c3afb5022e63f51ecd7117029fdce8e3",
+    "collect.py": "86823de0fd0efaa2196292f7108771d4cf512210671e048f52a9632b2724307f",
+    "run.py": "c9ff0b73f6d598acfcdc87b4a9d1d8e56f76c23160e6662ed894acc9ed7afc0f",
+    "test_observer.py": "0258ac985b0d2565590ab8d4b39c8bde68527592a9dc409d2c3c620df7712bfb"
+  },
+  "scope": "One fixed local Mac semantic-only original chain pass on saved20261017_213018 data, all formal frames. Always execute original assigned_sources and preserve original return object. No caching, performance comparison, devices, SDK or field claim. Different input/platform from Windows fixed ROI.",
+  "checks": [
+    "Full original report/state/archive exact; failure retained, no replacement.",
+    "All four original imported aliases patched only in this diagnostic process.",
+    "Full effective helper input signature and output recorded; repeated input output must agree.",
+    "No timing or causal contribution inferred."
+  ],
+  "actual_load_disturbance_pass": false
+}
