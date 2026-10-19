@@ -1,0 +1,9 @@
+--- experiments/session_output_bridge/outbox.py
++++ experiments/session_outbox_actor/outbox.py
+@@ -84,3 +84,6 @@
+         with (folder/'state.json').open('x',encoding='utf-8') as f:json.dump(dict(state=state,unconfirmed_files=files,
+             meaning='Snapshot of unconfirmed output; a write may subsequently return. Never proves parent application receipt.'),f,indent=2)
+         return state
++
++    def abort(self,reason):
++        with self.condition:self._fail(reason)

@@ -1,0 +1,85 @@
+{
+  "original_validation_cohort_pass": false,
+  "independent_actor_observations_verified": true,
+  "cases": {
+    "normal": {
+      "original_parent_contract_pass": true,
+      "actor_complete": true,
+      "ingress_prefix_frames": 33188,
+      "accepted_formal_frames": 29687,
+      "raw_prefix_and_archive_verified": true,
+      "local_report_and_quality_state_saved": true,
+      "measurement_resources_stopped": true,
+      "actor_exitcode": 0,
+      "writer_stop_confirmed_at_record": true,
+      "received_message_count": 688,
+      "unconfirmed_packet_count": 0,
+      "outbox_failure": null,
+      "high_accepted_messages": 3,
+      "high_accepted_bytes": 4654380,
+      "full_report_algorithm_oracle": true
+    },
+    "peer_disconnect": {
+      "original_parent_contract_pass": true,
+      "actor_complete": false,
+      "ingress_prefix_frames": 3507,
+      "accepted_formal_frames": 4,
+      "raw_prefix_and_archive_verified": true,
+      "local_report_and_quality_state_saved": true,
+      "measurement_resources_stopped": true,
+      "actor_exitcode": 1,
+      "writer_stop_confirmed_at_record": true,
+      "received_message_count": 86,
+      "unconfirmed_packet_count": 0,
+      "outbox_failure": {
+        "reason": "actor_fault:command_failure:BrokenPipeError(32, '\u7ba1\u9053\u5df2\u7ed3\u675f\u3002', None, 109, None)",
+        "sequence": null,
+        "packet_bytes": null,
+        "packet_sha256": null,
+        "detail": null
+      },
+      "high_accepted_messages": 3,
+      "high_accepted_bytes": 27616,
+      "full_report_algorithm_oracle": false
+    },
+    "parent_stall": {
+      "original_parent_contract_pass": false,
+      "actor_complete": false,
+      "ingress_prefix_frames": 10077,
+      "accepted_formal_frames": 6575,
+      "raw_prefix_and_archive_verified": true,
+      "local_report_and_quality_state_saved": true,
+      "measurement_resources_stopped": true,
+      "actor_exitcode": 1,
+      "writer_stop_confirmed_at_record": false,
+      "received_message_count": 89,
+      "unconfirmed_packet_count": 128,
+      "outbox_failure": {
+        "reason": "message_limit",
+        "sequence": 218,
+        "packet_bytes": 10198,
+        "packet_sha256": "dbd737473242220c1fa61ff7cd99da8fc4d9ce08979f1af2913ff2b44ec10e6c",
+        "detail": null
+      },
+      "high_accepted_messages": 128,
+      "high_accepted_bytes": 727168,
+      "full_report_algorithm_oracle": false
+    }
+  },
+  "actual_parent_process_death_tested": false,
+  "partial_report_algorithm_oracle": false,
+  "gui_proxy_or_performance_qualification": false,
+  "field_fix_verified": false,
+  "limits": [
+    "First parent validator failed onpollBrokenPipe; its failedstatus andruntime files remain unchanged.",
+    "Closed parent endpoint andpaused reading are tested, not forcedGUIparent process death.",
+    "Failed writer confirmation is retained despite subsequent OSprocess exit; no transport success inferred.",
+    "No replacement windows or extension of15sec pause."
+  ],
+  "bindings": {
+    "manifest_sha256": "816e9f65797e547bb726164f40597dbcbb4e18d9a152582d50242e21e6b561c9",
+    "plan_sha256": "3243408cc3e8190b887e08937413a4990dca575263b3430d37927719d15e8063",
+    "reference_report_sha256": "fc940763f51abe8d5bb9dc127e4c42092872fcce9ef8430c2846ca57fae4692e",
+    "review_sha256": "d7ae8de741b58f113a902c5816759c11f1519077a41a2eaccee6699003ffc729"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "stage": "Original three-case cohort",
+  "original_cohort_pass": false,
+  "normal_parent_contract_pass": true,
+  "disconnected_parent_contract_pass": true,
+  "parent_stall_parent_contract_pass": false,
+  "stalled_parent_error": "BrokenPipeError from connection.poll afteractor endpoint closed; oldparent only caught recv errors.",
+  "all_original_cases_attempted": true,
+  "no_window_repeated": true,
+  "old_runtime_sources_unchanged": true,
+  "prospective_parent_fix": {
+    "source": "parent02.py",
+    "poll_helper": "polling.py",
+    "launch_allowed": false,
+    "requires_new_plan_and_gate": true
+  }
+}

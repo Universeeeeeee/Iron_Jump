@@ -1,0 +1,98 @@
+--- experiments/consumer_session_controls/actor.py
++++ experiments/session_outbox_actor/actor.py
+@@ -21,16 +21,29 @@
+     from config.walking_config import WalkingConfig
+     from semantics02 import digest
+     from commands import apply_control,resources_stopped,bind_notifications
++    from outbox import Outbox,OutboxError
+     folder=Path(output_root);folder.mkdir(exist_ok=False);(folder/'active.lock').mkdir()
+     app=QCoreApplication([]);source=Source(Path(input_root));meta=source.meta
+     controller=SessionController(worker_factory=lambda **kwargs:source)
+     probe=QueueProbe(int(source.indices[0]),False,int(source.indices[-1]))
+     status={};events=[];errors=[];reports=[];armed=[];sequence=0;prepared=False;ready_sent=False;refs={};command_sequence=0;pending_control=None;completed_control=None
++    outbox=Outbox(connection);transport_fault=None
+     def emit(kind,payload):
+         nonlocal sequence
+         sequence+=1
+         row=dict(sequence=sequence,pid=os.getpid(),kind=kind,host_ns=time.perf_counter_ns(),payload=payload)
+-        connection.send(row);events.append(dict(sequence=sequence,kind=kind,host_ns=row['host_ns']))
++        try:outbox.enqueue(row);accepted=True
++        except OutboxError:accepted=False
++        events.append(dict(sequence=sequence,kind=kind,host_ns=row['host_ns'],accepted_by_outbox=accepted))
++        return accepted
++    def request_fault(reason):
++        nonlocal transport_fault,pending_control
++        if transport_fault is not None:return
++        transport_fault=dict(reason=reason,host_ns=time.perf_counter_ns())
++        errors.append('ipc_transport_failure:'+reason);outbox.abort('actor_fault:'+reason)
++        pending_control=dict(kind='transport_failure',command_sequence=None)
++        if controller.is_running:controller.stop('ipc_transport_failure')
++        elif controller._thread is not None:controller.discard()
+     original_consume=_GroundFrameInbox._consume
+     def consume(inbox,items):return probe.consume(inbox,items,original_consume)
+     _GroundFrameInbox._consume=consume
+@@ -68,7 +81,9 @@
+         def commands(self):
+             nonlocal prepared,command_sequence,ready_sent,pending_control,completed_control
+             try:
+-                if connection.poll():
++                failure=outbox.snapshot()['failure']
++                if failure is not None:request_fault(failure['reason'])
++                if transport_fault is None and connection.poll():
+                     command=connection.recv()
+                     if command['sequence']!=command_sequence+1:raise ValueError('Command sequence changed')
+                     command_sequence+=1;kind=command['kind']
+@@ -88,14 +103,15 @@
+                     else:raise ValueError('Unexpected command phase: '+kind)
+                 if prepared and pending_control is None and not ready_sent and status.get('ready') and getattr(controller._frame_inbox,'last_consumed_sample',-1)==meta['device']['checked_sample_index']:
+                     ready_sent=True;emit('ready_to_start',dict(quality_key=status['device_key'],completed_sample=controller._frame_inbox.last_consumed_sample))
+-                if pending_control is not None and resources_stopped(controller,source,refs.get('thread')):
++                if pending_control is not None and (resources_stopped(controller,source,refs.get('thread')) or (not prepared and controller._thread is None and source.reader is None)):
+                     QCoreApplication.sendPostedEvents(None,QEvent.MetaCall)
+                     completed_control=dict(pending_control)
+-                    emit('command_completed',dict(**completed_control,reader_stopped=True,qt_thread_stopped=True))
+-                    if reports:emit('report_value',dict(report=reports[0],raw_exports_child_owned=True))
++                    if transport_fault is None:
++                        emit('command_completed',dict(**completed_control,reader_stopped=True,qt_thread_stopped=True))
++                        if reports:emit('report_value',dict(report=reports[0],raw_exports_child_owned=True))
+                     timer.stop();app.quit()
+             except BaseException as exc:
+-                errors.append(repr(exc));timer.stop();app.quit()
++                request_fault('command_failure:'+repr(exc))
+     delivery=Delivery()
+     controller.walking_readiness_changed.connect(delivery.readiness)
+     controller.footprint_visual_frame.connect(delivery.visual)
+@@ -108,13 +124,13 @@
+     QTimer.singleShot(90000,timeout)
+     emit('actor_ready',dict(no_qwidget=True));app.exec();timer.stop()
+     if controller._thread:
+-        if controller.is_running:controller.stop('manual')
++        if controller.is_running:controller.stop('ipc_transport_failure' if transport_fault else 'manual')
+         else:controller.discard()
+     probe.close()
+     reader_stopped=source.reader is None or not source.reader.is_alive()
+-    thread_stopped='thread' in refs and not refs['thread'].isRunning()
++    thread_stopped=not prepared or ('thread' in refs and not refs['thread'].isRunning())
+     complete=not errors and completed_control is not None and reader_stopped and thread_stopped and ((completed_control['kind']=='stop' and len(reports)==len(armed)==1) or (completed_control['kind']=='discard' and not reports and not armed))
+-    if complete and reports:
++    if reports:
+         report=reports[0]
+         (folder/'report.json').write_text(json.dumps(report,ensure_ascii=False),encoding='utf-8')
+         quality=refs['quality'];engine=refs['engine'];runtime=quality._runtime;window_hash=hashlib.sha256()
+@@ -123,7 +139,14 @@
+         (folder/'state.json').write_text(json.dumps(state,ensure_ascii=False),encoding='utf-8')
+     if source.delivered:
+         np.savez_compressed(folder/'raw_frames.npz',**{k:np.array([getattr(f,a) for f in source.delivered]) for k,a in [('sample_indices','sample_index'),('frame_indices','frame_index'),('received_ns','received_monotonic_ns'),('dropped_frames_before','dropped_frames_before')]},bits=np.array([np.frombuffer(f.contact_bits,np.uint8) for f in source.delivered]),valid_bits=np.array([np.frombuffer(f.valid_bits,np.uint8) for f in source.delivered]),wire=np.array([np.frombuffer(f.wire_payload,np.uint8) for f in source.delivered]))
+-    result=dict(complete=complete,pid=os.getpid(),errors=errors,events=events,armed=armed,commands_received=command_sequence,source_count=len(source.delivered),expected_source_count=len(source.indices),reader_stopped=reader_stopped,qt_thread_stopped=thread_stopped,controller_released=controller._thread is None,queue_common=probe.common,performance_qualification=False,finite_EOF_poll_exemption=True,application_class=app.metaObject().className(),completed_control=completed_control,source_arm_error=getattr(source,'arm_error',None),accepted_last_sample=(getattr(refs.get('quality'),'latest_received_frame',None).sample_index if getattr(refs.get('quality'),'latest_received_frame',None) is not None else None))
++    emit('payload_end',dict(local_measurement_complete=complete,transport_unconfirmed=True))
++    writer_finished=outbox.finish(2)
++    if not writer_finished and transport_fault is None:
++        transport_fault=dict(reason='writer_finalization_failed',host_ns=time.perf_counter_ns())
++        errors.append('ipc_transport_failure:writer_finalization_failed')
++    outbox.preserve(folder/'output_snapshot')
++    complete=complete and writer_finished and not errors
++    result=dict(complete=complete,pid=os.getpid(),errors=errors,events=events,armed=armed,commands_received=command_sequence,source_count=len(source.delivered),expected_source_count=len(source.indices),reader_stopped=reader_stopped,qt_thread_stopped=thread_stopped,controller_released=controller._thread is None,queue_common=probe.common,performance_qualification=False,finite_EOF_poll_exemption=True,application_class=app.metaObject().className(),completed_control=completed_control,transport_fault=transport_fault,outbox=outbox.snapshot(),writer_stop_confirmed=not outbox.thread.is_alive(),report_saved=(folder/'report.json').exists(),source_arm_error=getattr(source,'arm_error',None),accepted_last_sample=(getattr(refs.get('quality'),'latest_received_frame',None).sample_index if getattr(refs.get('quality'),'latest_received_frame',None) is not None else None))
+     with (folder/'result.json').open('x') as f:json.dump(result,f,indent=2)
+-    emit('terminal',dict(complete=complete,errors=errors));connection.close()
++    connection.close()
+     if not complete:raise SystemExit(1)
