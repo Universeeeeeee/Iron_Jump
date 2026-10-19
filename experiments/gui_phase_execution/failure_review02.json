@@ -1,0 +1,233 @@
+{
+  "exploratory_failure_review": true,
+  "stages": {
+    "before_open": {
+      "source_sha256": "b7726c612b6572082ee633f57f68f40c52b14bdc4041010e188ee76bd0a5dbc7",
+      "scaling_pairs": [
+        {
+          "wall_ratio": 2.844640767242937,
+          "passes_frozen_range": false
+        },
+        {
+          "wall_ratio": 4.636807787809971,
+          "passes_frozen_range": true
+        },
+        {
+          "wall_ratio": 4.015743936631904,
+          "passes_frozen_range": true
+        }
+      ],
+      "rows": [
+        {
+          "iterations": 8000000,
+          "dependent_adds": 128000000,
+          "wall_ms": 101.8504,
+          "thread_cpu_ms": 46.875,
+          "thread_cycles": 129486240,
+          "core_before": 0,
+          "core_after": 3
+        },
+        {
+          "iterations": 32000000,
+          "dependent_adds": 512000000,
+          "wall_ms": 289.7278,
+          "thread_cpu_ms": 218.75,
+          "thread_cycles": 518407440,
+          "core_before": 1,
+          "core_after": 2
+        },
+        {
+          "iterations": 32000000,
+          "dependent_adds": 512000000,
+          "wall_ms": 253.5898,
+          "thread_cpu_ms": 218.75,
+          "thread_cycles": 519703920,
+          "core_before": 2,
+          "core_after": 0
+        },
+        {
+          "iterations": 8000000,
+          "dependent_adds": 128000000,
+          "wall_ms": 54.6906,
+          "thread_cpu_ms": 46.875,
+          "thread_cycles": 129952080,
+          "core_before": 0,
+          "core_after": 6
+        },
+        {
+          "iterations": 8000000,
+          "dependent_adds": 128000000,
+          "wall_ms": 54.0335,
+          "thread_cpu_ms": 62.5,
+          "thread_cycles": 129350880,
+          "core_before": 6,
+          "core_after": 6
+        },
+        {
+          "iterations": 32000000,
+          "dependent_adds": 512000000,
+          "wall_ms": 216.9847,
+          "thread_cpu_ms": 218.75,
+          "thread_cycles": 517746000,
+          "core_before": 6,
+          "core_after": 2
+        }
+      ]
+    },
+    "after_open": {
+      "source_sha256": "88d25d7c54b3da0a3d50a2832b3079645bbb538f40bfecf2dc480d22c5a65ec7",
+      "scaling_pairs": [
+        {
+          "wall_ratio": 3.9813837501390976,
+          "passes_frozen_range": true
+        },
+        {
+          "wall_ratio": 4.010531309473731,
+          "passes_frozen_range": true
+        },
+        {
+          "wall_ratio": 4.00800213291465,
+          "passes_frozen_range": true
+        }
+      ],
+      "rows": [
+        {
+          "iterations": 8000000,
+          "dependent_adds": 128000000,
+          "wall_ms": 54.8177,
+          "thread_cpu_ms": 62.5,
+          "thread_cycles": 129588480,
+          "core_before": 2,
+          "core_after": 2
+        },
+        {
+          "iterations": 32000000,
+          "dependent_adds": 512000000,
+          "wall_ms": 218.2503,
+          "thread_cpu_ms": 218.75,
+          "thread_cycles": 517019040,
+          "core_before": 2,
+          "core_after": 7
+        },
+        {
+          "iterations": 32000000,
+          "dependent_adds": 512000000,
+          "wall_ms": 216.4199,
+          "thread_cpu_ms": 203.125,
+          "thread_cycles": 516694080,
+          "core_before": 7,
+          "core_after": 3
+        },
+        {
+          "iterations": 8000000,
+          "dependent_adds": 128000000,
+          "wall_ms": 53.9629,
+          "thread_cpu_ms": 62.5,
+          "thread_cycles": 129261360,
+          "core_before": 3,
+          "core_after": 3
+        },
+        {
+          "iterations": 8000000,
+          "dependent_adds": 128000000,
+          "wall_ms": 54.0106,
+          "thread_cpu_ms": 46.875,
+          "thread_cycles": 129295680,
+          "core_before": 3,
+          "core_after": 3
+        },
+        {
+          "iterations": 32000000,
+          "dependent_adds": 512000000,
+          "wall_ms": 216.4746,
+          "thread_cpu_ms": 218.75,
+          "thread_cycles": 516770640,
+          "core_before": 3,
+          "core_after": 2
+        }
+      ]
+    },
+    "after_close": {
+      "source_sha256": "34957094eaf5c8b6d7cac4774c0ba0c80cdc918797f8f6639de7a7f86ec05a3b",
+      "scaling_pairs": [
+        {
+          "wall_ratio": 3.981724158954737,
+          "passes_frozen_range": true
+        },
+        {
+          "wall_ratio": 3.991725088857796,
+          "passes_frozen_range": true
+        },
+        {
+          "wall_ratio": 3.9488785340237658,
+          "passes_frozen_range": true
+        }
+      ],
+      "rows": [
+        {
+          "iterations": 8000000,
+          "dependent_adds": 128000000,
+          "wall_ms": 54.1261,
+          "thread_cpu_ms": 62.5,
+          "thread_cycles": 128946000,
+          "core_before": 2,
+          "core_after": 2
+        },
+        {
+          "iterations": 32000000,
+          "dependent_adds": 512000000,
+          "wall_ms": 215.5152,
+          "thread_cpu_ms": 203.125,
+          "thread_cycles": 515098320,
+          "core_before": 2,
+          "core_after": 2
+        },
+        {
+          "iterations": 32000000,
+          "dependent_adds": 512000000,
+          "wall_ms": 215.9655,
+          "thread_cpu_ms": 203.125,
+          "thread_cycles": 515394480,
+          "core_before": 2,
+          "core_after": 2
+        },
+        {
+          "iterations": 8000000,
+          "dependent_adds": 128000000,
+          "wall_ms": 54.1033,
+          "thread_cpu_ms": 62.5,
+          "thread_cycles": 128977920,
+          "core_before": 2,
+          "core_after": 2
+        },
+        {
+          "iterations": 8000000,
+          "dependent_adds": 128000000,
+          "wall_ms": 54.7676,
+          "thread_cpu_ms": 46.875,
+          "thread_cycles": 128965200,
+          "core_before": 2,
+          "core_after": 2
+        },
+        {
+          "iterations": 32000000,
+          "dependent_adds": 512000000,
+          "wall_ms": 216.2706,
+          "thread_cpu_ms": 218.75,
+          "thread_cycles": 515766720,
+          "core_before": 2,
+          "core_after": 2
+        }
+      ]
+    }
+  },
+  "phase_means_withheld": true,
+  "first_stage_stability_failed": true,
+  "second_window_not_attempted": true,
+  "root_identified": false,
+  "limits": [
+    "No failed-row removal, no replacement, no phase-speed ratios.",
+    "Cycles are OS-reported thread accounting, not certified hardwarefrequency. Short threadCPU quantization prevents wait share estimates.",
+    "Initial changes occur before original modelopen; active probe can itself change startup conditions. No explanation of prior sustainedGUI slow-state is established."
+  ]
+}

@@ -1,0 +1,116 @@
+{
+  "all_two_complete": false,
+  "cases": {
+    "phase01": {
+      "failed": true,
+      "record": {
+        "case": {
+          "id": "phase01",
+          "variant": "default"
+        },
+        "errors": [
+          "ValueError('Native scaling failed')"
+        ],
+        "target_pid": 6080,
+        "target_returncode": 0,
+        "runtime_context": {
+          "verified": true,
+          "foreground_self": [
+            true,
+            true,
+            true,
+            true,
+            true,
+            true
+          ],
+          "thread_policies": [
+            {
+              "role": "consumer",
+              "ordinal": 1,
+              "policy": {
+                "success": true,
+                "error": 0,
+                "version": 1,
+                "control_mask": 0,
+                "state_mask": 0
+              }
+            },
+            {
+              "role": "consumer",
+              "ordinal": 100,
+              "policy": {
+                "success": true,
+                "error": 0,
+                "version": 1,
+                "control_mask": 0,
+                "state_mask": 0
+              }
+            },
+            {
+              "role": "gui",
+              "ordinal": 1,
+              "policy": {
+                "success": true,
+                "error": 0,
+                "version": 1,
+                "control_mask": 0,
+                "state_mask": 0
+              }
+            },
+            {
+              "role": "gui",
+              "ordinal": 100,
+              "policy": {
+                "success": true,
+                "error": 0,
+                "version": 1,
+                "control_mask": 0,
+                "state_mask": 0
+              }
+            },
+            {
+              "role": "model",
+              "ordinal": 1,
+              "policy": {
+                "success": true,
+                "error": 0,
+                "version": 1,
+                "control_mask": 0,
+                "state_mask": 0
+              }
+            },
+            {
+              "role": "model",
+              "ordinal": 100,
+              "policy": {
+                "success": true,
+                "error": 0,
+                "version": 1,
+                "control_mask": 0,
+                "state_mask": 0
+              }
+            }
+          ]
+        },
+        "target_still_running": false
+      }
+    },
+    "phase02": {
+      "not_attempted": true
+    }
+  },
+  "decision": null,
+  "statistics_withheld": true,
+  "latency_qualification": false,
+  "observer_disturbance_qualified": false,
+  "field_fix_verified": false,
+  "limits": [
+    "Three active native probes intentionally perturb ready and cleanup timing. They can themselves warm or change state.",
+    "Snapshots bracket initialization; they do not continuously measure during contact or infer CPU frequency.",
+    "Two windows do not identify a cause or exclude unobserved states; no optional additional windows."
+  ],
+  "bindings": {
+    "plan_sha256": "dcfc9c33cad585d29d2a9b25f7215ebb6b842faa78c2703e455285c0d0cffd5f",
+    "analyzer_sha256": "2d7f2e1048c1dd4600b9a7539ed437e7e4cf493ba46725b92c64ec0cd01f7085"
+  }
+}
