@@ -1,0 +1,20 @@
+{
+  "hypothesis": "Default OS-managed process execution-speed policy may contribute to observed slow CPU execution. Current 0/0 masks do not establish throttling; this is a falsifiable candidate.",
+  "single_variable": "ProcessPowerThrottling execution-speed control only: default untouched versus ControlMask=1 StateMask=0 in the fresh isolated workload process. Never turn throttling ON.",
+  "scope": "No system-wide power, affinity, priority, CPU boost, GUI, hardware or production change. Candidate ends with process exit.",
+  "orders": [["default","optout"],["optout","default"],["optout","default"],["default","optout"]],
+  "fixed_work": "Same6824 original frames and220 real model calls, concurrent, OpenCV default8, all complete semantic checks unchanged.",
+  "native_probe": "Identical bounded integer probe before workload in both arms, exact output checked; do not convert toGHz. No PDH monitor in performance windows.",
+  "required_for_advancement": {
+    "all_four_consumer_pairs_improve": true,
+    "minimum_geometric_consumer_reduction": 0.15,
+    "minimum_geometric_native_throughput_gain": 0.10,
+    "maximum_geometric_whole_work_regression": 0.05,
+    "minimum_slow_default_windows": 3,
+    "slow_preparation_wall_ms_min": 4300,
+    "all_complete_outputs_exact": true
+  },
+  "failure_policy": "Freeze runnable source hashes and pass local/Windows gate tests before launch. Abort on runtime/semantic error, preserve all windows and locks, never replace or add samples. If criteria fail, stop this candidate.",
+  "interpretation": "Joint improvement only supports this process-policy contribution in fixed work. GUI1000Hz pending/contact-to-paint reproduction still required; old3%/1% and stack failures unchanged.",
+  "executed": false
+}
