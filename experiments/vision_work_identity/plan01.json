@@ -1,0 +1,167 @@
+{
+  "scope": "Eight fixed short synthetic schedule controls; use original queue and scheduler with fake inference. Historical4159/4163 timestamps are reused as test inputs, not historical wakeup reconstruction.",
+  "cases": {
+    "pair01_a": {
+      "frames": [
+        {
+          "frame_id": 4159,
+          "logical_s": 368590.7085635
+        },
+        {
+          "frame_id": 4163,
+          "logical_s": 368590.7438594
+        }
+      ],
+      "drain_after": [
+        0,
+        1
+      ]
+    },
+    "pair01_b": {
+      "frames": [
+        {
+          "frame_id": 4159,
+          "logical_s": 368691.4341287
+        },
+        {
+          "frame_id": 4163,
+          "logical_s": 368691.4948234
+        }
+      ],
+      "drain_after": [
+        0,
+        1
+      ]
+    },
+    "boundary_49": {
+      "frames": [
+        {
+          "frame_id": 1,
+          "logical_s": 1.0
+        },
+        {
+          "frame_id": 2,
+          "logical_s": 1.049
+        }
+      ],
+      "drain_after": [
+        0,
+        1
+      ]
+    },
+    "boundary_50": {
+      "frames": [
+        {
+          "frame_id": 1,
+          "logical_s": 1.0
+        },
+        {
+          "frame_id": 2,
+          "logical_s": 1.05
+        }
+      ],
+      "drain_after": [
+        0,
+        1
+      ]
+    },
+    "boundary_51": {
+      "frames": [
+        {
+          "frame_id": 1,
+          "logical_s": 1.0
+        },
+        {
+          "frame_id": 2,
+          "logical_s": 1.051
+        }
+      ],
+      "drain_after": [
+        0,
+        1
+      ]
+    },
+    "drain_each": {
+      "frames": [
+        {
+          "frame_id": 0,
+          "logical_s": 1.0
+        },
+        {
+          "frame_id": 1,
+          "logical_s": 1.1
+        },
+        {
+          "frame_id": 2,
+          "logical_s": 1.2
+        }
+      ],
+      "drain_after": [
+        0,
+        1,
+        2
+      ]
+    },
+    "overwrite": {
+      "frames": [
+        {
+          "frame_id": 0,
+          "logical_s": 1.0
+        },
+        {
+          "frame_id": 1,
+          "logical_s": 1.1
+        },
+        {
+          "frame_id": 2,
+          "logical_s": 1.2
+        }
+      ],
+      "drain_after": [
+        2
+      ]
+    },
+    "repeat_drain_each": {
+      "frames": [
+        {
+          "frame_id": 0,
+          "logical_s": 1.0
+        },
+        {
+          "frame_id": 1,
+          "logical_s": 1.1
+        },
+        {
+          "frame_id": 2,
+          "logical_s": 1.2
+        }
+      ],
+      "drain_after": [
+        0,
+        1,
+        2
+      ]
+    }
+  },
+  "sources": {
+    "experiments/vision_work_identity/control.py": "9d345e3e7779ae6d7a0a6c7c5fbb7939611697285a3f10913557ded8bfc98934",
+    "experiments/vision_work_identity/test_control.py": "785e73a3368ba9eb31bcadcb7ad81521f09aa1c823c4848476336932b5dda2e3",
+    "vision/service.py": "d8f43d891a6162db79d04e78cc198452814bbcaf30a4566c16c7f5646ebc42dc",
+    "vision/event_scheduler.py": "dc67f24a39a69e3f08da7c87d3666bbd843de4e427719c1ee6e64336df047246",
+    "vision/live_walking.py": "7f7ca4dd66bafe59ae43b2b2f25e528c9349faa8c5de20d177d5e2cd7642e228",
+    "vision/foot_reference.py": "8ceafb540566f79856793b012af4a3088edcd0eb124246d36332114c65650ee9",
+    "experiments/ground_throughput_diagnosis/enabled_replay.py": "9ce2e24936a8b05201c7b0a3634f25749a604902c66b439ad85ba124e15d3bce"
+  },
+  "historical_bindings": {
+    "experiments/gil_sdk_aa/runs/evidence01/runs/pair01_a/capture/workload_final.json": "ef54f889e172b7d5241af62603cfa2ea1db58786038edc51e30075c8cf32d39e",
+    "experiments/gil_sdk_aa/runs/evidence01/runs/pair01_b/capture/workload_final.json": "4103983634ff75a845a0bbf0c41a319008c4a42680da66a44cf23b361aabd8a0"
+  },
+  "checks": [
+    "49ms rejects;50/51ms selects after first cursor.",
+    "HistoricalA second timestamp rejected;B accepted under explicit drain-each control.",
+    "Same fixed timestamps with delayed drain overwrite earlier frames; original latest-only semantics unchanged.",
+    "Repeated identical controlled schedule has identical work SHA; wall timings are kept separate and are not an overhead benchmark."
+  ],
+  "actual_load_disturbance_pass": false,
+  "primary_root_identified": false
+}

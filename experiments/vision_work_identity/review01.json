@@ -1,0 +1,29 @@
+{
+  "title": "短窗工作量可解释性：时间选择与latest-only覆盖分别验证",
+  "reference_conversation": "6ad57268-5da0-83ea-9fdb-ef897db2a814",
+  "scope": "采纳引用对话中先做短窗可解释实验的建议；以仓库源码及已保存证据复核。仅本机合成控制，未运行新完整回放、SDK、模型、人体或设备采集。",
+  "findings": [
+    "两轮4159/4163原始媒体时间相同：41.7193952与41.763907秒，相隔44.5118ms。",
+    "四条提交记录均为epoch1、warming_up，实际scheduler_input等于callback，符合原LiveWalkingVision的非READY分支。原始callback间隔A约35.2959ms、B约60.6947ms，round到VIDEO毫秒后为35/61ms。",
+    "直接使用原EventWindowScheduler，在4159建立游标后，A的4163不推理，B的4163推理。另有49/50/51ms边界控制，结果为拒绝/接纳/接纳。这里只验证选帧机制，不回填历史worker唤醒过程。",
+    "使用原FootVisionService.submit_frame和_take_inputs，固定三条逻辑时间及帧ID：逐帧drain执行三次假推理；末尾才drain则前两帧被latest-only覆盖，只执行最后一帧。每条输入有独立终态记录。",
+    "相同逻辑时间与drain顺序的两个控制得到相同执行序列SHA；实际观测时钟单独记录，不用于选帧。",
+    "历史两轮SDK实际method/args/result/error有序内容指纹不同，不能仅凭相近调用次数认为同等SDK负载。"
+  ],
+  "validation": {"fixed_short_cases": 8, "new_tests_passed": 4, "existing_vision_tests_passed": 19},
+  "limits": [
+    "测试使用显式drain顺序和返回None的假推理；未启动真实worker、MediaPipe、GUI或SDK，不代表实际计算成本或采样开销。",
+    "每条输入可解释仅针对本合成控制。历史全段worker取队列/覆盖日志缺失，仍不能逐条证明未推理帧的去向；贪心时间戳参考不匹配整段的原结果保留。",
+    "固定时间戳与固定工作量是实验条件；不得据此修改正式程序或改变原真实负载验收结论。",
+    "积压位置与自然GIL等待见证保留；计算/分配/CPU交付这条线继续保留，尚无主根因或责任函数结论。"
+  ],
+  "next_design": {
+    "controlled_cost": "独立入口预先冻结帧ID、像素SHA、媒体/逻辑时间、显式交付顺序与模型调用序列，先验证真实推理内容完整性。只估计此受控负载下相同工作增加的观测成本，不宣称动态GUI现场等价。",
+    "dynamic_total_effect": "原动态选帧和覆盖策略保持；另行预声明随机化OFF/ON顺序、独立重复数及系统总效应终点，将实际推理/SDK/绘图变化保留为结果。不能沿用本合成控制作为通过证据。",
+    "required_ledger": ["原媒体时间、实验逻辑时间、实际decode/submit时间分列", "每条输入frame ID、clock epoch、来源SHA和最终执行或覆盖状态", "实际模型调用与返回身份，以及SDK消息/命令内容而非仅计数", "全部失败、完整窗口与原3%/1%门槛保留"],
+    "launch_status": "设计边界已明确，尚未启动真实模型受控负载或ON采样。"
+  },
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "primary_root_identified": false
+}

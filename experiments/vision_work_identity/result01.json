@@ -1,0 +1,701 @@
+{
+  "checks": {
+    "historical_A_skips_4163": true,
+    "historical_B_selects_4163": true,
+    "boundary_49_50_51": true,
+    "latest_only_overwrite": true,
+    "identical_controlled_work": true,
+    "each_input_accounted": true
+  },
+  "short_control_pass": true,
+  "cases": {
+    "pair01_a": {
+      "inputs": [
+        {
+          "frame_id": 4159,
+          "logical_s": 368590.7085635
+        },
+        {
+          "frame_id": 4163,
+          "logical_s": 368590.7438594
+        }
+      ],
+      "drain_after": [
+        0,
+        1
+      ],
+      "ledger": [
+        {
+          "stage": "submit",
+          "frame_id": 4159,
+          "logical_s": 368590.7085635,
+          "observed_ns": 752210188943875
+        },
+        {
+          "stage": "dequeue",
+          "frame_id": 4159,
+          "logical_s": 368590.7085635,
+          "observed_ns": 752210188946208
+        },
+        {
+          "stage": "scheduler",
+          "frame_id": 4159,
+          "rounded_ms": 368590709,
+          "prior_cursor_ms": null,
+          "selected": true,
+          "reason": "inferred"
+        },
+        {
+          "stage": "submit",
+          "frame_id": 4163,
+          "logical_s": 368590.7438594,
+          "observed_ns": 752210188965333
+        },
+        {
+          "stage": "dequeue",
+          "frame_id": 4163,
+          "logical_s": 368590.7438594,
+          "observed_ns": 752210188966291
+        },
+        {
+          "stage": "scheduler",
+          "frame_id": 4163,
+          "rounded_ms": 368590744,
+          "prior_cursor_ms": 368590709,
+          "selected": false,
+          "reason": "below_50ms"
+        }
+      ],
+      "terminal": {
+        "4159": [
+          "inferred"
+        ],
+        "4163": [
+          "below_50ms"
+        ]
+      },
+      "inferences": [
+        {
+          "frame_id": 4159,
+          "timestamp_ms": 368590709
+        }
+      ],
+      "deterministic_work_sha256": "cfd703003439df3ad9444687fc3c40d320907bfc3ecd69383ea78fc2e80277d7",
+      "scope": "Synthetic queue drain order, original methods, fake inference returning None. Actual observed_ns is separate from logical_s. No real worker/model/SDK or runtime speed inference."
+    },
+    "pair01_b": {
+      "inputs": [
+        {
+          "frame_id": 4159,
+          "logical_s": 368691.4341287
+        },
+        {
+          "frame_id": 4163,
+          "logical_s": 368691.4948234
+        }
+      ],
+      "drain_after": [
+        0,
+        1
+      ],
+      "ledger": [
+        {
+          "stage": "submit",
+          "frame_id": 4159,
+          "logical_s": 368691.4341287,
+          "observed_ns": 752210189000916
+        },
+        {
+          "stage": "dequeue",
+          "frame_id": 4159,
+          "logical_s": 368691.4341287,
+          "observed_ns": 752210189001750
+        },
+        {
+          "stage": "scheduler",
+          "frame_id": 4159,
+          "rounded_ms": 368691434,
+          "prior_cursor_ms": null,
+          "selected": true,
+          "reason": "inferred"
+        },
+        {
+          "stage": "submit",
+          "frame_id": 4163,
+          "logical_s": 368691.4948234,
+          "observed_ns": 752210189007958
+        },
+        {
+          "stage": "dequeue",
+          "frame_id": 4163,
+          "logical_s": 368691.4948234,
+          "observed_ns": 752210189009625
+        },
+        {
+          "stage": "scheduler",
+          "frame_id": 4163,
+          "rounded_ms": 368691495,
+          "prior_cursor_ms": 368691434,
+          "selected": true,
+          "reason": "inferred"
+        }
+      ],
+      "terminal": {
+        "4159": [
+          "inferred"
+        ],
+        "4163": [
+          "inferred"
+        ]
+      },
+      "inferences": [
+        {
+          "frame_id": 4159,
+          "timestamp_ms": 368691434
+        },
+        {
+          "frame_id": 4163,
+          "timestamp_ms": 368691495
+        }
+      ],
+      "deterministic_work_sha256": "39bb7e151d2e888ec7e85539e3103d9fe9130210c46cbd1c31692ec9eceac34a",
+      "scope": "Synthetic queue drain order, original methods, fake inference returning None. Actual observed_ns is separate from logical_s. No real worker/model/SDK or runtime speed inference."
+    },
+    "boundary_49": {
+      "inputs": [
+        {
+          "frame_id": 1,
+          "logical_s": 1.0
+        },
+        {
+          "frame_id": 2,
+          "logical_s": 1.049
+        }
+      ],
+      "drain_after": [
+        0,
+        1
+      ],
+      "ledger": [
+        {
+          "stage": "submit",
+          "frame_id": 1,
+          "logical_s": 1.0,
+          "observed_ns": 752210189031333
+        },
+        {
+          "stage": "dequeue",
+          "frame_id": 1,
+          "logical_s": 1.0,
+          "observed_ns": 752210189031958
+        },
+        {
+          "stage": "scheduler",
+          "frame_id": 1,
+          "rounded_ms": 1000,
+          "prior_cursor_ms": null,
+          "selected": true,
+          "reason": "inferred"
+        },
+        {
+          "stage": "submit",
+          "frame_id": 2,
+          "logical_s": 1.049,
+          "observed_ns": 752210189039541
+        },
+        {
+          "stage": "dequeue",
+          "frame_id": 2,
+          "logical_s": 1.049,
+          "observed_ns": 752210189040625
+        },
+        {
+          "stage": "scheduler",
+          "frame_id": 2,
+          "rounded_ms": 1049,
+          "prior_cursor_ms": 1000,
+          "selected": false,
+          "reason": "below_50ms"
+        }
+      ],
+      "terminal": {
+        "1": [
+          "inferred"
+        ],
+        "2": [
+          "below_50ms"
+        ]
+      },
+      "inferences": [
+        {
+          "frame_id": 1,
+          "timestamp_ms": 1000
+        }
+      ],
+      "deterministic_work_sha256": "0c22e15b4e2481693859876f598dc7079f820dbda0b347ed1c5c8992bebdd0b3",
+      "scope": "Synthetic queue drain order, original methods, fake inference returning None. Actual observed_ns is separate from logical_s. No real worker/model/SDK or runtime speed inference."
+    },
+    "boundary_50": {
+      "inputs": [
+        {
+          "frame_id": 1,
+          "logical_s": 1.0
+        },
+        {
+          "frame_id": 2,
+          "logical_s": 1.05
+        }
+      ],
+      "drain_after": [
+        0,
+        1
+      ],
+      "ledger": [
+        {
+          "stage": "submit",
+          "frame_id": 1,
+          "logical_s": 1.0,
+          "observed_ns": 752210189058083
+        },
+        {
+          "stage": "dequeue",
+          "frame_id": 1,
+          "logical_s": 1.0,
+          "observed_ns": 752210189058666
+        },
+        {
+          "stage": "scheduler",
+          "frame_id": 1,
+          "rounded_ms": 1000,
+          "prior_cursor_ms": null,
+          "selected": true,
+          "reason": "inferred"
+        },
+        {
+          "stage": "submit",
+          "frame_id": 2,
+          "logical_s": 1.05,
+          "observed_ns": 752210189063666
+        },
+        {
+          "stage": "dequeue",
+          "frame_id": 2,
+          "logical_s": 1.05,
+          "observed_ns": 752210189064041
+        },
+        {
+          "stage": "scheduler",
+          "frame_id": 2,
+          "rounded_ms": 1050,
+          "prior_cursor_ms": 1000,
+          "selected": true,
+          "reason": "inferred"
+        }
+      ],
+      "terminal": {
+        "1": [
+          "inferred"
+        ],
+        "2": [
+          "inferred"
+        ]
+      },
+      "inferences": [
+        {
+          "frame_id": 1,
+          "timestamp_ms": 1000
+        },
+        {
+          "frame_id": 2,
+          "timestamp_ms": 1050
+        }
+      ],
+      "deterministic_work_sha256": "11944664559b7a3467c0766e022358b2f75b89c0a39e5d8b8789ccabcc8a159e",
+      "scope": "Synthetic queue drain order, original methods, fake inference returning None. Actual observed_ns is separate from logical_s. No real worker/model/SDK or runtime speed inference."
+    },
+    "boundary_51": {
+      "inputs": [
+        {
+          "frame_id": 1,
+          "logical_s": 1.0
+        },
+        {
+          "frame_id": 2,
+          "logical_s": 1.051
+        }
+      ],
+      "drain_after": [
+        0,
+        1
+      ],
+      "ledger": [
+        {
+          "stage": "submit",
+          "frame_id": 1,
+          "logical_s": 1.0,
+          "observed_ns": 752210189082208
+        },
+        {
+          "stage": "dequeue",
+          "frame_id": 1,
+          "logical_s": 1.0,
+          "observed_ns": 752210189082625
+        },
+        {
+          "stage": "scheduler",
+          "frame_id": 1,
+          "rounded_ms": 1000,
+          "prior_cursor_ms": null,
+          "selected": true,
+          "reason": "inferred"
+        },
+        {
+          "stage": "submit",
+          "frame_id": 2,
+          "logical_s": 1.051,
+          "observed_ns": 752210189087125
+        },
+        {
+          "stage": "dequeue",
+          "frame_id": 2,
+          "logical_s": 1.051,
+          "observed_ns": 752210189087416
+        },
+        {
+          "stage": "scheduler",
+          "frame_id": 2,
+          "rounded_ms": 1051,
+          "prior_cursor_ms": 1000,
+          "selected": true,
+          "reason": "inferred"
+        }
+      ],
+      "terminal": {
+        "1": [
+          "inferred"
+        ],
+        "2": [
+          "inferred"
+        ]
+      },
+      "inferences": [
+        {
+          "frame_id": 1,
+          "timestamp_ms": 1000
+        },
+        {
+          "frame_id": 2,
+          "timestamp_ms": 1051
+        }
+      ],
+      "deterministic_work_sha256": "04374b7682f9a3d02d9502a86f8bbad94e459c50b00bba5ee18caa62233c38e1",
+      "scope": "Synthetic queue drain order, original methods, fake inference returning None. Actual observed_ns is separate from logical_s. No real worker/model/SDK or runtime speed inference."
+    },
+    "drain_each": {
+      "inputs": [
+        {
+          "frame_id": 0,
+          "logical_s": 1.0
+        },
+        {
+          "frame_id": 1,
+          "logical_s": 1.1
+        },
+        {
+          "frame_id": 2,
+          "logical_s": 1.2
+        }
+      ],
+      "drain_after": [
+        0,
+        1,
+        2
+      ],
+      "ledger": [
+        {
+          "stage": "submit",
+          "frame_id": 0,
+          "logical_s": 1.0,
+          "observed_ns": 752210189104208
+        },
+        {
+          "stage": "dequeue",
+          "frame_id": 0,
+          "logical_s": 1.0,
+          "observed_ns": 752210189104583
+        },
+        {
+          "stage": "scheduler",
+          "frame_id": 0,
+          "rounded_ms": 1000,
+          "prior_cursor_ms": null,
+          "selected": true,
+          "reason": "inferred"
+        },
+        {
+          "stage": "submit",
+          "frame_id": 1,
+          "logical_s": 1.1,
+          "observed_ns": 752210189108250
+        },
+        {
+          "stage": "dequeue",
+          "frame_id": 1,
+          "logical_s": 1.1,
+          "observed_ns": 752210189108541
+        },
+        {
+          "stage": "scheduler",
+          "frame_id": 1,
+          "rounded_ms": 1100,
+          "prior_cursor_ms": 1000,
+          "selected": true,
+          "reason": "inferred"
+        },
+        {
+          "stage": "submit",
+          "frame_id": 2,
+          "logical_s": 1.2,
+          "observed_ns": 752210189111833
+        },
+        {
+          "stage": "dequeue",
+          "frame_id": 2,
+          "logical_s": 1.2,
+          "observed_ns": 752210189112208
+        },
+        {
+          "stage": "scheduler",
+          "frame_id": 2,
+          "rounded_ms": 1200,
+          "prior_cursor_ms": 1100,
+          "selected": true,
+          "reason": "inferred"
+        }
+      ],
+      "terminal": {
+        "0": [
+          "inferred"
+        ],
+        "1": [
+          "inferred"
+        ],
+        "2": [
+          "inferred"
+        ]
+      },
+      "inferences": [
+        {
+          "frame_id": 0,
+          "timestamp_ms": 1000
+        },
+        {
+          "frame_id": 1,
+          "timestamp_ms": 1100
+        },
+        {
+          "frame_id": 2,
+          "timestamp_ms": 1200
+        }
+      ],
+      "deterministic_work_sha256": "72dfd0e7b08298413a43ecfb46660857a2c6cff3c82a5efb459249757467840a",
+      "scope": "Synthetic queue drain order, original methods, fake inference returning None. Actual observed_ns is separate from logical_s. No real worker/model/SDK or runtime speed inference."
+    },
+    "overwrite": {
+      "inputs": [
+        {
+          "frame_id": 0,
+          "logical_s": 1.0
+        },
+        {
+          "frame_id": 1,
+          "logical_s": 1.1
+        },
+        {
+          "frame_id": 2,
+          "logical_s": 1.2
+        }
+      ],
+      "drain_after": [
+        2
+      ],
+      "ledger": [
+        {
+          "stage": "submit",
+          "frame_id": 0,
+          "logical_s": 1.0,
+          "observed_ns": 752210189128500
+        },
+        {
+          "stage": "overwritten",
+          "frame_id": 0,
+          "by_frame_id": 1
+        },
+        {
+          "stage": "submit",
+          "frame_id": 1,
+          "logical_s": 1.1,
+          "observed_ns": 752210189129458
+        },
+        {
+          "stage": "overwritten",
+          "frame_id": 1,
+          "by_frame_id": 2
+        },
+        {
+          "stage": "submit",
+          "frame_id": 2,
+          "logical_s": 1.2,
+          "observed_ns": 752210189130166
+        },
+        {
+          "stage": "dequeue",
+          "frame_id": 2,
+          "logical_s": 1.2,
+          "observed_ns": 752210189130666
+        },
+        {
+          "stage": "scheduler",
+          "frame_id": 2,
+          "rounded_ms": 1200,
+          "prior_cursor_ms": null,
+          "selected": true,
+          "reason": "inferred"
+        }
+      ],
+      "terminal": {
+        "0": [
+          "overwritten"
+        ],
+        "1": [
+          "overwritten"
+        ],
+        "2": [
+          "inferred"
+        ]
+      },
+      "inferences": [
+        {
+          "frame_id": 2,
+          "timestamp_ms": 1200
+        }
+      ],
+      "deterministic_work_sha256": "14eb39bf4e08b4159699c9f832d2c5d56656dc02fb78af2ee921f015f48db753",
+      "scope": "Synthetic queue drain order, original methods, fake inference returning None. Actual observed_ns is separate from logical_s. No real worker/model/SDK or runtime speed inference."
+    },
+    "repeat_drain_each": {
+      "inputs": [
+        {
+          "frame_id": 0,
+          "logical_s": 1.0
+        },
+        {
+          "frame_id": 1,
+          "logical_s": 1.1
+        },
+        {
+          "frame_id": 2,
+          "logical_s": 1.2
+        }
+      ],
+      "drain_after": [
+        0,
+        1,
+        2
+      ],
+      "ledger": [
+        {
+          "stage": "submit",
+          "frame_id": 0,
+          "logical_s": 1.0,
+          "observed_ns": 752210189148500
+        },
+        {
+          "stage": "dequeue",
+          "frame_id": 0,
+          "logical_s": 1.0,
+          "observed_ns": 752210189148958
+        },
+        {
+          "stage": "scheduler",
+          "frame_id": 0,
+          "rounded_ms": 1000,
+          "prior_cursor_ms": null,
+          "selected": true,
+          "reason": "inferred"
+        },
+        {
+          "stage": "submit",
+          "frame_id": 1,
+          "logical_s": 1.1,
+          "observed_ns": 752210189152041
+        },
+        {
+          "stage": "dequeue",
+          "frame_id": 1,
+          "logical_s": 1.1,
+          "observed_ns": 752210189152333
+        },
+        {
+          "stage": "scheduler",
+          "frame_id": 1,
+          "rounded_ms": 1100,
+          "prior_cursor_ms": 1000,
+          "selected": true,
+          "reason": "inferred"
+        },
+        {
+          "stage": "submit",
+          "frame_id": 2,
+          "logical_s": 1.2,
+          "observed_ns": 752210189155333
+        },
+        {
+          "stage": "dequeue",
+          "frame_id": 2,
+          "logical_s": 1.2,
+          "observed_ns": 752210189155625
+        },
+        {
+          "stage": "scheduler",
+          "frame_id": 2,
+          "rounded_ms": 1200,
+          "prior_cursor_ms": 1100,
+          "selected": true,
+          "reason": "inferred"
+        }
+      ],
+      "terminal": {
+        "0": [
+          "inferred"
+        ],
+        "1": [
+          "inferred"
+        ],
+        "2": [
+          "inferred"
+        ]
+      },
+      "inferences": [
+        {
+          "frame_id": 0,
+          "timestamp_ms": 1000
+        },
+        {
+          "frame_id": 1,
+          "timestamp_ms": 1100
+        },
+        {
+          "frame_id": 2,
+          "timestamp_ms": 1200
+        }
+      ],
+      "deterministic_work_sha256": "72dfd0e7b08298413a43ecfb46660857a2c6cff3c82a5efb459249757467840a",
+      "scope": "Synthetic queue drain order, original methods, fake inference returning None. Actual observed_ns is separate from logical_s. No real worker/model/SDK or runtime speed inference."
+    }
+  },
+  "raw_sha256": "6c8cdd774665d1c966572e34a66ce978a3d5684eabd2e4c6409ddd3443ec3fbc",
+  "lock_retained": true,
+  "actual_load_disturbance_pass": false,
+  "primary_root_identified": false
+}
