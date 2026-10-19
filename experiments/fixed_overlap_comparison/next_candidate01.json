@@ -1,0 +1,10 @@
+{
+  "status": "proposed_not_executed",
+  "single_candidate": "cv2.setNumThreads(1) once before work in an isolated diagnostic process; original concurrent consumer and model work remain concurrent.",
+  "current_read_only_metadata": {"version": "5.0.0", "configured_threads": 8, "parallel_framework": "Concurrency", "binary_sha256": "ae833b9b5771f5932200bd3b8ad0f483f4fbec92cbdbd26d21d38fe524c60e66"},
+  "reason": "Four fixed-work pairs show a consistent consumer penalty from overlap, and prior lifecycle evidence places newly created entries in cv2.pyd during the first model call. This selects one bounded hypothesis, not a root-cause claim.",
+  "before_performance": "Freeze a bounded semantic/delivery gate. Compare actual resized pixels and complete model/report outputs, and use existing lifecycle evidence to verify execution-level delivery. Getter readback alone is insufficient. Keep all failed windows and stop if this gate fails.",
+  "performance_question": "Can the same original concurrent workload regain consumer capacity without serializing or suppressing model work? Freeze case budget, orders and practical decision thresholds before running; preserve full workload and all outcomes.",
+  "unchanged": ["Original NumPy and native binaries", "Input pixels and logical timestamps", "Filter and Processor", "Model call count and outputs", "Original concurrent Python threads", "GC, affinity, warmup and rendering settings"],
+  "limits": ["The current configured_threads value is post-cohort metadata, not measured past active-thread count.", "Entry-module evidence is not a complete current call stack or hotspot percentage.", "Even a positive fixed-task result must return to the original GUI symptom with a reproducible baseline,1000Hz pending and contact-to-paint validation before declaring a production fix."]
+}

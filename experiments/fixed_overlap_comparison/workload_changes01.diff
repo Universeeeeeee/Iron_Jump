@@ -1,0 +1,58 @@
+--- original fixed work
++++ overlap diagnostic
+@@ -8,6 +8,7 @@
+ import sys
+ import threading
+ import time
++sys.path.insert(0,str(Path(__file__).resolve().parent.parent/'fixed_work_accounting'))
+ from logical_clock import for_thread
+ from counters import snapshot,validate
+ 
+@@ -16,7 +17,8 @@
+ 
+ def child(name):
+     plan=json.loads((HERE/'plan01.json').read_text());assert name in plan['cases'];folder=HERE/'runs'/name;folder.mkdir(parents=True,exist_ok=False);(folder/'active.lock').mkdir()
+-    result=dict(errors=[],model={},actual_load_disturbance_pass=False);real=time.perf_counter_ns;worker=None;go=threading.Event();ready=threading.Event();cancel=threading.Event();payloads=[];work_done=threading.Event();close_release=threading.Event()
++    variant=plan['case_variants'][name];assert variant in ('concurrent','serial')
++    result=dict(variant=variant,errors=[],model={},actual_load_disturbance_pass=False);real=time.perf_counter_ns;worker=None;go=threading.Event();ready=threading.Event();cancel=threading.Event();payloads=[];work_done=threading.Event();close_release=threading.Event()
+     try:
+         root=Path(plan['replay_root']);sys.path.insert(0,str(root/'experiments/walk_compute_offline_diagnosis'));import replay
+         import cv2
+@@ -61,9 +63,15 @@
+             if i==trial.start-1:trial.arm(quality)
+         for i in range(plan['raw_first']):feed(i)
+         result['process_before']=snapshot(real)
+-        begin=real();cpu=time.thread_time_ns();go.set()
+-        for i in range(plan['raw_first'],plan['raw_after_last']):feed(i)
++        begin=real();cpu=time.thread_time_ns();progress=[]
++        if variant=='concurrent':go.set()
++        for i in range(plan['raw_first'],plan['raw_after_last']):
++            feed(i)
++            count=i-plan['raw_first']+1
++            if count in plan['progress_frames']:progress.append(dict(frames=count,raw_last=i,host_ns=real(),thread_cpu_ns=time.thread_time_ns()-cpu))
+         result['consumer']=dict(begin_ns=begin,end_ns=real(),thread_cpu_ns=time.thread_time_ns()-cpu,tid=threading.get_native_id(),frames=plan['raw_after_last']-plan['raw_first'])
++        result['consumer_progress']=progress
++        if variant=='serial':go.set()
+         assert work_done.wait(180) and not result['model']['errors']
+         result['process_after']=snapshot(real);result['close_release_ns']=real();close_release.set()
+         worker.join(180);assert not worker.is_alive() and result['model']['closed'] and not result['model']['errors']
+@@ -88,18 +96,4 @@
+         with (folder/'result.json').open('x') as f:json.dump(result,f,indent=2)
+     return int(bool(result['errors']) or result['worker_alive'])
+ 
+-if __name__=='__main__':
+-    if len(sys.argv)>1:raise SystemExit(child(sys.argv[1]))
+-    plan=json.loads((HERE/'plan01.json').read_text());stage=HERE/'runs';stage.mkdir(exist_ok=False);(stage/'active.lock').mkdir();status=dict(cases=[],errors=[])
+-    try:
+-        for name in plan['cases']:
+-            with (stage/(name+'.stdout')).open('xb') as out,(stage/(name+'.stderr')).open('xb') as err:
+-                p=subprocess.Popen([sys.executable,str(HERE/'run.py'),name],stdout=out,stderr=err)
+-                try:code=p.wait(timeout=480)
+-                except subprocess.TimeoutExpired:status['unconfirmed_pid']=p.pid;raise
+-            status['cases'].append(dict(name=name,exit_code=code));assert code==0
+-        status['complete']=True
+-    except BaseException as exc:status['errors'].append(repr(exc))
+-    finally:
+-        with (stage/'status.json').open('x') as f:json.dump(status,f,indent=2)
+-    print(json.dumps(status));raise SystemExit(bool(status['errors']))
++if __name__=='__main__':raise SystemExit(child(sys.argv[1]))
