@@ -1,0 +1,20 @@
+{
+  "thread_count": 3,
+  "thread_seconds": 0.15,
+  "sources": {
+    "experiments/thread_lifecycle_control/run.py": "78a3713f4f1eb9243b66a59d0d083d5ad8ade4d2fe8674e9f4e95f8938305e66",
+    "experiments/thread_lifecycle_control/fixture.py": "0bcecb95336adbe692faf7e5cad34706310a9b546b40980d31561e600b1fb481",
+    "experiments/thread_lifecycle_control/lifecycle.wprp": "4791d6fec91e5c237b0efe0c0ca8dc34348d94e9e9fb8a64a8b6608ca512a71a",
+    "experiments/native_stack_capture/record.py": "c6d963a249ad10c78cb8a0dba1f9be03889683a2852f1ddb96038f9f53f38d81",
+    "experiments/native_stack_capture/winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+    "experiments/native_stack_capture/ReadStacks.cs": "fb20ca77da7dfb4a26167ef3b54a75ee94633cc6b6d88c79a69220a9088d2476",
+    "experiments/thread_accounting_controls/inventory02.py": "9516ecf89d0f7645b89fbf5f27e9636fed2c7d937c81004f882480fea8e4a5bc"
+  },
+  "scope": "One lifecycle-only synthetic trace; no CPU/CSwitch stack providers or interval changes, no live device or real workload.",
+  "acceptance": [
+    "All3 known threads have Start and End events enclosing counters and within endpoint enumeration gap.",
+    "Zero lost events and clock residual within original native plan threshold; roles/PID/TID/creation must match.",
+    "WPR stop and unchanged interval confirmed; preserve failure/logs/lock.",
+    "No actual-load perturbation or start-address field qualification claimed."
+  ]
+}
