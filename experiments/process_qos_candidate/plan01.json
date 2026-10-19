@@ -1,0 +1,133 @@
+{
+  "replay_root": "E:/OptoJump/IronJump-walk-compute-offline-20261017-01",
+  "input_root": "E:/OptoJump/IronJump-single-usb-human-etw-20261017/experiments/single_usb_human_etw/runs/20261018_131910_3eef864f_walk_off/capture",
+  "input_sha256": {
+    "raw_frames.npz": "8ee4a9ea9ac835f5dc083d014eeaef9d337ee8c140f1cdc3a11f1be6fece2d47",
+    "raw_archive.npz": "6ec340e2ca62742235d6602cf38c4470a20cf5f29441c8387be9bb85522cdcd5",
+    "acquisition.json": "e84e6bd481eeadd408a61c377950cc878bf8d989b92f58596fccf6eee62c62cb",
+    "report.json": "0ae1bf2d9277c1e3d95d629e071cb3ff61d249c78c6d0b6d0901773f4fb68747",
+    "state.json": "bfb63086da795427cc2fbd5985a4ff56bcd1cdb964908dcc4a9408a79a6d914f",
+    "measurement.json": "a2b441f1367dd3d5eb7204c75eeebf05c344e8dd69b632ba29f57a4eed6febe9"
+  },
+  "raw_first": 42237,
+  "raw_after_last": 49061,
+  "replay_sha256": "fcde26dd2e707cc457623a971a97e68ebd9f49630126c51bd6ce83072a0d40a8",
+  "media_root": "E:\\OptoJump\\IronJump-ground-backlog-measurement-20261016\\experiments\\ground_backlog_measurement\\inputs\\walk",
+  "media_sha256": {
+    "camera.csv": "cc911dfd8e7aadf4da9f7c1e604e65ef33a02a4f7f790ba1e0ad1dfa7e890d88",
+    "camera.mjpg": "64d887e0c2817e3594e3bbad4193ab97b4abc1d0c2eed0229ac3d092fad04e52"
+  },
+  "model_path": "E:/OptoJump/IronJump-gil-gui-calibration-20261018-01/models/pose_landmarker_full.task",
+  "model_sha256": "5134a3aad27a58b93da0088d431f366da362b44e3ccfbe3462b3827a839011b1",
+  "frame_ids": [
+    4151,
+    4155,
+    4159,
+    4163,
+    4167,
+    4171,
+    4175,
+    4179,
+    4183,
+    4187,
+    4191
+  ],
+  "model_calls": 220,
+  "python_dll_sha256": "162e8557fbed5f39ae24983ee62b2d435b4796c937d9c1a34371888c7e43af00",
+  "numpy_pyd_sha256": "4fb4c5d62a6bd766eea716350eaf5396580e33cf7dc159e305488d1b7d72dad2",
+  "cases": [
+    "pair01_default",
+    "pair01_optout",
+    "pair02_optout",
+    "pair02_default",
+    "pair03_optout",
+    "pair03_default",
+    "pair04_default",
+    "pair04_optout"
+  ],
+  "case_variants": {
+    "pair01_default": "concurrent",
+    "pair01_optout": "concurrent",
+    "pair02_optout": "concurrent",
+    "pair02_default": "concurrent",
+    "pair03_optout": "concurrent",
+    "pair03_default": "concurrent",
+    "pair04_default": "concurrent",
+    "pair04_optout": "concurrent"
+  },
+  "progress_frames": [
+    1000,
+    2000,
+    3000,
+    4000,
+    5000,
+    6000,
+    6824
+  ],
+  "sources": {
+    "workload.py": "0d8f1ff73521cbf3cb1a90e96d26b1d853c19198437781de0584f0511a56c249",
+    "qos.py": "42be9ad18a63406b337ea9317d8a8d9d64767bd7a1c09cab6e7bd45a1208d773",
+    "gate.py": "28d12fc14efeae39eccf4a44b310ce7b476dd1804f0fb2649fc872e324401467",
+    "cohort.py": "bbd2bbe5809efbce8d40e1828dc5a45ddbda8bbb033fd7d3c4cf8cd8f2725160",
+    "verify.py": "3a591c1d674f9a32f9fb7be9cb7c17ad0750b7fa078b7fa7ada9102aa54643a6",
+    "reference01.json": "01233f2b0afba0d1ac45a1d33ffded6f8fd3b21427b6fb0f9602adf4dffbbed8"
+  },
+  "dependency_sources": {
+    "experiments/fixed_work_accounting/logical_clock.py": "309676131f0052886d8b32c1740ed461966cab39da98a625e5e23bd0b164c6e3",
+    "experiments/fixed_work_accounting/counters.py": "504cd67a5bbb9691eb4c8bfdf5a2a1e71d454317e70eaff559713767c3236a0d",
+    "experiments/fixed_work_accounting/run.py": "2cd5a0e2014ad1dc731b1cbcd87137405ad0d4205303982bc41d02bb69c884ba",
+    "experiments/cpu_state_observation/workload.py": "58572a6f4e21b2610ba32ca3ce694add4238b975d8739ef3856a703207d2cb23",
+    "experiments/cpu_execution_probe/probe.py": "ad4206e1f1b65203767178743e2aebd2dbfa7658088d31af57d0526a7381851c",
+    "experiments/cpu_execution_probe/plan01.json": "48857b47e7bc43d69f83cc6e9989386f077f1c15ef4d1010f74138742299ac18"
+  },
+  "reference_origin_sha256": "f3590d951c53c29981b9389abf5ed86ff644969a0bd8cffe7b316b40d1fc7905",
+  "scope": "Four pairs of process-only QoS control with identical native pre-work probe and original concurrent workload. NoPDH/ETW/GUI/hardware/global policy change.",
+  "failure_policy": "Abort remaining cohort on runtime/semantic error. Preserve all outputs and locks. Timeout is observation failure; retain PID and do not kill/restart.",
+  "cv2_sha256": "ae833b9b5771f5932200bd3b8ad0f483f4fbec92cbdbd26d21d38fe524c60e66",
+  "criteria": {
+    "all_four_consumer_pairs_improve": true,
+    "minimum_geometric_consumer_reduction": 0.15,
+    "minimum_geometric_native_throughput_gain": 0.1,
+    "maximum_geometric_whole_work_regression": 0.05,
+    "minimum_slow_default_windows": 3,
+    "slow_preparation_wall_ms_min": 4300,
+    "all_complete_outputs_exact": true
+  },
+  "pairs": [
+    {
+      "default": "pair01_default",
+      "optout": "pair01_optout"
+    },
+    {
+      "default": "pair02_default",
+      "optout": "pair02_optout"
+    },
+    {
+      "default": "pair03_default",
+      "optout": "pair03_optout"
+    },
+    {
+      "default": "pair04_default",
+      "optout": "pair04_optout"
+    }
+  ],
+  "qos_variants": {
+    "pair01_default": "default",
+    "pair01_optout": "optout",
+    "pair02_optout": "optout",
+    "pair02_default": "default",
+    "pair03_optout": "optout",
+    "pair03_default": "default",
+    "pair04_default": "default",
+    "pair04_optout": "optout"
+  },
+  "native_iterations": [
+    8000000,
+    32000000,
+    32000000,
+    8000000,
+    8000000,
+    32000000
+  ],
+  "proposal_sha256": "c4f8df9775491d30caea5f8739c3b137dff61647f8eb46932adc937ac6641b49"
+}
