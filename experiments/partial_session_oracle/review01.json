@@ -1,0 +1,68 @@
+{
+  "all_four_original_code_recomputations_exact": true,
+  "normal_positive_control_pass": true,
+  "cases": {
+    "normal_positive": {
+      "report_value_exact": true,
+      "full_quality_runtime_state_exact": true,
+      "bounds": {
+        "accepted_last_sample": 78590,
+        "preflight_frames": 3501,
+        "formal_frames": 29687,
+        "ingress_tail_not_reprocessed": 0,
+        "reason": "manual"
+      }
+    },
+    "early_manual": {
+      "report_value_exact": true,
+      "full_quality_runtime_state_exact": true,
+      "bounds": {
+        "accepted_last_sample": 54975,
+        "preflight_frames": 3501,
+        "formal_frames": 6072,
+        "ingress_tail_not_reprocessed": 3,
+        "reason": "manual"
+      }
+    },
+    "peer_fault": {
+      "report_value_exact": true,
+      "full_quality_runtime_state_exact": true,
+      "bounds": {
+        "accepted_last_sample": 48907,
+        "preflight_frames": 3501,
+        "formal_frames": 4,
+        "ingress_tail_not_reprocessed": 2,
+        "reason": "ipc_transport_failure"
+      }
+    },
+    "stall_fault": {
+      "report_value_exact": true,
+      "full_quality_runtime_state_exact": true,
+      "bounds": {
+        "accepted_last_sample": 55478,
+        "preflight_frames": 3501,
+        "formal_frames": 6575,
+        "ingress_tail_not_reprocessed": 1,
+        "reason": "ipc_transport_failure"
+      }
+    }
+  },
+  "normalization_or_field_removal": false,
+  "new_capture": false,
+  "new_actor_window": false,
+  "previous_failed_cohort_reclassified": false,
+  "writer_confirmation_failure_reclassified": false,
+  "qt_scheduling_or_latency_qualification": false,
+  "all_future_partial_reports_qualified": false,
+  "field_fix_verified": false,
+  "limits": [
+    "Applies to these fixed recorded prefixes and declared accepted boundaries/reasons, not everystop ordatafault.",
+    "Recorded receipt time is a logical clock for deterministicvalues; Qt dispatch, CPU orGIL timing is not reconstructed.",
+    "Same originalWindows Python/NumPy/filter/processor implementation, alternative offline orchestration; not an independent newalgorithm."
+  ],
+  "bindings": {
+    "manifest_sha256": "92551eb108cae6e12e80442e94aa31ded81ec056c0534397e3dba011c6cf7b90",
+    "plan_sha256": "939db2ba37f477d578033e81ff351ad390206c9179ade471dc2ad8bad6b4afdb",
+    "review_sha256": "18bbda32644de5c753c0aaf6f58bc83796ba4fe4f11eb8723936df5e8b2f207c"
+  }
+}
