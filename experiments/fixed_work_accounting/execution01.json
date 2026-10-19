@@ -1,0 +1,4 @@
+{
+  "command": "$p=Start-Process D:/conda/python.exe -ArgumentList 'E:/OptoJump/IronJump-gil-gui-calibration-20261018-01/experiments/fixed_work_accounting/run.py' -Wait -PassThru -RedirectStandardOutput 'E:/OptoJump/IronJump-gil-gui-calibration-20261018-01/experiments/fixed_work_accounting/run01.stdout' -RedirectStandardError 'E:/OptoJump/IronJump-gil-gui-calibration-20261018-01/experiments/fixed_work_accounting/run01.stderr';@{exit_code=$p.ExitCode}|ConvertTo-Json -Compress",
+  "result": "{\"exit_code\":0}"
+}
