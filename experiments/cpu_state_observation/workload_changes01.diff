@@ -1,0 +1,20 @@
+--- experiments/fixed_overlap_comparison/workload.py
++++ experiments/cpu_state_observation/workload.py
+@@ -22,6 +22,7 @@
+     try:
+         root=Path(plan['replay_root']);sys.path.insert(0,str(root/'experiments/walk_compute_offline_diagnosis'));import replay
+         import cv2
++        result['opencv_threads']=cv2.getNumThreads();assert result['opencv_threads']==8
+         import numpy as np
+         from vision.live_walking import _PreviewAdapter
+         assert all(sha(HERE/n)==v for n,v in plan['sources'].items()) and sha(Path(replay.__file__))==plan['replay_sha256']
+@@ -61,7 +62,9 @@
+         def feed(i):
+             frame=trial.frames[i];trial.clock=frame.received_monotonic_ns;quality.on_frame(frame)
+             if i==trial.start-1:trial.arm(quality)
++        prep_begin=real();prep_cpu=time.thread_time_ns()
+         for i in range(plan['raw_first']):feed(i)
++        result['preparation']=dict(begin_ns=prep_begin,end_ns=real(),thread_cpu_ns=time.thread_time_ns()-prep_cpu,frames=plan['raw_first'])
+         result['process_before']=snapshot(real)
+         begin=real();cpu=time.thread_time_ns();progress=[]
+         if variant=='concurrent':go.set()

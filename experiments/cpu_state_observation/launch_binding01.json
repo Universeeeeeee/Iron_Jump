@@ -1,0 +1,5 @@
+{
+  "script": "$ErrorActionPreference='Stop';$ProgressPreference='SilentlyContinue';[Console]::OutputEncoding=New-Object System.Text.UTF8Encoding;$env:QT_API='pyside6';$env:QT_QPA_PLATFORM='offscreen';$env:PYTHONUTF8='1';& D:/conda/python.exe -u 'E:/OptoJump/IronJump-gil-gui-calibration-20261018-01/experiments/cpu_state_observation/cohort.py' 2>&1 | Tee-Object -FilePath 'E:/OptoJump/IronJump-gil-gui-calibration-20261018-01/experiments/cpu_state_observation/cohort.stdout';exit $LASTEXITCODE",
+  "plan_sha256": "4753e196aca331dbd14b9a65a54de8a9865a4b9e8f6c6c8cdcaaa688b136b70a",
+  "launcher_sha256": "3165fba384312521693d319bd9fef01b94f0c386ecf9674cc2414c0b36970d2f"
+}
