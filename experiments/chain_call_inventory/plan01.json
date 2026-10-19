@@ -1,0 +1,32 @@
+{
+  "replay_root": "E:/OptoJump/IronJump-walk-compute-offline-20261017-01",
+  "input_root": "E:/OptoJump/IronJump-single-usb-human-etw-20261017/experiments/single_usb_human_etw/runs/20261018_131910_3eef864f_walk_off/capture",
+  "input_sha256": {
+    "raw_frames.npz": "8ee4a9ea9ac835f5dc083d014eeaef9d337ee8c140f1cdc3a11f1be6fece2d47",
+    "raw_archive.npz": "6ec340e2ca62742235d6602cf38c4470a20cf5f29441c8387be9bb85522cdcd5",
+    "acquisition.json": "e84e6bd481eeadd408a61c377950cc878bf8d989b92f58596fccf6eee62c62cb",
+    "report.json": "0ae1bf2d9277c1e3d95d629e071cb3ff61d249c78c6d0b6d0901773f4fb68747",
+    "state.json": "bfb63086da795427cc2fbd5985a4ff56bcd1cdb964908dcc4a9408a79a6d914f",
+    "measurement.json": "a2b441f1367dd3d5eb7204c75eeebf05c344e8dd69b632ba29f57a4eed6febe9"
+  },
+  "raw_first": 42237,
+  "raw_after_last": 49061,
+  "replay_sha256": "fcde26dd2e707cc457623a971a97e68ebd9f49630126c51bd6ce83072a0d40a8",
+  "cases": [
+    "a",
+    "b"
+  ],
+  "run_sha256": "9a25ff35e5be2032afe1abd05a0b7eca065a073b9e5326856c190d53874ce969",
+  "sources": {
+    "collect.py": "86823de0fd0efaa2196292f7108771d4cf512210671e048f52a9632b2724307f",
+    "run.py": "9a25ff35e5be2032afe1abd05a0b7eca065a073b9e5326856c190d53874ce969"
+  },
+  "scope": "Two fixed fresh-process complete original chain with cProfile only during raw42237..49060. Export counts and call edges only; no wall-time/profile-percent conclusions. No call tapes, GUI/SDK/device/human/Run/optimization AB.",
+  "checks": [
+    "Full original outputs/state/archive and source/input hashes exact.",
+    "No profiler-enabled timing used for throughput, calibrated CPU hotspots or GIL shares.",
+    "Keep unknown C-interface names; do not pretend these are closed native stacks.",
+    "Retain both fixed cases/failures; do not repeat for matching."
+  ],
+  "actual_load_disturbance_pass": false
+}

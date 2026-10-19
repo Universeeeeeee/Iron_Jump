@@ -1,0 +1,23 @@
+{
+  "title": "无调用带原链的固定ROI调用清单：NumPy边界与所有权审查路径",
+  "facts": [
+    "两个新进程在同一6824帧区间启用cProfile，完整原链输出、质量、审计、镜像及原始归档全部通过；未记录方法参数调用带。",
+    "DeviceQualitySession.on_frame到np.array_equal为6824次；GroundStabilityFilter._feed到np.all为7736次、np.any为15736次。NumPy ufunc reduce接口累计30296次。",
+    "WalkingProcessor._recover_ownership_groups到review_group_sources为26327次；assigned_sources累计43531次，ownership_record累计106898次。调用多不等于CPU成本高或重复工作可以删除。",
+    "按原始file/line/name分组并保留同名记录数后，两轮聚合调用计数没有差异。8种标签存在同名多代码记录，包括动态dataclass构造与同一行嵌套推导式；保留歧义，不宣称每个函数精确身份都匹配。"
+  ],
+  "source_interpretation": [
+    "review_group_sources会先检查group状态，很多调用可能快速返回；不能由26327次直接判定所有权审查主导成本。",
+    "assigned_sources构建集合并遍历已有source_decisions；调用内容随状态增长，可作为后续计算/分配边界候选。",
+    "NumPy调用边界与已有自然GIL等待链的源码候选相符，但这不是在同一现场时刻捕获的证据，不能将两轮拼接为持有者或占比结论。"
+  ],
+  "limits": [
+    "cProfile有显著扰动；仅导出调用计数和边，不导出其计时或热点百分比。",
+    "C接口名称不是完整原生调用栈，不能判断内核等待、CPU热点或GIL持有者。",
+    "当前两轮聚合计数相同不证明旧慢快整链具有相同指令/分配量，也不解释GUI竞争。",
+    "分析器测试确认同名记录不会被字典覆盖；无法区分的代码身份保留未知。"
+  ],
+  "next": "将质量array_equal、滤波归约与所有权审查/集合构造列为原生计算栈和局部执行观测候选，保持完整语义及坏束物理坐标规则。先取得适用的成本/等待证据，未授权优化A/B和正式修改仍不执行。",
+  "actual_load_disturbance_pass": false,
+  "primary_root_identified": false
+}
