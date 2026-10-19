@@ -58,3 +58,5 @@ CPU账本两窗PID23008/14620，与旧CPU ETL的PID11948不是同一时刻、同
 原ETL前后SHA一致，旧验收文件未改；新输出全部独立创建。二进制、完整事件和反汇编原文只留用户本地/Windows忽略目录，仓库提交代码、派生见证、哈希与旧失败判断。没有启动业务进程/采样器或改变系统策略。
 
 进一步将一处内部GIL等待核对到NumPy数组创建路径，详见 [allocation_boundary_update01.md](allocation_boundary_update01.md)。这是等待者路径升级，不是主因、持有者、PDB或优化资格升级。
+
+旧CPU窗口74条线程的入口经Windows本机事件定义独立核验，其中4条Qt线程由匹配PDB的实际执行栈确认执行图像缩放。详见 [thread_entry_update01.md](thread_entry_update01.md)；不跨PID关联等待者、CPU账本或GIL持有者，也不由线程数判断过度并行。
