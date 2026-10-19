@@ -1,0 +1,22 @@
+{
+  "title": "目标首阶段：真实模型受控短序列身份验证通过",
+  "goal": "../vision_work_identity/goal01.json",
+  "facts": [
+    "两个全新进程分别调用原_PreviewAdapter，对固定4151至4191间隔4的11帧执行推理；原模型、预览缩放、NumPy与正式源不变。",
+    "全部像素在模型打开前从原录像解码。原媒体时间、实验逻辑VIDEO时间和实际decode/call时间分开保留。逻辑时间1000+50*i毫秒只作为受控实验条件。",
+    "两轮11次调用的frame ID、JPEG摘要、像素摘要、形状、媒体时间与逻辑时间完全一致。",
+    "两轮每帧完整返回dataclass内容摘要一致，均有11个非空pose；没有仅以次数或has_pose一致替代完整结果核对。",
+    "模型关闭两轮分别约42.072和42.100秒，完成确认并保留；该时间在推理调用之外，不能用作旧行走阶段积压原因。"
+  ],
+  "validation": {"new_verifier_tests": 4, "existing_vision_tests": 19, "real_model_calls": 22, "archived_files_verified": 15, "formal_files_unchanged": 458},
+  "limits": [
+    "这是无GUI、无SDK、无真实worker调度的串行受控模型负载；没有运行人体或设备采集。",
+    "相同结果只证明本次固定序列的工作身份，不能声称MediaPipe对任何输入都确定性，也不能估计方差或工具扰动。",
+    "此阶段未启用ETW或采样器。原3%等效、1%精度和所有历史失败保持；共同观察成本仍未知。",
+    "自然GIL等待与计算成本两条线继续推进，未证明GUI绘图是主因。"
+  ],
+  "next": "以此身份合同准备受控负载的OFF/OFF统计设计，并把原消费计算链纳入同一受控任务边界；完整负载与自然动态系统适用范围分别验收，再启动ON。不得将11帧身份通过升级成现场性能通过。",
+  "controlled_model_identity_pass": true,
+  "actual_load_disturbance_pass": false,
+  "primary_root_identified": false
+}

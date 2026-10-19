@@ -1,0 +1,22 @@
+{
+  "objective": "落实引用对话的诊断闭环：解释实验工作量，分别验证受控成本与真实动态系统影响，在同一严重积压窗口区分计算和等待并锁定责任路径，最终以最小修复通过正确性与实时性验收。",
+  "reference_conversation": "6ad57268-5da0-83ea-9fdb-ef897db2a814",
+  "starting_commit": "3625b0e",
+  "current_phase": "真实模型的受控短序列身份验证",
+  "stages": [
+    "冻结媒体帧、像素摘要、逻辑时间和模型调用顺序；保留实际执行时钟，核对完整真实模型结果内容。",
+    "受控工作量下先评估OFF/OFF波动，再按预声明设计测工具增量成本；共同观察成本另列。",
+    "另行设计真实动态策略总效应实验，保留推理/SDK/绘图工作变化，禁止事后匹配、归一化或追加成功轮。",
+    "同一严重积压窗口关联batch/contact/pending、自然消费者栈、独立持有者证据及CPU/cycles；计算成本与GIL/Qt等待均保留。",
+    "责任证据足够后准备最小修复；正式修改及优化A/B须与此前限制协调，当前仍不执行。"
+  ],
+  "completion_criteria": [
+    "有足够证据确定主要责任路径，而非仅证明队列积压或某次GIL等待。",
+    "适用的栈完整性、PDB、PID/TID、时间和丢失事件及扰动门槛通过；不放宽既有3%/1%要求。",
+    "最终修复覆盖1000Hz持续处理、队列年龄不持续增长、既定显示延迟和完整报告/质量历史/布局正确性。"
+  ],
+  "constraints": ["沿用现有分支并推送完成阶段", "全部失败/锁/旧计划保留", "不启动人体、USB采集、Run、优化A/B或修改正式程序", "无符号内核保留模块及地址偏移", "SDK独立PID/GIL", "当前不需要真人测试"],
+  "app_goal_state_observed": "blocked; API does not support resuming or renaming an unfinished goal",
+  "primary_root_identified": false,
+  "complete": false
+}

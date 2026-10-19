@@ -1,0 +1,59 @@
+{
+  "scope": "Exactly two fresh-process sequential calls of original _PreviewAdapter on11 fixed recorded frames. CPU model only; no GUI/SDK/live acquisition/human/Run/optimization AB. Identity feasibility, not cost comparison.",
+  "cases": [
+    "a",
+    "b"
+  ],
+  "frame_ids": [
+    4151,
+    4155,
+    4159,
+    4163,
+    4167,
+    4171,
+    4175,
+    4179,
+    4183,
+    4187,
+    4191
+  ],
+  "input_root": "E:\\OptoJump\\IronJump-ground-backlog-measurement-20261016\\experiments\\ground_backlog_measurement\\inputs\\walk",
+  "input_sha256": {
+    "camera.csv": "cc911dfd8e7aadf4da9f7c1e604e65ef33a02a4f7f790ba1e0ad1dfa7e890d88",
+    "camera.mjpg": "64d887e0c2817e3594e3bbad4193ab97b4abc1d0c2eed0229ac3d092fad04e52"
+  },
+  "model_sha256": "5134a3aad27a58b93da0088d431f366da362b44e3ccfbe3462b3827a839011b1",
+  "existing_sources": {
+    "vision/__init__.py": "03f21dd0bec0dc46ad0e179c4b6df4383bf90a1087cd43fafcecb79974e36068",
+    "vision/annotations.py": "cf9a94b1677904046de310c1f68dac837ded2c80969d91b61f24b66a13e0cff4",
+    "vision/event_scheduler.py": "dc67f24a39a69e3f08da7c87d3666bbd843de4e427719c1ee6e64336df047246",
+    "vision/foot_reference.py": "8ceafb540566f79856793b012af4a3088edcd0eb124246d36332114c65650ee9",
+    "vision/framing.py": "18a59f054a362032a23ccbb4bb22ef1635acf71741bd7f5eb9fbaa8b9367fffe",
+    "vision/gimbal_tracking.py": "e52b9f155ff6a78d96f6c82f5ffa8f80c0f03767c8054b56817263fd5fdc3c0e",
+    "vision/landing_v2.py": "78275ae5b5557da226e4f086293a04971e99bb4760ba41aa317cba615fc0ee00",
+    "vision/leg_identity.py": "121e58eddac708e5aea7aaf6f8d3eb45bf9fbb579d89bf4cd8bdc1d9d076a8a7",
+    "vision/live_walking.py": "7f7ca4dd66bafe59ae43b2b2f25e528c9349faa8c5de20d177d5e2cd7642e228",
+    "vision/mediapipe_pose.py": "b4b771ce3e18d88c50fd1c698ac006bd0b87d2be9c5f50feb5f080a48f6c43e1",
+    "vision/phase_resync.py": "53719706dfba9bd2683df44e4776387cd80800d776f38dce85c761a682d92e72",
+    "vision/pose_overlay.py": "5bacd34bc05ec0bf150340e2d763e28419bcc335282af44f6767391e852ca9f2",
+    "vision/replay.py": "a5b5db46cf7a26ff42ff7fa60f7b53d6be348afedb6853f73acc7bed15413169",
+    "vision/service.py": "d8f43d891a6162db79d04e78cc198452814bbcaf30a4566c16c7f5646ebc42dc",
+    "vision/session.py": "18f7287a7f7993c91c56fff58fe515f21d08da75398637b31a52a2cf27be7941",
+    "vision/time_sync.py": "7d3a45b6e185ccf671c0bfe05cc50d14b1a698888b967df0185212c352f8df28",
+    "vision/video_index.py": "726cc227768215cc16b57a4fa66514072c79fe12004a3b90e4a0ba80d8f66bb3"
+  },
+  "run_sha256": "d6a258ab2de0e6b5e8075f0503c26419963d1e76c77296f76ea57beeff54e85a",
+  "sources": {
+    "run.py": "d6a258ab2de0e6b5e8075f0503c26419963d1e76c77296f76ea57beeff54e85a",
+    "test_verify.py": "a6347990ec058dfab9a4a7be6141dab67d7ae4080ff1c5be55b7e7bd04f9399a",
+    "verify.py": "7dca50fe6475f4881709ddbefc0f72925221be97b95e1e5cb1e3a83075a1b04f"
+  },
+  "checks": [
+    "Decode before model open; IDs/pixels/media/logical times exact.",
+    "Logical VIDEO timestamp1000+50*i; actual wall time never selects work.",
+    "Call original preview adapter, preserving resize and model conversion behavior.",
+    "Full result dataclass content hashed without tolerance; mismatch retained.",
+    "Open/close exceptions and unconfirmed exit retained; no repeat or kill to manufacture success."
+  ],
+  "actual_load_disturbance_pass": false
+}
