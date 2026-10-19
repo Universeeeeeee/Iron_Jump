@@ -1,0 +1,36 @@
+{
+  "scope": "Two fresh originalGUI/defaultQoS savedWalk processes in original interactive priority7 context; state diagnosis only, not a repairAB.",
+  "cases": [
+    "phase01",
+    "phase02"
+  ],
+  "checkpoints": [
+    "before_open",
+    "after_open",
+    "after_close"
+  ],
+  "thread_requirement": "All three native probes and original open/close records must use the same model threadTID; no cross-thread throughput comparison.",
+  "native_probe_source": "experiments/cpu_execution_probe/probe.py",
+  "native_plan_source": "experiments/cpu_execution_probe/plan01.json",
+  "native_unchanged_sha256": {
+    "experiments/cpu_execution_probe/probe.py": "ad4206e1f1b65203767178743e2aebd2dbfa7658088d31af57d0526a7381851c",
+    "experiments/cpu_execution_probe/plan01.json": "48857b47e7bc43d69f83cc6e9989386f077f1c15ef4d1010f74138742299ac18"
+  },
+  "sources": {
+    "boundary.py": "a75dd147e1f54f19613ab6cf0a29ff97787933b670560c432b75231be0b0bbff",
+    "test_boundary.py": "d260f989855e58ea505ba59b2da25e8dc435aad6139bf6b7ee7add8cad146685"
+  },
+  "perturbation": "About0.8sec per native checkpoint in previous state; delays modelready and close. Originalopen/close timed inside probes. Existing audit outer durations include probes and must be labelled accordingly. Do not use GUI latencies as unperturbed performance.",
+  "decision": {
+    "native_change_threshold": 0.15,
+    "rule": "Both complete windows must show same-direction >=15% after-open/before-open throughput change to support an initialization-associated execution-state transition. Otherwise inconclusive or no large observed transition. Never inferGHz, temperature or sole cause.",
+    "require_exact_native_outputs": true,
+    "require_fourfold_scaling": true,
+    "require_original_semantics": true,
+    "require_all_model_close": true,
+    "no_optional_windows": true
+  },
+  "launch_allowed": false,
+  "remaining": "Entry/controller/preflight integration and native stage ordering verification required before launch.",
+  "previous_failed_gui_protocol_unchanged": true
+}
