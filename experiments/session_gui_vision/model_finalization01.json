@@ -1,0 +1,44 @@
+{
+  "schema": 1,
+  "checks": {
+    "application_outcome_known": false,
+    "original_prefix_preserved": true,
+    "no_join_timeout": true,
+    "final_model_checks": true
+  },
+  "metadata_finalization_pass": false,
+  "joins": [
+    {
+      "service": 0,
+      "tid": 16116,
+      "begin_ns": 426719253207900,
+      "end_ns": 426758857794000,
+      "alive_before": true,
+      "alive_after": false
+    }
+  ],
+  "application_return_model_checks": {
+    "single_service": true,
+    "committed_prefix": true,
+    "service_exited": false,
+    "service_markers": false,
+    "one_model": false,
+    "no_callback_faults": true,
+    "model_identity": false,
+    "close_return_confirmed": false
+  },
+  "application_return_model_confirmed": false,
+  "observer_tail_model_checks": {
+    "single_service": true,
+    "committed_prefix": true,
+    "service_exited": true,
+    "service_markers": true,
+    "one_model": true,
+    "no_callback_faults": true,
+    "model_identity": true,
+    "close_return_confirmed": true
+  },
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "scope": "Additional observer lifetime after original application return, outside the CPU/cycles ROI. An unconfirmed original return is retained; a later success never rewrites it."
+}
