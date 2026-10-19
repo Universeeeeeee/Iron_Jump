@@ -1,0 +1,6944 @@
+{
+  "checks": {
+    "phases": true,
+    "legacy_workload_links": true,
+    "native_clock": true,
+    "terminal_lifetimes": true,
+    "clean": true,
+    "wire_delivery": true,
+    "child_clock_precision": true
+  },
+  "phase_checks": {
+    "schema": true,
+    "app_outcome_preserved": true,
+    "original_state_preserved": true,
+    "final_state_recomputed": true,
+    "prefix_unchanged": true,
+    "final_model_complete": true,
+    "no_join_timeout": true,
+    "finalization": true
+  },
+  "legacy_workload": {
+    "checks": {
+      "capture_identity": true,
+      "no_callback_faults": true,
+      "complete_services": true,
+      "pipeline_health": true,
+      "model_lifetimes": true,
+      "all_adapter_inference_submit_links": true,
+      "GUI_roles": true,
+      "native_handle_identity": true,
+      "separate_SDK_PID": true,
+      "control_lifecycle": true,
+      "SDK_control_identity": true,
+      "inference_ROI_lifetimes": true,
+      "SDK_aggregate_counts": true,
+      "all_relay_SDK_metadata_links": true,
+      "independent_child_clock_bracket": true,
+      "SDK_calls_successful": true
+    },
+    "observability_pass": true,
+    "errors": [],
+    "inference_links": [
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4151,
+        "epoch": 1,
+        "timestamp_s": 363919.33,
+        "begin_s": 363919.3299741,
+        "end_s": 363919.412026,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4159,
+        "epoch": 1,
+        "timestamp_s": 363919.418,
+        "begin_s": 363919.4181993,
+        "end_s": 363919.4505597,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4167,
+        "epoch": 1,
+        "timestamp_s": 363919.499,
+        "begin_s": 363919.5018845,
+        "end_s": 363919.5504268,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4171,
+        "epoch": 1,
+        "timestamp_s": 363919.55,
+        "begin_s": 363919.5506888,
+        "end_s": 363919.608848,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4179,
+        "epoch": 1,
+        "timestamp_s": 363919.621,
+        "begin_s": 363919.6214723,
+        "end_s": 363919.671136,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4187,
+        "epoch": 1,
+        "timestamp_s": 363919.706,
+        "begin_s": 363919.7060202,
+        "end_s": 363919.7578589,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4195,
+        "epoch": 1,
+        "timestamp_s": 363919.781,
+        "begin_s": 363919.7820883,
+        "end_s": 363919.8325762,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4203,
+        "epoch": 1,
+        "timestamp_s": 363919.863,
+        "begin_s": 363919.8635763,
+        "end_s": 363919.9047232,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4211,
+        "epoch": 1,
+        "timestamp_s": 363919.941,
+        "begin_s": 363919.9417699,
+        "end_s": 363919.9829387,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4219,
+        "epoch": 1,
+        "timestamp_s": 363920.023,
+        "begin_s": 363920.0231241,
+        "end_s": 363920.0680907,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4227,
+        "epoch": 1,
+        "timestamp_s": 363920.098,
+        "begin_s": 363920.0983969,
+        "end_s": 363920.1471964,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4235,
+        "epoch": 1,
+        "timestamp_s": 363920.176,
+        "begin_s": 363920.177274,
+        "end_s": 363920.2151408,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4239,
+        "epoch": 1,
+        "timestamp_s": 363920.226,
+        "begin_s": 363920.2271248,
+        "end_s": 363920.2660687,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4247,
+        "epoch": 1,
+        "timestamp_s": 363920.297,
+        "begin_s": 363920.298427,
+        "end_s": 363920.3412659,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4255,
+        "epoch": 1,
+        "timestamp_s": 363920.382,
+        "begin_s": 363920.382923,
+        "end_s": 363920.4251468,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4263,
+        "epoch": 1,
+        "timestamp_s": 363920.457,
+        "begin_s": 363920.4581364,
+        "end_s": 363920.5020842,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4271,
+        "epoch": 1,
+        "timestamp_s": 363920.53,
+        "begin_s": 363920.5481661,
+        "end_s": 363920.5905519,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4279,
+        "epoch": 1,
+        "timestamp_s": 363920.615,
+        "begin_s": 363920.6183438,
+        "end_s": 363920.6562225,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4287,
+        "epoch": 1,
+        "timestamp_s": 363920.695,
+        "begin_s": 363920.6963322,
+        "end_s": 363920.739606,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4295,
+        "epoch": 1,
+        "timestamp_s": 363920.779,
+        "begin_s": 363920.7806828,
+        "end_s": 363920.8184739,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4303,
+        "epoch": 1,
+        "timestamp_s": 363920.855,
+        "begin_s": 363920.8626203,
+        "end_s": 363920.9075818,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4311,
+        "epoch": 1,
+        "timestamp_s": 363920.93,
+        "begin_s": 363920.9486525,
+        "end_s": 363920.9881467,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4316,
+        "epoch": 1,
+        "timestamp_s": 363920.98,
+        "begin_s": 363920.9891026,
+        "end_s": 363921.0312712,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4323,
+        "epoch": 1,
+        "timestamp_s": 363921.059,
+        "begin_s": 363921.0616094,
+        "end_s": 363921.1050113,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4331,
+        "epoch": 1,
+        "timestamp_s": 363921.135,
+        "begin_s": 363921.1406531,
+        "end_s": 363921.1831719,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4339,
+        "epoch": 1,
+        "timestamp_s": 363921.211,
+        "begin_s": 363921.2187184,
+        "end_s": 363921.2676426,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4347,
+        "epoch": 1,
+        "timestamp_s": 363921.298,
+        "begin_s": 363921.299909,
+        "end_s": 363921.3377452,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4355,
+        "epoch": 1,
+        "timestamp_s": 363921.376,
+        "begin_s": 363921.3784775,
+        "end_s": 363921.4162347,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4363,
+        "epoch": 1,
+        "timestamp_s": 363921.455,
+        "begin_s": 363921.4611581,
+        "end_s": 363921.5059219,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4371,
+        "epoch": 1,
+        "timestamp_s": 363921.535,
+        "begin_s": 363921.5398509,
+        "end_s": 363921.5831189,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4379,
+        "epoch": 1,
+        "timestamp_s": 363921.618,
+        "begin_s": 363921.6185847,
+        "end_s": 363921.6596957,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4387,
+        "epoch": 1,
+        "timestamp_s": 363921.694,
+        "begin_s": 363921.6974241,
+        "end_s": 363921.7348706,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4395,
+        "epoch": 1,
+        "timestamp_s": 363921.774,
+        "begin_s": 363921.778375,
+        "end_s": 363921.8212817,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4403,
+        "epoch": 1,
+        "timestamp_s": 363921.861,
+        "begin_s": 363921.8625045,
+        "end_s": 363921.9007137,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4411,
+        "epoch": 1,
+        "timestamp_s": 363921.934,
+        "begin_s": 363921.9430348,
+        "end_s": 363921.9817669,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4419,
+        "epoch": 1,
+        "timestamp_s": 363922.015,
+        "begin_s": 363922.0245731,
+        "end_s": 363922.0678325,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4427,
+        "epoch": 1,
+        "timestamp_s": 363922.095,
+        "begin_s": 363922.0962729,
+        "end_s": 363922.2160591,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4439,
+        "epoch": 1,
+        "timestamp_s": 363922.214,
+        "begin_s": 363922.2363833,
+        "end_s": 363922.2828074,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4447,
+        "epoch": 1,
+        "timestamp_s": 363922.297,
+        "begin_s": 363922.3082317,
+        "end_s": 363922.3508296,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4455,
+        "epoch": 1,
+        "timestamp_s": 363922.369,
+        "begin_s": 363922.3798134,
+        "end_s": 363922.4199139,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4463,
+        "epoch": 1,
+        "timestamp_s": 363922.457,
+        "begin_s": 363922.4584777,
+        "end_s": 363922.4957685,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4471,
+        "epoch": 1,
+        "timestamp_s": 363922.53,
+        "begin_s": 363922.5395462,
+        "end_s": 363922.5835928,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4479,
+        "epoch": 1,
+        "timestamp_s": 363922.61,
+        "begin_s": 363922.6178606,
+        "end_s": 363922.6587665,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4487,
+        "epoch": 1,
+        "timestamp_s": 363922.695,
+        "begin_s": 363922.6950347,
+        "end_s": 363922.7323744,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4495,
+        "epoch": 1,
+        "timestamp_s": 363922.775,
+        "begin_s": 363922.7770984,
+        "end_s": 363922.8155053,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4503,
+        "epoch": 1,
+        "timestamp_s": 363922.857,
+        "begin_s": 363922.8596468,
+        "end_s": 363922.8944863,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4511,
+        "epoch": 1,
+        "timestamp_s": 363922.937,
+        "begin_s": 363922.9386266,
+        "end_s": 363922.977259,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4519,
+        "epoch": 1,
+        "timestamp_s": 363923.015,
+        "begin_s": 363923.0173971,
+        "end_s": 363923.0529444,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4527,
+        "epoch": 1,
+        "timestamp_s": 363923.095,
+        "begin_s": 363923.1022605,
+        "end_s": 363923.1402287,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4535,
+        "epoch": 1,
+        "timestamp_s": 363923.176,
+        "begin_s": 363923.1783424,
+        "end_s": 363923.2175636,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4543,
+        "epoch": 1,
+        "timestamp_s": 363923.251,
+        "begin_s": 363923.2591075,
+        "end_s": 363923.296251,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4551,
+        "epoch": 1,
+        "timestamp_s": 363923.33,
+        "begin_s": 363923.340001,
+        "end_s": 363923.3774821,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4559,
+        "epoch": 1,
+        "timestamp_s": 363923.416,
+        "begin_s": 363923.4182644,
+        "end_s": 363923.4599776,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4567,
+        "epoch": 1,
+        "timestamp_s": 363923.494,
+        "begin_s": 363923.4944482,
+        "end_s": 363923.5295326,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4575,
+        "epoch": 1,
+        "timestamp_s": 363923.576,
+        "begin_s": 363923.5786755,
+        "end_s": 363923.6187253,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4583,
+        "epoch": 1,
+        "timestamp_s": 363923.662,
+        "begin_s": 363923.6669085,
+        "end_s": 363923.7063969,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4591,
+        "epoch": 1,
+        "timestamp_s": 363923.731,
+        "begin_s": 363923.7345017,
+        "end_s": 363923.7729475,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4596,
+        "epoch": 1,
+        "timestamp_s": 363923.781,
+        "begin_s": 363923.8622164,
+        "end_s": 363923.902254,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4607,
+        "epoch": 1,
+        "timestamp_s": 363923.895,
+        "begin_s": 363923.9037309,
+        "end_s": 363923.9507127,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4615,
+        "epoch": 1,
+        "timestamp_s": 363923.971,
+        "begin_s": 363923.9772388,
+        "end_s": 363924.0106632,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4623,
+        "epoch": 1,
+        "timestamp_s": 363924.058,
+        "begin_s": 363924.0596738,
+        "end_s": 363924.0970834,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4631,
+        "epoch": 1,
+        "timestamp_s": 363924.136,
+        "begin_s": 363924.1395182,
+        "end_s": 363924.1830295,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4639,
+        "epoch": 1,
+        "timestamp_s": 363924.215,
+        "begin_s": 363924.217675,
+        "end_s": 363924.2549887,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4647,
+        "epoch": 1,
+        "timestamp_s": 363924.295,
+        "begin_s": 363924.2987233,
+        "end_s": 363924.3361183,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4655,
+        "epoch": 1,
+        "timestamp_s": 363924.38,
+        "begin_s": 363924.3835042,
+        "end_s": 363924.4223101,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4663,
+        "epoch": 1,
+        "timestamp_s": 363924.453,
+        "begin_s": 363924.4597524,
+        "end_s": 363924.5086021,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4671,
+        "epoch": 1,
+        "timestamp_s": 363924.535,
+        "begin_s": 363924.5367525,
+        "end_s": 363924.5731167,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4679,
+        "epoch": 1,
+        "timestamp_s": 363924.616,
+        "begin_s": 363924.6174086,
+        "end_s": 363924.6546788,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4687,
+        "epoch": 1,
+        "timestamp_s": 363924.693,
+        "begin_s": 363924.6967292,
+        "end_s": 363924.7336272,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4695,
+        "epoch": 1,
+        "timestamp_s": 363924.77,
+        "begin_s": 363924.7817173,
+        "end_s": 363924.8205192,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4703,
+        "epoch": 1,
+        "timestamp_s": 363924.858,
+        "begin_s": 363924.8575424,
+        "end_s": 363924.8941879,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4711,
+        "epoch": 1,
+        "timestamp_s": 363924.933,
+        "begin_s": 363924.9344473,
+        "end_s": 363924.9726976,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4719,
+        "epoch": 1,
+        "timestamp_s": 363925.016,
+        "begin_s": 363925.0217426,
+        "end_s": 363925.0622211,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4727,
+        "epoch": 1,
+        "timestamp_s": 363925.096,
+        "begin_s": 363925.0975624,
+        "end_s": 363925.1322042,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4735,
+        "epoch": 1,
+        "timestamp_s": 363925.172,
+        "begin_s": 363925.1824261,
+        "end_s": 363925.2192552,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4743,
+        "epoch": 1,
+        "timestamp_s": 363925.258,
+        "begin_s": 363925.2611101,
+        "end_s": 363925.2977791,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4751,
+        "epoch": 1,
+        "timestamp_s": 363925.337,
+        "begin_s": 363925.338432,
+        "end_s": 363925.3813504,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4759,
+        "epoch": 1,
+        "timestamp_s": 363925.413,
+        "begin_s": 363925.4173009,
+        "end_s": 363925.4538656,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4767,
+        "epoch": 1,
+        "timestamp_s": 363925.499,
+        "begin_s": 363925.5019536,
+        "end_s": 363925.5416068,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4775,
+        "epoch": 1,
+        "timestamp_s": 363925.582,
+        "begin_s": 363925.5890459,
+        "end_s": 363925.630219,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4784,
+        "epoch": 1,
+        "timestamp_s": 363925.66,
+        "begin_s": 363925.663491,
+        "end_s": 363925.7068125,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4791,
+        "epoch": 1,
+        "timestamp_s": 363925.73,
+        "begin_s": 363925.7428783,
+        "end_s": 363925.7826722,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4796,
+        "epoch": 1,
+        "timestamp_s": 363925.78,
+        "begin_s": 363925.7872083,
+        "end_s": 363925.8252595,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4803,
+        "epoch": 1,
+        "timestamp_s": 363925.85,
+        "begin_s": 363925.8532614,
+        "end_s": 363925.8927847,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4811,
+        "epoch": 1,
+        "timestamp_s": 363925.937,
+        "begin_s": 363925.937811,
+        "end_s": 363925.9745447,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4820,
+        "epoch": 1,
+        "timestamp_s": 363926.021,
+        "begin_s": 363926.0222704,
+        "end_s": 363926.0595428,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4827,
+        "epoch": 1,
+        "timestamp_s": 363926.098,
+        "begin_s": 363926.1049258,
+        "end_s": 363926.1538311,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4836,
+        "epoch": 1,
+        "timestamp_s": 363926.181,
+        "begin_s": 363926.1884478,
+        "end_s": 363926.2288355,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4844,
+        "epoch": 1,
+        "timestamp_s": 363926.26,
+        "begin_s": 363926.2605286,
+        "end_s": 363926.2992022,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4852,
+        "epoch": 1,
+        "timestamp_s": 363926.34,
+        "begin_s": 363926.341654,
+        "end_s": 363926.3802494,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4860,
+        "epoch": 1,
+        "timestamp_s": 363926.421,
+        "begin_s": 363926.4265612,
+        "end_s": 363926.4662717,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4868,
+        "epoch": 1,
+        "timestamp_s": 363926.5,
+        "begin_s": 363926.5025243,
+        "end_s": 363926.541981,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4876,
+        "epoch": 1,
+        "timestamp_s": 363926.58,
+        "begin_s": 363926.5816382,
+        "end_s": 363926.6237845,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4884,
+        "epoch": 1,
+        "timestamp_s": 363926.66,
+        "begin_s": 363926.6684898,
+        "end_s": 363926.7099074,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4892,
+        "epoch": 1,
+        "timestamp_s": 363926.74,
+        "begin_s": 363926.7399593,
+        "end_s": 363926.7772859,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4900,
+        "epoch": 1,
+        "timestamp_s": 363926.819,
+        "begin_s": 363926.8218604,
+        "end_s": 363926.8579874,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4908,
+        "epoch": 1,
+        "timestamp_s": 363926.9,
+        "begin_s": 363926.9040178,
+        "end_s": 363926.943246,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4916,
+        "epoch": 1,
+        "timestamp_s": 363926.98,
+        "begin_s": 363926.9821133,
+        "end_s": 363927.0271342,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4924,
+        "epoch": 1,
+        "timestamp_s": 363927.061,
+        "begin_s": 363927.0614124,
+        "end_s": 363927.0991574,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4932,
+        "epoch": 1,
+        "timestamp_s": 363927.14,
+        "begin_s": 363927.1442517,
+        "end_s": 363927.1844133,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4939,
+        "epoch": 1,
+        "timestamp_s": 363927.214,
+        "begin_s": 363927.2167299,
+        "end_s": 363927.2544443,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4947,
+        "epoch": 1,
+        "timestamp_s": 363927.29,
+        "begin_s": 363927.291312,
+        "end_s": 363927.3307431,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4955,
+        "epoch": 1,
+        "timestamp_s": 363927.371,
+        "begin_s": 363927.3721631,
+        "end_s": 363927.406572,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4962,
+        "epoch": 1,
+        "timestamp_s": 363927.444,
+        "begin_s": 363927.4464971,
+        "end_s": 363927.4864079,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4970,
+        "epoch": 1,
+        "timestamp_s": 363927.52,
+        "begin_s": 363927.5250088,
+        "end_s": 363927.5614303,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4978,
+        "epoch": 1,
+        "timestamp_s": 363927.6,
+        "begin_s": 363927.6045622,
+        "end_s": 363927.6405663,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4986,
+        "epoch": 1,
+        "timestamp_s": 363927.68,
+        "begin_s": 363927.6879741,
+        "end_s": 363927.7249214,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 4994,
+        "epoch": 1,
+        "timestamp_s": 363927.76,
+        "begin_s": 363927.7609907,
+        "end_s": 363927.7985023,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5002,
+        "epoch": 1,
+        "timestamp_s": 363927.842,
+        "begin_s": 363927.850619,
+        "end_s": 363927.8911786,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5010,
+        "epoch": 1,
+        "timestamp_s": 363927.927,
+        "begin_s": 363927.9301589,
+        "end_s": 363927.9639929,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5018,
+        "epoch": 1,
+        "timestamp_s": 363928.006,
+        "begin_s": 363928.0067578,
+        "end_s": 363928.042499,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5027,
+        "epoch": 1,
+        "timestamp_s": 363928.091,
+        "begin_s": 363928.0912714,
+        "end_s": 363928.126766,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5034,
+        "epoch": 1,
+        "timestamp_s": 363928.161,
+        "begin_s": 363928.1688581,
+        "end_s": 363928.2055169,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5042,
+        "epoch": 1,
+        "timestamp_s": 363928.24,
+        "begin_s": 363928.2566483,
+        "end_s": 363928.2920222,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5050,
+        "epoch": 1,
+        "timestamp_s": 363928.32,
+        "begin_s": 363928.3229225,
+        "end_s": 363928.3592855,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5058,
+        "epoch": 1,
+        "timestamp_s": 363928.404,
+        "begin_s": 363928.4116161,
+        "end_s": 363928.4499969,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5066,
+        "epoch": 1,
+        "timestamp_s": 363928.481,
+        "begin_s": 363928.4826719,
+        "end_s": 363928.5179916,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5074,
+        "epoch": 1,
+        "timestamp_s": 363928.561,
+        "begin_s": 363928.5642361,
+        "end_s": 363928.6098376,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5082,
+        "epoch": 1,
+        "timestamp_s": 363928.644,
+        "begin_s": 363928.646741,
+        "end_s": 363928.686447,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5090,
+        "epoch": 1,
+        "timestamp_s": 363928.72,
+        "begin_s": 363928.7302328,
+        "end_s": 363928.7727985,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5098,
+        "epoch": 1,
+        "timestamp_s": 363928.801,
+        "begin_s": 363928.8070613,
+        "end_s": 363928.8430631,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5106,
+        "epoch": 1,
+        "timestamp_s": 363928.882,
+        "begin_s": 363928.8841446,
+        "end_s": 363928.9230884,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5114,
+        "epoch": 1,
+        "timestamp_s": 363928.96,
+        "begin_s": 363928.9651379,
+        "end_s": 363929.0046191,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5122,
+        "epoch": 1,
+        "timestamp_s": 363929.04,
+        "begin_s": 363929.0538692,
+        "end_s": 363929.0891245,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5127,
+        "epoch": 1,
+        "timestamp_s": 363929.091,
+        "begin_s": 363929.0949046,
+        "end_s": 363929.1332114,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5135,
+        "epoch": 1,
+        "timestamp_s": 363929.172,
+        "begin_s": 363929.1721509,
+        "end_s": 363929.2081608,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5142,
+        "epoch": 1,
+        "timestamp_s": 363929.249,
+        "begin_s": 363929.2502485,
+        "end_s": 363929.2896979,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5151,
+        "epoch": 1,
+        "timestamp_s": 363929.33,
+        "begin_s": 363929.3380746,
+        "end_s": 363929.3776024,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5159,
+        "epoch": 1,
+        "timestamp_s": 363929.41,
+        "begin_s": 363929.411956,
+        "end_s": 363929.449325,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5166,
+        "epoch": 1,
+        "timestamp_s": 363929.491,
+        "begin_s": 363929.4912862,
+        "end_s": 363929.528538,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5175,
+        "epoch": 1,
+        "timestamp_s": 363929.571,
+        "begin_s": 363929.5726596,
+        "end_s": 363929.6089241,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5183,
+        "epoch": 1,
+        "timestamp_s": 363929.655,
+        "begin_s": 363929.6577947,
+        "end_s": 363929.6972523,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5190,
+        "epoch": 1,
+        "timestamp_s": 363929.726,
+        "begin_s": 363929.7286446,
+        "end_s": 363929.7679958,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5198,
+        "epoch": 1,
+        "timestamp_s": 363929.8,
+        "begin_s": 363929.8039044,
+        "end_s": 363929.838607,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5206,
+        "epoch": 1,
+        "timestamp_s": 363929.88,
+        "begin_s": 363929.8823677,
+        "end_s": 363929.9253581,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5214,
+        "epoch": 1,
+        "timestamp_s": 363929.968,
+        "begin_s": 363929.9691534,
+        "end_s": 363930.0046584,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5223,
+        "epoch": 1,
+        "timestamp_s": 363930.051,
+        "begin_s": 363930.0549835,
+        "end_s": 363930.0954534,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5230,
+        "epoch": 1,
+        "timestamp_s": 363930.12,
+        "begin_s": 363930.1230254,
+        "end_s": 363930.1609129,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5238,
+        "epoch": 1,
+        "timestamp_s": 363930.206,
+        "begin_s": 363930.2063256,
+        "end_s": 363930.2442797,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5246,
+        "epoch": 1,
+        "timestamp_s": 363930.28,
+        "begin_s": 363930.2841676,
+        "end_s": 363930.3198206,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5254,
+        "epoch": 1,
+        "timestamp_s": 363930.367,
+        "begin_s": 363930.3698704,
+        "end_s": 363930.4048385,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5262,
+        "epoch": 1,
+        "timestamp_s": 363930.441,
+        "begin_s": 363930.4433495,
+        "end_s": 363930.4785857,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5270,
+        "epoch": 1,
+        "timestamp_s": 363930.52,
+        "begin_s": 363930.5207865,
+        "end_s": 363930.5603712,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5278,
+        "epoch": 1,
+        "timestamp_s": 363930.6,
+        "begin_s": 363930.6057535,
+        "end_s": 363930.6437306,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5286,
+        "epoch": 1,
+        "timestamp_s": 363930.681,
+        "begin_s": 363930.6967097,
+        "end_s": 363930.7354233,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5294,
+        "epoch": 1,
+        "timestamp_s": 363930.759,
+        "begin_s": 363930.7791319,
+        "end_s": 363930.8472095,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5302,
+        "epoch": 1,
+        "timestamp_s": 363930.84,
+        "begin_s": 363930.861677,
+        "end_s": 363930.9015548,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5310,
+        "epoch": 1,
+        "timestamp_s": 363930.92,
+        "begin_s": 363930.9226153,
+        "end_s": 363930.9696074,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5318,
+        "epoch": 1,
+        "timestamp_s": 363931.0,
+        "begin_s": 363931.0048903,
+        "end_s": 363931.0411149,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5326,
+        "epoch": 1,
+        "timestamp_s": 363931.08,
+        "begin_s": 363931.0836071,
+        "end_s": 363931.1260875,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5334,
+        "epoch": 1,
+        "timestamp_s": 363931.16,
+        "begin_s": 363931.1637032,
+        "end_s": 363931.2056925,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5342,
+        "epoch": 1,
+        "timestamp_s": 363931.24,
+        "begin_s": 363931.2621015,
+        "end_s": 363931.302089,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5350,
+        "epoch": 1,
+        "timestamp_s": 363931.32,
+        "begin_s": 363931.326626,
+        "end_s": 363931.3724637,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5358,
+        "epoch": 1,
+        "timestamp_s": 363931.4,
+        "begin_s": 363931.4229322,
+        "end_s": 363931.4609223,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5366,
+        "epoch": 1,
+        "timestamp_s": 363931.48,
+        "begin_s": 363931.4835266,
+        "end_s": 363931.5291909,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5374,
+        "epoch": 1,
+        "timestamp_s": 363931.56,
+        "begin_s": 363931.5690049,
+        "end_s": 363931.607912,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5382,
+        "epoch": 1,
+        "timestamp_s": 363931.64,
+        "begin_s": 363931.6493431,
+        "end_s": 363931.6971027,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5390,
+        "epoch": 1,
+        "timestamp_s": 363931.72,
+        "begin_s": 363931.7274733,
+        "end_s": 363931.7654264,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5398,
+        "epoch": 1,
+        "timestamp_s": 363931.8,
+        "begin_s": 363931.8082081,
+        "end_s": 363931.8501256,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5406,
+        "epoch": 1,
+        "timestamp_s": 363931.88,
+        "begin_s": 363931.8955158,
+        "end_s": 363931.9412873,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5414,
+        "epoch": 1,
+        "timestamp_s": 363931.96,
+        "begin_s": 363931.9721991,
+        "end_s": 363932.020978,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5423,
+        "epoch": 1,
+        "timestamp_s": 363932.051,
+        "begin_s": 363932.0556719,
+        "end_s": 363932.0926623,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5431,
+        "epoch": 1,
+        "timestamp_s": 363932.13,
+        "begin_s": 363932.1431605,
+        "end_s": 363932.182032,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5439,
+        "epoch": 1,
+        "timestamp_s": 363932.211,
+        "begin_s": 363932.2150823,
+        "end_s": 363932.2545541,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5447,
+        "epoch": 1,
+        "timestamp_s": 363932.291,
+        "begin_s": 363932.3042132,
+        "end_s": 363932.3465159,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5455,
+        "epoch": 1,
+        "timestamp_s": 363932.37,
+        "begin_s": 363932.3750025,
+        "end_s": 363932.4129251,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5463,
+        "epoch": 1,
+        "timestamp_s": 363932.45,
+        "begin_s": 363932.4522414,
+        "end_s": 363932.494855,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5471,
+        "epoch": 1,
+        "timestamp_s": 363932.531,
+        "begin_s": 363932.5508873,
+        "end_s": 363932.5890368,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5478,
+        "epoch": 1,
+        "timestamp_s": 363932.6,
+        "begin_s": 363932.606317,
+        "end_s": 363932.6437151,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5486,
+        "epoch": 1,
+        "timestamp_s": 363932.68,
+        "begin_s": 363932.6824018,
+        "end_s": 363932.7259904,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5494,
+        "epoch": 1,
+        "timestamp_s": 363932.761,
+        "begin_s": 363932.7642393,
+        "end_s": 363932.8058173,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5502,
+        "epoch": 1,
+        "timestamp_s": 363932.841,
+        "begin_s": 363932.8638289,
+        "end_s": 363932.907453,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5510,
+        "epoch": 1,
+        "timestamp_s": 363932.92,
+        "begin_s": 363932.9244264,
+        "end_s": 363932.963279,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5518,
+        "epoch": 1,
+        "timestamp_s": 363933.0,
+        "begin_s": 363933.0072476,
+        "end_s": 363933.0525129,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5526,
+        "epoch": 1,
+        "timestamp_s": 363933.08,
+        "begin_s": 363933.0818417,
+        "end_s": 363933.1183115,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5534,
+        "epoch": 1,
+        "timestamp_s": 363933.16,
+        "begin_s": 363933.1869058,
+        "end_s": 363933.2289631,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5542,
+        "epoch": 1,
+        "timestamp_s": 363933.24,
+        "begin_s": 363933.2522748,
+        "end_s": 363933.300866,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5547,
+        "epoch": 1,
+        "timestamp_s": 363933.29,
+        "begin_s": 363933.3017932,
+        "end_s": 363933.3380506,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5555,
+        "epoch": 1,
+        "timestamp_s": 363933.372,
+        "begin_s": 363933.3764005,
+        "end_s": 363933.4136128,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5563,
+        "epoch": 1,
+        "timestamp_s": 363933.45,
+        "begin_s": 363933.4641235,
+        "end_s": 363933.5118717,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5570,
+        "epoch": 1,
+        "timestamp_s": 363933.52,
+        "begin_s": 363933.5272835,
+        "end_s": 363933.5650273,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5578,
+        "epoch": 1,
+        "timestamp_s": 363933.601,
+        "begin_s": 363933.6125965,
+        "end_s": 363933.649401,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5586,
+        "epoch": 1,
+        "timestamp_s": 363933.682,
+        "begin_s": 363933.6861134,
+        "end_s": 363933.7391959,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5594,
+        "epoch": 1,
+        "timestamp_s": 363933.76,
+        "begin_s": 363933.7633289,
+        "end_s": 363933.8064304,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5603,
+        "epoch": 1,
+        "timestamp_s": 363933.851,
+        "begin_s": 363933.8623468,
+        "end_s": 363933.9016538,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5610,
+        "epoch": 1,
+        "timestamp_s": 363933.921,
+        "begin_s": 363933.9328606,
+        "end_s": 363933.9780956,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5615,
+        "epoch": 1,
+        "timestamp_s": 363933.971,
+        "begin_s": 363933.9822676,
+        "end_s": 363934.0180275,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5622,
+        "epoch": 1,
+        "timestamp_s": 363934.049,
+        "begin_s": 363934.0541527,
+        "end_s": 363934.100874,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5631,
+        "epoch": 1,
+        "timestamp_s": 363934.131,
+        "begin_s": 363934.1392177,
+        "end_s": 363934.1821506,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5639,
+        "epoch": 1,
+        "timestamp_s": 363934.21,
+        "begin_s": 363934.2170467,
+        "end_s": 363934.2607563,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5647,
+        "epoch": 1,
+        "timestamp_s": 363934.29,
+        "begin_s": 363934.2931871,
+        "end_s": 363934.3291104,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5655,
+        "epoch": 1,
+        "timestamp_s": 363934.371,
+        "begin_s": 363934.3746939,
+        "end_s": 363934.423362,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5662,
+        "epoch": 1,
+        "timestamp_s": 363934.446,
+        "begin_s": 363934.4494519,
+        "end_s": 363934.4874623,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5670,
+        "epoch": 1,
+        "timestamp_s": 363934.524,
+        "begin_s": 363934.5420622,
+        "end_s": 363934.5987636,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5678,
+        "epoch": 1,
+        "timestamp_s": 363934.601,
+        "begin_s": 363934.6165364,
+        "end_s": 363934.6780278,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5687,
+        "epoch": 1,
+        "timestamp_s": 363934.691,
+        "begin_s": 363934.6928989,
+        "end_s": 363934.7297589,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5694,
+        "epoch": 1,
+        "timestamp_s": 363934.761,
+        "begin_s": 363934.7945485,
+        "end_s": 363934.836389,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5702,
+        "epoch": 1,
+        "timestamp_s": 363934.84,
+        "begin_s": 363934.845806,
+        "end_s": 363934.8826661,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5711,
+        "epoch": 1,
+        "timestamp_s": 363934.93,
+        "begin_s": 363934.939794,
+        "end_s": 363934.9806411,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5718,
+        "epoch": 1,
+        "timestamp_s": 363935.005,
+        "begin_s": 363935.0092894,
+        "end_s": 363935.0554659,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5726,
+        "epoch": 1,
+        "timestamp_s": 363935.08,
+        "begin_s": 363935.087771,
+        "end_s": 363935.1257785,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5730,
+        "epoch": 1,
+        "timestamp_s": 363935.13,
+        "begin_s": 363935.1358145,
+        "end_s": 363935.170993,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5739,
+        "epoch": 1,
+        "timestamp_s": 363935.211,
+        "begin_s": 363935.2316352,
+        "end_s": 363935.2775712,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5746,
+        "epoch": 1,
+        "timestamp_s": 363935.286,
+        "begin_s": 363935.294942,
+        "end_s": 363935.3355438,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5754,
+        "epoch": 1,
+        "timestamp_s": 363935.365,
+        "begin_s": 363935.4028844,
+        "end_s": 363935.4456067,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5762,
+        "epoch": 1,
+        "timestamp_s": 363935.44,
+        "begin_s": 363935.4465543,
+        "end_s": 363935.4855004,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5771,
+        "epoch": 1,
+        "timestamp_s": 363935.531,
+        "begin_s": 363935.5530043,
+        "end_s": 363935.6033574,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5778,
+        "epoch": 1,
+        "timestamp_s": 363935.601,
+        "begin_s": 363935.621845,
+        "end_s": 363935.671215,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5783,
+        "epoch": 1,
+        "timestamp_s": 363935.651,
+        "begin_s": 363935.6763454,
+        "end_s": 363935.7188359,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5791,
+        "epoch": 1,
+        "timestamp_s": 363935.73,
+        "begin_s": 363935.7357332,
+        "end_s": 363935.7774315,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5799,
+        "epoch": 1,
+        "timestamp_s": 363935.811,
+        "begin_s": 363935.8308383,
+        "end_s": 363935.8682605,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5806,
+        "epoch": 1,
+        "timestamp_s": 363935.881,
+        "begin_s": 363935.8837293,
+        "end_s": 363935.9230306,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5814,
+        "epoch": 1,
+        "timestamp_s": 363935.966,
+        "begin_s": 363935.9755428,
+        "end_s": 363936.0332831,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5822,
+        "epoch": 1,
+        "timestamp_s": 363936.04,
+        "begin_s": 363936.0433401,
+        "end_s": 363936.087919,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5830,
+        "epoch": 1,
+        "timestamp_s": 363936.119,
+        "begin_s": 363936.1320693,
+        "end_s": 363936.1746452,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5838,
+        "epoch": 1,
+        "timestamp_s": 363936.2,
+        "begin_s": 363936.2108431,
+        "end_s": 363936.2529662,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5846,
+        "epoch": 1,
+        "timestamp_s": 363936.279,
+        "begin_s": 363936.2872172,
+        "end_s": 363936.3495912,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5854,
+        "epoch": 1,
+        "timestamp_s": 363936.367,
+        "begin_s": 363936.3736868,
+        "end_s": 363936.4163154,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5862,
+        "epoch": 1,
+        "timestamp_s": 363936.444,
+        "begin_s": 363936.447673,
+        "end_s": 363936.5111659,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5870,
+        "epoch": 1,
+        "timestamp_s": 363936.519,
+        "begin_s": 363936.5313752,
+        "end_s": 363936.5726116,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5878,
+        "epoch": 1,
+        "timestamp_s": 363936.599,
+        "begin_s": 363936.6219754,
+        "end_s": 363936.6642889,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5886,
+        "epoch": 1,
+        "timestamp_s": 363936.687,
+        "begin_s": 363936.6951256,
+        "end_s": 363936.7345127,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5895,
+        "epoch": 1,
+        "timestamp_s": 363936.771,
+        "begin_s": 363936.8069402,
+        "end_s": 363936.8562273,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5902,
+        "epoch": 1,
+        "timestamp_s": 363936.846,
+        "begin_s": 363936.8573857,
+        "end_s": 363936.9009063,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5910,
+        "epoch": 1,
+        "timestamp_s": 363936.927,
+        "begin_s": 363936.9365819,
+        "end_s": 363936.9805968,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5919,
+        "epoch": 1,
+        "timestamp_s": 363937.01,
+        "begin_s": 363937.0141136,
+        "end_s": 363937.0802298,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5927,
+        "epoch": 1,
+        "timestamp_s": 363937.09,
+        "begin_s": 363937.0987596,
+        "end_s": 363937.1414905,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5935,
+        "epoch": 1,
+        "timestamp_s": 363937.17,
+        "begin_s": 363937.1738445,
+        "end_s": 363937.2168637,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5943,
+        "epoch": 1,
+        "timestamp_s": 363937.251,
+        "begin_s": 363937.2647201,
+        "end_s": 363937.3253584,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5950,
+        "epoch": 1,
+        "timestamp_s": 363937.32,
+        "begin_s": 363937.3264025,
+        "end_s": 363937.3674295,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5958,
+        "epoch": 1,
+        "timestamp_s": 363937.401,
+        "begin_s": 363937.4027343,
+        "end_s": 363937.4391251,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5966,
+        "epoch": 1,
+        "timestamp_s": 363937.48,
+        "begin_s": 363937.4899379,
+        "end_s": 363937.5444783,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5974,
+        "epoch": 1,
+        "timestamp_s": 363937.56,
+        "begin_s": 363937.5653742,
+        "end_s": 363937.6111184,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5982,
+        "epoch": 1,
+        "timestamp_s": 363937.641,
+        "begin_s": 363937.6655823,
+        "end_s": 363937.7180944,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5990,
+        "epoch": 1,
+        "timestamp_s": 363937.72,
+        "begin_s": 363937.7289113,
+        "end_s": 363937.7680304,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 5999,
+        "epoch": 1,
+        "timestamp_s": 363937.81,
+        "begin_s": 363937.8197489,
+        "end_s": 363937.8565091,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6007,
+        "epoch": 1,
+        "timestamp_s": 363937.889,
+        "begin_s": 363937.8972149,
+        "end_s": 363937.9402118,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6015,
+        "epoch": 1,
+        "timestamp_s": 363937.97,
+        "begin_s": 363937.9770923,
+        "end_s": 363938.0157336,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6023,
+        "epoch": 1,
+        "timestamp_s": 363938.051,
+        "begin_s": 363938.0562593,
+        "end_s": 363938.112875,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6031,
+        "epoch": 1,
+        "timestamp_s": 363938.13,
+        "begin_s": 363938.1350464,
+        "end_s": 363938.1729833,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6039,
+        "epoch": 1,
+        "timestamp_s": 363938.21,
+        "begin_s": 363938.236636,
+        "end_s": 363938.2808963,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6046,
+        "epoch": 1,
+        "timestamp_s": 363938.279,
+        "begin_s": 363938.2843646,
+        "end_s": 363938.3251385,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6054,
+        "epoch": 1,
+        "timestamp_s": 363938.36,
+        "begin_s": 363938.3739257,
+        "end_s": 363938.4366901,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6062,
+        "epoch": 1,
+        "timestamp_s": 363938.44,
+        "begin_s": 363938.4437259,
+        "end_s": 363938.4805217,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6071,
+        "epoch": 1,
+        "timestamp_s": 363938.53,
+        "begin_s": 363938.5515912,
+        "end_s": 363938.6012085,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6079,
+        "epoch": 1,
+        "timestamp_s": 363938.614,
+        "begin_s": 363938.6273168,
+        "end_s": 363938.667198,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6087,
+        "epoch": 1,
+        "timestamp_s": 363938.69,
+        "begin_s": 363938.6946766,
+        "end_s": 363938.7332962,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6095,
+        "epoch": 1,
+        "timestamp_s": 363938.771,
+        "begin_s": 363938.7800445,
+        "end_s": 363938.8361563,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6103,
+        "epoch": 1,
+        "timestamp_s": 363938.85,
+        "begin_s": 363938.8597973,
+        "end_s": 363938.902852,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6111,
+        "epoch": 1,
+        "timestamp_s": 363938.931,
+        "begin_s": 363938.9392285,
+        "end_s": 363938.9850281,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6119,
+        "epoch": 1,
+        "timestamp_s": 363939.011,
+        "begin_s": 363939.0210559,
+        "end_s": 363939.0736264,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6127,
+        "epoch": 1,
+        "timestamp_s": 363939.091,
+        "begin_s": 363939.0973637,
+        "end_s": 363939.141362,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6135,
+        "epoch": 1,
+        "timestamp_s": 363939.171,
+        "begin_s": 363939.1778726,
+        "end_s": 363939.2304107,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6143,
+        "epoch": 1,
+        "timestamp_s": 363939.252,
+        "begin_s": 363939.2634954,
+        "end_s": 363939.3032246,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6150,
+        "epoch": 1,
+        "timestamp_s": 363939.328,
+        "begin_s": 363939.3314933,
+        "end_s": 363939.3783239,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6159,
+        "epoch": 1,
+        "timestamp_s": 363939.411,
+        "begin_s": 363939.4375231,
+        "end_s": 363939.4764019,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6166,
+        "epoch": 1,
+        "timestamp_s": 363939.481,
+        "begin_s": 363939.4822147,
+        "end_s": 363939.5206028,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6174,
+        "epoch": 1,
+        "timestamp_s": 363939.568,
+        "begin_s": 363939.5726754,
+        "end_s": 363939.6262547,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6183,
+        "epoch": 1,
+        "timestamp_s": 363939.651,
+        "begin_s": 363939.6580404,
+        "end_s": 363939.6974216,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6191,
+        "epoch": 1,
+        "timestamp_s": 363939.731,
+        "begin_s": 363939.7358149,
+        "end_s": 363939.7787535,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6199,
+        "epoch": 1,
+        "timestamp_s": 363939.81,
+        "begin_s": 363939.8244745,
+        "end_s": 363939.8657421,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6207,
+        "epoch": 1,
+        "timestamp_s": 363939.891,
+        "begin_s": 363939.8969953,
+        "end_s": 363939.9413547,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6215,
+        "epoch": 1,
+        "timestamp_s": 363939.97,
+        "begin_s": 363940.0912209,
+        "end_s": 363940.1319243,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6227,
+        "epoch": 1,
+        "timestamp_s": 363940.09,
+        "begin_s": 363940.1328766,
+        "end_s": 363940.1717915,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6235,
+        "epoch": 1,
+        "timestamp_s": 363940.17,
+        "begin_s": 363940.1754732,
+        "end_s": 363940.2145744,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6243,
+        "epoch": 1,
+        "timestamp_s": 363940.25,
+        "begin_s": 363940.2587061,
+        "end_s": 363940.3066057,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6251,
+        "epoch": 1,
+        "timestamp_s": 363940.33,
+        "begin_s": 363940.340152,
+        "end_s": 363940.373742,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6259,
+        "epoch": 1,
+        "timestamp_s": 363940.411,
+        "begin_s": 363940.4249973,
+        "end_s": 363940.4647863,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6267,
+        "epoch": 1,
+        "timestamp_s": 363940.491,
+        "begin_s": 363940.4955776,
+        "end_s": 363940.5341394,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6275,
+        "epoch": 1,
+        "timestamp_s": 363940.571,
+        "begin_s": 363940.5797332,
+        "end_s": 363940.6307975,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6283,
+        "epoch": 1,
+        "timestamp_s": 363940.65,
+        "begin_s": 363940.6531401,
+        "end_s": 363940.6979322,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6291,
+        "epoch": 1,
+        "timestamp_s": 363940.732,
+        "begin_s": 363940.7573071,
+        "end_s": 363940.7960329,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6299,
+        "epoch": 1,
+        "timestamp_s": 363940.812,
+        "begin_s": 363940.8198416,
+        "end_s": 363940.8563589,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6307,
+        "epoch": 1,
+        "timestamp_s": 363940.89,
+        "begin_s": 363940.9003906,
+        "end_s": 363940.96598,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6315,
+        "epoch": 1,
+        "timestamp_s": 363940.971,
+        "begin_s": 363940.9863132,
+        "end_s": 363941.0274084,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6323,
+        "epoch": 1,
+        "timestamp_s": 363941.051,
+        "begin_s": 363941.0571327,
+        "end_s": 363941.0940202,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6331,
+        "epoch": 1,
+        "timestamp_s": 363941.13,
+        "begin_s": 363941.131432,
+        "end_s": 363941.1789102,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6339,
+        "epoch": 1,
+        "timestamp_s": 363941.21,
+        "begin_s": 363941.2145533,
+        "end_s": 363941.2530986,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6347,
+        "epoch": 1,
+        "timestamp_s": 363941.29,
+        "begin_s": 363941.2946582,
+        "end_s": 363941.331884,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6355,
+        "epoch": 1,
+        "timestamp_s": 363941.37,
+        "begin_s": 363941.3749045,
+        "end_s": 363941.4100413,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6363,
+        "epoch": 1,
+        "timestamp_s": 363941.451,
+        "begin_s": 363941.4581565,
+        "end_s": 363941.5015071,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6371,
+        "epoch": 1,
+        "timestamp_s": 363941.531,
+        "begin_s": 363941.5423211,
+        "end_s": 363941.5814278,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6378,
+        "epoch": 1,
+        "timestamp_s": 363941.609,
+        "begin_s": 363941.626598,
+        "end_s": 363941.6686503,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6387,
+        "epoch": 1,
+        "timestamp_s": 363941.692,
+        "begin_s": 363941.7075248,
+        "end_s": 363941.7490417,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6394,
+        "epoch": 1,
+        "timestamp_s": 363941.76,
+        "begin_s": 363941.847107,
+        "end_s": 363941.8815329,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6406,
+        "epoch": 1,
+        "timestamp_s": 363941.881,
+        "begin_s": 363941.8926742,
+        "end_s": 363941.9361031,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6414,
+        "epoch": 1,
+        "timestamp_s": 363941.961,
+        "begin_s": 363941.9745781,
+        "end_s": 363942.015446,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6422,
+        "epoch": 1,
+        "timestamp_s": 363942.04,
+        "begin_s": 363942.0448827,
+        "end_s": 363942.0885109,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6430,
+        "epoch": 1,
+        "timestamp_s": 363942.119,
+        "begin_s": 363942.1311617,
+        "end_s": 363942.1695961,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6438,
+        "epoch": 1,
+        "timestamp_s": 363942.2,
+        "begin_s": 363942.2021795,
+        "end_s": 363942.240686,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6446,
+        "epoch": 1,
+        "timestamp_s": 363942.279,
+        "begin_s": 363942.285271,
+        "end_s": 363942.3236264,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6454,
+        "epoch": 1,
+        "timestamp_s": 363942.36,
+        "begin_s": 363942.3671746,
+        "end_s": 363942.4138218,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6462,
+        "epoch": 1,
+        "timestamp_s": 363942.448,
+        "begin_s": 363942.4507931,
+        "end_s": 363942.4929757,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6471,
+        "epoch": 1,
+        "timestamp_s": 363942.53,
+        "begin_s": 363942.5326411,
+        "end_s": 363942.5704253,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6478,
+        "epoch": 1,
+        "timestamp_s": 363942.599,
+        "begin_s": 363942.6058252,
+        "end_s": 363942.6387557,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6486,
+        "epoch": 1,
+        "timestamp_s": 363942.68,
+        "begin_s": 363942.6844324,
+        "end_s": 363942.7201135,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6494,
+        "epoch": 1,
+        "timestamp_s": 363942.759,
+        "begin_s": 363942.7626483,
+        "end_s": 363942.8029191,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6502,
+        "epoch": 1,
+        "timestamp_s": 363942.84,
+        "begin_s": 363942.8441232,
+        "end_s": 363942.8881848,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6510,
+        "epoch": 1,
+        "timestamp_s": 363942.93,
+        "begin_s": 363942.938145,
+        "end_s": 363942.9817415,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6519,
+        "epoch": 1,
+        "timestamp_s": 363943.01,
+        "begin_s": 363943.0301103,
+        "end_s": 363943.0689994,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6527,
+        "epoch": 1,
+        "timestamp_s": 363943.09,
+        "begin_s": 363943.0971863,
+        "end_s": 363943.1367278,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6535,
+        "epoch": 1,
+        "timestamp_s": 363943.17,
+        "begin_s": 363943.1780126,
+        "end_s": 363943.2163474,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6543,
+        "epoch": 1,
+        "timestamp_s": 363943.25,
+        "begin_s": 363943.2622375,
+        "end_s": 363943.3003,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6551,
+        "epoch": 1,
+        "timestamp_s": 363943.33,
+        "begin_s": 363943.3330925,
+        "end_s": 363943.3702913,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6559,
+        "epoch": 1,
+        "timestamp_s": 363943.41,
+        "begin_s": 363943.4190739,
+        "end_s": 363943.4584181,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6567,
+        "epoch": 1,
+        "timestamp_s": 363943.49,
+        "begin_s": 363943.50458,
+        "end_s": 363943.5453173,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6575,
+        "epoch": 1,
+        "timestamp_s": 363943.569,
+        "begin_s": 363943.5811368,
+        "end_s": 363943.6212935,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6583,
+        "epoch": 1,
+        "timestamp_s": 363943.65,
+        "begin_s": 363943.65407,
+        "end_s": 363943.7078975,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6591,
+        "epoch": 1,
+        "timestamp_s": 363943.73,
+        "begin_s": 363943.7382739,
+        "end_s": 363943.7791991,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6599,
+        "epoch": 1,
+        "timestamp_s": 363943.812,
+        "begin_s": 363943.8188713,
+        "end_s": 363943.8572655,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6607,
+        "epoch": 1,
+        "timestamp_s": 363943.89,
+        "begin_s": 363943.8921679,
+        "end_s": 363943.9364753,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6615,
+        "epoch": 1,
+        "timestamp_s": 363943.971,
+        "begin_s": 363943.976056,
+        "end_s": 363944.0163112,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6623,
+        "epoch": 1,
+        "timestamp_s": 363944.051,
+        "begin_s": 363944.0549494,
+        "end_s": 363944.0907143,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6631,
+        "epoch": 1,
+        "timestamp_s": 363944.13,
+        "begin_s": 363944.1339911,
+        "end_s": 363944.1793346,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6639,
+        "epoch": 1,
+        "timestamp_s": 363944.21,
+        "begin_s": 363944.2219213,
+        "end_s": 363944.2662805,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6647,
+        "epoch": 1,
+        "timestamp_s": 363944.291,
+        "begin_s": 363944.3050305,
+        "end_s": 363944.3452848,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6654,
+        "epoch": 1,
+        "timestamp_s": 363944.369,
+        "begin_s": 363944.3732688,
+        "end_s": 363944.4153981,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6663,
+        "epoch": 1,
+        "timestamp_s": 363944.45,
+        "begin_s": 363944.4577871,
+        "end_s": 363944.4973978,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6671,
+        "epoch": 1,
+        "timestamp_s": 363944.531,
+        "begin_s": 363944.5403801,
+        "end_s": 363944.5843473,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6679,
+        "epoch": 1,
+        "timestamp_s": 363944.61,
+        "begin_s": 363944.6155605,
+        "end_s": 363944.6516757,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6687,
+        "epoch": 1,
+        "timestamp_s": 363944.69,
+        "begin_s": 363944.6952825,
+        "end_s": 363944.733087,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6695,
+        "epoch": 1,
+        "timestamp_s": 363944.77,
+        "begin_s": 363944.7791693,
+        "end_s": 363944.8165641,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6703,
+        "epoch": 1,
+        "timestamp_s": 363944.85,
+        "begin_s": 363944.8561464,
+        "end_s": 363944.8970736,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6711,
+        "epoch": 1,
+        "timestamp_s": 363944.93,
+        "begin_s": 363944.9374615,
+        "end_s": 363944.9746198,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6719,
+        "epoch": 1,
+        "timestamp_s": 363945.011,
+        "begin_s": 363945.0135816,
+        "end_s": 363945.0528137,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6727,
+        "epoch": 1,
+        "timestamp_s": 363945.09,
+        "begin_s": 363945.0954261,
+        "end_s": 363945.1372442,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6735,
+        "epoch": 1,
+        "timestamp_s": 363945.17,
+        "begin_s": 363945.1804361,
+        "end_s": 363945.2168662,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6743,
+        "epoch": 1,
+        "timestamp_s": 363945.25,
+        "begin_s": 363945.2530048,
+        "end_s": 363945.2907748,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6751,
+        "epoch": 1,
+        "timestamp_s": 363945.33,
+        "begin_s": 363945.3335155,
+        "end_s": 363945.3712157,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6759,
+        "epoch": 1,
+        "timestamp_s": 363945.41,
+        "begin_s": 363945.4170841,
+        "end_s": 363945.4520114,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6767,
+        "epoch": 1,
+        "timestamp_s": 363945.49,
+        "begin_s": 363945.4928812,
+        "end_s": 363945.5484153,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6775,
+        "epoch": 1,
+        "timestamp_s": 363945.57,
+        "begin_s": 363945.5739984,
+        "end_s": 363945.6228179,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6783,
+        "epoch": 1,
+        "timestamp_s": 363945.65,
+        "begin_s": 363945.6686809,
+        "end_s": 363945.714181,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6791,
+        "epoch": 1,
+        "timestamp_s": 363945.732,
+        "begin_s": 363945.741627,
+        "end_s": 363945.7819404,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6799,
+        "epoch": 1,
+        "timestamp_s": 363945.81,
+        "begin_s": 363945.8185648,
+        "end_s": 363945.8575062,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6807,
+        "epoch": 1,
+        "timestamp_s": 363945.891,
+        "begin_s": 363945.8994668,
+        "end_s": 363945.9421442,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6815,
+        "epoch": 1,
+        "timestamp_s": 363945.971,
+        "begin_s": 363945.9814037,
+        "end_s": 363946.0236376,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6823,
+        "epoch": 1,
+        "timestamp_s": 363946.051,
+        "begin_s": 363946.0563764,
+        "end_s": 363946.0961812,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6831,
+        "epoch": 1,
+        "timestamp_s": 363946.131,
+        "begin_s": 363946.1406169,
+        "end_s": 363946.1828415,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6839,
+        "epoch": 1,
+        "timestamp_s": 363946.213,
+        "begin_s": 363946.2230139,
+        "end_s": 363946.2633455,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6847,
+        "epoch": 1,
+        "timestamp_s": 363946.291,
+        "begin_s": 363946.2957101,
+        "end_s": 363946.3402708,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6855,
+        "epoch": 1,
+        "timestamp_s": 363946.371,
+        "begin_s": 363946.3748683,
+        "end_s": 363946.4147122,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6863,
+        "epoch": 1,
+        "timestamp_s": 363946.451,
+        "begin_s": 363946.4538141,
+        "end_s": 363946.497819,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6871,
+        "epoch": 1,
+        "timestamp_s": 363946.53,
+        "begin_s": 363946.534343,
+        "end_s": 363946.5720238,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6879,
+        "epoch": 1,
+        "timestamp_s": 363946.611,
+        "begin_s": 363946.6131928,
+        "end_s": 363946.6494162,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6887,
+        "epoch": 1,
+        "timestamp_s": 363946.69,
+        "begin_s": 363946.6951084,
+        "end_s": 363946.7309595,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6895,
+        "epoch": 1,
+        "timestamp_s": 363946.769,
+        "begin_s": 363946.775218,
+        "end_s": 363946.8165471,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6903,
+        "epoch": 1,
+        "timestamp_s": 363946.849,
+        "begin_s": 363946.85718,
+        "end_s": 363946.9022514,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6911,
+        "epoch": 1,
+        "timestamp_s": 363946.93,
+        "begin_s": 363946.9375939,
+        "end_s": 363946.9774534,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6919,
+        "epoch": 1,
+        "timestamp_s": 363947.009,
+        "begin_s": 363947.0232792,
+        "end_s": 363947.0642761,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6927,
+        "epoch": 1,
+        "timestamp_s": 363947.09,
+        "begin_s": 363947.1116094,
+        "end_s": 363947.1519669,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6935,
+        "epoch": 1,
+        "timestamp_s": 363947.17,
+        "begin_s": 363947.1779735,
+        "end_s": 363947.2198619,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6943,
+        "epoch": 1,
+        "timestamp_s": 363947.25,
+        "begin_s": 363947.2577831,
+        "end_s": 363947.2972251,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6951,
+        "epoch": 1,
+        "timestamp_s": 363947.33,
+        "begin_s": 363947.3421826,
+        "end_s": 363947.3826024,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6959,
+        "epoch": 1,
+        "timestamp_s": 363947.41,
+        "begin_s": 363947.41677,
+        "end_s": 363947.4594204,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6967,
+        "epoch": 1,
+        "timestamp_s": 363947.49,
+        "begin_s": 363947.4953315,
+        "end_s": 363947.5420193,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6975,
+        "epoch": 1,
+        "timestamp_s": 363947.57,
+        "begin_s": 363947.5769777,
+        "end_s": 363947.6204065,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6983,
+        "epoch": 1,
+        "timestamp_s": 363947.651,
+        "begin_s": 363947.6543251,
+        "end_s": 363947.6928834,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6991,
+        "epoch": 1,
+        "timestamp_s": 363947.73,
+        "begin_s": 363947.7318852,
+        "end_s": 363947.7709595,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 6999,
+        "epoch": 1,
+        "timestamp_s": 363947.811,
+        "begin_s": 363947.8146995,
+        "end_s": 363947.858139,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 7007,
+        "epoch": 1,
+        "timestamp_s": 363947.89,
+        "begin_s": 363947.9004871,
+        "end_s": 363947.9494578,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 7015,
+        "epoch": 1,
+        "timestamp_s": 363947.97,
+        "begin_s": 363947.9783189,
+        "end_s": 363948.0242015,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 7023,
+        "epoch": 1,
+        "timestamp_s": 363948.05,
+        "begin_s": 363948.0651127,
+        "end_s": 363948.1069956,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 7031,
+        "epoch": 1,
+        "timestamp_s": 363948.131,
+        "begin_s": 363948.1450983,
+        "end_s": 363948.1895774,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 7039,
+        "epoch": 1,
+        "timestamp_s": 363948.211,
+        "begin_s": 363948.2267086,
+        "end_s": 363948.2705013,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 7047,
+        "epoch": 1,
+        "timestamp_s": 363948.291,
+        "begin_s": 363948.3015513,
+        "end_s": 363948.3420164,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 7055,
+        "epoch": 1,
+        "timestamp_s": 363948.372,
+        "begin_s": 363948.381259,
+        "end_s": 363948.4189253,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 7063,
+        "epoch": 1,
+        "timestamp_s": 363948.452,
+        "begin_s": 363948.4635594,
+        "end_s": 363948.503566,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 7071,
+        "epoch": 1,
+        "timestamp_s": 363948.531,
+        "begin_s": 363948.5380605,
+        "end_s": 363948.5860046,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 7079,
+        "epoch": 1,
+        "timestamp_s": 363948.611,
+        "begin_s": 363948.6192877,
+        "end_s": 363948.6666688,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 7087,
+        "epoch": 1,
+        "timestamp_s": 363948.69,
+        "begin_s": 363948.6957095,
+        "end_s": 363948.7317243,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 7095,
+        "epoch": 1,
+        "timestamp_s": 363948.77,
+        "begin_s": 363948.774464,
+        "end_s": 363948.8094014,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 7103,
+        "epoch": 1,
+        "timestamp_s": 363948.85,
+        "begin_s": 363948.8556211,
+        "end_s": 363948.8947941,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 7111,
+        "epoch": 1,
+        "timestamp_s": 363948.93,
+        "begin_s": 363948.9327668,
+        "end_s": 363948.9691826,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 7119,
+        "epoch": 1,
+        "timestamp_s": 363949.01,
+        "begin_s": 363949.0258668,
+        "end_s": 363949.0698639,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 7125,
+        "epoch": 1,
+        "timestamp_s": 363949.07,
+        "begin_s": 363949.2854045,
+        "end_s": 363949.3305932,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 7137,
+        "epoch": 1,
+        "timestamp_s": 363949.319,
+        "begin_s": 363949.3315729,
+        "end_s": 363949.3730105,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 7145,
+        "epoch": 1,
+        "timestamp_s": 363949.4,
+        "begin_s": 363949.4063751,
+        "end_s": 363949.4444449,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 7153,
+        "epoch": 1,
+        "timestamp_s": 363949.48,
+        "begin_s": 363949.4853342,
+        "end_s": 363949.52082,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 7161,
+        "epoch": 1,
+        "timestamp_s": 363949.56,
+        "begin_s": 363949.5647712,
+        "end_s": 363949.6073028,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 7169,
+        "epoch": 1,
+        "timestamp_s": 363949.641,
+        "begin_s": 363949.6497828,
+        "end_s": 363949.6924777,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 7176,
+        "epoch": 1,
+        "timestamp_s": 363949.71,
+        "begin_s": 363949.7216797,
+        "end_s": 363949.7631781,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 7183,
+        "epoch": 1,
+        "timestamp_s": 363949.78,
+        "begin_s": 363949.7887319,
+        "end_s": 363949.8254776,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 7191,
+        "epoch": 1,
+        "timestamp_s": 363949.86,
+        "begin_s": 363949.8669752,
+        "end_s": 363949.898912,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      },
+      {
+        "service": 0,
+        "tid": 21140,
+        "frame": 7199,
+        "epoch": 1,
+        "timestamp_s": 363949.941,
+        "begin_s": 363949.9415062,
+        "end_s": 363950.0032132,
+        "shape": [
+          360,
+          640,
+          3
+        ],
+        "bounds": true,
+        "call_matches": true
+      }
+    ],
+    "actual_inference_count": 385,
+    "service_submit_call_count": 757,
+    "whole_inference_frame_ids": [
+      4151,
+      4159,
+      4167,
+      4171,
+      4179,
+      4187,
+      4195,
+      4203,
+      4211,
+      4219,
+      4227,
+      4235,
+      4239,
+      4247,
+      4255,
+      4263,
+      4271,
+      4279,
+      4287,
+      4295,
+      4303,
+      4311,
+      4316,
+      4323,
+      4331,
+      4339,
+      4347,
+      4355,
+      4363,
+      4371,
+      4379,
+      4387,
+      4395,
+      4403,
+      4411,
+      4419,
+      4427,
+      4439,
+      4447,
+      4455,
+      4463,
+      4471,
+      4479,
+      4487,
+      4495,
+      4503,
+      4511,
+      4519,
+      4527,
+      4535,
+      4543,
+      4551,
+      4559,
+      4567,
+      4575,
+      4583,
+      4591,
+      4596,
+      4607,
+      4615,
+      4623,
+      4631,
+      4639,
+      4647,
+      4655,
+      4663,
+      4671,
+      4679,
+      4687,
+      4695,
+      4703,
+      4711,
+      4719,
+      4727,
+      4735,
+      4743,
+      4751,
+      4759,
+      4767,
+      4775,
+      4784,
+      4791,
+      4796,
+      4803,
+      4811,
+      4820,
+      4827,
+      4836,
+      4844,
+      4852,
+      4860,
+      4868,
+      4876,
+      4884,
+      4892,
+      4900,
+      4908,
+      4916,
+      4924,
+      4932,
+      4939,
+      4947,
+      4955,
+      4962,
+      4970,
+      4978,
+      4986,
+      4994,
+      5002,
+      5010,
+      5018,
+      5027,
+      5034,
+      5042,
+      5050,
+      5058,
+      5066,
+      5074,
+      5082,
+      5090,
+      5098,
+      5106,
+      5114,
+      5122,
+      5127,
+      5135,
+      5142,
+      5151,
+      5159,
+      5166,
+      5175,
+      5183,
+      5190,
+      5198,
+      5206,
+      5214,
+      5223,
+      5230,
+      5238,
+      5246,
+      5254,
+      5262,
+      5270,
+      5278,
+      5286,
+      5294,
+      5302,
+      5310,
+      5318,
+      5326,
+      5334,
+      5342,
+      5350,
+      5358,
+      5366,
+      5374,
+      5382,
+      5390,
+      5398,
+      5406,
+      5414,
+      5423,
+      5431,
+      5439,
+      5447,
+      5455,
+      5463,
+      5471,
+      5478,
+      5486,
+      5494,
+      5502,
+      5510,
+      5518,
+      5526,
+      5534,
+      5542,
+      5547,
+      5555,
+      5563,
+      5570,
+      5578,
+      5586,
+      5594,
+      5603,
+      5610,
+      5615,
+      5622,
+      5631,
+      5639,
+      5647,
+      5655,
+      5662,
+      5670,
+      5678,
+      5687,
+      5694,
+      5702,
+      5711,
+      5718,
+      5726,
+      5730,
+      5739,
+      5746,
+      5754,
+      5762,
+      5771,
+      5778,
+      5783,
+      5791,
+      5799,
+      5806,
+      5814,
+      5822,
+      5830,
+      5838,
+      5846,
+      5854,
+      5862,
+      5870,
+      5878,
+      5886,
+      5895,
+      5902,
+      5910,
+      5919,
+      5927,
+      5935,
+      5943,
+      5950,
+      5958,
+      5966,
+      5974,
+      5982,
+      5990,
+      5999,
+      6007,
+      6015,
+      6023,
+      6031,
+      6039,
+      6046,
+      6054,
+      6062,
+      6071,
+      6079,
+      6087,
+      6095,
+      6103,
+      6111,
+      6119,
+      6127,
+      6135,
+      6143,
+      6150,
+      6159,
+      6166,
+      6174,
+      6183,
+      6191,
+      6199,
+      6207,
+      6215,
+      6227,
+      6235,
+      6243,
+      6251,
+      6259,
+      6267,
+      6275,
+      6283,
+      6291,
+      6299,
+      6307,
+      6315,
+      6323,
+      6331,
+      6339,
+      6347,
+      6355,
+      6363,
+      6371,
+      6378,
+      6387,
+      6394,
+      6406,
+      6414,
+      6422,
+      6430,
+      6438,
+      6446,
+      6454,
+      6462,
+      6471,
+      6478,
+      6486,
+      6494,
+      6502,
+      6510,
+      6519,
+      6527,
+      6535,
+      6543,
+      6551,
+      6559,
+      6567,
+      6575,
+      6583,
+      6591,
+      6599,
+      6607,
+      6615,
+      6623,
+      6631,
+      6639,
+      6647,
+      6654,
+      6663,
+      6671,
+      6679,
+      6687,
+      6695,
+      6703,
+      6711,
+      6719,
+      6727,
+      6735,
+      6743,
+      6751,
+      6759,
+      6767,
+      6775,
+      6783,
+      6791,
+      6799,
+      6807,
+      6815,
+      6823,
+      6831,
+      6839,
+      6847,
+      6855,
+      6863,
+      6871,
+      6879,
+      6887,
+      6895,
+      6903,
+      6911,
+      6919,
+      6927,
+      6935,
+      6943,
+      6951,
+      6959,
+      6967,
+      6975,
+      6983,
+      6991,
+      6999,
+      7007,
+      7015,
+      7023,
+      7031,
+      7039,
+      7047,
+      7055,
+      7063,
+      7071,
+      7079,
+      7087,
+      7095,
+      7103,
+      7111,
+      7119,
+      7125,
+      7137,
+      7145,
+      7153,
+      7161,
+      7169,
+      7176,
+      7183,
+      7191,
+      7199
+    ],
+    "SDK_pose_input_count": 533,
+    "SDK_call_count": 568,
+    "child_clock": {
+      "host_minus_child_ns_bounds": [
+        -218300.0,
+        214900.0
+      ],
+      "uncertainty_ns": 433200.0,
+      "zero_offset_compatible": true
+    },
+    "ROI_host_ns": [
+      363931300254400,
+      363936300254400
+    ],
+    "ROI_inference_identities": [
+      [
+        1,
+        5342
+      ],
+      [
+        1,
+        5350
+      ],
+      [
+        1,
+        5358
+      ],
+      [
+        1,
+        5366
+      ],
+      [
+        1,
+        5374
+      ],
+      [
+        1,
+        5382
+      ],
+      [
+        1,
+        5390
+      ],
+      [
+        1,
+        5398
+      ],
+      [
+        1,
+        5406
+      ],
+      [
+        1,
+        5414
+      ],
+      [
+        1,
+        5423
+      ],
+      [
+        1,
+        5431
+      ],
+      [
+        1,
+        5439
+      ],
+      [
+        1,
+        5447
+      ],
+      [
+        1,
+        5455
+      ],
+      [
+        1,
+        5463
+      ],
+      [
+        1,
+        5471
+      ],
+      [
+        1,
+        5478
+      ],
+      [
+        1,
+        5486
+      ],
+      [
+        1,
+        5494
+      ],
+      [
+        1,
+        5502
+      ],
+      [
+        1,
+        5510
+      ],
+      [
+        1,
+        5518
+      ],
+      [
+        1,
+        5526
+      ],
+      [
+        1,
+        5534
+      ],
+      [
+        1,
+        5542
+      ],
+      [
+        1,
+        5547
+      ],
+      [
+        1,
+        5555
+      ],
+      [
+        1,
+        5563
+      ],
+      [
+        1,
+        5570
+      ],
+      [
+        1,
+        5578
+      ],
+      [
+        1,
+        5586
+      ],
+      [
+        1,
+        5594
+      ],
+      [
+        1,
+        5603
+      ],
+      [
+        1,
+        5610
+      ],
+      [
+        1,
+        5615
+      ],
+      [
+        1,
+        5622
+      ],
+      [
+        1,
+        5631
+      ],
+      [
+        1,
+        5639
+      ],
+      [
+        1,
+        5647
+      ],
+      [
+        1,
+        5655
+      ],
+      [
+        1,
+        5662
+      ],
+      [
+        1,
+        5670
+      ],
+      [
+        1,
+        5678
+      ],
+      [
+        1,
+        5687
+      ],
+      [
+        1,
+        5694
+      ],
+      [
+        1,
+        5702
+      ],
+      [
+        1,
+        5711
+      ],
+      [
+        1,
+        5718
+      ],
+      [
+        1,
+        5726
+      ],
+      [
+        1,
+        5730
+      ],
+      [
+        1,
+        5739
+      ],
+      [
+        1,
+        5746
+      ],
+      [
+        1,
+        5754
+      ],
+      [
+        1,
+        5762
+      ],
+      [
+        1,
+        5771
+      ],
+      [
+        1,
+        5778
+      ],
+      [
+        1,
+        5783
+      ],
+      [
+        1,
+        5791
+      ],
+      [
+        1,
+        5799
+      ],
+      [
+        1,
+        5806
+      ],
+      [
+        1,
+        5814
+      ],
+      [
+        1,
+        5822
+      ],
+      [
+        1,
+        5830
+      ],
+      [
+        1,
+        5838
+      ],
+      [
+        1,
+        5846
+      ]
+    ],
+    "inference_native_tids": [
+      21140
+    ],
+    "limits": [
+      "Adapter/inference spans are wall intervals, not CPU time, GIL occupancy, or exclusive function cost.",
+      "Relay/SDK checks project metadata only; no pose coordinates or pixels are retained by these hooks. These are necessary workload links, not proof of identical complete execution."
+    ]
+  },
+  "wire": {
+    "checks": {
+      "one_control": true,
+      "bound_original_child_sources": true,
+      "write_acceptance": true,
+      "ASCII_LF_stream": true,
+      "independent_read_receipts": true,
+      "EOF_and_reader_exit": true,
+      "PID_and_exit": true,
+      "JSON_contract": true,
+      "known_stage_names": true,
+      "runtime_occurrences": true,
+      "reader_event_identity": true,
+      "nested_runtime_calls": true,
+      "nested_mailbox_calls": true,
+      "relay_to_write_occurrences": true,
+      "runtime_to_original_pose_logs": true,
+      "GUI_role": true,
+      "independent_causal_clock": true
+    },
+    "wire_delivery_pass": true,
+    "counts": {
+      "write_calls": 540,
+      "text_lines": 540,
+      "pose_lines": 533,
+      "runtime_packet_calls": 533,
+      "runtime_submit_calls": 534,
+      "mailbox_submit_calls": 534
+    },
+    "child_clock": {
+      "host_minus_child_ns_bounds": [
+        -61200,
+        245200
+      ],
+      "uncertainty_ns": 306400,
+      "zero_offset_compatible": true
+    },
+    "read_pose_sequences_without_runtime": [],
+    "unclassified_pose_sequences": [],
+    "no_runtime_classification": "Original serve runtime-is-None branch, conditional on whole closed transcript and unchanged bound sources",
+    "actual_load_disturbance_pass": false,
+    "field_attribution_ready": false,
+    "limits": [
+      "Normal mailbox return is not business acceptance or SDK physical actuation.",
+      "New receipt observer may alter startup, inference selection and GIL behavior; overhead unqualified.",
+      "Old strict relay/runtime equality gate remains separately reported and is never upgraded by these new receipts."
+    ]
+  },
+  "protocol_qualification_pass": true,
+  "native_clock": {
+    "qpc_frequency": 10000000,
+    "host_ns_offset_lower": -9800,
+    "host_ns_offset_upper": 5900,
+    "uncertainty_ns": 15700,
+    "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+  },
+  "application_return_model_confirmed": false,
+  "original_return_not_rewritten": true,
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "primary_root_identified": false,
+  "prior_failed_windows_still_failed": true,
+  "scope": "One new full-input replay with independent pipe receipts and original SDK. Legacy relay/runtime equality remains a separate unchanged gate; receipt success does not upgrade it or qualify overhead."
+}

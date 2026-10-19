@@ -1,0 +1,7 @@
+{
+  "command": "$t=Get-ScheduledTask -TaskName 'IronJump-sdk-wire-workload01';$i=Get-ScheduledTaskInfo -TaskName $t.TaskName;if([string]$t.State -ne 'Ready' -or $i.LastTaskResult -ne 0){throw 'Task not confirmed complete'};Unregister-ScheduledTask -TaskName $t.TaskName -Confirm:$false;@{removed_completed_temporary_task=$true;prior_result=$i.LastTaskResult}|ConvertTo-Json -Compress",
+  "result": {
+    "removed_completed_temporary_task": true,
+    "prior_result": 0
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "task_state": "Ready",
+  "task_result": 0,
+  "python_pids": [],
+  "target_pid": 23112,
+  "target_returncode": 0,
+  "target_still_running": false,
+  "protocol_case_pass": true,
+  "errors": [],
+  "wire_delivery": {
+    "checks": {
+      "one_control": true,
+      "bound_original_child_sources": true,
+      "write_acceptance": true,
+      "ASCII_LF_stream": true,
+      "independent_read_receipts": true,
+      "EOF_and_reader_exit": true,
+      "PID_and_exit": true,
+      "JSON_contract": true,
+      "known_stage_names": true,
+      "runtime_occurrences": true,
+      "reader_event_identity": true,
+      "nested_runtime_calls": true,
+      "nested_mailbox_calls": true,
+      "relay_to_write_occurrences": true,
+      "runtime_to_original_pose_logs": true,
+      "GUI_role": true,
+      "independent_causal_clock": true
+    },
+    "wire_delivery_pass": true,
+    "counts": {
+      "write_calls": 540,
+      "text_lines": 540,
+      "pose_lines": 533,
+      "runtime_packet_calls": 533,
+      "runtime_submit_calls": 534,
+      "mailbox_submit_calls": 534
+    },
+    "child_clock": {
+      "host_minus_child_ns_bounds": [
+        -61200,
+        245200
+      ],
+      "uncertainty_ns": 306400,
+      "zero_offset_compatible": true
+    },
+    "read_pose_sequences_without_runtime": [],
+    "unclassified_pose_sequences": [],
+    "no_runtime_classification": "Original serve runtime-is-None branch, conditional on whole closed transcript and unchanged bound sources",
+    "actual_load_disturbance_pass": false,
+    "field_attribution_ready": false,
+    "limits": [
+      "Normal mailbox return is not business acceptance or SDK physical actuation.",
+      "New receipt observer may alter startup, inference selection and GIL behavior; overhead unqualified.",
+      "Old strict relay/runtime equality gate remains separately reported and is never upgraded by these new receipts."
+    ]
+  },
+  "raw_local_recovery_sha256": "80422cd814aef7838a99cee1c2d2dbca299ec4db409f5fee55a96fc17c04da92",
+  "single_attempt_no_restart": true
+}
