@@ -60,3 +60,5 @@ CPU账本两窗PID23008/14620，与旧CPU ETL的PID11948不是同一时刻、同
 进一步将一处内部GIL等待核对到NumPy数组创建路径，详见 [allocation_boundary_update01.md](allocation_boundary_update01.md)。这是等待者路径升级，不是主因、持有者、PDB或优化资格升级。
 
 旧CPU窗口74条线程的入口经Windows本机事件定义独立核验，其中4条Qt线程由匹配PDB的实际执行栈确认执行图像缩放。详见 [thread_entry_update01.md](thread_entry_update01.md)；不跨PID关联等待者、CPU账本或GIL持有者，也不由线程数判断过度并行。
+
+同一旧等待轮进一步发现QLabel基类绘制→Qt缩放→latch的同步链，公开包装入口没有显式释放GIL；59组GUI latch/消费者GIL等待的共同区间能保守关联到批次完成前缀滞后。详见 [qt_label_wait_update01.md](qt_label_wait_update01.md)。这不是直接owner快照、精确pending/活动批次或主因占比，也不改变旧资格失败。

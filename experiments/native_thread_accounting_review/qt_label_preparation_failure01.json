@@ -1,0 +1,14 @@
+{
+  "stage": "Offline wrapper disassembly; before any wait result creation",
+  "failure": "Assertion required PyErr_Occurred to be imported directly from python311.dll, but exact PE imports it via python3.dll stable ABI.",
+  "failed_source_sha256": "bdd9cd2792aca594f2ebe8555412e7af717c3779fc6612f1025a11b810496e8b",
+  "retained_source": "experiments/native_thread_accounting_review/runs/qt_label_wait_review_failed01.py",
+  "disassembly_sha256": {
+    "experiments/native_thread_accounting_review/runs/QtWidgets.pyd_1a8690_qtlabel.txt": "cdfe561eecbcdd0b502617f5da2079aa6bf54d2afee3b68a567d84ca04ae2819",
+    "experiments/native_thread_accounting_review/runs/shiboken6.abi3.dll_11400_qtlabel.txt": "62e1cb41a61cede9b96d87105bb2e5b23c76827e21b6bddecacf4bc8068cfcf3",
+    "experiments/native_thread_accounting_review/runs/shiboken6.abi3.dll_12730_qtlabel.txt": "2f4453ff1595d47fa5b16472b5a02313551eb4744d6548459e9914dcd404db3c",
+    "experiments/native_thread_accounting_review/runs/shiboken6.abi3.dll_25420_qtlabel.txt": "1af93470c0fbf504a8ca4f017584d62b0f181ee06944815c406e337d5468e255"
+  },
+  "no_target_or_capture_started": true,
+  "wait_output_created": false
+}

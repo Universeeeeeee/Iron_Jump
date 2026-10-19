@@ -1,0 +1,3437 @@
+{
+  "pid": 17752,
+  "common_counter_window_qpc": [
+    2407895201106,
+    2407955232206
+  ],
+  "public_wrapper": {
+    "public_entry": "QLabel.paintEvent",
+    "entry_rva": 1738384,
+    "unwind_range": [
+      1738384,
+      1738659,
+      3905848
+    ],
+    "retained_field_return_rva": 1738615,
+    "field_return_inside_entry": true,
+    "module_sha256": "85cb6c2181b4b09887a7d8507dd950844d1b8f74a9c4002c7b71169f75bf6fda",
+    "descriptor_header_sha256": "a1ee0124142fe91204d0c5e85169b55341b2167111a1447e3a8ed50f9bd5a12f",
+    "descriptor_basic_size": 56,
+    "method_name_crosscheck": true,
+    "owner_type_crosscheck": true,
+    "script_sha256": "047cea7c42afa3a2f82940bb8ef1890e68e29bb772f384cdf0b9600829120163",
+    "scope": "Fresh process import and own descriptor/module reads only. No QApplication, Qt object, image, model, device, target attach or trace.",
+    "GIL_import_addresses": {
+      "PyEval_SaveThread": 140703207854832,
+      "PyEval_RestoreThread": 140703207854912,
+      "PyGILState_Ensure": 140703208229152,
+      "PyGILState_Release": 140703208229328
+    }
+  },
+  "exact_wrapper_instructions": [
+    {
+      "rva": 1738384,
+      "bytes": "48895c2408",
+      "instruction": "movq\t%rbx, 0x8(%rsp)"
+    },
+    {
+      "rva": 1738389,
+      "bytes": "4889742410",
+      "instruction": "movq\t%rsi, 0x10(%rsp)"
+    },
+    {
+      "rva": 1738394,
+      "bytes": "57",
+      "instruction": "pushq\t%rdi"
+    },
+    {
+      "rva": 1738395,
+      "bytes": "4883ec40",
+      "instruction": "subq\t$0x40, %rsp"
+    },
+    {
+      "rva": 1738399,
+      "bytes": "0f29742430",
+      "instruction": "movaps\t%xmm6, 0x30(%rsp)"
+    },
+    {
+      "rva": 1738404,
+      "bytes": "488bfa",
+      "instruction": "movq\t%rdx, %rdi"
+    },
+    {
+      "rva": 1738407,
+      "bytes": "488bf1",
+      "instruction": "movq\t%rcx, %rsi"
+    },
+    {
+      "rva": 1738410,
+      "bytes": "ff15b82a1b00",
+      "instruction": "callq\t*0x1b2ab8(%rip)         # 0x18035b168",
+      "iat_rva": 3518824,
+      "imported_target": {
+        "dll": "shiboken6.abi3.dll",
+        "name": "?isValid@Object@Shiboken@@YA_NPEAU_object@@@Z"
+      }
+    },
+    {
+      "rva": 1738416,
+      "bytes": "33db",
+      "instruction": "xorl\t%ebx, %ebx"
+    },
+    {
+      "rva": 1738418,
+      "bytes": "84c0",
+      "instruction": "testb\t%al, %al"
+    },
+    {
+      "rva": 1738420,
+      "bytes": "7507",
+      "instruction": "jne\t0x1801a86bd <PyInit_QtWidgets+0x188519>"
+    },
+    {
+      "rva": 1738422,
+      "bytes": "33c0",
+      "instruction": "xorl\t%eax, %eax"
+    },
+    {
+      "rva": 1738424,
+      "bytes": "e9d1000000",
+      "instruction": "jmp\t0x1801a878e <PyInit_QtWidgets+0x1885ea>"
+    },
+    {
+      "rva": 1738429,
+      "bytes": "488b0df40e2c00",
+      "instruction": "movq\t0x2c0ef4(%rip), %rcx    # 0x1804695b8"
+    },
+    {
+      "rva": 1738436,
+      "bytes": "4881c1900c0000",
+      "instruction": "addq\t$0xc90, %rcx            # imm = 0xC90"
+    },
+    {
+      "rva": 1738443,
+      "bytes": "ff15172a1b00",
+      "instruction": "callq\t*0x1b2a17(%rip)         # 0x18035b0e8",
+      "iat_rva": 3518696,
+      "imported_target": {
+        "dll": "shiboken6.abi3.dll",
+        "name": "?get@Module@Shiboken@@YAPEAU_typeobject@@AEAUTypeInitStruct@12@@Z"
+      }
+    },
+    {
+      "rva": 1738449,
+      "bytes": "488bc8",
+      "instruction": "movq\t%rax, %rcx"
+    },
+    {
+      "rva": 1738452,
+      "bytes": "488bd6",
+      "instruction": "movq\t%rsi, %rdx"
+    },
+    {
+      "rva": 1738455,
+      "bytes": "ff1563291b00",
+      "instruction": "callq\t*0x1b2963(%rip)         # 0x18035b040",
+      "iat_rva": 3518528,
+      "imported_target": {
+        "dll": "shiboken6.abi3.dll",
+        "name": "?cppPointer@Conversions@Shiboken@@YAPEAXPEAU_typeobject@@PEAUSbkObject@@@Z"
+      }
+    },
+    {
+      "rva": 1738461,
+      "bytes": "488d4c2460",
+      "instruction": "leaq\t0x60(%rsp), %rcx"
+    },
+    {
+      "rva": 1738466,
+      "bytes": "488bf0",
+      "instruction": "movq\t%rax, %rsi"
+    },
+    {
+      "rva": 1738469,
+      "bytes": "ff15d5281b00",
+      "instruction": "callq\t*0x1b28d5(%rip)         # 0x18035afc0",
+      "iat_rva": 3518400,
+      "imported_target": {
+        "dll": "shiboken6.abi3.dll",
+        "name": "??0PythonContextMarker@Shiboken@@QEAA@XZ"
+      }
+    },
+    {
+      "rva": 1738475,
+      "bytes": "488b0d9e0d2c00",
+      "instruction": "movq\t0x2c0d9e(%rip), %rcx    # 0x180469490"
+    },
+    {
+      "rva": 1738482,
+      "bytes": "4881c1500e0000",
+      "instruction": "addq\t$0xe50, %rcx            # imm = 0xE50"
+    },
+    {
+      "rva": 1738489,
+      "bytes": "ff15e9291b00",
+      "instruction": "callq\t*0x1b29e9(%rip)         # 0x18035b0e8",
+      "iat_rva": 3518696,
+      "imported_target": {
+        "dll": "shiboken6.abi3.dll",
+        "name": "?get@Module@Shiboken@@YAPEAU_typeobject@@AEAUTypeInitStruct@12@@Z"
+      }
+    },
+    {
+      "rva": 1738495,
+      "bytes": "4c8bc7",
+      "instruction": "movq\t%rdi, %r8"
+    },
+    {
+      "rva": 1738498,
+      "bytes": "488d4c2420",
+      "instruction": "leaq\t0x20(%rsp), %rcx"
+    },
+    {
+      "rva": 1738503,
+      "bytes": "488bd0",
+      "instruction": "movq\t%rax, %rdx"
+    },
+    {
+      "rva": 1738506,
+      "bytes": "ff1548291b00",
+      "instruction": "callq\t*0x1b2948(%rip)         # 0x18035b058",
+      "iat_rva": 3518552,
+      "imported_target": {
+        "dll": "shiboken6.abi3.dll",
+        "name": "?pythonToCppPointerConversion@Conversions@Shiboken@@YA?AUPythonToCppConversion@12@PEAU_typeobject@@PEAU_object@@@Z"
+      }
+    },
+    {
+      "rva": 1738512,
+      "bytes": "488bcf",
+      "instruction": "movq\t%rdi, %rcx"
+    },
+    {
+      "rva": 1738515,
+      "bytes": "0f1030",
+      "instruction": "movups\t(%rax), %xmm6"
+    },
+    {
+      "rva": 1738518,
+      "bytes": "8b4008",
+      "instruction": "movl\t0x8(%rax), %eax"
+    },
+    {
+      "rva": 1738521,
+      "bytes": "84c0",
+      "instruction": "testb\t%al, %al"
+    },
+    {
+      "rva": 1738523,
+      "bytes": "7528",
+      "instruction": "jne\t0x1801a8745 <PyInit_QtWidgets+0x1885a1>"
+    },
+    {
+      "rva": 1738525,
+      "bytes": "488b05940e2c00",
+      "instruction": "movq\t0x2c0e94(%rip), %rax    # 0x1804695b8"
+    },
+    {
+      "rva": 1738532,
+      "bytes": "4c8d442420",
+      "instruction": "leaq\t0x20(%rsp), %r8"
+    },
+    {
+      "rva": 1738537,
+      "bytes": "488d15f88d1b00",
+      "instruction": "leaq\t0x1b8df8(%rip), %rdx    # 0x180361528"
+    },
+    {
+      "rva": 1738544,
+      "bytes": "0f1080900c0000",
+      "instruction": "movups\t0xc90(%rax), %xmm0"
+    },
+    {
+      "rva": 1738551,
+      "bytes": "f30f7f442420",
+      "instruction": "movdqu\t%xmm0, 0x20(%rsp)"
+    },
+    {
+      "rva": 1738557,
+      "bytes": "ff15b52a1b00",
+      "instruction": "callq\t*0x1b2ab5(%rip)         # 0x18035b1f8",
+      "iat_rva": 3518968,
+      "imported_target": {
+        "dll": "shiboken6.abi3.dll",
+        "name": "?returnWrongArguments@Shiboken@@YAPEAU_object@@PEAU2@PEBDUTypeInitStruct@Module@1@@Z"
+      }
+    },
+    {
+      "rva": 1738563,
+      "bytes": "eb38",
+      "instruction": "jmp\t0x1801a877d <PyInit_QtWidgets+0x1885d9>"
+    },
+    {
+      "rva": 1738565,
+      "bytes": "ff151d2a1b00",
+      "instruction": "callq\t*0x1b2a1d(%rip)         # 0x18035b168",
+      "iat_rva": 3518824,
+      "imported_target": {
+        "dll": "shiboken6.abi3.dll",
+        "name": "?isValid@Object@Shiboken@@YA_NPEAU_object@@@Z"
+      }
+    },
+    {
+      "rva": 1738571,
+      "bytes": "84c0",
+      "instruction": "testb\t%al, %al"
+    },
+    {
+      "rva": 1738573,
+      "bytes": "7431",
+      "instruction": "je\t0x1801a8780 <PyInit_QtWidgets+0x1885dc>"
+    },
+    {
+      "rva": 1738575,
+      "bytes": "488d542468",
+      "instruction": "leaq\t0x68(%rsp), %rdx"
+    },
+    {
+      "rva": 1738580,
+      "bytes": "488bcf",
+      "instruction": "movq\t%rdi, %rcx"
+    },
+    {
+      "rva": 1738583,
+      "bytes": "66480f7ef0",
+      "instruction": "movq\t%xmm6, %rax"
+    },
+    {
+      "rva": 1738588,
+      "bytes": "ffd0",
+      "instruction": "callq\t*%rax"
+    },
+    {
+      "rva": 1738590,
+      "bytes": "ff153c281b00",
+      "instruction": "callq\t*0x1b283c(%rip)         # 0x18035afa0",
+      "iat_rva": 3518368,
+      "imported_target": {
+        "dll": "shiboken6.abi3.dll",
+        "name": "?occurred@Errors@Shiboken@@YAPEAU_object@@XZ"
+      }
+    },
+    {
+      "rva": 1738596,
+      "bytes": "4885c0",
+      "instruction": "testq\t%rax, %rax"
+    },
+    {
+      "rva": 1738599,
+      "bytes": "750e",
+      "instruction": "jne\t0x1801a8777 <PyInit_QtWidgets+0x1885d3>"
+    },
+    {
+      "rva": 1738601,
+      "bytes": "488b542468",
+      "instruction": "movq\t0x68(%rsp), %rdx"
+    },
+    {
+      "rva": 1738606,
+      "bytes": "488bce",
+      "instruction": "movq\t%rsi, %rcx"
+    },
+    {
+      "rva": 1738609,
+      "bytes": "ff15a9d11a00",
+      "instruction": "callq\t*0x1ad1a9(%rip)         # 0x180355920",
+      "iat_rva": 3496224,
+      "imported_target": {
+        "dll": "Qt6Widgets.dll",
+        "name": "?paintEvent@QLabel@@MEAAXPEAVQPaintEvent@@@Z"
+      }
+    },
+    {
+      "rva": 1738615,
+      "bytes": "ff15a32a1b00",
+      "instruction": "callq\t*0x1b2aa3(%rip)         # 0x18035b220",
+      "iat_rva": 3519008,
+      "imported_target": {
+        "dll": "shiboken6.abi3.dll",
+        "name": "Sbk_ReturnFromPython_None"
+      }
+    },
+    {
+      "rva": 1738621,
+      "bytes": "488bd8",
+      "instruction": "movq\t%rax, %rbx"
+    },
+    {
+      "rva": 1738624,
+      "bytes": "488d4c2460",
+      "instruction": "leaq\t0x60(%rsp), %rcx"
+    },
+    {
+      "rva": 1738629,
+      "bytes": "ff152d281b00",
+      "instruction": "callq\t*0x1b282d(%rip)         # 0x18035afb8",
+      "iat_rva": 3518392,
+      "imported_target": {
+        "dll": "shiboken6.abi3.dll",
+        "name": "??1PythonContextMarker@Shiboken@@QEAA@XZ"
+      }
+    },
+    {
+      "rva": 1738635,
+      "bytes": "488bc3",
+      "instruction": "movq\t%rbx, %rax"
+    },
+    {
+      "rva": 1738638,
+      "bytes": "488b5c2450",
+      "instruction": "movq\t0x50(%rsp), %rbx"
+    },
+    {
+      "rva": 1738643,
+      "bytes": "488b742458",
+      "instruction": "movq\t0x58(%rsp), %rsi"
+    },
+    {
+      "rva": 1738648,
+      "bytes": "0f28742430",
+      "instruction": "movaps\t0x30(%rsp), %xmm6"
+    },
+    {
+      "rva": 1738653,
+      "bytes": "4883c440",
+      "instruction": "addq\t$0x40, %rsp"
+    },
+    {
+      "rva": 1738657,
+      "bytes": "5f",
+      "instruction": "popq\t%rdi"
+    },
+    {
+      "rva": 1738658,
+      "bytes": "c3",
+      "instruction": "retq"
+    }
+  ],
+  "helper_export_entries": {
+    "??0PythonContextMarker@Shiboken@@QEAA@XZ": 70656,
+    "??1PythonContextMarker@Shiboken@@QEAA@XZ": 75568,
+    "?occurred@Errors@Shiboken@@YAPEAU_object@@XZ": 152608
+  },
+  "context_guard_constructor": [
+    {
+      "rva": 70656,
+      "bytes": "65488b042558000000",
+      "instruction": "movq\t%gs:0x58, %rax"
+    },
+    {
+      "rva": 70665,
+      "bytes": "8b1519840400",
+      "instruction": "movl\t0x48419(%rip), %edx     # 0x180059828 <PepMethod_TypePtr+0xe0>"
+    },
+    {
+      "rva": 70671,
+      "bytes": "41b808000000",
+      "instruction": "movl\t$0x8, %r8d"
+    },
+    {
+      "rva": 70677,
+      "bytes": "488b14d0",
+      "instruction": "movq\t(%rax,%rdx,8), %rdx"
+    },
+    {
+      "rva": 70681,
+      "bytes": "4a8b0402",
+      "instruction": "movq\t(%rdx,%r8), %rax"
+    },
+    {
+      "rva": 70685,
+      "bytes": "488d044501000000",
+      "instruction": "leaq\t0x1(,%rax,2), %rax"
+    },
+    {
+      "rva": 70693,
+      "bytes": "4a890402",
+      "instruction": "movq\t%rax, (%rdx,%r8)"
+    },
+    {
+      "rva": 70697,
+      "bytes": "488bc1",
+      "instruction": "movq\t%rcx, %rax"
+    },
+    {
+      "rva": 70700,
+      "bytes": "c3",
+      "instruction": "retq"
+    }
+  ],
+  "context_guard_destructor": [
+    {
+      "rva": 75568,
+      "bytes": "8b0df2700400",
+      "instruction": "movl\t0x470f2(%rip), %ecx     # 0x180059828 <PepMethod_TypePtr+0xe0>"
+    },
+    {
+      "rva": 75574,
+      "bytes": "65488b042558000000",
+      "instruction": "movq\t%gs:0x58, %rax"
+    },
+    {
+      "rva": 75583,
+      "bytes": "ba08000000",
+      "instruction": "movl\t$0x8, %edx"
+    },
+    {
+      "rva": 75588,
+      "bytes": "488b04c8",
+      "instruction": "movq\t(%rax,%rcx,8), %rax"
+    },
+    {
+      "rva": 75592,
+      "bytes": "48d12c10",
+      "instruction": "shrq\t(%rax,%rdx)"
+    },
+    {
+      "rva": 75596,
+      "bytes": "c3",
+      "instruction": "retq"
+    }
+  ],
+  "pre_native_error_helper": [
+    {
+      "rva": 152608,
+      "bytes": "48895c2408",
+      "instruction": "movq\t%rbx, 0x8(%rsp)"
+    },
+    {
+      "rva": 152613,
+      "bytes": "4889742410",
+      "instruction": "movq\t%rsi, 0x10(%rsp)"
+    },
+    {
+      "rva": 152618,
+      "bytes": "57",
+      "instruction": "pushq\t%rdi"
+    },
+    {
+      "rva": 152619,
+      "bytes": "4883ec20",
+      "instruction": "subq\t$0x20, %rsp"
+    },
+    {
+      "rva": 152623,
+      "bytes": "8b0df3430300",
+      "instruction": "movl\t0x343f3(%rip), %ecx     # 0x180059828 <PepMethod_TypePtr+0xe0>"
+    },
+    {
+      "rva": 152629,
+      "bytes": "65488b042558000000",
+      "instruction": "movq\t%gs:0x58, %rax"
+    },
+    {
+      "rva": 152638,
+      "bytes": "bf4c000000",
+      "instruction": "movl\t$0x4c, %edi"
+    },
+    {
+      "rva": 152643,
+      "bytes": "488b1cc8",
+      "instruction": "movq\t(%rax,%rcx,8), %rbx"
+    },
+    {
+      "rva": 152647,
+      "bytes": "803c1f00",
+      "instruction": "cmpb\t$0x0, (%rdi,%rbx)"
+    },
+    {
+      "rva": 152651,
+      "bytes": "7505",
+      "instruction": "jne\t0x180025452 <?occurred@Errors@Shiboken@@YAPEAU_object@@XZ+0x32>"
+    },
+    {
+      "rva": 152653,
+      "bytes": "e862bb0000",
+      "instruction": "callq\t0x180030fb4 <init_DateTime+0xac4>"
+    },
+    {
+      "rva": 152658,
+      "bytes": "be10000000",
+      "instruction": "movl\t$0x10, %esi"
+    },
+    {
+      "rva": 152663,
+      "bytes": "48833c1e00",
+      "instruction": "cmpq\t$0x0, (%rsi,%rbx)"
+    },
+    {
+      "rva": 152668,
+      "bytes": "742f",
+      "instruction": "je\t0x18002548d <?occurred@Errors@Shiboken@@YAPEAU_object@@XZ+0x6d>"
+    },
+    {
+      "rva": 152670,
+      "bytes": "803c1f00",
+      "instruction": "cmpb\t$0x0, (%rdi,%rbx)"
+    },
+    {
+      "rva": 152674,
+      "bytes": "7505",
+      "instruction": "jne\t0x180025469 <?occurred@Errors@Shiboken@@YAPEAU_object@@XZ+0x49>"
+    },
+    {
+      "rva": 152676,
+      "bytes": "e84bbb0000",
+      "instruction": "callq\t0x180030fb4 <init_DateTime+0xac4>"
+    },
+    {
+      "rva": 152681,
+      "bytes": "4c8b441e08",
+      "instruction": "movq\t0x8(%rsi,%rbx), %r8"
+    },
+    {
+      "rva": 152686,
+      "bytes": "488b141e",
+      "instruction": "movq\t(%rsi,%rbx), %rdx"
+    },
+    {
+      "rva": 152690,
+      "bytes": "488b4c1e10",
+      "instruction": "movq\t0x10(%rsi,%rbx), %rcx"
+    },
+    {
+      "rva": 152695,
+      "bytes": "ff1503e60000",
+      "instruction": "callq\t*0xe603(%rip)           # 0x180033a80",
+      "iat_rva": 211584,
+      "imported_target": {
+        "dll": "python3.dll",
+        "name": "PyErr_Restore"
+      }
+    },
+    {
+      "rva": 152701,
+      "bytes": "33c0",
+      "instruction": "xorl\t%eax, %eax"
+    },
+    {
+      "rva": 152703,
+      "bytes": "4889441e08",
+      "instruction": "movq\t%rax, 0x8(%rsi,%rbx)"
+    },
+    {
+      "rva": 152708,
+      "bytes": "4889041e",
+      "instruction": "movq\t%rax, (%rsi,%rbx)"
+    },
+    {
+      "rva": 152712,
+      "bytes": "4889441e10",
+      "instruction": "movq\t%rax, 0x10(%rsi,%rbx)"
+    },
+    {
+      "rva": 152717,
+      "bytes": "488b5c2430",
+      "instruction": "movq\t0x30(%rsp), %rbx"
+    },
+    {
+      "rva": 152722,
+      "bytes": "488b742438",
+      "instruction": "movq\t0x38(%rsp), %rsi"
+    },
+    {
+      "rva": 152727,
+      "bytes": "4883c420",
+      "instruction": "addq\t$0x20, %rsp"
+    },
+    {
+      "rva": 152731,
+      "bytes": "5f",
+      "instruction": "popq\t%rdi"
+    },
+    {
+      "rva": 152732,
+      "bytes": "48ff252de30000",
+      "instruction": "jmpq\t*0xe32d(%rip)           # 0x1800337d0",
+      "iat_rva": 210896,
+      "imported_target": {
+        "dll": "python3.dll",
+        "name": "PyErr_Occurred"
+      }
+    }
+  ],
+  "loaded_stable_ABI_targets": {
+    "shiboken_sha256": "47f4f9b44c95037565dd14f4be04f350f20c53c05483b750e0be867c39a7441e",
+    "targets": [
+      {
+        "iat_rva": 210896,
+        "public_API": "PyErr_Occurred",
+        "actual_target": 140703208019504,
+        "matches_CPython_export": true
+      },
+      {
+        "iat_rva": 211584,
+        "public_API": "PyErr_Restore",
+        "actual_target": 140703208018192,
+        "matches_CPython_export": true
+      }
+    ],
+    "script_sha256": "d7a7143c0046195a1e79e32701a911477edb6d70e986cfb05f2a92cd9dd906f9",
+    "scope": "Own-process loaded IAT reads only. No error API invocation, Qt objects, QApplication, image, model, target attach, device or capture."
+  },
+  "no_explicit_wrapper_GIL_release": true,
+  "native_call_bridge": [
+    {
+      "rva": 1738596,
+      "bytes": "4885c0",
+      "instruction": "testq\t%rax, %rax"
+    },
+    {
+      "rva": 1738599,
+      "bytes": "750e",
+      "instruction": "jne\t0x1801a8777 <PyInit_QtWidgets+0x1885d3>"
+    },
+    {
+      "rva": 1738601,
+      "bytes": "488b542468",
+      "instruction": "movq\t0x68(%rsp), %rdx"
+    },
+    {
+      "rva": 1738606,
+      "bytes": "488bce",
+      "instruction": "movq\t%rsi, %rcx"
+    },
+    {
+      "rva": 1738609,
+      "bytes": "ff15a9d11a00",
+      "instruction": "callq\t*0x1ad1a9(%rip)         # 0x180355920",
+      "iat_rva": 3496224,
+      "imported_target": {
+        "dll": "Qt6Widgets.dll",
+        "name": "?paintEvent@QLabel@@MEAAXPEAVQPaintEvent@@@Z"
+      }
+    }
+  ],
+  "six_existing_batch_pending_points": [
+    {
+      "formal_s": 12.808202,
+      "pending": 481,
+      "qpc_bounds": [
+        2407912252665,
+        2407912252753
+      ],
+      "GUI_latch_wait_indices": []
+    },
+    {
+      "formal_s": 13.2200252,
+      "pending": 590,
+      "qpc_bounds": [
+        2407916370897,
+        2407916370985
+      ],
+      "GUI_latch_wait_indices": []
+    },
+    {
+      "formal_s": 13.3230065,
+      "pending": 595,
+      "qpc_bounds": [
+        2407917400710,
+        2407917400798
+      ],
+      "GUI_latch_wait_indices": []
+    },
+    {
+      "formal_s": 13.8641344,
+      "pending": 672,
+      "qpc_bounds": [
+        2407922811989,
+        2407922812077
+      ],
+      "GUI_latch_wait_indices": []
+    },
+    {
+      "formal_s": 14.1321266,
+      "pending": 1027,
+      "qpc_bounds": [
+        2407925491911,
+        2407925491999
+      ],
+      "GUI_latch_wait_indices": []
+    },
+    {
+      "formal_s": 15.3840173,
+      "pending": 1156,
+      "qpc_bounds": [
+        2407938010818,
+        2407938010906
+      ],
+      "GUI_latch_wait_indices": []
+    }
+  ],
+  "guard_qpc_ticks": 1000,
+  "limits": [
+    "The public native call has no explicit SaveThread bridge; the normal CPython method-entry GIL contract is a static mechanism constraint, not a direct historical owner snapshot.",
+    "Qt latch waits and consumer GIL waits are distinct Waiting paths. Ready-to-in is not counted as GIL Waiting.",
+    "A simultaneous scheduler intersection does not identify the GIL owner, wake source, same image job or root contribution.",
+    "No prior pending point is promoted to a QLabel witness unless its full clock bracket and guard match.",
+    "Old stack and actual-load3%/1% failures remain failed. No duration shares, CPU percentages or formal fix follow."
+  ],
+  "new_capture": false,
+  "direct_historical_owner_identified": false,
+  "primary_root_identified": false,
+  "field_fix_verified": false,
+  "raw_manifest": {
+    "raw_path": "experiments/native_thread_accounting_review/runs/qt_label_review02/full_review01.json",
+    "sha256": "d859291e525d662c1868e249591413c5d5aedc612cf73f90ff5ba5842e2dfcfd",
+    "bytes": 242622789,
+    "reason": "Keep all 26350 qualified consumer chains and full evidence locally; publish bounded derived witnesses without video, binaries or redundant full stacks.",
+    "original_output_name": "qt_label_wait01.json",
+    "content_unchanged": true
+  },
+  "GUI_QLatch_waits": [
+    {
+      "source_index": 0,
+      "tid": 20420,
+      "out_qpc": 2407897275294,
+      "ready_qpc": 2407897281758,
+      "in_qpc": 2407897281817,
+      "full_frames_canonical_json_sha256": "4f46a2863692fb4af42722ea44d7fdbdeb29f5c3839fff6c15ed033ebbf6290c"
+    },
+    {
+      "source_index": 1,
+      "tid": 20420,
+      "out_qpc": 2407898130445,
+      "ready_qpc": 2407898136346,
+      "in_qpc": 2407898136403,
+      "full_frames_canonical_json_sha256": "71732bd589d8ca4849783b7543c62871fa0a85720a7564acf95529d8b6ed13ec"
+    },
+    {
+      "source_index": 2,
+      "tid": 20420,
+      "out_qpc": 2407898994358,
+      "ready_qpc": 2407899000988,
+      "in_qpc": 2407899001093,
+      "full_frames_canonical_json_sha256": "fca8c4d6b234457ed7d04a2235fa1b844aad158f877be3f27e7d3e5dfe1e9c1c"
+    },
+    {
+      "source_index": 3,
+      "tid": 20420,
+      "out_qpc": 2407899287704,
+      "ready_qpc": 2407899293061,
+      "in_qpc": 2407899293134,
+      "full_frames_canonical_json_sha256": "4f46a2863692fb4af42722ea44d7fdbdeb29f5c3839fff6c15ed033ebbf6290c"
+    },
+    {
+      "source_index": 4,
+      "tid": 20420,
+      "out_qpc": 2407899934782,
+      "ready_qpc": 2407899939577,
+      "in_qpc": 2407899939635,
+      "full_frames_canonical_json_sha256": "fca8c4d6b234457ed7d04a2235fa1b844aad158f877be3f27e7d3e5dfe1e9c1c"
+    },
+    {
+      "source_index": 5,
+      "tid": 20420,
+      "out_qpc": 2407900860494,
+      "ready_qpc": 2407900866036,
+      "in_qpc": 2407900866105,
+      "full_frames_canonical_json_sha256": "4f46a2863692fb4af42722ea44d7fdbdeb29f5c3839fff6c15ed033ebbf6290c"
+    },
+    {
+      "source_index": 6,
+      "tid": 20420,
+      "out_qpc": 2407901443093,
+      "ready_qpc": 2407901450385,
+      "in_qpc": 2407901450466,
+      "full_frames_canonical_json_sha256": "4f873c6cf5c8ac87a6d51dafa2ea012db63083992f402affaf175caf2f1538e4"
+    },
+    {
+      "source_index": 7,
+      "tid": 20420,
+      "out_qpc": 2407902515692,
+      "ready_qpc": 2407902523477,
+      "in_qpc": 2407902523557,
+      "full_frames_canonical_json_sha256": "fca8c4d6b234457ed7d04a2235fa1b844aad158f877be3f27e7d3e5dfe1e9c1c"
+    },
+    {
+      "source_index": 8,
+      "tid": 20420,
+      "out_qpc": 2407903057112,
+      "ready_qpc": 2407903062398,
+      "in_qpc": 2407903062482,
+      "full_frames_canonical_json_sha256": "71732bd589d8ca4849783b7543c62871fa0a85720a7564acf95529d8b6ed13ec"
+    },
+    {
+      "source_index": 9,
+      "tid": 20420,
+      "out_qpc": 2407905048999,
+      "ready_qpc": 2407905053824,
+      "in_qpc": 2407905053889,
+      "full_frames_canonical_json_sha256": "fca8c4d6b234457ed7d04a2235fa1b844aad158f877be3f27e7d3e5dfe1e9c1c"
+    },
+    {
+      "source_index": 10,
+      "tid": 20420,
+      "out_qpc": 2407905399118,
+      "ready_qpc": 2407905406263,
+      "in_qpc": 2407905406335,
+      "full_frames_canonical_json_sha256": "4f46a2863692fb4af42722ea44d7fdbdeb29f5c3839fff6c15ed033ebbf6290c"
+    },
+    {
+      "source_index": 11,
+      "tid": 20420,
+      "out_qpc": 2407905997218,
+      "ready_qpc": 2407906002874,
+      "in_qpc": 2407906002948,
+      "full_frames_canonical_json_sha256": "fca8c4d6b234457ed7d04a2235fa1b844aad158f877be3f27e7d3e5dfe1e9c1c"
+    },
+    {
+      "source_index": 12,
+      "tid": 20420,
+      "out_qpc": 2407907016946,
+      "ready_qpc": 2407907022264,
+      "in_qpc": 2407907022359,
+      "full_frames_canonical_json_sha256": "4f46a2863692fb4af42722ea44d7fdbdeb29f5c3839fff6c15ed033ebbf6290c"
+    },
+    {
+      "source_index": 13,
+      "tid": 20420,
+      "out_qpc": 2407907352496,
+      "ready_qpc": 2407907357310,
+      "in_qpc": 2407907357381,
+      "full_frames_canonical_json_sha256": "4f873c6cf5c8ac87a6d51dafa2ea012db63083992f402affaf175caf2f1538e4"
+    },
+    {
+      "source_index": 14,
+      "tid": 20420,
+      "out_qpc": 2407907773378,
+      "ready_qpc": 2407907778217,
+      "in_qpc": 2407907778280,
+      "full_frames_canonical_json_sha256": "4f46a2863692fb4af42722ea44d7fdbdeb29f5c3839fff6c15ed033ebbf6290c"
+    },
+    {
+      "source_index": 15,
+      "tid": 20420,
+      "out_qpc": 2407908272429,
+      "ready_qpc": 2407908277269,
+      "in_qpc": 2407908277341,
+      "full_frames_canonical_json_sha256": "fca8c4d6b234457ed7d04a2235fa1b844aad158f877be3f27e7d3e5dfe1e9c1c"
+    },
+    {
+      "source_index": 16,
+      "tid": 20420,
+      "out_qpc": 2407909562246,
+      "ready_qpc": 2407909568108,
+      "in_qpc": 2407909568171,
+      "full_frames_canonical_json_sha256": "fca8c4d6b234457ed7d04a2235fa1b844aad158f877be3f27e7d3e5dfe1e9c1c"
+    },
+    {
+      "source_index": 17,
+      "tid": 20420,
+      "out_qpc": 2407910079380,
+      "ready_qpc": 2407910084355,
+      "in_qpc": 2407910084428,
+      "full_frames_canonical_json_sha256": "4f46a2863692fb4af42722ea44d7fdbdeb29f5c3839fff6c15ed033ebbf6290c"
+    },
+    {
+      "source_index": 18,
+      "tid": 20420,
+      "out_qpc": 2407910732551,
+      "ready_qpc": 2407910737715,
+      "in_qpc": 2407910737796,
+      "full_frames_canonical_json_sha256": "fca8c4d6b234457ed7d04a2235fa1b844aad158f877be3f27e7d3e5dfe1e9c1c"
+    },
+    {
+      "source_index": 19,
+      "tid": 20420,
+      "out_qpc": 2407910999828,
+      "ready_qpc": 2407911004665,
+      "in_qpc": 2407911004736,
+      "full_frames_canonical_json_sha256": "fca8c4d6b234457ed7d04a2235fa1b844aad158f877be3f27e7d3e5dfe1e9c1c"
+    },
+    {
+      "source_index": 20,
+      "tid": 20420,
+      "out_qpc": 2407911918220,
+      "ready_qpc": 2407911923027,
+      "in_qpc": 2407911923093,
+      "full_frames_canonical_json_sha256": "fca8c4d6b234457ed7d04a2235fa1b844aad158f877be3f27e7d3e5dfe1e9c1c"
+    },
+    {
+      "source_index": 21,
+      "tid": 20420,
+      "out_qpc": 2407912903822,
+      "ready_qpc": 2407912910338,
+      "in_qpc": 2407912910450,
+      "full_frames_canonical_json_sha256": "4f46a2863692fb4af42722ea44d7fdbdeb29f5c3839fff6c15ed033ebbf6290c"
+    },
+    {
+      "source_index": 22,
+      "tid": 20420,
+      "out_qpc": 2407913539115,
+      "ready_qpc": 2407913544369,
+      "in_qpc": 2407913544436,
+      "full_frames_canonical_json_sha256": "fca8c4d6b234457ed7d04a2235fa1b844aad158f877be3f27e7d3e5dfe1e9c1c"
+    },
+    {
+      "source_index": 23,
+      "tid": 20420,
+      "out_qpc": 2407913770516,
+      "ready_qpc": 2407913775937,
+      "in_qpc": 2407913776009,
+      "full_frames_canonical_json_sha256": "fca8c4d6b234457ed7d04a2235fa1b844aad158f877be3f27e7d3e5dfe1e9c1c"
+    },
+    {
+      "source_index": 24,
+      "tid": 20420,
+      "out_qpc": 2407915020690,
+      "ready_qpc": 2407915025991,
+      "in_qpc": 2407915026072,
+      "full_frames_canonical_json_sha256": "489c1b8c3b7ab0453aa58ee65f71f384571771f8b768c199a7db2fc2492b4ccd"
+    },
+    {
+      "source_index": 25,
+      "tid": 20420,
+      "out_qpc": 2407916102388,
+      "ready_qpc": 2407916107212,
+      "in_qpc": 2407916107262,
+      "full_frames_canonical_json_sha256": "fca8c4d6b234457ed7d04a2235fa1b844aad158f877be3f27e7d3e5dfe1e9c1c"
+    },
+    {
+      "source_index": 26,
+      "tid": 20420,
+      "out_qpc": 2407917120656,
+      "ready_qpc": 2407917125945,
+      "in_qpc": 2407917126029,
+      "full_frames_canonical_json_sha256": "4f873c6cf5c8ac87a6d51dafa2ea012db63083992f402affaf175caf2f1538e4"
+    },
+    {
+      "source_index": 27,
+      "tid": 20420,
+      "out_qpc": 2407917577011,
+      "ready_qpc": 2407917581880,
+      "in_qpc": 2407917581939,
+      "full_frames_canonical_json_sha256": "4f46a2863692fb4af42722ea44d7fdbdeb29f5c3839fff6c15ed033ebbf6290c"
+    },
+    {
+      "source_index": 28,
+      "tid": 20420,
+      "out_qpc": 2407918243356,
+      "ready_qpc": 2407918251099,
+      "in_qpc": 2407918251206,
+      "full_frames_canonical_json_sha256": "fca8c4d6b234457ed7d04a2235fa1b844aad158f877be3f27e7d3e5dfe1e9c1c"
+    },
+    {
+      "source_index": 29,
+      "tid": 20420,
+      "out_qpc": 2407918399598,
+      "ready_qpc": 2407918404592,
+      "in_qpc": 2407918404660,
+      "full_frames_canonical_json_sha256": "fca8c4d6b234457ed7d04a2235fa1b844aad158f877be3f27e7d3e5dfe1e9c1c"
+    },
+    {
+      "source_index": 30,
+      "tid": 20420,
+      "out_qpc": 2407919236481,
+      "ready_qpc": 2407919241539,
+      "in_qpc": 2407919241605,
+      "full_frames_canonical_json_sha256": "fca8c4d6b234457ed7d04a2235fa1b844aad158f877be3f27e7d3e5dfe1e9c1c"
+    },
+    {
+      "source_index": 31,
+      "tid": 20420,
+      "out_qpc": 2407922910930,
+      "ready_qpc": 2407922920314,
+      "in_qpc": 2407922920380,
+      "full_frames_canonical_json_sha256": "4f46a2863692fb4af42722ea44d7fdbdeb29f5c3839fff6c15ed033ebbf6290c"
+    },
+    {
+      "source_index": 32,
+      "tid": 20420,
+      "out_qpc": 2407923816078,
+      "ready_qpc": 2407923825493,
+      "in_qpc": 2407923825558,
+      "full_frames_canonical_json_sha256": "4f873c6cf5c8ac87a6d51dafa2ea012db63083992f402affaf175caf2f1538e4"
+    },
+    {
+      "source_index": 33,
+      "tid": 20420,
+      "out_qpc": 2407924073490,
+      "ready_qpc": 2407924078785,
+      "in_qpc": 2407924078852,
+      "full_frames_canonical_json_sha256": "4f873c6cf5c8ac87a6d51dafa2ea012db63083992f402affaf175caf2f1538e4"
+    },
+    {
+      "source_index": 34,
+      "tid": 20420,
+      "out_qpc": 2407927041490,
+      "ready_qpc": 2407927050896,
+      "in_qpc": 2407927050982,
+      "full_frames_canonical_json_sha256": "fca8c4d6b234457ed7d04a2235fa1b844aad158f877be3f27e7d3e5dfe1e9c1c"
+    },
+    {
+      "source_index": 35,
+      "tid": 20420,
+      "out_qpc": 2407927370235,
+      "ready_qpc": 2407927375069,
+      "in_qpc": 2407927375121,
+      "full_frames_canonical_json_sha256": "4f46a2863692fb4af42722ea44d7fdbdeb29f5c3839fff6c15ed033ebbf6290c"
+    },
+    {
+      "source_index": 36,
+      "tid": 20420,
+      "out_qpc": 2407928283808,
+      "ready_qpc": 2407928288780,
+      "in_qpc": 2407928288847,
+      "full_frames_canonical_json_sha256": "fca8c4d6b234457ed7d04a2235fa1b844aad158f877be3f27e7d3e5dfe1e9c1c"
+    },
+    {
+      "source_index": 37,
+      "tid": 20420,
+      "out_qpc": 2407928503989,
+      "ready_qpc": 2407928510855,
+      "in_qpc": 2407928510956,
+      "full_frames_canonical_json_sha256": "4f46a2863692fb4af42722ea44d7fdbdeb29f5c3839fff6c15ed033ebbf6290c"
+    },
+    {
+      "source_index": 38,
+      "tid": 20420,
+      "out_qpc": 2407929218054,
+      "ready_qpc": 2407929226101,
+      "in_qpc": 2407929226193,
+      "full_frames_canonical_json_sha256": "4f873c6cf5c8ac87a6d51dafa2ea012db63083992f402affaf175caf2f1538e4"
+    },
+    {
+      "source_index": 39,
+      "tid": 20420,
+      "out_qpc": 2407930104175,
+      "ready_qpc": 2407930111355,
+      "in_qpc": 2407930111452,
+      "full_frames_canonical_json_sha256": "fca8c4d6b234457ed7d04a2235fa1b844aad158f877be3f27e7d3e5dfe1e9c1c"
+    },
+    {
+      "source_index": 40,
+      "tid": 20420,
+      "out_qpc": 2407930728298,
+      "ready_qpc": 2407930733195,
+      "in_qpc": 2407930733280,
+      "full_frames_canonical_json_sha256": "4f46a2863692fb4af42722ea44d7fdbdeb29f5c3839fff6c15ed033ebbf6290c"
+    },
+    {
+      "source_index": 41,
+      "tid": 20420,
+      "out_qpc": 2407931382977,
+      "ready_qpc": 2407931387744,
+      "in_qpc": 2407931387774,
+      "full_frames_canonical_json_sha256": "4f46a2863692fb4af42722ea44d7fdbdeb29f5c3839fff6c15ed033ebbf6290c"
+    },
+    {
+      "source_index": 42,
+      "tid": 20420,
+      "out_qpc": 2407932025709,
+      "ready_qpc": 2407932032536,
+      "in_qpc": 2407932032625,
+      "full_frames_canonical_json_sha256": "fca8c4d6b234457ed7d04a2235fa1b844aad158f877be3f27e7d3e5dfe1e9c1c"
+    },
+    {
+      "source_index": 43,
+      "tid": 20420,
+      "out_qpc": 2407932962301,
+      "ready_qpc": 2407932967263,
+      "in_qpc": 2407932967323,
+      "full_frames_canonical_json_sha256": "fca8c4d6b234457ed7d04a2235fa1b844aad158f877be3f27e7d3e5dfe1e9c1c"
+    },
+    {
+      "source_index": 44,
+      "tid": 20420,
+      "out_qpc": 2407933929032,
+      "ready_qpc": 2407933939033,
+      "in_qpc": 2407933939120,
+      "full_frames_canonical_json_sha256": "4f873c6cf5c8ac87a6d51dafa2ea012db63083992f402affaf175caf2f1538e4"
+    },
+    {
+      "source_index": 45,
+      "tid": 20420,
+      "out_qpc": 2407934378247,
+      "ready_qpc": 2407934383415,
+      "in_qpc": 2407934383494,
+      "full_frames_canonical_json_sha256": "fca8c4d6b234457ed7d04a2235fa1b844aad158f877be3f27e7d3e5dfe1e9c1c"
+    },
+    {
+      "source_index": 46,
+      "tid": 20420,
+      "out_qpc": 2407934842177,
+      "ready_qpc": 2407934847271,
+      "in_qpc": 2407934847334,
+      "full_frames_canonical_json_sha256": "fca8c4d6b234457ed7d04a2235fa1b844aad158f877be3f27e7d3e5dfe1e9c1c"
+    },
+    {
+      "source_index": 47,
+      "tid": 20420,
+      "out_qpc": 2407935389233,
+      "ready_qpc": 2407935394056,
+      "in_qpc": 2407935394113,
+      "full_frames_canonical_json_sha256": "71732bd589d8ca4849783b7543c62871fa0a85720a7564acf95529d8b6ed13ec"
+    },
+    {
+      "source_index": 48,
+      "tid": 20420,
+      "out_qpc": 2407936114487,
+      "ready_qpc": 2407936121155,
+      "in_qpc": 2407936121234,
+      "full_frames_canonical_json_sha256": "fca8c4d6b234457ed7d04a2235fa1b844aad158f877be3f27e7d3e5dfe1e9c1c"
+    },
+    {
+      "source_index": 49,
+      "tid": 20420,
+      "out_qpc": 2407936246900,
+      "ready_qpc": 2407936252071,
+      "in_qpc": 2407936252123,
+      "full_frames_canonical_json_sha256": "fca8c4d6b234457ed7d04a2235fa1b844aad158f877be3f27e7d3e5dfe1e9c1c"
+    },
+    {
+      "source_index": 50,
+      "tid": 20420,
+      "out_qpc": 2407936837468,
+      "ready_qpc": 2407936842267,
+      "in_qpc": 2407936842315,
+      "full_frames_canonical_json_sha256": "4f46a2863692fb4af42722ea44d7fdbdeb29f5c3839fff6c15ed033ebbf6290c"
+    },
+    {
+      "source_index": 51,
+      "tid": 20420,
+      "out_qpc": 2407937462869,
+      "ready_qpc": 2407937468203,
+      "in_qpc": 2407937468262,
+      "full_frames_canonical_json_sha256": "fca8c4d6b234457ed7d04a2235fa1b844aad158f877be3f27e7d3e5dfe1e9c1c"
+    },
+    {
+      "source_index": 52,
+      "tid": 20420,
+      "out_qpc": 2407938633355,
+      "ready_qpc": 2407938638235,
+      "in_qpc": 2407938638292,
+      "full_frames_canonical_json_sha256": "fca8c4d6b234457ed7d04a2235fa1b844aad158f877be3f27e7d3e5dfe1e9c1c"
+    },
+    {
+      "source_index": 53,
+      "tid": 20420,
+      "out_qpc": 2407939102879,
+      "ready_qpc": 2407939109745,
+      "in_qpc": 2407939109839,
+      "full_frames_canonical_json_sha256": "4f46a2863692fb4af42722ea44d7fdbdeb29f5c3839fff6c15ed033ebbf6290c"
+    },
+    {
+      "source_index": 54,
+      "tid": 20420,
+      "out_qpc": 2407939641604,
+      "ready_qpc": 2407939648558,
+      "in_qpc": 2407939648629,
+      "full_frames_canonical_json_sha256": "4f46a2863692fb4af42722ea44d7fdbdeb29f5c3839fff6c15ed033ebbf6290c"
+    },
+    {
+      "source_index": 55,
+      "tid": 20420,
+      "out_qpc": 2407940107380,
+      "ready_qpc": 2407940112293,
+      "in_qpc": 2407940112362,
+      "full_frames_canonical_json_sha256": "d6b555c31b70f99a51c16b67216f4b080b04121b6d7a95e7009be45ef252385b"
+    },
+    {
+      "source_index": 56,
+      "tid": 20420,
+      "out_qpc": 2407940454490,
+      "ready_qpc": 2407940459610,
+      "in_qpc": 2407940459684,
+      "full_frames_canonical_json_sha256": "4f873c6cf5c8ac87a6d51dafa2ea012db63083992f402affaf175caf2f1538e4"
+    },
+    {
+      "source_index": 57,
+      "tid": 20420,
+      "out_qpc": 2407940939180,
+      "ready_qpc": 2407940946492,
+      "in_qpc": 2407940946615,
+      "full_frames_canonical_json_sha256": "fca8c4d6b234457ed7d04a2235fa1b844aad158f877be3f27e7d3e5dfe1e9c1c"
+    },
+    {
+      "source_index": 58,
+      "tid": 20420,
+      "out_qpc": 2407941404034,
+      "ready_qpc": 2407941408870,
+      "in_qpc": 2407941408937,
+      "full_frames_canonical_json_sha256": "71732bd589d8ca4849783b7543c62871fa0a85720a7564acf95529d8b6ed13ec"
+    }
+  ],
+  "consumer_GIL_waits_participating": [
+    {
+      "source_index": 703,
+      "tid": 5376,
+      "out_qpc": 2407897275124,
+      "ready_qpc": 2407897284514,
+      "in_qpc": 2407897284560,
+      "full_frames_canonical_json_sha256": "eb3e99baeec474024e489e107bc5491a7a81b99a556369516f7294ab8718d497"
+    },
+    {
+      "source_index": 1278,
+      "tid": 5376,
+      "out_qpc": 2407898130099,
+      "ready_qpc": 2407898138467,
+      "in_qpc": 2407898138518,
+      "full_frames_canonical_json_sha256": "bc36be4c3d7af939db265286bf16b3a11d7f49e84398ed26f155c3d0812f1268"
+    },
+    {
+      "source_index": 1866,
+      "tid": 5376,
+      "out_qpc": 2407898994109,
+      "ready_qpc": 2407899003359,
+      "in_qpc": 2407899003889,
+      "full_frames_canonical_json_sha256": "548b7f569b080f3c72e510c59347ef99d2c4475f035e35a29389e36a990b8473"
+    },
+    {
+      "source_index": 1923,
+      "tid": 5376,
+      "out_qpc": 2407899287445,
+      "ready_qpc": 2407899296037,
+      "in_qpc": 2407899296089,
+      "full_frames_canonical_json_sha256": "bc36be4c3d7af939db265286bf16b3a11d7f49e84398ed26f155c3d0812f1268"
+    },
+    {
+      "source_index": 2455,
+      "tid": 5376,
+      "out_qpc": 2407899934640,
+      "ready_qpc": 2407899941591,
+      "in_qpc": 2407899941817,
+      "full_frames_canonical_json_sha256": "b26bc3d93afe49973038afc3811faa8c7b76fa4ece4119c55b93cfd47f6bc958"
+    },
+    {
+      "source_index": 3025,
+      "tid": 5376,
+      "out_qpc": 2407900860175,
+      "ready_qpc": 2407900868247,
+      "in_qpc": 2407900868528,
+      "full_frames_canonical_json_sha256": "b6ffce77bcc3e6518685c7f07e37ce47090ad0fb189e651254e194f92831a0b3"
+    },
+    {
+      "source_index": 3536,
+      "tid": 5376,
+      "out_qpc": 2407901442769,
+      "ready_qpc": 2407901452729,
+      "in_qpc": 2407901452813,
+      "full_frames_canonical_json_sha256": "e9ed63ffe391d7e07a2afc4a9b99054ce0627925f4ee638ae49931977a68c8c5"
+    },
+    {
+      "source_index": 4132,
+      "tid": 5376,
+      "out_qpc": 2407902514754,
+      "ready_qpc": 2407902525825,
+      "in_qpc": 2407902526250,
+      "full_frames_canonical_json_sha256": "cf93eb932a520718ae9c9581a87c2a347fb5bd22a96646a9e7d15302e6b092a4"
+    },
+    {
+      "source_index": 4271,
+      "tid": 5376,
+      "out_qpc": 2407903056613,
+      "ready_qpc": 2407903064623,
+      "in_qpc": 2407903064975,
+      "full_frames_canonical_json_sha256": "0f630ac156184078a1e1458a86cb877adfb32e129fe4b43060d5b482c09d2b65"
+    },
+    {
+      "source_index": 5490,
+      "tid": 5376,
+      "out_qpc": 2407905048436,
+      "ready_qpc": 2407905055933,
+      "in_qpc": 2407905055997,
+      "full_frames_canonical_json_sha256": "cc8cd011456c7d3e3de85d8033e47af53fb781c990c6827d5abc433794989b45"
+    },
+    {
+      "source_index": 5568,
+      "tid": 5376,
+      "out_qpc": 2407905398110,
+      "ready_qpc": 2407905409338,
+      "in_qpc": 2407905409405,
+      "full_frames_canonical_json_sha256": "5ee60e4beb0dd1a738cc06cf6c224bd8e97b352298d747c8a51c69a264feee12"
+    },
+    {
+      "source_index": 6110,
+      "tid": 5376,
+      "out_qpc": 2407905996778,
+      "ready_qpc": 2407906005202,
+      "in_qpc": 2407906005268,
+      "full_frames_canonical_json_sha256": "b6ffce77bcc3e6518685c7f07e37ce47090ad0fb189e651254e194f92831a0b3"
+    },
+    {
+      "source_index": 6714,
+      "tid": 5376,
+      "out_qpc": 2407907016696,
+      "ready_qpc": 2407907024782,
+      "in_qpc": 2407907025148,
+      "full_frames_canonical_json_sha256": "5ee60e4beb0dd1a738cc06cf6c224bd8e97b352298d747c8a51c69a264feee12"
+    },
+    {
+      "source_index": 6825,
+      "tid": 5376,
+      "out_qpc": 2407907351875,
+      "ready_qpc": 2407907359608,
+      "in_qpc": 2407907359702,
+      "full_frames_canonical_json_sha256": "ce045ef428e6c440db6c751dee29580990e6e48a1eb9b5a4f6b1b1aecd5f1ef2"
+    },
+    {
+      "source_index": 6917,
+      "tid": 5376,
+      "out_qpc": 2407907772794,
+      "ready_qpc": 2407907780854,
+      "in_qpc": 2407907780931,
+      "full_frames_canonical_json_sha256": "e9ed63ffe391d7e07a2afc4a9b99054ce0627925f4ee638ae49931977a68c8c5"
+    },
+    {
+      "source_index": 7407,
+      "tid": 5376,
+      "out_qpc": 2407908272158,
+      "ready_qpc": 2407908279348,
+      "in_qpc": 2407908279409,
+      "full_frames_canonical_json_sha256": "bc36be4c3d7af939db265286bf16b3a11d7f49e84398ed26f155c3d0812f1268"
+    },
+    {
+      "source_index": 8031,
+      "tid": 5376,
+      "out_qpc": 2407909561918,
+      "ready_qpc": 2407909606792,
+      "in_qpc": 2407909606941,
+      "full_frames_canonical_json_sha256": "eb3e99baeec474024e489e107bc5491a7a81b99a556369516f7294ab8718d497"
+    },
+    {
+      "source_index": 8128,
+      "tid": 5376,
+      "out_qpc": 2407910079537,
+      "ready_qpc": 2407910087049,
+      "in_qpc": 2407910087297,
+      "full_frames_canonical_json_sha256": "c9b0fb2c8cf49805415dc2c3e2f1dedbb685226fbdf29c40e6f91090ae247393"
+    },
+    {
+      "source_index": 8663,
+      "tid": 5376,
+      "out_qpc": 2407910732114,
+      "ready_qpc": 2407910740171,
+      "in_qpc": 2407910740348,
+      "full_frames_canonical_json_sha256": "c9b0fb2c8cf49805415dc2c3e2f1dedbb685226fbdf29c40e6f91090ae247393"
+    },
+    {
+      "source_index": 8723,
+      "tid": 5376,
+      "out_qpc": 2407910999822,
+      "ready_qpc": 2407911006932,
+      "in_qpc": 2407911007088,
+      "full_frames_canonical_json_sha256": "548b7f569b080f3c72e510c59347ef99d2c4475f035e35a29389e36a990b8473"
+    },
+    {
+      "source_index": 9294,
+      "tid": 5376,
+      "out_qpc": 2407911917946,
+      "ready_qpc": 2407911925130,
+      "in_qpc": 2407911925842,
+      "full_frames_canonical_json_sha256": "b6ffce77bcc3e6518685c7f07e37ce47090ad0fb189e651254e194f92831a0b3"
+    },
+    {
+      "source_index": 9847,
+      "tid": 5376,
+      "out_qpc": 2407912903365,
+      "ready_qpc": 2407912913589,
+      "in_qpc": 2407912913702,
+      "full_frames_canonical_json_sha256": "4f64c5ff425d0884df36c0d16e4acf34eec3579e92f80cca898aa4d0609d1ce5"
+    },
+    {
+      "source_index": 10375,
+      "tid": 5376,
+      "out_qpc": 2407913538669,
+      "ready_qpc": 2407913546613,
+      "in_qpc": 2407913546871,
+      "full_frames_canonical_json_sha256": "eb3e99baeec474024e489e107bc5491a7a81b99a556369516f7294ab8718d497"
+    },
+    {
+      "source_index": 10426,
+      "tid": 5376,
+      "out_qpc": 2407913770677,
+      "ready_qpc": 2407913778218,
+      "in_qpc": 2407913778953,
+      "full_frames_canonical_json_sha256": "2174f4aa126580df5fe86d0625ec9a0fcc0bbde4dfc7fa24c92307be46deea34"
+    },
+    {
+      "source_index": 11050,
+      "tid": 5376,
+      "out_qpc": 2407915020443,
+      "ready_qpc": 2407915028760,
+      "in_qpc": 2407915028950,
+      "full_frames_canonical_json_sha256": "548b7f569b080f3c72e510c59347ef99d2c4475f035e35a29389e36a990b8473"
+    },
+    {
+      "source_index": 11606,
+      "tid": 5376,
+      "out_qpc": 2407916102367,
+      "ready_qpc": 2407916109315,
+      "in_qpc": 2407916109458,
+      "full_frames_canonical_json_sha256": "b6ffce77bcc3e6518685c7f07e37ce47090ad0fb189e651254e194f92831a0b3"
+    },
+    {
+      "source_index": 12167,
+      "tid": 5376,
+      "out_qpc": 2407917119885,
+      "ready_qpc": 2407917128510,
+      "in_qpc": 2407917129026,
+      "full_frames_canonical_json_sha256": "826ca88fc14c97b0dd2903a338f7ec600f2c1275c6f6fb49b7aa7da3c8c91780"
+    },
+    {
+      "source_index": 12249,
+      "tid": 5376,
+      "out_qpc": 2407917577025,
+      "ready_qpc": 2407917584205,
+      "in_qpc": 2407917584728,
+      "full_frames_canonical_json_sha256": "eb3e99baeec474024e489e107bc5491a7a81b99a556369516f7294ab8718d497"
+    },
+    {
+      "source_index": 12799,
+      "tid": 5376,
+      "out_qpc": 2407918243150,
+      "ready_qpc": 2407918254600,
+      "in_qpc": 2407918254699,
+      "full_frames_canonical_json_sha256": "4f64c5ff425d0884df36c0d16e4acf34eec3579e92f80cca898aa4d0609d1ce5"
+    },
+    {
+      "source_index": 12837,
+      "tid": 5376,
+      "out_qpc": 2407918399392,
+      "ready_qpc": 2407918406638,
+      "in_qpc": 2407918407213,
+      "full_frames_canonical_json_sha256": "b6ffce77bcc3e6518685c7f07e37ce47090ad0fb189e651254e194f92831a0b3"
+    },
+    {
+      "source_index": 13379,
+      "tid": 5376,
+      "out_qpc": 2407919236705,
+      "ready_qpc": 2407919243626,
+      "in_qpc": 2407919243872,
+      "full_frames_canonical_json_sha256": "e9ed63ffe391d7e07a2afc4a9b99054ce0627925f4ee638ae49931977a68c8c5"
+    },
+    {
+      "source_index": 13999,
+      "tid": 5376,
+      "out_qpc": 2407922910581,
+      "ready_qpc": 2407922922570,
+      "in_qpc": 2407922923253,
+      "full_frames_canonical_json_sha256": "2174f4aa126580df5fe86d0625ec9a0fcc0bbde4dfc7fa24c92307be46deea34"
+    },
+    {
+      "source_index": 14777,
+      "tid": 5376,
+      "out_qpc": 2407923815376,
+      "ready_qpc": 2407923828474,
+      "in_qpc": 2407923828581,
+      "full_frames_canonical_json_sha256": "e9ed63ffe391d7e07a2afc4a9b99054ce0627925f4ee638ae49931977a68c8c5"
+    },
+    {
+      "source_index": 14870,
+      "tid": 5376,
+      "out_qpc": 2407924073628,
+      "ready_qpc": 2407924081615,
+      "in_qpc": 2407924081697,
+      "full_frames_canonical_json_sha256": "826ca88fc14c97b0dd2903a338f7ec600f2c1275c6f6fb49b7aa7da3c8c91780"
+    },
+    {
+      "source_index": 15689,
+      "tid": 5376,
+      "out_qpc": 2407927041866,
+      "ready_qpc": 2407927053318,
+      "in_qpc": 2407927054058,
+      "full_frames_canonical_json_sha256": "2dee3af8741f7617d4b7b9209b8b2df5c7986f7ea816e011bd6342ca0f4ddef2"
+    },
+    {
+      "source_index": 15783,
+      "tid": 5376,
+      "out_qpc": 2407927370250,
+      "ready_qpc": 2407927377733,
+      "in_qpc": 2407927377952,
+      "full_frames_canonical_json_sha256": "2dee3af8741f7617d4b7b9209b8b2df5c7986f7ea816e011bd6342ca0f4ddef2"
+    },
+    {
+      "source_index": 16339,
+      "tid": 5376,
+      "out_qpc": 2407928283502,
+      "ready_qpc": 2407928290894,
+      "in_qpc": 2407928291504,
+      "full_frames_canonical_json_sha256": "cf93eb932a520718ae9c9581a87c2a347fb5bd22a96646a9e7d15302e6b092a4"
+    },
+    {
+      "source_index": 16390,
+      "tid": 5376,
+      "out_qpc": 2407928503416,
+      "ready_qpc": 2407928514277,
+      "in_qpc": 2407928514812,
+      "full_frames_canonical_json_sha256": "fe033126bcdf7e18e34163d6008ef74f5fa29d78f86a523a96c2bdc6c474c9df"
+    },
+    {
+      "source_index": 16915,
+      "tid": 5376,
+      "out_qpc": 2407929217937,
+      "ready_qpc": 2407929229523,
+      "in_qpc": 2407929229673,
+      "full_frames_canonical_json_sha256": "e9ed63ffe391d7e07a2afc4a9b99054ce0627925f4ee638ae49931977a68c8c5"
+    },
+    {
+      "source_index": 17502,
+      "tid": 5376,
+      "out_qpc": 2407930102949,
+      "ready_qpc": 2407930114727,
+      "in_qpc": 2407930115151,
+      "full_frames_canonical_json_sha256": "b26bc3d93afe49973038afc3811faa8c7b76fa4ece4119c55b93cfd47f6bc958"
+    },
+    {
+      "source_index": 17611,
+      "tid": 5376,
+      "out_qpc": 2407930728106,
+      "ready_qpc": 2407930735708,
+      "in_qpc": 2407930735888,
+      "full_frames_canonical_json_sha256": "0f630ac156184078a1e1458a86cb877adfb32e129fe4b43060d5b482c09d2b65"
+    },
+    {
+      "source_index": 18112,
+      "tid": 5376,
+      "out_qpc": 2407931382953,
+      "ready_qpc": 2407931390419,
+      "in_qpc": 2407931390499,
+      "full_frames_canonical_json_sha256": "b26bc3d93afe49973038afc3811faa8c7b76fa4ece4119c55b93cfd47f6bc958"
+    },
+    {
+      "source_index": 18640,
+      "tid": 5376,
+      "out_qpc": 2407932025288,
+      "ready_qpc": 2407932035463,
+      "in_qpc": 2407932035820,
+      "full_frames_canonical_json_sha256": "2174f4aa126580df5fe86d0625ec9a0fcc0bbde4dfc7fa24c92307be46deea34"
+    },
+    {
+      "source_index": 19242,
+      "tid": 5376,
+      "out_qpc": 2407932961886,
+      "ready_qpc": 2407932969378,
+      "in_qpc": 2407932969908,
+      "full_frames_canonical_json_sha256": "e688105aa9728e5422916b4c53a0d5c5a774e9a6d2f973039cf250e45cfc66e9"
+    },
+    {
+      "source_index": 19787,
+      "tid": 5376,
+      "out_qpc": 2407933928436,
+      "ready_qpc": 2407933942473,
+      "in_qpc": 2407933942579,
+      "full_frames_canonical_json_sha256": "b26bc3d93afe49973038afc3811faa8c7b76fa4ece4119c55b93cfd47f6bc958"
+    },
+    {
+      "source_index": 19885,
+      "tid": 5376,
+      "out_qpc": 2407934377551,
+      "ready_qpc": 2407934385947,
+      "in_qpc": 2407934386193,
+      "full_frames_canonical_json_sha256": "e9ed63ffe391d7e07a2afc4a9b99054ce0627925f4ee638ae49931977a68c8c5"
+    },
+    {
+      "source_index": 19971,
+      "tid": 5376,
+      "out_qpc": 2407934842280,
+      "ready_qpc": 2407934849586,
+      "in_qpc": 2407934850001,
+      "full_frames_canonical_json_sha256": "5ee60e4beb0dd1a738cc06cf6c224bd8e97b352298d747c8a51c69a264feee12"
+    },
+    {
+      "source_index": 20065,
+      "tid": 5376,
+      "out_qpc": 2407935388336,
+      "ready_qpc": 2407935396142,
+      "in_qpc": 2407935396378,
+      "full_frames_canonical_json_sha256": "b26bc3d93afe49973038afc3811faa8c7b76fa4ece4119c55b93cfd47f6bc958"
+    },
+    {
+      "source_index": 20587,
+      "tid": 5376,
+      "out_qpc": 2407936114064,
+      "ready_qpc": 2407936123664,
+      "in_qpc": 2407936123845,
+      "full_frames_canonical_json_sha256": "4f75f895cdfd9b65b0335d30a2d9c106b8945eb1d377828dde72b9edfd3cd677"
+    },
+    {
+      "source_index": 20627,
+      "tid": 5376,
+      "out_qpc": 2407936246375,
+      "ready_qpc": 2407936254276,
+      "in_qpc": 2407936254355,
+      "full_frames_canonical_json_sha256": "eb3e99baeec474024e489e107bc5491a7a81b99a556369516f7294ab8718d497"
+    },
+    {
+      "source_index": 20727,
+      "tid": 5376,
+      "out_qpc": 2407936837538,
+      "ready_qpc": 2407936844391,
+      "in_qpc": 2407936844851,
+      "full_frames_canonical_json_sha256": "15e94c8def5af6addd4793eb7f57bc151aa45d506b5f5036f9b51c228e00247d"
+    },
+    {
+      "source_index": 21295,
+      "tid": 5376,
+      "out_qpc": 2407937462558,
+      "ready_qpc": 2407937470299,
+      "in_qpc": 2407937470534,
+      "full_frames_canonical_json_sha256": "b6ffce77bcc3e6518685c7f07e37ce47090ad0fb189e651254e194f92831a0b3"
+    },
+    {
+      "source_index": 21862,
+      "tid": 5376,
+      "out_qpc": 2407938632916,
+      "ready_qpc": 2407938640269,
+      "in_qpc": 2407938640492,
+      "full_frames_canonical_json_sha256": "0f630ac156184078a1e1458a86cb877adfb32e129fe4b43060d5b482c09d2b65"
+    },
+    {
+      "source_index": 21952,
+      "tid": 5376,
+      "out_qpc": 2407939102984,
+      "ready_qpc": 2407939112982,
+      "in_qpc": 2407939113241,
+      "full_frames_canonical_json_sha256": "eb3e99baeec474024e489e107bc5491a7a81b99a556369516f7294ab8718d497"
+    },
+    {
+      "source_index": 22083,
+      "tid": 5376,
+      "out_qpc": 2407939640433,
+      "ready_qpc": 2407939656344,
+      "in_qpc": 2407939656562,
+      "full_frames_canonical_json_sha256": "0f630ac156184078a1e1458a86cb877adfb32e129fe4b43060d5b482c09d2b65"
+    },
+    {
+      "source_index": 22205,
+      "tid": 5376,
+      "out_qpc": 2407940106691,
+      "ready_qpc": 2407940114470,
+      "in_qpc": 2407940114698,
+      "full_frames_canonical_json_sha256": "548b7f569b080f3c72e510c59347ef99d2c4475f035e35a29389e36a990b8473"
+    },
+    {
+      "source_index": 22368,
+      "tid": 5376,
+      "out_qpc": 2407940453926,
+      "ready_qpc": 2407940461812,
+      "in_qpc": 2407940462070,
+      "full_frames_canonical_json_sha256": "e9ed63ffe391d7e07a2afc4a9b99054ce0627925f4ee638ae49931977a68c8c5"
+    },
+    {
+      "source_index": 22505,
+      "tid": 5376,
+      "out_qpc": 2407940938721,
+      "ready_qpc": 2407940950423,
+      "in_qpc": 2407940950472,
+      "full_frames_canonical_json_sha256": "e9ed63ffe391d7e07a2afc4a9b99054ce0627925f4ee638ae49931977a68c8c5"
+    },
+    {
+      "source_index": 22590,
+      "tid": 5376,
+      "out_qpc": 2407941403868,
+      "ready_qpc": 2407941410855,
+      "in_qpc": 2407941410908,
+      "full_frames_canonical_json_sha256": "e9ed63ffe391d7e07a2afc4a9b99054ce0627925f4ee638ae49931977a68c8c5"
+    }
+  ],
+  "first_GUI_full_chain": {
+    "tid": 20420,
+    "out_qpc": 2407897275294,
+    "ready_qpc": 2407897281758,
+    "in_qpc": 2407897281817,
+    "frames": [
+      {
+        "module": "ntdll.dll",
+        "rva": 1464772,
+        "symbol": "NtWaitForAlertByThreadId",
+        "pdb_matched": true
+      },
+      {
+        "module": "ntdll.dll",
+        "rva": 445043,
+        "symbol": "RtlWaitOnAddress",
+        "pdb_matched": true
+      },
+      {
+        "module": "KernelBase.dll",
+        "rva": 909656,
+        "symbol": "WaitOnAddress",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Core.dll",
+        "rva": 2572861,
+        "symbol": "QLatch::waitInternal",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Gui.dll",
+        "rva": 1682505,
+        "symbol": "qt_qimageScaleAARGBA_up_xy",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Gui.dll",
+        "rva": 1677525,
+        "symbol": "qSmoothScaleImage",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Gui.dll",
+        "rva": 321258,
+        "symbol": "QImage::smoothScaled",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Gui.dll",
+        "rva": 325042,
+        "symbol": "QImage::transformed",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Gui.dll",
+        "rva": 493424,
+        "symbol": "QPlatformPixmap::transformed",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Gui.dll",
+        "rva": 460999,
+        "symbol": "QPixmap::scaled",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Widgets.dll",
+        "rva": 1585455,
+        "symbol": "QLabel::paintEvent",
+        "pdb_matched": true
+      },
+      {
+        "module": "QtWidgets.pyd",
+        "rva": 1738615,
+        "symbol": null,
+        "pdb_matched": false
+      },
+      {
+        "module": "python311.dll",
+        "rva": 2061057,
+        "symbol": "_PyEval_EvalFrameDefault",
+        "pdb_matched": true
+      },
+      {
+        "module": "python311.dll",
+        "rva": 2075214,
+        "symbol": "_PyEval_Vector",
+        "pdb_matched": true
+      },
+      {
+        "module": "python311.dll",
+        "rva": 1043885,
+        "symbol": "_PyFunction_Vectorcall",
+        "pdb_matched": true
+      },
+      {
+        "module": "python311.dll",
+        "rva": 1051529,
+        "symbol": "_PyObject_VectorcallTstate",
+        "pdb_matched": true
+      },
+      {
+        "module": "python311.dll",
+        "rva": 1053073,
+        "symbol": "method_vectorcall",
+        "pdb_matched": true
+      },
+      {
+        "module": "python311.dll",
+        "rva": 1043278,
+        "symbol": "_PyVectorcall_Call",
+        "pdb_matched": true
+      },
+      {
+        "module": "python311.dll",
+        "rva": 1043551,
+        "symbol": "_PyObject_Call",
+        "pdb_matched": true
+      },
+      {
+        "module": "QtWidgets.pyd",
+        "rva": 126774,
+        "symbol": null,
+        "pdb_matched": false
+      },
+      {
+        "module": "QtWidgets.pyd",
+        "rva": 1970935,
+        "symbol": null,
+        "pdb_matched": false
+      },
+      {
+        "module": "Qt6Widgets.dll",
+        "rva": 367667,
+        "symbol": "QWidget::event",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Widgets.dll",
+        "rva": 759011,
+        "symbol": "QFrame::event",
+        "pdb_matched": true
+      },
+      {
+        "module": "QtWidgets.pyd",
+        "rva": 1896743,
+        "symbol": null,
+        "pdb_matched": false
+      },
+      {
+        "module": "Qt6Widgets.dll",
+        "rva": 78929,
+        "symbol": "QApplicationPrivate::notify_helper",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Widgets.dll",
+        "rva": 74795,
+        "symbol": "QApplication::notify",
+        "pdb_matched": true
+      },
+      {
+        "module": "QtWidgets.pyd",
+        "rva": 3382599,
+        "symbol": null,
+        "pdb_matched": false
+      },
+      {
+        "module": "Qt6Core.dll",
+        "rva": 706161,
+        "symbol": "QCoreApplication::notifyInternal2",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Widgets.dll",
+        "rva": 364310,
+        "symbol": "QWidgetPrivate::drawWidget",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Widgets.dll",
+        "rva": 404298,
+        "symbol": "QWidgetPrivate::paintSiblingsRecursive",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Widgets.dll",
+        "rva": 403989,
+        "symbol": "QWidgetPrivate::paintSiblingsRecursive",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Widgets.dll",
+        "rva": 364735,
+        "symbol": "QWidgetPrivate::drawWidget",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Widgets.dll",
+        "rva": 404298,
+        "symbol": "QWidgetPrivate::paintSiblingsRecursive",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Widgets.dll",
+        "rva": 364735,
+        "symbol": "QWidgetPrivate::drawWidget",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Widgets.dll",
+        "rva": 404298,
+        "symbol": "QWidgetPrivate::paintSiblingsRecursive",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Widgets.dll",
+        "rva": 364735,
+        "symbol": "QWidgetPrivate::drawWidget",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Widgets.dll",
+        "rva": 404298,
+        "symbol": "QWidgetPrivate::paintSiblingsRecursive",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Widgets.dll",
+        "rva": 403989,
+        "symbol": "QWidgetPrivate::paintSiblingsRecursive",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Widgets.dll",
+        "rva": 364735,
+        "symbol": "QWidgetPrivate::drawWidget",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Widgets.dll",
+        "rva": 404298,
+        "symbol": "QWidgetPrivate::paintSiblingsRecursive",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Widgets.dll",
+        "rva": 364735,
+        "symbol": "QWidgetPrivate::drawWidget",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Widgets.dll",
+        "rva": 404298,
+        "symbol": "QWidgetPrivate::paintSiblingsRecursive",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Widgets.dll",
+        "rva": 364735,
+        "symbol": "QWidgetPrivate::drawWidget",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Widgets.dll",
+        "rva": 404298,
+        "symbol": "QWidgetPrivate::paintSiblingsRecursive",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Widgets.dll",
+        "rva": 403989,
+        "symbol": "QWidgetPrivate::paintSiblingsRecursive",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Widgets.dll",
+        "rva": 364735,
+        "symbol": "QWidgetPrivate::drawWidget",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Widgets.dll",
+        "rva": 404298,
+        "symbol": "QWidgetPrivate::paintSiblingsRecursive",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Widgets.dll",
+        "rva": 364735,
+        "symbol": "QWidgetPrivate::drawWidget",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Widgets.dll",
+        "rva": 404298,
+        "symbol": "QWidgetPrivate::paintSiblingsRecursive",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Widgets.dll",
+        "rva": 364735,
+        "symbol": "QWidgetPrivate::drawWidget",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Widgets.dll",
+        "rva": 404298,
+        "symbol": "QWidgetPrivate::paintSiblingsRecursive",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Widgets.dll",
+        "rva": 364735,
+        "symbol": "QWidgetPrivate::drawWidget",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Widgets.dll",
+        "rva": 505138,
+        "symbol": "QWidgetRepaintManager::paintAndFlush",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Widgets.dll",
+        "rva": 368665,
+        "symbol": "QWidget::event",
+        "pdb_matched": true
+      },
+      {
+        "module": "QtWidgets.pyd",
+        "rva": 384659,
+        "symbol": null,
+        "pdb_matched": false
+      },
+      {
+        "module": "Qt6Widgets.dll",
+        "rva": 78929,
+        "symbol": "QApplicationPrivate::notify_helper",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Widgets.dll",
+        "rva": 74795,
+        "symbol": "QApplication::notify",
+        "pdb_matched": true
+      },
+      {
+        "module": "QtWidgets.pyd",
+        "rva": 3382599,
+        "symbol": null,
+        "pdb_matched": false
+      },
+      {
+        "module": "Qt6Core.dll",
+        "rva": 706161,
+        "symbol": "QCoreApplication::notifyInternal2",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Core.dll",
+        "rva": 716611,
+        "symbol": "QCoreApplicationPrivate::sendPostedEvents",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Gui.dll",
+        "rva": 3985311,
+        "symbol": "QWindowsGuiEventDispatcher::sendPostedEvents",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Core.dll",
+        "rva": 2484352,
+        "symbol": "QEventDispatcherWin32::processEvents",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Gui.dll",
+        "rva": 3985177,
+        "symbol": "QWindowsGuiEventDispatcher::processEvents",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Core.dll",
+        "rva": 733588,
+        "symbol": "QEventLoop::exec",
+        "pdb_matched": true
+      },
+      {
+        "module": "Qt6Core.dll",
+        "rva": 699130,
+        "symbol": "QCoreApplication::exec",
+        "pdb_matched": true
+      },
+      {
+        "module": "QtWidgets.pyd",
+        "rva": 3167747,
+        "symbol": null,
+        "pdb_matched": false
+      },
+      {
+        "module": "python311.dll",
+        "rva": 1324903,
+        "symbol": "cfunction_vectorcall_NOARGS",
+        "pdb_matched": true
+      },
+      {
+        "module": "python311.dll",
+        "rva": 1042009,
+        "symbol": "_PyObject_VectorcallTstate",
+        "pdb_matched": true
+      },
+      {
+        "module": "python311.dll",
+        "rva": 1043409,
+        "symbol": "PyObject_Vectorcall",
+        "pdb_matched": true
+      },
+      {
+        "module": "python311.dll",
+        "rva": 2059354,
+        "symbol": "_PyEval_EvalFrameDefault",
+        "pdb_matched": true
+      },
+      {
+        "module": "python311.dll",
+        "rva": 2075214,
+        "symbol": "_PyEval_Vector",
+        "pdb_matched": true
+      },
+      {
+        "module": "python311.dll",
+        "rva": 2040192,
+        "symbol": "PyEval_EvalCode",
+        "pdb_matched": true
+      },
+      {
+        "module": "python311.dll",
+        "rva": 2019225,
+        "symbol": "builtin_exec_impl",
+        "pdb_matched": true
+      },
+      {
+        "module": "python311.dll",
+        "rva": 2009598,
+        "symbol": "builtin_exec",
+        "pdb_matched": true
+      },
+      {
+        "module": "python311.dll",
+        "rva": 1324456,
+        "symbol": "cfunction_vectorcall_FASTCALL_KEYWORDS",
+        "pdb_matched": true
+      },
+      {
+        "module": "python311.dll",
+        "rva": 1042009,
+        "symbol": "_PyObject_VectorcallTstate",
+        "pdb_matched": true
+      },
+      {
+        "module": "python311.dll",
+        "rva": 1043409,
+        "symbol": "PyObject_Vectorcall",
+        "pdb_matched": true
+      },
+      {
+        "module": "python311.dll",
+        "rva": 2059354,
+        "symbol": "_PyEval_EvalFrameDefault",
+        "pdb_matched": true
+      },
+      {
+        "module": "python311.dll",
+        "rva": 2075214,
+        "symbol": "_PyEval_Vector",
+        "pdb_matched": true
+      },
+      {
+        "module": "python311.dll",
+        "rva": 2040192,
+        "symbol": "PyEval_EvalCode",
+        "pdb_matched": true
+      },
+      {
+        "module": "python311.dll",
+        "rva": 2563614,
+        "symbol": "run_eval_code_obj",
+        "pdb_matched": true
+      },
+      {
+        "module": "python311.dll",
+        "rva": 2563832,
+        "symbol": "run_mod",
+        "pdb_matched": true
+      },
+      {
+        "module": "python311.dll",
+        "rva": 2562600,
+        "symbol": "pyrun_file",
+        "pdb_matched": true
+      },
+      {
+        "module": "python311.dll",
+        "rva": 2553333,
+        "symbol": "_PyRun_SimpleFileObject",
+        "pdb_matched": true
+      },
+      {
+        "module": "python311.dll",
+        "rva": 2549860,
+        "symbol": "_PyRun_AnyFileObject",
+        "pdb_matched": true
+      },
+      {
+        "module": "python311.dll",
+        "rva": 527036,
+        "symbol": "pymain_run_file_obj",
+        "pdb_matched": true
+      },
+      {
+        "module": "python311.dll",
+        "rva": 529555,
+        "symbol": "pymain_run_python",
+        "pdb_matched": true
+      },
+      {
+        "module": "python311.dll",
+        "rva": 530480,
+        "symbol": "Py_Main",
+        "pdb_matched": true
+      },
+      {
+        "module": "python.exe",
+        "rva": 5268,
+        "symbol": null,
+        "pdb_matched": false
+      },
+      {
+        "module": "kernel32.dll",
+        "rva": 187815,
+        "symbol": "BaseThreadInitThunk",
+        "pdb_matched": true
+      },
+      {
+        "module": "ntdll.dll",
+        "rva": 519756,
+        "symbol": "RtlUserThreadStart",
+        "pdb_matched": true
+      }
+    ]
+  },
+  "first_overlapping_consumer_full_chain_per_boundary": [
+    {
+      "source_index": 703,
+      "tid": 5376,
+      "out_qpc": 2407897275124,
+      "ready_qpc": 2407897284514,
+      "in_qpc": 2407897284560,
+      "frames": [
+        {
+          "module": "ntdll.dll",
+          "rva": 1449428,
+          "symbol": "NtWaitForSingleObject",
+          "pdb_matched": true
+        },
+        {
+          "module": "KernelBase.dll",
+          "rva": 114335,
+          "symbol": "WaitForSingleObjectEx",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2035090,
+          "symbol": "_PyCOND_WAIT_MS",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2035713,
+          "symbol": "take_gil",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2036563,
+          "symbol": "PyEval_RestoreThread",
+          "pdb_matched": true
+        },
+        {
+          "module": "_multiarray_umath.cp311-win_amd64.pyd",
+          "rva": 1556718,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "_multiarray_umath.cp311-win_amd64.pyd",
+          "rva": 1533655,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "_multiarray_umath.cp311-win_amd64.pyd",
+          "rva": 1562776,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "_multiarray_umath.cp311-win_amd64.pyd",
+          "rva": 1563659,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1042009,
+          "symbol": "_PyObject_VectorcallTstate",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1046830,
+          "symbol": "object_vacall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1047520,
+          "symbol": "PyObject_CallFunctionObjArgs",
+          "pdb_matched": true
+        },
+        {
+          "module": "_multiarray_umath.cp311-win_amd64.pyd",
+          "rva": 1178170,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "python311.dll",
+          "rva": 928884,
+          "symbol": "binary_iop1",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 929713,
+          "symbol": "PyNumber_InPlaceSubtract",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2064871,
+          "symbol": "_PyEval_EvalFrameDefault",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2075214,
+          "symbol": "_PyEval_Vector",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043885,
+          "symbol": "_PyFunction_Vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1052918,
+          "symbol": "method_vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043278,
+          "symbol": "_PyVectorcall_Call",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043551,
+          "symbol": "_PyObject_Call",
+          "pdb_matched": true
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 70395,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 69683,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 102800,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 103480,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "QtCore.pyd",
+          "rva": 1027798,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 759825,
+          "symbol": "QMetaObject::metacall",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 988757,
+          "symbol": "doActivate<0>",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 1000020,
+          "symbol": "QMetaObject::activate",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 1105486,
+          "symbol": "QTimer::timerEvent",
+          "pdb_matched": true
+        },
+        {
+          "module": "QtCore.pyd",
+          "rva": 545520,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 1031064,
+          "symbol": "QObject::event",
+          "pdb_matched": true
+        },
+        {
+          "module": "QtCore.pyd",
+          "rva": 525648,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Widgets.dll",
+          "rva": 78929,
+          "symbol": "QApplicationPrivate::notify_helper",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Widgets.dll",
+          "rva": 74795,
+          "symbol": "QApplication::notify",
+          "pdb_matched": true
+        },
+        {
+          "module": "QtWidgets.pyd",
+          "rva": 3382599,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 706161,
+          "symbol": "QCoreApplication::notifyInternal2",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 2483774,
+          "symbol": "QEventDispatcherWin32::event",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Widgets.dll",
+          "rva": 78929,
+          "symbol": "QApplicationPrivate::notify_helper",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Widgets.dll",
+          "rva": 74795,
+          "symbol": "QApplication::notify",
+          "pdb_matched": true
+        },
+        {
+          "module": "QtWidgets.pyd",
+          "rva": 3382599,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 706161,
+          "symbol": "QCoreApplication::notifyInternal2",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 716611,
+          "symbol": "QCoreApplicationPrivate::sendPostedEvents",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 2484352,
+          "symbol": "QEventDispatcherWin32::processEvents",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 733588,
+          "symbol": "QEventLoop::exec",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 1726395,
+          "symbol": "QThread::exec",
+          "pdb_matched": true
+        },
+        {
+          "module": "QtCore.pyd",
+          "rva": 542781,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 2545746,
+          "symbol": "QThreadPrivate::start",
+          "pdb_matched": true
+        },
+        {
+          "module": "kernel32.dll",
+          "rva": 187815,
+          "symbol": "BaseThreadInitThunk",
+          "pdb_matched": true
+        },
+        {
+          "module": "ntdll.dll",
+          "rva": 519756,
+          "symbol": "RtlUserThreadStart",
+          "pdb_matched": true
+        }
+      ]
+    },
+    {
+      "source_index": 3536,
+      "tid": 5376,
+      "out_qpc": 2407901442769,
+      "ready_qpc": 2407901452729,
+      "in_qpc": 2407901452813,
+      "frames": [
+        {
+          "module": "ntdll.dll",
+          "rva": 1449428,
+          "symbol": "NtWaitForSingleObject",
+          "pdb_matched": true
+        },
+        {
+          "module": "KernelBase.dll",
+          "rva": 114335,
+          "symbol": "WaitForSingleObjectEx",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2035090,
+          "symbol": "_PyCOND_WAIT_MS",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2035713,
+          "symbol": "take_gil",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2410908,
+          "symbol": "PyGILState_Ensure",
+          "pdb_matched": true
+        },
+        {
+          "module": "shiboken6.abi3.dll",
+          "rva": 70561,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 102628,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 103480,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "QtCore.pyd",
+          "rva": 1027798,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 759825,
+          "symbol": "QMetaObject::metacall",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 988757,
+          "symbol": "doActivate<0>",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 999860,
+          "symbol": "QMetaObject::activate",
+          "pdb_matched": true
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 103213,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 103473,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "QtCore.pyd",
+          "rva": 1027798,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 759825,
+          "symbol": "QMetaObject::metacall",
+          "pdb_matched": true
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 68342,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 27811,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1087295,
+          "symbol": "method_vectorcall_VARARGS",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1042009,
+          "symbol": "_PyObject_VectorcallTstate",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043409,
+          "symbol": "PyObject_Vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2059354,
+          "symbol": "_PyEval_EvalFrameDefault",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 2075214,
+          "symbol": "_PyEval_Vector",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043885,
+          "symbol": "_PyFunction_Vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1052918,
+          "symbol": "method_vectorcall",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043278,
+          "symbol": "_PyVectorcall_Call",
+          "pdb_matched": true
+        },
+        {
+          "module": "python311.dll",
+          "rva": 1043551,
+          "symbol": "_PyObject_Call",
+          "pdb_matched": true
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 70395,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 69683,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 102800,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "pyside6.abi3.dll",
+          "rva": 103480,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "QtCore.pyd",
+          "rva": 1027798,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 759825,
+          "symbol": "QMetaObject::metacall",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 988757,
+          "symbol": "doActivate<0>",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 1000020,
+          "symbol": "QMetaObject::activate",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 1105486,
+          "symbol": "QTimer::timerEvent",
+          "pdb_matched": true
+        },
+        {
+          "module": "QtCore.pyd",
+          "rva": 545520,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 1031064,
+          "symbol": "QObject::event",
+          "pdb_matched": true
+        },
+        {
+          "module": "QtCore.pyd",
+          "rva": 525648,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Widgets.dll",
+          "rva": 78929,
+          "symbol": "QApplicationPrivate::notify_helper",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Widgets.dll",
+          "rva": 74795,
+          "symbol": "QApplication::notify",
+          "pdb_matched": true
+        },
+        {
+          "module": "QtWidgets.pyd",
+          "rva": 3382599,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 706161,
+          "symbol": "QCoreApplication::notifyInternal2",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 2483774,
+          "symbol": "QEventDispatcherWin32::event",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Widgets.dll",
+          "rva": 78929,
+          "symbol": "QApplicationPrivate::notify_helper",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Widgets.dll",
+          "rva": 74795,
+          "symbol": "QApplication::notify",
+          "pdb_matched": true
+        },
+        {
+          "module": "QtWidgets.pyd",
+          "rva": 3382599,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 706161,
+          "symbol": "QCoreApplication::notifyInternal2",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 716611,
+          "symbol": "QCoreApplicationPrivate::sendPostedEvents",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 2484352,
+          "symbol": "QEventDispatcherWin32::processEvents",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 733588,
+          "symbol": "QEventLoop::exec",
+          "pdb_matched": true
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 1726395,
+          "symbol": "QThread::exec",
+          "pdb_matched": true
+        },
+        {
+          "module": "QtCore.pyd",
+          "rva": 542781,
+          "symbol": null,
+          "pdb_matched": false
+        },
+        {
+          "module": "Qt6Core.dll",
+          "rva": 2545746,
+          "symbol": "QThreadPrivate::start",
+          "pdb_matched": true
+        },
+        {
+          "module": "kernel32.dll",
+          "rva": 187815,
+          "symbol": "BaseThreadInitThunk",
+          "pdb_matched": true
+        },
+        {
+          "module": "ntdll.dll",
+          "rva": 519756,
+          "symbol": "RtlUserThreadStart",
+          "pdb_matched": true
+        }
+      ]
+    }
+  ],
+  "guarded_simultaneous_waits": [
+    {
+      "GUI_wait_source_index": 0,
+      "consumer_wait_source_index": 703,
+      "qpc_bounds": [
+        2407897276294,
+        2407897280758
+      ]
+    },
+    {
+      "GUI_wait_source_index": 1,
+      "consumer_wait_source_index": 1278,
+      "qpc_bounds": [
+        2407898131445,
+        2407898135346
+      ]
+    },
+    {
+      "GUI_wait_source_index": 2,
+      "consumer_wait_source_index": 1866,
+      "qpc_bounds": [
+        2407898995358,
+        2407898999988
+      ]
+    },
+    {
+      "GUI_wait_source_index": 3,
+      "consumer_wait_source_index": 1923,
+      "qpc_bounds": [
+        2407899288704,
+        2407899292061
+      ]
+    },
+    {
+      "GUI_wait_source_index": 4,
+      "consumer_wait_source_index": 2455,
+      "qpc_bounds": [
+        2407899935782,
+        2407899938577
+      ]
+    },
+    {
+      "GUI_wait_source_index": 5,
+      "consumer_wait_source_index": 3025,
+      "qpc_bounds": [
+        2407900861494,
+        2407900865036
+      ]
+    },
+    {
+      "GUI_wait_source_index": 6,
+      "consumer_wait_source_index": 3536,
+      "qpc_bounds": [
+        2407901444093,
+        2407901449385
+      ]
+    },
+    {
+      "GUI_wait_source_index": 7,
+      "consumer_wait_source_index": 4132,
+      "qpc_bounds": [
+        2407902516692,
+        2407902522477
+      ]
+    },
+    {
+      "GUI_wait_source_index": 8,
+      "consumer_wait_source_index": 4271,
+      "qpc_bounds": [
+        2407903058112,
+        2407903061398
+      ]
+    },
+    {
+      "GUI_wait_source_index": 9,
+      "consumer_wait_source_index": 5490,
+      "qpc_bounds": [
+        2407905049999,
+        2407905052824
+      ]
+    },
+    {
+      "GUI_wait_source_index": 10,
+      "consumer_wait_source_index": 5568,
+      "qpc_bounds": [
+        2407905400118,
+        2407905405263
+      ]
+    },
+    {
+      "GUI_wait_source_index": 11,
+      "consumer_wait_source_index": 6110,
+      "qpc_bounds": [
+        2407905998218,
+        2407906001874
+      ]
+    },
+    {
+      "GUI_wait_source_index": 12,
+      "consumer_wait_source_index": 6714,
+      "qpc_bounds": [
+        2407907017946,
+        2407907021264
+      ]
+    },
+    {
+      "GUI_wait_source_index": 13,
+      "consumer_wait_source_index": 6825,
+      "qpc_bounds": [
+        2407907353496,
+        2407907356310
+      ]
+    },
+    {
+      "GUI_wait_source_index": 14,
+      "consumer_wait_source_index": 6917,
+      "qpc_bounds": [
+        2407907774378,
+        2407907777217
+      ]
+    },
+    {
+      "GUI_wait_source_index": 15,
+      "consumer_wait_source_index": 7407,
+      "qpc_bounds": [
+        2407908273429,
+        2407908276269
+      ]
+    },
+    {
+      "GUI_wait_source_index": 16,
+      "consumer_wait_source_index": 8031,
+      "qpc_bounds": [
+        2407909563246,
+        2407909567108
+      ]
+    },
+    {
+      "GUI_wait_source_index": 17,
+      "consumer_wait_source_index": 8128,
+      "qpc_bounds": [
+        2407910080537,
+        2407910083355
+      ]
+    },
+    {
+      "GUI_wait_source_index": 18,
+      "consumer_wait_source_index": 8663,
+      "qpc_bounds": [
+        2407910733551,
+        2407910736715
+      ]
+    },
+    {
+      "GUI_wait_source_index": 19,
+      "consumer_wait_source_index": 8723,
+      "qpc_bounds": [
+        2407911000828,
+        2407911003665
+      ]
+    },
+    {
+      "GUI_wait_source_index": 20,
+      "consumer_wait_source_index": 9294,
+      "qpc_bounds": [
+        2407911919220,
+        2407911922027
+      ]
+    },
+    {
+      "GUI_wait_source_index": 21,
+      "consumer_wait_source_index": 9847,
+      "qpc_bounds": [
+        2407912904822,
+        2407912909338
+      ]
+    },
+    {
+      "GUI_wait_source_index": 22,
+      "consumer_wait_source_index": 10375,
+      "qpc_bounds": [
+        2407913540115,
+        2407913543369
+      ]
+    },
+    {
+      "GUI_wait_source_index": 23,
+      "consumer_wait_source_index": 10426,
+      "qpc_bounds": [
+        2407913771677,
+        2407913774937
+      ]
+    },
+    {
+      "GUI_wait_source_index": 24,
+      "consumer_wait_source_index": 11050,
+      "qpc_bounds": [
+        2407915021690,
+        2407915024991
+      ]
+    },
+    {
+      "GUI_wait_source_index": 25,
+      "consumer_wait_source_index": 11606,
+      "qpc_bounds": [
+        2407916103388,
+        2407916106212
+      ]
+    },
+    {
+      "GUI_wait_source_index": 26,
+      "consumer_wait_source_index": 12167,
+      "qpc_bounds": [
+        2407917121656,
+        2407917124945
+      ]
+    },
+    {
+      "GUI_wait_source_index": 27,
+      "consumer_wait_source_index": 12249,
+      "qpc_bounds": [
+        2407917578025,
+        2407917580880
+      ]
+    },
+    {
+      "GUI_wait_source_index": 28,
+      "consumer_wait_source_index": 12799,
+      "qpc_bounds": [
+        2407918244356,
+        2407918250099
+      ]
+    },
+    {
+      "GUI_wait_source_index": 29,
+      "consumer_wait_source_index": 12837,
+      "qpc_bounds": [
+        2407918400598,
+        2407918403592
+      ]
+    },
+    {
+      "GUI_wait_source_index": 30,
+      "consumer_wait_source_index": 13379,
+      "qpc_bounds": [
+        2407919237705,
+        2407919240539
+      ]
+    },
+    {
+      "GUI_wait_source_index": 31,
+      "consumer_wait_source_index": 13999,
+      "qpc_bounds": [
+        2407922911930,
+        2407922919314
+      ]
+    },
+    {
+      "GUI_wait_source_index": 32,
+      "consumer_wait_source_index": 14777,
+      "qpc_bounds": [
+        2407923817078,
+        2407923824493
+      ]
+    },
+    {
+      "GUI_wait_source_index": 33,
+      "consumer_wait_source_index": 14870,
+      "qpc_bounds": [
+        2407924074628,
+        2407924077785
+      ]
+    },
+    {
+      "GUI_wait_source_index": 34,
+      "consumer_wait_source_index": 15689,
+      "qpc_bounds": [
+        2407927042866,
+        2407927049896
+      ]
+    },
+    {
+      "GUI_wait_source_index": 35,
+      "consumer_wait_source_index": 15783,
+      "qpc_bounds": [
+        2407927371250,
+        2407927374069
+      ]
+    },
+    {
+      "GUI_wait_source_index": 36,
+      "consumer_wait_source_index": 16339,
+      "qpc_bounds": [
+        2407928284808,
+        2407928287780
+      ]
+    },
+    {
+      "GUI_wait_source_index": 37,
+      "consumer_wait_source_index": 16390,
+      "qpc_bounds": [
+        2407928504989,
+        2407928509855
+      ]
+    },
+    {
+      "GUI_wait_source_index": 38,
+      "consumer_wait_source_index": 16915,
+      "qpc_bounds": [
+        2407929219054,
+        2407929225101
+      ]
+    },
+    {
+      "GUI_wait_source_index": 39,
+      "consumer_wait_source_index": 17502,
+      "qpc_bounds": [
+        2407930105175,
+        2407930110355
+      ]
+    },
+    {
+      "GUI_wait_source_index": 40,
+      "consumer_wait_source_index": 17611,
+      "qpc_bounds": [
+        2407930729298,
+        2407930732195
+      ]
+    },
+    {
+      "GUI_wait_source_index": 41,
+      "consumer_wait_source_index": 18112,
+      "qpc_bounds": [
+        2407931383977,
+        2407931386744
+      ]
+    },
+    {
+      "GUI_wait_source_index": 42,
+      "consumer_wait_source_index": 18640,
+      "qpc_bounds": [
+        2407932026709,
+        2407932031536
+      ]
+    },
+    {
+      "GUI_wait_source_index": 43,
+      "consumer_wait_source_index": 19242,
+      "qpc_bounds": [
+        2407932963301,
+        2407932966263
+      ]
+    },
+    {
+      "GUI_wait_source_index": 44,
+      "consumer_wait_source_index": 19787,
+      "qpc_bounds": [
+        2407933930032,
+        2407933938033
+      ]
+    },
+    {
+      "GUI_wait_source_index": 45,
+      "consumer_wait_source_index": 19885,
+      "qpc_bounds": [
+        2407934379247,
+        2407934382415
+      ]
+    },
+    {
+      "GUI_wait_source_index": 46,
+      "consumer_wait_source_index": 19971,
+      "qpc_bounds": [
+        2407934843280,
+        2407934846271
+      ]
+    },
+    {
+      "GUI_wait_source_index": 47,
+      "consumer_wait_source_index": 20065,
+      "qpc_bounds": [
+        2407935390233,
+        2407935393056
+      ]
+    },
+    {
+      "GUI_wait_source_index": 48,
+      "consumer_wait_source_index": 20587,
+      "qpc_bounds": [
+        2407936115487,
+        2407936120155
+      ]
+    },
+    {
+      "GUI_wait_source_index": 49,
+      "consumer_wait_source_index": 20627,
+      "qpc_bounds": [
+        2407936247900,
+        2407936251071
+      ]
+    },
+    {
+      "GUI_wait_source_index": 50,
+      "consumer_wait_source_index": 20727,
+      "qpc_bounds": [
+        2407936838538,
+        2407936841267
+      ]
+    },
+    {
+      "GUI_wait_source_index": 51,
+      "consumer_wait_source_index": 21295,
+      "qpc_bounds": [
+        2407937463869,
+        2407937467203
+      ]
+    },
+    {
+      "GUI_wait_source_index": 52,
+      "consumer_wait_source_index": 21862,
+      "qpc_bounds": [
+        2407938634355,
+        2407938637235
+      ]
+    },
+    {
+      "GUI_wait_source_index": 53,
+      "consumer_wait_source_index": 21952,
+      "qpc_bounds": [
+        2407939103984,
+        2407939108745
+      ]
+    },
+    {
+      "GUI_wait_source_index": 54,
+      "consumer_wait_source_index": 22083,
+      "qpc_bounds": [
+        2407939642604,
+        2407939647558
+      ]
+    },
+    {
+      "GUI_wait_source_index": 55,
+      "consumer_wait_source_index": 22205,
+      "qpc_bounds": [
+        2407940108380,
+        2407940111293
+      ]
+    },
+    {
+      "GUI_wait_source_index": 56,
+      "consumer_wait_source_index": 22368,
+      "qpc_bounds": [
+        2407940455490,
+        2407940458610
+      ]
+    },
+    {
+      "GUI_wait_source_index": 57,
+      "consumer_wait_source_index": 22505,
+      "qpc_bounds": [
+        2407940940180,
+        2407940945492
+      ]
+    },
+    {
+      "GUI_wait_source_index": 58,
+      "consumer_wait_source_index": 22590,
+      "qpc_bounds": [
+        2407941405034,
+        2407941407870
+      ]
+    }
+  ],
+  "qualified_GUI_wait_count": 59,
+  "qualified_consumer_wait_count": 26350,
+  "full_consumer_chains_kept_locally": true,
+  "frames_digest_format": "UTF-8 json.dumps(sort_keys=True,separators=(comma,colon))",
+  "selection": "All timing references for every qualified GUI latch wait and every guarded intersection. Full-chain examples are the first by observed order per consumer GIL boundary, not selected for longest waits.",
+  "bindings": {
+    "experiments/native_thread_accounting_review/summarize_qt_label_wait.py": "3ee5dd6f726825c85bbabe16c039188ba17feceb11b140973517b4a2416f0ada",
+    "experiments/native_thread_accounting_review/qt_label_wait_review.py": "8d5d0ec2ea2cd85c9f5609ffb1a590a7ac0da8e44529ffd4f25d1d20ecd9c0e6",
+    "experiments/native_thread_accounting_review/qt_label_raw_preservation01.json": "b352679b2acde6c01bae6247a352fc4e7e2f1ba18143d54f47f9ea8ec3234173",
+    "experiments/native_thread_accounting_review/runs/qt_label_review02/full_review01.json": "d859291e525d662c1868e249591413c5d5aedc612cf73f90ff5ba5842e2dfcfd",
+    "experiments/native_thread_accounting_review/label_boundary01.json": "e2656514c40af200f95d14f62b495638698b31fe554672bdc5f7f5380b455215",
+    "experiments/native_thread_accounting_review/error_api01.json": "9f452969a27e101aff1eb80e863d679746209e3710c024896d837aa9078c01ab"
+  }
+}

@@ -1,0 +1,3808 @@
+{
+  "pid": 17752,
+  "mapping": {
+    "qpc_frequency": 10000000,
+    "host_ns_offset_lower": -5500,
+    "host_ns_offset_upper": 3300,
+    "uncertainty_ns": 8800,
+    "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+  },
+  "pairs": [
+    {
+      "pair": {
+        "GUI_wait_source_index": 0,
+        "consumer_wait_source_index": 703,
+        "qpc_bounds": [
+          2407897276294,
+          2407897280758
+        ]
+      },
+      "full_host_ns_envelope": [
+        240789727623900,
+        240789728079100
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 478,
+        "row": [
+          240789652934000,
+          30607,
+          240789364042800,
+          297,
+          240789364110700,
+          30904,
+          240789652097900,
+          297,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240789680585200
+      },
+      "after": {
+        "source": "common",
+        "index": 480,
+        "row": [
+          240789755850500,
+          30727,
+          240789475432900,
+          274,
+          240789476389400,
+          31001,
+          240789755457800,
+          274,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        30607,
+        30727
+      ],
+      "received_sample_prefix_bounds": [
+        30904,
+        31001
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 177,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 1,
+        "consumer_wait_source_index": 1278,
+        "qpc_bounds": [
+          2407898131445,
+          2407898135346
+        ]
+      },
+      "full_host_ns_envelope": [
+        240789813139000,
+        240789813537900
+      ],
+      "available": true,
+      "before": {
+        "source": "samples",
+        "index": 304,
+        "row": [
+          240789712140900,
+          30707,
+          240789460142300,
+          228,
+          240789476389400,
+          30955,
+          240789707780800,
+          248,
+          20,
+          "batch",
+          30708,
+          30727,
+          20
+        ],
+        "read_end_upper_ns": 240789812175200
+      },
+      "after": {
+        "source": "common",
+        "index": 481,
+        "row": [
+          240789849214100,
+          30787,
+          240789538078200,
+          313,
+          240789538307500,
+          31100,
+          240789848837400,
+          313,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        30707,
+        30787
+      ],
+      "received_sample_prefix_bounds": [
+        30955,
+        31100
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 168,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 2,
+        "consumer_wait_source_index": 1866,
+        "qpc_bounds": [
+          2407898995358,
+          2407898999988
+        ]
+      },
+      "full_host_ns_envelope": [
+        240789899530300,
+        240789900002100
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 480,
+        "row": [
+          240789755850500,
+          30727,
+          240789475432900,
+          274,
+          240789476389400,
+          31001,
+          240789755457800,
+          274,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240789849214100
+      },
+      "after": {
+        "source": "samples",
+        "index": 306,
+        "row": [
+          240789913999100,
+          30847,
+          240789595661200,
+          292,
+          240789616096300,
+          31159,
+          240789909296000,
+          312,
+          20,
+          "batch",
+          30848,
+          30867,
+          20
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        30727,
+        30847
+      ],
+      "received_sample_prefix_bounds": [
+        31001,
+        31159
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 154,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 3,
+        "consumer_wait_source_index": 1923,
+        "qpc_bounds": [
+          2407899288704,
+          2407899292061
+        ]
+      },
+      "full_host_ns_envelope": [
+        240789928864900,
+        240789929209400
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 481,
+        "row": [
+          240789849214100,
+          30787,
+          240789538078200,
+          313,
+          240789538307500,
+          31100,
+          240789848837400,
+          313,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240789918628800
+      },
+      "after": {
+        "source": "common",
+        "index": 483,
+        "row": [
+          240790002903200,
+          30927,
+          240789675079600,
+          327,
+          240789676241500,
+          31254,
+          240790002109800,
+          327,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        30787,
+        30927
+      ],
+      "received_sample_prefix_bounds": [
+        31100,
+        31254
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 173,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 4,
+        "consumer_wait_source_index": 2455,
+        "qpc_bounds": [
+          2407899935782,
+          2407899938577
+        ]
+      },
+      "full_host_ns_envelope": [
+        240789993572700,
+        240789993861000
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 481,
+        "row": [
+          240789849214100,
+          30787,
+          240789538078200,
+          313,
+          240789538307500,
+          31100,
+          240789848837400,
+          313,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240789918628800
+      },
+      "after": {
+        "source": "common",
+        "index": 483,
+        "row": [
+          240790002903200,
+          30927,
+          240789675079600,
+          327,
+          240789676241500,
+          31254,
+          240790002109800,
+          327,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        30787,
+        30927
+      ],
+      "received_sample_prefix_bounds": [
+        31100,
+        31254
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 173,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 5,
+        "consumer_wait_source_index": 3025,
+        "qpc_bounds": [
+          2407900861494,
+          2407900865036
+        ]
+      },
+      "full_host_ns_envelope": [
+        240790086143900,
+        240790086506900
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 482,
+        "row": [
+          240789918628800,
+          30867,
+          240789615558700,
+          295,
+          240789616096300,
+          31162,
+          240789918129400,
+          295,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240790002903200
+      },
+      "after": {
+        "source": "samples",
+        "index": 308,
+        "row": [
+          240790116248400,
+          30967,
+          240789721507400,
+          380,
+          240789742797100,
+          31367,
+          240790116163900,
+          400,
+          20,
+          "batch",
+          30968,
+          30987,
+          20
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        30867,
+        30967
+      ],
+      "received_sample_prefix_bounds": [
+        31162,
+        31367
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 195,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 6,
+        "consumer_wait_source_index": 3536,
+        "qpc_bounds": [
+          2407901444093,
+          2407901449385
+        ]
+      },
+      "full_host_ns_envelope": [
+        240790144403800,
+        240790144941800
+      ],
+      "available": true,
+      "before": {
+        "source": "samples",
+        "index": 307,
+        "row": [
+          240790014743200,
+          30927,
+          240789675079600,
+          313,
+          240789696704300,
+          31260,
+          240790008173500,
+          333,
+          20,
+          "batch",
+          30928,
+          30947,
+          20
+        ],
+        "read_end_upper_ns": 240790116248400
+      },
+      "after": {
+        "source": "common",
+        "index": 485,
+        "row": [
+          240790168993000,
+          31047,
+          240789798049800,
+          371,
+          240789798858100,
+          31418,
+          240790168136100,
+          371,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        30927,
+        31047
+      ],
+      "received_sample_prefix_bounds": [
+        31260,
+        31418
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 213,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 7,
+        "consumer_wait_source_index": 4132,
+        "qpc_bounds": [
+          2407902516692,
+          2407902522477
+        ]
+      },
+      "full_host_ns_envelope": [
+        240790251663700,
+        240790252251000
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 485,
+        "row": [
+          240790168993000,
+          31047,
+          240789798049800,
+          371,
+          240789798858100,
+          31418,
+          240790168136100,
+          371,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240790236405700
+      },
+      "after": {
+        "source": "common",
+        "index": 487,
+        "row": [
+          240790297070900,
+          31187,
+          240789940963900,
+          361,
+          240789941015400,
+          31548,
+          240790296486000,
+          361,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        31047,
+        31187
+      ],
+      "received_sample_prefix_bounds": [
+        31418,
+        31548
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 231,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 8,
+        "consumer_wait_source_index": 4271,
+        "qpc_bounds": [
+          2407903058112,
+          2407903061398
+        ]
+      },
+      "full_host_ns_envelope": [
+        240790305805700,
+        240790306143100
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 486,
+        "row": [
+          240790236405700,
+          31107,
+          240789855263200,
+          381,
+          240789856406100,
+          31488,
+          240790236110800,
+          381,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240790297070900
+      },
+      "after": {
+        "source": "samples",
+        "index": 310,
+        "row": [
+          240790318043000,
+          31207,
+          240789955769000,
+          353,
+          240789956391800,
+          31560,
+          240790311445200,
+          353,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        31107,
+        31207
+      ],
+      "received_sample_prefix_bounds": [
+        31488,
+        31560
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 281,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 9,
+        "consumer_wait_source_index": 5490,
+        "qpc_bounds": [
+          2407905049999,
+          2407905052824
+        ]
+      },
+      "full_host_ns_envelope": [
+        240790504994400,
+        240790505285700
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 488,
+        "row": [
+          240790362439400,
+          31247,
+          240789995402400,
+          367,
+          240789996396600,
+          31614,
+          240790362037800,
+          367,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240790449642700
+      },
+      "after": {
+        "source": "common",
+        "index": 490,
+        "row": [
+          240790510525500,
+          31367,
+          240790116163900,
+          395,
+          240790117776700,
+          31762,
+          240790510242400,
+          395,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        31247,
+        31367
+      ],
+      "received_sample_prefix_bounds": [
+        31614,
+        31762
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 247,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 10,
+        "consumer_wait_source_index": 5568,
+        "qpc_bounds": [
+          2407905400118,
+          2407905405263
+        ]
+      },
+      "full_host_ns_envelope": [
+        240790540006300,
+        240790540529600
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 489,
+        "row": [
+          240790449642700,
+          31307,
+          240790056165800,
+          390,
+          240790056759400,
+          31697,
+          240790449408800,
+          390,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240790510525500
+      },
+      "after": {
+        "source": "common",
+        "index": 491,
+        "row": [
+          240790597294300,
+          31427,
+          240790179645800,
+          421,
+          240790184263200,
+          31848,
+          240790596307900,
+          421,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        31307,
+        31427
+      ],
+      "received_sample_prefix_bounds": [
+        31697,
+        31848
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 270,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 11,
+        "consumer_wait_source_index": 6110,
+        "qpc_bounds": [
+          2407905998218,
+          2407906001874
+        ]
+      },
+      "full_host_ns_envelope": [
+        240790599816300,
+        240790600190700
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 490,
+        "row": [
+          240790510525500,
+          31367,
+          240790116163900,
+          395,
+          240790117776700,
+          31762,
+          240790510242400,
+          395,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240790597294300
+      },
+      "after": {
+        "source": "samples",
+        "index": 313,
+        "row": [
+          240790621412600,
+          31447,
+          240790199421400,
+          406,
+          240790219254700,
+          31873,
+          240790621143900,
+          426,
+          20,
+          "batch",
+          31448,
+          31467,
+          20
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        31367,
+        31447
+      ],
+      "received_sample_prefix_bounds": [
+        31762,
+        31873
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 315,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 12,
+        "consumer_wait_source_index": 6714,
+        "qpc_bounds": [
+          2407907017946,
+          2407907021264
+        ]
+      },
+      "full_host_ns_envelope": [
+        240790701789100,
+        240790702129700
+      ],
+      "available": true,
+      "before": {
+        "source": "samples",
+        "index": 312,
+        "row": [
+          240790521359600,
+          31367,
+          240790116163900,
+          377,
+          240790136392400,
+          31764,
+          240790516186000,
+          397,
+          20,
+          "batch",
+          31368,
+          31387,
+          20
+        ],
+        "read_end_upper_ns": 240790621412600
+      },
+      "after": {
+        "source": "common",
+        "index": 492,
+        "row": [
+          240790711917800,
+          31507,
+          240790256837300,
+          456,
+          240790257512000,
+          31963,
+          240790711038800,
+          456,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        31367,
+        31507
+      ],
+      "received_sample_prefix_bounds": [
+        31764,
+        31963
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 257,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 13,
+        "consumer_wait_source_index": 6825,
+        "qpc_bounds": [
+          2407907353496,
+          2407907356310
+        ]
+      },
+      "full_host_ns_envelope": [
+        240790735344100,
+        240790735634300
+      ],
+      "available": true,
+      "before": {
+        "source": "samples",
+        "index": 313,
+        "row": [
+          240790621412600,
+          31447,
+          240790199421400,
+          406,
+          240790219254700,
+          31873,
+          240790621143900,
+          426,
+          20,
+          "batch",
+          31448,
+          31467,
+          20
+        ],
+        "read_end_upper_ns": 240790722037600
+      },
+      "after": {
+        "source": "common",
+        "index": 493,
+        "row": [
+          240790763933200,
+          31567,
+          240790330589700,
+          445,
+          240790330636900,
+          32012,
+          240790763635500,
+          445,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        31447,
+        31567
+      ],
+      "received_sample_prefix_bounds": [
+        31873,
+        32012
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 306,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 14,
+        "consumer_wait_source_index": 6917,
+        "qpc_bounds": [
+          2407907774378,
+          2407907777217
+        ]
+      },
+      "full_host_ns_envelope": [
+        240790777432300,
+        240790777725000
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 492,
+        "row": [
+          240790711917800,
+          31507,
+          240790256837300,
+          456,
+          240790257512000,
+          31963,
+          240790711038800,
+          456,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240790763933200
+      },
+      "after": {
+        "source": "samples",
+        "index": 315,
+        "row": [
+          240790822448800,
+          31607,
+          240790355311200,
+          447,
+          240790384426400,
+          32074,
+          240790822209300,
+          467,
+          20,
+          "batch",
+          31608,
+          31627,
+          20
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        31507,
+        31607
+      ],
+      "received_sample_prefix_bounds": [
+        31963,
+        32074
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 356,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 15,
+        "consumer_wait_source_index": 7407,
+        "qpc_bounds": [
+          2407908273429,
+          2407908276269
+        ]
+      },
+      "full_host_ns_envelope": [
+        240790827337400,
+        240790827630200
+      ],
+      "available": true,
+      "before": {
+        "source": "samples",
+        "index": 314,
+        "row": [
+          240790722037600,
+          31507,
+          240790256837300,
+          446,
+          240790283390000,
+          31973,
+          240790721311000,
+          466,
+          20,
+          "batch",
+          31508,
+          31527,
+          20
+        ],
+        "read_end_upper_ns": 240790822448800
+      },
+      "after": {
+        "source": "common",
+        "index": 494,
+        "row": [
+          240790830445500,
+          31627,
+          240790378325400,
+          454,
+          240790384426400,
+          32081,
+          240790829138500,
+          454,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        31507,
+        31627
+      ],
+      "received_sample_prefix_bounds": [
+        31973,
+        32081
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 346,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 16,
+        "consumer_wait_source_index": 8031,
+        "qpc_bounds": [
+          2407909563246,
+          2407909567108
+        ]
+      },
+      "full_host_ns_envelope": [
+        240790956319100,
+        240790956714100
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 494,
+        "row": [
+          240790830445500,
+          31627,
+          240790378325400,
+          454,
+          240790384426400,
+          32081,
+          240790829138500,
+          454,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240790904491100
+      },
+      "after": {
+        "source": "common",
+        "index": 496,
+        "row": [
+          240790966147000,
+          31747,
+          240790496574100,
+          466,
+          240790498434300,
+          32213,
+          240790965846200,
+          466,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        31627,
+        31747
+      ],
+      "received_sample_prefix_bounds": [
+        32081,
+        32213
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 334,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 17,
+        "consumer_wait_source_index": 8128,
+        "qpc_bounds": [
+          2407910080537,
+          2407910083355
+        ]
+      },
+      "full_host_ns_envelope": [
+        240791008048200,
+        240791008338800
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 495,
+        "row": [
+          240790904491100,
+          31687,
+          240790437645900,
+          464,
+          240790437800800,
+          32151,
+          240790902873200,
+          464,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240790966147000
+      },
+      "after": {
+        "source": "samples",
+        "index": 317,
+        "row": [
+          240791023384600,
+          31807,
+          240790560286900,
+          468,
+          240790560764800,
+          32275,
+          240791023098900,
+          468,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        31687,
+        31807
+      ],
+      "received_sample_prefix_bounds": [
+        32151,
+        32275
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 344,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 18,
+        "consumer_wait_source_index": 8663,
+        "qpc_bounds": [
+          2407910733551,
+          2407910736715
+        ]
+      },
+      "full_host_ns_envelope": [
+        240791073349600,
+        240791073674800
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 496,
+        "row": [
+          240790966147000,
+          31747,
+          240790496574100,
+          466,
+          240790498434300,
+          32213,
+          240790965846200,
+          466,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240791046763600
+      },
+      "after": {
+        "source": "samples",
+        "index": 318,
+        "row": [
+          240791123592400,
+          31867,
+          240790615133600,
+          473,
+          240790647777500,
+          32360,
+          240791122630100,
+          493,
+          20,
+          "batch",
+          31868,
+          31887,
+          20
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        31747,
+        31867
+      ],
+      "received_sample_prefix_bounds": [
+        32213,
+        32360
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 346,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 19,
+        "consumer_wait_source_index": 8723,
+        "qpc_bounds": [
+          2407911000828,
+          2407911003665
+        ]
+      },
+      "full_host_ns_envelope": [
+        240791100077300,
+        240791100369800
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 496,
+        "row": [
+          240790966147000,
+          31747,
+          240790496574100,
+          466,
+          240790498434300,
+          32213,
+          240790965846200,
+          466,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240791046763600
+      },
+      "after": {
+        "source": "samples",
+        "index": 318,
+        "row": [
+          240791123592400,
+          31867,
+          240790615133600,
+          473,
+          240790647777500,
+          32360,
+          240791122630100,
+          493,
+          20,
+          "batch",
+          31868,
+          31887,
+          20
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        31747,
+        31867
+      ],
+      "received_sample_prefix_bounds": [
+        32213,
+        32360
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 346,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 20,
+        "consumer_wait_source_index": 9294,
+        "qpc_bounds": [
+          2407911919220,
+          2407911922027
+        ]
+      },
+      "full_host_ns_envelope": [
+        240791191916500,
+        240791192206000
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 497,
+        "row": [
+          240791046763600,
+          31827,
+          240790578247600,
+          469,
+          240790580890400,
+          32296,
+          240791045982800,
+          469,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240791128640500
+      },
+      "after": {
+        "source": "common",
+        "index": 499,
+        "row": [
+          240791193836200,
+          31947,
+          240790696152300,
+          497,
+          240790697249200,
+          32444,
+          240791193273800,
+          497,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        31827,
+        31947
+      ],
+      "received_sample_prefix_bounds": [
+        32296,
+        32444
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 349,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 21,
+        "consumer_wait_source_index": 9847,
+        "qpc_bounds": [
+          2407912904822,
+          2407912909338
+        ]
+      },
+      "full_host_ns_envelope": [
+        240791290476700,
+        240791290937100
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 499,
+        "row": [
+          240791193836200,
+          31947,
+          240790696152300,
+          497,
+          240790697249200,
+          32444,
+          240791193273800,
+          497,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240791281301500
+      },
+      "after": {
+        "source": "samples",
+        "index": 320,
+        "row": [
+          240791325985300,
+          32027,
+          240790776246300,
+          528,
+          240790800315000,
+          32575,
+          240791325055100,
+          548,
+          20,
+          "batch",
+          32028,
+          32047,
+          20
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        31947,
+        32027
+      ],
+      "received_sample_prefix_bounds": [
+        32444,
+        32575
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 417,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 22,
+        "consumer_wait_source_index": 10375,
+        "qpc_bounds": [
+          2407913540115,
+          2407913543369
+        ]
+      },
+      "full_host_ns_envelope": [
+        240791354006000,
+        240791354340200
+      ],
+      "available": true,
+      "before": {
+        "source": "samples",
+        "index": 319,
+        "row": [
+          240791225269800,
+          31967,
+          240790715303800,
+          481,
+          240790736588400,
+          32468,
+          240791220229600,
+          501,
+          20,
+          "batch",
+          31968,
+          31987,
+          20
+        ],
+        "read_end_upper_ns": 240791325985300
+      },
+      "after": {
+        "source": "common",
+        "index": 501,
+        "row": [
+          240791369646600,
+          32067,
+          240790816441800,
+          554,
+          240790816792900,
+          32621,
+          240791369283900,
+          554,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        31967,
+        32067
+      ],
+      "received_sample_prefix_bounds": [
+        32468,
+        32621
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 401,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 23,
+        "consumer_wait_source_index": 10426,
+        "qpc_bounds": [
+          2407913771677,
+          2407913774937
+        ]
+      },
+      "full_host_ns_envelope": [
+        240791377162200,
+        240791377497000
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 500,
+        "row": [
+          240791281301500,
+          32007,
+          240790762276400,
+          525,
+          240790762870700,
+          32532,
+          240791280424500,
+          525,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240791369646600
+      },
+      "after": {
+        "source": "samples",
+        "index": 321,
+        "row": [
+          240791429313900,
+          32067,
+          240790816441800,
+          560,
+          240790836105700,
+          32647,
+          240791397341500,
+          580,
+          20,
+          "batch",
+          32068,
+          32087,
+          20
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        32007,
+        32067
+      ],
+      "received_sample_prefix_bounds": [
+        32532,
+        32647
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 465,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 24,
+        "consumer_wait_source_index": 11050,
+        "qpc_bounds": [
+          2407915021690,
+          2407915024991
+        ]
+      },
+      "full_host_ns_envelope": [
+        240791502163500,
+        240791502502400
+      ],
+      "available": true,
+      "before": {
+        "source": "samples",
+        "index": 320,
+        "row": [
+          240791325985300,
+          32027,
+          240790776246300,
+          528,
+          240790800315000,
+          32575,
+          240791325055100,
+          548,
+          20,
+          "batch",
+          32028,
+          32047,
+          20
+        ],
+        "read_end_upper_ns": 240791429313900
+      },
+      "after": {
+        "source": "common",
+        "index": 502,
+        "row": [
+          240791511856200,
+          32147,
+          240790895384900,
+          615,
+          240790896675600,
+          32762,
+          240791510992300,
+          615,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        32027,
+        32147
+      ],
+      "received_sample_prefix_bounds": [
+        32575,
+        32762
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 428,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 25,
+        "consumer_wait_source_index": 11606,
+        "qpc_bounds": [
+          2407916103388,
+          2407916106212
+        ]
+      },
+      "full_host_ns_envelope": [
+        240791610333300,
+        240791610624500
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 502,
+        "row": [
+          240791511856200,
+          32147,
+          240790895384900,
+          615,
+          240790896675600,
+          32762,
+          240791510992300,
+          615,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240791561840400
+      },
+      "after": {
+        "source": "common",
+        "index": 504,
+        "row": [
+          240791619966800,
+          32267,
+          240791020449900,
+          603,
+          240791020743800,
+          32870,
+          240791619501200,
+          603,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        32147,
+        32267
+      ],
+      "received_sample_prefix_bounds": [
+        32762,
+        32870
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 495,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 26,
+        "consumer_wait_source_index": 12167,
+        "qpc_bounds": [
+          2407917121656,
+          2407917124945
+        ]
+      },
+      "full_host_ns_envelope": [
+        240791712160100,
+        240791712497800
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 504,
+        "row": [
+          240791619966800,
+          32267,
+          240791020449900,
+          603,
+          240791020743800,
+          32870,
+          240791619501200,
+          603,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240791680502400
+      },
+      "after": {
+        "source": "samples",
+        "index": 324,
+        "row": [
+          240791740074300,
+          32367,
+          240791125276900,
+          595,
+          240791142588700,
+          32982,
+          240791735429300,
+          615,
+          20,
+          "batch",
+          32368,
+          32387,
+          20
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        32267,
+        32367
+      ],
+      "received_sample_prefix_bounds": [
+        32870,
+        32982
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 503,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 27,
+        "consumer_wait_source_index": 12249,
+        "qpc_bounds": [
+          2407917578025,
+          2407917580880
+        ]
+      },
+      "full_host_ns_envelope": [
+        240791757797000,
+        240791758091300
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 505,
+        "row": [
+          240791680502400,
+          32327,
+          240791092051500,
+          602,
+          240791093917800,
+          32929,
+          240791677606000,
+          602,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240791747053400
+      },
+      "after": {
+        "source": "common",
+        "index": 507,
+        "row": [
+          240791837776200,
+          32467,
+          240791219857700,
+          621,
+          240791220229600,
+          33088,
+          240791836212800,
+          621,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        32327,
+        32467
+      ],
+      "received_sample_prefix_bounds": [
+        32929,
+        33088
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 462,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 28,
+        "consumer_wait_source_index": 12799,
+        "qpc_bounds": [
+          2407918244356,
+          2407918250099
+        ]
+      },
+      "full_host_ns_envelope": [
+        240791824430100,
+        240791825013200
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 505,
+        "row": [
+          240791680502400,
+          32327,
+          240791092051500,
+          602,
+          240791093917800,
+          32929,
+          240791677606000,
+          602,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240791747053400
+      },
+      "after": {
+        "source": "common",
+        "index": 507,
+        "row": [
+          240791837776200,
+          32467,
+          240791219857700,
+          621,
+          240791220229600,
+          33088,
+          240791836212800,
+          621,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        32327,
+        32467
+      ],
+      "received_sample_prefix_bounds": [
+        32929,
+        33088
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 462,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 29,
+        "consumer_wait_source_index": 12837,
+        "qpc_bounds": [
+          2407918400598,
+          2407918403592
+        ]
+      },
+      "full_host_ns_envelope": [
+        240791840054300,
+        240791840362500
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 506,
+        "row": [
+          240791747053400,
+          32387,
+          240791141511600,
+          598,
+          240791142588700,
+          32985,
+          240791745894000,
+          598,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240791837776200
+      },
+      "after": {
+        "source": "samples",
+        "index": 325,
+        "row": [
+          240791840818800,
+          32467,
+          240791219857700,
+          604,
+          240791247702500,
+          33091,
+          240791839044900,
+          624,
+          20,
+          "batch",
+          32468,
+          32487,
+          20
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        32387,
+        32467
+      ],
+      "received_sample_prefix_bounds": [
+        32985,
+        33091
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 518,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 30,
+        "consumer_wait_source_index": 13379,
+        "qpc_bounds": [
+          2407919237705,
+          2407919240539
+        ]
+      },
+      "full_host_ns_envelope": [
+        240791923765000,
+        240791924057200
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 506,
+        "row": [
+          240791747053400,
+          32387,
+          240791141511600,
+          598,
+          240791142588700,
+          32985,
+          240791745894000,
+          598,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240791837776200
+      },
+      "after": {
+        "source": "common",
+        "index": 508,
+        "row": [
+          240791935570100,
+          32527,
+          240791275251400,
+          660,
+          240791276166000,
+          33187,
+          240791935066600,
+          660,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        32387,
+        32527
+      ],
+      "received_sample_prefix_bounds": [
+        32985,
+        33187
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 458,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 31,
+        "consumer_wait_source_index": 13999,
+        "qpc_bounds": [
+          2407922911930,
+          2407922919314
+        ]
+      },
+      "full_host_ns_envelope": [
+        240792291187500,
+        240792291934700
+      ],
+      "available": true,
+      "before": {
+        "source": "samples",
+        "index": 326,
+        "row": [
+          240791940966100,
+          32527,
+          240791275251400,
+          645,
+          240791296041800,
+          33192,
+          240791940870800,
+          665,
+          20,
+          "batch",
+          32528,
+          32547,
+          20
+        ],
+        "read_end_upper_ns": 240792281202200
+      },
+      "after": {
+        "source": "common",
+        "index": 509,
+        "row": [
+          240792309892700,
+          32587,
+          240791336950400,
+          710,
+          240791337139800,
+          33297,
+          240792309184000,
+          710,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        32527,
+        32587
+      ],
+      "received_sample_prefix_bounds": [
+        33192,
+        33297
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 605,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 32,
+        "consumer_wait_source_index": 14777,
+        "qpc_bounds": [
+          2407923817078,
+          2407923824493
+        ]
+      },
+      "full_host_ns_envelope": [
+        240792381702300,
+        240792382452600
+      ],
+      "available": true,
+      "before": {
+        "source": "samples",
+        "index": 326,
+        "row": [
+          240791940966100,
+          32527,
+          240791275251400,
+          645,
+          240791296041800,
+          33192,
+          240791940870800,
+          665,
+          20,
+          "batch",
+          32528,
+          32547,
+          20
+        ],
+        "read_end_upper_ns": 240792281202200
+      },
+      "after": {
+        "source": "samples",
+        "index": 328,
+        "row": [
+          240792382889100,
+          32607,
+          240791356042700,
+          950,
+          240791376319400,
+          33577,
+          240792380885900,
+          970,
+          20,
+          "batch",
+          32608,
+          32627,
+          20
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        32527,
+        32607
+      ],
+      "received_sample_prefix_bounds": [
+        33192,
+        33577
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 585,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 33,
+        "consumer_wait_source_index": 14870,
+        "qpc_bounds": [
+          2407924074628,
+          2407924077785
+        ]
+      },
+      "full_host_ns_envelope": [
+        240792407457300,
+        240792407781800
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 509,
+        "row": [
+          240792309892700,
+          32587,
+          240791336950400,
+          710,
+          240791337139800,
+          33297,
+          240792309184000,
+          710,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240792405954600
+      },
+      "after": {
+        "source": "samples",
+        "index": 329,
+        "row": [
+          240792549194400,
+          32667,
+          240791442557300,
+          1027,
+          240791449530400,
+          33714,
+          240792469398800,
+          1047,
+          20,
+          "batch",
+          32668,
+          32687,
+          20
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        32587,
+        32667
+      ],
+      "received_sample_prefix_bounds": [
+        33297,
+        33714
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 630,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 34,
+        "consumer_wait_source_index": 15689,
+        "qpc_bounds": [
+          2407927042866,
+          2407927049896
+        ]
+      },
+      "full_host_ns_envelope": [
+        240792704281100,
+        240792704992900
+      ],
+      "available": true,
+      "before": {
+        "source": "samples",
+        "index": 329,
+        "row": [
+          240792549194400,
+          32667,
+          240791442557300,
+          1027,
+          240791449530400,
+          33714,
+          240792469398800,
+          1047,
+          20,
+          "batch",
+          32668,
+          32687,
+          20
+        ],
+        "read_end_upper_ns": 240792690794800
+      },
+      "after": {
+        "source": "common",
+        "index": 512,
+        "row": [
+          240792714449400,
+          32787,
+          240791545009900,
+          1148,
+          240791545054500,
+          33935,
+          240792713886000,
+          1148,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        32667,
+        32787
+      ],
+      "received_sample_prefix_bounds": [
+        33714,
+        33935
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 927,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 35,
+        "consumer_wait_source_index": 15783,
+        "qpc_bounds": [
+          2407927371250,
+          2407927374069
+        ]
+      },
+      "full_host_ns_envelope": [
+        240792737119500,
+        240792737410200
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 511,
+        "row": [
+          240792575143800,
+          32707,
+          240791459889500,
+          1079,
+          240791459957900,
+          33786,
+          240792574088100,
+          1079,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240792714449400
+      },
+      "after": {
+        "source": "common",
+        "index": 513,
+        "row": [
+          240792786192300,
+          32847,
+          240791595093300,
+          1186,
+          240791596225900,
+          34033,
+          240792784853200,
+          1186,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        32707,
+        32847
+      ],
+      "received_sample_prefix_bounds": [
+        33786,
+        34033
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 939,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 36,
+        "consumer_wait_source_index": 16339,
+        "qpc_bounds": [
+          2407928284808,
+          2407928287780
+        ]
+      },
+      "full_host_ns_envelope": [
+        240792828475300,
+        240792828781300
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 512,
+        "row": [
+          240792714449400,
+          32787,
+          240791545009900,
+          1148,
+          240791545054500,
+          33935,
+          240792713886000,
+          1148,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240792786192300
+      },
+      "after": {
+        "source": "common",
+        "index": 514,
+        "row": [
+          240792866863300,
+          32907,
+          240791660316600,
+          1208,
+          240791660365300,
+          34115,
+          240792866212800,
+          1208,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        32787,
+        32907
+      ],
+      "received_sample_prefix_bounds": [
+        33935,
+        34115
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 1028,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 37,
+        "consumer_wait_source_index": 16390,
+        "qpc_bounds": [
+          2407928504989,
+          2407928509855
+        ]
+      },
+      "full_host_ns_envelope": [
+        240792850493400,
+        240792850988800
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 512,
+        "row": [
+          240792714449400,
+          32787,
+          240791545009900,
+          1148,
+          240791545054500,
+          33935,
+          240792713886000,
+          1148,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240792786192300
+      },
+      "after": {
+        "source": "common",
+        "index": 514,
+        "row": [
+          240792866863300,
+          32907,
+          240791660316600,
+          1208,
+          240791660365300,
+          34115,
+          240792866212800,
+          1208,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        32787,
+        32907
+      ],
+      "received_sample_prefix_bounds": [
+        33935,
+        34115
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 1028,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 38,
+        "consumer_wait_source_index": 16915,
+        "qpc_bounds": [
+          2407929219054,
+          2407929225101
+        ]
+      },
+      "full_host_ns_envelope": [
+        240792921899900,
+        240792922513400
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 514,
+        "row": [
+          240792866863300,
+          32907,
+          240791660316600,
+          1208,
+          240791660365300,
+          34115,
+          240792866212800,
+          1208,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240792917216200
+      },
+      "after": {
+        "source": "samples",
+        "index": 333,
+        "row": [
+          240792993820400,
+          33007,
+          240791755457700,
+          1215,
+          240791779076000,
+          34242,
+          240792993403900,
+          1235,
+          20,
+          "batch",
+          33008,
+          33027,
+          20
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        32907,
+        33007
+      ],
+      "received_sample_prefix_bounds": [
+        34115,
+        34242
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 1108,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 39,
+        "consumer_wait_source_index": 17502,
+        "qpc_bounds": [
+          2407930105175,
+          2407930110355
+        ]
+      },
+      "full_host_ns_envelope": [
+        240793010512000,
+        240793011038800
+      ],
+      "available": true,
+      "before": {
+        "source": "samples",
+        "index": 332,
+        "row": [
+          240792891450400,
+          32927,
+          240791675048000,
+          1196,
+          240791696959500,
+          34143,
+          240792891383500,
+          1216,
+          20,
+          "batch",
+          32928,
+          32947,
+          20
+        ],
+        "read_end_upper_ns": 240792993820400
+      },
+      "after": {
+        "source": "common",
+        "index": 516,
+        "row": [
+          240793015461900,
+          33027,
+          240791777991700,
+          1239,
+          240791779076000,
+          34266,
+          240793015142500,
+          1239,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        32927,
+        33027
+      ],
+      "received_sample_prefix_bounds": [
+        34143,
+        34266
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 1116,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 40,
+        "consumer_wait_source_index": 17611,
+        "qpc_bounds": [
+          2407930729298,
+          2407930732195
+        ]
+      },
+      "full_host_ns_envelope": [
+        240793072924300,
+        240793073222800
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 515,
+        "row": [
+          240792917216200,
+          32967,
+          240791717300600,
+          1201,
+          240791718659100,
+          34168,
+          240792916362700,
+          1201,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240793015461900
+      },
+      "after": {
+        "source": "common",
+        "index": 517,
+        "row": [
+          240793086636100,
+          33107,
+          240791863868700,
+          1226,
+          240791864474200,
+          34333,
+          240793085935300,
+          1226,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        32967,
+        33107
+      ],
+      "received_sample_prefix_bounds": [
+        34168,
+        34333
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 1061,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 41,
+        "consumer_wait_source_index": 18112,
+        "qpc_bounds": [
+          2407931383977,
+          2407931386744
+        ]
+      },
+      "full_host_ns_envelope": [
+        240793138392200,
+        240793138677700
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 516,
+        "row": [
+          240793015461900,
+          33027,
+          240791777991700,
+          1239,
+          240791779076000,
+          34266,
+          240793015142500,
+          1239,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240793086636100
+      },
+      "after": {
+        "source": "common",
+        "index": 518,
+        "row": [
+          240793189095400,
+          33167,
+          240791915635900,
+          1273,
+          240791916997500,
+          34440,
+          240793188144500,
+          1273,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        33027,
+        33167
+      ],
+      "received_sample_prefix_bounds": [
+        34266,
+        34440
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 1099,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 42,
+        "consumer_wait_source_index": 18640,
+        "qpc_bounds": [
+          2407932026709,
+          2407932031536
+        ]
+      },
+      "full_host_ns_envelope": [
+        240793202665400,
+        240793203156900
+      ],
+      "available": true,
+      "before": {
+        "source": "samples",
+        "index": 334,
+        "row": [
+          240793094338300,
+          33107,
+          240791863868700,
+          1209,
+          240791877562700,
+          34336,
+          240793090727200,
+          1229,
+          20,
+          "batch",
+          33108,
+          33127,
+          20
+        ],
+        "read_end_upper_ns": 240793195027900
+      },
+      "after": {
+        "source": "common",
+        "index": 519,
+        "row": [
+          240793290701400,
+          33227,
+          240791976311000,
+          1314,
+          240791976525000,
+          34541,
+          240793289769100,
+          1314,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        33107,
+        33227
+      ],
+      "received_sample_prefix_bounds": [
+        34336,
+        34541
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 1109,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 43,
+        "consumer_wait_source_index": 19242,
+        "qpc_bounds": [
+          2407932963301,
+          2407932966263
+        ]
+      },
+      "full_host_ns_envelope": [
+        240793296324600,
+        240793296629600
+      ],
+      "available": true,
+      "before": {
+        "source": "samples",
+        "index": 335,
+        "row": [
+          240793195027900,
+          33167,
+          240791915635900,
+          1259,
+          240791936170200,
+          34446,
+          240793194470500,
+          1279,
+          20,
+          "batch",
+          33168,
+          33187,
+          20
+        ],
+        "read_end_upper_ns": 240793295844500
+      },
+      "after": {
+        "source": "common",
+        "index": 520,
+        "row": [
+          240793360503100,
+          33287,
+          240792304835700,
+          1306,
+          240792304898800,
+          34593,
+          240793359420300,
+          1306,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        33167,
+        33287
+      ],
+      "received_sample_prefix_bounds": [
+        34446,
+        34593
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 1159,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 44,
+        "consumer_wait_source_index": 19787,
+        "qpc_bounds": [
+          2407933930032,
+          2407933938033
+        ]
+      },
+      "full_host_ns_envelope": [
+        240793392997700,
+        240793393806600
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 519,
+        "row": [
+          240793290701400,
+          33227,
+          240791976311000,
+          1314,
+          240791976525000,
+          34541,
+          240793289769100,
+          1314,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240793360503100
+      },
+      "after": {
+        "source": "samples",
+        "index": 337,
+        "row": [
+          240793396492400,
+          33327,
+          240792322326000,
+          1299,
+          240792325250600,
+          34646,
+          240793396280800,
+          1319,
+          20,
+          "batch",
+          33328,
+          33347,
+          20
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        33227,
+        33327
+      ],
+      "received_sample_prefix_bounds": [
+        34541,
+        34646
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 1214,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 45,
+        "consumer_wait_source_index": 19885,
+        "qpc_bounds": [
+          2407934379247,
+          2407934382415
+        ]
+      },
+      "full_host_ns_envelope": [
+        240793437919200,
+        240793438244800
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 520,
+        "row": [
+          240793360503100,
+          33287,
+          240792304835700,
+          1306,
+          240792304898800,
+          34593,
+          240793359420300,
+          1306,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240793409570300
+      },
+      "after": {
+        "source": "common",
+        "index": 522,
+        "row": [
+          240793448096700,
+          33427,
+          240792347753100,
+          1272,
+          240792347802400,
+          34699,
+          240793447364600,
+          1272,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        33287,
+        33427
+      ],
+      "received_sample_prefix_bounds": [
+        34593,
+        34699
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 1166,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 46,
+        "consumer_wait_source_index": 19971,
+        "qpc_bounds": [
+          2407934843280,
+          2407934846271
+        ]
+      },
+      "full_host_ns_envelope": [
+        240793484322500,
+        240793484630400
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 522,
+        "row": [
+          240793448096700,
+          33427,
+          240792347753100,
+          1272,
+          240792347802400,
+          34699,
+          240793447364600,
+          1272,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240793471488200
+      },
+      "after": {
+        "source": "samples",
+        "index": 338,
+        "row": [
+          240793496788900,
+          33527,
+          240792367577100,
+          1201,
+          240792373259800,
+          34748,
+          240793496459600,
+          1221,
+          20,
+          "batch",
+          33528,
+          33547,
+          20
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        33427,
+        33527
+      ],
+      "received_sample_prefix_bounds": [
+        34699,
+        34748
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 1172,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 47,
+        "consumer_wait_source_index": 20065,
+        "qpc_bounds": [
+          2407935390233,
+          2407935393056
+        ]
+      },
+      "full_host_ns_envelope": [
+        240793539017800,
+        240793539308900
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 523,
+        "row": [
+          240793471488200,
+          33487,
+          240792358133500,
+          1235,
+          240792358182700,
+          34722,
+          240793470153000,
+          1235,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240793504758100
+      },
+      "after": {
+        "source": "samples",
+        "index": 339,
+        "row": [
+          240793597455600,
+          33587,
+          240792385051100,
+          1239,
+          240792390661300,
+          34846,
+          240793596554500,
+          1259,
+          20,
+          "batch",
+          33588,
+          33607,
+          20
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        33487,
+        33587
+      ],
+      "received_sample_prefix_bounds": [
+        34722,
+        34846
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 1135,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 48,
+        "consumer_wait_source_index": 20587,
+        "qpc_bounds": [
+          2407936115487,
+          2407936120155
+        ]
+      },
+      "full_host_ns_envelope": [
+        240793611543200,
+        240793612018800
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 524,
+        "row": [
+          240793504758100,
+          33547,
+          240792373216600,
+          1209,
+          240792373259800,
+          34756,
+          240793504076300,
+          1209,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240793599607100
+      },
+      "after": {
+        "source": "common",
+        "index": 526,
+        "row": [
+          240793641189300,
+          33667,
+          240792425575100,
+          1225,
+          240792426198000,
+          34892,
+          240793640582000,
+          1225,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        33547,
+        33667
+      ],
+      "received_sample_prefix_bounds": [
+        34756,
+        34892
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 1089,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 49,
+        "consumer_wait_source_index": 20627,
+        "qpc_bounds": [
+          2407936247900,
+          2407936251071
+        ]
+      },
+      "full_host_ns_envelope": [
+        240793624784500,
+        240793625110400
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 524,
+        "row": [
+          240793504758100,
+          33547,
+          240792373216600,
+          1209,
+          240792373259800,
+          34756,
+          240793504076300,
+          1209,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240793599607100
+      },
+      "after": {
+        "source": "common",
+        "index": 526,
+        "row": [
+          240793641189300,
+          33667,
+          240792425575100,
+          1225,
+          240792426198000,
+          34892,
+          240793640582000,
+          1225,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        33547,
+        33667
+      ],
+      "received_sample_prefix_bounds": [
+        34756,
+        34892
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 1089,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 50,
+        "consumer_wait_source_index": 20727,
+        "qpc_bounds": [
+          2407936838538,
+          2407936841267
+        ]
+      },
+      "full_host_ns_envelope": [
+        240793683848300,
+        240793684130000
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 525,
+        "row": [
+          240793599607100,
+          33607,
+          240792390612300,
+          1241,
+          240792390661300,
+          34848,
+          240793599026300,
+          1241,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240793641189300
+      },
+      "after": {
+        "source": "samples",
+        "index": 340,
+        "row": [
+          240793697487300,
+          33727,
+          240792556010100,
+          1200,
+          240792560485800,
+          34947,
+          240793697080800,
+          1220,
+          20,
+          "batch",
+          33728,
+          33747,
+          20
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        33607,
+        33727
+      ],
+      "received_sample_prefix_bounds": [
+        34848,
+        34947
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 1121,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 51,
+        "consumer_wait_source_index": 21295,
+        "qpc_bounds": [
+          2407937463869,
+          2407937467203
+        ]
+      },
+      "full_host_ns_envelope": [
+        240793746381400,
+        240793746723600
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 526,
+        "row": [
+          240793641189300,
+          33667,
+          240792425575100,
+          1225,
+          240792426198000,
+          34892,
+          240793640582000,
+          1225,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240793701297700
+      },
+      "after": {
+        "source": "common",
+        "index": 528,
+        "row": [
+          240793755792100,
+          33807,
+          240792586802000,
+          1200,
+          240792586902000,
+          35007,
+          240793755289700,
+          1200,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        33667,
+        33807
+      ],
+      "received_sample_prefix_bounds": [
+        34892,
+        35007
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 1085,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 52,
+        "consumer_wait_source_index": 21862,
+        "qpc_bounds": [
+          2407938634355,
+          2407938637235
+        ]
+      },
+      "full_host_ns_envelope": [
+        240793863430000,
+        240793863726800
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 529,
+        "row": [
+          240793783406500,
+          33867,
+          240792615310000,
+          1168,
+          240792616839800,
+          35035,
+          240793783127800,
+          1168,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240793854042400
+      },
+      "after": {
+        "source": "common",
+        "index": 531,
+        "row": [
+          240793873662900,
+          33987,
+          240792743167100,
+          1136,
+          240792743894300,
+          35123,
+          240793871509500,
+          1136,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        33867,
+        33987
+      ],
+      "received_sample_prefix_bounds": [
+        35035,
+        35123
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 1048,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 53,
+        "consumer_wait_source_index": 21952,
+        "qpc_bounds": [
+          2407939103984,
+          2407939108745
+        ]
+      },
+      "full_host_ns_envelope": [
+        240793910392900,
+        240793910877800
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 530,
+        "row": [
+          240793854042400,
+          33927,
+          240792712341900,
+          1178,
+          240792712800700,
+          35105,
+          240793853258900,
+          1178,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240793873662900
+      },
+      "after": {
+        "source": "common",
+        "index": 532,
+        "row": [
+          240793920228200,
+          34067,
+          240792824704600,
+          1104,
+          240792824786400,
+          35171,
+          240793919589900,
+          1104,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        33927,
+        34067
+      ],
+      "received_sample_prefix_bounds": [
+        35105,
+        35171
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 1038,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 54,
+        "consumer_wait_source_index": 22083,
+        "qpc_bounds": [
+          2407939642604,
+          2407939647558
+        ]
+      },
+      "full_host_ns_envelope": [
+        240793964254900,
+        240793964759100
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 532,
+        "row": [
+          240793920228200,
+          34067,
+          240792824704600,
+          1104,
+          240792824786400,
+          35171,
+          240793919589900,
+          1104,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240793935874300
+      },
+      "after": {
+        "source": "common",
+        "index": 534,
+        "row": [
+          240793978927000,
+          34187,
+          240792950034100,
+          1042,
+          240792950713800,
+          35229,
+          240793978483400,
+          1042,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        34067,
+        34187
+      ],
+      "received_sample_prefix_bounds": [
+        35171,
+        35229
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 984,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 55,
+        "consumer_wait_source_index": 22205,
+        "qpc_bounds": [
+          2407940108380,
+          2407940111293
+        ]
+      },
+      "full_host_ns_envelope": [
+        240794010832500,
+        240794011132600
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 533,
+        "row": [
+          240793935874300,
+          34127,
+          240792877182200,
+          1059,
+          240792877384700,
+          35186,
+          240793935564200,
+          1059,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240793978927000
+      },
+      "after": {
+        "source": "common",
+        "index": 535,
+        "row": [
+          240794018928700,
+          34247,
+          240792995295500,
+          1018,
+          240792996223300,
+          35265,
+          240794018491400,
+          1018,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        34127,
+        34247
+      ],
+      "received_sample_prefix_bounds": [
+        35186,
+        35265
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 939,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 56,
+        "consumer_wait_source_index": 22368,
+        "qpc_bounds": [
+          2407940455490,
+          2407940458610
+        ]
+      },
+      "full_host_ns_envelope": [
+        240794045543500,
+        240794045864300
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 535,
+        "row": [
+          240794018928700,
+          34247,
+          240792995295500,
+          1018,
+          240792996223300,
+          35265,
+          240794018491400,
+          1018,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240794042440200
+      },
+      "after": {
+        "source": "common",
+        "index": 537,
+        "row": [
+          240794092847800,
+          34387,
+          240793135600000,
+          957,
+          240793136459000,
+          35344,
+          240794092604700,
+          957,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        34247,
+        34387
+      ],
+      "received_sample_prefix_bounds": [
+        35265,
+        35344
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 878,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 57,
+        "consumer_wait_source_index": 22505,
+        "qpc_bounds": [
+          2407940940180,
+          2407940945492
+        ]
+      },
+      "full_host_ns_envelope": [
+        240794094012500,
+        240794094552500
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 536,
+        "row": [
+          240794042440200,
+          34307,
+          240793060633200,
+          984,
+          240793067380600,
+          35291,
+          240794039245300,
+          984,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240794092847800
+      },
+      "after": {
+        "source": "samples",
+        "index": 344,
+        "row": [
+          240794102873100,
+          34407,
+          240793156535600,
+          927,
+          240793176986800,
+          35354,
+          240794102049700,
+          947,
+          20,
+          "batch",
+          34408,
+          34427,
+          20
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        34307,
+        34407
+      ],
+      "received_sample_prefix_bounds": [
+        35291,
+        35354
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 884,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    },
+    {
+      "pair": {
+        "GUI_wait_source_index": 58,
+        "consumer_wait_source_index": 22590,
+        "qpc_bounds": [
+          2407941405034,
+          2407941407870
+        ]
+      },
+      "full_host_ns_envelope": [
+        240794140497900,
+        240794140790300
+      ],
+      "available": true,
+      "before": {
+        "source": "common",
+        "index": 537,
+        "row": [
+          240794092847800,
+          34387,
+          240793135600000,
+          957,
+          240793136459000,
+          35344,
+          240794092604700,
+          957,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ],
+        "read_end_upper_ns": 240794120281600
+      },
+      "after": {
+        "source": "common",
+        "index": 539,
+        "row": [
+          240794152035700,
+          34507,
+          240793260823100,
+          896,
+          240793260900100,
+          35403,
+          240794151164300,
+          896,
+          0,
+          "pending",
+          null,
+          null,
+          0
+        ]
+      },
+      "completed_sample_prefix_bounds": [
+        34387,
+        34507
+      ],
+      "received_sample_prefix_bounds": [
+        35344,
+        35403
+      ],
+      "unfinished_batch_prefix_lag_lower_bound": 837,
+      "meaning": "Received sample prefix minus completed-batch prefix; may include work already processed inside an unfinished batch. Not exact deque pending or per-frame progress."
+    }
+  ],
+  "all_pairs": 59,
+  "pairs_with_lag_lower_bound_over_100": 59,
+  "limits": [
+    "Bounds use monotone prefix counters and complete prior-read brackets, not nearest-point interpolation.",
+    "An unfinished batch can include already processed frames; do not call this exact deque occupancy or name an exact active 20-frame batch.",
+    "These are workload associations for qualitative paired waits, not GIL attribution, wait duration, CPU percentages or observer qualification.",
+    "The six original pending snapshots remain separate; none became a direct GUI-latch point."
+  ],
+  "bindings": {
+    "experiments/native_thread_accounting_review/qt_wait_queue_bounds.py": "a9eae85f73ad07674e6edcfb9a9178951120f99505eff8cf745ee77da2b0d5e5",
+    "experiments/native_thread_accounting_review/qt_label_wait_summary01.json": "5317ea768e1234e524ae1d308cf58ba851047a1cf4e992785eb5a5a36722d7bc",
+    "experiments/native_stack_capture/field_reviews/20261017_field_wait01/round02/batch_wait_witnesses01.json": "c771075133847e4843ffebb34c154808d88d6736a4c333c258e9116895e12c87",
+    "experiments/single_usb_human_etw/runs/20261017_214905_5c874d97_walk_off/capture/measurement.json": "cf44031761530ace41869ef568252fbb8b20a0a7ed624a84ac6144a1c7912d30",
+    "experiments/single_usb_human_etw/queue_probe.py": "b3b5715ac2d4c191098499458528ff2d9f5495bd5bb6966dc1776ecb0e5105b3",
+    "experiments/single_usb_human_etw/frozen_sources.json": "e81e6a013c1feef532124204ff77768f33ac9adeb8512f7bf4490a28f4017aa0",
+    "experiments/single_usb_human_etw/runs/20261017_214905_5c874d97_walk_off/capture/raw_frames.npz": "2042f146705f24efaa49d43df29a8ad655810f41eb812fef93f444cf88df2ac5"
+  },
+  "primary_root_identified": false,
+  "field_fix_verified": false,
+  "old_acceptance_upgraded": false
+}
