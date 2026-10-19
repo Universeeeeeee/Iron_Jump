@@ -1,0 +1,76 @@
+{
+  "cases": {
+    "stable_workers": {
+      "group_read_ms": [
+        0.076,
+        0.1095
+      ],
+      "enumeration_ms": [
+        42.19,
+        41.9373
+      ],
+      "enumeration_thread_cpu_ms": [
+        46.875,
+        46.875
+      ],
+      "retained_threads_pass": true,
+      "reasons": [],
+      "process_cpu_ms": 2000.0,
+      "retained_cpu_ms": 2000.0,
+      "residual_cpu_ms": 0.0,
+      "whole_process_lifetime_coverage_proven": false
+    },
+    "exited_worker": {
+      "group_read_ms": [
+        0.0576,
+        0.1715
+      ],
+      "enumeration_ms": [
+        41.5332,
+        45.2888
+      ],
+      "enumeration_thread_cpu_ms": [
+        31.25,
+        31.25
+      ],
+      "retained_threads_pass": false,
+      "reasons": [
+        "endpoint_enumeration_changed",
+        "retained_thread_exited"
+      ],
+      "process_cpu_ms": 2000.0,
+      "retained_cpu_ms": 2000.0,
+      "residual_cpu_ms": 0.0,
+      "whole_process_lifetime_coverage_proven": false
+    },
+    "transient_worker": {
+      "group_read_ms": [
+        0.0466,
+        0.1174
+      ],
+      "enumeration_ms": [
+        42.8953,
+        42.4805
+      ],
+      "enumeration_thread_cpu_ms": [
+        46.875,
+        46.875
+      ],
+      "retained_threads_pass": true,
+      "reasons": [],
+      "process_cpu_ms": 2000.0,
+      "retained_cpu_ms": 0.0,
+      "residual_cpu_ms": 2000.0,
+      "whole_process_lifetime_coverage_proven": false
+    }
+  },
+  "all_three_expected_controls_pass": true,
+  "old_failure_unchanged": true,
+  "actual_load_disturbance_pass": false,
+  "primary_root_identified": false,
+  "sources": {
+    "review02.py": "1dbfe29adb4062ad227837d8c126f2348400d98e772bf069d4f92474a8033577",
+    "plan02.json": "a13760a2173ccc2ed4c424cc01eea398130949fcc4b7f345d3c455c62161c33d",
+    "result02.json": "685acf09ffda547747d6f488ff9d382a2097b7360fce33886576dc20e8b07f0d"
+  }
+}
