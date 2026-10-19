@@ -56,3 +56,5 @@ Windows独立目录为 `E:/OptoJump/IronJump-qt-label-valid-paint-20261020-01`�
 原脚印/相机绘图代码和正式处理链没有变化。旧CPU/CSwitch、3%等效/1%精度失败，以及上一轮原Qt控制的未知退出码和所有故障锁均保持原状。performance_benefit_proven、actual_load_disturbance_pass、field_attribution_ready及root_cause_or_fix_complete仍为false。
 
 后续若验证实际控件或保存负载，须另行冻结范围和有限预算，保留原绘制/模型语义及严重积压基线要求，不因当前像素一致就启动优化或宣布修复。当前无需真人测试。
+
+后续[原版保存GUI调用身份观察](../label_call_identity/README.md)在新窗口直接识别了EmbeddedCameraPanel._preview的AnnotationCanvas基类调用及DPR条件；它没有安装本桥，也没有给出积压贡献或性能收益。

@@ -1,0 +1,37 @@
+--- session_gui_comparison/entry.py
++++ label_call_identity/entry.py
+@@ -5,7 +5,7 @@
+ HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[1]
+ 
+ def main():
+-    for folder in (ROOT,ROOT/'experiments/gil_gui_calibration',ROOT/'experiments/gil_workload_finalization',ROOT/'experiments/session_gui_vision',ROOT/'experiments/session_local_baseline',HERE):sys.path.insert(0,str(folder))
++    for folder in (ROOT,ROOT/'experiments/gil_gui_calibration',ROOT/'experiments/gil_workload_finalization',ROOT/'experiments/session_gui_vision',ROOT/'experiments/session_local_baseline',ROOT/'experiments/session_gui_comparison',HERE):sys.path.insert(0,str(folder))
+     from gate import require_gate
+     plan=require_gate(HERE);name=sys.argv[sys.argv.index('--case')+1];case=next(v for v in plan['cases'] if v['id']==name)
+     stage=HERE/'runs/cohort01'/name/'capture';case_plan=dict(plan,backend=case['backend'])
+@@ -30,11 +30,16 @@
+     from context import Phases,restore,check
+     rows=[];observer=Phases(rows,plan['context_checkpoints'],clock=lambda:None if links.client is None else links.client.clock)
+     audit=RetainedAudit();anchors=[native_anchor()];contexts=[]
++    from identity_hook import Identity,verify as verify_identity
++    identity=Identity(ROOT,plan['native_entry'])
+     try:
+         audit.install();contexts=observer.install(('gui','model','consumer') if case['backend']=='original' else ('gui','model'))
+         from gui import run
++        identity.start()
+         raise SystemExit(run(case_plan,stage))
+     finally:
++        identity_result=identity.close()
++        if stage.exists():write(stage/'call_identity.json',identity_result)
+         exc=sys.exc_info()[1];outcome=dict(success=exc is None or isinstance(exc,SystemExit) and exc.code in (0,None),exception_type=None if exc is None else type(exc).__name__,exit_code=getattr(exc,'code',None),error=None if exc is None else repr(exc))
+         if stage.exists():
+             final=finalize(audit,lambda name,value:write(stage/name,value),90,outcome)
+@@ -45,6 +50,8 @@
+                 if case['backend']=='original':from pipeline_review import verify_pipeline
+                 else:from verify_pipeline02 import verify_pipeline
+                 review=verify_pipeline(stage,anchors);review['runtime_context']=check(rows,case['backend'])
++                formal=json.loads((ROOT/plan['formal_baseline_manifest']).read_text(encoding='utf-8-sig'))['baseline_files']
++                review['label_call_identity']=verify_identity(identity_result,plan['native_entry'],formal)
+             except BaseException as failure:
+                 write(stage/'pipeline_failure.json',dict(error=repr(failure),traceback=__import__('traceback').format_exc()));raise
+             write(stage/'pipeline_review.json',review)

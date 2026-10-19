@@ -1,0 +1,20 @@
+--- qt_label_contract_control/launch02.ps1
++++ label_call_identity/process_helper.ps1
+@@ -16,7 +16,7 @@
+     $info = New-Object System.Diagnostics.ProcessStartInfo
+     $info.FileName = $Program
+     $info.Arguments = $Arguments
+-    $info.WorkingDirectory = $PSScriptRoot
++    $info.WorkingDirectory = (Resolve-Path (Join-Path $PSScriptRoot '../..')).Path
+     $info.UseShellExecute = $false
+     $info.RedirectStandardOutput = $true
+     $info.RedirectStandardError = $true
+@@ -28,7 +28,7 @@
+     $err = $p.StandardError.ReadToEndAsync()
+     $dispatch = @{pid=$p.Id; retained_handle_before_wait=$true; start_utc=$p.StartTime.ToUniversalTime().ToString('o')}
+     [IO.File]::WriteAllText(($Prefix + '.dispatch.json'), ($dispatch | ConvertTo-Json))
+-    $exited = $p.WaitForExit(30000)
++    $exited = $p.WaitForExit(480000)
+     $status = @{pid=$p.Id; confirmed_exit=$exited; native_exit_code=$null; native_query_success=$false; managed_exit_code=$null; observation_complete=$false}
+     if ($exited) {
+         [uint32]$code = 0

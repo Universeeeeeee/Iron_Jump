@@ -1,0 +1,139 @@
+{
+  "call_identity_pass": true,
+  "gui_pid": 20384,
+  "sdk_fake_pid": 17124,
+  "same_observed_preview_instance": true,
+  "rows": [
+    {
+      "receiver_type": "ui.annotation_canvas.AnnotationCanvas",
+      "caller": {
+        "file": "E:\\OptoJump\\IronJump-gil-gui-calibration-20261018-01\\ui\\annotation_canvas.py",
+        "relative": "ui/annotation_canvas.py",
+        "function": "paintEvent",
+        "qualname": "AnnotationCanvas.paintEvent",
+        "line": 223,
+        "source_sha256": "ab573f096bc859ce2550821973abd508e1484e8bf90494b048c42dd8cc162df4"
+      },
+      "entry_rva": 1738384,
+      "preview_owner_directly_matched": true,
+      "pixmap": {
+        "width": 784,
+        "height": 441,
+        "dpr": 1.0,
+        "alpha": false
+      },
+      "widget": {
+        "width": 784,
+        "height": 441,
+        "dpr": 1.25,
+        "scaled_contents": false
+      },
+      "live_pose_present": false,
+      "observation_relative_arm_s": [
+        0.0833674,
+        0.0862756
+      ],
+      "before_first_nonbad_valid_beam_activity": true
+    },
+    {
+      "receiver_type": "ui.annotation_canvas.AnnotationCanvas",
+      "caller": {
+        "file": "E:\\OptoJump\\IronJump-gil-gui-calibration-20261018-01\\ui\\annotation_canvas.py",
+        "relative": "ui/annotation_canvas.py",
+        "function": "paintEvent",
+        "qualname": "AnnotationCanvas.paintEvent",
+        "line": 223,
+        "source_sha256": "ab573f096bc859ce2550821973abd508e1484e8bf90494b048c42dd8cc162df4"
+      },
+      "entry_rva": 1738384,
+      "preview_owner_directly_matched": true,
+      "pixmap": {
+        "width": 784,
+        "height": 441,
+        "dpr": 1.0,
+        "alpha": false
+      },
+      "widget": {
+        "width": 784,
+        "height": 441,
+        "dpr": 1.25,
+        "scaled_contents": false
+      },
+      "live_pose_present": false,
+      "observation_relative_arm_s": [
+        0.1180219,
+        0.1210619
+      ],
+      "before_first_nonbad_valid_beam_activity": true
+    },
+    {
+      "receiver_type": "ui.annotation_canvas.AnnotationCanvas",
+      "caller": {
+        "file": "E:\\OptoJump\\IronJump-gil-gui-calibration-20261018-01\\ui\\annotation_canvas.py",
+        "relative": "ui/annotation_canvas.py",
+        "function": "paintEvent",
+        "qualname": "AnnotationCanvas.paintEvent",
+        "line": 223,
+        "source_sha256": "ab573f096bc859ce2550821973abd508e1484e8bf90494b048c42dd8cc162df4"
+      },
+      "entry_rva": 1738384,
+      "preview_owner_directly_matched": true,
+      "pixmap": {
+        "width": 784,
+        "height": 441,
+        "dpr": 1.0,
+        "alpha": false
+      },
+      "widget": {
+        "width": 784,
+        "height": 441,
+        "dpr": 1.25,
+        "scaled_contents": false
+      },
+      "live_pose_present": true,
+      "observation_relative_arm_s": [
+        0.2310035,
+        0.23688
+      ],
+      "before_first_nonbad_valid_beam_activity": true
+    }
+  ],
+  "first_nonbad_valid_beam_activity": {
+    "sample": 53380,
+    "received_ns": 443778302367300,
+    "bad_indices_excluded": [
+      576
+    ]
+  },
+  "full_original_semantics": {
+    "full_original_report": true,
+    "full_quality_runtime_state": true,
+    "raw_fields_exact": true,
+    "source_frames": 33188,
+    "checked_sample": 48903,
+    "performance_qualification": false
+  },
+  "model_cleanup_at_original_return": false,
+  "model_cleanup_after_tail": true,
+  "limits": [
+    "Three early image calls in this new saved-workload window are directly identified; not all calls/widgets over the whole window.",
+    "DPR1 pixmap versus DPR1.25 widget is observed metadata, not a measured resampling job or CPU/GIL cost.",
+    "The profiling callback perturbs the GUI before the native call. Its partial observation bracket is not native paint time or complete observer cost.",
+    "No historical field receiver, GIL owner, same-backlog pending/batch witness or dominant root contribution is recovered.",
+    "The experiment never installs the GIL-boundary bridge; no optimization/performance A/B or observer-equivalence qualification follows."
+  ],
+  "performance_qualification": false,
+  "actual_load_disturbance_pass": false,
+  "field_historical_receiver_identified": false,
+  "root_cause_or_fix_complete": false,
+  "bindings": {
+    "review.py": "781313b337f712f0ed63433c6bbdee0031af71691f1580cacab0b8dfad321ced",
+    "plan02.json": "af4980ea70a9b9a9aacc6d88346f38e161a429f0db9a6d4207c0938dd4593001",
+    "call_identity01.json": "27b9be073836c6b5fb3c6b59a4808e7a07673e14c1104b727bf66a1bccaa797c",
+    "record01.json": "386605972f12fa1e9297349c8c7a6e323422618b346696394dbdcf5a8a927e39",
+    "gui_result01.json": "43ac73698567e8ed28911083e47c653612db5b48fc3713b5b613b5167e624781",
+    "pipeline_review01.json": "3229d0c6e134119fa37d479a4f16f1bbc475f3d6007536fcb786ea4b6bb8846f",
+    "task_status01.json": "69c579c237a9402aa27f13bce2034474389ace1a0805d556a3b31b504a0d1599",
+    "transport01.json": "de93125d88c98caa63b5db8aae19a5fd4794b5b0f12465796b8b80b139d9e85e"
+  }
+}
