@@ -1,0 +1,172 @@
+{
+  "passed": true,
+  "checks": {
+    "return_identity_preserved": true,
+    "original_exception_identity_preserved": true,
+    "native_reads_valid": true
+  },
+  "return_control": {
+    "rows": [
+      {
+        "label": "before_open",
+        "adapter": 1851433633968,
+        "capture_begin_ns": 433137324115900,
+        "value": {
+          "pid": 2720,
+          "tid": 14488,
+          "identity_crosscheck": true,
+          "begin_ns": 433137324118000,
+          "end_ns": 433137324274100,
+          "process": {
+            "creation_100ns": 134369109328355597,
+            "kernel_100ns": 1406250,
+            "user_100ns": 468750,
+            "cycles": 476878560
+          },
+          "thread": {
+            "creation_100ns": 134369109328355648,
+            "kernel_100ns": 1406250,
+            "user_100ns": 312500,
+            "cycles": 440064720
+          },
+          "python_thread_before_ns": 171875000,
+          "python_thread_after_ns": 171875000,
+          "python_process_before_ns": 187500000,
+          "python_process_after_ns": 187500000,
+          "reader_gil": "held for short readonly Win32 calls"
+        },
+        "valid": true,
+        "capture_end_ns": 433137324292000
+      },
+      {
+        "label": "after_open",
+        "adapter": 1851433633968,
+        "capture_begin_ns": 433137324295500,
+        "value": {
+          "pid": 2720,
+          "tid": 14488,
+          "identity_crosscheck": true,
+          "begin_ns": 433137324296700,
+          "end_ns": 433137324406700,
+          "process": {
+            "creation_100ns": 134369109328355597,
+            "kernel_100ns": 1406250,
+            "user_100ns": 468750,
+            "cycles": 477206880
+          },
+          "thread": {
+            "creation_100ns": 134369109328355648,
+            "kernel_100ns": 1406250,
+            "user_100ns": 312500,
+            "cycles": 440370720
+          },
+          "python_thread_before_ns": 171875000,
+          "python_thread_after_ns": 171875000,
+          "python_process_before_ns": 187500000,
+          "python_process_after_ns": 187500000,
+          "reader_gil": "held for short readonly Win32 calls"
+        },
+        "valid": true,
+        "capture_end_ns": 433137324416700
+      }
+    ],
+    "calls": [
+      {
+        "kind": "open",
+        "adapter": 1851433633968,
+        "begin_ns": 433137324293500,
+        "end_ns": 433137324295000,
+        "error": null
+      }
+    ],
+    "infer_count": 0,
+    "model_adapters": [
+      1851433633968
+    ],
+    "actual_load_disturbance_pass": false
+  },
+  "exception_control": {
+    "rows": [
+      {
+        "label": "before_open",
+        "adapter": 1851433633968,
+        "capture_begin_ns": 433137324432800,
+        "value": {
+          "pid": 2720,
+          "tid": 14488,
+          "identity_crosscheck": true,
+          "begin_ns": 433137324433800,
+          "end_ns": 433137324545700,
+          "process": {
+            "creation_100ns": 134369109328355597,
+            "kernel_100ns": 1406250,
+            "user_100ns": 468750,
+            "cycles": 477554880
+          },
+          "thread": {
+            "creation_100ns": 134369109328355648,
+            "kernel_100ns": 1406250,
+            "user_100ns": 312500,
+            "cycles": 440712480
+          },
+          "python_thread_before_ns": 171875000,
+          "python_thread_after_ns": 171875000,
+          "python_process_before_ns": 187500000,
+          "python_process_after_ns": 187500000,
+          "reader_gil": "held for short readonly Win32 calls"
+        },
+        "valid": true,
+        "capture_end_ns": 433137324558500
+      },
+      {
+        "label": "after_open",
+        "adapter": 1851433633968,
+        "capture_begin_ns": 433137324568700,
+        "value": {
+          "pid": 2720,
+          "tid": 14488,
+          "identity_crosscheck": true,
+          "begin_ns": 433137324569700,
+          "end_ns": 433137324680500,
+          "process": {
+            "creation_100ns": 134369109328355597,
+            "kernel_100ns": 1406250,
+            "user_100ns": 468750,
+            "cycles": 477870480
+          },
+          "thread": {
+            "creation_100ns": 134369109328355648,
+            "kernel_100ns": 1406250,
+            "user_100ns": 312500,
+            "cycles": 441033600
+          },
+          "python_thread_before_ns": 171875000,
+          "python_thread_after_ns": 171875000,
+          "python_process_before_ns": 187500000,
+          "python_process_after_ns": 187500000,
+          "reader_gil": "held for short readonly Win32 calls"
+        },
+        "valid": true,
+        "capture_end_ns": 433137324689700
+      }
+    ],
+    "calls": [
+      {
+        "kind": "open",
+        "adapter": 1851433633968,
+        "begin_ns": 433137324559800,
+        "end_ns": 433137324568300,
+        "error": "RuntimeError('native-control-original-error')"
+      }
+    ],
+    "infer_count": 0,
+    "model_adapters": [
+      1851433633968
+    ],
+    "actual_load_disturbance_pass": false
+  },
+  "pointer_bytes": 8,
+  "reader_sha256": "67c5ba01ba78994545c3b9a1994e21e4f15a2c502888088bdc6f0af173479446",
+  "model_orhardware_started": false,
+  "actual_load_disturbance_pass": false
+}
