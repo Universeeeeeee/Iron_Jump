@@ -1,0 +1,9 @@
+{
+  "stage": "Windows pre-capture test deployment",
+  "error": "test_capture_cleanup could not import the existing native_stack_capture/test_record_cleanup.py because that test-only file was not transferred. Eight delivery tests passed; cleanup suite import failed.",
+  "launch_enforcement_failure": "The outer shell command had separate newline commands without fail-fast behavior; launch.py ran after deployment/test command exited nonzero.",
+  "capture_started_despite_test_failure": true,
+  "runtime_source_changes": false,
+  "action": "Preserve both planned windows and this failure; no replacement capture. Verify unchanged sources and run the missing test suite after capture, explicitly labelled post-capture. Any later performance run must pass a separate explicit preflight gate before launch.",
+  "prospective_windows_test_gate_passed": false
+}

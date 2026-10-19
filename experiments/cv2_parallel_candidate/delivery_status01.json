@@ -1,0 +1,89 @@
+{
+  "cases": [
+    "default",
+    "one"
+  ],
+  "errors": [],
+  "complete": true,
+  "performance_started": false,
+  "gate": {
+    "default_cv2_workers_observed": true,
+    "candidate_no_new_cv2_workers": true,
+    "no_unclassified_starts": true,
+    "exact_pixels": true
+  },
+  "reviews": {
+    "default": {
+      "full_original_work_exact": true,
+      "resized_count": 220,
+      "configured_before": 8,
+      "configured_after": 8,
+      "clock_residual_ms": 0.044,
+      "lifecycle": {
+        "cv2_starts": [
+          {
+            "tid": 3144,
+            "qpc": 3932018522688,
+            "entry": 140735501036388,
+            "module": "\\Device\\HarddiskVolume2\\conda\\Lib\\site-packages\\cv2\\cv2.pyd",
+            "rva": 76213092
+          },
+          {
+            "tid": 22648,
+            "qpc": 3932018523662,
+            "entry": 140735501036388,
+            "module": "\\Device\\HarddiskVolume2\\conda\\Lib\\site-packages\\cv2\\cv2.pyd",
+            "rva": 76213092
+          },
+          {
+            "tid": 14724,
+            "qpc": 3932018524292,
+            "entry": 140735501036388,
+            "module": "\\Device\\HarddiskVolume2\\conda\\Lib\\site-packages\\cv2\\cv2.pyd",
+            "rva": 76213092
+          }
+        ],
+        "unknown": []
+      },
+      "role_lifetimes": {
+        "consumer": {
+          "begin": 3931869393829,
+          "actual_creation": true,
+          "end": 3932745172018,
+          "actual_exit": true
+        },
+        "model": {
+          "begin": 3931944754611,
+          "actual_creation": true,
+          "end": 3932529656236,
+          "actual_exit": true
+        }
+      }
+    },
+    "one": {
+      "full_original_work_exact": true,
+      "resized_count": 220,
+      "configured_before": 8,
+      "configured_after": 1,
+      "clock_residual_ms": 0.0441,
+      "lifecycle": {
+        "cv2_starts": [],
+        "unknown": []
+      },
+      "role_lifetimes": {
+        "consumer": {
+          "begin": 3933025908065,
+          "actual_creation": true,
+          "end": 3933911525778,
+          "actual_exit": true
+        },
+        "model": {
+          "begin": 3933100857665,
+          "actual_creation": true,
+          "end": 3933698635206,
+          "actual_exit": true
+        }
+      }
+    }
+  }
+}

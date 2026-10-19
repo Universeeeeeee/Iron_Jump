@@ -1,0 +1,36 @@
+test_capture_cleanup (unittest.loader._FailedTest.test_capture_cleanup) ... ERROR
+test_boundary_ambiguity_retained (test_delivery.DeliveryTests.test_boundary_ambiguity_retained) ... ok
+test_getter_without_delivery_insufficient (test_delivery.DeliveryTests.test_getter_without_delivery_insufficient) ... ok
+test_map_known_layout (test_delivery.DeliveryTests.test_map_known_layout) ... ok
+test_missing_baseline_insufficient (test_delivery.DeliveryTests.test_missing_baseline_insufficient) ... ok
+test_other_version_not_silently_counted_absent (test_delivery.DeliveryTests.test_other_version_not_silently_counted_absent) ... ok
+test_pixel_change_rejects (test_delivery.DeliveryTests.test_pixel_change_rejects) ... ok
+test_positive (test_delivery.DeliveryTests.test_positive) ... ok
+test_unknown_layout_rejects_gate (test_delivery.DeliveryTests.test_unknown_layout_rejects_gate) ... ok
+
+======================================================================
+ERROR: test_capture_cleanup (unittest.loader._FailedTest.test_capture_cleanup)
+----------------------------------------------------------------------
+ImportError: Failed to import test module: test_capture_cleanup
+Traceback (most recent call last):
+  File "D:\conda\Lib\unittest\loader.py", line 407, in _find_test_path
+    module = self._get_module_from_name(name)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\Lib\unittest\loader.py", line 350, in _get_module_from_name
+    __import__(name)
+  File "E:\OptoJump\IronJump-gil-gui-calibration-20261018-01\experiments\cv2_parallel_candidate\test_capture_cleanup.py", line 8, in <module>
+    suite=load('cv2_original_cleanup_tests',OLD/'test_record_cleanup.py')
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\OptoJump\IronJump-gil-gui-calibration-20261018-01\experiments\cv2_parallel_candidate\test_capture_cleanup.py", line 7, in load
+    spec=importlib.util.spec_from_file_location(name,path);m=importlib.util.module_from_spec(spec);spec.loader.exec_module(m);return m
+                                                                                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "<frozen importlib._bootstrap_external>", line 936, in exec_module
+  File "<frozen importlib._bootstrap_external>", line 1073, in get_code
+  File "<frozen importlib._bootstrap_external>", line 1130, in get_data
+FileNotFoundError: [Errno 2] No such file or directory: 'E:\\OptoJump\\IronJump-gil-gui-calibration-20261018-01\\experiments\\native_stack_capture\\test_record_cleanup.py'
+
+
+----------------------------------------------------------------------
+Ran 9 tests in 0.922s
+
+FAILED (errors=1)

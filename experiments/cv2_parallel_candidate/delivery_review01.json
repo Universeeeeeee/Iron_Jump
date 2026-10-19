@@ -1,0 +1,85 @@
+{
+  "observed_delivery_and_semantics_pass": true,
+  "prospective_windows_preflight_passed": false,
+  "post_capture_windows_tests_passed": true,
+  "preflight_enforcement_failure_preserved": true,
+  "gate": {
+    "default_cv2_workers_observed": true,
+    "candidate_no_new_cv2_workers": true,
+    "no_unclassified_starts": true,
+    "exact_pixels": true
+  },
+  "whole_trace_supplement": {
+    "default": {
+      "cv2_starts": [
+        {
+          "tid": 3144,
+          "qpc": 3932018522688,
+          "entry": 140735501036388,
+          "module": "\\Device\\HarddiskVolume2\\conda\\Lib\\site-packages\\cv2\\cv2.pyd",
+          "rva": 76213092
+        },
+        {
+          "tid": 22648,
+          "qpc": 3932018523662,
+          "entry": 140735501036388,
+          "module": "\\Device\\HarddiskVolume2\\conda\\Lib\\site-packages\\cv2\\cv2.pyd",
+          "rva": 76213092
+        },
+        {
+          "tid": 14724,
+          "qpc": 3932018524292,
+          "entry": 140735501036388,
+          "module": "\\Device\\HarddiskVolume2\\conda\\Lib\\site-packages\\cv2\\cv2.pyd",
+          "rva": 76213092
+        }
+      ],
+      "unknown": [
+        {
+          "tid": 12596,
+          "reason": "unmapped or ambiguous entry"
+        }
+      ]
+    },
+    "one": {
+      "cv2_starts": [],
+      "unknown": [
+        {
+          "tid": 23408,
+          "reason": "unmapped or ambiguous entry"
+        }
+      ]
+    }
+  },
+  "configured_counts": {
+    "default": {
+      "before": 8,
+      "after": 8
+    },
+    "one": {
+      "before": 8,
+      "after": 1
+    }
+  },
+  "actual_work_roi_thread_counts": {
+    "default": 3,
+    "one": 0
+  },
+  "resized_pixels_compared": 220,
+  "performance_claim": false,
+  "performance_started": false,
+  "actual_load_disturbance_pass": false,
+  "primary_root_identified": false,
+  "limits": [
+    "The failed prospective Windows test gate remains failed; post-capture tests do not rewrite it.",
+    "These are execution-delivery and exact-semantics observations, not speed or field qualification.",
+    "Lifecycle entry module does not identify a current hotspot or GIL owner.",
+    "Future performance requires a new explicit passed preflight marker bound to that new plan; never continue after a failed shell step."
+  ],
+  "bindings": {
+    "plan01.json": "06b3d8316da53a0909982d047d63a0dae58d72633ab2dec3b5093ec57deb2a2e",
+    "review_delivery.py": "c01620fecfe82c7bfd2ebf211a5e019269ed2c9828af7c95a27fccf777050dfb",
+    "preflight_failure01.json": "5cf77cfd6fbc3fe9ad2d98399c17c8c48bb267f69fce691b8ac41f762face4e7",
+    "windows_tests_post01.json": "2d532ecae663c58dac0f2f73a56575eea3c1fa80fedc56ab784d00b40542361d"
+  }
+}

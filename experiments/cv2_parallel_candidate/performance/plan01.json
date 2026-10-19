@@ -1,0 +1,140 @@
+{
+  "replay_root": "E:/OptoJump/IronJump-walk-compute-offline-20261017-01",
+  "input_root": "E:/OptoJump/IronJump-single-usb-human-etw-20261017/experiments/single_usb_human_etw/runs/20261018_131910_3eef864f_walk_off/capture",
+  "input_sha256": {
+    "raw_frames.npz": "8ee4a9ea9ac835f5dc083d014eeaef9d337ee8c140f1cdc3a11f1be6fece2d47",
+    "raw_archive.npz": "6ec340e2ca62742235d6602cf38c4470a20cf5f29441c8387be9bb85522cdcd5",
+    "acquisition.json": "e84e6bd481eeadd408a61c377950cc878bf8d989b92f58596fccf6eee62c62cb",
+    "report.json": "0ae1bf2d9277c1e3d95d629e071cb3ff61d249c78c6d0b6d0901773f4fb68747",
+    "state.json": "bfb63086da795427cc2fbd5985a4ff56bcd1cdb964908dcc4a9408a79a6d914f",
+    "measurement.json": "a2b441f1367dd3d5eb7204c75eeebf05c344e8dd69b632ba29f57a4eed6febe9"
+  },
+  "raw_first": 42237,
+  "raw_after_last": 49061,
+  "replay_sha256": "fcde26dd2e707cc457623a971a97e68ebd9f49630126c51bd6ce83072a0d40a8",
+  "media_root": "E:\\OptoJump\\IronJump-ground-backlog-measurement-20261016\\experiments\\ground_backlog_measurement\\inputs\\walk",
+  "media_sha256": {
+    "camera.csv": "cc911dfd8e7aadf4da9f7c1e604e65ef33a02a4f7f790ba1e0ad1dfa7e890d88",
+    "camera.mjpg": "64d887e0c2817e3594e3bbad4193ab97b4abc1d0c2eed0229ac3d092fad04e52"
+  },
+  "model_path": "E:/OptoJump/IronJump-gil-gui-calibration-20261018-01/models/pose_landmarker_full.task",
+  "model_sha256": "5134a3aad27a58b93da0088d431f366da362b44e3ccfbe3462b3827a839011b1",
+  "frame_ids": [
+    4151,
+    4155,
+    4159,
+    4163,
+    4167,
+    4171,
+    4175,
+    4179,
+    4183,
+    4187,
+    4191
+  ],
+  "model_calls": 220,
+  "python_dll_sha256": "162e8557fbed5f39ae24983ee62b2d435b4796c937d9c1a34371888c7e43af00",
+  "numpy_pyd_sha256": "4fb4c5d62a6bd766eea716350eaf5396580e33cf7dc159e305488d1b7d72dad2",
+  "progress_frames": [
+    1000,
+    2000,
+    3000,
+    4000,
+    5000,
+    6000,
+    6824
+  ],
+  "cases": [
+    "pair01_default",
+    "pair01_one",
+    "pair02_one",
+    "pair02_default",
+    "pair03_one",
+    "pair03_default",
+    "pair04_default",
+    "pair04_one"
+  ],
+  "pairs": [
+    {
+      "default": "pair01_default",
+      "one": "pair01_one"
+    },
+    {
+      "default": "pair02_default",
+      "one": "pair02_one"
+    },
+    {
+      "default": "pair03_default",
+      "one": "pair03_one"
+    },
+    {
+      "default": "pair04_default",
+      "one": "pair04_one"
+    }
+  ],
+  "orders": [
+    [
+      "default",
+      "one"
+    ],
+    [
+      "one",
+      "default"
+    ],
+    [
+      "one",
+      "default"
+    ],
+    [
+      "default",
+      "one"
+    ]
+  ],
+  "opencv_variants": {
+    "pair01_default": "default",
+    "pair01_one": "one",
+    "pair02_default": "default",
+    "pair02_one": "one",
+    "pair03_default": "default",
+    "pair03_one": "one",
+    "pair04_default": "default",
+    "pair04_one": "one"
+  },
+  "case_variants": {
+    "pair01_default": "concurrent",
+    "pair01_one": "concurrent",
+    "pair02_one": "concurrent",
+    "pair02_default": "concurrent",
+    "pair03_one": "concurrent",
+    "pair03_default": "concurrent",
+    "pair04_default": "concurrent",
+    "pair04_one": "concurrent"
+  },
+  "original_threads": 8,
+  "cv2_sha256": "ae833b9b5771f5932200bd3b8ad0f483f4fbec92cbdbd26d21d38fe524c60e66",
+  "sources": {
+    "workload.py": "d5e4fadc5ce704f69ca3f8eed933a94b64a053787825e043e95b2d698bf9e79e",
+    "cohort.py": "0284c51cf14563d8fdb1d95ff726f649e52f25403692c3dc5eb2e98af5370fc2",
+    "verify.py": "3a591c1d674f9a32f9fb7be9cb7c17ad0750b7fa078b7fa7ada9102aa54643a6",
+    "preflight_gate.py": "25609994fc4c13d8856cf0c125adb10ff983e34c9208f3526b74deb746450c48",
+    "reference01.json": "01233f2b0afba0d1ac45a1d33ffded6f8fd3b21427b6fb0f9602adf4dffbbed8",
+    "delivery_review01.json": "0392718c5b953292e3b15577a230ff11fe46c61c40e25a1d11387d61c12ddd70"
+  },
+  "dependency_sources": {
+    "experiments/fixed_overlap_comparison/workload.py": "c9645bec3c82716da153a792d3e310a5873dfae7a4b5a99b24a716c959b8eaf0",
+    "experiments/fixed_work_accounting/counters.py": "504cd67a5bbb9691eb4c8bfdf5a2a1e71d454317e70eaff559713767c3236a0d",
+    "experiments/fixed_work_accounting/logical_clock.py": "309676131f0052886d8b32c1740ed461966cab39da98a625e5e23bd0b164c6e3"
+  },
+  "primary_endpoint": "consumer wall time",
+  "minimum_geometric_consumer_reduction": 0.1,
+  "maximum_geometric_whole_work_regression": 0.05,
+  "all_pairs_consumer_improve_required": true,
+  "scope": "Four pairs, only OpenCV configuration default8 vs1; original concurrent fixed work in both arms, common7 progress markers/counters. No ETW/resize hashing/stack sampler/GUI/hardware. No repeat or subset.",
+  "delivery_evidence": {
+    "review_sha256": "0392718c5b953292e3b15577a230ff11fe46c61c40e25a1d11387d61c12ddd70",
+    "prospective_windows_preflight_failed": true,
+    "post_capture_tests_passed": true,
+    "note": "Prior enforcement error remains failed. Actual immutable delivery/semantic data independently reviewed; this new performance phase requires its own passed preflight before any case starts."
+  },
+  "originating_thresholds_sha256": "06b3d8316da53a0909982d047d63a0dae58d72633ab2dec3b5093ec57deb2a2e"
+}

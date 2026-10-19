@@ -1,0 +1,43 @@
+{
+  "delivery_cases": [
+    "default",
+    "one"
+  ],
+  "model_calls": 220,
+  "original_threads": 8,
+  "cv2_sha256": "ae833b9b5771f5932200bd3b8ad0f483f4fbec92cbdbd26d21d38fe524c60e66",
+  "reader": "E:/OptoJump/IronJump-gil-gui-calibration-20261018-01/experiments/thread_lifecycle_control/ReadStacks.exe",
+  "reader_sha256": "a446a8427441990b24cdb1dfcd06a04720e6747a93fe03a44a3db07091bdad15",
+  "sources": {
+    "fixture.py": "8a3990c73f33505d3f925ead4bc1b2016505d913ac340f04575d8c4caf09af77",
+    "capture.py": "d372c973135bc40f53f7ef84f4f823456da867ab1950c2fc0b2890f1874b7833",
+    "lifecycle.wprp": "4791d6fec91e5c237b0efe0c0ca8dc34348d94e9e9fb8a64a8b6608ca512a71a",
+    "delivery.py": "7fcaec631a6f23dffe785457d5ea56f3cae977633daf48dbc16c8b9cf77b9e91",
+    "run_delivery.py": "dd9e161ad4ea8af9a869b76e66a94ab6e8b9cc7a37d72bcfe220c4bb7f3e928f",
+    "reference01.json": "01233f2b0afba0d1ac45a1d33ffded6f8fd3b21427b6fb0f9602adf4dffbbed8",
+    "child/plan01.json": "173da63d9e673e2ab7f273bcd6486aa8636798149ae2c0869ddcf557f10ecc91"
+  },
+  "dependency_sources": {
+    "experiments/fixed_overlap_comparison/workload.py": "c9645bec3c82716da153a792d3e310a5873dfae7a4b5a99b24a716c959b8eaf0",
+    "experiments/fixed_overlap_comparison/verify.py": "3a591c1d674f9a32f9fb7be9cb7c17ad0750b7fa078b7fa7ada9102aa54643a6",
+    "experiments/fixed_work_accounting/logical_clock.py": "309676131f0052886d8b32c1740ed461966cab39da98a625e5e23bd0b164c6e3",
+    "experiments/fixed_work_accounting/counters.py": "504cd67a5bbb9691eb4c8bfdf5a2a1e71d454317e70eaff559713767c3236a0d",
+    "experiments/native_stack_symbol_preflight/pe_identity.py": "fa7b76195d682200a0aab4d0122ddcd0954ec7f0b73af085f0b5f41ac3ce0294",
+    "experiments/native_stack_capture/winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+    "experiments/native_stack_capture/analyze.py": "e99d90dc65b29daaf7e75fbb8f60d45f4a53af48b3bdaa7cbae8b929807d1808",
+    "experiments/native_stack_capture/plan.json": "2a0ec4593a07e65bda0c329e094480775b4bc3574af3853bd9d86b8532196178",
+    "experiments/thread_lifecycle_review/review.py": "98e35adb151cfab88e12634cb24fc99dfb412fd771db3c181bf1b6e3ab8c62df"
+  },
+  "scope": "Exactly two semantic/execution-delivery windows, default8 then candidate1, both original concurrent fixed work. Lifecycle-only trace and identical resized-pixel hashing. No performance conclusion from these instrumented windows; no replacement on failure.",
+  "delivery_gate": "Exact220 resized pixel records plus complete original model/report/raw semantics; known consumer/model Start/End cover work; zero loss and original1ms clock gate; all ROI starts classifiable; default has cv2-entry starts, candidate has none.",
+  "future_performance": {
+    "status": "not_started_and_requires_delivery_pass",
+    "budget": "Exactly4 fresh-process pairs, orders AB/BA/BA/AB. No replacement or posthoc subset.",
+    "primary": "consumer wall time",
+    "require_all_pairs_improve": true,
+    "minimum_geometric_consumer_reduction": 0.1,
+    "maximum_geometric_whole_work_regression": 0.05,
+    "observers": "No ETW or resize hashing; same original boundary counters and7 progress markers in both arms.",
+    "limits": "Directional practicality gates only; old3%/1% and field-fix gates unchanged."
+  }
+}
