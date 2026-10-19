@@ -1,0 +1,4603 @@
+{
+  "cases": {
+    "a": {
+      "order": [
+        "quality",
+        "filter",
+        "processor"
+      ],
+      "report_sha256": "f497b7901a79d5b902744ce4a4a87270862ec3f8d2409c6f8982ec9d4b909c68",
+      "stages": {
+        "quality": {
+          "preflight": {
+            "wall_ms": 2945.0612,
+            "cpu_ms": 2937.5,
+            "operations": 33906,
+            "blocks": 1,
+            "negative_wall_minus_cpu_blocks": []
+          },
+          "formal": {
+            "wall_ms": 3231.9588,
+            "cpu_ms": 3234.375,
+            "operations": 40977,
+            "blocks": 41,
+            "negative_wall_minus_cpu_blocks": [
+              4,
+              9,
+              14,
+              17,
+              23,
+              29,
+              30,
+              36,
+              40
+            ]
+          }
+        },
+        "filter": {
+          "preflight": {
+            "wall_ms": 0.0,
+            "cpu_ms": 0.0,
+            "operations": 0,
+            "blocks": 0,
+            "negative_wall_minus_cpu_blocks": []
+          },
+          "formal": {
+            "wall_ms": 2798.7075,
+            "cpu_ms": 2765.625,
+            "operations": 40979,
+            "blocks": 41,
+            "negative_wall_minus_cpu_blocks": [
+              3,
+              4,
+              5,
+              7,
+              8,
+              11,
+              13,
+              14,
+              17,
+              21,
+              27,
+              34,
+              35
+            ]
+          }
+        },
+        "processor": {
+          "preflight": {
+            "wall_ms": 0.0,
+            "cpu_ms": 0.0,
+            "operations": 0,
+            "blocks": 0,
+            "negative_wall_minus_cpu_blocks": []
+          },
+          "formal": {
+            "wall_ms": 4577.9828,
+            "cpu_ms": 4562.5,
+            "operations": 41396,
+            "blocks": 41,
+            "negative_wall_minus_cpu_blocks": [
+              0,
+              5,
+              9,
+              10,
+              12,
+              15,
+              23,
+              24,
+              26,
+              28,
+              31,
+              33,
+              37,
+              39
+            ]
+          }
+        }
+      },
+      "all_rows": {
+        "quality": [
+          {
+            "block": -1,
+            "raw_first": 0,
+            "raw_last": 33905,
+            "operations": 33906,
+            "calls": {
+              "on_frame": 33906
+            },
+            "thread_cpu_ns": 2937500000,
+            "wall_ns": 2945061200
+          },
+          {
+            "block": 0,
+            "raw_first": 33906,
+            "raw_last": 34905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 49591700
+          },
+          {
+            "block": 1,
+            "raw_first": 34906,
+            "raw_last": 35905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 49167100
+          },
+          {
+            "block": 2,
+            "raw_first": 35906,
+            "raw_last": 36905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 48743800
+          },
+          {
+            "block": 3,
+            "raw_first": 36906,
+            "raw_last": 37905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 79135600
+          },
+          {
+            "block": 4,
+            "raw_first": 37906,
+            "raw_last": 38905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 93750000,
+            "wall_ns": 81102400
+          },
+          {
+            "block": 5,
+            "raw_first": 38906,
+            "raw_last": 39905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 82445600
+          },
+          {
+            "block": 6,
+            "raw_first": 39906,
+            "raw_last": 40905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 78867600
+          },
+          {
+            "block": 7,
+            "raw_first": 40906,
+            "raw_last": 41905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 81129900
+          },
+          {
+            "block": 8,
+            "raw_first": 41906,
+            "raw_last": 42905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 78620900
+          },
+          {
+            "block": 9,
+            "raw_first": 42906,
+            "raw_last": 43905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 93750000,
+            "wall_ns": 82270300
+          },
+          {
+            "block": 10,
+            "raw_first": 43906,
+            "raw_last": 44905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 82242700
+          },
+          {
+            "block": 11,
+            "raw_first": 44906,
+            "raw_last": 45905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 81197100
+          },
+          {
+            "block": 12,
+            "raw_first": 45906,
+            "raw_last": 46905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 80287400
+          },
+          {
+            "block": 13,
+            "raw_first": 46906,
+            "raw_last": 47905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 83142900
+          },
+          {
+            "block": 14,
+            "raw_first": 47906,
+            "raw_last": 48905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 93750000,
+            "wall_ns": 81358200
+          },
+          {
+            "block": 15,
+            "raw_first": 48906,
+            "raw_last": 49905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 86170200
+          },
+          {
+            "block": 16,
+            "raw_first": 49906,
+            "raw_last": 50905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 80091900
+          },
+          {
+            "block": 17,
+            "raw_first": 50906,
+            "raw_last": 51905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 93750000,
+            "wall_ns": 81371200
+          },
+          {
+            "block": 18,
+            "raw_first": 51906,
+            "raw_last": 52905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 80938700
+          },
+          {
+            "block": 19,
+            "raw_first": 52906,
+            "raw_last": 53905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 78915000
+          },
+          {
+            "block": 20,
+            "raw_first": 53906,
+            "raw_last": 54905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 80785400
+          },
+          {
+            "block": 21,
+            "raw_first": 54906,
+            "raw_last": 55905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 80261900
+          },
+          {
+            "block": 22,
+            "raw_first": 55906,
+            "raw_last": 56905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 80556700
+          },
+          {
+            "block": 23,
+            "raw_first": 56906,
+            "raw_last": 57905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 93750000,
+            "wall_ns": 80190400
+          },
+          {
+            "block": 24,
+            "raw_first": 57906,
+            "raw_last": 58905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 80353900
+          },
+          {
+            "block": 25,
+            "raw_first": 58906,
+            "raw_last": 59905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 79148900
+          },
+          {
+            "block": 26,
+            "raw_first": 59906,
+            "raw_last": 60905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 82848400
+          },
+          {
+            "block": 27,
+            "raw_first": 60906,
+            "raw_last": 61905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 79916900
+          },
+          {
+            "block": 28,
+            "raw_first": 61906,
+            "raw_last": 62905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 79739200
+          },
+          {
+            "block": 29,
+            "raw_first": 62906,
+            "raw_last": 63905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 93750000,
+            "wall_ns": 86742100
+          },
+          {
+            "block": 30,
+            "raw_first": 63906,
+            "raw_last": 64905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 93750000,
+            "wall_ns": 88646600
+          },
+          {
+            "block": 31,
+            "raw_first": 64906,
+            "raw_last": 65905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 80427500
+          },
+          {
+            "block": 32,
+            "raw_first": 65906,
+            "raw_last": 66905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 81867300
+          },
+          {
+            "block": 33,
+            "raw_first": 66906,
+            "raw_last": 67905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 80120900
+          },
+          {
+            "block": 34,
+            "raw_first": 67906,
+            "raw_last": 68905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 81631000
+          },
+          {
+            "block": 35,
+            "raw_first": 68906,
+            "raw_last": 69905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 80357400
+          },
+          {
+            "block": 36,
+            "raw_first": 69906,
+            "raw_last": 70905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 93750000,
+            "wall_ns": 79767000
+          },
+          {
+            "block": 37,
+            "raw_first": 70906,
+            "raw_last": 71905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 80316700
+          },
+          {
+            "block": 38,
+            "raw_first": 71906,
+            "raw_last": 72905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 80133800
+          },
+          {
+            "block": 39,
+            "raw_first": 72906,
+            "raw_last": 73905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 84438600
+          },
+          {
+            "block": 40,
+            "raw_first": 73906,
+            "raw_last": 74882,
+            "operations": 977,
+            "calls": {
+              "on_frame": 977
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 76918000
+          }
+        ],
+        "filter": [
+          {
+            "block": 0,
+            "raw_first": 33906,
+            "raw_last": 34905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 51379400
+          },
+          {
+            "block": 1,
+            "raw_first": 34906,
+            "raw_last": 35905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 47895200
+          },
+          {
+            "block": 2,
+            "raw_first": 35906,
+            "raw_last": 36905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 52132900
+          },
+          {
+            "block": 3,
+            "raw_first": 36906,
+            "raw_last": 37905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 46187500
+          },
+          {
+            "block": 4,
+            "raw_first": 37906,
+            "raw_last": 38905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 62500000,
+            "wall_ns": 49804100
+          },
+          {
+            "block": 5,
+            "raw_first": 38906,
+            "raw_last": 39905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 46872700
+          },
+          {
+            "block": 6,
+            "raw_first": 39906,
+            "raw_last": 40905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 49293600
+          },
+          {
+            "block": 7,
+            "raw_first": 40906,
+            "raw_last": 41905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 46572600
+          },
+          {
+            "block": 8,
+            "raw_first": 41906,
+            "raw_last": 42905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 93750000,
+            "wall_ns": 89917200
+          },
+          {
+            "block": 9,
+            "raw_first": 42906,
+            "raw_last": 43905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 140625000,
+            "wall_ns": 140959500
+          },
+          {
+            "block": 10,
+            "raw_first": 43906,
+            "raw_last": 44905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 140625000,
+            "wall_ns": 149082600
+          },
+          {
+            "block": 11,
+            "raw_first": 44906,
+            "raw_last": 45905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 156250000,
+            "wall_ns": 148844300
+          },
+          {
+            "block": 12,
+            "raw_first": 45906,
+            "raw_last": 46905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 133759500
+          },
+          {
+            "block": 13,
+            "raw_first": 46906,
+            "raw_last": 47905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 156250000,
+            "wall_ns": 147504300
+          },
+          {
+            "block": 14,
+            "raw_first": 47906,
+            "raw_last": 48905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 140625000,
+            "wall_ns": 138916500
+          },
+          {
+            "block": 15,
+            "raw_first": 48906,
+            "raw_last": 49905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 62500000,
+            "wall_ns": 63808000
+          },
+          {
+            "block": 16,
+            "raw_first": 49906,
+            "raw_last": 50905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 48390800
+          },
+          {
+            "block": 17,
+            "raw_first": 50906,
+            "raw_last": 51905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 46805100
+          },
+          {
+            "block": 18,
+            "raw_first": 51906,
+            "raw_last": 52905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 48345400
+          },
+          {
+            "block": 19,
+            "raw_first": 52906,
+            "raw_last": 53905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 48361600
+          },
+          {
+            "block": 20,
+            "raw_first": 53906,
+            "raw_last": 54905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 47373700
+          },
+          {
+            "block": 21,
+            "raw_first": 54906,
+            "raw_last": 55905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 46173800
+          },
+          {
+            "block": 22,
+            "raw_first": 55906,
+            "raw_last": 56905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 48175600
+          },
+          {
+            "block": 23,
+            "raw_first": 56906,
+            "raw_last": 57905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 49198700
+          },
+          {
+            "block": 24,
+            "raw_first": 57906,
+            "raw_last": 58905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 31250000,
+            "wall_ns": 47727800
+          },
+          {
+            "block": 25,
+            "raw_first": 58906,
+            "raw_last": 59905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 47292900
+          },
+          {
+            "block": 26,
+            "raw_first": 59906,
+            "raw_last": 60905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 47216300
+          },
+          {
+            "block": 27,
+            "raw_first": 60906,
+            "raw_last": 61905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 62500000,
+            "wall_ns": 48836200
+          },
+          {
+            "block": 28,
+            "raw_first": 61906,
+            "raw_last": 62905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 47288200
+          },
+          {
+            "block": 29,
+            "raw_first": 62906,
+            "raw_last": 63905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 48228100
+          },
+          {
+            "block": 30,
+            "raw_first": 63906,
+            "raw_last": 64905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 47789500
+          },
+          {
+            "block": 31,
+            "raw_first": 64906,
+            "raw_last": 65905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 48693900
+          },
+          {
+            "block": 32,
+            "raw_first": 65906,
+            "raw_last": 66905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 49804200
+          },
+          {
+            "block": 33,
+            "raw_first": 66906,
+            "raw_last": 67905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 50534800
+          },
+          {
+            "block": 34,
+            "raw_first": 67906,
+            "raw_last": 68905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 46729900
+          },
+          {
+            "block": 35,
+            "raw_first": 68906,
+            "raw_last": 69905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 62500000,
+            "wall_ns": 49030400
+          },
+          {
+            "block": 36,
+            "raw_first": 69906,
+            "raw_last": 70905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 234375000,
+            "wall_ns": 243667300
+          },
+          {
+            "block": 37,
+            "raw_first": 70906,
+            "raw_last": 71905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 47097400
+          },
+          {
+            "block": 38,
+            "raw_first": 71906,
+            "raw_last": 72905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 47328600
+          },
+          {
+            "block": 39,
+            "raw_first": 72906,
+            "raw_last": 73905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 47905200
+          },
+          {
+            "block": 40,
+            "raw_first": 73906,
+            "raw_last": 74882,
+            "operations": 979,
+            "calls": {
+              "feed": 977,
+              "flush": 2
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 47782200
+          }
+        ],
+        "processor": [
+          {
+            "block": 0,
+            "raw_first": 33906,
+            "raw_last": 34905,
+            "operations": 1000,
+            "calls": {
+              "summary": 10,
+              "process": 990
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 34697000
+          },
+          {
+            "block": 1,
+            "raw_first": 34906,
+            "raw_last": 35905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 31250000,
+            "wall_ns": 35476000
+          },
+          {
+            "block": 2,
+            "raw_first": 35906,
+            "raw_last": 36905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 31250000,
+            "wall_ns": 34694600
+          },
+          {
+            "block": 3,
+            "raw_first": 36906,
+            "raw_last": 37905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 31250000,
+            "wall_ns": 33812800
+          },
+          {
+            "block": 4,
+            "raw_first": 37906,
+            "raw_last": 38905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 31250000,
+            "wall_ns": 34558800
+          },
+          {
+            "block": 5,
+            "raw_first": 38906,
+            "raw_last": 39905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 33396100
+          },
+          {
+            "block": 6,
+            "raw_first": 39906,
+            "raw_last": 40905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 31250000,
+            "wall_ns": 35617800
+          },
+          {
+            "block": 7,
+            "raw_first": 40906,
+            "raw_last": 41905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 31250000,
+            "wall_ns": 33490800
+          },
+          {
+            "block": 8,
+            "raw_first": 41906,
+            "raw_last": 42905,
+            "operations": 1011,
+            "calls": {
+              "process": 1000,
+              "summary": 10,
+              "_record_visual": 1
+            },
+            "thread_cpu_ns": 140625000,
+            "wall_ns": 146065500
+          },
+          {
+            "block": 9,
+            "raw_first": 42906,
+            "raw_last": 43905,
+            "operations": 1011,
+            "calls": {
+              "process": 1000,
+              "_record_visual": 2,
+              "summary": 9
+            },
+            "thread_cpu_ns": 203125000,
+            "wall_ns": 200067800
+          },
+          {
+            "block": 10,
+            "raw_first": 43906,
+            "raw_last": 44905,
+            "operations": 1012,
+            "calls": {
+              "process": 1000,
+              "summary": 10,
+              "_record_visual": 2
+            },
+            "thread_cpu_ns": 203125000,
+            "wall_ns": 198301700
+          },
+          {
+            "block": 11,
+            "raw_first": 44906,
+            "raw_last": 45905,
+            "operations": 1012,
+            "calls": {
+              "process": 1000,
+              "summary": 10,
+              "_record_visual": 2
+            },
+            "thread_cpu_ns": 203125000,
+            "wall_ns": 204248700
+          },
+          {
+            "block": 12,
+            "raw_first": 45906,
+            "raw_last": 46905,
+            "operations": 1011,
+            "calls": {
+              "process": 1000,
+              "summary": 10,
+              "_record_visual": 1
+            },
+            "thread_cpu_ns": 203125000,
+            "wall_ns": 201168500
+          },
+          {
+            "block": 13,
+            "raw_first": 46906,
+            "raw_last": 47905,
+            "operations": 1012,
+            "calls": {
+              "process": 1000,
+              "summary": 10,
+              "_record_visual": 2
+            },
+            "thread_cpu_ns": 234375000,
+            "wall_ns": 240168700
+          },
+          {
+            "block": 14,
+            "raw_first": 47906,
+            "raw_last": 48905,
+            "operations": 1011,
+            "calls": {
+              "process": 1000,
+              "summary": 10,
+              "_record_visual": 1
+            },
+            "thread_cpu_ns": 187500000,
+            "wall_ns": 190257600
+          },
+          {
+            "block": 15,
+            "raw_first": 48906,
+            "raw_last": 49905,
+            "operations": 1009,
+            "calls": {
+              "process": 1000,
+              "summary": 9
+            },
+            "thread_cpu_ns": 125000000,
+            "wall_ns": 113228100
+          },
+          {
+            "block": 16,
+            "raw_first": 49906,
+            "raw_last": 50905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 113642500
+          },
+          {
+            "block": 17,
+            "raw_first": 50906,
+            "raw_last": 51905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 115799100
+          },
+          {
+            "block": 18,
+            "raw_first": 51906,
+            "raw_last": 52905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 110931100
+          },
+          {
+            "block": 19,
+            "raw_first": 52906,
+            "raw_last": 53905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 112011400
+          },
+          {
+            "block": 20,
+            "raw_first": 53906,
+            "raw_last": 54905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 111979300
+          },
+          {
+            "block": 21,
+            "raw_first": 54906,
+            "raw_last": 55905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 112257000
+          },
+          {
+            "block": 22,
+            "raw_first": 55906,
+            "raw_last": 56905,
+            "operations": 1011,
+            "calls": {
+              "process": 1000,
+              "summary": 11
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 114249000
+          },
+          {
+            "block": 23,
+            "raw_first": 56906,
+            "raw_last": 57905,
+            "operations": 1009,
+            "calls": {
+              "process": 1000,
+              "summary": 9
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 106423800
+          },
+          {
+            "block": 24,
+            "raw_first": 57906,
+            "raw_last": 58905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 108992300
+          },
+          {
+            "block": 25,
+            "raw_first": 58906,
+            "raw_last": 59905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 109683000
+          },
+          {
+            "block": 26,
+            "raw_first": 59906,
+            "raw_last": 60905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 125000000,
+            "wall_ns": 117574100
+          },
+          {
+            "block": 27,
+            "raw_first": 60906,
+            "raw_last": 61905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 111727000
+          },
+          {
+            "block": 28,
+            "raw_first": 61906,
+            "raw_last": 62905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 125000000,
+            "wall_ns": 118132000
+          },
+          {
+            "block": 29,
+            "raw_first": 62906,
+            "raw_last": 63905,
+            "operations": 1009,
+            "calls": {
+              "process": 1000,
+              "summary": 9
+            },
+            "thread_cpu_ns": 93750000,
+            "wall_ns": 107334600
+          },
+          {
+            "block": 30,
+            "raw_first": 63906,
+            "raw_last": 64905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 109557900
+          },
+          {
+            "block": 31,
+            "raw_first": 64906,
+            "raw_last": 65905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 125000000,
+            "wall_ns": 112050100
+          },
+          {
+            "block": 32,
+            "raw_first": 65906,
+            "raw_last": 66905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 110347600
+          },
+          {
+            "block": 33,
+            "raw_first": 66906,
+            "raw_last": 67905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 109353600
+          },
+          {
+            "block": 34,
+            "raw_first": 67906,
+            "raw_last": 68905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 93750000,
+            "wall_ns": 110686800
+          },
+          {
+            "block": 35,
+            "raw_first": 68906,
+            "raw_last": 69905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 112584000
+          },
+          {
+            "block": 36,
+            "raw_first": 69906,
+            "raw_last": 70905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 109634600
+          },
+          {
+            "block": 37,
+            "raw_first": 70906,
+            "raw_last": 71905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 108757300
+          },
+          {
+            "block": 38,
+            "raw_first": 71906,
+            "raw_last": 72905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 115973500
+          },
+          {
+            "block": 39,
+            "raw_first": 72906,
+            "raw_last": 73905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 140625000,
+            "wall_ns": 126558900
+          },
+          {
+            "block": 40,
+            "raw_first": 73906,
+            "raw_last": 74882,
+            "operations": 998,
+            "calls": {
+              "process": 987,
+              "summary": 10,
+              "build_report": 1
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 112491800
+          }
+        ]
+      }
+    },
+    "b": {
+      "order": [
+        "filter",
+        "processor",
+        "quality"
+      ],
+      "report_sha256": "f497b7901a79d5b902744ce4a4a87270862ec3f8d2409c6f8982ec9d4b909c68",
+      "stages": {
+        "filter": {
+          "preflight": {
+            "wall_ms": 0.0,
+            "cpu_ms": 0.0,
+            "operations": 0,
+            "blocks": 0,
+            "negative_wall_minus_cpu_blocks": []
+          },
+          "formal": {
+            "wall_ms": 2677.3288,
+            "cpu_ms": 2671.875,
+            "operations": 40979,
+            "blocks": 41,
+            "negative_wall_minus_cpu_blocks": [
+              2,
+              6,
+              10,
+              12,
+              14,
+              20,
+              26,
+              31,
+              35,
+              40
+            ]
+          }
+        },
+        "processor": {
+          "preflight": {
+            "wall_ms": 0.0,
+            "cpu_ms": 0.0,
+            "operations": 0,
+            "blocks": 0,
+            "negative_wall_minus_cpu_blocks": []
+          },
+          "formal": {
+            "wall_ms": 4507.1184,
+            "cpu_ms": 4468.75,
+            "operations": 41396,
+            "blocks": 41,
+            "negative_wall_minus_cpu_blocks": [
+              6,
+              10,
+              11,
+              13,
+              15,
+              17,
+              18,
+              20,
+              23,
+              27,
+              29,
+              34,
+              36,
+              37,
+              38
+            ]
+          }
+        },
+        "quality": {
+          "preflight": {
+            "wall_ms": 2882.9238,
+            "cpu_ms": 2890.625,
+            "operations": 33906,
+            "blocks": 1,
+            "negative_wall_minus_cpu_blocks": [
+              -1
+            ]
+          },
+          "formal": {
+            "wall_ms": 3363.2216,
+            "cpu_ms": 3359.375,
+            "operations": 40977,
+            "blocks": 41,
+            "negative_wall_minus_cpu_blocks": [
+              1,
+              10,
+              17,
+              20,
+              25,
+              28,
+              31,
+              33,
+              35,
+              37,
+              38,
+              40
+            ]
+          }
+        }
+      },
+      "all_rows": {
+        "filter": [
+          {
+            "block": 0,
+            "raw_first": 33906,
+            "raw_last": 34905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 51219300
+          },
+          {
+            "block": 1,
+            "raw_first": 34906,
+            "raw_last": 35905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 52455600
+          },
+          {
+            "block": 2,
+            "raw_first": 35906,
+            "raw_last": 36905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 62500000,
+            "wall_ns": 49185500
+          },
+          {
+            "block": 3,
+            "raw_first": 36906,
+            "raw_last": 37905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 52219600
+          },
+          {
+            "block": 4,
+            "raw_first": 37906,
+            "raw_last": 38905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 50800500
+          },
+          {
+            "block": 5,
+            "raw_first": 38906,
+            "raw_last": 39905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 50260000
+          },
+          {
+            "block": 6,
+            "raw_first": 39906,
+            "raw_last": 40905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 62500000,
+            "wall_ns": 49482600
+          },
+          {
+            "block": 7,
+            "raw_first": 40906,
+            "raw_last": 41905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 54227000
+          },
+          {
+            "block": 8,
+            "raw_first": 41906,
+            "raw_last": 42905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 93750000,
+            "wall_ns": 94672600
+          },
+          {
+            "block": 9,
+            "raw_first": 42906,
+            "raw_last": 43905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 140625000,
+            "wall_ns": 141029400
+          },
+          {
+            "block": 10,
+            "raw_first": 43906,
+            "raw_last": 44905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 156250000,
+            "wall_ns": 147168200
+          },
+          {
+            "block": 11,
+            "raw_first": 44906,
+            "raw_last": 45905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 140625000,
+            "wall_ns": 144889700
+          },
+          {
+            "block": 12,
+            "raw_first": 45906,
+            "raw_last": 46905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 140625000,
+            "wall_ns": 134364800
+          },
+          {
+            "block": 13,
+            "raw_first": 46906,
+            "raw_last": 47905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 140625000,
+            "wall_ns": 150177400
+          },
+          {
+            "block": 14,
+            "raw_first": 47906,
+            "raw_last": 48905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 140625000,
+            "wall_ns": 136454300
+          },
+          {
+            "block": 15,
+            "raw_first": 48906,
+            "raw_last": 49905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 62500000,
+            "wall_ns": 69184700
+          },
+          {
+            "block": 16,
+            "raw_first": 49906,
+            "raw_last": 50905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 51213600
+          },
+          {
+            "block": 17,
+            "raw_first": 50906,
+            "raw_last": 51905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 51072900
+          },
+          {
+            "block": 18,
+            "raw_first": 51906,
+            "raw_last": 52905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 49806900
+          },
+          {
+            "block": 19,
+            "raw_first": 52906,
+            "raw_last": 53905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 49312100
+          },
+          {
+            "block": 20,
+            "raw_first": 53906,
+            "raw_last": 54905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 62500000,
+            "wall_ns": 50586300
+          },
+          {
+            "block": 21,
+            "raw_first": 54906,
+            "raw_last": 55905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 49325900
+          },
+          {
+            "block": 22,
+            "raw_first": 55906,
+            "raw_last": 56905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 49547500
+          },
+          {
+            "block": 23,
+            "raw_first": 56906,
+            "raw_last": 57905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 50601500
+          },
+          {
+            "block": 24,
+            "raw_first": 57906,
+            "raw_last": 58905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 50182100
+          },
+          {
+            "block": 25,
+            "raw_first": 58906,
+            "raw_last": 59905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 48762500
+          },
+          {
+            "block": 26,
+            "raw_first": 59906,
+            "raw_last": 60905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 62500000,
+            "wall_ns": 49980600
+          },
+          {
+            "block": 27,
+            "raw_first": 60906,
+            "raw_last": 61905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 48756300
+          },
+          {
+            "block": 28,
+            "raw_first": 61906,
+            "raw_last": 62905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 51562700
+          },
+          {
+            "block": 29,
+            "raw_first": 62906,
+            "raw_last": 63905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 49210700
+          },
+          {
+            "block": 30,
+            "raw_first": 63906,
+            "raw_last": 64905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 49757400
+          },
+          {
+            "block": 31,
+            "raw_first": 64906,
+            "raw_last": 65905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 62500000,
+            "wall_ns": 48831400
+          },
+          {
+            "block": 32,
+            "raw_first": 65906,
+            "raw_last": 66905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 52563700
+          },
+          {
+            "block": 33,
+            "raw_first": 66906,
+            "raw_last": 67905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 49726300
+          },
+          {
+            "block": 34,
+            "raw_first": 67906,
+            "raw_last": 68905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 49148400
+          },
+          {
+            "block": 35,
+            "raw_first": 68906,
+            "raw_last": 69905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 62500000,
+            "wall_ns": 51154400
+          },
+          {
+            "block": 36,
+            "raw_first": 69906,
+            "raw_last": 70905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 49620200
+          },
+          {
+            "block": 37,
+            "raw_first": 70906,
+            "raw_last": 71905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 50668700
+          },
+          {
+            "block": 38,
+            "raw_first": 71906,
+            "raw_last": 72905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 49902100
+          },
+          {
+            "block": 39,
+            "raw_first": 72906,
+            "raw_last": 73905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 49910100
+          },
+          {
+            "block": 40,
+            "raw_first": 73906,
+            "raw_last": 74882,
+            "operations": 979,
+            "calls": {
+              "feed": 977,
+              "flush": 2
+            },
+            "thread_cpu_ns": 62500000,
+            "wall_ns": 48333300
+          }
+        ],
+        "processor": [
+          {
+            "block": 0,
+            "raw_first": 33906,
+            "raw_last": 34905,
+            "operations": 1000,
+            "calls": {
+              "summary": 10,
+              "process": 990
+            },
+            "thread_cpu_ns": 31250000,
+            "wall_ns": 36065600
+          },
+          {
+            "block": 1,
+            "raw_first": 34906,
+            "raw_last": 35905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 31250000,
+            "wall_ns": 32455900
+          },
+          {
+            "block": 2,
+            "raw_first": 35906,
+            "raw_last": 36905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 31250000,
+            "wall_ns": 33012400
+          },
+          {
+            "block": 3,
+            "raw_first": 36906,
+            "raw_last": 37905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 31250000,
+            "wall_ns": 32859500
+          },
+          {
+            "block": 4,
+            "raw_first": 37906,
+            "raw_last": 38905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 31250000,
+            "wall_ns": 32807200
+          },
+          {
+            "block": 5,
+            "raw_first": 38906,
+            "raw_last": 39905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 31250000,
+            "wall_ns": 32935300
+          },
+          {
+            "block": 6,
+            "raw_first": 39906,
+            "raw_last": 40905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 33323500
+          },
+          {
+            "block": 7,
+            "raw_first": 40906,
+            "raw_last": 41905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 31250000,
+            "wall_ns": 32384000
+          },
+          {
+            "block": 8,
+            "raw_first": 41906,
+            "raw_last": 42905,
+            "operations": 1011,
+            "calls": {
+              "process": 1000,
+              "summary": 10,
+              "_record_visual": 1
+            },
+            "thread_cpu_ns": 125000000,
+            "wall_ns": 147507000
+          },
+          {
+            "block": 9,
+            "raw_first": 42906,
+            "raw_last": 43905,
+            "operations": 1011,
+            "calls": {
+              "process": 1000,
+              "_record_visual": 2,
+              "summary": 9
+            },
+            "thread_cpu_ns": 203125000,
+            "wall_ns": 205965300
+          },
+          {
+            "block": 10,
+            "raw_first": 43906,
+            "raw_last": 44905,
+            "operations": 1012,
+            "calls": {
+              "process": 1000,
+              "summary": 10,
+              "_record_visual": 2
+            },
+            "thread_cpu_ns": 203125000,
+            "wall_ns": 202307200
+          },
+          {
+            "block": 11,
+            "raw_first": 44906,
+            "raw_last": 45905,
+            "operations": 1012,
+            "calls": {
+              "process": 1000,
+              "summary": 10,
+              "_record_visual": 2
+            },
+            "thread_cpu_ns": 203125000,
+            "wall_ns": 201245300
+          },
+          {
+            "block": 12,
+            "raw_first": 45906,
+            "raw_last": 46905,
+            "operations": 1011,
+            "calls": {
+              "process": 1000,
+              "summary": 10,
+              "_record_visual": 1
+            },
+            "thread_cpu_ns": 187500000,
+            "wall_ns": 193355500
+          },
+          {
+            "block": 13,
+            "raw_first": 46906,
+            "raw_last": 47905,
+            "operations": 1012,
+            "calls": {
+              "process": 1000,
+              "summary": 10,
+              "_record_visual": 2
+            },
+            "thread_cpu_ns": 250000000,
+            "wall_ns": 237473900
+          },
+          {
+            "block": 14,
+            "raw_first": 47906,
+            "raw_last": 48905,
+            "operations": 1011,
+            "calls": {
+              "process": 1000,
+              "summary": 10,
+              "_record_visual": 1
+            },
+            "thread_cpu_ns": 187500000,
+            "wall_ns": 190856900
+          },
+          {
+            "block": 15,
+            "raw_first": 48906,
+            "raw_last": 49905,
+            "operations": 1009,
+            "calls": {
+              "process": 1000,
+              "summary": 9
+            },
+            "thread_cpu_ns": 125000000,
+            "wall_ns": 117775100
+          },
+          {
+            "block": 16,
+            "raw_first": 49906,
+            "raw_last": 50905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 93750000,
+            "wall_ns": 110364800
+          },
+          {
+            "block": 17,
+            "raw_first": 50906,
+            "raw_last": 51905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 125000000,
+            "wall_ns": 111906200
+          },
+          {
+            "block": 18,
+            "raw_first": 51906,
+            "raw_last": 52905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 108746700
+          },
+          {
+            "block": 19,
+            "raw_first": 52906,
+            "raw_last": 53905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 109463800
+          },
+          {
+            "block": 20,
+            "raw_first": 53906,
+            "raw_last": 54905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 108804100
+          },
+          {
+            "block": 21,
+            "raw_first": 54906,
+            "raw_last": 55905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 109767600
+          },
+          {
+            "block": 22,
+            "raw_first": 55906,
+            "raw_last": 56905,
+            "operations": 1011,
+            "calls": {
+              "process": 1000,
+              "summary": 11
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 113226000
+          },
+          {
+            "block": 23,
+            "raw_first": 56906,
+            "raw_last": 57905,
+            "operations": 1009,
+            "calls": {
+              "process": 1000,
+              "summary": 9
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 104704000
+          },
+          {
+            "block": 24,
+            "raw_first": 57906,
+            "raw_last": 58905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 115058600
+          },
+          {
+            "block": 25,
+            "raw_first": 58906,
+            "raw_last": 59905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 111186500
+          },
+          {
+            "block": 26,
+            "raw_first": 59906,
+            "raw_last": 60905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 112329100
+          },
+          {
+            "block": 27,
+            "raw_first": 60906,
+            "raw_last": 61905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 108249300
+          },
+          {
+            "block": 28,
+            "raw_first": 61906,
+            "raw_last": 62905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 109685300
+          },
+          {
+            "block": 29,
+            "raw_first": 62906,
+            "raw_last": 63905,
+            "operations": 1009,
+            "calls": {
+              "process": 1000,
+              "summary": 9
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 106325900
+          },
+          {
+            "block": 30,
+            "raw_first": 63906,
+            "raw_last": 64905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 110916400
+          },
+          {
+            "block": 31,
+            "raw_first": 64906,
+            "raw_last": 65905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 111925600
+          },
+          {
+            "block": 32,
+            "raw_first": 65906,
+            "raw_last": 66905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 93750000,
+            "wall_ns": 108310700
+          },
+          {
+            "block": 33,
+            "raw_first": 66906,
+            "raw_last": 67905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 109702400
+          },
+          {
+            "block": 34,
+            "raw_first": 67906,
+            "raw_last": 68905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 125000000,
+            "wall_ns": 110973700
+          },
+          {
+            "block": 35,
+            "raw_first": 68906,
+            "raw_last": 69905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 93750000,
+            "wall_ns": 108267400
+          },
+          {
+            "block": 36,
+            "raw_first": 69906,
+            "raw_last": 70905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 107922800
+          },
+          {
+            "block": 37,
+            "raw_first": 70906,
+            "raw_last": 71905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 108379200
+          },
+          {
+            "block": 38,
+            "raw_first": 71906,
+            "raw_last": 72905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 107411700
+          },
+          {
+            "block": 39,
+            "raw_first": 72906,
+            "raw_last": 73905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 109505800
+          },
+          {
+            "block": 40,
+            "raw_first": 73906,
+            "raw_last": 74882,
+            "operations": 998,
+            "calls": {
+              "process": 987,
+              "summary": 10,
+              "build_report": 1
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 111655200
+          }
+        ],
+        "quality": [
+          {
+            "block": -1,
+            "raw_first": 0,
+            "raw_last": 33905,
+            "operations": 33906,
+            "calls": {
+              "on_frame": 33906
+            },
+            "thread_cpu_ns": 2890625000,
+            "wall_ns": 2882923800
+          },
+          {
+            "block": 0,
+            "raw_first": 33906,
+            "raw_last": 34905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 49363200
+          },
+          {
+            "block": 1,
+            "raw_first": 34906,
+            "raw_last": 35905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 62500000,
+            "wall_ns": 47776600
+          },
+          {
+            "block": 2,
+            "raw_first": 35906,
+            "raw_last": 36905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 47903000
+          },
+          {
+            "block": 3,
+            "raw_first": 36906,
+            "raw_last": 37905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 78654800
+          },
+          {
+            "block": 4,
+            "raw_first": 37906,
+            "raw_last": 38905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 80273000
+          },
+          {
+            "block": 5,
+            "raw_first": 38906,
+            "raw_last": 39905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 78497800
+          },
+          {
+            "block": 6,
+            "raw_first": 39906,
+            "raw_last": 40905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 78157900
+          },
+          {
+            "block": 7,
+            "raw_first": 40906,
+            "raw_last": 41905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 79782300
+          },
+          {
+            "block": 8,
+            "raw_first": 41906,
+            "raw_last": 42905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 79037200
+          },
+          {
+            "block": 9,
+            "raw_first": 42906,
+            "raw_last": 43905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 82250500
+          },
+          {
+            "block": 10,
+            "raw_first": 43906,
+            "raw_last": 44905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 93750000,
+            "wall_ns": 85773000
+          },
+          {
+            "block": 11,
+            "raw_first": 44906,
+            "raw_last": 45905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 250000000,
+            "wall_ns": 261108700
+          },
+          {
+            "block": 12,
+            "raw_first": 45906,
+            "raw_last": 46905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 78940900
+          },
+          {
+            "block": 13,
+            "raw_first": 46906,
+            "raw_last": 47905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 80386700
+          },
+          {
+            "block": 14,
+            "raw_first": 47906,
+            "raw_last": 48905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 80761700
+          },
+          {
+            "block": 15,
+            "raw_first": 48906,
+            "raw_last": 49905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 84581200
+          },
+          {
+            "block": 16,
+            "raw_first": 49906,
+            "raw_last": 50905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 78385900
+          },
+          {
+            "block": 17,
+            "raw_first": 50906,
+            "raw_last": 51905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 77824700
+          },
+          {
+            "block": 18,
+            "raw_first": 51906,
+            "raw_last": 52905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 78473900
+          },
+          {
+            "block": 19,
+            "raw_first": 52906,
+            "raw_last": 53905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 78540300
+          },
+          {
+            "block": 20,
+            "raw_first": 53906,
+            "raw_last": 54905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 93750000,
+            "wall_ns": 80725300
+          },
+          {
+            "block": 21,
+            "raw_first": 54906,
+            "raw_last": 55905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 80678400
+          },
+          {
+            "block": 22,
+            "raw_first": 55906,
+            "raw_last": 56905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 78151700
+          },
+          {
+            "block": 23,
+            "raw_first": 56906,
+            "raw_last": 57905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 79065100
+          },
+          {
+            "block": 24,
+            "raw_first": 57906,
+            "raw_last": 58905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 79289200
+          },
+          {
+            "block": 25,
+            "raw_first": 58906,
+            "raw_last": 59905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 78109500
+          },
+          {
+            "block": 26,
+            "raw_first": 59906,
+            "raw_last": 60905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 79117100
+          },
+          {
+            "block": 27,
+            "raw_first": 60906,
+            "raw_last": 61905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 83600800
+          },
+          {
+            "block": 28,
+            "raw_first": 61906,
+            "raw_last": 62905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 93750000,
+            "wall_ns": 81456100
+          },
+          {
+            "block": 29,
+            "raw_first": 62906,
+            "raw_last": 63905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 79700100
+          },
+          {
+            "block": 30,
+            "raw_first": 63906,
+            "raw_last": 64905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 83110300
+          },
+          {
+            "block": 31,
+            "raw_first": 64906,
+            "raw_last": 65905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 77845000
+          },
+          {
+            "block": 32,
+            "raw_first": 65906,
+            "raw_last": 66905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 79873700
+          },
+          {
+            "block": 33,
+            "raw_first": 66906,
+            "raw_last": 67905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 93750000,
+            "wall_ns": 84547700
+          },
+          {
+            "block": 34,
+            "raw_first": 67906,
+            "raw_last": 68905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 78960700
+          },
+          {
+            "block": 35,
+            "raw_first": 68906,
+            "raw_last": 69905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 77810100
+          },
+          {
+            "block": 36,
+            "raw_first": 69906,
+            "raw_last": 70905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 82023400
+          },
+          {
+            "block": 37,
+            "raw_first": 70906,
+            "raw_last": 71905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 78026000
+          },
+          {
+            "block": 38,
+            "raw_first": 71906,
+            "raw_last": 72905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 77934900
+          },
+          {
+            "block": 39,
+            "raw_first": 72906,
+            "raw_last": 73905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 79069400
+          },
+          {
+            "block": 40,
+            "raw_first": 73906,
+            "raw_last": 74882,
+            "operations": 977,
+            "calls": {
+              "on_frame": 977
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 77653800
+          }
+        ]
+      }
+    },
+    "c": {
+      "order": [
+        "processor",
+        "quality",
+        "filter"
+      ],
+      "report_sha256": "f497b7901a79d5b902744ce4a4a87270862ec3f8d2409c6f8982ec9d4b909c68",
+      "stages": {
+        "processor": {
+          "preflight": {
+            "wall_ms": 0.0,
+            "cpu_ms": 0.0,
+            "operations": 0,
+            "blocks": 0,
+            "negative_wall_minus_cpu_blocks": []
+          },
+          "formal": {
+            "wall_ms": 4643.3271,
+            "cpu_ms": 4640.625,
+            "operations": 41396,
+            "blocks": 41,
+            "negative_wall_minus_cpu_blocks": [
+              4,
+              9,
+              12,
+              14,
+              19,
+              22,
+              29,
+              33,
+              36,
+              40
+            ]
+          }
+        },
+        "quality": {
+          "preflight": {
+            "wall_ms": 3003.0325,
+            "cpu_ms": 2984.375,
+            "operations": 33906,
+            "blocks": 1,
+            "negative_wall_minus_cpu_blocks": []
+          },
+          "formal": {
+            "wall_ms": 3210.446,
+            "cpu_ms": 3187.5,
+            "operations": 40977,
+            "blocks": 41,
+            "negative_wall_minus_cpu_blocks": [
+              1,
+              5,
+              11,
+              15,
+              20,
+              28,
+              29,
+              30,
+              32,
+              36,
+              37
+            ]
+          }
+        },
+        "filter": {
+          "preflight": {
+            "wall_ms": 0.0,
+            "cpu_ms": 0.0,
+            "operations": 0,
+            "blocks": 0,
+            "negative_wall_minus_cpu_blocks": []
+          },
+          "formal": {
+            "wall_ms": 2788.1997,
+            "cpu_ms": 2765.625,
+            "operations": 40979,
+            "blocks": 41,
+            "negative_wall_minus_cpu_blocks": [
+              3,
+              5,
+              6,
+              10,
+              12,
+              14,
+              24,
+              25,
+              28,
+              38,
+              40
+            ]
+          }
+        }
+      },
+      "all_rows": {
+        "processor": [
+          {
+            "block": 0,
+            "raw_first": 33906,
+            "raw_last": 34905,
+            "operations": 1000,
+            "calls": {
+              "summary": 10,
+              "process": 990
+            },
+            "thread_cpu_ns": 31250000,
+            "wall_ns": 33779900
+          },
+          {
+            "block": 1,
+            "raw_first": 34906,
+            "raw_last": 35905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 31250000,
+            "wall_ns": 31958400
+          },
+          {
+            "block": 2,
+            "raw_first": 35906,
+            "raw_last": 36905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 31250000,
+            "wall_ns": 32256200
+          },
+          {
+            "block": 3,
+            "raw_first": 36906,
+            "raw_last": 37905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 31250000,
+            "wall_ns": 32044600
+          },
+          {
+            "block": 4,
+            "raw_first": 37906,
+            "raw_last": 38905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 32227700
+          },
+          {
+            "block": 5,
+            "raw_first": 38906,
+            "raw_last": 39905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 31250000,
+            "wall_ns": 33128900
+          },
+          {
+            "block": 6,
+            "raw_first": 39906,
+            "raw_last": 40905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 31250000,
+            "wall_ns": 32418600
+          },
+          {
+            "block": 7,
+            "raw_first": 40906,
+            "raw_last": 41905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 31250000,
+            "wall_ns": 32220400
+          },
+          {
+            "block": 8,
+            "raw_first": 41906,
+            "raw_last": 42905,
+            "operations": 1011,
+            "calls": {
+              "process": 1000,
+              "summary": 10,
+              "_record_visual": 1
+            },
+            "thread_cpu_ns": 140625000,
+            "wall_ns": 145146600
+          },
+          {
+            "block": 9,
+            "raw_first": 42906,
+            "raw_last": 43905,
+            "operations": 1011,
+            "calls": {
+              "process": 1000,
+              "_record_visual": 2,
+              "summary": 9
+            },
+            "thread_cpu_ns": 203125000,
+            "wall_ns": 203052300
+          },
+          {
+            "block": 10,
+            "raw_first": 43906,
+            "raw_last": 44905,
+            "operations": 1012,
+            "calls": {
+              "process": 1000,
+              "summary": 10,
+              "_record_visual": 2
+            },
+            "thread_cpu_ns": 187500000,
+            "wall_ns": 194158000
+          },
+          {
+            "block": 11,
+            "raw_first": 44906,
+            "raw_last": 45905,
+            "operations": 1012,
+            "calls": {
+              "process": 1000,
+              "summary": 10,
+              "_record_visual": 2
+            },
+            "thread_cpu_ns": 187500000,
+            "wall_ns": 202688300
+          },
+          {
+            "block": 12,
+            "raw_first": 45906,
+            "raw_last": 46905,
+            "operations": 1011,
+            "calls": {
+              "process": 1000,
+              "summary": 10,
+              "_record_visual": 1
+            },
+            "thread_cpu_ns": 218750000,
+            "wall_ns": 205486000
+          },
+          {
+            "block": 13,
+            "raw_first": 46906,
+            "raw_last": 47905,
+            "operations": 1012,
+            "calls": {
+              "process": 1000,
+              "summary": 10,
+              "_record_visual": 2
+            },
+            "thread_cpu_ns": 234375000,
+            "wall_ns": 241151900
+          },
+          {
+            "block": 14,
+            "raw_first": 47906,
+            "raw_last": 48905,
+            "operations": 1011,
+            "calls": {
+              "process": 1000,
+              "summary": 10,
+              "_record_visual": 1
+            },
+            "thread_cpu_ns": 203125000,
+            "wall_ns": 195415100
+          },
+          {
+            "block": 15,
+            "raw_first": 48906,
+            "raw_last": 49905,
+            "operations": 1009,
+            "calls": {
+              "process": 1000,
+              "summary": 9
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 116138100
+          },
+          {
+            "block": 16,
+            "raw_first": 49906,
+            "raw_last": 50905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 111949800
+          },
+          {
+            "block": 17,
+            "raw_first": 50906,
+            "raw_last": 51905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 112150400
+          },
+          {
+            "block": 18,
+            "raw_first": 51906,
+            "raw_last": 52905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 110005800
+          },
+          {
+            "block": 19,
+            "raw_first": 52906,
+            "raw_last": 53905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 125000000,
+            "wall_ns": 111939200
+          },
+          {
+            "block": 20,
+            "raw_first": 53906,
+            "raw_last": 54905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 113999900
+          },
+          {
+            "block": 21,
+            "raw_first": 54906,
+            "raw_last": 55905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 110191100
+          },
+          {
+            "block": 22,
+            "raw_first": 55906,
+            "raw_last": 56905,
+            "operations": 1011,
+            "calls": {
+              "process": 1000,
+              "summary": 11
+            },
+            "thread_cpu_ns": 125000000,
+            "wall_ns": 116462200
+          },
+          {
+            "block": 23,
+            "raw_first": 56906,
+            "raw_last": 57905,
+            "operations": 1009,
+            "calls": {
+              "process": 1000,
+              "summary": 9
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 110686400
+          },
+          {
+            "block": 24,
+            "raw_first": 57906,
+            "raw_last": 58905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 110354600
+          },
+          {
+            "block": 25,
+            "raw_first": 58906,
+            "raw_last": 59905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 111680800
+          },
+          {
+            "block": 26,
+            "raw_first": 59906,
+            "raw_last": 60905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 112595500
+          },
+          {
+            "block": 27,
+            "raw_first": 60906,
+            "raw_last": 61905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 112112700
+          },
+          {
+            "block": 28,
+            "raw_first": 61906,
+            "raw_last": 62905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 112311900
+          },
+          {
+            "block": 29,
+            "raw_first": 62906,
+            "raw_last": 63905,
+            "operations": 1009,
+            "calls": {
+              "process": 1000,
+              "summary": 9
+            },
+            "thread_cpu_ns": 125000000,
+            "wall_ns": 118001700
+          },
+          {
+            "block": 30,
+            "raw_first": 63906,
+            "raw_last": 64905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 109682200
+          },
+          {
+            "block": 31,
+            "raw_first": 64906,
+            "raw_last": 65905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 156250000,
+            "wall_ns": 156913100
+          },
+          {
+            "block": 32,
+            "raw_first": 65906,
+            "raw_last": 66905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 140625000,
+            "wall_ns": 144913000
+          },
+          {
+            "block": 33,
+            "raw_first": 66906,
+            "raw_last": 67905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 125000000,
+            "wall_ns": 111106800
+          },
+          {
+            "block": 34,
+            "raw_first": 67906,
+            "raw_last": 68905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 111479000
+          },
+          {
+            "block": 35,
+            "raw_first": 68906,
+            "raw_last": 69905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 112325500
+          },
+          {
+            "block": 36,
+            "raw_first": 69906,
+            "raw_last": 70905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 109333900
+          },
+          {
+            "block": 37,
+            "raw_first": 70906,
+            "raw_last": 71905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 115945400
+          },
+          {
+            "block": 38,
+            "raw_first": 71906,
+            "raw_last": 72905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 110021600
+          },
+          {
+            "block": 39,
+            "raw_first": 72906,
+            "raw_last": 73905,
+            "operations": 1010,
+            "calls": {
+              "process": 1000,
+              "summary": 10
+            },
+            "thread_cpu_ns": 109375000,
+            "wall_ns": 110077000
+          },
+          {
+            "block": 40,
+            "raw_first": 73906,
+            "raw_last": 74882,
+            "operations": 998,
+            "calls": {
+              "process": 987,
+              "summary": 10,
+              "build_report": 1
+            },
+            "thread_cpu_ns": 125000000,
+            "wall_ns": 113816600
+          }
+        ],
+        "quality": [
+          {
+            "block": -1,
+            "raw_first": 0,
+            "raw_last": 33905,
+            "operations": 33906,
+            "calls": {
+              "on_frame": 33906
+            },
+            "thread_cpu_ns": 2984375000,
+            "wall_ns": 3003032500
+          },
+          {
+            "block": 0,
+            "raw_first": 33906,
+            "raw_last": 34905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 49086200
+          },
+          {
+            "block": 1,
+            "raw_first": 34906,
+            "raw_last": 35905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 62500000,
+            "wall_ns": 48757700
+          },
+          {
+            "block": 2,
+            "raw_first": 35906,
+            "raw_last": 36905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 53534300
+          },
+          {
+            "block": 3,
+            "raw_first": 36906,
+            "raw_last": 37905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 84387200
+          },
+          {
+            "block": 4,
+            "raw_first": 37906,
+            "raw_last": 38905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 79223900
+          },
+          {
+            "block": 5,
+            "raw_first": 38906,
+            "raw_last": 39905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 93750000,
+            "wall_ns": 78904600
+          },
+          {
+            "block": 6,
+            "raw_first": 39906,
+            "raw_last": 40905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 79829400
+          },
+          {
+            "block": 7,
+            "raw_first": 40906,
+            "raw_last": 41905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 79707500
+          },
+          {
+            "block": 8,
+            "raw_first": 41906,
+            "raw_last": 42905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 80735500
+          },
+          {
+            "block": 9,
+            "raw_first": 42906,
+            "raw_last": 43905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 81798000
+          },
+          {
+            "block": 10,
+            "raw_first": 43906,
+            "raw_last": 44905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 81906700
+          },
+          {
+            "block": 11,
+            "raw_first": 44906,
+            "raw_last": 45905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 93750000,
+            "wall_ns": 84241800
+          },
+          {
+            "block": 12,
+            "raw_first": 45906,
+            "raw_last": 46905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 79438300
+          },
+          {
+            "block": 13,
+            "raw_first": 46906,
+            "raw_last": 47905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 81901200
+          },
+          {
+            "block": 14,
+            "raw_first": 47906,
+            "raw_last": 48905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 82775900
+          },
+          {
+            "block": 15,
+            "raw_first": 48906,
+            "raw_last": 49905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 93750000,
+            "wall_ns": 87615000
+          },
+          {
+            "block": 16,
+            "raw_first": 49906,
+            "raw_last": 50905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 78814500
+          },
+          {
+            "block": 17,
+            "raw_first": 50906,
+            "raw_last": 51905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 62500000,
+            "wall_ns": 79079900
+          },
+          {
+            "block": 18,
+            "raw_first": 51906,
+            "raw_last": 52905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 79300700
+          },
+          {
+            "block": 19,
+            "raw_first": 52906,
+            "raw_last": 53905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 79791300
+          },
+          {
+            "block": 20,
+            "raw_first": 53906,
+            "raw_last": 54905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 93750000,
+            "wall_ns": 79691600
+          },
+          {
+            "block": 21,
+            "raw_first": 54906,
+            "raw_last": 55905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 79639500
+          },
+          {
+            "block": 22,
+            "raw_first": 55906,
+            "raw_last": 56905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 79221800
+          },
+          {
+            "block": 23,
+            "raw_first": 56906,
+            "raw_last": 57905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 80803900
+          },
+          {
+            "block": 24,
+            "raw_first": 57906,
+            "raw_last": 58905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 78528500
+          },
+          {
+            "block": 25,
+            "raw_first": 58906,
+            "raw_last": 59905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 79960700
+          },
+          {
+            "block": 26,
+            "raw_first": 59906,
+            "raw_last": 60905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 78400100
+          },
+          {
+            "block": 27,
+            "raw_first": 60906,
+            "raw_last": 61905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 82635400
+          },
+          {
+            "block": 28,
+            "raw_first": 61906,
+            "raw_last": 62905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 93750000,
+            "wall_ns": 82601300
+          },
+          {
+            "block": 29,
+            "raw_first": 62906,
+            "raw_last": 63905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 78052700
+          },
+          {
+            "block": 30,
+            "raw_first": 63906,
+            "raw_last": 64905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 77965800
+          },
+          {
+            "block": 31,
+            "raw_first": 64906,
+            "raw_last": 65905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 79648900
+          },
+          {
+            "block": 32,
+            "raw_first": 65906,
+            "raw_last": 66905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 78008600
+          },
+          {
+            "block": 33,
+            "raw_first": 66906,
+            "raw_last": 67905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 80019000
+          },
+          {
+            "block": 34,
+            "raw_first": 67906,
+            "raw_last": 68905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 82648100
+          },
+          {
+            "block": 35,
+            "raw_first": 68906,
+            "raw_last": 69905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 80561300
+          },
+          {
+            "block": 36,
+            "raw_first": 69906,
+            "raw_last": 70905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 93750000,
+            "wall_ns": 81253800
+          },
+          {
+            "block": 37,
+            "raw_first": 70906,
+            "raw_last": 71905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 77726800
+          },
+          {
+            "block": 38,
+            "raw_first": 71906,
+            "raw_last": 72905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 78841700
+          },
+          {
+            "block": 39,
+            "raw_first": 72906,
+            "raw_last": 73905,
+            "operations": 1000,
+            "calls": {
+              "on_frame": 1000
+            },
+            "thread_cpu_ns": 62500000,
+            "wall_ns": 79138200
+          },
+          {
+            "block": 40,
+            "raw_first": 73906,
+            "raw_last": 74882,
+            "operations": 977,
+            "calls": {
+              "on_frame": 977
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 84268700
+          }
+        ],
+        "filter": [
+          {
+            "block": 0,
+            "raw_first": 33906,
+            "raw_last": 34905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 52177100
+          },
+          {
+            "block": 1,
+            "raw_first": 34906,
+            "raw_last": 35905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 48488300
+          },
+          {
+            "block": 2,
+            "raw_first": 35906,
+            "raw_last": 36905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 47618500
+          },
+          {
+            "block": 3,
+            "raw_first": 36906,
+            "raw_last": 37905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 62500000,
+            "wall_ns": 50627900
+          },
+          {
+            "block": 4,
+            "raw_first": 37906,
+            "raw_last": 38905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 31250000,
+            "wall_ns": 46127000
+          },
+          {
+            "block": 5,
+            "raw_first": 38906,
+            "raw_last": 39905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 62500000,
+            "wall_ns": 47744700
+          },
+          {
+            "block": 6,
+            "raw_first": 39906,
+            "raw_last": 40905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 46761000
+          },
+          {
+            "block": 7,
+            "raw_first": 40906,
+            "raw_last": 41905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 31250000,
+            "wall_ns": 46773400
+          },
+          {
+            "block": 8,
+            "raw_first": 41906,
+            "raw_last": 42905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 78125000,
+            "wall_ns": 90597100
+          },
+          {
+            "block": 9,
+            "raw_first": 42906,
+            "raw_last": 43905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 140625000,
+            "wall_ns": 140995800
+          },
+          {
+            "block": 10,
+            "raw_first": 43906,
+            "raw_last": 44905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 156250000,
+            "wall_ns": 146334100
+          },
+          {
+            "block": 11,
+            "raw_first": 44906,
+            "raw_last": 45905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 140625000,
+            "wall_ns": 151486600
+          },
+          {
+            "block": 12,
+            "raw_first": 45906,
+            "raw_last": 46905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 328125000,
+            "wall_ns": 318704300
+          },
+          {
+            "block": 13,
+            "raw_first": 46906,
+            "raw_last": 47905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 140625000,
+            "wall_ns": 147715700
+          },
+          {
+            "block": 14,
+            "raw_first": 47906,
+            "raw_last": 48905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 140625000,
+            "wall_ns": 135898300
+          },
+          {
+            "block": 15,
+            "raw_first": 48906,
+            "raw_last": 49905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 62500000,
+            "wall_ns": 64603000
+          },
+          {
+            "block": 16,
+            "raw_first": 49906,
+            "raw_last": 50905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 48458700
+          },
+          {
+            "block": 17,
+            "raw_first": 50906,
+            "raw_last": 51905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 48140500
+          },
+          {
+            "block": 18,
+            "raw_first": 51906,
+            "raw_last": 52905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 47518200
+          },
+          {
+            "block": 19,
+            "raw_first": 52906,
+            "raw_last": 53905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 47086200
+          },
+          {
+            "block": 20,
+            "raw_first": 53906,
+            "raw_last": 54905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 49306300
+          },
+          {
+            "block": 21,
+            "raw_first": 54906,
+            "raw_last": 55905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 47396200
+          },
+          {
+            "block": 22,
+            "raw_first": 55906,
+            "raw_last": 56905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 57722100
+          },
+          {
+            "block": 23,
+            "raw_first": 56906,
+            "raw_last": 57905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 47281100
+          },
+          {
+            "block": 24,
+            "raw_first": 57906,
+            "raw_last": 58905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 46713300
+          },
+          {
+            "block": 25,
+            "raw_first": 58906,
+            "raw_last": 59905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 62500000,
+            "wall_ns": 48446400
+          },
+          {
+            "block": 26,
+            "raw_first": 59906,
+            "raw_last": 60905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 47124400
+          },
+          {
+            "block": 27,
+            "raw_first": 60906,
+            "raw_last": 61905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 46964700
+          },
+          {
+            "block": 28,
+            "raw_first": 61906,
+            "raw_last": 62905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 46783800
+          },
+          {
+            "block": 29,
+            "raw_first": 62906,
+            "raw_last": 63905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 48183400
+          },
+          {
+            "block": 30,
+            "raw_first": 63906,
+            "raw_last": 64905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 47935000
+          },
+          {
+            "block": 31,
+            "raw_first": 64906,
+            "raw_last": 65905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 47057500
+          },
+          {
+            "block": 32,
+            "raw_first": 65906,
+            "raw_last": 66905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 50089100
+          },
+          {
+            "block": 33,
+            "raw_first": 66906,
+            "raw_last": 67905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 48074400
+          },
+          {
+            "block": 34,
+            "raw_first": 67906,
+            "raw_last": 68905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 49248900
+          },
+          {
+            "block": 35,
+            "raw_first": 68906,
+            "raw_last": 69905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 47062200
+          },
+          {
+            "block": 36,
+            "raw_first": 69906,
+            "raw_last": 70905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 47902100
+          },
+          {
+            "block": 37,
+            "raw_first": 70906,
+            "raw_last": 71905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 48589600
+          },
+          {
+            "block": 38,
+            "raw_first": 71906,
+            "raw_last": 72905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 62500000,
+            "wall_ns": 49047400
+          },
+          {
+            "block": 39,
+            "raw_first": 72906,
+            "raw_last": 73905,
+            "operations": 1000,
+            "calls": {
+              "feed": 1000
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 47145200
+          },
+          {
+            "block": 40,
+            "raw_first": 73906,
+            "raw_last": 74882,
+            "operations": 979,
+            "calls": {
+              "feed": 977,
+              "flush": 2
+            },
+            "thread_cpu_ns": 46875000,
+            "wall_ns": 46270200
+          }
+        ]
+      }
+    }
+  },
+  "same_stage_call_counts_and_boundaries": true,
+  "formal_ranges": {
+    "quality": {
+      "wall_ms": [
+        3210.446,
+        3363.2216
+      ],
+      "cpu_ms": [
+        3187.5,
+        3359.375
+      ]
+    },
+    "filter": {
+      "wall_ms": [
+        2677.3288,
+        2798.7075
+      ],
+      "cpu_ms": [
+        2671.875,
+        2765.625
+      ]
+    },
+    "processor": {
+      "wall_ms": [
+        4507.1184,
+        4643.3271
+      ],
+      "cpu_ms": [
+        4468.75,
+        4640.625
+      ]
+    }
+  },
+  "manifest_files_verified": 15,
+  "limits": [
+    "Three fixed rotating-order cases; not enough for equivalence or independent noise characterization.",
+    "Stage replay reads retained call tapes; it changes cache/allocation/GC and excludes some session work. Do not sum stage times as whole-chain time.",
+    "No per-frame timers; original1000-raw-input block timers retained. CPU quantization can yield negative wall-minus-CPU.",
+    "All rows and failed limits remain; no fastest-run or warmup selection.",
+    "New stage scope cannot explain oldcpu01..cpu04 or historical GUI GIL contribution."
+  ],
+  "actual_load_disturbance_pass": false,
+  "primary_root_identified": false
+}
