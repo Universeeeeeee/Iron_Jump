@@ -1,0 +1,41 @@
+{
+  "same_query_source": true,
+  "ssh": {
+    "session": 0,
+    "priority": "NORMAL_PRIORITY_CLASS",
+    "priority_value": 32
+  },
+  "interactive": {
+    "session": 1,
+    "priority": "BELOW_NORMAL_PRIORITY_CLASS",
+    "priority_value": 16384
+  },
+  "default_task_priority": 7,
+  "initial_qos_masks_identical": true,
+  "historical_target_priority_measured": false,
+  "real_desktop_entry_priority_measured": false,
+  "causal_attribution": false,
+  "prior_joint_gate_pass": false,
+  "sources": {
+    "experiments/gil_boundary_ab/start01.ps1": "5c5f22174fbfb3d4d85d969f805f2b05d8cc6ef2bfe2851cd977c5c61e07fdb6",
+    "experiments/gil_boundary_ab/launch01.ps1": "42be1365f43395c894b7c27433e5c18f2149d5d5b729aa97d8ef4ae3011a3264",
+    "experiments/gil_boundary_ab/cohort.py": "88dfc40746530f68afc368eaf084b1252c5d1689b4e82a9bc7b602e7988c3a0f",
+    "experiments/gil_boundary_ab/gui_entry.py": "c5f3ac0b8d310f81c1e6ec91aac8d20f658639c654c8e7c8da27d7eaa24657c3",
+    "experiments/gil_workload_finalization/entry01.py": "7f006c02a82b62acffd289710f02cf83762441848daeacb0ce380d355a76386e",
+    "experiments/process_qos_candidate/launch.py": "2437664767b35ed3cfc1879fce21775ee2b6ec6f62930fc3ea3b8531d9b6599a",
+    "experiments/process_qos_candidate/cohort.py": "bbd2bbe5809efbce8d40e1828dc5a45ddbda8bbb033fd7d3c4cf8cd8f2725160"
+  },
+  "evidence": {
+    "read_context.py": "5d7d7c83756ec879d72937c48fcd4fe96c59acf3c3077ad7116f61cc2347bd76",
+    "interactive01.ps1": "6f34525501f0badf126073a716a46941ce88e9cae083a5cdd672a98d604b076a",
+    "ssh01.json": "5e9d503cce704697fc8edb6e44ca249a32a6c3fe9f833b130b1b0c807b14b1a0",
+    "interactive01.json": "67182bea85a0e288f11a8c9dd1900d72a5d3ef7af372e61134109f6398b69845",
+    "task01.json": "95b690dda158aa51adf5e043cad7aea93bc9d4fdc258183efea7333d3045d400",
+    "default_task_settings01.json": "2c0d3e14dc8bd3a9d5a0a70bbd3240f5243f4b8cde6fc3bdd705a5eb7f9e0b27"
+  },
+  "limits": [
+    "Fresh startup-process observations only; noGUI/window state or actual model-worker QoS readbacks.",
+    "Current task defaults and matching startup path support an environment mismatch; do not retrofit priority records to historical GUI windows.",
+    "Normal/BelowNormal priority is distinct from execution-speed QoS; do not name either as the backlog root from this read-only comparison."
+  ]
+}
