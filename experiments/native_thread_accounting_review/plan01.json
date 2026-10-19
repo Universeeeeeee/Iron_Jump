@@ -1,0 +1,27 @@
+{
+  "scope": "Offline counter-role review only; no newcapture oracceptance changes.",
+  "cases": [
+    {
+      "id": "finalization_protocol01",
+      "archive": "experiments/gil_workload_finalization/runs/evidence01",
+      "relative": "runs/protocol01",
+      "workload": "workload_final.json",
+      "original_acceptance": "experiments/gil_workload_finalization/result01.json"
+    },
+    {
+      "id": "metadata_failed02",
+      "archive": "experiments/gil_workload_observation/runs/evidence02",
+      "relative": "runs/observation02/off_a",
+      "workload": "workload01.json",
+      "original_acceptance": "experiments/gil_workload_observation/result02.json"
+    }
+  ],
+  "bindings": {
+    "experiments/native_thread_accounting_review/analyze.py": "095b5414bf4e8d8e7439300a2c1e13c26024b28dd83a03bee30e31150af5046d",
+    "experiments/native_thread_accounting_review/test_roles.py": "cabda796dfcb98e00134b550a78e40d569423d9679c977ef4bb59099650912ba",
+    "experiments/gil_gui_analysis/temporal_review02.py": "bf9a397e18f0a590c1c43c2c0077be318a0298a3154f5af99df6b6deec5b9e24",
+    "experiments/gil_workload_finalization/result01.json": "3c75cb3f2601ecd6fa6fc57117625206017acbf8a4b5bd98f339366d4282d085",
+    "experiments/gil_workload_observation/result02.json": "2af107c6554128c604fc822552cc36b9aa831a56c3b3276a75829cdf5ff7f53c",
+    "experiments/ground_throughput_diagnosis/enabled_replay.py": "9ce2e24936a8b05201c7b0a3634f25749a604902c66b439ad85ba124e15d3bce"
+  }
+}

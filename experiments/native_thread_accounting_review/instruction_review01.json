@@ -1,0 +1,476 @@
+{
+  "scope": "ExactPE offline instruction/unwind-range review at retainedCPU witness IPs; no target execution.",
+  "module_sha256": "aa8e6c1b618c30cd3a6ad584dee1b2f2c99c3f3025d683bada36e1566d9092b7",
+  "examples": [
+    {
+      "tid": 3792,
+      "qpc": 2417760913475,
+      "sample_rva": 16670662,
+      "pdb_function_name": null,
+      "module_sha256": "aa8e6c1b618c30cd3a6ad584dee1b2f2c99c3f3025d683bada36e1566d9092b7",
+      "unwind_begin_rva": 16670336,
+      "unwind_end_rva": 16671404,
+      "unwind_info_rva": 26435756,
+      "witnessed_instruction": {
+        "rva": 16670662,
+        "bytes": "c4 42 7d 18 2c 1c",
+        "instruction": "vbroadcastss\t(%r12,%rbx), %ymm13"
+      },
+      "nearby_instructions": [
+        {
+          "rva": 16670633,
+          "bytes": "c5 7c 28 d9",
+          "instruction": "vmovaps\t%ymm1, %ymm11"
+        },
+        {
+          "rva": 16670637,
+          "bytes": "c5 fc 28 f8",
+          "instruction": "vmovaps\t%ymm0, %ymm7"
+        },
+        {
+          "rva": 16670641,
+          "bytes": "66 66 66 66 66 66 2e 0f 1f 84 00 00 00 00 00",
+          "instruction": "nopw\t%cs:(%rax,%rax)"
+        },
+        {
+          "rva": 16670656,
+          "bytes": "c4 42 7d 18 24 19",
+          "instruction": "vbroadcastss\t(%r9,%rbx), %ymm12"
+        },
+        {
+          "rva": 16670662,
+          "bytes": "c4 42 7d 18 2c 1c",
+          "instruction": "vbroadcastss\t(%r12,%rbx), %ymm13"
+        },
+        {
+          "rva": 16670668,
+          "bytes": "c4 42 7d 18 74 1d 00",
+          "instruction": "vbroadcastss\t(%r13,%rbx), %ymm14"
+        },
+        {
+          "rva": 16670675,
+          "bytes": "c4 62 7d 18 7c 1d 00",
+          "instruction": "vbroadcastss\t(%rbp,%rbx), %ymm15"
+        },
+        {
+          "rva": 16670682,
+          "bytes": "c4 c2 7d 18 1c 1f",
+          "instruction": "vbroadcastss\t(%r15,%rbx), %ymm3"
+        },
+        {
+          "rva": 16670688,
+          "bytes": "c4 c1 7c 28 26",
+          "instruction": "vmovaps\t(%r14), %ymm4"
+        }
+      ],
+      "range_vector_arithmetic_present": true,
+      "range_pause_present": false,
+      "raw_disassembly_sha256": "3f322afb7149c54c5407b0c4afc425ca7b05f1458e72728720b421ad4f8d9a91",
+      "disassembler_symbol_labels_not_used": true
+    },
+    {
+      "tid": 2788,
+      "qpc": 2417750507350,
+      "sample_rva": 16670693,
+      "pdb_function_name": null,
+      "module_sha256": "aa8e6c1b618c30cd3a6ad584dee1b2f2c99c3f3025d683bada36e1566d9092b7",
+      "unwind_begin_rva": 16670336,
+      "unwind_end_rva": 16671404,
+      "unwind_info_rva": 26435756,
+      "witnessed_instruction": {
+        "rva": 16670693,
+        "bytes": "c4 e2 1d b8 cc",
+        "instruction": "vfmadd231ps\t%ymm4, %ymm12, %ymm1 # ymm1 = (ymm12 * ymm4) + ymm1"
+      },
+      "nearby_instructions": [
+        {
+          "rva": 16670668,
+          "bytes": "c4 42 7d 18 74 1d 00",
+          "instruction": "vbroadcastss\t(%r13,%rbx), %ymm14"
+        },
+        {
+          "rva": 16670675,
+          "bytes": "c4 62 7d 18 7c 1d 00",
+          "instruction": "vbroadcastss\t(%rbp,%rbx), %ymm15"
+        },
+        {
+          "rva": 16670682,
+          "bytes": "c4 c2 7d 18 1c 1f",
+          "instruction": "vbroadcastss\t(%r15,%rbx), %ymm3"
+        },
+        {
+          "rva": 16670688,
+          "bytes": "c4 c1 7c 28 26",
+          "instruction": "vmovaps\t(%r14), %ymm4"
+        },
+        {
+          "rva": 16670693,
+          "bytes": "c4 e2 1d b8 cc",
+          "instruction": "vfmadd231ps\t%ymm4, %ymm12, %ymm1 # ymm1 = (ymm12 * ymm4) + ymm1"
+        },
+        {
+          "rva": 16670698,
+          "bytes": "c4 62 15 b8 c4",
+          "instruction": "vfmadd231ps\t%ymm4, %ymm13, %ymm8 # ymm8 = (ymm13 * ymm4) + ymm8"
+        },
+        {
+          "rva": 16670703,
+          "bytes": "c4 62 0d b8 cc",
+          "instruction": "vfmadd231ps\t%ymm4, %ymm14, %ymm9 # ymm9 = (ymm14 * ymm4) + ymm9"
+        },
+        {
+          "rva": 16670708,
+          "bytes": "c4 62 05 b8 d4",
+          "instruction": "vfmadd231ps\t%ymm4, %ymm15, %ymm10 # ymm10 = (ymm15 * ymm4) + ymm10"
+        },
+        {
+          "rva": 16670713,
+          "bytes": "c4 62 65 b8 dc",
+          "instruction": "vfmadd231ps\t%ymm4, %ymm3, %ymm11 # ymm11 = (ymm3 * ymm4) + ymm11"
+        }
+      ],
+      "range_vector_arithmetic_present": true,
+      "range_pause_present": false,
+      "raw_disassembly_sha256": "3f322afb7149c54c5407b0c4afc425ca7b05f1458e72728720b421ad4f8d9a91",
+      "disassembler_symbol_labels_not_used": true
+    },
+    {
+      "tid": 2084,
+      "qpc": 2417739645820,
+      "sample_rva": 16670713,
+      "pdb_function_name": null,
+      "module_sha256": "aa8e6c1b618c30cd3a6ad584dee1b2f2c99c3f3025d683bada36e1566d9092b7",
+      "unwind_begin_rva": 16670336,
+      "unwind_end_rva": 16671404,
+      "unwind_info_rva": 26435756,
+      "witnessed_instruction": {
+        "rva": 16670713,
+        "bytes": "c4 62 65 b8 dc",
+        "instruction": "vfmadd231ps\t%ymm4, %ymm3, %ymm11 # ymm11 = (ymm3 * ymm4) + ymm11"
+      },
+      "nearby_instructions": [
+        {
+          "rva": 16670693,
+          "bytes": "c4 e2 1d b8 cc",
+          "instruction": "vfmadd231ps\t%ymm4, %ymm12, %ymm1 # ymm1 = (ymm12 * ymm4) + ymm1"
+        },
+        {
+          "rva": 16670698,
+          "bytes": "c4 62 15 b8 c4",
+          "instruction": "vfmadd231ps\t%ymm4, %ymm13, %ymm8 # ymm8 = (ymm13 * ymm4) + ymm8"
+        },
+        {
+          "rva": 16670703,
+          "bytes": "c4 62 0d b8 cc",
+          "instruction": "vfmadd231ps\t%ymm4, %ymm14, %ymm9 # ymm9 = (ymm14 * ymm4) + ymm9"
+        },
+        {
+          "rva": 16670708,
+          "bytes": "c4 62 05 b8 d4",
+          "instruction": "vfmadd231ps\t%ymm4, %ymm15, %ymm10 # ymm10 = (ymm15 * ymm4) + ymm10"
+        },
+        {
+          "rva": 16670713,
+          "bytes": "c4 62 65 b8 dc",
+          "instruction": "vfmadd231ps\t%ymm4, %ymm3, %ymm11 # ymm11 = (ymm3 * ymm4) + ymm11"
+        },
+        {
+          "rva": 16670718,
+          "bytes": "c4 c1 7c 28 66 20",
+          "instruction": "vmovaps\t0x20(%r14), %ymm4"
+        },
+        {
+          "rva": 16670724,
+          "bytes": "c4 c2 5d b8 c4",
+          "instruction": "vfmadd231ps\t%ymm12, %ymm4, %ymm0 # ymm0 = (ymm4 * ymm12) + ymm0"
+        },
+        {
+          "rva": 16670729,
+          "bytes": "c4 c2 5d b8 d5",
+          "instruction": "vfmadd231ps\t%ymm13, %ymm4, %ymm2 # ymm2 = (ymm4 * ymm13) + ymm2"
+        },
+        {
+          "rva": 16670734,
+          "bytes": "c4 c2 5d b8 ee",
+          "instruction": "vfmadd231ps\t%ymm14, %ymm4, %ymm5 # ymm5 = (ymm4 * ymm14) + ymm5"
+        }
+      ],
+      "range_vector_arithmetic_present": true,
+      "range_pause_present": false,
+      "raw_disassembly_sha256": "3f322afb7149c54c5407b0c4afc425ca7b05f1458e72728720b421ad4f8d9a91",
+      "disassembler_symbol_labels_not_used": true
+    },
+    {
+      "tid": 22368,
+      "qpc": 2417742052966,
+      "sample_rva": 16670718,
+      "pdb_function_name": null,
+      "module_sha256": "aa8e6c1b618c30cd3a6ad584dee1b2f2c99c3f3025d683bada36e1566d9092b7",
+      "unwind_begin_rva": 16670336,
+      "unwind_end_rva": 16671404,
+      "unwind_info_rva": 26435756,
+      "witnessed_instruction": {
+        "rva": 16670718,
+        "bytes": "c4 c1 7c 28 66 20",
+        "instruction": "vmovaps\t0x20(%r14), %ymm4"
+      },
+      "nearby_instructions": [
+        {
+          "rva": 16670698,
+          "bytes": "c4 62 15 b8 c4",
+          "instruction": "vfmadd231ps\t%ymm4, %ymm13, %ymm8 # ymm8 = (ymm13 * ymm4) + ymm8"
+        },
+        {
+          "rva": 16670703,
+          "bytes": "c4 62 0d b8 cc",
+          "instruction": "vfmadd231ps\t%ymm4, %ymm14, %ymm9 # ymm9 = (ymm14 * ymm4) + ymm9"
+        },
+        {
+          "rva": 16670708,
+          "bytes": "c4 62 05 b8 d4",
+          "instruction": "vfmadd231ps\t%ymm4, %ymm15, %ymm10 # ymm10 = (ymm15 * ymm4) + ymm10"
+        },
+        {
+          "rva": 16670713,
+          "bytes": "c4 62 65 b8 dc",
+          "instruction": "vfmadd231ps\t%ymm4, %ymm3, %ymm11 # ymm11 = (ymm3 * ymm4) + ymm11"
+        },
+        {
+          "rva": 16670718,
+          "bytes": "c4 c1 7c 28 66 20",
+          "instruction": "vmovaps\t0x20(%r14), %ymm4"
+        },
+        {
+          "rva": 16670724,
+          "bytes": "c4 c2 5d b8 c4",
+          "instruction": "vfmadd231ps\t%ymm12, %ymm4, %ymm0 # ymm0 = (ymm4 * ymm12) + ymm0"
+        },
+        {
+          "rva": 16670729,
+          "bytes": "c4 c2 5d b8 d5",
+          "instruction": "vfmadd231ps\t%ymm13, %ymm4, %ymm2 # ymm2 = (ymm4 * ymm13) + ymm2"
+        },
+        {
+          "rva": 16670734,
+          "bytes": "c4 c2 5d b8 ee",
+          "instruction": "vfmadd231ps\t%ymm14, %ymm4, %ymm5 # ymm5 = (ymm4 * ymm14) + ymm5"
+        },
+        {
+          "rva": 16670739,
+          "bytes": "c4 c2 5d b8 f7",
+          "instruction": "vfmadd231ps\t%ymm15, %ymm4, %ymm6 # ymm6 = (ymm4 * ymm15) + ymm6"
+        }
+      ],
+      "range_vector_arithmetic_present": true,
+      "range_pause_present": false,
+      "raw_disassembly_sha256": "3f322afb7149c54c5407b0c4afc425ca7b05f1458e72728720b421ad4f8d9a91",
+      "disassembler_symbol_labels_not_used": true
+    },
+    {
+      "tid": 11568,
+      "qpc": 2417745837482,
+      "sample_rva": 16670729,
+      "pdb_function_name": null,
+      "module_sha256": "aa8e6c1b618c30cd3a6ad584dee1b2f2c99c3f3025d683bada36e1566d9092b7",
+      "unwind_begin_rva": 16670336,
+      "unwind_end_rva": 16671404,
+      "unwind_info_rva": 26435756,
+      "witnessed_instruction": {
+        "rva": 16670729,
+        "bytes": "c4 c2 5d b8 d5",
+        "instruction": "vfmadd231ps\t%ymm13, %ymm4, %ymm2 # ymm2 = (ymm4 * ymm13) + ymm2"
+      },
+      "nearby_instructions": [
+        {
+          "rva": 16670708,
+          "bytes": "c4 62 05 b8 d4",
+          "instruction": "vfmadd231ps\t%ymm4, %ymm15, %ymm10 # ymm10 = (ymm15 * ymm4) + ymm10"
+        },
+        {
+          "rva": 16670713,
+          "bytes": "c4 62 65 b8 dc",
+          "instruction": "vfmadd231ps\t%ymm4, %ymm3, %ymm11 # ymm11 = (ymm3 * ymm4) + ymm11"
+        },
+        {
+          "rva": 16670718,
+          "bytes": "c4 c1 7c 28 66 20",
+          "instruction": "vmovaps\t0x20(%r14), %ymm4"
+        },
+        {
+          "rva": 16670724,
+          "bytes": "c4 c2 5d b8 c4",
+          "instruction": "vfmadd231ps\t%ymm12, %ymm4, %ymm0 # ymm0 = (ymm4 * ymm12) + ymm0"
+        },
+        {
+          "rva": 16670729,
+          "bytes": "c4 c2 5d b8 d5",
+          "instruction": "vfmadd231ps\t%ymm13, %ymm4, %ymm2 # ymm2 = (ymm4 * ymm13) + ymm2"
+        },
+        {
+          "rva": 16670734,
+          "bytes": "c4 c2 5d b8 ee",
+          "instruction": "vfmadd231ps\t%ymm14, %ymm4, %ymm5 # ymm5 = (ymm4 * ymm14) + ymm5"
+        },
+        {
+          "rva": 16670739,
+          "bytes": "c4 c2 5d b8 f7",
+          "instruction": "vfmadd231ps\t%ymm15, %ymm4, %ymm6 # ymm6 = (ymm4 * ymm15) + ymm6"
+        },
+        {
+          "rva": 16670744,
+          "bytes": "c4 e2 65 b8 fc",
+          "instruction": "vfmadd231ps\t%ymm4, %ymm3, %ymm7 # ymm7 = (ymm3 * ymm4) + ymm7"
+        },
+        {
+          "rva": 16670749,
+          "bytes": "49 83 c6 40",
+          "instruction": "addq\t$0x40, %r14"
+        }
+      ],
+      "range_vector_arithmetic_present": true,
+      "range_pause_present": false,
+      "raw_disassembly_sha256": "3f322afb7149c54c5407b0c4afc425ca7b05f1458e72728720b421ad4f8d9a91",
+      "disassembler_symbol_labels_not_used": true
+    },
+    {
+      "tid": 17116,
+      "qpc": 2417736509530,
+      "sample_rva": 16680160,
+      "pdb_function_name": null,
+      "module_sha256": "aa8e6c1b618c30cd3a6ad584dee1b2f2c99c3f3025d683bada36e1566d9092b7",
+      "unwind_begin_rva": 16679728,
+      "unwind_end_rva": 16680815,
+      "unwind_info_rva": 24777720,
+      "witnessed_instruction": {
+        "rva": 16680160,
+        "bytes": "c4 c2 6d 98 a1 40 01 00 00",
+        "instruction": "vfmadd132ps\t0x140(%r9), %ymm2, %ymm4 # ymm4 = (ymm4 * mem) + ymm2"
+      },
+      "nearby_instructions": [
+        {
+          "rva": 16680129,
+          "bytes": "c4 c2 5d 98 91 00 01 00 00",
+          "instruction": "vfmadd132ps\t0x100(%r9), %ymm4, %ymm2 # ymm2 = (ymm2 * mem) + ymm4"
+        },
+        {
+          "rva": 16680138,
+          "bytes": "c4 c2 55 98 99 20 01 00 00",
+          "instruction": "vfmadd132ps\t0x120(%r9), %ymm5, %ymm3 # ymm3 = (ymm3 * mem) + ymm5"
+        },
+        {
+          "rva": 16680147,
+          "bytes": "c4 81 7c 10 24 1e",
+          "instruction": "vmovups\t(%r14,%r11), %ymm4"
+        },
+        {
+          "rva": 16680153,
+          "bytes": "c4 81 7c 10 6c 1e 20",
+          "instruction": "vmovups\t0x20(%r14,%r11), %ymm5"
+        },
+        {
+          "rva": 16680160,
+          "bytes": "c4 c2 6d 98 a1 40 01 00 00",
+          "instruction": "vfmadd132ps\t0x140(%r9), %ymm2, %ymm4 # ymm4 = (ymm4 * mem) + ymm2"
+        },
+        {
+          "rva": 16680169,
+          "bytes": "c4 c2 65 98 a9 60 01 00 00",
+          "instruction": "vfmadd132ps\t0x160(%r9), %ymm3, %ymm5 # ymm5 = (ymm5 * mem) + ymm3"
+        },
+        {
+          "rva": 16680178,
+          "bytes": "c4 81 7c 10 14 1a",
+          "instruction": "vmovups\t(%r10,%r11), %ymm2"
+        },
+        {
+          "rva": 16680184,
+          "bytes": "c4 81 7c 10 5c 1a 20",
+          "instruction": "vmovups\t0x20(%r10,%r11), %ymm3"
+        },
+        {
+          "rva": 16680191,
+          "bytes": "c4 c2 5d 98 91 80 01 00 00",
+          "instruction": "vfmadd132ps\t0x180(%r9), %ymm4, %ymm2 # ymm2 = (ymm2 * mem) + ymm4"
+        }
+      ],
+      "range_vector_arithmetic_present": true,
+      "range_pause_present": false,
+      "raw_disassembly_sha256": "2fd0455ec4eef1633d0fe6052966d8218222cfb0db32f1f486e2edb03bdb76f4",
+      "disassembler_symbol_labels_not_used": true
+    },
+    {
+      "tid": 12088,
+      "qpc": 2417737335423,
+      "sample_rva": 16680313,
+      "pdb_function_name": null,
+      "module_sha256": "aa8e6c1b618c30cd3a6ad584dee1b2f2c99c3f3025d683bada36e1566d9092b7",
+      "unwind_begin_rva": 16679728,
+      "unwind_end_rva": 16680815,
+      "unwind_info_rva": 24777720,
+      "witnessed_instruction": {
+        "rva": 16680313,
+        "bytes": "c5 fc 5f dd",
+        "instruction": "vmaxps\t%ymm5, %ymm0, %ymm3"
+      },
+      "nearby_instructions": [
+        {
+          "rva": 16680284,
+          "bytes": "c4 c2 6d 98 a1 40 02 00 00",
+          "instruction": "vfmadd132ps\t0x240(%r9), %ymm2, %ymm4 # ymm4 = (ymm4 * mem) + ymm2"
+        },
+        {
+          "rva": 16680293,
+          "bytes": "c4 c2 65 98 a9 60 02 00 00",
+          "instruction": "vfmadd132ps\t0x260(%r9), %ymm3, %ymm5 # ymm5 = (ymm5 * mem) + ymm3"
+        },
+        {
+          "rva": 16680302,
+          "bytes": "49 81 c1 80 02 00 00",
+          "instruction": "addq\t$0x280, %r9             # imm = 0x280"
+        },
+        {
+          "rva": 16680309,
+          "bytes": "c5 fc 5f d4",
+          "instruction": "vmaxps\t%ymm4, %ymm0, %ymm2"
+        },
+        {
+          "rva": 16680313,
+          "bytes": "c5 fc 5f dd",
+          "instruction": "vmaxps\t%ymm5, %ymm0, %ymm3"
+        },
+        {
+          "rva": 16680317,
+          "bytes": "c5 f4 5d d2",
+          "instruction": "vminps\t%ymm2, %ymm1, %ymm2"
+        },
+        {
+          "rva": 16680321,
+          "bytes": "c5 f4 5d db",
+          "instruction": "vminps\t%ymm3, %ymm1, %ymm3"
+        },
+        {
+          "rva": 16680325,
+          "bytes": "c4 a1 7c 11 14 1b",
+          "instruction": "vmovups\t%ymm2, (%rbx,%r11)"
+        },
+        {
+          "rva": 16680331,
+          "bytes": "c4 a1 7c 11 5c 1b 20",
+          "instruction": "vmovups\t%ymm3, 0x20(%rbx,%r11)"
+        }
+      ],
+      "range_vector_arithmetic_present": true,
+      "range_pause_present": false,
+      "raw_disassembly_sha256": "2fd0455ec4eef1633d0fe6052966d8218222cfb0db32f1f486e2edb03bdb76f4",
+      "disassembler_symbol_labels_not_used": true
+    }
+  ],
+  "limits": [
+    "Nearest exported symbol plus displacement is not a private function identity.",
+    "Instruction evidence does not name convolution/GEMM/operator ormeasure cost share.",
+    "One witnessed vector arithmetic instruction does not exclude other waits/spins elsewhere orprove startup root cause.",
+    "Original failedCPUtrace and actual-load calibration remain failed."
+  ],
+  "new_capture": false,
+  "primary_root_identified": false
+}
