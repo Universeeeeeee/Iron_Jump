@@ -1,0 +1,46 @@
+{
+  "cases": {
+    "pair01_concurrent": {
+      "user_cpu_ms": 14890.625,
+      "kernel_cpu_ms": 312.5,
+      "record_sha256": "8a027228b70dfbf8c4719d51c9ca74edb1facbdbf793bb55c0b503a7994f6b95"
+    },
+    "pair01_serial": {
+      "user_cpu_ms": 12343.75,
+      "kernel_cpu_ms": 250.0,
+      "record_sha256": "5182f998b900227609ad9824e461da24a7624caf98e8f64b0d658bceb0feb15e"
+    },
+    "pair02_serial": {
+      "user_cpu_ms": 7703.125,
+      "kernel_cpu_ms": 453.125,
+      "record_sha256": "9eb5c2bccba7fd0bdac5ac80ac705e3f2bed89c2e7f40a965793eec55e62ee5e"
+    },
+    "pair02_concurrent": {
+      "user_cpu_ms": 8437.5,
+      "kernel_cpu_ms": 531.25,
+      "record_sha256": "b1ee61fdc1909b7cccad36ccb68f278fd8b5257b96a30d7341784c6c4f82b344"
+    },
+    "pair03_serial": {
+      "user_cpu_ms": 7281.25,
+      "kernel_cpu_ms": 562.5,
+      "record_sha256": "9822ad7f27bfe2639a802189f82711109a3a2be7b96c0a59d2f17815f84cd70d"
+    },
+    "pair03_concurrent": {
+      "user_cpu_ms": 8250.0,
+      "kernel_cpu_ms": 390.625,
+      "record_sha256": "2567300ce057374766eeda462dfa85567f70767213f10ee10293e22bebbcccae"
+    },
+    "pair04_concurrent": {
+      "user_cpu_ms": 8578.125,
+      "kernel_cpu_ms": 546.875,
+      "record_sha256": "145f92122b8e7fa9e194e2340fcafc00dc398be26649b0cc2ae3702b9b7afdc0"
+    },
+    "pair04_serial": {
+      "user_cpu_ms": 7671.875,
+      "kernel_cpu_ms": 406.25,
+      "record_sha256": "8d14d3fb82c0d8bb8d293a514e163bd89177e44d7742ebc15b43f8130c2c9bfa"
+    }
+  },
+  "manifest_sha256": "cae5129c1c40e29609afd91a9e6bc8e98e2efc7880172c57608c19d22c810ce5",
+  "scope": "Raw whole-process GetProcessTimes deltas inside the original ROI. Not per-functionCPU attribution, instruction count or GHz."
+}

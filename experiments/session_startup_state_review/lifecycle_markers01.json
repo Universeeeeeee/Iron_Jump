@@ -1,0 +1,33 @@
+{
+  "cases": {
+    "aa01": {
+      "model_open_end_minus_source_start_ms": 190.4419,
+      "last_source_receipt_after_arm_s": 29.6895073,
+      "last_consumed_witness_after_arm_s": 31.0324622,
+      "source_result_sha256": "12e10126c4bb1f756e20ad2cd6173a008012f9ac2f2892dc6d741b6d11b6ae90",
+      "workload_sha256": "5035d0c65e82ba98802a0f501bfd9bffe05fc3668e4d6bdc5513f24026c8bc56"
+    },
+    "aa02": {
+      "model_open_end_minus_source_start_ms": -236.5858,
+      "last_source_receipt_after_arm_s": 29.6911006,
+      "last_consumed_witness_after_arm_s": 29.6926575,
+      "source_result_sha256": "c1140aff951027e25125d53d6e14a7219ea778f2331f0b47010dc32639bd6be4",
+      "workload_sha256": "e692d0fb215cb2e3e4ed6de84c62b634914fbe817cc10213102248c76928a01a"
+    },
+    "aa03": {
+      "model_open_end_minus_source_start_ms": -257.371,
+      "last_source_receipt_after_arm_s": 29.6899689,
+      "last_consumed_witness_after_arm_s": 29.6917036,
+      "source_result_sha256": "f74008ec9d2b86129f427c7dc69abae5c92a67b84d3566eb5089ebf141b37387",
+      "workload_sha256": "431b87c706315743b626420d3cd54ec96cdd9b75213687dd564099f43c30402f"
+    },
+    "aa04": {
+      "model_open_end_minus_source_start_ms": -236.6644,
+      "last_source_receipt_after_arm_s": 29.7201249,
+      "last_consumed_witness_after_arm_s": 29.7504922,
+      "source_result_sha256": "8a5e7a98ee356923d2a8e9a198ea35bb18f56f847583365b06ebe2da5665fc8f",
+      "workload_sha256": "3195efdde6b9c09f0b5d4d9c22313943886650f17bd710eb1a791aeedfa47044"
+    }
+  },
+  "scope": "Existing timing only. Positive open-end minus source-start means startup overlap, not causation. Later bins can include drain/export activity, not an idle model control."
+}
