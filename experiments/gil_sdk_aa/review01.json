@@ -1,0 +1,58 @@
+{
+  "title": "OFF/OFF完整交付通过但实际视觉/SDK负载不一致",
+  "cases": {
+    "pair01_a": {
+      "frame4159_to4163_ms": 35,
+      "frame4163_inferred": false,
+      "first_actual_inference_frames": [
+        4151,
+        4159,
+        4167,
+        4175,
+        4183,
+        4191
+      ],
+      "timestamp_only_greedy_matches_whole_sequence": false,
+      "greedy_count": 380,
+      "actual_count": 379
+    },
+    "pair01_b": {
+      "frame4159_to4163_ms": 61,
+      "frame4163_inferred": true,
+      "first_actual_inference_frames": [
+        4151,
+        4159,
+        4163,
+        4171,
+        4179,
+        4187
+      ],
+      "timestamp_only_greedy_matches_whole_sequence": false,
+      "greedy_count": 377,
+      "actual_count": 377
+    }
+  },
+  "source_sha256": {
+    "experiments/ground_throughput_diagnosis/enabled_replay.py": "9ce2e24936a8b05201c7b0a3634f25749a604902c66b439ad85ba124e15d3bce",
+    "vision/event_scheduler.py": "dc67f24a39a69e3f08da7c87d3666bbd843de4e427719c1ee6e64336df047246",
+    "vision/service.py": "d8f43d891a6162db79d04e78cc198452814bbcaf30a4566c16c7f5646ebc42dc"
+  },
+  "facts": [
+    "视频回放在解码后使用实时perf_counter填写callback/decoded时间，再提交视觉链。",
+    "回放另有超过33.333333ms截止时间的跳帧路径；两轮记录的跳帧为3和2，但总帧数差不能全部归因于该计数。",
+    "推理调度按round(captured_at_s*1000)及50ms最小间隔选帧，服务本身还有缓冲/线程调度路径。",
+    "帧4159至4163在A为35ms、B为61ms；A未推理4163、B推理4163。这是与实际分歧一致的门槛边界证据。"
+  ],
+  "limits": [
+    "时间戳贪心参考是否匹配整段在每轮单独报告；不忽略worker队列覆盖、调度或终止因素以强行匹配。",
+    "不能将该回放负载机制等同于正式程序积压根因；不能更改正式推理策略来令校准通过。",
+    "当前一对不支持独立对之间的方差估计。CPU/cycles差仅作描述，不能称为采样开销。"
+  ],
+  "next": [
+    "暂停ON采样，保留本对及所有旧失败；不追加同配置轮次碰运气寻找匹配对。",
+    "先设计独立实验级确定性输入/时间戳控制，并验证它与原实际负载的适用边界；不得把合成稳定性推广为真实负载通过。",
+    "若采用真实负载分布的随机化设计，须预先明确估计对象、工作量变化和足够独立对数；不能事后以次数归一化或删帧替代原门槛。"
+  ],
+  "actual_load_disturbance_pass": false,
+  "primary_root_identified": false
+}

@@ -1,0 +1,212 @@
+{
+  "cases": {
+    "pair01_a": {
+      "protocol_qualification_pass": true,
+      "counts": {
+        "video": 749,
+        "whole_inference": 379,
+        "ROI_inference": 65,
+        "service_submits": 749,
+        "SDK_pose_inputs": 536,
+        "SDK_calls": 563,
+        "tracking_decisions": 479,
+        "nonzero_speeds": 398,
+        "valid_draws": 589
+      },
+      "totals": {
+        "gui": {
+          "cpu_ns": 2703125000,
+          "cycles": 6932071200,
+          "threads": 1
+        },
+        "consumer": {
+          "cpu_ns": 2093750000,
+          "cycles": 5275092240,
+          "threads": 1
+        },
+        "reader": {
+          "cpu_ns": 703125000,
+          "cycles": 1698976560,
+          "threads": 1
+        },
+        "gui_other_native": {
+          "cpu_ns": 6234375000,
+          "cycles": 16691185920,
+          "threads": 64
+        },
+        "sdk": {
+          "cpu_ns": 140625000,
+          "cycles": 438495600,
+          "threads": 21
+        }
+      },
+      "native_clock": {
+        "qpc_frequency": 10000000,
+        "host_ns_offset_lower": -9500,
+        "host_ns_offset_upper": 5700,
+        "uncertainty_ns": 15200,
+        "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+      },
+      "child_clock": {
+        "host_minus_child_ns_bounds": [
+          -61300,
+          157700
+        ],
+        "uncertainty_ns": 219000,
+        "zero_offset_compatible": true
+      },
+      "queue_observed_lower": 3888
+    },
+    "pair01_b": {
+      "protocol_qualification_pass": true,
+      "counts": {
+        "video": 744,
+        "whole_inference": 377,
+        "ROI_inference": 64,
+        "service_submits": 744,
+        "SDK_pose_inputs": 532,
+        "SDK_calls": 559,
+        "tracking_decisions": 474,
+        "nonzero_speeds": 394,
+        "valid_draws": 588
+      },
+      "totals": {
+        "gui": {
+          "cpu_ns": 2562500000,
+          "cycles": 6891288720,
+          "threads": 1
+        },
+        "consumer": {
+          "cpu_ns": 2234375000,
+          "cycles": 5338500720,
+          "threads": 1
+        },
+        "reader": {
+          "cpu_ns": 671875000,
+          "cycles": 1664190480,
+          "threads": 1
+        },
+        "gui_other_native": {
+          "cpu_ns": 6875000000,
+          "cycles": 17076050400,
+          "threads": 64
+        },
+        "sdk": {
+          "cpu_ns": 203125000,
+          "cycles": 457230960,
+          "threads": 21
+        }
+      },
+      "native_clock": {
+        "qpc_frequency": 10000000,
+        "host_ns_offset_lower": -9100,
+        "host_ns_offset_upper": 5300,
+        "uncertainty_ns": 14400,
+        "formula": "host_ns = qpc * 1e9 / frequency + offset; retain both bounds"
+      },
+      "child_clock": {
+        "host_minus_child_ns_bounds": [
+          -55500,
+          226800
+        ],
+        "uncertainty_ns": 282300,
+        "zero_offset_compatible": true
+      },
+      "queue_observed_lower": 3800
+    }
+  },
+  "comparison": {
+    "checks": {
+      "video": false,
+      "whole_inference": false,
+      "ROI_inference": false,
+      "service_submits": false,
+      "SDK_pose_inputs": false,
+      "SDK_calls": false,
+      "tracking_decisions": false,
+      "nonzero_speeds": false,
+      "valid_draws": false
+    },
+    "necessary_workload_identity_pass": false,
+    "independent_pairs": 1,
+    "variance_estimate_available": false,
+    "actual_load_disturbance_pass": false,
+    "field_attribution_ready": false,
+    "reason": "One prospective pair is a comparability check, not a variance estimate. All common observers remain enabled; their absolute cost is unqualified."
+  },
+  "identity_differences": {
+    "video": {
+      "lengths": [
+        749,
+        744
+      ],
+      "first_mismatch": {
+        "position": 63,
+        "left": 4403,
+        "right": 4408
+      }
+    },
+    "whole_inference": {
+      "lengths": [
+        379,
+        377
+      ],
+      "first_mismatch": {
+        "position": 2,
+        "left": 4167,
+        "right": 4163
+      }
+    },
+    "ROI_inference": {
+      "lengths": [
+        65,
+        64
+      ],
+      "first_mismatch": {
+        "position": 56,
+        "left": [
+          1,
+          5783
+        ],
+        "right": [
+          1,
+          5787
+        ]
+      }
+    }
+  },
+  "descriptive_counter_relative_changes": {
+    "gui": {
+      "cpu_ns": -0.052023121387283267,
+      "cycles": -0.005883159422828799
+    },
+    "consumer": {
+      "cpu_ns": 0.0671641791044777,
+      "cycles": 0.012020354737910743
+    },
+    "reader": {
+      "cpu_ns": -0.0444444444444444,
+      "cycles": -0.020474726266971
+    },
+    "gui_other_native": {
+      "cpu_ns": 0.10275689223057638,
+      "cycles": 0.02305794698139696
+    },
+    "sdk": {
+      "cpu_ns": 0.4444444444444444,
+      "cycles": 0.04272644925057412
+    }
+  },
+  "all_protocols_pass": true,
+  "ON_allowed": false,
+  "limits": [
+    "Single pair cannot estimate independent-pair variance or a confidence interval.",
+    "Counter differences include scheduling and unequal work; never label these as observer overhead.",
+    "GUI main thread and other GUI native threads are separate; SDK belongs to another PID/GIL.",
+    "GetThreadTimes empirical15.625ms quantum remains material;100ns units do not establish precision.",
+    "Common observation overhead remains unqualified even if a later sampler-only comparison passes."
+  ],
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "primary_root_identified": false
+}
