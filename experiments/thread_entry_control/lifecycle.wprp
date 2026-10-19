@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WindowsPerformanceRecorder Version="1.0" Author="IronJump isolated lifecycle control">
+  <Profiles>
+    <SystemCollector Id="Collector" Name="IronJumpLifecycle"><BufferSize Value="128" /><Buffers Value="128" /></SystemCollector>
+    <SystemProvider Id="Provider"><Keywords><Keyword Value="ProcessThread" /><Keyword Value="Loader" /></Keywords></SystemProvider>
+    <Profile Id="Nativelifecycle.Verbose.File" Name="Nativelifecycle" Description="Synthetic thread lifecycle only" LoggingMode="File" DetailLevel="Verbose">
+      <Collectors><SystemCollectorId Value="Collector"><SystemProviderId Value="Provider" /></SystemCollectorId></Collectors>
+    </Profile>
+  </Profiles>
+</WindowsPerformanceRecorder>

@@ -1,0 +1,58 @@
+{
+  "known_entry_control_pass": true,
+  "validated_payload_layout": {
+    "version": 3,
+    "pointer_bits": 64,
+    "length": 74,
+    "entry_offset": 48
+  },
+  "threads": [
+    {
+      "tid": 23160,
+      "export": "EntryA",
+      "entry": 140704293654528,
+      "rva": 4096,
+      "query_matches": true,
+      "start_and_end_payload_match": true,
+      "creation_100ns": 134368661235189392
+    },
+    {
+      "tid": 15644,
+      "export": "EntryB",
+      "entry": 140704293654576,
+      "rva": 4144,
+      "query_matches": true,
+      "start_and_end_payload_match": true,
+      "creation_100ns": 134368661235192722
+    }
+  ],
+  "module": {
+    "base": 140704293650432,
+    "size": 118784,
+    "path": "\\Device\\HarddiskVolume3\\OptoJump\\IronJump-gil-gui-calibration-20261018-01\\experiments\\thread_entry_control\\EntryOracle.dll",
+    "qpc": 3883276626381,
+    "checksum": 0
+  },
+  "dll_sha256": "0e63700e79c2f211c56be9b3c462fd9d43559f496471ede70304ec78f81e014f",
+  "clock_residual_ms": 0.0,
+  "loss": {
+    "header_events_lost": 0,
+    "consumer_events_lost": 0,
+    "buffers_lost": 0
+  },
+  "actual_load_disturbance_pass": false,
+  "primary_root_identified": false,
+  "limits": [
+    "Only delivered74-byte x64 version3 Start/End payloads validated; reject other layouts until independently verified.",
+    "Entry address is a thread startup boundary, not its current stack, creator, GIL owner, CPU hotspot or responsibility function.",
+    "No PDB claim; export identity is supplied by our known native oracle and actual CreateThread argument.",
+    "Newly created threads in the previous untraced model window remain unattributed."
+  ],
+  "sources": {
+    "review.py": "db0c7de65957948703ee6781d364d994cfb4f28d1af3096ecda356044ff84d1a",
+    "plan01.json": "d9af44b0359fb9e11f98357a045e65adddf42df5e54ebfedca9ab7940962582d",
+    "fixture01.json": "3293766c6bec15a362d6bf7f6c8b14957e520858b39179679591dfb4a4295dbc",
+    "events01.jsonl": "acb32a39e941cbd7c3c3b4e438f9202e22cdd3ed1ce20585f689f36e23fd5267",
+    "metadata01.json": "fa78504b3a0690be262a9cc452da32061bafb3ba12462c80a864815d6d58f2f3"
+  }
+}

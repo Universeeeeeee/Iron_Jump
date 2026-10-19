@@ -1,0 +1,20 @@
+{
+  "dll_sha256": "0e63700e79c2f211c56be9b3c462fd9d43559f496471ede70304ec78f81e014f",
+  "sources": {
+    "experiments/thread_entry_control/EntryOracle.c": "d80610721a7a21c663e8b96cc7597e401669de11abf3140f41db1e2ae7b963a7",
+    "experiments/thread_entry_control/build.cmd": "859e08e54a2ab10a76fd7231eaf0517940397428cae098ec9fc63a65ead1b638",
+    "experiments/thread_entry_control/fixture.py": "27e621ee49a4ac789a8c42ffdd08f7ec6730454092d32ffe1febd0244e5eaea1",
+    "experiments/thread_entry_control/run.py": "78a3713f4f1eb9243b66a59d0d083d5ad8ade4d2fe8674e9f4e95f8938305e66",
+    "experiments/thread_entry_control/lifecycle.wprp": "4791d6fec91e5c237b0efe0c0ca8dc34348d94e9e9fb8a64a8b6608ca512a71a",
+    "experiments/native_stack_capture/record.py": "c6d963a249ad10c78cb8a0dba1f9be03889683a2852f1ddb96038f9f53f38d81",
+    "experiments/native_stack_capture/winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6"
+  },
+  "scope": "One lifecycle-only synthetic trace with two distinct known native entry functions; cross-check actual CreateThread input, live NtQueryInformationThread class9 result, and ETW payload. No real workload or optimization.",
+  "acceptance": [
+    "Both distinct known entry addresses match system query while alive.",
+    "Both actual Start/End pairs enclose live query and preserve owner PID/TID/creation.",
+    "Zero lost events, original1ms clock gate, unchanged sampling interval and confirmed owned WPR stop.",
+    "Candidate ETW offset must contain exact expected address for every start/end; unknown layouts remain rejected.",
+    "No PDB or actual-load disturbance claim; no replacement capture on failure."
+  ]
+}
