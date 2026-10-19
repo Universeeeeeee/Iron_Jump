@@ -1,0 +1,22 @@
+{
+  "title": "独立阶段长尖峰出现同窗generation2 GC证据；现场主因仍未确定",
+  "findings": [
+    "三轮完整原oracle及阶段结果全部通过，458个原源文件和输入不变。未关闭GC、修改阈值或强制回收。",
+    "A/filter块35墙钟246.916ms，内含generation2 GC197.844ms，collected0。",
+    "B/quality块10墙钟265.731ms，内含generation2 GC181.750ms，collected0。",
+    "C/filter块11墙钟333.218ms，内含generation2 GC186.048ms，collected0。",
+    "GC起止与区块端点使用同进程真实时钟；块端点来自原有读数，结构检查确认未新增计时调用，未删除原处理或验证逻辑。"
+  ],
+  "interpretation": "本轮独立stage回放的长区块中确有长generation2 GC活动。回收0个对象不等于未执行扫描。大量存活调用带/输入/结果对象是值得验证的GC扫描范围来源，但本轮未记录对象图，不能指认哪类对象主导。",
+  "limits": [
+    "仅确认本次同窗回调区间重叠，不将GC墙钟区间当作独占CPU开销或从区块时间中扣除后宣布通过。",
+    "原独立stage方式本就保留调用带及结果，和无调用带的整链、真实GUI的堆状态不同。不能把这些GC事件回填为上轮未观测尖峰或正式积压原因。",
+    "旧同步整链四轮的ROI内GC总区间仅约5.4–8.9ms，且慢快差跨全部区块；当前generation2结果没有解释那组持续成本差。",
+    "新GC callback及端点字段自身扰动未校准，不提高原3%/1%或自然持有者资格。"
+  ],
+  "next": "将阶段调用带保留对GC的影响作为测量范围限制，避免把它错判为原算法热点；下一步回到无调用带的完整原链，在同窗记录低频计数与GC，并用适用的原生计算栈或阶段内部工作计数定位持续执行成本。保持计算与自然GIL等待两条线。",
+  "preflight_failure_retained": "首次结构测试错误地要求新增输出字典所属append调用整体AST相同，测试自身失败；未启动采集。原测试/计划/脚本已冻结，修正后新计划仅一次执行三轮，失败记录未覆盖。",
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "primary_root_identified": false
+}

@@ -1,0 +1,52 @@
+{
+  "replay_root": "E:/OptoJump/IronJump-walk-compute-offline-20261017-01",
+  "input_root": "E:/OptoJump/IronJump-single-usb-human-etw-20261017/experiments/single_usb_human_etw/runs/20261018_131910_3eef864f_walk_off/capture",
+  "input_sha256": {
+    "raw_frames.npz": "8ee4a9ea9ac835f5dc083d014eeaef9d337ee8c140f1cdc3a11f1be6fece2d47",
+    "raw_archive.npz": "6ec340e2ca62742235d6602cf38c4470a20cf5f29441c8387be9bb85522cdcd5",
+    "acquisition.json": "e84e6bd481eeadd408a61c377950cc878bf8d989b92f58596fccf6eee62c62cb",
+    "report.json": "0ae1bf2d9277c1e3d95d629e071cb3ff61d249c78c6d0b6d0901773f4fb68747",
+    "state.json": "bfb63086da795427cc2fbd5985a4ff56bcd1cdb964908dcc4a9408a79a6d914f",
+    "measurement.json": "a2b441f1367dd3d5eb7204c75eeebf05c344e8dd69b632ba29f57a4eed6febe9"
+  },
+  "raw_first": 42237,
+  "raw_after_last": 49061,
+  "replay_sha256": "fcde26dd2e707cc457623a971a97e68ebd9f49630126c51bd6ce83072a0d40a8",
+  "cases": {
+    "a": [
+      "quality",
+      "filter",
+      "processor"
+    ],
+    "b": [
+      "filter",
+      "processor",
+      "quality"
+    ],
+    "c": [
+      "processor",
+      "quality",
+      "filter"
+    ]
+  },
+  "run_sha256": "b52622bcdbb3340e7dc017ee78c6da17f9f5ea1ff807d2dba79aa233f4ab2d66",
+  "sources": {
+    "measure.py": "9cb1a2928d326708c2969b91fc2aca56b46a2298d3da9e6b36952bbcd6c8aa13",
+    "collect.py": "86823de0fd0efaa2196292f7108771d4cf512210671e048f52a9632b2724307f",
+    "run.py": "b52622bcdbb3340e7dc017ee78c6da17f9f5ea1ff807d2dba79aa233f4ab2d66",
+    "test_measure.py": "98b3edf0964304b9bf78f930811d46e460ee3bc5513cc9fb6d83d5517a375a21"
+  },
+  "scope": "Three prospectively fixed rotating-order stage runs with preallocated GC callback rows and retained existing clock endpoints. No GC settings, forced collections, algorithm or native-library changes. No devices, GUI/SDK, Run, optimization AB or samplers.",
+  "checks": [
+    "Full original oracle before stage timing; each original stage equality gate retained.",
+    "Same saved input and all458 original sources must match before/after.",
+    "Preflight and formal rows separate; report all stages and blocks without selecting fastest.",
+    "No sum of isolated stages as whole-chain time; no per-stage GIL share or causal overhead claim.",
+    "Three cases only; no sample extension, no old CPU-case attribution.",
+    "GC records include wall/cpu,generation,phase,tid,collected/uncollectable; overflow or unmatched callbacks fail analysis.",
+    "Original method AST differs only in saving start clock and adding endpoint output keys, with all original calls unchanged.",
+    "GC overlap is wall interval evidence, not exclusive causal CPU cost or explanation of previous unobserved windows."
+  ],
+  "actual_load_disturbance_pass": false,
+  "prior_plan_sha256": "68bcdee6dc564b3a2ca418cfea2255387379a116ff79f0aaf3d0aaf7efce6d72"
+}
