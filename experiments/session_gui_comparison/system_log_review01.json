@@ -1,0 +1,66 @@
+{
+  "read_only": true,
+  "start_utc": "2026-10-19T17:59:07.1167706Z",
+  "queries": [
+    {
+      "label": "processor_power",
+      "status": "no_matching_events",
+      "error": "找不到任何与指定的选择条件匹配的事件。",
+      "error_id": "NoMatchingEventsFound,Microsoft.PowerShell.Commands.GetWinEventCommand",
+      "events": []
+    },
+    {
+      "label": "kernel_power",
+      "status": "no_matching_events",
+      "error": "找不到任何与指定的选择条件匹配的事件。",
+      "error_id": "NoMatchingEventsFound,Microsoft.PowerShell.Commands.GetWinEventCommand",
+      "events": []
+    },
+    {
+      "label": "usermode_power",
+      "status": "no_matching_events",
+      "error": "找不到任何与指定的选择条件匹配的事件。",
+      "error_id": "NoMatchingEventsFound,Microsoft.PowerShell.Commands.GetWinEventCommand",
+      "events": []
+    },
+    {
+      "label": "defender_scan",
+      "status": "no_matching_events",
+      "error": "找不到任何与指定的选择条件匹配的事件。",
+      "error_id": "NoMatchingEventsFound,Microsoft.PowerShell.Commands.GetWinEventCommand",
+      "events": []
+    }
+  ],
+  "end_utc": "2026-10-19T18:21:52.9546716Z",
+  "new_capture": false,
+  "scope": "Existing event logs bounded by retained cohort UTCanchors plus2minutes. No events does not exclude effective-frequency, scheduling orbackground resource changes.",
+  "query_definitions": [
+    {
+      "label": "processor_power",
+      "log": "System",
+      "provider": "Microsoft-Windows-Kernel-Processor-Power",
+      "maximum_events": 200
+    },
+    {
+      "label": "kernel_power",
+      "log": "System",
+      "provider": "Microsoft-Windows-Kernel-Power",
+      "maximum_events": 200
+    },
+    {
+      "label": "usermode_power",
+      "log": "System",
+      "provider": "Microsoft-Windows-UserModePowerService",
+      "maximum_events": 200
+    },
+    {
+      "label": "defender_scan",
+      "log": "Microsoft-Windows-Windows Defender/Operational",
+      "ids": [
+        1000,
+        1001
+      ],
+      "maximum_events": 200
+    }
+  ]
+}

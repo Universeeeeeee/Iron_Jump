@@ -1,0 +1,231 @@
+{
+  "scope": "Posthoc nested-call wall intervals from the existing12-window archive only.",
+  "cases": {
+    "aa01": {
+      "backend": "original",
+      "calls": 417,
+      "all_calls_nested_and_same_native_thread": true,
+      "input_shape": [
+        360,
+        640,
+        3
+      ],
+      "input_dtype": "uint8",
+      "pose_present": 417,
+      "wall_ms_medians": {
+        "whole_ms": 41.5214,
+        "base_adapter_ms": 37.3417,
+        "outer_shell_ms": 3.1643
+      }
+    },
+    "aa02": {
+      "backend": "original",
+      "calls": 403,
+      "all_calls_nested_and_same_native_thread": true,
+      "input_shape": [
+        360,
+        640,
+        3
+      ],
+      "input_dtype": "uint8",
+      "pose_present": 403,
+      "wall_ms_medians": {
+        "whole_ms": 23.0559,
+        "base_adapter_ms": 20.9932,
+        "outer_shell_ms": 1.792
+      }
+    },
+    "aa03": {
+      "backend": "original",
+      "calls": 416,
+      "all_calls_nested_and_same_native_thread": true,
+      "input_shape": [
+        360,
+        640,
+        3
+      ],
+      "input_dtype": "uint8",
+      "pose_present": 416,
+      "wall_ms_medians": {
+        "whole_ms": 22.9618,
+        "base_adapter_ms": 20.88615,
+        "outer_shell_ms": 1.8065
+      }
+    },
+    "aa04": {
+      "backend": "original",
+      "calls": 403,
+      "all_calls_nested_and_same_native_thread": true,
+      "input_shape": [
+        360,
+        640,
+        3
+      ],
+      "input_dtype": "uint8",
+      "pose_present": 403,
+      "wall_ms_medians": {
+        "whole_ms": 22.9824,
+        "base_adapter_ms": 20.8424,
+        "outer_shell_ms": 1.8127
+      }
+    },
+    "pair01_original": {
+      "backend": "original",
+      "calls": 409,
+      "all_calls_nested_and_same_native_thread": true,
+      "input_shape": [
+        360,
+        640,
+        3
+      ],
+      "input_dtype": "uint8",
+      "pose_present": 409,
+      "wall_ms_medians": {
+        "whole_ms": 22.9354,
+        "base_adapter_ms": 20.9816,
+        "outer_shell_ms": 1.82
+      }
+    },
+    "pair01_isolated": {
+      "backend": "isolated",
+      "calls": 420,
+      "all_calls_nested_and_same_native_thread": true,
+      "input_shape": [
+        360,
+        640,
+        3
+      ],
+      "input_dtype": "uint8",
+      "pose_present": 420,
+      "wall_ms_medians": {
+        "whole_ms": 22.1132,
+        "base_adapter_ms": 20.1905,
+        "outer_shell_ms": 1.7408000000000001
+      }
+    },
+    "pair02_isolated": {
+      "backend": "isolated",
+      "calls": 416,
+      "all_calls_nested_and_same_native_thread": true,
+      "input_shape": [
+        360,
+        640,
+        3
+      ],
+      "input_dtype": "uint8",
+      "pose_present": 416,
+      "wall_ms_medians": {
+        "whole_ms": 22.22255,
+        "base_adapter_ms": 20.1903,
+        "outer_shell_ms": 1.7639
+      }
+    },
+    "pair02_original": {
+      "backend": "original",
+      "calls": 400,
+      "all_calls_nested_and_same_native_thread": true,
+      "input_shape": [
+        360,
+        640,
+        3
+      ],
+      "input_dtype": "uint8",
+      "pose_present": 400,
+      "wall_ms_medians": {
+        "whole_ms": 22.8403,
+        "base_adapter_ms": 20.73745,
+        "outer_shell_ms": 1.80325
+      }
+    },
+    "pair03_original": {
+      "backend": "original",
+      "calls": 398,
+      "all_calls_nested_and_same_native_thread": true,
+      "input_shape": [
+        360,
+        640,
+        3
+      ],
+      "input_dtype": "uint8",
+      "pose_present": 398,
+      "wall_ms_medians": {
+        "whole_ms": 22.7954,
+        "base_adapter_ms": 20.8508,
+        "outer_shell_ms": 1.789
+      }
+    },
+    "pair03_isolated": {
+      "backend": "isolated",
+      "calls": 416,
+      "all_calls_nested_and_same_native_thread": true,
+      "input_shape": [
+        360,
+        640,
+        3
+      ],
+      "input_dtype": "uint8",
+      "pose_present": 416,
+      "wall_ms_medians": {
+        "whole_ms": 22.126800000000003,
+        "base_adapter_ms": 20.0002,
+        "outer_shell_ms": 1.7441
+      }
+    },
+    "pair04_isolated": {
+      "backend": "isolated",
+      "calls": 416,
+      "all_calls_nested_and_same_native_thread": true,
+      "input_shape": [
+        360,
+        640,
+        3
+      ],
+      "input_dtype": "uint8",
+      "pose_present": 416,
+      "wall_ms_medians": {
+        "whole_ms": 22.20315,
+        "base_adapter_ms": 20.25845,
+        "outer_shell_ms": 1.74515
+      }
+    },
+    "pair04_original": {
+      "backend": "original",
+      "calls": 399,
+      "all_calls_nested_and_same_native_thread": true,
+      "input_shape": [
+        360,
+        640,
+        3
+      ],
+      "input_dtype": "uint8",
+      "pose_present": 399,
+      "wall_ms_medians": {
+        "whole_ms": 23.062,
+        "base_adapter_ms": 21.0097,
+        "outer_shell_ms": 1.8382
+      }
+    }
+  },
+  "code_boundaries": {
+    "base_adapter": "vision/mediapipe_pose.py::MediaPipePoseAdapter.infer_bgr (RGB array, MediaPipe Image, detect_for_video, landmarks conversion)",
+    "outer_shell": "vision/live_walking.py::_PreviewAdapter.infer_bgr plus call dispatch and retained audit event overhead outside the base markers"
+  },
+  "limits": [
+    "Neither interval is pureCPU time; both can include GIL reacquisition, scheduling, native work and waits.",
+    "Outer shell is not equivalent to cv2.resize; audit event publication and Python return are included.",
+    "All frames have poses and fixed dimensions, but internal MediaPipe tracking/detection work and dynamic prior frame histories are not proven identical.",
+    "No function orGIL contribution percentage, kernel identification orperformance qualification follows."
+  ],
+  "new_capture": false,
+  "primary_root_identified": false,
+  "bindings": {
+    "experiments/session_gui_comparison/boundary_review.py": "36a5cd1c23fc4c99590520e725ca4468579b8bb47467b99a2ca277739fa3c5f1",
+    "experiments/session_gui_comparison/result01.json": "986c1bba3ca38efbb58fe836c15231676d2ae2a46db136cd2175d83fa4a63790",
+    "experiments/session_gui_comparison/review01.json": "bfb614831e94bd6875025d665678333c62e9d9266ac9c9e4e15eb2fda068793d",
+    "experiments/session_gui_comparison/collection01.json": "8da66d3c7d27c7627fcf4cbfc4197be339fb021a01f6b1cfb124221986578ea3",
+    "vision/live_walking.py": "7f7ca4dd66bafe59ae43b2b2f25e528c9349faa8c5de20d177d5e2cd7642e228",
+    "vision/mediapipe_pose.py": "b4b771ce3e18d88c50fd1c698ac006bd0b87d2be9c5f50feb5f080a48f6c43e1",
+    "vision/service.py": "d8f43d891a6162db79d04e78cc198452814bbcaf30a4566c16c7f5646ebc42dc",
+    "experiments/gil_workload_observation/workload.py": "f01174dc72f3cd6b54b20c90ff7abeb6922bfd9dba79b06b11d7dc14455ccef6"
+  }
+}
