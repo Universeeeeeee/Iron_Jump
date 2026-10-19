@@ -1,0 +1,26 @@
+{
+  "purpose": "为自然GIL等待证据对应的一次NumPy边界准备最小隔离因果干预；尚未激活或执行性能对照。",
+  "intervention": "仅在独立诊断进程中将DeviceQualitySession.on_frame中的np.array_equal(flagged, self._runtime_suspicious_mask)替换为runtime_mask_equal；正式源文件不改。",
+  "candidate_behavior": [
+    "仅对两个C连续的原生ndarray、dtype=bool、shape=(768,)且底层布尔字节均为0或1使用bytes相等判断。",
+    "None、不同形状或dtype、非连续或非规范bool存储全部回到原np.array_equal。不得把非零bool原始字节相同当作数值相等的必要条件。",
+    "保留原始输入和返回相等语义，不缓存集合/掩码，不跳过质量判断，不改变坏束参与规则或物理坐标。",
+    "只有这个调用表达式可改变，AST结构测试与源SHA拒绝规则限制激活范围。"
+  ],
+  "rationale": "既有同SHA自然ETW见证在积压、20帧在途时包含NumPy归约返回后的take_gil等待；独立机器码映射确认>500迭代规模的相关SaveThread/RestoreThread路径。此候选用于检验去掉一个已知获取边界是否影响消费进展，不把调用次数视为实际释放/等待次数。",
+  "proposed_experiment": {
+    "status": "Prepared only; no activation, deployment or performance A/B executed",
+    "first_gate": "取得隔离A/B范围授权后，先以原完整输入、报告、质量历史、事件审计、时间线及原始归档逐字段核对候选；失败立即保留并停止。",
+    "causal_gate": "只有语义门槛通过后，再冻结原入口/候选入口的成对随机顺序与固定例数，在已有保存Walk回放中记录消费进展、pending和发布延迟；完整视觉/SDK实际工作变化作为结果保留，不事后筛选匹配。",
+    "interpretation": "对照若显示改善，也只是该干预在该隔离协议下的效果；需区分额外Python/分配成本、GIL交接与共同观察工具交互。无完整证据不宣布唯一主因或CPU/GIL占比。",
+    "production_fix": "未实施；保持原NumPy、滤波、Processor、线程和绘图源不变。",
+    "human_Run": "不启动"
+  },
+  "authorization_boundary": {
+    "previous_user_instruction": "不进行 Run 测试或优化 A/B；不修改正式程序",
+    "current_scope": "诊断候选准备与语义单元测试；不含原程序性能A/B",
+    "additional_scope_needed": "在独立实验进程中激活这一单调用候选并执行保存Walk数据的因果A/B；不等同正式发布或新人体测试"
+  },
+  "actual_load_disturbance_pass": false,
+  "primary_root_identified": false
+}
