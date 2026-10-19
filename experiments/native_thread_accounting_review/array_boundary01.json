@@ -1,0 +1,30 @@
+{
+  "cv2_sha256": "ae833b9b5771f5932200bd3b8ad0f483f4fbec92cbdbd26d21d38fe524c60e66",
+  "numpy_pyd_sha256": "4fb4c5d62a6bd766eea716350eaf5396580e33cf7dc159e305488d1b7d72dad2",
+  "numpy_version": "2.4.6",
+  "pointer_rva": 110024240,
+  "table_equals_numpy_array_api": true,
+  "pyarray_type_slot": 2,
+  "type_slot_equals_numpy_ndarray": true,
+  "constructor_slot": 93,
+  "constructor_public_api": "PyArray_New",
+  "constructor_numpy_rva": 843248,
+  "constructor_header_sha256": "f4e70bbd628489d1574ff6336c89ee6b716df2bb825e052d1bebe5f70f5696e4",
+  "constructor_header_excerpt": "#define PyArray_New \\\n        (*(PyObject * (*)(PyTypeObject *, int, npy_intp const *, int, npy_intp const *, void *, int, int, PyObject *)) \\\n    PyArray_API[93])",
+  "GIL_import_targets": {
+    "PyGILState_Ensure": {
+      "return_rva": 32122381,
+      "iat_rva": 85711760,
+      "target": 140703263803680
+    },
+    "PyGILState_Release": {
+      "return_rva": 32122899,
+      "iat_rva": 85711752,
+      "target": 140703263803856
+    }
+  },
+  "private_cpp_function_name": null,
+  "scope": "Fresh process own module/C-API table reads only. No cv2 image function, model, GUI, SDK, USB, tracing orCPU load.",
+  "new_capture": false,
+  "script_sha256": "af6da8a058644b6a347ce5f830214227e9dc26f2cdb19541672912333fb06386"
+}

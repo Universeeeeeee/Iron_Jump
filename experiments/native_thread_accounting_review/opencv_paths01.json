@@ -1,0 +1,416 @@
+{
+  "target_pid": 11948,
+  "scope": "Old sameCPUtrace individual paths only, not CPUshares orstartup cause.",
+  "module_sha256": "ae833b9b5771f5932200bd3b8ad0f483f4fbec92cbdbd26d21d38fe524c60e66",
+  "examples": [
+    {
+      "tid": 13080,
+      "qpc": 2417736498793,
+      "sample_rva": 39670391,
+      "public_caller_entries": [],
+      "private_function_name": null,
+      "unwind_range": [
+        39668896,
+        39672690
+      ],
+      "sample_instruction": {
+        "rva": 39670391,
+        "bytes": "0f b6 04 39",
+        "instruction": "movzbl\t(%rcx,%rdi), %eax"
+      },
+      "nearby_instructions": [
+        {
+          "rva": 39670374,
+          "bytes": "66 0f 6e c8",
+          "instruction": "movd\t%eax, %xmm1"
+        },
+        {
+          "rva": 39670378,
+          "bytes": "0f 5b c9",
+          "instruction": "cvtdq2ps\t%xmm1, %xmm1"
+        },
+        {
+          "rva": 39670381,
+          "bytes": "f3 0f 59 cb",
+          "instruction": "mulss\t%xmm3, %xmm1"
+        },
+        {
+          "rva": 39670385,
+          "bytes": "f3 0f 58 4c 93 08",
+          "instruction": "addss\t0x8(%rbx,%rdx,4), %xmm1"
+        },
+        {
+          "rva": 39670391,
+          "bytes": "0f b6 04 39",
+          "instruction": "movzbl\t(%rcx,%rdi), %eax"
+        },
+        {
+          "rva": 39670395,
+          "bytes": "66 0f 6e c0",
+          "instruction": "movd\t%eax, %xmm0"
+        },
+        {
+          "rva": 39670399,
+          "bytes": "0f 5b c0",
+          "instruction": "cvtdq2ps\t%xmm0, %xmm0"
+        },
+        {
+          "rva": 39670402,
+          "bytes": "f3 0f 59 c3",
+          "instruction": "mulss\t%xmm3, %xmm0"
+        },
+        {
+          "rva": 39670406,
+          "bytes": "f3 0f 58 04 93",
+          "instruction": "addss\t(%rbx,%rdx,4), %xmm0"
+        }
+      ],
+      "disassembly_sha256": "6acaa745810c76c4068086c09c4f58da8d88faf9b8d9b27d99a04acde3ed6868",
+      "nearest_export_label_ignored": true
+    },
+    {
+      "tid": 12820,
+      "qpc": 2417737114338,
+      "sample_rva": 73906827,
+      "public_caller_entries": [
+        "cv2.imdecode"
+      ],
+      "private_function_name": null,
+      "unwind_range": [
+        73905911,
+        73908631
+      ],
+      "sample_instruction": {
+        "rva": 73906827,
+        "bytes": "4d 85 ff",
+        "instruction": "testq\t%r15, %r15"
+      },
+      "nearby_instructions": [
+        {
+          "rva": 73906807,
+          "bytes": "74 1b",
+          "instruction": "je\t0x18467ba94 <PyInit_cv2+0x27dbd04>"
+        },
+        {
+          "rva": 73906809,
+          "bytes": "4a 63 8c af cc 01 00 00",
+          "instruction": "movslq\t0x1cc(%rdi,%r13,4), %rcx"
+        },
+        {
+          "rva": 73906817,
+          "bytes": "44 03 54 8c 28",
+          "instruction": "addl\t0x28(%rsp,%rcx,4), %r10d"
+        },
+        {
+          "rva": 73906822,
+          "bytes": "44 89 54 8c 28",
+          "instruction": "movl\t%r10d, 0x28(%rsp,%rcx,4)"
+        },
+        {
+          "rva": 73906827,
+          "bytes": "4d 85 ff",
+          "instruction": "testq\t%r15, %r15"
+        },
+        {
+          "rva": 73906830,
+          "bytes": "74 04",
+          "instruction": "je\t0x18467ba94 <PyInit_cv2+0x27dbd04>"
+        },
+        {
+          "rva": 73906832,
+          "bytes": "66 45 89 17",
+          "instruction": "movw\t%r10w, (%r15)"
+        },
+        {
+          "rva": 73906836,
+          "bytes": "41 80 bc 2d 3a 01 00 00 00",
+          "instruction": "cmpb\t$0x0, 0x13a(%r13,%rbp)"
+        },
+        {
+          "rva": 73906845,
+          "bytes": "0f 84 83 03 00 00",
+          "instruction": "je\t0x18467be26 <PyInit_cv2+0x27dc096>"
+        }
+      ],
+      "disassembly_sha256": "3546bba9084942829161d5d2ca22b0fad84a03777573aaf5bead023798ab58a5",
+      "nearest_export_label_ignored": true
+    },
+    {
+      "tid": 20448,
+      "qpc": 2417737611302,
+      "sample_rva": 39670347,
+      "public_caller_entries": [
+        "cv2.resize"
+      ],
+      "private_function_name": null,
+      "unwind_range": [
+        39668896,
+        39672690
+      ],
+      "sample_instruction": {
+        "rva": 39670347,
+        "bytes": "0f b6 44 39 01",
+        "instruction": "movzbl\t0x1(%rcx,%rdi), %eax"
+      },
+      "nearby_instructions": [
+        {
+          "rva": 39670327,
+          "bytes": "f3 0f 11 4c 93 08",
+          "instruction": "movss\t%xmm1, 0x8(%rbx,%rdx,4)"
+        },
+        {
+          "rva": 39670333,
+          "bytes": "f3 41 0f 10 58 18",
+          "instruction": "movss\t0x18(%r8), %xmm3"
+        },
+        {
+          "rva": 39670339,
+          "bytes": "49 63 50 14",
+          "instruction": "movslq\t0x14(%r8), %rdx"
+        },
+        {
+          "rva": 39670343,
+          "bytes": "49 63 48 10",
+          "instruction": "movslq\t0x10(%r8), %rcx"
+        },
+        {
+          "rva": 39670347,
+          "bytes": "0f b6 44 39 01",
+          "instruction": "movzbl\t0x1(%rcx,%rdi), %eax"
+        },
+        {
+          "rva": 39670352,
+          "bytes": "66 0f 6e d0",
+          "instruction": "movd\t%eax, %xmm2"
+        },
+        {
+          "rva": 39670356,
+          "bytes": "0f 5b d2",
+          "instruction": "cvtdq2ps\t%xmm2, %xmm2"
+        },
+        {
+          "rva": 39670359,
+          "bytes": "f3 0f 59 d3",
+          "instruction": "mulss\t%xmm3, %xmm2"
+        },
+        {
+          "rva": 39670363,
+          "bytes": "f3 0f 58 54 93 04",
+          "instruction": "addss\t0x4(%rbx,%rdx,4), %xmm2"
+        }
+      ],
+      "disassembly_sha256": "6acaa745810c76c4068086c09c4f58da8d88faf9b8d9b27d99a04acde3ed6868",
+      "nearest_export_label_ignored": true
+    },
+    {
+      "tid": 7916,
+      "qpc": 2417741860682,
+      "sample_rva": 39699997,
+      "public_caller_entries": [],
+      "private_function_name": null,
+      "unwind_range": [
+        39699088,
+        39700498
+      ],
+      "sample_instruction": {
+        "rva": 39699997,
+        "bytes": "66 0f 6e c7",
+        "instruction": "movd\t%edi, %xmm0"
+      },
+      "nearby_instructions": [
+        {
+          "rva": 39699984,
+          "bytes": "42 0f b6 0c 08",
+          "instruction": "movzbl\t(%rax,%r9), %ecx"
+        },
+        {
+          "rva": 39699989,
+          "bytes": "03 f9",
+          "instruction": "addl\t%ecx, %edi"
+        },
+        {
+          "rva": 39699991,
+          "bytes": "43 8d 04 13",
+          "instruction": "leal\t(%r11,%r10), %eax"
+        },
+        {
+          "rva": 39699995,
+          "bytes": "03 f8",
+          "instruction": "addl\t%eax, %edi"
+        },
+        {
+          "rva": 39699997,
+          "bytes": "66 0f 6e c7",
+          "instruction": "movd\t%edi, %xmm0"
+        },
+        {
+          "rva": 39700001,
+          "bytes": "0f 5b c0",
+          "instruction": "cvtdq2ps\t%xmm0, %xmm0"
+        },
+        {
+          "rva": 39700004,
+          "bytes": "f3 0f 59 c6",
+          "instruction": "mulss\t%xmm6, %xmm0"
+        },
+        {
+          "rva": 39700008,
+          "bytes": "f3 0f 2d c8",
+          "instruction": "cvtss2si\t%xmm0, %ecx"
+        },
+        {
+          "rva": 39700012,
+          "bytes": "41 b9 ff 00 00 00",
+          "instruction": "movl\t$0xff, %r9d"
+        }
+      ],
+      "disassembly_sha256": "806c314d8c263fea22a35225f00f1505f9ca59bcd75489297c9041de0b064569",
+      "nearest_export_label_ignored": true
+    },
+    {
+      "tid": 14312,
+      "qpc": 2417744931148,
+      "sample_rva": 39699901,
+      "public_caller_entries": [
+        "cv2.resize"
+      ],
+      "private_function_name": null,
+      "unwind_range": [
+        39699088,
+        39700498
+      ],
+      "sample_instruction": {
+        "rva": 39699901,
+        "bytes": "48 63 cb",
+        "instruction": "movslq\t%ebx, %rcx"
+      },
+      "nearby_instructions": [
+        {
+          "rva": 39699889,
+          "bytes": "49 83 eb 01",
+          "instruction": "subq\t$0x1, %r11"
+        },
+        {
+          "rva": 39699893,
+          "bytes": "75 cb",
+          "instruction": "jne\t0x1825dc582 <PyInit_cv2+0x73c7f2>"
+        },
+        {
+          "rva": 39699895,
+          "bytes": "45 33 d2",
+          "instruction": "xorl\t%r10d, %r10d"
+        },
+        {
+          "rva": 39699898,
+          "bytes": "45 33 db",
+          "instruction": "xorl\t%r11d, %r11d"
+        },
+        {
+          "rva": 39699901,
+          "bytes": "48 63 cb",
+          "instruction": "movslq\t%ebx, %rcx"
+        },
+        {
+          "rva": 39699904,
+          "bytes": "4c 3b c1",
+          "instruction": "cmpq\t%rcx, %r8"
+        },
+        {
+          "rva": 39699907,
+          "bytes": "7d 58",
+          "instruction": "jge\t0x1825dc61d <PyInit_cv2+0x73c88d>"
+        },
+        {
+          "rva": 39699909,
+          "bytes": "49 8b 95 b0 01 00 00",
+          "instruction": "movq\t0x1b0(%r13), %rdx"
+        },
+        {
+          "rva": 39699916,
+          "bytes": "48 8b c1",
+          "instruction": "movq\t%rcx, %rax"
+        }
+      ],
+      "disassembly_sha256": "806c314d8c263fea22a35225f00f1505f9ca59bcd75489297c9041de0b064569",
+      "nearest_export_label_ignored": true
+    },
+    {
+      "tid": 22184,
+      "qpc": 2417751235871,
+      "sample_rva": 39700012,
+      "public_caller_entries": [],
+      "private_function_name": null,
+      "unwind_range": [
+        39699088,
+        39700498
+      ],
+      "sample_instruction": {
+        "rva": 39700012,
+        "bytes": "41 b9 ff 00 00 00",
+        "instruction": "movl\t$0xff, %r9d"
+      },
+      "nearby_instructions": [
+        {
+          "rva": 39699997,
+          "bytes": "66 0f 6e c7",
+          "instruction": "movd\t%edi, %xmm0"
+        },
+        {
+          "rva": 39700001,
+          "bytes": "0f 5b c0",
+          "instruction": "cvtdq2ps\t%xmm0, %xmm0"
+        },
+        {
+          "rva": 39700004,
+          "bytes": "f3 0f 59 c6",
+          "instruction": "mulss\t%xmm6, %xmm0"
+        },
+        {
+          "rva": 39700008,
+          "bytes": "f3 0f 2d c8",
+          "instruction": "cvtss2si\t%xmm0, %ecx"
+        },
+        {
+          "rva": 39700012,
+          "bytes": "41 b9 ff 00 00 00",
+          "instruction": "movl\t$0xff, %r9d"
+        },
+        {
+          "rva": 39700018,
+          "bytes": "41 3b c9",
+          "instruction": "cmpl\t%r9d, %ecx"
+        },
+        {
+          "rva": 39700021,
+          "bytes": "76 0a",
+          "instruction": "jbe\t0x1825dc641 <PyInit_cv2+0x73c8b1>"
+        },
+        {
+          "rva": 39700023,
+          "bytes": "33 c0",
+          "instruction": "xorl\t%eax, %eax"
+        },
+        {
+          "rva": 39700025,
+          "bytes": "85 c9",
+          "instruction": "testl\t%ecx, %ecx"
+        }
+      ],
+      "disassembly_sha256": "806c314d8c263fea22a35225f00f1505f9ca59bcd75489297c9041de0b064569",
+      "nearest_export_label_ignored": true
+    }
+  ],
+  "interpretation": [
+    "A native worker can execute the same private range as a caller whose closed stack includes cv2.resize; this does not identify which simultaneous resize job supplied the worker.",
+    "Public entry ranges identify a boundary, not a unique Python business caller.",
+    "Vector instructions at anIP are computation/memory witnesses, not proof of a named OpenCV internal operator.",
+    "No-GIL/GILhold orwaiting duration cannot be inferred from module/entry/instruction names."
+  ],
+  "new_capture": false,
+  "primary_root_identified": false,
+  "bindings": {
+    "expanded_cpu_review_sha256": "4d3ddf22c7664a7a48ec944ad1ea521018fb22976f8af57d8a08199dc68e3259",
+    "entry_map_sha256": "ba54d921820f37b3282929e145881ca6318b5171afc1028748f2448c74000387",
+    "script_sha256": "76872e210b15832a21631943270f0a7563de8fc15f336ab671990895167a0c68"
+  }
+}
