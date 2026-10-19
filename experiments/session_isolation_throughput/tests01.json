@@ -1,0 +1,41 @@
+[
+  {
+    "arguments": [
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "experiments/session_isolation_throughput",
+      "-p",
+      "test_*.py"
+    ],
+    "returncode": 0,
+    "output": ".....\n----------------------------------------------------------------------\nRan 5 tests in 0.000s\n\nOK\n"
+  },
+  {
+    "arguments": [
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "experiments/gil_observation_termination",
+      "-p",
+      "test_queue_bounds.py"
+    ],
+    "returncode": 0,
+    "output": "......\n----------------------------------------------------------------------\nRan 6 tests in 0.003s\n\nOK\n"
+  },
+  {
+    "arguments": [
+      "-m",
+      "unittest",
+      "discover",
+      "-s",
+      "experiments/gil_gui_analysis",
+      "-p",
+      "test_cursors.py"
+    ],
+    "returncode": 0,
+    "output": "....\n----------------------------------------------------------------------\nRan 4 tests in 0.000s\n\nOK\n"
+  }
+]
