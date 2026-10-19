@@ -1,0 +1,12 @@
+--- experiments/cpu_state_observation/workload.py
++++ experiments/model_process_isolation/workload.py
+@@ -36,6 +36,9 @@
+             for frame_id in plan['frame_ids']:
+                 row=index[frame_id];f.seek(int(row['offset']));data=f.read(int(row['length']));frame=cv2.imdecode(np.frombuffer(data,dtype=np.uint8),cv2.IMREAD_COLOR);assert frame is not None
+                 frames.append(frame);frame_evidence.append(dict(frame_id=frame_id,media_sample_s=float(row['sample_time']),pixels_sha256=hashlib.sha256(frame.tobytes()).hexdigest(),shape=list(frame.shape)))
++        if plan['isolation_variants'][name]=='process':
++            from model_process import PreparedModel
++            _PreviewAdapter=lambda path:PreparedModel(path,frames,folder/'vision_child')
+         app=replay.QCoreApplication.instance() or replay.QCoreApplication([]);trial=replay.Trial(source);engine=replay.GaitEngine(config=trial.cfg);quality=trial.quality(engine);engine.quality=quality
+         quality.armed.connect(engine.begin_quality_session);quality.frame_ready.connect(engine.process_quality_frame)
+         def model_work():

@@ -1,0 +1,33 @@
+{
+  "observed_delivery_and_complete_semantics_pass": true,
+  "cases": {
+    "delivery_local": {
+      "full_original_identity_matches": true,
+      "complete_model_calls": 220
+    },
+    "delivery_process": {
+      "full_original_identity_matches": true,
+      "complete_model_calls": 220,
+      "actual_delivery": {
+        "separate_pid": true,
+        "actual_model_overlap": true,
+        "complete_model_calls": 220,
+        "parent_model_thread_is_ipc_proxy": true,
+        "child_process_cpu_ms": 9468.75,
+        "child_process_cycles": 23071198800,
+        "child_pid": 20020,
+        "child_model_tid": 10956,
+        "performance_qualification": false
+      }
+    }
+  },
+  "performance_qualification": false,
+  "field_fix_verified": false,
+  "prior_qos_joint_gate_pass": false,
+  "bindings": {
+    "plan01.json": "67d173fd6d66c7af8377e3b9cbfa536b7eab0578b7a675181be8aaa66efb8eb2",
+    "delivery.py": "02a180dc078e69761d14e25c84f5ba99d42998d03ea266f918b40071ce4a12db",
+    "manifest.json": "3c3fc2319fbfe809e90714723a38b8e2a95869db8e2e6b5f2b90186937cf5bc2",
+    "collection01.json": "175e0c0ffda263a2ec4bdb3d89bd436e4ade6b0a9e54f30d755f315a6f9c1766"
+  }
+}

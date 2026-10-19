@@ -1,0 +1,22 @@
+{
+  "status": "Proposed; not executed",
+  "single_variable": "Same-process original model thread vs prepared real model subprocess; original consumer/GUI-free fixed work unchanged.",
+  "budget": "Exactly4 fresh-process pairs, local/process, process/local, process/local, local/process. Delivery windows are excluded from performance cohort, not replaced.",
+  "criteria": {
+    "all_four_consumer_pairs_improve": true,
+    "minimum_geometric_consumer_reduction": 0.2,
+    "maximum_geometric_whole_work_regression": 0.05,
+    "all_complete_original_identity_matches": true,
+    "all220_actual_child_calls_and_overlap_verified": true
+  },
+  "accounting": "Parent-only process counters never compared as whole-systemCPU; child separately recorded. Parent modelThreadCPU is proxyCPU in isolated arm. No GIL share or CPUfrequency inference.",
+  "failure_policy": "Stop on semantic/runtime failure; retain every window and locks. No added windows or threshold relaxation.",
+  "decision": "Passing fixed-work effect only selects a candidate for actualGUI1000Hz pending/contact-to-paint test; it cannot prove that visual isolation fixes original symptom.",
+  "exclusions": [
+    "No active phase probes",
+    "No ETW/stack observers",
+    "No QoS or priority changes",
+    "No affinity/power/NumPy/filter/Processor/painting changes",
+    "No human/USB/Run tests"
+  ]
+}

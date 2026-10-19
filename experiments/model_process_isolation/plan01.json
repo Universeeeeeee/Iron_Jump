@@ -1,0 +1,82 @@
+{
+  "replay_root": "E:/OptoJump/IronJump-walk-compute-offline-20261017-01",
+  "input_root": "E:/OptoJump/IronJump-single-usb-human-etw-20261017/experiments/single_usb_human_etw/runs/20261018_131910_3eef864f_walk_off/capture",
+  "input_sha256": {
+    "raw_frames.npz": "8ee4a9ea9ac835f5dc083d014eeaef9d337ee8c140f1cdc3a11f1be6fece2d47",
+    "raw_archive.npz": "6ec340e2ca62742235d6602cf38c4470a20cf5f29441c8387be9bb85522cdcd5",
+    "acquisition.json": "e84e6bd481eeadd408a61c377950cc878bf8d989b92f58596fccf6eee62c62cb",
+    "report.json": "0ae1bf2d9277c1e3d95d629e071cb3ff61d249c78c6d0b6d0901773f4fb68747",
+    "state.json": "bfb63086da795427cc2fbd5985a4ff56bcd1cdb964908dcc4a9408a79a6d914f",
+    "measurement.json": "a2b441f1367dd3d5eb7204c75eeebf05c344e8dd69b632ba29f57a4eed6febe9"
+  },
+  "raw_first": 42237,
+  "raw_after_last": 49061,
+  "replay_sha256": "fcde26dd2e707cc457623a971a97e68ebd9f49630126c51bd6ce83072a0d40a8",
+  "media_root": "E:\\OptoJump\\IronJump-ground-backlog-measurement-20261016\\experiments\\ground_backlog_measurement\\inputs\\walk",
+  "media_sha256": {
+    "camera.csv": "cc911dfd8e7aadf4da9f7c1e604e65ef33a02a4f7f790ba1e0ad1dfa7e890d88",
+    "camera.mjpg": "64d887e0c2817e3594e3bbad4193ab97b4abc1d0c2eed0229ac3d092fad04e52"
+  },
+  "model_path": "E:/OptoJump/IronJump-gil-gui-calibration-20261018-01/models/pose_landmarker_full.task",
+  "model_sha256": "5134a3aad27a58b93da0088d431f366da362b44e3ccfbe3462b3827a839011b1",
+  "frame_ids": [
+    4151,
+    4155,
+    4159,
+    4163,
+    4167,
+    4171,
+    4175,
+    4179,
+    4183,
+    4187,
+    4191
+  ],
+  "model_calls": 220,
+  "python_dll_sha256": "162e8557fbed5f39ae24983ee62b2d435b4796c937d9c1a34371888c7e43af00",
+  "numpy_pyd_sha256": "4fb4c5d62a6bd766eea716350eaf5396580e33cf7dc159e305488d1b7d72dad2",
+  "cases": [
+    "delivery_local",
+    "delivery_process"
+  ],
+  "case_variants": {
+    "delivery_local": "concurrent",
+    "delivery_process": "concurrent"
+  },
+  "progress_frames": [
+    1000,
+    2000,
+    3000,
+    4000,
+    5000,
+    6000,
+    6824
+  ],
+  "sources": {
+    "model_process.py": "2be6af215ce1d63a5597cefb34fef4302ba980f99104f2f0c7139110f6b29b7e",
+    "workload.py": "ee876fd5564d82796c80424b987d75daeb8e32051adca142405d912b8234675e",
+    "verify.py": "3a591c1d674f9a32f9fb7be9cb7c17ad0750b7fa078b7fa7ada9102aa54643a6",
+    "delivery.py": "02a180dc078e69761d14e25c84f5ba99d42998d03ea266f918b40071ce4a12db",
+    "gate.py": "28d12fc14efeae39eccf4a44b310ce7b476dd1804f0fb2649fc872e324401467",
+    "cohort.py": "d17dfb97068759c696e687c0d4803583444540f582609bf17ba4bc375cfb6a00",
+    "reference01.json": "01233f2b0afba0d1ac45a1d33ffded6f8fd3b21427b6fb0f9602adf4dffbbed8"
+  },
+  "dependency_sources": {
+    "experiments/fixed_work_accounting/logical_clock.py": "309676131f0052886d8b32c1740ed461966cab39da98a625e5e23bd0b164c6e3",
+    "experiments/fixed_work_accounting/counters.py": "504cd67a5bbb9691eb4c8bfdf5a2a1e71d454317e70eaff559713767c3236a0d",
+    "experiments/fixed_work_accounting/run.py": "2cd5a0e2014ad1dc731b1cbcd87137405ad0d4205303982bc41d02bb69c884ba"
+  },
+  "reference_origin_sha256": "f3590d951c53c29981b9389abf5ed86ff644969a0bd8cffe7b316b40d1fc7905",
+  "scope": "Exactly2 delivery and complete-semantics windows. Only original model pipeline moves to prepared childprocess. Parent consumer unchanged. No performance efficacy claim or optional replacement.",
+  "failure_policy": "Abort remaining cohort on runtime/semantic error. Preserve all outputs and locks. Timeout is observation failure; retain PID and do not kill/restart.",
+  "cv2_sha256": "ae833b9b5771f5932200bd3b8ad0f483f4fbec92cbdbd26d21d38fe524c60e66",
+  "isolation_variants": {
+    "delivery_local": "local",
+    "delivery_process": "process"
+  },
+  "accounting_limits": "Parent model-thread counters describe IPC proxy in process arm; parent processCPU excludes child. Child PID/TID and separate before/after processCPU/cycles retained. Never sum unrelated or misaligned intervals, or label proxyCPU as real modelCPU.",
+  "reference_condition": "Same6824 rawframes and220 real calls with original pixels, timestamps, original report/raw outputs; all220 actual returned poses compared to original reference. Child runs in genuine separatePID, actual inference intervals overlap parent consumer.",
+  "launch_allowed": true,
+  "status": "Delivery only; requires passed frozenWindows gate. No performance conclusions.",
+  "preparation_sha256": "0ac2d124c5148cc85baa1f399a48d61b9667d7467645802aff302a9594be4587"
+}
