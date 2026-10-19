@@ -1,0 +1,34 @@
+{
+  "base_commit": "375773994248f4ec076af5a0bceb380051c35bd4",
+  "scope": "Synthetic GIL contract control only; two invalid-paint calls, no image or performance endpoint.",
+  "call_order": [
+    "binding_protected_base",
+    "direct_same_native_export"
+  ],
+  "retry_budget": 0,
+  "process_budget": 1,
+  "maximum_native_messages": 32,
+  "expected_message_type": 1,
+  "expected_errors": "Qt invalid-paint warnings are deliberately generated in both calls.",
+  "sources": {
+    "MessageOracle.c": "7dffc4fe1d9b521ba9fb18fa170f6ff0fdcbb617ca80d9d01e68b1d7c7b4fadc",
+    "build.cmd": "a12f790e258955c9c8d4c09b032ef41917cea3686f0ce770eba834781283160c",
+    "check.py": "83adeaa20570cbdeb8966514058bdaee508a90ae02c9f47570b655ef08ce34e2",
+    "control.py": "c1aa7ce203cee292bd519c9acd94142d55e4f0193974f1b766039e8e306b0301",
+    "freeze.py": "a9fc25135f3be3726738b7f7aa471e17bfd20bc267c9ea3b61f8debd1632a84e",
+    "test_check.py": "0fb3d12f4f538b7ab1de5f3df5d7c91d35bfb8a88ad380c93daa34b3af67250f"
+  },
+  "dll_sha256": "38169b790366adabe4217cf7401a7eabee4db4389ee74bb57c4864a8b28b9917",
+  "exact_modules": {
+    "D:/conda/python311.dll": "162e8557fbed5f39ae24983ee62b2d435b4796c937d9c1a34371888c7e43af00",
+    "D:/conda/Lib/site-packages/PySide6/Qt6Core.dll": "65fe6224b6c47a15b058738031d31dce9928c4d7a58e1b8db6434f6f5cddd702",
+    "D:/conda/Lib/site-packages/PySide6/Qt6Widgets.dll": "5a9f37dedd3dc5bcc1a4bb8ea919c49fc62df751a1450accc34379eb6710eab6",
+    "D:/conda/Lib/site-packages/PySide6/QtWidgets.pyd": "85cb6c2181b4b09887a7d8507dd950844d1b8f74a9c4002c7b71169f75bf6fda",
+    "D:/conda/Lib/site-packages/shiboken6/shiboken6.abi3.dll": "47f4f9b44c95037565dd14f4be04f350f20c53c05483b750e0be867c39a7441e"
+  },
+  "qInstallMessageHandler_export": "?qInstallMessageHandler@@YAP6AXW4QtMsgType@@AEBVQMessageLogContext@@AEBVQString@@@ZP6AX012@Z@Z",
+  "old_acceptance_upgraded": false,
+  "field_attribution_ready": false,
+  "performance_AB": false,
+  "formal_change_authorized": false
+}

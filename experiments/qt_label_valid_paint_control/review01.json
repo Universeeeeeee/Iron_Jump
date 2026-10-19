@@ -1,0 +1,60 @@
+{
+  "correctness_control_pass": true,
+  "archived_pixel_cases": [
+    {
+      "id": "opaque_a",
+      "full_archived_bytes_equal": true,
+      "bytes_per_mode": 140732
+    },
+    {
+      "id": "opaque_b",
+      "full_archived_bytes_equal": true,
+      "bytes_per_mode": 140732
+    },
+    {
+      "id": "alpha_fractional",
+      "full_archived_bytes_equal": true,
+      "bytes_per_mode": 279496
+    },
+    {
+      "id": "source_and_target_fractional",
+      "full_archived_bytes_equal": true,
+      "bytes_per_mode": 592156
+    },
+    {
+      "id": "double_dpr",
+      "full_archived_bytes_equal": true,
+      "bytes_per_mode": 1180848
+    },
+    {
+      "id": "unscaled",
+      "full_archived_bytes_equal": true,
+      "bytes_per_mode": 150092
+    }
+  ],
+  "invalid_input_pairs": 4,
+  "faults_caught_at_same_base_boundary": true,
+  "native_exit_code_confirmed": 0,
+  "expected_locks_retained": true,
+  "formal_source_or_existing_painter_modified": false,
+  "limitations": [
+    "Only the specified synthetic QLabel/QProxyStyle domain is covered; not the real AnnotationCanvas, pose overlay or complete GUI/report lifecycle.",
+    "Six complete image triplets are retained and independently compared. Fault recovery byte comparisons were made at runtime; those additional images were not retained.",
+    "Private Shiboken ABI is pinned to these exact files; no support for a different wheel/build or arbitrary multiple inheritance is claimed.",
+    "No actual workload perturbation, model/input equivalence, root contribution, latency benefit or field repair is certified.",
+    "All previous failures, including the earlier null-exit-code control, stay unchanged."
+  ],
+  "performance_experiment_started": false,
+  "actual_load_disturbance_pass": false,
+  "field_attribution_ready": false,
+  "root_cause_or_fix_complete": false,
+  "bindings": {
+    "review.py": "8f543b2531bab475b624858fceedae4ba62d6e6f152ffbe3d8016d697193b9e4",
+    "plan01.json": "cf3f5f74477bf041a72bd081e9d4795475b3d0d010e43f1d171ac92d548297e7",
+    "result01.json": "b4f5f813ed59248ce6af8ced1369ff88b5ce55ffff907dfc187a230175e8dd1a",
+    "post01.json": "149f11fc9b04b00e33c96c66a92c4bb41cd13466c3b39ce009e18ffab2ffa1a2",
+    "control02.status.json": "4cbff7791835e25f1af729d9be30a38660d5d9427329f17f00d189cf0eac4b86",
+    "transport01.json": "4a1115e4064912f882ac8eda4517e3c5405c317e4cbd0d05b994681e4b6b3456",
+    "launch_binding01.json": "a18da6d956f79b1fb1f3e3d710a7c483b90759d17e2276220a87d7c484c21106"
+  }
+}
