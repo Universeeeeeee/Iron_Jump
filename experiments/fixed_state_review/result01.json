@@ -1,0 +1,235 @@
+{
+  "cohorts": {
+    "fixed_overlap_comparison": {
+      "pair01_concurrent": {
+        "variant": "concurrent",
+        "ready_to_consumer_ms": 4929.1477,
+        "consumer_wall_ms": 5109.0625,
+        "consumer_cpu_ms": 4921.875,
+        "tail_calls": 95,
+        "tail_median_ms": 33.8908,
+        "tail_mean_ms": 36.17112,
+        "model_close_ms": 42080.1252,
+        "process_cpu_ms": 15203.125,
+        "process_cycles": 36720589440
+      },
+      "pair01_serial": {
+        "variant": "serial",
+        "ready_to_consumer_ms": 4862.1618,
+        "consumer_wall_ms": 3811.1436,
+        "consumer_cpu_ms": 3796.875,
+        "tail_calls": 95,
+        "tail_median_ms": 32.5077,
+        "tail_mean_ms": 34.11635894736842,
+        "model_close_ms": 42087.8368,
+        "process_cpu_ms": 12593.75,
+        "process_cycles": 31575730320
+      },
+      "pair02_serial": {
+        "variant": "serial",
+        "ready_to_consumer_ms": 2827.1567,
+        "consumer_wall_ms": 2269.5655,
+        "consumer_cpu_ms": 2234.375,
+        "tail_calls": 95,
+        "tail_median_ms": 19.9519,
+        "tail_mean_ms": 20.922773684210526,
+        "model_close_ms": 42067.4965,
+        "process_cpu_ms": 8156.25,
+        "process_cycles": 19213088160
+      },
+      "pair02_concurrent": {
+        "variant": "concurrent",
+        "ready_to_consumer_ms": 2806.326,
+        "consumer_wall_ms": 2862.0548,
+        "consumer_cpu_ms": 2812.5,
+        "tail_calls": 95,
+        "tail_median_ms": 19.9068,
+        "tail_mean_ms": 20.075955789473685,
+        "model_close_ms": 42046.8539,
+        "process_cpu_ms": 8968.75,
+        "process_cycles": 21143975280
+      },
+      "pair03_serial": {
+        "variant": "serial",
+        "ready_to_consumer_ms": 2821.6236,
+        "consumer_wall_ms": 2113.5886,
+        "consumer_cpu_ms": 2109.375,
+        "tail_calls": 95,
+        "tail_median_ms": 19.992,
+        "tail_mean_ms": 21.017427368421053,
+        "model_close_ms": 42046.7231,
+        "process_cpu_ms": 7843.75,
+        "process_cycles": 18871223520
+      },
+      "pair03_concurrent": {
+        "variant": "concurrent",
+        "ready_to_consumer_ms": 2869.9802,
+        "consumer_wall_ms": 2881.4255,
+        "consumer_cpu_ms": 2765.625,
+        "tail_calls": 95,
+        "tail_median_ms": 19.8629,
+        "tail_mean_ms": 19.959594736842106,
+        "model_close_ms": 42064.4703,
+        "process_cpu_ms": 8640.625,
+        "process_cycles": 21255705360
+      },
+      "pair04_concurrent": {
+        "variant": "concurrent",
+        "ready_to_consumer_ms": 2846.6861,
+        "consumer_wall_ms": 2977.0209,
+        "consumer_cpu_ms": 2859.375,
+        "tail_calls": 95,
+        "tail_median_ms": 19.8406,
+        "tail_mean_ms": 19.968187368421052,
+        "model_close_ms": 42094.6578,
+        "process_cpu_ms": 9125.0,
+        "process_cycles": 21641432640
+      },
+      "pair04_serial": {
+        "variant": "serial",
+        "ready_to_consumer_ms": 2884.8634,
+        "consumer_wall_ms": 2127.929,
+        "consumer_cpu_ms": 2093.75,
+        "tail_calls": 95,
+        "tail_median_ms": 19.9448,
+        "tail_mean_ms": 21.221248421052632,
+        "model_close_ms": 42046.5394,
+        "process_cpu_ms": 8078.125,
+        "process_cycles": 18944426880
+      }
+    },
+    "cv2_parallel_candidate/performance": {
+      "pair01_default": {
+        "variant": "concurrent",
+        "ready_to_consumer_ms": 4934.3113,
+        "consumer_wall_ms": 4935.3481,
+        "consumer_cpu_ms": 4875.0,
+        "tail_calls": 95,
+        "tail_median_ms": 32.5486,
+        "tail_mean_ms": 32.75687894736842,
+        "model_close_ms": 42110.2775,
+        "process_cpu_ms": 14843.75,
+        "process_cycles": 35289035760
+      },
+      "pair01_one": {
+        "variant": "concurrent",
+        "ready_to_consumer_ms": 4966.6166,
+        "consumer_wall_ms": 4916.0558,
+        "consumer_cpu_ms": 4781.25,
+        "tail_calls": 95,
+        "tail_median_ms": 35.8112,
+        "tail_mean_ms": 36.555137894736845,
+        "model_close_ms": 42072.1705,
+        "process_cpu_ms": 13937.5,
+        "process_cycles": 33354520080
+      },
+      "pair02_one": {
+        "variant": "concurrent",
+        "ready_to_consumer_ms": 5005.2927,
+        "consumer_wall_ms": 4985.6241,
+        "consumer_cpu_ms": 4812.5,
+        "tail_calls": 95,
+        "tail_median_ms": 35.8823,
+        "tail_mean_ms": 36.73909052631579,
+        "model_close_ms": 42068.1365,
+        "process_cpu_ms": 14078.125,
+        "process_cycles": 33815179200
+      },
+      "pair02_default": {
+        "variant": "concurrent",
+        "ready_to_consumer_ms": 4959.7984,
+        "consumer_wall_ms": 4936.004,
+        "consumer_cpu_ms": 4812.5,
+        "tail_calls": 95,
+        "tail_median_ms": 32.7629,
+        "tail_mean_ms": 33.004813684210525,
+        "model_close_ms": 42103.6694,
+        "process_cpu_ms": 14625.0,
+        "process_cycles": 35437389840
+      },
+      "pair03_one": {
+        "variant": "concurrent",
+        "ready_to_consumer_ms": 4974.1587,
+        "consumer_wall_ms": 4820.6977,
+        "consumer_cpu_ms": 4750.0,
+        "tail_calls": 95,
+        "tail_median_ms": 35.8832,
+        "tail_mean_ms": 36.24739684210526,
+        "model_close_ms": 42068.2378,
+        "process_cpu_ms": 13734.375,
+        "process_cycles": 33047513520
+      },
+      "pair03_default": {
+        "variant": "concurrent",
+        "ready_to_consumer_ms": 5052.4847,
+        "consumer_wall_ms": 4945.3414,
+        "consumer_cpu_ms": 4750.0,
+        "tail_calls": 95,
+        "tail_median_ms": 32.6536,
+        "tail_mean_ms": 33.14350842105263,
+        "model_close_ms": 42097.906,
+        "process_cpu_ms": 14343.75,
+        "process_cycles": 35276036400
+      },
+      "pair04_default": {
+        "variant": "concurrent",
+        "ready_to_consumer_ms": 4922.5968,
+        "consumer_wall_ms": 5008.1283,
+        "consumer_cpu_ms": 4843.75,
+        "tail_calls": 95,
+        "tail_median_ms": 32.7838,
+        "tail_mean_ms": 32.92853789473684,
+        "model_close_ms": 42089.8043,
+        "process_cpu_ms": 14843.75,
+        "process_cycles": 35754429600
+      },
+      "pair04_one": {
+        "variant": "concurrent",
+        "ready_to_consumer_ms": 5027.9905,
+        "consumer_wall_ms": 4793.4779,
+        "consumer_cpu_ms": 4656.25,
+        "tail_calls": 95,
+        "tail_median_ms": 35.9537,
+        "tail_mean_ms": 36.24016631578947,
+        "model_close_ms": 42120.2805,
+        "process_cpu_ms": 13687.5,
+        "process_cycles": 32821026960
+      }
+    }
+  },
+  "all_16_work_identities_equal": true,
+  "tail_ordinals": [
+    125,
+    219
+  ],
+  "tail_after_consumer_in_all_windows": true,
+  "source_bindings": {
+    "fixed_overlap_comparison/pair01_concurrent": "8a027228b70dfbf8c4719d51c9ca74edb1facbdbf793bb55c0b503a7994f6b95",
+    "fixed_overlap_comparison/pair01_serial": "5182f998b900227609ad9824e461da24a7624caf98e8f64b0d658bceb0feb15e",
+    "fixed_overlap_comparison/pair02_serial": "9eb5c2bccba7fd0bdac5ac80ac705e3f2bed89c2e7f40a965793eec55e62ee5e",
+    "fixed_overlap_comparison/pair02_concurrent": "b1ee61fdc1909b7cccad36ccb68f278fd8b5257b96a30d7341784c6c4f82b344",
+    "fixed_overlap_comparison/pair03_serial": "9822ad7f27bfe2639a802189f82711109a3a2be7b96c0a59d2f17815f84cd70d",
+    "fixed_overlap_comparison/pair03_concurrent": "2567300ce057374766eeda462dfa85567f70767213f10ee10293e22bebbcccae",
+    "fixed_overlap_comparison/pair04_concurrent": "145f92122b8e7fa9e194e2340fcafc00dc398be26649b0cc2ae3702b9b7afdc0",
+    "fixed_overlap_comparison/pair04_serial": "8d14d3fb82c0d8bb8d293a514e163bd89177e44d7742ebc15b43f8130c2c9bfa",
+    "cv2_parallel_candidate/performance/pair01_default": "39bd06e248586dbbbb0ee27b0981dd8e6055e9d69d88fafb797dc2c4a8419829",
+    "cv2_parallel_candidate/performance/pair01_one": "9566afdec012ffccb922aa0fb1bffff6ef0586175ca271a696340e7c994b9e47",
+    "cv2_parallel_candidate/performance/pair02_one": "cc16196651c487fdf1b5e7142f82d327b979faeadb959d20f1366f1fc7e4b186",
+    "cv2_parallel_candidate/performance/pair02_default": "2ddd451aaf3e5391fa1a3c8e5af63bc61c44aa645c4fbbd458d2351996f3a321",
+    "cv2_parallel_candidate/performance/pair03_one": "9bbd3988a3cad2d1afd80452ed7ee48d2560c97501c6bce9f72f58e5c67ab0bc",
+    "cv2_parallel_candidate/performance/pair03_default": "c3d96626376e14c10be339584e4f2babcf2c898c1af5401a3262ae009d7056ad",
+    "cv2_parallel_candidate/performance/pair04_default": "27ac043ab979ac8ce1fd4ab9b8f2913308261436eaa5183b50d7e67d20719144",
+    "cv2_parallel_candidate/performance/pair04_one": "dd9dc4734f8e9bf5c287c95da19b48f02ff5c28b0451b3ba40fa08494dc9e0b0"
+  },
+  "analyzer_sha256": "354fe060cea1e6944edcea39ae5b542965e3c03052e2dfae841358ef6d95b25a",
+  "exploratory": true,
+  "causal_attribution": false,
+  "field_fix_verified": false,
+  "limits": [
+    "Ready-to-consumer is a wall-time proxy for the common historical-frame preparation, including coordinator wakeup and accounting; no preparation CPU counters exist.",
+    "The model is ready but no infer_bgr call is released during historical-frame preparation. Idle native model threads can still exist.",
+    "Common tail ordinals were selected after inspecting all windows. The95 calls are dependent repeated work, not95 independent replicates.",
+    "Different cohorts, serial/concurrent schedules and OpenCV variants remain separate. No cross-cohort subtraction or causal effect estimate.",
+    "Process cycles and CPU time do not identify effective CPU frequency, instructions, temperature, external load or waiting shares."
+  ]
+}
