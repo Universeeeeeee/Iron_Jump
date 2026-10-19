@@ -1,0 +1,59 @@
+{
+  "replay_root": "E:/OptoJump/IronJump-walk-compute-offline-20261017-01",
+  "input_root": "E:/OptoJump/IronJump-single-usb-human-etw-20261017/experiments/single_usb_human_etw/runs/20261018_131910_3eef864f_walk_off/capture",
+  "input_sha256": {
+    "raw_frames.npz": "8ee4a9ea9ac835f5dc083d014eeaef9d337ee8c140f1cdc3a11f1be6fece2d47",
+    "raw_archive.npz": "6ec340e2ca62742235d6602cf38c4470a20cf5f29441c8387be9bb85522cdcd5",
+    "acquisition.json": "e84e6bd481eeadd408a61c377950cc878bf8d989b92f58596fccf6eee62c62cb",
+    "report.json": "0ae1bf2d9277c1e3d95d629e071cb3ff61d249c78c6d0b6d0901773f4fb68747",
+    "state.json": "bfb63086da795427cc2fbd5985a4ff56bcd1cdb964908dcc4a9408a79a6d914f",
+    "measurement.json": "a2b441f1367dd3d5eb7204c75eeebf05c344e8dd69b632ba29f57a4eed6febe9"
+  },
+  "raw_first": 42237,
+  "raw_after_last": 49061,
+  "replay_sha256": "fcde26dd2e707cc457623a971a97e68ebd9f49630126c51bd6ce83072a0d40a8",
+  "cases": [
+    "diagnostic01"
+  ],
+  "media_root": "E:\\OptoJump\\IronJump-ground-backlog-measurement-20261016\\experiments\\ground_backlog_measurement\\inputs\\walk",
+  "media_sha256": {
+    "camera.csv": "cc911dfd8e7aadf4da9f7c1e604e65ef33a02a4f7f790ba1e0ad1dfa7e890d88",
+    "camera.mjpg": "64d887e0c2817e3594e3bbad4193ab97b4abc1d0c2eed0229ac3d092fad04e52"
+  },
+  "model_path": "E:/OptoJump/IronJump-gil-gui-calibration-20261018-01/models/pose_landmarker_full.task",
+  "model_sha256": "5134a3aad27a58b93da0088d431f366da362b44e3ccfbe3462b3827a839011b1",
+  "frame_ids": [
+    4151,
+    4155,
+    4159,
+    4163,
+    4167,
+    4171,
+    4175,
+    4179,
+    4183,
+    4187,
+    4191
+  ],
+  "model_calls": 220,
+  "python_dll_sha256": "162e8557fbed5f39ae24983ee62b2d435b4796c937d9c1a34371888c7e43af00",
+  "numpy_pyd_sha256": "4fb4c5d62a6bd766eea716350eaf5396580e33cf7dc159e305488d1b7d72dad2",
+  "sources": {},
+  "scope": "One original fixed6824-frame/220-model-call diagnostic, with lifecycle-only trace across preparation/work/finalization and retained counters. Observational only; no speed comparison, GUI, SDK, device, human or CPU/CSwitch stacks. Actual trace duration is recorded; not a nominal3-second trace.",
+  "actual_load_disturbance_pass": false,
+  "prior_fixed_bundle_plan_sha256": "7f0967253a585c9dc23257b0a800ad33118fc948c1808bee2b3e979b33e51ee3",
+  "dependency_sources": {
+    "experiments/fixed_work_accounting/run.py": "2cd5a0e2014ad1dc731b1cbcd87137405ad0d4205303982bc41d02bb69c884ba",
+    "experiments/fixed_work_accounting/counters.py": "504cd67a5bbb9691eb4c8bfdf5a2a1e71d454317e70eaff559713767c3236a0d",
+    "experiments/fixed_work_accounting/logical_clock.py": "309676131f0052886d8b32c1740ed461966cab39da98a625e5e23bd0b164c6e3",
+    "experiments/fixed_concurrent_work/verify.py": "cdbc318fd2f0854376d11190e875e45f60b8d18c5799342acb055add1c8a5c53",
+    "experiments/thread_accounting_controls/inventory02.py": "9516ecf89d0f7645b89fbf5f27e9636fed2c7d937c81004f882480fea8e4a5bc",
+    "experiments/native_stack_capture/winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+    "experiments/native_stack_capture/ReadStacks.cs": "fb20ca77da7dfb4a26167ef3b54a75ee94633cc6b6d88c79a69220a9088d2476"
+  },
+  "prior_boundary_plan_sha256": "40b872df166928bfa81145c8f79777c1f363493476de1e6b10a2217befa396ab",
+  "prior_boundary_result_sha256": "c5358ee9cd54270678956bf7ba4d863b069958e23d616ef6040cbdce02fc6e6a",
+  "per_read_ns": 1000000,
+  "group_ns": 10000000,
+  "whole_process_lifetime_coverage_proven": false
+}

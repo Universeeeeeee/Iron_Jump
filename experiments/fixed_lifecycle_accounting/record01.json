@@ -1,0 +1,94 @@
+{
+  "mode": "lifecycle",
+  "instance": "IJNative_e68b1a9fdba8480b836605a898aaa212",
+  "start": {
+    "qpc_before": 3889757245858,
+    "qpc_after": 3889757245948,
+    "frequency": 10000000,
+    "filetime_100ns": 134368667715802485,
+    "perf_ns": 388975724595300,
+    "perf_before_ns": 388975724578800,
+    "perf_after_ns": 388975724595300
+  },
+  "commands": [
+    {
+      "args": [
+        "logman",
+        "query",
+        "-ets"
+      ],
+      "returncode": 0,
+      "stdout": "\r\nData Collector Set                      Type                          Status\r\n-------------------------------------------------------------------------------\nCircular Kernel Context Logger          Trace                         Running \r\nAccessValidatorLog                      Trace                         Running \r\nAppModel                                Trace                         Running \r\nCimFSUnionFS-Filter                     Trace                         Running \r\nDiagLog                                 Trace                         Running \r\nDiagtrack-Listener                      Trace                         Running \r\nEventLog-Application                    Trace                         Running \r\nEventLog-DebugChannel                   Trace                         Running \r\nEventLog-Lenovo-Sif-Companion-Operational Trace                         Running \r\nEventLog-Lenovo-Sif-Core-Operational    Trace                         Running \r\nEventLog-Lenovo-Sif-Device-Operational  Trace                         Running \r\nEventLog-Lenovo-Sif-Settings-Operational Trace                         Running \r\nEventLog-System                         Trace                         Running \r\nFilterMgr-Logger                        Trace                         Running \r\niclsClient                              Trace                         Running \r\niclsProxy                               Trace                         Running \r\nIntelPTTEKRecertification               Trace                         Running \r\nIntelRST                                Trace                         Running \r\nLwtNetLog                               Trace                         Running \r\nMicrosoft-Windows-Rdp-Graphics-RdpIdd-Trace Trace                         Running \r\nNetCore                                 Trace                         Running \r\nNtfsLog                                 Trace                         Running \r\nRadioMgr                                Trace                         Running \r\nReFSLog                                 Trace                         Running \r\nSocketHeciServer                        Trace                         Running \r\nTPMProvisioningService                  Trace                         Running \r\nUBPM                                    Trace                         Running \r\nWdiContextLog                           Trace                         Running \r\nWiFiDriverIHVSession                    Trace                         Running \r\nWiFiSession                             Trace                         Running \r\nWPR_initiated_DiagTrackMiniLogger_WPR System Collector Trace                         Running \r\nWPR_initiated_DiagTrackMiniLogger_OneTrace_User_Logger_20261016_1_EC_0 Trace                         Running \r\nZulerCoreToolWatchDog{4A234956-2B7D-4221-BADF-12593BD342A8} Trace                         Running \r\nSHS-10152026-080753-7-1ff               Trace                         Running \r\nSCM                                     Trace                         Running \r\nSleepStudyTraceSession                  Trace                         Running \r\nCldFltLog                               Trace                         Running \r\nNVIDIA-NVTOPPS-NOCAT                    Trace                         Running \r\nNVIDIA-NVTOPPS-FILTER                   Trace                         Running \r\nhrtracev2                               Trace                         Running \r\nScreenOnPowerStudyTraceSession          Trace                         Running \r\n8696EAC4-1288-4288-A4EE-49EE431B0AD9    Trace                         Running \r\nUpdateSessionOrchestration              Trace                         Running \r\nMoUxCoreWorker                          Trace                         Running \r\nWXSendinput_{3688DDE4-9B04-4441-91EB-A414E33B2BF2 Trace                         Running \r\nWinDiag-Realtime-Session                Trace                         Running \r\nDefenderApiLoggerLowPriv                Trace                         Running \r\nMicrosoft.Windows.Remediation           Trace                         Running \r\nWindowsUpdate_trace_log                 Trace                         Running \r\nWindows-Compat-Inventory-InstallMon     Trace                         Running \r\nWINNETESP                               Trace                         Running \r\n\nThe command completed successfully.\r\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "wpr",
+        "-start",
+        "E:\\OptoJump\\IronJump-gil-gui-calibration-20261018-01\\experiments\\fixed_lifecycle_accounting\\lifecycle.wprp!Nativelifecycle",
+        "-filemode",
+        "-instancename",
+        "IJNative_e68b1a9fdba8480b836605a898aaa212"
+      ],
+      "returncode": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "wpr",
+        "-status",
+        "-instancename",
+        "IJNative_e68b1a9fdba8480b836605a898aaa212"
+      ],
+      "returncode": 0,
+      "stdout": "\r\nMicrosoft Windows Performance Recorder Version 10.0.26100 (CoreSystem)\r\nCopyright (c) 2024 Microsoft Corporation. All rights reserved.\r\n\r\nWPR recording is in progress...\r\n\r\nTime since start\t: 00:00:00\r\nDropped event\t\t: 0\r\nLogging mode\t\t: File\r\n",
+      "stderr": ""
+    },
+    {
+      "args": [
+        "D:\\conda\\python.exe",
+        "E:\\OptoJump\\IronJump-gil-gui-calibration-20261018-01\\experiments\\fixed_lifecycle_accounting\\fixture.py"
+      ],
+      "returncode": 0,
+      "stdout": "{\"workload_returncode\": 0, \"errors\": [], \"retained_threads_pass\": false}\r\n",
+      "stderr": "INFO: Created TensorFlow Lite XNNPACK delegate for CPU.\r\nW0000 00:00:1792393183.999289   15756 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.\r\nW0000 00:00:1792393184.031428   15756 inference_feedback_manager.cc:121] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.\r\nW0000 00:00:1792393189.221666   20684 landmark_projection_calculator.cc:81] Using NORM_RECT without IMAGE_DIMENSIONS is only supported for the square ROI. Provide IMAGE_DIMENSIONS or use PROJECTION_MATRIX.\r\nE0000 00:00:1792393239.779736   20616 portable_clearcut_uploader.cc:90] Failed to send to clearcut: INTERNAL: ResponseInfo[id: 1, type: 0, code: 2, description: \"Status_ConnectFailed: 12002\", headers: ]\r\n=== Source Location Trace: ===\r\nwireless/android/play/playlog/cplusplus/ion_http_client.cc:44\r\n"
+    },
+    {
+      "args": [
+        "wpr",
+        "-stop",
+        "E:\\OptoJump\\IronJump-gil-gui-calibration-20261018-01\\experiments\\fixed_lifecycle_accounting\\runs\\control01\\window\\trace.etl",
+        "-instancename",
+        "IJNative_e68b1a9fdba8480b836605a898aaa212"
+      ],
+      "returncode": 0,
+      "stdout": "Press Ctrl+C to cancel the stop operation.\r\nThe trace was successfully saved.\r\n",
+      "stderr": ""
+    }
+  ],
+  "cleanup_complete": true,
+  "human_test_started_by_tool": false,
+  "external_targets": false,
+  "source_sha256": {
+    "capture.py": "faa79f0a6ff3c72dfe31d09658311b8ded4ad534fc216e2b5d68ee563195651e",
+    "entry_query.py": "2c76422af61ec7503d043687455a89d856c6de2ebe1162b6f7609e1d365448ca",
+    "fixture.py": "9218e1ed2332d1a5c6c7c0405b2bd232cb18d2aa6f2f2c9c6bf014caa5f3bad7",
+    "lifecycle.wprp": "4791d6fec91e5c237b0efe0c0ca8dc34348d94e9e9fb8a64a8b6608ca512a71a",
+    "plan01.json": "0033132ec6bdcc31a3030e9caeedcc2b40b4708ed31ca24c93408b3fca5b3b48",
+    "run.py": "313c56fc0316a167e8c6e329e50d72eb0850d83da3cae39548ebdea4599a1157",
+    "test_capture_cleanup.py": "40a57fc02dfcdbb9ab501aac7900618bffc6c7ff0942345efdf9e21830f91778"
+  },
+  "sessions_before": "\r\nData Collector Set                      Type                          Status\r\n-------------------------------------------------------------------------------\nCircular Kernel Context Logger          Trace                         Running \r\nAccessValidatorLog                      Trace                         Running \r\nAppModel                                Trace                         Running \r\nCimFSUnionFS-Filter                     Trace                         Running \r\nDiagLog                                 Trace                         Running \r\nDiagtrack-Listener                      Trace                         Running \r\nEventLog-Application                    Trace                         Running \r\nEventLog-DebugChannel                   Trace                         Running \r\nEventLog-Lenovo-Sif-Companion-Operational Trace                         Running \r\nEventLog-Lenovo-Sif-Core-Operational    Trace                         Running \r\nEventLog-Lenovo-Sif-Device-Operational  Trace                         Running \r\nEventLog-Lenovo-Sif-Settings-Operational Trace                         Running \r\nEventLog-System                         Trace                         Running \r\nFilterMgr-Logger                        Trace                         Running \r\niclsClient                              Trace                         Running \r\niclsProxy                               Trace                         Running \r\nIntelPTTEKRecertification               Trace                         Running \r\nIntelRST                                Trace                         Running \r\nLwtNetLog                               Trace                         Running \r\nMicrosoft-Windows-Rdp-Graphics-RdpIdd-Trace Trace                         Running \r\nNetCore                                 Trace                         Running \r\nNtfsLog                                 Trace                         Running \r\nRadioMgr                                Trace                         Running \r\nReFSLog                                 Trace                         Running \r\nSocketHeciServer                        Trace                         Running \r\nTPMProvisioningService                  Trace                         Running \r\nUBPM                                    Trace                         Running \r\nWdiContextLog                           Trace                         Running \r\nWiFiDriverIHVSession                    Trace                         Running \r\nWiFiSession                             Trace                         Running \r\nWPR_initiated_DiagTrackMiniLogger_WPR System Collector Trace                         Running \r\nWPR_initiated_DiagTrackMiniLogger_OneTrace_User_Logger_20261016_1_EC_0 Trace                         Running \r\nZulerCoreToolWatchDog{4A234956-2B7D-4221-BADF-12593BD342A8} Trace                         Running \r\nSHS-10152026-080753-7-1ff               Trace                         Running \r\nSCM                                     Trace                         Running \r\nSleepStudyTraceSession                  Trace                         Running \r\nCldFltLog                               Trace                         Running \r\nNVIDIA-NVTOPPS-NOCAT                    Trace                         Running \r\nNVIDIA-NVTOPPS-FILTER                   Trace                         Running \r\nhrtracev2                               Trace                         Running \r\nScreenOnPowerStudyTraceSession          Trace                         Running \r\n8696EAC4-1288-4288-A4EE-49EE431B0AD9    Trace                         Running \r\nUpdateSessionOrchestration              Trace                         Running \r\nMoUxCoreWorker                          Trace                         Running \r\nWXSendinput_{3688DDE4-9B04-4441-91EB-A414E33B2BF2 Trace                         Running \r\nWinDiag-Realtime-Session                Trace                         Running \r\nDefenderApiLoggerLowPriv                Trace                         Running \r\nMicrosoft.Windows.Remediation           Trace                         Running \r\nWindowsUpdate_trace_log                 Trace                         Running \r\nWindows-Compat-Inventory-InstallMon     Trace                         Running \r\nWINNETESP                               Trace                         Running \r\n\nThe command completed successfully.\r\n",
+  "profile_sha256": "4791d6fec91e5c237b0efe0c0ca8dc34348d94e9e9fb8a64a8b6608ca512a71a",
+  "stop_ok": true,
+  "end": {
+    "qpc_before": 3890894894189,
+    "qpc_after": 3890894894263,
+    "frequency": 10000000,
+    "filetime_100ns": 134368668853449776,
+    "perf_ns": 389089489426900,
+    "perf_before_ns": 389089489413700,
+    "perf_after_ns": 389089489426900
+  }
+}

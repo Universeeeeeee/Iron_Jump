@@ -1,0 +1,192 @@
+{
+  "exploratory_after_capture": true,
+  "slow_GUI_state_reproduced": false,
+  "reason": "No prospectively frozen slow-state classifier or GUI/pending endpoint in this fixed-work lifecycle protocol.",
+  "timeline_ms": {
+    "model_ready": -5079.4919,
+    "consumer_begin": 0,
+    "consumer_end": 5407.1178,
+    "model_begin": 0.163,
+    "model_end": 8546.7249
+  },
+  "consumer_cpu_ms": 5125.0,
+  "model_entry_cpu_ms": 1250.0,
+  "process_cpu_ms": 14953.125,
+  "retained_cpu_ms": 13187.5,
+  "unknown_cpu_ms": 1765.625,
+  "thread_starts_inside_work": [
+    {
+      "tid": 21964,
+      "host_ns_bounds": [
+        388993308204300,
+        388993308224900
+      ],
+      "since_consumer_start_ms": [
+        52.4257,
+        52.4463
+      ],
+      "layout_supported": true,
+      "entry": 140735480785764,
+      "module": "\\Device\\HarddiskVolume2\\conda\\Lib\\site-packages\\cv2\\cv2.pyd",
+      "rva": 76213092,
+      "contained_model_calls": [
+        0
+      ]
+    },
+    {
+      "tid": 8004,
+      "host_ns_bounds": [
+        388993308298900,
+        388993308319500
+      ],
+      "since_consumer_start_ms": [
+        52.5203,
+        52.5409
+      ],
+      "layout_supported": true,
+      "entry": 140735480785764,
+      "module": "\\Device\\HarddiskVolume2\\conda\\Lib\\site-packages\\cv2\\cv2.pyd",
+      "rva": 76213092,
+      "contained_model_calls": [
+        0
+      ]
+    },
+    {
+      "tid": 15764,
+      "host_ns_bounds": [
+        388993308372900,
+        388993308393500
+      ],
+      "since_consumer_start_ms": [
+        52.5943,
+        52.6149
+      ],
+      "layout_supported": true,
+      "entry": 140735480785764,
+      "module": "\\Device\\HarddiskVolume2\\conda\\Lib\\site-packages\\cv2\\cv2.pyd",
+      "rva": 76213092,
+      "contained_model_calls": [
+        0
+      ]
+    }
+  ],
+  "model_blocks": [
+    {
+      "first_ordinal": 0,
+      "count": 20,
+      "begin_ms": 0.1709,
+      "end_ms": 942.585,
+      "median_wall_ms": 44.028000000000006,
+      "max_wall_ms": 113.2703
+    },
+    {
+      "first_ordinal": 20,
+      "count": 20,
+      "begin_ms": 942.5906,
+      "end_ms": 1798.9512,
+      "median_wall_ms": 41.297700000000006,
+      "max_wall_ms": 52.4582
+    },
+    {
+      "first_ordinal": 40,
+      "count": 20,
+      "begin_ms": 1798.9565,
+      "end_ms": 2672.2787,
+      "median_wall_ms": 42.80645,
+      "max_wall_ms": 52.5266
+    },
+    {
+      "first_ordinal": 60,
+      "count": 20,
+      "begin_ms": 2672.2831,
+      "end_ms": 3503.6186,
+      "median_wall_ms": 39.54585,
+      "max_wall_ms": 52.5854
+    },
+    {
+      "first_ordinal": 80,
+      "count": 20,
+      "begin_ms": 3503.6241,
+      "end_ms": 4326.2998,
+      "median_wall_ms": 39.10075,
+      "max_wall_ms": 54.9093
+    },
+    {
+      "first_ordinal": 100,
+      "count": 20,
+      "begin_ms": 4326.3045,
+      "end_ms": 5287.3655,
+      "median_wall_ms": 39.68405,
+      "max_wall_ms": 161.1549
+    },
+    {
+      "first_ordinal": 120,
+      "count": 20,
+      "begin_ms": 5287.3709,
+      "end_ms": 5958.5028,
+      "median_wall_ms": 32.151349999999994,
+      "max_wall_ms": 47.6658
+    },
+    {
+      "first_ordinal": 140,
+      "count": 20,
+      "begin_ms": 5958.5073,
+      "end_ms": 6608.8548,
+      "median_wall_ms": 31.999000000000002,
+      "max_wall_ms": 36.3783
+    },
+    {
+      "first_ordinal": 160,
+      "count": 20,
+      "begin_ms": 6608.8592,
+      "end_ms": 7256.0313,
+      "median_wall_ms": 32.0229,
+      "max_wall_ms": 33.7742
+    },
+    {
+      "first_ordinal": 180,
+      "count": 20,
+      "begin_ms": 7256.0359,
+      "end_ms": 7899.787,
+      "median_wall_ms": 32.0005,
+      "max_wall_ms": 33.2878
+    },
+    {
+      "first_ordinal": 200,
+      "count": 20,
+      "begin_ms": 7899.7911,
+      "end_ms": 8546.7199,
+      "median_wall_ms": 31.9834,
+      "max_wall_ms": 37.1823
+    }
+  ],
+  "model_call_groups": {
+    "during_consumer": {
+      "count": 123,
+      "median_wall_ms": 40.1297
+    },
+    "after_consumer": {
+      "count": 96,
+      "median_wall_ms": 32.0005
+    },
+    "crossing_call_ordinals": [
+      123
+    ]
+  },
+  "exact_consumer_subwindow_progress_available": false,
+  "live_query_crosscheck_pass": false,
+  "next_single_intervention": "Same complete consumer/model work: concurrent release versus model release only after consumer completes. Change only overlap in isolated harness; preserve original functions, inputs, model history and outputs.",
+  "limits": [
+    "ETW entry-to-module evidence uses the previously validated layout; live query failed with0xC0000022, so this window lacks its independent runtime cross-check.",
+    "During/after model medians are temporal associations with different frame/history; not a causal estimate.",
+    "Consumer CPU and wall are coextensive raw measurements, not a calibrated GIL/wait percentage. Process CPU can exceed wall; never subtract process CPU from wall.",
+    "Only whole consumer-span timing was saved. No batch-by-batch consumer slowdown localization is available.",
+    "cv2.resize is a source-path candidate, not a stack-proven responsible function."
+  ],
+  "sources": {
+    "joint_timeline.py": "9a0a1bac946dfcb1073c07cc749e86fdce6c7eb1eb13aeea2807b3879e7fb2ed",
+    "review01.json": "6b4ef70b7a502c4bba068ca7dca7494e1748eda100c5796a7c475c01668699cc",
+    "workload01.json": "f8c0c38c9d8433298ba6bd270bb7b61566b24aa1dd29d18b184083e8ac872e2e",
+    "events01.jsonl": "7c7c651644f39c8b4698d3134e8fed1651cc5eeb3a3c7d81483436630dc06788"
+  }
+}

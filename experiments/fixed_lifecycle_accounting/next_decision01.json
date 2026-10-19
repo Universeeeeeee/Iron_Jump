@@ -1,0 +1,12 @@
+{
+  "status": "proposal_only_not_executed",
+  "question": "Does overlap with the original model pipeline materially slow the fixed original consumer, with complete work identity unchanged?",
+  "single_intervention": "Release the original 220 model calls concurrently with the consumer, or only after the original 6824-frame consumer finishes. Model open/ready, input pixels, logical timestamps, original functions and model thread are identical.",
+  "budget": "Exactly four fresh-process pairs, balanced orders AB/BA/BA/AB; no replacement, extra pair or post-hoc subset. Stop remaining cases on runtime or semantic failure and preserve every attempted case.",
+  "primary_endpoint": "Whole consumer wall time from the same original begin/end boundaries.",
+  "secondary_endpoints": ["Consumer thread CPU", "Whole fixed-work completion wall time", "Model call timing in ordinal blocks of20", "Seven common coarse consumer progress markers after1000,2000,3000,4000,5000,6000 and6824 frames; freeze this identical diagnostic in both arms before execution"],
+  "recorders": "No ETW, stack sampler, thread enumeration or entry queries during this directional comparison. Preserve existing complete-work validation and boundary counters identically in both arms.",
+  "directional_decision": "Only prioritize model-pipeline overlap as a causal contributor in this protocol if all four pairs preserve full semantics, every serial arm improves consumer wall time, and the paired geometric mean reduction is at least20%. Report all raw differences and an uncertainty interval. This is a practical direction threshold, not an equivalence, precision, GIL-share or field-fix claim.",
+  "otherwise": "Report this direction as inconclusive or unsupported, do not add samples to obtain a desired result; reassess slow-state reproducibility using preserved evidence.",
+  "limits": ["CPU quantization and old3%/1% failures remain.", "A serial diagnostic schedule is not a proposed production architecture.", "This fixed workload has no1000Hz realtime pending or GUI contact-to-paint endpoint; it cannot certify symptom repair.", "No new warmup, cv2 thread-count, affinity, GC, equality-helper or drawing interventions are bundled into this comparison."]
+}
