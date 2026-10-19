@@ -62,3 +62,5 @@ CPU账本两窗PID23008/14620，与旧CPU ETL的PID11948不是同一时刻、同
 旧CPU窗口74条线程的入口经Windows本机事件定义独立核验，其中4条Qt线程由匹配PDB的实际执行栈确认执行图像缩放。详见 [thread_entry_update01.md](thread_entry_update01.md)；不跨PID关联等待者、CPU账本或GIL持有者，也不由线程数判断过度并行。
 
 同一旧等待轮进一步发现QLabel基类绘制→Qt缩放→latch的同步链，公开包装入口没有显式释放GIL；59组GUI latch/消费者GIL等待的共同区间能保守关联到批次完成前缀滞后。详见 [qt_label_wait_update01.md](qt_label_wait_update01.md)。这不是直接owner快照、精确pending/活动批次或主因占比，也不改变旧资格失败。
+
+一个离屏合成API控制在原生Qt警告回调中直接观察到包装调用保留GIL，负控制能观察到未持有；原Qt进程退出码缺失，整体执行验收仍未通过，窗口和锁保留。详见 [契约控制](../qt_label_contract_control/README.md)。该无效绘制控制未执行真实缩放/latch，不升级现场主因或修复资格。
