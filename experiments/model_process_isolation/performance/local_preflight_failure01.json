@@ -1,0 +1,7 @@
+{
+  "stage": "Local unittest discovery before deployment",
+  "error": "test_protocol prepended parent directory to sys.path; unittest then resolved parent test_verify instead of performance test_verify and rejected discovery.",
+  "correction": "Append parent only for locating model_process; retain performance directory first for local test module identities.",
+  "workload_started": false,
+  "windows_deployed": false
+}

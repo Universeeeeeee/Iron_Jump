@@ -1,0 +1,506 @@
+{
+  "all_eight_complete": true,
+  "cases": {
+    "pair01_local": {
+      "qualified": true,
+      "variant": "local",
+      "consumer_wall_ms": 4617.4169,
+      "consumer_cpu_ms": 4500.0,
+      "whole_wall_ms": 8179.44005,
+      "parent_process_cpu_ms": 14031.25,
+      "model_or_proxy_wall_ms": 8178.642,
+      "child": null,
+      "progress_blocks": [
+        {
+          "first_frame": 1,
+          "last_frame": 1000,
+          "wall_ms": 640.5423,
+          "cpu_ms": 609.375
+        },
+        {
+          "first_frame": 1001,
+          "last_frame": 2000,
+          "wall_ms": 646.0406,
+          "cpu_ms": 640.625
+        },
+        {
+          "first_frame": 2001,
+          "last_frame": 3000,
+          "wall_ms": 618.9033,
+          "cpu_ms": 578.125
+        },
+        {
+          "first_frame": 3001,
+          "last_frame": 4000,
+          "wall_ms": 657.0123,
+          "cpu_ms": 640.625
+        },
+        {
+          "first_frame": 4001,
+          "last_frame": 5000,
+          "wall_ms": 719.404,
+          "cpu_ms": 718.75
+        },
+        {
+          "first_frame": 5001,
+          "last_frame": 6000,
+          "wall_ms": 811.1325,
+          "cpu_ms": 781.25
+        },
+        {
+          "first_frame": 6001,
+          "last_frame": 6824,
+          "wall_ms": 524.376,
+          "cpu_ms": 531.25
+        }
+      ]
+    },
+    "pair01_process": {
+      "qualified": true,
+      "variant": "process",
+      "consumer_wall_ms": 4471.9732,
+      "consumer_cpu_ms": 4406.25,
+      "whole_wall_ms": 8206.5278,
+      "parent_process_cpu_ms": 4437.5,
+      "model_or_proxy_wall_ms": 8206.0354,
+      "child": {
+        "separate_pid": true,
+        "actual_model_overlap": true,
+        "complete_model_calls": 220,
+        "parent_model_thread_is_ipc_proxy": true,
+        "child_process_cpu_ms": 10015.625,
+        "child_process_cycles": 22992462960,
+        "child_pid": 12048,
+        "child_model_tid": 23040,
+        "performance_qualification": false
+      },
+      "progress_blocks": [
+        {
+          "first_frame": 1,
+          "last_frame": 1000,
+          "wall_ms": 633.8992,
+          "cpu_ms": 640.625
+        },
+        {
+          "first_frame": 1001,
+          "last_frame": 2000,
+          "wall_ms": 624.0709,
+          "cpu_ms": 625.0
+        },
+        {
+          "first_frame": 2001,
+          "last_frame": 3000,
+          "wall_ms": 679.324,
+          "cpu_ms": 656.25
+        },
+        {
+          "first_frame": 3001,
+          "last_frame": 4000,
+          "wall_ms": 596.8902,
+          "cpu_ms": 593.75
+        },
+        {
+          "first_frame": 4001,
+          "last_frame": 5000,
+          "wall_ms": 741.7282,
+          "cpu_ms": 718.75
+        },
+        {
+          "first_frame": 5001,
+          "last_frame": 6000,
+          "wall_ms": 700.494,
+          "cpu_ms": 687.5
+        },
+        {
+          "first_frame": 6001,
+          "last_frame": 6824,
+          "wall_ms": 495.5592,
+          "cpu_ms": 484.375
+        }
+      ]
+    },
+    "pair02_process": {
+      "qualified": true,
+      "variant": "process",
+      "consumer_wall_ms": 4679.5092,
+      "consumer_cpu_ms": 4593.75,
+      "whole_wall_ms": 8345.2786,
+      "parent_process_cpu_ms": 4625.0,
+      "model_or_proxy_wall_ms": 8344.5934,
+      "child": {
+        "separate_pid": true,
+        "actual_model_overlap": true,
+        "complete_model_calls": 220,
+        "parent_model_thread_is_ipc_proxy": true,
+        "child_process_cpu_ms": 10046.875,
+        "child_process_cycles": 23361126720,
+        "child_pid": 12052,
+        "child_model_tid": 7000,
+        "performance_qualification": false
+      },
+      "progress_blocks": [
+        {
+          "first_frame": 1,
+          "last_frame": 1000,
+          "wall_ms": 658.6998,
+          "cpu_ms": 640.625
+        },
+        {
+          "first_frame": 1001,
+          "last_frame": 2000,
+          "wall_ms": 642.1365,
+          "cpu_ms": 640.625
+        },
+        {
+          "first_frame": 2001,
+          "last_frame": 3000,
+          "wall_ms": 740.1643,
+          "cpu_ms": 718.75
+        },
+        {
+          "first_frame": 3001,
+          "last_frame": 4000,
+          "wall_ms": 621.0543,
+          "cpu_ms": 593.75
+        },
+        {
+          "first_frame": 4001,
+          "last_frame": 5000,
+          "wall_ms": 716.4128,
+          "cpu_ms": 718.75
+        },
+        {
+          "first_frame": 5001,
+          "last_frame": 6000,
+          "wall_ms": 759.1798,
+          "cpu_ms": 750.0
+        },
+        {
+          "first_frame": 6001,
+          "last_frame": 6824,
+          "wall_ms": 541.8548,
+          "cpu_ms": 531.25
+        }
+      ]
+    },
+    "pair02_local": {
+      "qualified": true,
+      "variant": "local",
+      "consumer_wall_ms": 4882.7473,
+      "consumer_cpu_ms": 4718.75,
+      "whole_wall_ms": 8540.72435,
+      "parent_process_cpu_ms": 14703.125,
+      "model_or_proxy_wall_ms": 8540.2634,
+      "child": null,
+      "progress_blocks": [
+        {
+          "first_frame": 1,
+          "last_frame": 1000,
+          "wall_ms": 664.5951,
+          "cpu_ms": 625.0
+        },
+        {
+          "first_frame": 1001,
+          "last_frame": 2000,
+          "wall_ms": 670.0633,
+          "cpu_ms": 625.0
+        },
+        {
+          "first_frame": 2001,
+          "last_frame": 3000,
+          "wall_ms": 669.5292,
+          "cpu_ms": 656.25
+        },
+        {
+          "first_frame": 3001,
+          "last_frame": 4000,
+          "wall_ms": 707.6347,
+          "cpu_ms": 671.875
+        },
+        {
+          "first_frame": 4001,
+          "last_frame": 5000,
+          "wall_ms": 790.709,
+          "cpu_ms": 796.875
+        },
+        {
+          "first_frame": 5001,
+          "last_frame": 6000,
+          "wall_ms": 840.6732,
+          "cpu_ms": 812.5
+        },
+        {
+          "first_frame": 6001,
+          "last_frame": 6824,
+          "wall_ms": 539.5366,
+          "cpu_ms": 531.25
+        }
+      ]
+    },
+    "pair03_process": {
+      "qualified": true,
+      "variant": "process",
+      "consumer_wall_ms": 4546.5764,
+      "consumer_cpu_ms": 4515.625,
+      "whole_wall_ms": 8217.9893,
+      "parent_process_cpu_ms": 4562.5,
+      "model_or_proxy_wall_ms": 8217.3392,
+      "child": {
+        "separate_pid": true,
+        "actual_model_overlap": true,
+        "complete_model_calls": 220,
+        "parent_model_thread_is_ipc_proxy": true,
+        "child_process_cpu_ms": 9562.5,
+        "child_process_cycles": 23032646400,
+        "child_pid": 13992,
+        "child_model_tid": 13960,
+        "performance_qualification": false
+      },
+      "progress_blocks": [
+        {
+          "first_frame": 1,
+          "last_frame": 1000,
+          "wall_ms": 664.4957,
+          "cpu_ms": 640.625
+        },
+        {
+          "first_frame": 1001,
+          "last_frame": 2000,
+          "wall_ms": 611.6128,
+          "cpu_ms": 609.375
+        },
+        {
+          "first_frame": 2001,
+          "last_frame": 3000,
+          "wall_ms": 648.4206,
+          "cpu_ms": 656.25
+        },
+        {
+          "first_frame": 3001,
+          "last_frame": 4000,
+          "wall_ms": 661.5466,
+          "cpu_ms": 656.25
+        },
+        {
+          "first_frame": 4001,
+          "last_frame": 5000,
+          "wall_ms": 691.2144,
+          "cpu_ms": 671.875
+        },
+        {
+          "first_frame": 5001,
+          "last_frame": 6000,
+          "wall_ms": 756.2756,
+          "cpu_ms": 765.625
+        },
+        {
+          "first_frame": 6001,
+          "last_frame": 6824,
+          "wall_ms": 513.0044,
+          "cpu_ms": 515.625
+        }
+      ]
+    },
+    "pair03_local": {
+      "qualified": true,
+      "variant": "local",
+      "consumer_wall_ms": 4762.7677,
+      "consumer_cpu_ms": 4734.375,
+      "whole_wall_ms": 8464.85875,
+      "parent_process_cpu_ms": 14515.625,
+      "model_or_proxy_wall_ms": 8464.4135,
+      "child": null,
+      "progress_blocks": [
+        {
+          "first_frame": 1,
+          "last_frame": 1000,
+          "wall_ms": 642.4958,
+          "cpu_ms": 640.625
+        },
+        {
+          "first_frame": 1001,
+          "last_frame": 2000,
+          "wall_ms": 677.8097,
+          "cpu_ms": 687.5
+        },
+        {
+          "first_frame": 2001,
+          "last_frame": 3000,
+          "wall_ms": 682.6964,
+          "cpu_ms": 656.25
+        },
+        {
+          "first_frame": 3001,
+          "last_frame": 4000,
+          "wall_ms": 633.0277,
+          "cpu_ms": 640.625
+        },
+        {
+          "first_frame": 4001,
+          "last_frame": 5000,
+          "wall_ms": 767.7566,
+          "cpu_ms": 765.625
+        },
+        {
+          "first_frame": 5001,
+          "last_frame": 6000,
+          "wall_ms": 836.2227,
+          "cpu_ms": 843.75
+        },
+        {
+          "first_frame": 6001,
+          "last_frame": 6824,
+          "wall_ms": 522.7527,
+          "cpu_ms": 500.0
+        }
+      ]
+    },
+    "pair04_local": {
+      "qualified": true,
+      "variant": "local",
+      "consumer_wall_ms": 4875.6851,
+      "consumer_cpu_ms": 4703.125,
+      "whole_wall_ms": 8404.20715,
+      "parent_process_cpu_ms": 14843.75,
+      "model_or_proxy_wall_ms": 8403.7654,
+      "child": null,
+      "progress_blocks": [
+        {
+          "first_frame": 1,
+          "last_frame": 1000,
+          "wall_ms": 683.382,
+          "cpu_ms": 687.5
+        },
+        {
+          "first_frame": 1001,
+          "last_frame": 2000,
+          "wall_ms": 631.2512,
+          "cpu_ms": 562.5
+        },
+        {
+          "first_frame": 2001,
+          "last_frame": 3000,
+          "wall_ms": 723.6426,
+          "cpu_ms": 734.375
+        },
+        {
+          "first_frame": 3001,
+          "last_frame": 4000,
+          "wall_ms": 675.719,
+          "cpu_ms": 640.625
+        },
+        {
+          "first_frame": 4001,
+          "last_frame": 5000,
+          "wall_ms": 793.5741,
+          "cpu_ms": 765.625
+        },
+        {
+          "first_frame": 5001,
+          "last_frame": 6000,
+          "wall_ms": 831.2443,
+          "cpu_ms": 781.25
+        },
+        {
+          "first_frame": 6001,
+          "last_frame": 6824,
+          "wall_ms": 536.8655,
+          "cpu_ms": 531.25
+        }
+      ]
+    },
+    "pair04_process": {
+      "qualified": true,
+      "variant": "process",
+      "consumer_wall_ms": 4519.0557,
+      "consumer_cpu_ms": 4484.375,
+      "whole_wall_ms": 8203.61615,
+      "parent_process_cpu_ms": 4515.625,
+      "model_or_proxy_wall_ms": 8203.2111,
+      "child": {
+        "separate_pid": true,
+        "actual_model_overlap": true,
+        "complete_model_calls": 220,
+        "parent_model_thread_is_ipc_proxy": true,
+        "child_process_cpu_ms": 9359.375,
+        "child_process_cycles": 23075314560,
+        "child_pid": 20312,
+        "child_model_tid": 3228,
+        "performance_qualification": false
+      },
+      "progress_blocks": [
+        {
+          "first_frame": 1,
+          "last_frame": 1000,
+          "wall_ms": 668.3867,
+          "cpu_ms": 671.875
+        },
+        {
+          "first_frame": 1001,
+          "last_frame": 2000,
+          "wall_ms": 646.4866,
+          "cpu_ms": 640.625
+        },
+        {
+          "first_frame": 2001,
+          "last_frame": 3000,
+          "wall_ms": 660.0772,
+          "cpu_ms": 656.25
+        },
+        {
+          "first_frame": 3001,
+          "last_frame": 4000,
+          "wall_ms": 639.4386,
+          "cpu_ms": 640.625
+        },
+        {
+          "first_frame": 4001,
+          "last_frame": 5000,
+          "wall_ms": 695.9429,
+          "cpu_ms": 703.125
+        },
+        {
+          "first_frame": 5001,
+          "last_frame": 6000,
+          "wall_ms": 692.8229,
+          "cpu_ms": 656.25
+        },
+        {
+          "first_frame": 6001,
+          "last_frame": 6824,
+          "wall_ms": 515.8688,
+          "cpu_ms": 515.625
+        }
+      ]
+    }
+  },
+  "comparison": {
+    "relative_consumer_changes": [
+      -0.031498931794527785,
+      -0.041623718679850485,
+      -0.04539194720750295,
+      -0.0731444694818375
+    ],
+    "geometric_consumer_reduction": 0.04804082256169365,
+    "geometric_whole_work_change": -0.018231460486732996,
+    "descriptive_95pct_consumer_reduction_interval": [
+      0.01908410057517751,
+      0.07614273961672072
+    ],
+    "all_four_pairs_improve": true,
+    "advance": false
+  },
+  "statistics_withheld": false,
+  "field_fix_verified": false,
+  "root_identified": false,
+  "limits": [
+    "Four paired log ratios; t interval descriptive with independence/approximate-normality assumptions.",
+    "Parent model-threadCPU is IPC proxyCPU in process arm. Parent processCPU excludes vision child. No aligned whole-systemCPU sum orGIL share.",
+    "OriginalGUI/realtime1000Hz pending/contact-to-paint absent. Fixed-work improvement is not a field-fix proof.",
+    "Delivery windows excluded; no reruns or omitted first pairs."
+  ],
+  "bindings": {
+    "plan_sha256": "2d9b3b32b1fd801311fb1db16b50b7c453839f26954b1bf954405d2bf39061c0",
+    "analysis_sha256": "e3c3c35c7ab930491b657dc91e443c85c0a35d3d65522fef574215a2e25c764f"
+  }
+}
