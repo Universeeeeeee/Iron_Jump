@@ -1,0 +1,21 @@
+{
+  "cases": [
+    "busy",
+    "sleep",
+    "worker_busy_main_wait"
+  ],
+  "seconds": 2,
+  "read_bracket_ns_max": 1000000,
+  "sources": {
+    "probe.py": "559e3e4361281d7df4158e04a5dd467656dc2242dacaee9960d894ebc0561992",
+    "run.py": "b58b7f05ccbd6c95c912950f34695e5ab9c3b61b0b621c622a7ec700c5da0944",
+    "test_probe.py": "32e76a2c6a04293bde0714a31fe921e483908be64331f73ee97ff3c38f9d1461"
+  },
+  "scope": "Single synthetic cohort only. No GUI/model/device/ETW or production import. Coarse >=500ms CPU and <=250ms idle controls; not 3%/1% or short-call precision qualification.",
+  "failures": "Retain all windows and lock; abort on first failure; never retry to replace failure.",
+  "limits": [
+    "time.thread_time and GetThreadTimes share OS accounting, not independent hardware validation.",
+    "Cycles are recorded only as monotone execution evidence; no frequency or GIL attribution.",
+    "100 boundary read widths do not estimate actual-load perturbation."
+  ]
+}

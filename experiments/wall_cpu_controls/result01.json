@@ -1,0 +1,398 @@
+{
+  "cases": {
+    "busy": {
+      "before": {
+        "pid": 15112,
+        "tid": 12568,
+        "thread_time_before_ns": 203125000,
+        "thread": {
+          "creation_100ns": 134368631131173177,
+          "exit_100ns": 0,
+          "kernel_100ns": 1406250,
+          "user_100ns": 625000,
+          "cycles": 452228160
+        },
+        "process": {
+          "creation_100ns": 134368631131173155,
+          "exit_100ns": 0,
+          "kernel_100ns": 1406250,
+          "user_100ns": 625000,
+          "cycles": 486347520
+        },
+        "thread_time_after_ns": 203125000,
+        "before_ns": 385317480298900,
+        "after_ns": 385317480350900
+      },
+      "work": {
+        "blocks": 8244,
+        "checksum": 49995000
+      },
+      "after": {
+        "pid": 15112,
+        "tid": 12568,
+        "thread_time_before_ns": 2171875000,
+        "thread": {
+          "creation_100ns": 134368631131173177,
+          "exit_100ns": 0,
+          "kernel_100ns": 1562500,
+          "user_100ns": 20156250,
+          "cycles": 5219703840
+        },
+        "process": {
+          "creation_100ns": 134368631131173155,
+          "exit_100ns": 0,
+          "kernel_100ns": 1562500,
+          "user_100ns": 20156250,
+          "cycles": 5254049040
+        },
+        "thread_time_after_ns": 2171875000,
+        "before_ns": 385319480419700,
+        "after_ns": 385319480595400
+      },
+      "delta": {
+        "wall_ms_bounds": [
+          2000.0688,
+          2000.2965
+        ],
+        "thread": {
+          "cpu_ms": 1968.75,
+          "cycles": 4767475680
+        },
+        "process": {
+          "cpu_ms": 1968.75,
+          "cycles": 4767701520
+        },
+        "thread_time_ms_bounds": [
+          1968.75,
+          1968.75
+        ]
+      },
+      "checks": {
+        "duration": true,
+        "os_thread_clock_agrees": true,
+        "process_covers_thread": true,
+        "executing": true
+      },
+      "worker_alive": false
+    },
+    "sleep": {
+      "before": {
+        "pid": 15112,
+        "tid": 12568,
+        "thread_time_before_ns": 2171875000,
+        "thread": {
+          "creation_100ns": 134368631131173177,
+          "exit_100ns": 0,
+          "kernel_100ns": 1562500,
+          "user_100ns": 20156250,
+          "cycles": 5220346560
+        },
+        "process": {
+          "creation_100ns": 134368631131173155,
+          "exit_100ns": 0,
+          "kernel_100ns": 1562500,
+          "user_100ns": 20156250,
+          "cycles": 5254602720
+        },
+        "thread_time_after_ns": 2171875000,
+        "before_ns": 385319480714400,
+        "after_ns": 385319480830300
+      },
+      "after": {
+        "pid": 15112,
+        "tid": 12568,
+        "thread_time_before_ns": 2171875000,
+        "thread": {
+          "creation_100ns": 134368631131173177,
+          "exit_100ns": 0,
+          "kernel_100ns": 1562500,
+          "user_100ns": 20156250,
+          "cycles": 5220826080
+        },
+        "process": {
+          "creation_100ns": 134368631131173155,
+          "exit_100ns": 0,
+          "kernel_100ns": 1562500,
+          "user_100ns": 20156250,
+          "cycles": 5255136240
+        },
+        "thread_time_after_ns": 2171875000,
+        "before_ns": 385321481391100,
+        "after_ns": 385321481573300
+      },
+      "delta": {
+        "wall_ms_bounds": [
+          2000.5608,
+          2000.8589
+        ],
+        "thread": {
+          "cpu_ms": 0.0,
+          "cycles": 479520
+        },
+        "process": {
+          "cpu_ms": 0.0,
+          "cycles": 533520
+        },
+        "thread_time_ms_bounds": [
+          0.0,
+          0.0
+        ]
+      },
+      "checks": {
+        "duration": true,
+        "os_thread_clock_agrees": true,
+        "process_covers_thread": true,
+        "waiting_thread_low_CPU": true,
+        "idle_process_low_CPU": true
+      },
+      "worker_alive": false
+    },
+    "worker_busy_main_wait": {
+      "before": {
+        "pid": 15112,
+        "tid": 12568,
+        "thread_time_before_ns": 2171875000,
+        "thread": {
+          "creation_100ns": 134368631131173177,
+          "exit_100ns": 0,
+          "kernel_100ns": 1562500,
+          "user_100ns": 20156250,
+          "cycles": 5222213520
+        },
+        "process": {
+          "creation_100ns": 134368631131173155,
+          "exit_100ns": 0,
+          "kernel_100ns": 1562500,
+          "user_100ns": 20156250,
+          "cycles": 5260096320
+        },
+        "thread_time_after_ns": 2171875000,
+        "before_ns": 385321483524400,
+        "after_ns": 385321483664900
+      },
+      "worker_before": {
+        "pid": 15112,
+        "tid": 16992,
+        "thread_time_before_ns": 0,
+        "thread": {
+          "creation_100ns": 134368631173358792,
+          "exit_100ns": 0,
+          "kernel_100ns": 0,
+          "user_100ns": 0,
+          "cycles": 3672960
+        },
+        "process": {
+          "creation_100ns": 134368631131173155,
+          "exit_100ns": 0,
+          "kernel_100ns": 1562500,
+          "user_100ns": 20156250,
+          "cycles": 5260467120
+        },
+        "thread_time_after_ns": 0,
+        "before_ns": 385321483711100,
+        "after_ns": 385321483817700
+      },
+      "work": {
+        "blocks": 8022,
+        "checksum": 49995000
+      },
+      "worker_after": {
+        "pid": 15112,
+        "tid": 16992,
+        "thread_time_before_ns": 2000000000,
+        "thread": {
+          "creation_100ns": 134368631173358792,
+          "exit_100ns": 0,
+          "kernel_100ns": 0,
+          "user_100ns": 20000000,
+          "cycles": 4792002480
+        },
+        "process": {
+          "creation_100ns": 134368631131173155,
+          "exit_100ns": 0,
+          "kernel_100ns": 1562500,
+          "user_100ns": 40156250,
+          "cycles": 10048824000
+        },
+        "thread_time_after_ns": 2000000000,
+        "before_ns": 385323484001200,
+        "after_ns": 385323484148400
+      },
+      "after": {
+        "pid": 15112,
+        "tid": 12568,
+        "thread_time_before_ns": 2171875000,
+        "thread": {
+          "creation_100ns": 134368631131173177,
+          "exit_100ns": 0,
+          "kernel_100ns": 1562500,
+          "user_100ns": 20156250,
+          "cycles": 5222687280
+        },
+        "process": {
+          "creation_100ns": 134368631131173155,
+          "exit_100ns": 0,
+          "kernel_100ns": 1562500,
+          "user_100ns": 40156250,
+          "cycles": 10049763840
+        },
+        "thread_time_after_ns": 2187500000,
+        "before_ns": 385323484245800,
+        "after_ns": 385323484406000
+      },
+      "delta": {
+        "wall_ms_bounds": [
+          2000.5809,
+          2000.8816
+        ],
+        "thread": {
+          "cpu_ms": 0.0,
+          "cycles": 473760
+        },
+        "process": {
+          "cpu_ms": 2000.0,
+          "cycles": 4789667520
+        },
+        "thread_time_ms_bounds": [
+          0.0,
+          15.625
+        ]
+      },
+      "worker_delta": {
+        "wall_ms_bounds": [
+          2000.1835,
+          2000.4373
+        ],
+        "thread": {
+          "cpu_ms": 2000.0,
+          "cycles": 4788329520
+        },
+        "process": {
+          "cpu_ms": 2000.0,
+          "cycles": 4788356880
+        },
+        "thread_time_ms_bounds": [
+          2000.0,
+          2000.0
+        ]
+      },
+      "checks": {
+        "duration": true,
+        "os_thread_clock_agrees": true,
+        "process_covers_thread": true,
+        "waiting_thread_low_CPU": true,
+        "worker_executing": true,
+        "process_covers_worker": true,
+        "different_threads": true,
+        "worker_bracket_inside_main": true
+      },
+      "worker_alive": false
+    }
+  },
+  "errors": [],
+  "actual_load_disturbance_pass": false,
+  "read_bracket_ns": [
+    172300,
+    113000,
+    104700,
+    106000,
+    102800,
+    102700,
+    113800,
+    90400,
+    99600,
+    96000,
+    104400,
+    93400,
+    97500,
+    98000,
+    62800,
+    62900,
+    67900,
+    45400,
+    53600,
+    48400,
+    45800,
+    44900,
+    45400,
+    45100,
+    45300,
+    45500,
+    45800,
+    47300,
+    51600,
+    49000,
+    45100,
+    46100,
+    45200,
+    45200,
+    44700,
+    44400,
+    44900,
+    48400,
+    63500,
+    46300,
+    48600,
+    48400,
+    48200,
+    44600,
+    45000,
+    46000,
+    48900,
+    45700,
+    45600,
+    45500,
+    46000,
+    46300,
+    45400,
+    45300,
+    44900,
+    48300,
+    48400,
+    45500,
+    53100,
+    46000,
+    45900,
+    45200,
+    45900,
+    46100,
+    45500,
+    49200,
+    46300,
+    45200,
+    45300,
+    48700,
+    46500,
+    45900,
+    48000,
+    45000,
+    47200,
+    44500,
+    45100,
+    45800,
+    52900,
+    45100,
+    44800,
+    44500,
+    47400,
+    47700,
+    44700,
+    45300,
+    44800,
+    44600,
+    47600,
+    45000,
+    44800,
+    44300,
+    48200,
+    45400,
+    44600,
+    47500,
+    44800,
+    44300,
+    44300,
+    52100
+  ],
+  "complete": true,
+  "sources_unchanged": true
+}

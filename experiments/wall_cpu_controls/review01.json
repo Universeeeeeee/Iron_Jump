@@ -1,0 +1,43 @@
+{
+  "cases": {
+    "busy": {
+      "wall_ms_bounds": [
+        2000.0688,
+        2000.2965
+      ],
+      "thread_cpu_ms": 1968.75,
+      "process_cpu_ms": 1968.75,
+      "thread_cycles": 4767475680,
+      "worker_thread_cpu_ms": null
+    },
+    "sleep": {
+      "wall_ms_bounds": [
+        2000.5608,
+        2000.8589
+      ],
+      "thread_cpu_ms": 0.0,
+      "process_cpu_ms": 0.0,
+      "thread_cycles": 479520,
+      "worker_thread_cpu_ms": null
+    },
+    "worker_busy_main_wait": {
+      "wall_ms_bounds": [
+        2000.5809,
+        2000.8816
+      ],
+      "thread_cpu_ms": 0.0,
+      "process_cpu_ms": 2000.0,
+      "thread_cycles": 473760,
+      "worker_thread_cpu_ms": 2000.0
+    }
+  },
+  "source_sha256": "b474d5c68e5afbfa273ff5e5b733a15e6696a3d59feeca446b8357ace7b79828",
+  "plan_sha256": "82d6743b339a5b3942903b386f3da77b63ebf29c59e67c1ba7076a7ae1457024",
+  "result_sha256": "122aa2a6ba38f1248477d41c50866d5e2cd808102fbeb7729a47be6c0d9d700c",
+  "boundary_read_ns_min": 44300,
+  "boundary_read_ns_max": 172300,
+  "synthetic_controls_pass": true,
+  "per_inference_precision_pass": false,
+  "actual_load_disturbance_pass": false,
+  "primary_root_identified": false
+}
