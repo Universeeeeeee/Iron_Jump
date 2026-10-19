@@ -1,0 +1,63 @@
+{
+  "remaining_scenarios_pass": true,
+  "old_failed_cohort_unchanged": true,
+  "actor_source_unchanged": true,
+  "cases": {
+    "early_stop": {
+      "complete": true,
+      "actual_resource_stop": true,
+      "ordered_messages": 214,
+      "actual_ingress_prefix_frames": 9576,
+      "command_completion_correlated": true,
+      "source_arm_error": null,
+      "semantics": {
+        "partial_ingress_prefix_exact": true,
+        "accepted_raw_archive_exact": true,
+        "accepted_last_sample": 54975,
+        "accepted_formal_frames": 6072,
+        "all_ingress_frames": 9576,
+        "post_freeze_ingress_frames": 3,
+        "partial_report_algorithm_oracle": false,
+        "performance_qualification": false
+      },
+      "notification_counts": {
+        "device_layout_changed": 5,
+        "device_state_changed": 3,
+        "beam_quality_notice": 1
+      }
+    },
+    "discard_ready": {
+      "complete": true,
+      "actual_resource_stop": true,
+      "ordered_messages": 89,
+      "actual_ingress_prefix_frames": 3501,
+      "command_completion_correlated": true,
+      "source_arm_error": "Arm/SDK readiness timeout",
+      "semantics": {
+        "no_started_or_report": true,
+        "discard_completed_after_resource_stop": true,
+        "source_fixture_arm_error": "Arm/SDK readiness timeout"
+      },
+      "notification_counts": {
+        "device_layout_changed": 6,
+        "device_state_changed": 3
+      }
+    }
+  },
+  "partial_report_algorithm_oracle": false,
+  "full_gui_proxy_qualification": false,
+  "output_backpressure_qualified": false,
+  "performance_qualification": false,
+  "field_fix_verified": false,
+  "limits": [
+    "Full scenario retained in first failed-cohort archive and independently verified; its malformed status is not repaired.",
+    "Only remaining earlystop/discard scenarios executed with JSON logging correction.",
+    "Discard sourcefixture retains armwait timeout; productionUSB stop timing not qualified.",
+    "Notifications with zero actual occurrences only have binding tests; not actual hardware-path evidence."
+  ],
+  "bindings": {
+    "manifest_sha256": "68780391cc20d8d7f96954d27bef3263cdf96cdc92887f94df47d5ff4b75a8d6",
+    "first_review_sha256": "16579aae79279c7cd5cdfd53d219fa0ef2cd3aa1469556b58b16fea3d4e2cfd1",
+    "review_source_sha256": "98e4202e3a0304a1916e5c94c6e8d7b896bf855ec939d21b6dd7b927e6c3276a"
+  }
+}
