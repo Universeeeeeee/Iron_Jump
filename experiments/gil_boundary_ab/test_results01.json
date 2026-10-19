@@ -1,0 +1,19 @@
+{
+  "results": [
+    {
+      "python": "/private/tmp/ironjump_stats_20261018/bin/python",
+      "pattern": "test_analysis.py",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "test_complete_fixed_pairs_required (test_analysis.Endpoints.test_complete_fixed_pairs_required) ... ok\ntest_empty_rejected (test_analysis.Endpoints.test_empty_rejected) ... ok\ntest_large_regression_preserved (test_analysis.Endpoints.test_large_regression_preserved) ... ok\ntest_nearest_rank_p95 (test_analysis.Endpoints.test_nearest_rank_p95) ... ok\n\n----------------------------------------------------------------------\nRan 4 tests in 0.330s\n\nOK\n"
+    },
+    {
+      "python": "/Users/vae/Projects/Iron_Jump/.venv/bin/python",
+      "pattern": "test_fake_sdk.py",
+      "returncode": 0,
+      "stdout": "",
+      "stderr": "test_original_settings_and_tracking_protocol (test_fake_sdk.SimulatedSDK.test_original_settings_and_tracking_protocol) ... ok\n\n----------------------------------------------------------------------\nRan 1 test in 0.093s\n\nOK\n"
+    }
+  ],
+  "earlier_environment_failure": "Combined discovery in statistics-only environment: four analysis tests passed; SDK test failed because qtpy is absent. SDK test passed in existing project environment; no dependencies changed."
+}

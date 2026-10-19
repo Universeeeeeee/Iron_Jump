@@ -1,0 +1,14 @@
+{
+  "primary_plan_sha256": "001e49b39143d36324f8498181a88114e6bc1c5a9a88b26a0027c26364c63c40",
+  "analysis_sources": {
+    "experiments/gil_boundary_ab/analyze.py": "3c3375b1ec713731936aef49cef28beb9b9b87cf5abf9ef27af53eea598e2bc0",
+    "experiments/gil_observation_termination/queue_bounds.py": "75545839cbdb87fac1340b77c823c9f43c2c06207baeff2af6a9ade7ff4e1c33",
+    "experiments/gil_gui_analysis/temporal_review02.py": "bf9a397e18f0a590c1c43c2c0077be318a0298a3154f5af99df6b6deec5b9e24",
+    "experiments/gil_gui_analysis/publication_map02.json": "793f136e4c8c35888d3a84551b1c7c9bc5fbdafa868a7a7128caade6c79471cc",
+    "experiments/gil_workload_observation/verify.py": "cedf2e8a224e14de15ed247ccf6456e3d3cd931e6ad40d84f7ab6d765a1d842d"
+  },
+  "additional_exploratory_metric": "scheduled replay-source touch-to-paint = primary actual-receipt touch-to-paint + observed touch-frame delivery lateness from original arrivals(now,due,index).",
+  "reason": "A GIL-related intervention may change producer delivery timing; queue-only improvement must not hide delayed source delivery.",
+  "timing": "Added during ongoing capture before result inspection, after original plan freeze. It is an additional explanatory metric, not a replacement primary endpoint or changed acceptance threshold.",
+  "no_capture_source_or_plan_changed": true
+}
