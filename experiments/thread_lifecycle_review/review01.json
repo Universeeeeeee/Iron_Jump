@@ -1,0 +1,136 @@
+{
+  "raw_events_and_payloads_exactly_match_tracerpt": true,
+  "event_count": 16,
+  "distinct_tids": 8,
+  "named_role_checks": {
+    "cpu_b": {
+      "tid": 20836,
+      "counter_window_enclosed": true,
+      "lifetime_qpc": {
+        "begin": 2125652721643,
+        "actual_creation": true,
+        "end": 2125712778238,
+        "actual_exit": true
+      }
+    },
+    "cpu_a": {
+      "tid": 784,
+      "counter_window_enclosed": true,
+      "lifetime_qpc": {
+        "begin": 2125652712608,
+        "actual_creation": true,
+        "end": 2125712780144,
+        "actual_exit": true
+      }
+    },
+    "qt_wait": {
+      "tid": 16756,
+      "counter_window_enclosed": true,
+      "lifetime_qpc": {
+        "begin": 2125652724112,
+        "actual_creation": true,
+        "end": 2125712818245,
+        "actual_exit": true
+      }
+    },
+    "system_wait": {
+      "tid": 5984,
+      "counter_window_enclosed": true,
+      "lifetime_qpc": {
+        "begin": 2125652725855,
+        "actual_creation": true,
+        "end": 2125712818977,
+        "actual_exit": true
+      }
+    }
+  },
+  "all_lifetimes": {
+    "13708": [
+      {
+        "begin": 2125650268832,
+        "actual_creation": true,
+        "end": 2125713019917,
+        "actual_exit": true
+      }
+    ],
+    "2812": [
+      {
+        "begin": 2125650319013,
+        "actual_creation": true,
+        "end": 2125713013193,
+        "actual_exit": true
+      }
+    ],
+    "9260": [
+      {
+        "begin": 2125650320669,
+        "actual_creation": true,
+        "end": 2125713013293,
+        "actual_exit": true
+      }
+    ],
+    "10184": [
+      {
+        "begin": 2125650321545,
+        "actual_creation": true,
+        "end": 2125713012968,
+        "actual_exit": true
+      }
+    ],
+    "784": [
+      {
+        "begin": 2125652712608,
+        "actual_creation": true,
+        "end": 2125712780144,
+        "actual_exit": true
+      }
+    ],
+    "20836": [
+      {
+        "begin": 2125652721643,
+        "actual_creation": true,
+        "end": 2125712778238,
+        "actual_exit": true
+      }
+    ],
+    "16756": [
+      {
+        "begin": 2125652724112,
+        "actual_creation": true,
+        "end": 2125712818245,
+        "actual_exit": true
+      }
+    ],
+    "5984": [
+      {
+        "begin": 2125652725855,
+        "actual_creation": true,
+        "end": 2125712818977,
+        "actual_exit": true
+      }
+    ]
+  },
+  "loss": {
+    "header_events_lost": 0,
+    "buffers_lost": 0,
+    "consumer_events_lost": 0
+  },
+  "named_start_address_decoded": false,
+  "tracerpt_schema_error": 15005,
+  "whole_process_lifetime_calibration_complete": false,
+  "limits": [
+    "Raw cross-reader identity is validated; tracerpt did not resolve thread fields beyond raw bytes. Thread start address stays uninterpreted.",
+    "Only four independently counter-observed historical roles are validated. Dedicated between-enumeration short-lived and TID-reuse controls remain missing.",
+    "DCStart/DCStop are capture rundown, not actual creation/exit. Synthetic sequence tests enforce this distinction.",
+    "Historical ETL cannot identify the three new TIDs in the later untraced fixed-model experiment; no retroactive attribution.",
+    "Stack closure and observer-disturbance failures are unchanged; lifecycle event validation does not make those pass."
+  ],
+  "sources": {
+    "experiments/thread_lifecycle_review/review.py": "98e35adb151cfab88e12634cb24fc99dfb412fd771db3c181bf1b6e3ab8c62df",
+    "experiments/native_stack_capture/runs/cpu_pair1_cpu/trace.etl": "274aea8c38703565f35587fec4d3b02e40c1a523c6b2a28a89e1c431c7ba7184",
+    "experiments/native_stack_capture/runs/cpu_pair1_cpu/decoded/events.jsonl": "27fc8c65b6ccb564fc7641c78f7ed9c20d4528fdb3c0db9d8fc5aec7a41560a2",
+    "experiments/native_stack_capture/runs/cpu_pair1_cpu/decoded/metadata.json": "67ac9938db4c8a2b070b10fa28d6199965077c74c52152953aade4185f5c9d1b",
+    "experiments/native_stack_capture/runs/cpu_pair1_cpu/fixture/fixture.json": "b818baf240e3d3dc5b4a5a8d524f521026a9a462ff21fa96cc40c1b2e9f35a6f",
+    "experiments/thread_lifecycle_review/tracerpt_selected03.json": "665be13b96c727a26ab510abe788a8f7600b2a458d1059d36f3eb37c2143bf1e"
+  }
+}
