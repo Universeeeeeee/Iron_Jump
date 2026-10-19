@@ -1,0 +1,40 @@
+{
+  "core_session_delivery_pass": true,
+  "complete_original_report_and_state_match": true,
+  "raw_frames_exact": 33188,
+  "ordered_actual_output_messages": 677,
+  "separate_pid": true,
+  "actual_qt_thread_and_reader_stop": true,
+  "supported_commands": [
+    "prepare",
+    "start"
+  ],
+  "stop_path": "Existing sourceEOF -> childdrain -> originalcontroller.stop(manual). Parent-requested earlystop not implemented.",
+  "observed_output_kinds": {
+    "actor_ready": 1,
+    "drained_eof": 1,
+    "prepared": 1,
+    "readiness": 74,
+    "ready_to_start": 1,
+    "report_value": 1,
+    "snapshot": 294,
+    "started": 1,
+    "terminal": 1,
+    "visual": 302
+  },
+  "log_encoding": "cp936",
+  "performance_qualification": false,
+  "full_gui_proxy_qualification": false,
+  "field_fix_verified": false,
+  "missing": [
+    "Parent-commanded earlystop, pause/resume/discard and their fault paths.",
+    "RemainingGUI signals including device notices, quality notices, step events and layout changes.",
+    "RealGUI/vision/SDK load, bounded output buffering and1000Hz pending/contact-to-paint performance."
+  ],
+  "bindings": {
+    "manifest_sha256": "60e5f3ba2238c5603f7b6c5c2cb305d85c818737169a4e31d028f3fde275654d",
+    "reference_report_sha256": "fc940763f51abe8d5bb9dc127e4c42092872fcce9ef8430c2846ca57fae4692e",
+    "reference_measurement_sha256": "d87e26210cc2857835ad68674537e7ef1efc0afa989655bd97aa2ea8fe998b58",
+    "review_source_sha256": "365ed85f49dda268cd682751d7267fb88e13196c0d99695b7b2c83ef69cdfc01"
+  }
+}
