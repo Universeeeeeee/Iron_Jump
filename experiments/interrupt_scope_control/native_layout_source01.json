@@ -1,0 +1,6 @@
+{
+  "source": "https://raw.githubusercontent.com/winsiderss/phnt/master/ntexapi.h",
+  "sha256": "0510ac40fa1690cd73bed8afe3ed602aaa7bb6870ab95ea9aaba36ce1f4c3d53",
+  "excerpt": "typedef struct _SYSTEM_PROCESSOR_PERFORMANCE_INFORMATION\n{\n    LARGE_INTEGER IdleTime;         // The IdleTime member contains the amount of time that the system has been idle, in 100-nanosecond intervals.\n    LARGE_INTEGER KernelTime;       // The KernelTime member contains the amount of time that the system has spent executing in Kernel mode (including all threads in all processes, on all processors), in 100-nanosecond intervals.\n    LARGE_INTEGER UserTime;         // The UserTime member contains the amount of time that the system has spent executing in User mode (including all threads in all processes, on all processors), in 100-nanosecond intervals.\n    LARGE_INTEGER DpcTime;          // The DpcTime member contains the amount of time that the system has spent processing deferred procedure calls (DPCs), in 100-nanosecond intervals.\n    LARGE_INTEGER InterruptTime;    // The InterruptT",
+  "scope": "External native API layout reference, not a guarantee offine timing accuracy oncurrentWindows."
+}

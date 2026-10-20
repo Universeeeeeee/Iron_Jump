@@ -1,0 +1,32 @@
+{
+  "original_frozen_analyzer_shape_failure_preserved": true,
+  "all_21_archive_files_match": true,
+  "all_frozen_sources_unchanged": true,
+  "corrected_schema_independently_checked": true,
+  "DPC_event_time_with_zero_OS_DPC_time_CPUs": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7
+  ],
+  "OS_interrupt_counter_15625us_steps": [
+    2,
+    6
+  ],
+  "complete_interrupt_occupancy_qualified": false,
+  "fine_CPU_accounting_qualified": false,
+  "actual_workload_disturbance_qualified": false,
+  "old_83ms_gap_explained": false,
+  "conclusion": "DPC andISR-MSI eventfields/timestamps delivered and independently verified. Coarse system endpoint counters cannot certify complete/fine interrupt occupancy; do not subtract these counts from historical missing events orforce oldCPU gate pass.",
+  "next_action": "Do not repeat the old4windows just toobtain a smaller CPU mismatch. If collecting morework, first distinguish scoped residency, interrupt overlap andOS statistical accounting; preserve originalraw gate andevidence.",
+  "bindings": {
+    "result02.json": "390444a474d4cc19f14f20237c612d0ef2b2f85d4d922c3e8f8d5a9be7de9566",
+    "schema_check01.json": "a3dba78c69d69a7551888bdc6435902825b8baff29d30838e109c289403901b6",
+    "capture_plan02.json": "321d47d272ff919f83fa609203037934ec3f134711b3377b9f8c3c27a258da99",
+    "transport01.json": "e338257f50a1ff9688f86a4b94a3102a280f05e540b5994f5a5226d00778b5d9"
+  }
+}

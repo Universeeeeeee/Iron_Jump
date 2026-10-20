@@ -1,0 +1,160 @@
+{
+  "frozen_analyzer_pass": false,
+  "ISR_MSI_compatibility_schema_independently_verified": true,
+  "actual_DPC_ISR_delivery": true,
+  "version2_schema_and_QPC_intervals_valid": true,
+  "no_reported_loss": true,
+  "shapes": {
+    "(68, 16)": 772,
+    "(50, 24)": 112,
+    "(69, 16)": 69
+  },
+  "per_CPU": [
+    {
+      "cpu": 0,
+      "OS_interrupt_count_delta": 582,
+      "DPC": {
+        "event_count": 82,
+        "union_ns": 1318500.0,
+        "OS_counter_ns": 0,
+        "scope_difference_ns": 1318500.0
+      },
+      "ISR": {
+        "event_count": 43,
+        "union_ns": 294000.0,
+        "OS_counter_ns": 0,
+        "scope_difference_ns": 294000.0
+      }
+    },
+    {
+      "cpu": 1,
+      "OS_interrupt_count_delta": 365,
+      "DPC": {
+        "event_count": 8,
+        "union_ns": 71200.0,
+        "OS_counter_ns": 0,
+        "scope_difference_ns": 71200.0
+      },
+      "ISR": {
+        "event_count": 1,
+        "union_ns": 3300.0,
+        "OS_counter_ns": 0,
+        "scope_difference_ns": 3300.0
+      }
+    },
+    {
+      "cpu": 2,
+      "OS_interrupt_count_delta": 2798,
+      "DPC": {
+        "event_count": 227,
+        "union_ns": 3472200.0,
+        "OS_counter_ns": 0,
+        "scope_difference_ns": 3472200.0
+      },
+      "ISR": {
+        "event_count": 1,
+        "union_ns": 2200.0,
+        "OS_counter_ns": 15625000,
+        "scope_difference_ns": -15622800.0
+      }
+    },
+    {
+      "cpu": 3,
+      "OS_interrupt_count_delta": 481,
+      "DPC": {
+        "event_count": 60,
+        "union_ns": 590700.0,
+        "OS_counter_ns": 0,
+        "scope_difference_ns": 590700.0
+      },
+      "ISR": {
+        "event_count": 16,
+        "union_ns": 27200.0,
+        "OS_counter_ns": 0,
+        "scope_difference_ns": 27200.0
+      }
+    },
+    {
+      "cpu": 4,
+      "OS_interrupt_count_delta": 821,
+      "DPC": {
+        "event_count": 80,
+        "union_ns": 606400.0,
+        "OS_counter_ns": 0,
+        "scope_difference_ns": 606400.0
+      },
+      "ISR": {
+        "event_count": 4,
+        "union_ns": 8400.0,
+        "OS_counter_ns": 0,
+        "scope_difference_ns": 8400.0
+      }
+    },
+    {
+      "cpu": 5,
+      "OS_interrupt_count_delta": 665,
+      "DPC": {
+        "event_count": 35,
+        "union_ns": 260200.0,
+        "OS_counter_ns": 0,
+        "scope_difference_ns": 260200.0
+      },
+      "ISR": {
+        "event_count": 1,
+        "union_ns": 5100.0,
+        "OS_counter_ns": 0,
+        "scope_difference_ns": 5100.0
+      }
+    },
+    {
+      "cpu": 6,
+      "OS_interrupt_count_delta": 553,
+      "DPC": {
+        "event_count": 46,
+        "union_ns": 276600.0,
+        "OS_counter_ns": 0,
+        "scope_difference_ns": 276600.0
+      },
+      "ISR": {
+        "event_count": 4,
+        "union_ns": 11900.0,
+        "OS_counter_ns": 15625000,
+        "scope_difference_ns": -15613100.0
+      }
+    },
+    {
+      "cpu": 7,
+      "OS_interrupt_count_delta": 568,
+      "DPC": {
+        "event_count": 34,
+        "union_ns": 330500.0,
+        "OS_counter_ns": 0,
+        "scope_difference_ns": 330500.0
+      },
+      "ISR": {
+        "event_count": 2,
+        "union_ns": 6600.0,
+        "OS_counter_ns": 0,
+        "scope_difference_ns": 6600.0
+      }
+    }
+  ],
+  "threaded_DPC_events_kept_separate": 0,
+  "coarse_OS_endpoint_check_pass": true,
+  "independent_counter_has_nonzero_time": true,
+  "root_mechanism_identified": false,
+  "old_83ms_gap_explained": false,
+  "prior_windows_repaired": false,
+  "limitations": [
+    "One idle window cannot explain historical 83ms mismatch orcalibrate actual workload disturbance.",
+    "ThreadedDPC is scheduled thread work, not subtracted again.",
+    "Nested ISR/DPC uses union toavoid double counting.",
+    "Endpoint OS counters are coarse; event counts andhardware interrupt count have different units forshared handlers.",
+    "Routine addresses retained asaddresses; no invented kernel symbol names."
+  ],
+  "bindings": {
+    "analyze02.py": "8e1bcb4ba577ccdb55ceae42c75c82d25bcd3db9798df34dcb282410e698b589",
+    "capture_plan02.json": "321d47d272ff919f83fa609203037934ec3f134711b3377b9f8c3c27a258da99",
+    "evidence01.zip": "9ebece1d1160aa1faf9444b234a7bcf11b0393f3af0acd9430e4732f4c49eca0"
+  }
+}
