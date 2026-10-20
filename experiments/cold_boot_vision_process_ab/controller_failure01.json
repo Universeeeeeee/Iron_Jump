@@ -1,0 +1,10 @@
+{
+  "plan": "plan01.json",
+  "boot_restarted": true,
+  "window_started": false,
+  "runs_directory_created": false,
+  "failure": "ctypes.ArgumentError: GetPriorityClass pseudo-handle overflow",
+  "cause": "GetPriorityClass argtypes did not declare HANDLE on 64-bit Windows",
+  "same_boot_recovery_allowed": "No target ran; current boot may be used only while the frozen uptime/session/AC gates still pass",
+  "replacement_window_used": false
+}

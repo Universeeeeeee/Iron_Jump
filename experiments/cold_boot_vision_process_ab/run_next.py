@@ -23,7 +23,8 @@ def boot_context():
     class Power(ctypes.Structure):_fields_=[('ac',ctypes.c_byte),('battery_flag',ctypes.c_byte),('battery_percent',ctypes.c_byte),('system_status',ctypes.c_byte),('lifetime',wintypes.DWORD),('full_lifetime',wintypes.DWORD)]
     power=Power();assert kernel.GetSystemPowerStatus(ctypes.byref(power))
     session=wintypes.DWORD();assert kernel.ProcessIdToSessionId(os.getpid(),ctypes.byref(session))
-    kernel.GetPriorityClass.restype=wintypes.DWORD;kernel.GetCurrentProcess.restype=wintypes.HANDLE
+    kernel.GetCurrentProcess.restype=wintypes.HANDLE
+    kernel.GetPriorityClass.argtypes=[wintypes.HANDLE];kernel.GetPriorityClass.restype=wintypes.DWORD
     return dict(boot_100ns=boot_100ns,uptime_seconds=uptime_ms/1000,session_id=session.value,priority_class=kernel.GetPriorityClass(kernel.GetCurrentProcess()),ac_online=int(power.ac))
 
 if __name__=='__main__':
