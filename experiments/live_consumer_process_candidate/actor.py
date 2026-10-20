@@ -1,6 +1,6 @@
 """Child-owned original SessionController/UsbWorker with batch40 ground inbox."""
 from dataclasses import asdict
-import hashlib,json,os,sys,time
+import hashlib,json,os,sys,time,threading
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
 def run_actor(connection,output_root,batch_size=40,fixture_root=None):
@@ -20,6 +20,7 @@ def run_actor(connection,output_root,batch_size=40,fixture_root=None):
   from replay02 import Source
   source=Source(Path(fixture_root));controller=SessionController(worker_factory=lambda **kwargs:source)
  outbox=Outbox(connection)
+ def readers():return [dict(tid=t.native_id,name=t.name) for t in threading.enumerate() if t.name=='CyUsbInterfaceReader']
  sequence=command_sequence=0;prepared=False;reports=[];errors=[];refs={};raw_batches=[];pending_control=None;completed_control=None;transport_fault=None
  original_drain=_GroundFrameInbox.drain;original_consume=_GroundFrameInbox._consume
  def drain(inbox):
@@ -96,6 +97,7 @@ def run_actor(connection,output_root,batch_size=40,fixture_root=None):
   emit('report_value',dict(report=report,raw_exports_child_owned=True))
  complete=not errors and completed_control is not None and controller._thread is None and (completed_control['kind']=='discard' or len(reports)==1)
  emit('terminal',dict(complete=complete,errors=errors,batch_size=batch_size));writer_finished=outbox.finish(2);outbox.preserve(folder/'output_snapshot')
- result=dict(complete=complete and writer_finished,pid=os.getpid(),errors=errors,commands_received=command_sequence,completed_control=completed_control,report_saved=(folder/'report.json').exists(),batch_size=batch_size,output=outbox.snapshot(),transport_fault=transport_fault,formal_program_modified=False)
+ result=dict(complete=complete and writer_finished,pid=os.getpid(),errors=errors,commands_received=command_sequence,completed_control=completed_control,report_saved=(folder/'report.json').exists(),batch_size=batch_size,output=outbox.snapshot(),transport_fault=transport_fault,
+  live_default_USB=fixture_root is None,worker_class=None if 'worker' not in refs else refs['worker'].__class__.__module__+'.'+refs['worker'].__class__.__name__,readers_after_cleanup=readers(),formal_program_modified=False)
  (folder/'result.json').write_text(json.dumps(result,indent=2));_GroundFrameInbox.drain=original_drain;_GroundFrameInbox._consume=original_consume;connection.close()
  if not result['complete']:raise SystemExit(1)
