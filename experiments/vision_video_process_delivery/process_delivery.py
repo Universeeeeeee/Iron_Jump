@@ -23,6 +23,10 @@ def receive(connection,kind,timeout=180):
     return value
 
 
+def reference_path(folder):
+    return Path(folder).parent/'reference01.json'
+
+
 def child(connection,shm_name,capacity,plan,schedule,folder):
     sys.path.insert(0,str(ROOT));from vision.live_walking import _PreviewAdapter
     memory=shared_memory.SharedMemory(name=shm_name);adapter=_PreviewAdapter(Path(plan['model_path']))
@@ -63,9 +67,9 @@ def child(connection,shm_name,capacity,plan,schedule,folder):
 
 
 if __name__=='__main__':
-    plan=json.loads((HERE/'plan02.json').read_text());folder=Path(sys.argv[1]);folder.mkdir(exist_ok=False);(folder/'active.lock').mkdir()
+    plan=json.loads((HERE/'plan03.json').read_text());folder=Path(sys.argv[1]);folder.mkdir(exist_ok=False);(folder/'active.lock').mkdir()
     assert all(sha(HERE/n)==v for n,v in plan['sources'].items()) and sha(Path(plan['model_path']))==plan['model_sha256']
-    schedule=json.loads((HERE/'selection01.json').read_text());reference=json.loads((HERE/'reference01.json').read_text())
+    schedule=json.loads((HERE/'selection01.json').read_text());reference=json.loads(reference_path(folder).read_text())
     assert reference['complete'] and not reference['errors']
     expected_previews=reference['previews'];expected_poses=reference['inferences'];capacity=plan['shared_frame_capacity_bytes']
     memory=shared_memory.SharedMemory(create=True,size=capacity);context=multiprocessing.get_context('spawn');parent,endpoint=context.Pipe()
