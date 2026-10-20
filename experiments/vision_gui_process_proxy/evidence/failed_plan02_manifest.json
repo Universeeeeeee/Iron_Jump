@@ -1,0 +1,97 @@
+{
+  "plan_sha256": "c2dd89c4b2937882a2f1fc7aaf14204e37ca77000b28d0448370bbc14d535501",
+  "source_sha256": {
+    "cohort.py": "79780ec6c09dfcc1556bcd50b7101ed8a62c8f338b518dcf63564d62b8d6f715",
+    "collector.py": "e460eabf0142a76c4bc5ad185c3233563bfa4ae36f46758b5e44a85444b786d4",
+    "entry.py": "ee2a0a102e9d97883006fbbd029aff3c53e05943a77f70786c58101424334cc4",
+    "gate.py": "027a8c17af7c62f3f31a7bca74c609c16a683b476ed633ac382bd1538412b5d5",
+    "gui.py": "d35a2d432369430f25a329ff79f0ee0ada3c57d07aa00644834cfd65b4beab13",
+    "preflight.py": "5e52c28dbbb618afd4dd47378d8908b279e6f999dcf654bb92e306286af0ece6",
+    "proxy.py": "fe85909caf556b1161c22bfce9b2e8f77d071ee663281ee4f2685d3f3214fbcd",
+    "test_proxy.py": "0945a8180a1e3a6f32e6d4f2b4720f4aee344926c33490826f2c5845c5fd5bef",
+    "verify.py": "8bfc7a467b0c9b1c77767ffc5b2e575db18f59365958056129fc96161d384115",
+    "oracle01.json": "a5488c16863f087e325b5694c45847df3b3f1320635054187abf6e247481fb39",
+    "selection01.json": "0a21dab39e4b3325d330c7d46457e9070f46c185502ad13facd3b8addb982777",
+    "preflight_failure01.json": "fd5c8740a5e33a9cb326e65139d575f3e1e5cad906aeae40ce6ec0b8bd657dbb"
+  },
+  "status": {
+    "complete": false,
+    "steps": [
+      {
+        "name": "gui",
+        "command": [
+          "D:\\conda\\python.exe",
+          "E:\\OptoJump\\IronJump-gil-gui-calibration-20261018-01\\experiments\\vision_gui_process_proxy_plan02\\entry.py"
+        ],
+        "complete": true,
+        "errors": [],
+        "pid": 22300,
+        "returncode": 0,
+        "target_still_running": false
+      },
+      {
+        "name": "verify",
+        "command": [
+          "D:\\conda\\python.exe",
+          "E:\\OptoJump\\IronJump-gil-gui-calibration-20261018-01\\experiments\\vision_gui_process_proxy_plan02\\verify.py"
+        ],
+        "complete": false,
+        "errors": [
+          "AssertionError()"
+        ],
+        "pid": 17576,
+        "returncode": 1,
+        "target_still_running": false
+      }
+    ],
+    "errors": [
+      "RuntimeError('Stop at failed step: verify')"
+    ]
+  },
+  "files": {
+    "cohort.py": "79780ec6c09dfcc1556bcd50b7101ed8a62c8f338b518dcf63564d62b8d6f715",
+    "collector.py": "e460eabf0142a76c4bc5ad185c3233563bfa4ae36f46758b5e44a85444b786d4",
+    "dispatch02.json": "c61fd96e6588ce2d307abf275d300d7f229cc5a9ac47e0e89ae82c920a2da803",
+    "entry.py": "ee2a0a102e9d97883006fbbd029aff3c53e05943a77f70786c58101424334cc4",
+    "gate.py": "027a8c17af7c62f3f31a7bca74c609c16a683b476ed633ac382bd1538412b5d5",
+    "gui.py": "d35a2d432369430f25a329ff79f0ee0ada3c57d07aa00644834cfd65b4beab13",
+    "gui.record.json": "9596c74c69c4cb0eb1ab78efa286860559c9b83e3540be5ba0cff1e886dec1cb",
+    "gui.stderr": "8c4ce9cda664a9e2183a5bf1df093d3accf073dc429002beea07fe505c9b1582",
+    "gui.stdout": "7f28073b377db67989c0beaced653a4bcf937b8a3890a6b6ff1149ca50302e2d",
+    "launch02.ps1": "a44ae947e39c33913c93bf5730a100bbf231fbeb57fb1e3aaf6ddac74644e006",
+    "oracle01.json": "a5488c16863f087e325b5694c45847df3b3f1320635054187abf6e247481fb39",
+    "plan02.json": "c2dd89c4b2937882a2f1fc7aaf14204e37ca77000b28d0448370bbc14d535501",
+    "preflight.py": "5e52c28dbbb618afd4dd47378d8908b279e6f999dcf654bb92e306286af0ece6",
+    "preflight_failure01.json": "fd5c8740a5e33a9cb326e65139d575f3e1e5cad906aeae40ce6ec0b8bd657dbb",
+    "preflight_passed02.json": "659126740a923abc5b2682059805695a2903b4bcda99ccbd679f2b999d506ec1",
+    "proxy.py": "fe85909caf556b1161c22bfce9b2e8f77d071ee663281ee4f2685d3f3214fbcd",
+    "README.md": "75e2f7ffaf81104799502c52c3e70cefa3c0ddd04d851a5aab6dbbd16c450e89",
+    "runs01/client/actor/output_snapshot/state.json": "8671b942750fb5b571cd258654a37169e5faabe104df75d00e7c9d1f36db088a",
+    "runs01/client/actor/raw_frames.npz": "d34994ef6f628327ba308ffc5d05563b50ed0fbfee7332dd1f2e1898e04bf497",
+    "runs01/client/actor/report.json": "f30afbed61b85695323ee08a8abd3d719ae9ff110b98bc93f71df60664309b35",
+    "runs01/client/actor/result.json": "7369453f5306d3cee40d406d57cf99100999ce55aebaa0f7b023512989fd8063",
+    "runs01/client/actor/state.json": "427a344ed31190c0fcd73896edf7d2a7896d4ef27908151abdd0ad6634ae0047",
+    "runs01/client/command_snapshot/state.json": "8690206c4b408113b595f16ca7aa97f18d5557cd01ada4decd027028d87c226d",
+    "runs01/client/controller.json": "85edddb16e46fbc8f8825820e38923796f3fcd09cf2c3afd94dc8b349a16a835",
+    "runs01/client/received_snapshot/state.json": "1bd4e4dc06a540674c36b8127b4e70b43198c8a6db352ec9fdf606f1783e2e34",
+    "runs01/client/status.json": "6837cf413275e6c1a55c0df2dbec5f57a9f94fddedd4d98a65f3bddf11bb6f43",
+    "runs01/controller.json": "62ad82c271e1f9458fdd9cedc7c5dc39c83fc772a32d0ade7d3cc8d881a50f91",
+    "runs01/gui_result.json": "066284d804c341b4a81faa37e867e0cbeea66458d2ecac227b1c9e4fead1b04d",
+    "runs01/sdk_backend.json": "ec168f7f3910ae2678d3c8b5f389b48054649d237161bbbf5efacbb9b73b3e81",
+    "runs01/vision/child_result.json": "1141dca453a525b905a041270948df5cba7f6daa88b0031149c34df8473e7497",
+    "runs01/vision/controller.json": "573342faec84dfcd570c7ad13990c30949ce5f22bd4253a094f91f5f68257a26",
+    "runs01/vision/result.json": "2176629e43947af5a7480f51eaa1b0a2356135063f1a3cb85f5d780c8621b6a4",
+    "selection01.json": "0a21dab39e4b3325d330c7d46457e9070f46c185502ad13facd3b8addb982777",
+    "status01.json": "0939185c240fd991226d24c32db211337b5685f9e4c014ca086a40d2060af6ec",
+    "task02.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "task02.stdout": "e7b6c321c23b04b6de4995c76c469ed72e4849bdf8f04f15f2ab3d1d27e91753",
+    "test_proxy.py": "0945a8180a1e3a6f32e6d4f2b4720f4aee344926c33490826f2c5845c5fd5bef",
+    "verify.py": "8bfc7a467b0c9b1c77767ffc5b2e575db18f59365958056129fc96161d384115",
+    "verify.record.json": "3993da8e22ed13963d73257e6994f6a32592e11d37c487981bc869be0dafe3fc",
+    "verify.stderr": "fd610c05337c7eb19d2dacb62152ec156984d838fb0dc2bf768e045c633368bc",
+    "verify.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "windows_tests02.json": "b3bd8ef2c0142ff39b21c31068301a8a44a3a3c0a0740734dfaa5725a8afa1d8"
+  },
+  "collector_started_target": false,
+  "collector_retried_target": false
+}

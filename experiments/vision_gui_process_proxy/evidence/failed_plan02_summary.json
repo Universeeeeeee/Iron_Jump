@@ -1,0 +1,148 @@
+{
+  "window": "plan02 GUI target complete; offline verifier failed",
+  "workload_retried": false,
+  "failure": "verify.py expected sdk['error']; simulated SDK schema intentionally omits that key",
+  "gui": {
+    "complete": true,
+    "errors": [],
+    "pid": 22300,
+    "measurement_pid": 7984,
+    "vision_receiver_alive": false,
+    "expected_active_publications": [
+      0,
+      2,
+      4,
+      5,
+      6,
+      7,
+      8,
+      10,
+      11
+    ],
+    "painted_active_publications": [
+      0,
+      2,
+      4,
+      5,
+      6,
+      7,
+      8,
+      10,
+      11
+    ],
+    "original_paint_calls": 424,
+    "sdk": {
+      "start_success": true,
+      "stop_success": true,
+      "ready_events": [
+        {
+          "method": "tracking_start",
+          "code": 0,
+          "sdk_pid": 24216,
+          "gui_pid": 22300,
+          "observed_ns": 501111752000400
+        }
+      ],
+      "errors": [],
+      "tracking_decisions": 879,
+      "nonzero_speeds": 718
+    },
+    "draws": {
+      "all": 816,
+      "valid": 816,
+      "disabled_calls": 0
+    },
+    "actual_camera_recording_qualified": false,
+    "performance_qualification": false,
+    "field_fix_verified": false
+  },
+  "vision": {
+    "complete": true,
+    "errors": [],
+    "parent_pid": 22300,
+    "child_pid": 19740,
+    "child_exitcode": 0,
+    "child_alive": false,
+    "preview_count": 822,
+    "pose_count": 417,
+    "model_closed": true,
+    "shared_memory_unlinked": true
+  },
+  "sdk": {
+    "backend": "simulated_native_SDK",
+    "pid": 24216,
+    "parent_pid": 22300,
+    "clock_anchors": [
+      {
+        "qpc_before": 5011105348596,
+        "qpc_after": 5011105348724,
+        "frequency": 10000000,
+        "filetime_100ns": 134369789063970492,
+        "perf_ns": 501110534872900,
+        "perf_before_ns": 501110534849600,
+        "perf_after_ns": 501110534872900
+      },
+      {
+        "qpc_before": 5012150809469,
+        "qpc_after": 5012150809529,
+        "frequency": 10000000,
+        "filetime_100ns": 134369790109431302,
+        "perf_ns": 501215080953200,
+        "perf_before_ns": 501215080943000,
+        "perf_after_ns": 501215080953200
+      }
+    ],
+    "calls": {
+      "init": 1,
+      "set_fov": 1,
+      "set_auto_focus": 1,
+      "set_exposure_compensation": 1,
+      "set_anti_flicker": 1,
+      "set_wdr": 1,
+      "attach": 1,
+      "set_speed": 1657,
+      "disable_ai": 1,
+      "close": 1
+    },
+    "serve_returncode": 0,
+    "original_serve_source_sha256": "d3a786f0483b53ba2a28345381df51fff9a96a9f214076ca75310abe9331afe0",
+    "no_native_device_opened": true
+  },
+  "status": {
+    "complete": false,
+    "steps": [
+      {
+        "name": "gui",
+        "command": [
+          "D:\\conda\\python.exe",
+          "E:\\OptoJump\\IronJump-gil-gui-calibration-20261018-01\\experiments\\vision_gui_process_proxy_plan02\\entry.py"
+        ],
+        "complete": true,
+        "errors": [],
+        "pid": 22300,
+        "returncode": 0,
+        "target_still_running": false
+      },
+      {
+        "name": "verify",
+        "command": [
+          "D:\\conda\\python.exe",
+          "E:\\OptoJump\\IronJump-gil-gui-calibration-20261018-01\\experiments\\vision_gui_process_proxy_plan02\\verify.py"
+        ],
+        "complete": false,
+        "errors": [
+          "AssertionError()"
+        ],
+        "pid": 17576,
+        "returncode": 1,
+        "target_still_running": false
+      }
+    ],
+    "errors": [
+      "RuntimeError('Stop at failed step: verify')"
+    ]
+  },
+  "complete_archive_sha256": "84f7f11cf68a56371c25a436f947cf532fe46acb6658619055f912f66ea9807e",
+  "manifest_sha256": "4c382d4bca264e649031cce8a44ecb86f96ccf3513a37e744aa25947d172dd09",
+  "remote_complete_archive_retained": true
+}
