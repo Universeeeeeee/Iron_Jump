@@ -1,0 +1,8 @@
+{
+  "stage": "Second local extraction from the retained aa01 archive",
+  "failure": "The extractor inverted the intended nesting: PoseInferenceRecord covers scheduler/service work around the adapter call, so inference_start <= adapter.begin <= adapter.end <= inference_end, not the reverse.",
+  "source_archive_rewritten": false,
+  "workload_started": false,
+  "result_created": false,
+  "recovery": "Check the actual enclosing interval and use rounded nanoseconds only for the float-recorded outer endpoints. Preserve the exact integer adapter boundaries separately."
+}

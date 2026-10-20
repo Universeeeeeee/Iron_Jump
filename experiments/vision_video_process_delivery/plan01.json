@@ -1,0 +1,36 @@
+{
+  "input_root": "E:\\OptoJump\\IronJump-ground-backlog-measurement-20261016\\experiments\\ground_backlog_measurement\\inputs\\walk",
+  "media_sha256": {
+    "camera.csv": "cc911dfd8e7aadf4da9f7c1e604e65ef33a02a4f7f790ba1e0ad1dfa7e890d88",
+    "camera.mjpg": "64d887e0c2817e3594e3bbad4193ab97b4abc1d0c2eed0229ac3d092fad04e52"
+  },
+  "model_path": "E:/OptoJump/IronJump-gil-gui-calibration-20261018-01/models/pose_landmarker_full.task",
+  "model_sha256": "5134a3aad27a58b93da0088d431f366da362b44e3ccfbe3462b3827a839011b1",
+  "selection_sha256": "0a21dab39e4b3325d330c7d46457e9070f46c185502ad13facd3b8addb982777",
+  "reference_archive_sha256": "6bb7407cdddb8a620015baa7f3797ed75ccca749379b262d27e960d583591fb6",
+  "reference_source_sha256": {
+    "gui_result.json": "409979a5889e1f5c180de2676229175981424dcae883eb7a45a99809226995f4",
+    "workload_final.json": "5035d0c65e82ba98802a0f501bfd9bffe05fc3668e4d6bdc5513f24026c8bc56"
+  },
+  "counts": {
+    "preview_frames": 822,
+    "inferences": 417,
+    "stale_frames_skipped": 31
+  },
+  "shared_frame_capacity_bytes": 8388608,
+  "sources": {
+    "common.py": "c289654e32d24ac54a22a807a7c0ff1e7e40c3a8e2490134882494d6a2584b8b",
+    "extract_reference.py": "edc811b020f6968acce683ac249494fb20fd8681196d5aeffe0ece39e98c9aa6",
+    "freeze.py": "cc1aab49076b56ab191c0c90250b73cbb60779dda4d48663cf60d5cbaf69bc4a",
+    "preflight.py": "921a18dfe687fe307b861b2fee837c09c40cc34a87fb0661952f82e661c8ce57",
+    "process_delivery.py": "788a021128313385397c3c7fee669279627cfce42b79bc6f16fefb46ccd15d8d",
+    "reference.py": "4be361951f673bf30808037f4187d0d2261c5f115df6c16f7fb1b09da021eb37",
+    "test_protocol.py": "4ccfd3557ccf5e971c50642a90bdfdaee5aa4349d809c68daf39ebc06332bd28",
+    "test_reference.py": "17fe2fef4303053b569bf269e72102bd941b0172f6909a0e30802442623d1b16"
+  },
+  "budget": "Exactly one same-process reference andone child-process delivery. Stop onidentity/runtime/cleanup failure; no replacement, performance claim orGUI/device run.",
+  "acceptance": "Every preview source/decoded pixel identity andevery full pose hash must match; actual childPID, message order, shared-memory acknowledgement, close/exit/unlink all required.",
+  "scope": "Saved video decode plus original PreviewAdapter only. No camera recording,GUI,SDK,USB,human orformal change.",
+  "performance_qualification": false,
+  "field_fix_verified": false
+}

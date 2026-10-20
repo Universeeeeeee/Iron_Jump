@@ -1,0 +1,8 @@
+{
+  "stage": "First local extraction from the retained aa01 archive",
+  "failure": "extract_reference.py required gui.camera.frames==824, but this aa01 record exposes camera.decoded_frames=822 and stale_frames_skipped=31; video_frame_ids also contains 822 entries.",
+  "source_archive_rewritten": false,
+  "workload_started": false,
+  "result_created": false,
+  "recovery": "Bind preview count to the actual decoded_frames field and retain stale_frames_skipped separately. Do not replace aa01 with another window or force the count from a different baseline."
+}
