@@ -1,0 +1,90 @@
+{
+  "all_eight_complete": true,
+  "raw_endpoints_independently_match": true,
+  "cases": [
+    {
+      "id": "pair01_original",
+      "mode": "original",
+      "observed_deque_lower": 4820,
+      "queue_upper": 4896,
+      "independently_recomputed_scheduled_latency_ms": 3742.828,
+      "independently_recomputed_input_lateness_ms": 126.7967
+    },
+    {
+      "id": "pair01_bridge",
+      "mode": "bridge",
+      "observed_deque_lower": 3605,
+      "queue_upper": 3681,
+      "independently_recomputed_scheduled_latency_ms": 3424.7946,
+      "independently_recomputed_input_lateness_ms": 107.7825
+    },
+    {
+      "id": "pair02_bridge",
+      "mode": "bridge",
+      "observed_deque_lower": 72,
+      "queue_upper": 148,
+      "independently_recomputed_scheduled_latency_ms": 165.7494,
+      "independently_recomputed_input_lateness_ms": 83.6525
+    },
+    {
+      "id": "pair02_original",
+      "mode": "original",
+      "observed_deque_lower": 96,
+      "queue_upper": 161,
+      "independently_recomputed_scheduled_latency_ms": 166.5599,
+      "independently_recomputed_input_lateness_ms": 87.6813
+    },
+    {
+      "id": "pair03_original",
+      "mode": "original",
+      "observed_deque_lower": 90,
+      "queue_upper": 159,
+      "independently_recomputed_scheduled_latency_ms": 171.3364,
+      "independently_recomputed_input_lateness_ms": 85.0488
+    },
+    {
+      "id": "pair03_bridge",
+      "mode": "bridge",
+      "observed_deque_lower": 126,
+      "queue_upper": 194,
+      "independently_recomputed_scheduled_latency_ms": 172.3292,
+      "independently_recomputed_input_lateness_ms": 83.8037
+    },
+    {
+      "id": "pair04_bridge",
+      "mode": "bridge",
+      "observed_deque_lower": 83,
+      "queue_upper": 158,
+      "independently_recomputed_scheduled_latency_ms": 173.0474,
+      "independently_recomputed_input_lateness_ms": 87.0736
+    },
+    {
+      "id": "pair04_original",
+      "mode": "original",
+      "observed_deque_lower": 92,
+      "queue_upper": 147,
+      "independently_recomputed_scheduled_latency_ms": 162.9692,
+      "independently_recomputed_input_lateness_ms": 88.1977
+    }
+  ],
+  "severe_original_windows": [
+    "pair01_original"
+  ],
+  "input_lateness_failed_windows": [
+    "pair01_original",
+    "pair01_bridge"
+  ],
+  "decision_failures": [
+    "input_lateness_exceeded_100ms",
+    "severe_baseline_only_1_of_4",
+    "first_bridge_remained_severely_backlogged"
+  ],
+  "conclusion": "Cannot validate stable severe-backlog benefit. Candidate remains severely delayed in the first pair; later fast windows are not substitute evidence.",
+  "repeat_or_replacement_permitted": false,
+  "formal_fix_verified": false,
+  "bindings": {
+    "result_sha256": "30a8aa2b37ae3c1d59f3e8751e74236bbad6c8de07b02cda6a0fbfdcb40fe8d2",
+    "plan_sha256": "1ff2ef320f9293947e774ef23fdc91d8f7b78bdbbceca543b6292709318e95a2",
+    "verifier_sha256": "85d8720e6693ae659d737daeb9d5484570dcadefa8da367cbb6631de7f698d89"
+  }
+}

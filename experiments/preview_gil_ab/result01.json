@@ -1,0 +1,4525 @@
+{
+  "decision": {
+    "protocol_quality_pass": false,
+    "severe_baseline_reproduced": false,
+    "pairs": [
+      {
+        "original": "pair01_original",
+        "bridge": "pair01_bridge",
+        "severe_original": true,
+        "candidate_absolute_bounds_pass": false,
+        "severe_pair_improved": false
+      },
+      {
+        "original": "pair02_original",
+        "bridge": "pair02_bridge",
+        "severe_original": false,
+        "candidate_absolute_bounds_pass": true,
+        "severe_pair_improved": false
+      },
+      {
+        "original": "pair03_original",
+        "bridge": "pair03_bridge",
+        "severe_original": false,
+        "candidate_absolute_bounds_pass": true,
+        "severe_pair_improved": false
+      },
+      {
+        "original": "pair04_original",
+        "bridge": "pair04_bridge",
+        "severe_original": false,
+        "candidate_absolute_bounds_pass": true,
+        "severe_pair_improved": false
+      }
+    ],
+    "advance": false,
+    "reason": "protocol_or_input_quality_failed",
+    "fast_state_benefit_substituted": false,
+    "root_cause_share_identified": false,
+    "formal_fix_verified": false
+  },
+  "cases": {
+    "pair01_original": {
+      "backend": "original",
+      "raw_frames": 33188,
+      "queue": {
+        "combined_observed_deque_peak_lower_bound": 4820,
+        "continuous_deque_peak_upper_bound": 4896,
+        "observations": 520,
+        "first_observed_host_ns": 459493880853600,
+        "last_observed_host_ns": 459529245314600
+      },
+      "queue_crosscheck": {
+        "oldest_pending_receipts_independently_matched": 409,
+        "max_post_arm_inflight": 0,
+        "queue_common_monotone": true
+      },
+      "contacts": [
+        {
+          "contact_id": 0,
+          "touch_sample": 60188,
+          "published_sample": 60251,
+          "raw_release_trigger": 60261,
+          "source_confirmation_sample_span": 73,
+          "source_confirmation_time_ms": 76.9325,
+          "enqueue_host_bounds_ns": [
+            459508748230500,
+            459508952289300
+          ],
+          "dequeue_host_bounds_ns": [
+            459508716570100,
+            459508952289300
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            204.0588
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            235.7192
+          ],
+          "publication_host_bounds_ns": [
+            459508748230500,
+            459508952289300
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            204.0588
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -24.6181,
+            179.4407
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            179.4407
+          ],
+          "source_touch_to_paint_ms": 256.3732,
+          "scheduled_touch_to_paint_ms": 256.5825
+        },
+        {
+          "contact_id": 2,
+          "touch_sample": 60871,
+          "published_sample": 60960,
+          "raw_release_trigger": 60970,
+          "source_confirmation_sample_span": 99,
+          "source_confirmation_time_ms": 102.1987,
+          "enqueue_host_bounds_ns": [
+            459509456121000,
+            459509464570100
+          ],
+          "dequeue_host_bounds_ns": [
+            459509901503000,
+            459510120660400
+          ],
+          "queue_residence_bounds_ms": [
+            436.9329,
+            664.5394
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            219.1574
+          ],
+          "publication_host_bounds_ns": [
+            459509901503000,
+            459510120660400
+          ],
+          "source_trigger_to_publication_ms": [
+            445.382,
+            664.5394
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -32.5594,
+            186.598
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            186.598
+          ],
+          "source_touch_to_paint_ms": 734.1787,
+          "scheduled_touch_to_paint_ms": 735.0468
+        },
+        {
+          "contact_id": 4,
+          "touch_sample": 61475,
+          "published_sample": 61541,
+          "raw_release_trigger": 61551,
+          "source_confirmation_sample_span": 76,
+          "source_confirmation_time_ms": 60.9372,
+          "enqueue_host_bounds_ns": [
+            459510038584800,
+            459510120660400
+          ],
+          "dequeue_host_bounds_ns": [
+            459510873096600,
+            459511001581400
+          ],
+          "queue_residence_bounds_ms": [
+            752.4362,
+            962.9966
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            128.4848
+          ],
+          "publication_host_bounds_ns": [
+            459510873096600,
+            459511001581400
+          ],
+          "source_trigger_to_publication_ms": [
+            834.5118,
+            962.9966
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -29.2615,
+            99.2233
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            99.2233
+          ],
+          "source_touch_to_paint_ms": 994.6723,
+          "scheduled_touch_to_paint_ms": 1000.9135
+        },
+        {
+          "contact_id": 5,
+          "touch_sample": 62050,
+          "published_sample": 62111,
+          "raw_release_trigger": 62121,
+          "source_confirmation_sample_span": 71,
+          "source_confirmation_time_ms": 80.3497,
+          "enqueue_host_bounds_ns": [
+            459510618736200,
+            459510669831500
+          ],
+          "dequeue_host_bounds_ns": [
+            459511797601300,
+            459511983480100
+          ],
+          "queue_residence_bounds_ms": [
+            1127.7698,
+            1364.7439
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            185.8788
+          ],
+          "publication_host_bounds_ns": [
+            459511797601300,
+            459511983480100
+          ],
+          "source_trigger_to_publication_ms": [
+            1178.8651,
+            1364.7439
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -14.4517,
+            171.4271
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            171.4271
+          ],
+          "source_touch_to_paint_ms": 1430.6419,
+          "scheduled_touch_to_paint_ms": 1431.7431
+        },
+        {
+          "contact_id": 6,
+          "touch_sample": 62626,
+          "published_sample": 62693,
+          "raw_release_trigger": 62703,
+          "source_confirmation_sample_span": 77,
+          "source_confirmation_time_ms": 79.6715,
+          "enqueue_host_bounds_ns": [
+            459511189450300,
+            459511249500700
+          ],
+          "dequeue_host_bounds_ns": [
+            459512734514600,
+            459512869515900
+          ],
+          "queue_residence_bounds_ms": [
+            1485.0139,
+            1680.0656
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            135.0013
+          ],
+          "publication_host_bounds_ns": [
+            459512734514600,
+            459512869515900
+          ],
+          "source_trigger_to_publication_ms": [
+            1545.0643,
+            1680.0656
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -47.0681,
+            87.9332
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            87.9332
+          ],
+          "source_touch_to_paint_ms": 1712.669,
+          "scheduled_touch_to_paint_ms": 1713.0811
+        },
+        {
+          "contact_id": 7,
+          "touch_sample": 63199,
+          "published_sample": 63258,
+          "raw_release_trigger": 63268,
+          "source_confirmation_sample_span": 69,
+          "source_confirmation_time_ms": 77.0437,
+          "enqueue_host_bounds_ns": [
+            459511766465300,
+            459511797601300
+          ],
+          "dequeue_host_bounds_ns": [
+            459513626896900,
+            459513834511800
+          ],
+          "queue_residence_bounds_ms": [
+            1829.2956,
+            2068.0465
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            207.6149
+          ],
+          "publication_host_bounds_ns": [
+            459513626896900,
+            459513834511800
+          ],
+          "source_trigger_to_publication_ms": [
+            1860.4316,
+            2068.0465
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -45.7104,
+            161.9045
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            161.9045
+          ],
+          "source_touch_to_paint_ms": 2099.3798,
+          "scheduled_touch_to_paint_ms": 2105.5613
+        },
+        {
+          "contact_id": 8,
+          "touch_sample": 63747,
+          "published_sample": 63806,
+          "raw_release_trigger": 63816,
+          "source_confirmation_sample_span": 69,
+          "source_confirmation_time_ms": 59.9518,
+          "enqueue_host_bounds_ns": [
+            459512298515300,
+            459512317479500
+          ],
+          "dequeue_host_bounds_ns": [
+            459514669929800,
+            459514874831000
+          ],
+          "queue_residence_bounds_ms": [
+            2352.4503,
+            2576.3157
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            204.9012
+          ],
+          "publication_host_bounds_ns": [
+            459514669929800,
+            459514874831000
+          ],
+          "source_trigger_to_publication_ms": [
+            2371.4145,
+            2576.3157
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -148.8645,
+            56.0367
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            56.0367
+          ],
+          "source_touch_to_paint_ms": 2487.403,
+          "scheduled_touch_to_paint_ms": 2495.7991
+        },
+        {
+          "contact_id": 10,
+          "touch_sample": 64328,
+          "published_sample": 64397,
+          "raw_release_trigger": 64407,
+          "source_confirmation_sample_span": 79,
+          "source_confirmation_time_ms": 68.1056,
+          "enqueue_host_bounds_ns": [
+            459512892880300,
+            459512993325300
+          ],
+          "dequeue_host_bounds_ns": [
+            459515776284600,
+            459515932512300
+          ],
+          "queue_residence_bounds_ms": [
+            2782.9593,
+            3039.632
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            156.2277
+          ],
+          "publication_host_bounds_ns": [
+            459515776284600,
+            459515932512300
+          ],
+          "source_trigger_to_publication_ms": [
+            2883.4043,
+            3039.632
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -82.4822,
+            73.7455
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            73.7455
+          ],
+          "source_touch_to_paint_ms": 3025.2554,
+          "scheduled_touch_to_paint_ms": 3026.0747
+        },
+        {
+          "contact_id": 11,
+          "touch_sample": 64883,
+          "published_sample": 64947,
+          "raw_release_trigger": 64957,
+          "source_confirmation_sample_span": 74,
+          "source_confirmation_time_ms": 81.3028,
+          "enqueue_host_bounds_ns": [
+            459513452444100,
+            459513562248100
+          ],
+          "dequeue_host_bounds_ns": [
+            459516972208400,
+            459517147724400
+          ],
+          "queue_residence_bounds_ms": [
+            3409.9603,
+            3695.2803
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            175.516
+          ],
+          "publication_host_bounds_ns": [
+            459516972208400,
+            459517147724400
+          ],
+          "source_trigger_to_publication_ms": [
+            3519.7643,
+            3695.2803
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -36.7218,
+            138.7942
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            138.7942
+          ],
+          "source_touch_to_paint_ms": 3739.8613,
+          "scheduled_touch_to_paint_ms": 3742.828
+        }
+      ],
+      "max_latency_ms": 3739.8613,
+      "scheduled_max_ms": 3742.828,
+      "input_lateness_ms": 126.7967,
+      "observed_queue_lower": 4820,
+      "queue_upper": 4896,
+      "work": {
+        "video": 837,
+        "inferences": 425,
+        "model_wall_ms_median": 41.05549998348579,
+        "model_wall_ms_mean": 46.155594352714935,
+        "precontact_model_calls": 142,
+        "precontact_model_wall_ms_median": 38.78965001786128,
+        "sdk": {
+          "start_success": true,
+          "stop_success": true,
+          "ready_events": [
+            {
+              "method": "tracking_start",
+              "code": 0,
+              "sdk_pid": 4344,
+              "gui_pid": 7232,
+              "observed_ns": 459492874822400
+            }
+          ],
+          "errors": [],
+          "tracking_decisions": 501,
+          "nonzero_speeds": 423
+        },
+        "draws": {
+          "all": 610,
+          "valid": 610,
+          "disabled_calls": 0
+        }
+      },
+      "context": {
+        "context_reads_pass": true,
+        "role_pids": {
+          "gui": 7232,
+          "model": 7232,
+          "consumer": 7232
+        },
+        "foreground_self": {
+          "consumer/59904": true,
+          "model/59904": true,
+          "gui/59904": true,
+          "gui/65904": true,
+          "model/65904": true,
+          "consumer/65904": true
+        },
+        "foreground_gui": {
+          "consumer/59904": true,
+          "model/59904": true,
+          "gui/59904": true,
+          "gui/65904": true,
+          "model/65904": true,
+          "consumer/65904": true
+        },
+        "policy": {
+          "consumer/59904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "model/59904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "gui/59904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "gui/65904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "model/65904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "consumer/65904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          }
+        },
+        "scope": "Two phase checkpoints after original calls; not continuous scheduler coverage or observer-disturbance qualification."
+      },
+      "original_return_model_confirmed": false,
+      "complete": true,
+      "semantics_pass": true,
+      "native_SDK_pass": true,
+      "mode": "original",
+      "pair": 1
+    },
+    "pair01_bridge": {
+      "backend": "original",
+      "raw_frames": 33188,
+      "queue": {
+        "combined_observed_deque_peak_lower_bound": 3605,
+        "continuous_deque_peak_upper_bound": 3681,
+        "observations": 520,
+        "first_observed_host_ns": 459604947438800,
+        "last_observed_host_ns": 459638141769900
+      },
+      "queue_crosscheck": {
+        "oldest_pending_receipts_independently_matched": 347,
+        "max_post_arm_inflight": 0,
+        "queue_common_monotone": true
+      },
+      "contacts": [
+        {
+          "contact_id": 0,
+          "touch_sample": 60188,
+          "published_sample": 60251,
+          "raw_release_trigger": 60261,
+          "source_confirmation_sample_span": 73,
+          "source_confirmation_time_ms": 95.7632,
+          "enqueue_host_bounds_ns": [
+            459619831607500,
+            459619836855500
+          ],
+          "dequeue_host_bounds_ns": [
+            459619836855500,
+            459620020452400
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            188.8449
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            183.5969
+          ],
+          "publication_host_bounds_ns": [
+            459619836855500,
+            459620020452400
+          ],
+          "source_trigger_to_publication_ms": [
+            5.248,
+            188.8449
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -48.8063,
+            134.7906
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            134.7906
+          ],
+          "source_touch_to_paint_ms": 235.8018,
+          "scheduled_touch_to_paint_ms": 236.7578
+        },
+        {
+          "contact_id": 2,
+          "touch_sample": 60871,
+          "published_sample": 60960,
+          "raw_release_trigger": 60970,
+          "source_confirmation_sample_span": 99,
+          "source_confirmation_time_ms": 121.5728,
+          "enqueue_host_bounds_ns": [
+            459620539970500,
+            459620580632400
+          ],
+          "dequeue_host_bounds_ns": [
+            459621031338100,
+            459621192959500
+          ],
+          "queue_residence_bounds_ms": [
+            450.7057,
+            652.989
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            161.6214
+          ],
+          "publication_host_bounds_ns": [
+            459621031338100,
+            459621192959500
+          ],
+          "source_trigger_to_publication_ms": [
+            491.3676,
+            652.989
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -37.858,
+            123.7634
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            123.7634
+          ],
+          "source_touch_to_paint_ms": 736.7038,
+          "scheduled_touch_to_paint_ms": 738.2477
+        },
+        {
+          "contact_id": 4,
+          "touch_sample": 61475,
+          "published_sample": 61541,
+          "raw_release_trigger": 61551,
+          "source_confirmation_sample_span": 76,
+          "source_confirmation_time_ms": 68.5111,
+          "enqueue_host_bounds_ns": [
+            459621104862000,
+            459621192959500
+          ],
+          "dequeue_host_bounds_ns": [
+            459621945258500,
+            459622166308100
+          ],
+          "queue_residence_bounds_ms": [
+            752.299,
+            1061.4461
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            221.0496
+          ],
+          "publication_host_bounds_ns": [
+            459621945258500,
+            459622166308100
+          ],
+          "source_trigger_to_publication_ms": [
+            840.3965,
+            1061.4461
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -123.6457,
+            97.4039
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            97.4039
+          ],
+          "source_touch_to_paint_ms": 1006.3115,
+          "scheduled_touch_to_paint_ms": 1007.4564
+        },
+        {
+          "contact_id": 5,
+          "touch_sample": 62050,
+          "published_sample": 62111,
+          "raw_release_trigger": 62121,
+          "source_confirmation_sample_span": 71,
+          "source_confirmation_time_ms": 87.761,
+          "enqueue_host_bounds_ns": [
+            459621690004900,
+            459621756134100
+          ],
+          "dequeue_host_bounds_ns": [
+            459622938564100,
+            459623139521700
+          ],
+          "queue_residence_bounds_ms": [
+            1182.43,
+            1449.5168
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            200.9576
+          ],
+          "publication_host_bounds_ns": [
+            459622938564100,
+            459623139521700
+          ],
+          "source_trigger_to_publication_ms": [
+            1248.5592,
+            1449.5168
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -16.8712,
+            184.0864
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            184.0864
+          ],
+          "source_touch_to_paint_ms": 1520.4066,
+          "scheduled_touch_to_paint_ms": 1521.5656
+        },
+        {
+          "contact_id": 6,
+          "touch_sample": 62626,
+          "published_sample": 62693,
+          "raw_release_trigger": 62703,
+          "source_confirmation_sample_span": 77,
+          "source_confirmation_time_ms": 79.256,
+          "enqueue_host_bounds_ns": [
+            459622253412600,
+            459622327347700
+          ],
+          "dequeue_host_bounds_ns": [
+            459623931946500,
+            459624063882800
+          ],
+          "queue_residence_bounds_ms": [
+            1604.5988,
+            1810.4702
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            131.9363
+          ],
+          "publication_host_bounds_ns": [
+            459623931946500,
+            459624063882800
+          ],
+          "source_trigger_to_publication_ms": [
+            1678.5339,
+            1810.4702
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -42.1422,
+            89.7941
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            89.7941
+          ],
+          "source_touch_to_paint_ms": 1847.584,
+          "scheduled_touch_to_paint_ms": 1848.5743
+        },
+        {
+          "contact_id": 7,
+          "touch_sample": 63199,
+          "published_sample": 63258,
+          "raw_release_trigger": 63268,
+          "source_confirmation_sample_span": 69,
+          "source_confirmation_time_ms": 81.1644,
+          "enqueue_host_bounds_ns": [
+            459622831506000,
+            459622876121600
+          ],
+          "dequeue_host_bounds_ns": [
+            459624846572400,
+            459624976979500
+          ],
+          "queue_residence_bounds_ms": [
+            1970.4508,
+            2145.4735
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            130.4071
+          ],
+          "publication_host_bounds_ns": [
+            459624846572400,
+            459624976979500
+          ],
+          "source_trigger_to_publication_ms": [
+            2015.0664,
+            2145.4735
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -30.9824,
+            99.4247
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            99.4247
+          ],
+          "source_touch_to_paint_ms": 2195.6555,
+          "scheduled_touch_to_paint_ms": 2198.9574
+        },
+        {
+          "contact_id": 8,
+          "touch_sample": 63747,
+          "published_sample": 63806,
+          "raw_release_trigger": 63816,
+          "source_confirmation_sample_span": 69,
+          "source_confirmation_time_ms": 54.4046,
+          "enqueue_host_bounds_ns": [
+            459623363531900,
+            459623493981200
+          ],
+          "dequeue_host_bounds_ns": [
+            459625705698900,
+            459625845398500
+          ],
+          "queue_residence_bounds_ms": [
+            2211.7177,
+            2481.8666
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            139.6996
+          ],
+          "publication_host_bounds_ns": [
+            459625705698900,
+            459625845398500
+          ],
+          "source_trigger_to_publication_ms": [
+            2342.167,
+            2481.8666
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -5.8963,
+            133.8033
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            133.8033
+          ],
+          "source_touch_to_paint_ms": 2530.3749,
+          "scheduled_touch_to_paint_ms": 2545.5352
+        },
+        {
+          "contact_id": 10,
+          "touch_sample": 64328,
+          "published_sample": 64397,
+          "raw_release_trigger": 64407,
+          "source_confirmation_sample_span": 79,
+          "source_confirmation_time_ms": 69.2189,
+          "enqueue_host_bounds_ns": [
+            459623957598200,
+            459624063882800
+          ],
+          "dequeue_host_bounds_ns": [
+            459626791446400,
+            459627029965800
+          ],
+          "queue_residence_bounds_ms": [
+            2727.5636,
+            3072.3676
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            238.5194
+          ],
+          "publication_host_bounds_ns": [
+            459626791446400,
+            459627029965800
+          ],
+          "source_trigger_to_publication_ms": [
+            2833.8482,
+            3072.3676
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -149.8531,
+            88.6663
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            88.6663
+          ],
+          "source_touch_to_paint_ms": 2991.7334,
+          "scheduled_touch_to_paint_ms": 2992.3577
+        },
+        {
+          "contact_id": 11,
+          "touch_sample": 64883,
+          "published_sample": 64947,
+          "raw_release_trigger": 64957,
+          "source_confirmation_sample_span": 74,
+          "source_confirmation_time_ms": 84.3272,
+          "enqueue_host_bounds_ns": [
+            459624517225600,
+            459624606104000
+          ],
+          "dequeue_host_bounds_ns": [
+            459627665319900,
+            459627795419500
+          ],
+          "queue_residence_bounds_ms": [
+            3059.2159,
+            3278.1939
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            130.0996
+          ],
+          "publication_host_bounds_ns": [
+            459627665319900,
+            459627795419500
+          ],
+          "source_trigger_to_publication_ms": [
+            3148.0943,
+            3278.1939
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            61.3493,
+            191.4489
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            61.3493,
+            191.4489
+          ],
+          "source_touch_to_paint_ms": 3423.8704,
+          "scheduled_touch_to_paint_ms": 3424.7946
+        }
+      ],
+      "max_latency_ms": 3423.8704,
+      "scheduled_max_ms": 3424.7946,
+      "input_lateness_ms": 107.7825,
+      "observed_queue_lower": 3605,
+      "queue_upper": 3681,
+      "work": {
+        "video": 796,
+        "inferences": 403,
+        "model_wall_ms_median": 38.4722999879159,
+        "model_wall_ms_mean": 39.4701181147444,
+        "precontact_model_calls": 141,
+        "precontact_model_wall_ms_median": 39.16789998766035,
+        "sdk": {
+          "start_success": true,
+          "stop_success": true,
+          "ready_events": [
+            {
+              "method": "tracking_start",
+              "code": 0,
+              "sdk_pid": 15848,
+              "gui_pid": 17116,
+              "observed_ns": 459603940465100
+            }
+          ],
+          "errors": [],
+          "tracking_decisions": 479,
+          "nonzero_speeds": 400
+        },
+        "draws": {
+          "all": 593,
+          "valid": 593,
+          "disabled_calls": 0
+        }
+      },
+      "context": {
+        "context_reads_pass": true,
+        "role_pids": {
+          "gui": 17116,
+          "model": 17116,
+          "consumer": 17116
+        },
+        "foreground_self": {
+          "consumer/59904": true,
+          "model/59904": true,
+          "gui/59904": true,
+          "gui/65904": true,
+          "model/65904": true,
+          "consumer/65904": true
+        },
+        "foreground_gui": {
+          "consumer/59904": true,
+          "model/59904": true,
+          "gui/59904": true,
+          "gui/65904": true,
+          "model/65904": true,
+          "consumer/65904": true
+        },
+        "policy": {
+          "consumer/59904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "model/59904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "gui/59904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "gui/65904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "model/65904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "consumer/65904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          }
+        },
+        "scope": "Two phase checkpoints after original calls; not continuous scheduler coverage or observer-disturbance qualification."
+      },
+      "original_return_model_confirmed": false,
+      "complete": true,
+      "semantics_pass": true,
+      "native_SDK_pass": true,
+      "mode": "bridge",
+      "pair": 1
+    },
+    "pair02_bridge": {
+      "backend": "original",
+      "raw_frames": 33188,
+      "queue": {
+        "combined_observed_deque_peak_lower_bound": 72,
+        "continuous_deque_peak_upper_bound": 148,
+        "observations": 520,
+        "first_observed_host_ns": 459702805172800,
+        "last_observed_host_ns": 459735996578500
+      },
+      "queue_crosscheck": {
+        "oldest_pending_receipts_independently_matched": 220,
+        "max_post_arm_inflight": 0,
+        "queue_common_monotone": true
+      },
+      "contacts": [
+        {
+          "contact_id": 0,
+          "touch_sample": 60188,
+          "published_sample": 60251,
+          "raw_release_trigger": 60261,
+          "source_confirmation_sample_span": 73,
+          "source_confirmation_time_ms": 73.5824,
+          "enqueue_host_bounds_ns": [
+            459717666433000,
+            459717779428000
+          ],
+          "dequeue_host_bounds_ns": [
+            459717663355200,
+            459717779428000
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            112.995
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            116.0728
+          ],
+          "publication_host_bounds_ns": [
+            459717666433000,
+            459717779428000
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            112.995
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -57.686,
+            55.309
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            55.309
+          ],
+          "source_touch_to_paint_ms": 128.8914,
+          "scheduled_touch_to_paint_ms": 129.8211
+        },
+        {
+          "contact_id": 2,
+          "touch_sample": 60871,
+          "published_sample": 60960,
+          "raw_release_trigger": 60970,
+          "source_confirmation_sample_span": 99,
+          "source_confirmation_time_ms": 98.5239,
+          "enqueue_host_bounds_ns": [
+            459718373398500,
+            459718388826100
+          ],
+          "dequeue_host_bounds_ns": [
+            459718388826100,
+            459718457646400
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            84.2479
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            68.8203
+          ],
+          "publication_host_bounds_ns": [
+            459718388826100,
+            459718457646400
+          ],
+          "source_trigger_to_publication_ms": [
+            15.4276,
+            84.2479
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -18.0106,
+            50.8097
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            50.8097
+          ],
+          "source_touch_to_paint_ms": 164.7612,
+          "scheduled_touch_to_paint_ms": 165.7494
+        },
+        {
+          "contact_id": 4,
+          "touch_sample": 61475,
+          "published_sample": 61541,
+          "raw_release_trigger": 61551,
+          "source_confirmation_sample_span": 76,
+          "source_confirmation_time_ms": 63.5988,
+          "enqueue_host_bounds_ns": [
+            459718956857800,
+            459719037557200
+          ],
+          "dequeue_host_bounds_ns": [
+            459718918522900,
+            459719037557200
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            80.6994
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            119.0343
+          ],
+          "publication_host_bounds_ns": [
+            459718956857800,
+            459719037557200
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            80.6994
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -3.7323,
+            76.9671
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            76.9671
+          ],
+          "source_touch_to_paint_ms": 140.5659,
+          "scheduled_touch_to_paint_ms": 141.5863
+        },
+        {
+          "contact_id": 5,
+          "touch_sample": 62050,
+          "published_sample": 62111,
+          "raw_release_trigger": 62121,
+          "source_confirmation_sample_span": 71,
+          "source_confirmation_time_ms": 76.0858,
+          "enqueue_host_bounds_ns": [
+            459719539199100,
+            459719623405000
+          ],
+          "dequeue_host_bounds_ns": [
+            459719514544400,
+            459719623405000
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            84.2059
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            108.8606
+          ],
+          "publication_host_bounds_ns": [
+            459719539199100,
+            459719623405000
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            84.2059
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -48.8816,
+            35.3243
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            35.3243
+          ],
+          "source_touch_to_paint_ms": 111.4101,
+          "scheduled_touch_to_paint_ms": 116.4059
+        },
+        {
+          "contact_id": 6,
+          "touch_sample": 62626,
+          "published_sample": 62693,
+          "raw_release_trigger": 62703,
+          "source_confirmation_sample_span": 77,
+          "source_confirmation_time_ms": 78.4529,
+          "enqueue_host_bounds_ns": [
+            459720108912000,
+            459720160296800
+          ],
+          "dequeue_host_bounds_ns": [
+            459720069914700,
+            459720160296800
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            51.3848
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            90.3821
+          ],
+          "publication_host_bounds_ns": [
+            459720108912000,
+            459720160296800
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            51.3848
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -6.2352,
+            45.1496
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            45.1496
+          ],
+          "source_touch_to_paint_ms": 123.6025,
+          "scheduled_touch_to_paint_ms": 123.8627
+        },
+        {
+          "contact_id": 7,
+          "touch_sample": 63199,
+          "published_sample": 63258,
+          "raw_release_trigger": 63268,
+          "source_confirmation_sample_span": 69,
+          "source_confirmation_time_ms": 88.0852,
+          "enqueue_host_bounds_ns": [
+            459720693768100,
+            459720762719700
+          ],
+          "dequeue_host_bounds_ns": [
+            459720638432100,
+            459720762719700
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            68.9516
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            124.2876
+          ],
+          "publication_host_bounds_ns": [
+            459720693768100,
+            459720762719700
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            68.9516
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -13.3067,
+            55.6449
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            55.6449
+          ],
+          "source_touch_to_paint_ms": 143.7301,
+          "scheduled_touch_to_paint_ms": 145.3407
+        },
+        {
+          "contact_id": 8,
+          "touch_sample": 63747,
+          "published_sample": 63806,
+          "raw_release_trigger": 63816,
+          "source_confirmation_sample_span": 69,
+          "source_confirmation_time_ms": 67.9516,
+          "enqueue_host_bounds_ns": [
+            459721219440400,
+            459721235963100
+          ],
+          "dequeue_host_bounds_ns": [
+            459721235963100,
+            459721351894700
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            132.4543
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            115.9316
+          ],
+          "publication_host_bounds_ns": [
+            459721235963100,
+            459721351894700
+          ],
+          "source_trigger_to_publication_ms": [
+            16.5227,
+            132.4543
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -82.3093,
+            33.6223
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            33.6223
+          ],
+          "source_touch_to_paint_ms": 118.0966,
+          "scheduled_touch_to_paint_ms": 118.5858
+        },
+        {
+          "contact_id": 10,
+          "touch_sample": 64328,
+          "published_sample": 64397,
+          "raw_release_trigger": 64407,
+          "source_confirmation_sample_span": 79,
+          "source_confirmation_time_ms": 72.3061,
+          "enqueue_host_bounds_ns": [
+            459721818782400,
+            459721828133800
+          ],
+          "dequeue_host_bounds_ns": [
+            459721828133800,
+            459721893697700
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            74.9153
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            65.5639
+          ],
+          "publication_host_bounds_ns": [
+            459721828133800,
+            459721893697700
+          ],
+          "source_trigger_to_publication_ms": [
+            9.3514,
+            74.9153
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -23.9843,
+            41.5796
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            41.5796
+          ],
+          "source_touch_to_paint_ms": 123.2371,
+          "scheduled_touch_to_paint_ms": 124.9258
+        },
+        {
+          "contact_id": 11,
+          "touch_sample": 64883,
+          "published_sample": 64947,
+          "raw_release_trigger": 64957,
+          "source_confirmation_sample_span": 74,
+          "source_confirmation_time_ms": 83.9904,
+          "enqueue_host_bounds_ns": [
+            459722373464300,
+            459722415390100
+          ],
+          "dequeue_host_bounds_ns": [
+            459722344898000,
+            459722415390100
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            41.9258
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            70.4921
+          ],
+          "publication_host_bounds_ns": [
+            459722373464300,
+            459722415390100
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            41.9258
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -2.2607,
+            39.6651
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            39.6651
+          ],
+          "source_touch_to_paint_ms": 123.6555,
+          "scheduled_touch_to_paint_ms": 124.1226
+        }
+      ],
+      "max_latency_ms": 164.7612,
+      "scheduled_max_ms": 165.7494,
+      "input_lateness_ms": 83.6525,
+      "observed_queue_lower": 72,
+      "queue_upper": 148,
+      "work": {
+        "video": 800,
+        "inferences": 404,
+        "model_wall_ms_median": 22.6929500058759,
+        "model_wall_ms_mean": 26.400098266364722,
+        "precontact_model_calls": 141,
+        "precontact_model_wall_ms_median": 21.700200042687356,
+        "sdk": {
+          "start_success": true,
+          "stop_success": true,
+          "ready_events": [
+            {
+              "method": "tracking_start",
+              "code": 0,
+              "sdk_pid": 14592,
+              "gui_pid": 11120,
+              "observed_ns": 459701799939100
+            }
+          ],
+          "errors": [],
+          "tracking_decisions": 478,
+          "nonzero_speeds": 393
+        },
+        "draws": {
+          "all": 635,
+          "valid": 635,
+          "disabled_calls": 0
+        }
+      },
+      "context": {
+        "context_reads_pass": true,
+        "role_pids": {
+          "gui": 11120,
+          "model": 11120,
+          "consumer": 11120
+        },
+        "foreground_self": {
+          "gui/59904": true,
+          "consumer/59904": true,
+          "model/59904": true,
+          "gui/65904": true,
+          "consumer/65904": true,
+          "model/65904": true
+        },
+        "foreground_gui": {
+          "gui/59904": true,
+          "consumer/59904": true,
+          "model/59904": true,
+          "gui/65904": true,
+          "consumer/65904": true,
+          "model/65904": true
+        },
+        "policy": {
+          "gui/59904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "consumer/59904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "model/59904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "gui/65904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "consumer/65904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "model/65904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          }
+        },
+        "scope": "Two phase checkpoints after original calls; not continuous scheduler coverage or observer-disturbance qualification."
+      },
+      "original_return_model_confirmed": false,
+      "complete": true,
+      "semantics_pass": true,
+      "native_SDK_pass": true,
+      "mode": "bridge",
+      "pair": 2
+    },
+    "pair02_original": {
+      "backend": "original",
+      "raw_frames": 33188,
+      "queue": {
+        "combined_observed_deque_peak_lower_bound": 96,
+        "continuous_deque_peak_upper_bound": 161,
+        "observations": 520,
+        "first_observed_host_ns": 459800217925600,
+        "last_observed_host_ns": 459833415586300
+      },
+      "queue_crosscheck": {
+        "oldest_pending_receipts_independently_matched": 227,
+        "max_post_arm_inflight": 0,
+        "queue_common_monotone": true
+      },
+      "contacts": [
+        {
+          "contact_id": 0,
+          "touch_sample": 60188,
+          "published_sample": 60251,
+          "raw_release_trigger": 60261,
+          "source_confirmation_sample_span": 73,
+          "source_confirmation_time_ms": 71.5796,
+          "enqueue_host_bounds_ns": [
+            459815079510600,
+            459815080893700
+          ],
+          "dequeue_host_bounds_ns": [
+            459815080893700,
+            459815156668400
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            77.1578
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            75.7747
+          ],
+          "publication_host_bounds_ns": [
+            459815080893700,
+            459815156668400
+          ],
+          "source_trigger_to_publication_ms": [
+            1.3831,
+            77.1578
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -17.1315,
+            58.6432
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            58.6432
+          ],
+          "source_touch_to_paint_ms": 131.6059,
+          "scheduled_touch_to_paint_ms": 132.4372
+        },
+        {
+          "contact_id": 2,
+          "touch_sample": 60871,
+          "published_sample": 60960,
+          "raw_release_trigger": 60970,
+          "source_confirmation_sample_span": 99,
+          "source_confirmation_time_ms": 98.5038,
+          "enqueue_host_bounds_ns": [
+            459815788585800,
+            459815804891200
+          ],
+          "dequeue_host_bounds_ns": [
+            459815804891200,
+            459815873817700
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            85.2319
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            68.9265
+          ],
+          "publication_host_bounds_ns": [
+            459815804891200,
+            459815873817700
+          ],
+          "source_trigger_to_publication_ms": [
+            16.3054,
+            85.2319
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -18.1926,
+            50.7339
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            50.7339
+          ],
+          "source_touch_to_paint_ms": 165.5431,
+          "scheduled_touch_to_paint_ms": 166.5599
+        },
+        {
+          "contact_id": 4,
+          "touch_sample": 61475,
+          "published_sample": 61541,
+          "raw_release_trigger": 61551,
+          "source_confirmation_sample_span": 76,
+          "source_confirmation_time_ms": 63.9653,
+          "enqueue_host_bounds_ns": [
+            459816371892900,
+            459816445879400
+          ],
+          "dequeue_host_bounds_ns": [
+            459816335422200,
+            459816445879400
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            73.9865
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            110.4572
+          ],
+          "publication_host_bounds_ns": [
+            459816371892900,
+            459816445879400
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            73.9865
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -3.435,
+            70.5515
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            70.5515
+          ],
+          "source_touch_to_paint_ms": 134.5168,
+          "scheduled_touch_to_paint_ms": 135.027
+        },
+        {
+          "contact_id": 5,
+          "touch_sample": 62050,
+          "published_sample": 62111,
+          "raw_release_trigger": 62121,
+          "source_confirmation_sample_span": 71,
+          "source_confirmation_time_ms": 76.5287,
+          "enqueue_host_bounds_ns": [
+            459816954957900,
+            459817012555400
+          ],
+          "dequeue_host_bounds_ns": [
+            459816935516300,
+            459817012555400
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            57.5975
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            77.0391
+          ],
+          "publication_host_bounds_ns": [
+            459816954957900,
+            459817012555400
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            57.5975
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -22.79,
+            34.8075
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            34.8075
+          ],
+          "source_touch_to_paint_ms": 111.3362,
+          "scheduled_touch_to_paint_ms": 116.4691
+        },
+        {
+          "contact_id": 6,
+          "touch_sample": 62626,
+          "published_sample": 62693,
+          "raw_release_trigger": 62703,
+          "source_confirmation_sample_span": 77,
+          "source_confirmation_time_ms": 77.2878,
+          "enqueue_host_bounds_ns": [
+            459817525655600,
+            459817582066100
+          ],
+          "dequeue_host_bounds_ns": [
+            459817485882400,
+            459817582066100
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            56.4105
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            96.1837
+          ],
+          "publication_host_bounds_ns": [
+            459817525655600,
+            459817582066100
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            56.4105
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -5.8896,
+            50.5209
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            50.5209
+          ],
+          "source_touch_to_paint_ms": 127.8087,
+          "scheduled_touch_to_paint_ms": 130.7988
+        },
+        {
+          "contact_id": 7,
+          "touch_sample": 63199,
+          "published_sample": 63258,
+          "raw_release_trigger": 63268,
+          "source_confirmation_sample_span": 69,
+          "source_confirmation_time_ms": 83.9622,
+          "enqueue_host_bounds_ns": [
+            459818104007500,
+            459818186867800
+          ],
+          "dequeue_host_bounds_ns": [
+            459818052501500,
+            459818186867800
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            82.8603
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            134.3663
+          ],
+          "publication_host_bounds_ns": [
+            459818104007500,
+            459818186867800
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            82.8603
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -17.8831,
+            64.9772
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            64.9772
+          ],
+          "source_touch_to_paint_ms": 148.9394,
+          "scheduled_touch_to_paint_ms": 149.7336
+        },
+        {
+          "contact_id": 8,
+          "touch_sample": 63747,
+          "published_sample": 63806,
+          "raw_release_trigger": 63816,
+          "source_confirmation_sample_span": 69,
+          "source_confirmation_time_ms": 67.9133,
+          "enqueue_host_bounds_ns": [
+            459818634611400,
+            459818663970700
+          ],
+          "dequeue_host_bounds_ns": [
+            459818663970700,
+            459818731054300
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            96.4429
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            67.0836
+          ],
+          "publication_host_bounds_ns": [
+            459818663970700,
+            459818731054300
+          ],
+          "source_trigger_to_publication_ms": [
+            29.3593,
+            96.4429
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -34.1024,
+            32.9812
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            32.9812
+          ],
+          "source_touch_to_paint_ms": 130.2538,
+          "scheduled_touch_to_paint_ms": 130.7735
+        },
+        {
+          "contact_id": 10,
+          "touch_sample": 64328,
+          "published_sample": 64397,
+          "raw_release_trigger": 64407,
+          "source_confirmation_sample_span": 79,
+          "source_confirmation_time_ms": 73.7407,
+          "enqueue_host_bounds_ns": [
+            459819235707600,
+            459819322363200
+          ],
+          "dequeue_host_bounds_ns": [
+            459819210589600,
+            459819322363200
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            86.6556
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            111.7736
+          ],
+          "publication_host_bounds_ns": [
+            459819235707600,
+            459819322363200
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            86.6556
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -22.4933,
+            64.1623
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            64.1623
+          ],
+          "source_touch_to_paint_ms": 137.903,
+          "scheduled_touch_to_paint_ms": 139.9035
+        },
+        {
+          "contact_id": 11,
+          "touch_sample": 64883,
+          "published_sample": 64947,
+          "raw_release_trigger": 64957,
+          "source_confirmation_sample_span": 74,
+          "source_confirmation_time_ms": 83.77,
+          "enqueue_host_bounds_ns": [
+            459819788336100,
+            459819837666700
+          ],
+          "dequeue_host_bounds_ns": [
+            459819761937000,
+            459819837666700
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            49.3306
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            75.7297
+          ],
+          "publication_host_bounds_ns": [
+            459819788336100,
+            459819837666700
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            49.3306
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -4.8721,
+            44.4585
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            44.4585
+          ],
+          "source_touch_to_paint_ms": 128.2285,
+          "scheduled_touch_to_paint_ms": 128.609
+        }
+      ],
+      "max_latency_ms": 165.5431,
+      "scheduled_max_ms": 166.5599,
+      "input_lateness_ms": 87.6813,
+      "observed_queue_lower": 96,
+      "queue_upper": 161,
+      "work": {
+        "video": 811,
+        "inferences": 409,
+        "model_wall_ms_median": 23.10430002398789,
+        "model_wall_ms_mean": 27.079833744459247,
+        "precontact_model_calls": 141,
+        "precontact_model_wall_ms_median": 22.189400042407215,
+        "sdk": {
+          "start_success": true,
+          "stop_success": true,
+          "ready_events": [
+            {
+              "method": "tracking_start",
+              "code": 0,
+              "sdk_pid": 14816,
+              "gui_pid": 10216,
+              "observed_ns": 459799212814200
+            }
+          ],
+          "errors": [],
+          "tracking_decisions": 481,
+          "nonzero_speeds": 394
+        },
+        "draws": {
+          "all": 641,
+          "valid": 641,
+          "disabled_calls": 0
+        }
+      },
+      "context": {
+        "context_reads_pass": true,
+        "role_pids": {
+          "gui": 10216,
+          "model": 10216,
+          "consumer": 10216
+        },
+        "foreground_self": {
+          "consumer/59904": true,
+          "gui/59904": true,
+          "model/59904": true,
+          "gui/65904": true,
+          "consumer/65904": true,
+          "model/65904": true
+        },
+        "foreground_gui": {
+          "consumer/59904": true,
+          "gui/59904": true,
+          "model/59904": true,
+          "gui/65904": true,
+          "consumer/65904": true,
+          "model/65904": true
+        },
+        "policy": {
+          "consumer/59904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "gui/59904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "model/59904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "gui/65904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "consumer/65904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "model/65904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          }
+        },
+        "scope": "Two phase checkpoints after original calls; not continuous scheduler coverage or observer-disturbance qualification."
+      },
+      "original_return_model_confirmed": false,
+      "complete": true,
+      "semantics_pass": true,
+      "native_SDK_pass": true,
+      "mode": "original",
+      "pair": 2
+    },
+    "pair03_original": {
+      "backend": "original",
+      "raw_frames": 33188,
+      "queue": {
+        "combined_observed_deque_peak_lower_bound": 90,
+        "continuous_deque_peak_upper_bound": 159,
+        "observations": 520,
+        "first_observed_host_ns": 459898286380800,
+        "last_observed_host_ns": 459931486241500
+      },
+      "queue_crosscheck": {
+        "oldest_pending_receipts_independently_matched": 242,
+        "max_post_arm_inflight": 0,
+        "queue_common_monotone": true
+      },
+      "contacts": [
+        {
+          "contact_id": 0,
+          "touch_sample": 60188,
+          "published_sample": 60251,
+          "raw_release_trigger": 60261,
+          "source_confirmation_sample_span": 73,
+          "source_confirmation_time_ms": 71.537,
+          "enqueue_host_bounds_ns": [
+            459913150279400,
+            459913228466900
+          ],
+          "dequeue_host_bounds_ns": [
+            459913145709000,
+            459913228466900
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            78.1875
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            82.7579
+          ],
+          "publication_host_bounds_ns": [
+            459913150279400,
+            459913228466900
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            78.1875
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -15.8647,
+            62.3228
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            62.3228
+          ],
+          "source_touch_to_paint_ms": 133.8598,
+          "scheduled_touch_to_paint_ms": 134.8526
+        },
+        {
+          "contact_id": 2,
+          "touch_sample": 60871,
+          "published_sample": 60960,
+          "raw_release_trigger": 60970,
+          "source_confirmation_sample_span": 99,
+          "source_confirmation_time_ms": 99.9563,
+          "enqueue_host_bounds_ns": [
+            459913863123900,
+            459913868884400
+          ],
+          "dequeue_host_bounds_ns": [
+            459913868884400,
+            459913942970000
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            79.8461
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            74.0856
+          ],
+          "publication_host_bounds_ns": [
+            459913868884400,
+            459913942970000
+          ],
+          "source_trigger_to_publication_ms": [
+            5.7605,
+            79.8461
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -11.9185,
+            62.1671
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            62.1671
+          ],
+          "source_touch_to_paint_ms": 167.8839,
+          "scheduled_touch_to_paint_ms": 171.3364
+        },
+        {
+          "contact_id": 4,
+          "touch_sample": 61475,
+          "published_sample": 61541,
+          "raw_release_trigger": 61551,
+          "source_confirmation_sample_span": 76,
+          "source_confirmation_time_ms": 62.5564,
+          "enqueue_host_bounds_ns": [
+            459914441794700,
+            459914520890300
+          ],
+          "dequeue_host_bounds_ns": [
+            459914409848300,
+            459914520890300
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            79.0956
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            111.042
+          ],
+          "publication_host_bounds_ns": [
+            459914441794700,
+            459914520890300
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            79.0956
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -4.9878,
+            74.1078
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            74.1078
+          ],
+          "source_touch_to_paint_ms": 136.6642,
+          "scheduled_touch_to_paint_ms": 137.8352
+        },
+        {
+          "contact_id": 5,
+          "touch_sample": 62050,
+          "published_sample": 62111,
+          "raw_release_trigger": 62121,
+          "source_confirmation_sample_span": 71,
+          "source_confirmation_time_ms": 74.1708,
+          "enqueue_host_bounds_ns": [
+            459915026096200,
+            459915112368200
+          ],
+          "dequeue_host_bounds_ns": [
+            459914999289300,
+            459915112368200
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            86.272
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            113.0789
+          ],
+          "publication_host_bounds_ns": [
+            459915026096200,
+            459915112368200
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            86.272
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -55.9383,
+            30.3337
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            30.3337
+          ],
+          "source_touch_to_paint_ms": 104.5045,
+          "scheduled_touch_to_paint_ms": 112.4837
+        },
+        {
+          "contact_id": 6,
+          "touch_sample": 62626,
+          "published_sample": 62693,
+          "raw_release_trigger": 62703,
+          "source_confirmation_sample_span": 77,
+          "source_confirmation_time_ms": 77.6829,
+          "enqueue_host_bounds_ns": [
+            459915594315000,
+            459915640904500
+          ],
+          "dequeue_host_bounds_ns": [
+            459915577062300,
+            459915640904500
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            46.5895
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            63.8422
+          ],
+          "publication_host_bounds_ns": [
+            459915594315000,
+            459915640904500
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            46.5895
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -8.8376,
+            37.7519
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            37.7519
+          ],
+          "source_touch_to_paint_ms": 115.4348,
+          "scheduled_touch_to_paint_ms": 116.0393
+        },
+        {
+          "contact_id": 7,
+          "touch_sample": 63199,
+          "published_sample": 63258,
+          "raw_release_trigger": 63268,
+          "source_confirmation_sample_span": 69,
+          "source_confirmation_time_ms": 85.7988,
+          "enqueue_host_bounds_ns": [
+            459916175862700,
+            459916244514500
+          ],
+          "dequeue_host_bounds_ns": [
+            459916129581800,
+            459916244514500
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            68.6518
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            114.9327
+          ],
+          "publication_host_bounds_ns": [
+            459916175862700,
+            459916244514500
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            68.6518
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -11.1875,
+            57.4643
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            57.4643
+          ],
+          "source_touch_to_paint_ms": 143.2631,
+          "scheduled_touch_to_paint_ms": 143.426
+        },
+        {
+          "contact_id": 8,
+          "touch_sample": 63747,
+          "published_sample": 63806,
+          "raw_release_trigger": 63816,
+          "source_confirmation_sample_span": 69,
+          "source_confirmation_time_ms": 68.1116,
+          "enqueue_host_bounds_ns": [
+            459916705891700,
+            459916719655200
+          ],
+          "dequeue_host_bounds_ns": [
+            459916719655200,
+            459916842233900
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            136.3422
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            122.5787
+          ],
+          "publication_host_bounds_ns": [
+            459916719655200,
+            459916842233900
+          ],
+          "source_trigger_to_publication_ms": [
+            13.7635,
+            136.3422
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -88.8408,
+            33.7379
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            33.7379
+          ],
+          "source_touch_to_paint_ms": 115.613,
+          "scheduled_touch_to_paint_ms": 116.5648
+        },
+        {
+          "contact_id": 10,
+          "touch_sample": 64328,
+          "published_sample": 64397,
+          "raw_release_trigger": 64407,
+          "source_confirmation_sample_span": 79,
+          "source_confirmation_time_ms": 76.1165,
+          "enqueue_host_bounds_ns": [
+            459917307022600,
+            459917325285500
+          ],
+          "dequeue_host_bounds_ns": [
+            459917325285500,
+            459917396029500
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            89.0069
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            70.744
+          ],
+          "publication_host_bounds_ns": [
+            459917325285500,
+            459917396029500
+          ],
+          "source_trigger_to_publication_ms": [
+            18.2629,
+            89.0069
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -34.2084,
+            36.5356
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            36.5356
+          ],
+          "source_touch_to_paint_ms": 130.915,
+          "scheduled_touch_to_paint_ms": 131.2048
+        },
+        {
+          "contact_id": 11,
+          "touch_sample": 64883,
+          "published_sample": 64947,
+          "raw_release_trigger": 64957,
+          "source_confirmation_sample_span": 74,
+          "source_confirmation_time_ms": 82.7834,
+          "enqueue_host_bounds_ns": [
+            459917859339400,
+            459917893219400
+          ],
+          "dequeue_host_bounds_ns": [
+            459917821730000,
+            459917893219400
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            33.88
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            71.4894
+          ],
+          "publication_host_bounds_ns": [
+            459917859339400,
+            459917893219400
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            33.88
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            4.322,
+            38.202
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            4.322,
+            38.202
+          ],
+          "source_touch_to_paint_ms": 120.9854,
+          "scheduled_touch_to_paint_ms": 122.7059
+        }
+      ],
+      "max_latency_ms": 167.8839,
+      "scheduled_max_ms": 171.3364,
+      "input_lateness_ms": 85.0488,
+      "observed_queue_lower": 90,
+      "queue_upper": 159,
+      "work": {
+        "video": 798,
+        "inferences": 405,
+        "model_wall_ms_median": 23.12640001764521,
+        "model_wall_ms_mean": 26.602426913917572,
+        "precontact_model_calls": 142,
+        "precontact_model_wall_ms_median": 22.352949978085235,
+        "sdk": {
+          "start_success": true,
+          "stop_success": true,
+          "ready_events": [
+            {
+              "method": "tracking_start",
+              "code": 0,
+              "sdk_pid": 20992,
+              "gui_pid": 19308,
+              "observed_ns": 459897281085700
+            }
+          ],
+          "errors": [],
+          "tracking_decisions": 477,
+          "nonzero_speeds": 394
+        },
+        "draws": {
+          "all": 639,
+          "valid": 639,
+          "disabled_calls": 0
+        }
+      },
+      "context": {
+        "context_reads_pass": true,
+        "role_pids": {
+          "gui": 19308,
+          "model": 19308,
+          "consumer": 19308
+        },
+        "foreground_self": {
+          "gui/59904": true,
+          "consumer/59904": true,
+          "model/59904": true,
+          "consumer/65904": true,
+          "gui/65904": true,
+          "model/65904": true
+        },
+        "foreground_gui": {
+          "gui/59904": true,
+          "consumer/59904": true,
+          "model/59904": true,
+          "consumer/65904": true,
+          "gui/65904": true,
+          "model/65904": true
+        },
+        "policy": {
+          "gui/59904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "consumer/59904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "model/59904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "consumer/65904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "gui/65904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "model/65904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          }
+        },
+        "scope": "Two phase checkpoints after original calls; not continuous scheduler coverage or observer-disturbance qualification."
+      },
+      "original_return_model_confirmed": false,
+      "complete": true,
+      "semantics_pass": true,
+      "native_SDK_pass": true,
+      "mode": "original",
+      "pair": 3
+    },
+    "pair03_bridge": {
+      "backend": "original",
+      "raw_frames": 33188,
+      "queue": {
+        "combined_observed_deque_peak_lower_bound": 126,
+        "continuous_deque_peak_upper_bound": 194,
+        "observations": 520,
+        "first_observed_host_ns": 459996100336000,
+        "last_observed_host_ns": 460029291034100
+      },
+      "queue_crosscheck": {
+        "oldest_pending_receipts_independently_matched": 218,
+        "max_post_arm_inflight": 0,
+        "queue_common_monotone": true
+      },
+      "contacts": [
+        {
+          "contact_id": 0,
+          "touch_sample": 60188,
+          "published_sample": 60251,
+          "raw_release_trigger": 60261,
+          "source_confirmation_sample_span": 73,
+          "source_confirmation_time_ms": 71.7626,
+          "enqueue_host_bounds_ns": [
+            460010956427100,
+            460011042304300
+          ],
+          "dequeue_host_bounds_ns": [
+            460010935211800,
+            460011042304300
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            85.8772
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            107.0925
+          ],
+          "publication_host_bounds_ns": [
+            460010956427100,
+            460011042304300
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            85.8772
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -22.5489,
+            63.3283
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            63.3283
+          ],
+          "source_touch_to_paint_ms": 135.0909,
+          "scheduled_touch_to_paint_ms": 135.6069
+        },
+        {
+          "contact_id": 2,
+          "touch_sample": 60871,
+          "published_sample": 60960,
+          "raw_release_trigger": 60970,
+          "source_confirmation_sample_span": 99,
+          "source_confirmation_time_ms": 99.3374,
+          "enqueue_host_bounds_ns": [
+            460011666814700,
+            460011674008200
+          ],
+          "dequeue_host_bounds_ns": [
+            460011674008200,
+            460011741311200
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            74.4965
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            67.303
+          ],
+          "publication_host_bounds_ns": [
+            460011674008200,
+            460011741311200
+          ],
+          "source_trigger_to_publication_ms": [
+            7.1935,
+            74.4965
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -2.868,
+            64.435
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            64.435
+          ],
+          "source_touch_to_paint_ms": 170.9659,
+          "scheduled_touch_to_paint_ms": 172.3292
+        },
+        {
+          "contact_id": 4,
+          "touch_sample": 61475,
+          "published_sample": 61541,
+          "raw_release_trigger": 61551,
+          "source_confirmation_sample_span": 76,
+          "source_confirmation_time_ms": 72.444,
+          "enqueue_host_bounds_ns": [
+            460012257492600,
+            460012317371600
+          ],
+          "dequeue_host_bounds_ns": [
+            460012207124900,
+            460012317371600
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            59.879
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            110.2467
+          ],
+          "publication_host_bounds_ns": [
+            460012257492600,
+            460012317371600
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            59.879
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -12.1555,
+            47.7235
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            47.7235
+          ],
+          "source_touch_to_paint_ms": 120.1675,
+          "scheduled_touch_to_paint_ms": 120.7499
+        },
+        {
+          "contact_id": 5,
+          "touch_sample": 62050,
+          "published_sample": 62111,
+          "raw_release_trigger": 62121,
+          "source_confirmation_sample_span": 71,
+          "source_confirmation_time_ms": 79.9498,
+          "enqueue_host_bounds_ns": [
+            460012832298100,
+            460012885480500
+          ],
+          "dequeue_host_bounds_ns": [
+            460012796464800,
+            460012885480500
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            53.1824
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            89.0157
+          ],
+          "publication_host_bounds_ns": [
+            460012832298100,
+            460012885480500
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            53.1824
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -14.1263,
+            39.0561
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            39.0561
+          ],
+          "source_touch_to_paint_ms": 119.0059,
+          "scheduled_touch_to_paint_ms": 121.0091
+        },
+        {
+          "contact_id": 6,
+          "touch_sample": 62626,
+          "published_sample": 62693,
+          "raw_release_trigger": 62703,
+          "source_confirmation_sample_span": 77,
+          "source_confirmation_time_ms": 78.9299,
+          "enqueue_host_bounds_ns": [
+            460013402223100,
+            460013451429600
+          ],
+          "dequeue_host_bounds_ns": [
+            460013394397000,
+            460013451429600
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            49.2065
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            57.0326
+          ],
+          "publication_host_bounds_ns": [
+            460013402223100,
+            460013451429600
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            49.2065
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -13.6389,
+            35.5676
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            35.5676
+          ],
+          "source_touch_to_paint_ms": 114.4975,
+          "scheduled_touch_to_paint_ms": 115.3642
+        },
+        {
+          "contact_id": 7,
+          "touch_sample": 63199,
+          "published_sample": 63258,
+          "raw_release_trigger": 63268,
+          "source_confirmation_sample_span": 69,
+          "source_confirmation_time_ms": 86.8964,
+          "enqueue_host_bounds_ns": [
+            460013983215700,
+            460014042076800
+          ],
+          "dequeue_host_bounds_ns": [
+            460013932016300,
+            460014042076800
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            58.8611
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            110.0605
+          ],
+          "publication_host_bounds_ns": [
+            460013983215700,
+            460014042076800
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            58.8611
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -1.9768,
+            56.8843
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            56.8843
+          ],
+          "source_touch_to_paint_ms": 143.7807,
+          "scheduled_touch_to_paint_ms": 143.8001
+        },
+        {
+          "contact_id": 8,
+          "touch_sample": 63747,
+          "published_sample": 63806,
+          "raw_release_trigger": 63816,
+          "source_confirmation_sample_span": 69,
+          "source_confirmation_time_ms": 66.7407,
+          "enqueue_host_bounds_ns": [
+            460014511712100,
+            460014532189400
+          ],
+          "dequeue_host_bounds_ns": [
+            460014442036000,
+            460014532189400
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            20.4773
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            90.1534
+          ],
+          "publication_host_bounds_ns": [
+            460014511712100,
+            460014532189400
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            20.4773
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            28.1488,
+            48.6261
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            28.1488,
+            48.6261
+          ],
+          "source_touch_to_paint_ms": 115.3668,
+          "scheduled_touch_to_paint_ms": 117.111
+        },
+        {
+          "contact_id": 10,
+          "touch_sample": 64328,
+          "published_sample": 64397,
+          "raw_release_trigger": 64407,
+          "source_confirmation_sample_span": 79,
+          "source_confirmation_time_ms": 71.2519,
+          "enqueue_host_bounds_ns": [
+            460015110141000,
+            460015126784100
+          ],
+          "dequeue_host_bounds_ns": [
+            460015126784100,
+            460015226307800
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            116.1668
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            99.5237
+          ],
+          "publication_host_bounds_ns": [
+            460015126784100,
+            460015226307800
+          ],
+          "source_trigger_to_publication_ms": [
+            16.6431,
+            116.1668
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -63.7423,
+            35.7814
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            35.7814
+          ],
+          "source_touch_to_paint_ms": 123.6764,
+          "scheduled_touch_to_paint_ms": 125.5503
+        },
+        {
+          "contact_id": 11,
+          "touch_sample": 64883,
+          "published_sample": 64947,
+          "raw_release_trigger": 64957,
+          "source_confirmation_sample_span": 74,
+          "source_confirmation_time_ms": 77.2823,
+          "enqueue_host_bounds_ns": [
+            460015666121700,
+            460015704946800
+          ],
+          "dequeue_host_bounds_ns": [
+            460015638893400,
+            460015704946800
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            38.8251
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            66.0534
+          ],
+          "publication_host_bounds_ns": [
+            460015666121700,
+            460015704946800
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            38.8251
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -0.9067,
+            37.9184
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            37.9184
+          ],
+          "source_touch_to_paint_ms": 115.2007,
+          "scheduled_touch_to_paint_ms": 122.8057
+        }
+      ],
+      "max_latency_ms": 170.9659,
+      "scheduled_max_ms": 172.3292,
+      "input_lateness_ms": 83.8037,
+      "observed_queue_lower": 126,
+      "queue_upper": 194,
+      "work": {
+        "video": 801,
+        "inferences": 405,
+        "model_wall_ms_median": 23.149000015109777,
+        "model_wall_ms_mean": 28.233824446251226,
+        "precontact_model_calls": 142,
+        "precontact_model_wall_ms_median": 22.00940001057461,
+        "sdk": {
+          "start_success": true,
+          "stop_success": true,
+          "ready_events": [
+            {
+              "method": "tracking_start",
+              "code": 0,
+              "sdk_pid": 7216,
+              "gui_pid": 13216,
+              "observed_ns": 459995094427000
+            }
+          ],
+          "errors": [],
+          "tracking_decisions": 480,
+          "nonzero_speeds": 399
+        },
+        "draws": {
+          "all": 634,
+          "valid": 634,
+          "disabled_calls": 0
+        }
+      },
+      "context": {
+        "context_reads_pass": true,
+        "role_pids": {
+          "gui": 13216,
+          "model": 13216,
+          "consumer": 13216
+        },
+        "foreground_self": {
+          "consumer/59904": true,
+          "gui/59904": true,
+          "model/59904": true,
+          "consumer/65904": true,
+          "gui/65904": true,
+          "model/65904": true
+        },
+        "foreground_gui": {
+          "consumer/59904": true,
+          "gui/59904": true,
+          "model/59904": true,
+          "consumer/65904": true,
+          "gui/65904": true,
+          "model/65904": true
+        },
+        "policy": {
+          "consumer/59904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "gui/59904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "model/59904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "consumer/65904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "gui/65904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "model/65904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          }
+        },
+        "scope": "Two phase checkpoints after original calls; not continuous scheduler coverage or observer-disturbance qualification."
+      },
+      "original_return_model_confirmed": false,
+      "complete": true,
+      "semantics_pass": true,
+      "native_SDK_pass": true,
+      "mode": "bridge",
+      "pair": 3
+    },
+    "pair04_bridge": {
+      "backend": "original",
+      "raw_frames": 33188,
+      "queue": {
+        "combined_observed_deque_peak_lower_bound": 83,
+        "continuous_deque_peak_upper_bound": 158,
+        "observations": 520,
+        "first_observed_host_ns": 460093801425500,
+        "last_observed_host_ns": 460126996038000
+      },
+      "queue_crosscheck": {
+        "oldest_pending_receipts_independently_matched": 236,
+        "max_post_arm_inflight": 0,
+        "queue_common_monotone": true
+      },
+      "contacts": [
+        {
+          "contact_id": 0,
+          "touch_sample": 60188,
+          "published_sample": 60251,
+          "raw_release_trigger": 60261,
+          "source_confirmation_sample_span": 73,
+          "source_confirmation_time_ms": 72.0335,
+          "enqueue_host_bounds_ns": [
+            460108663508400,
+            460108777526400
+          ],
+          "dequeue_host_bounds_ns": [
+            460108662019400,
+            460108777526400
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            114.018
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            115.507
+          ],
+          "publication_host_bounds_ns": [
+            460108663508400,
+            460108777526400
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            114.018
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -52.1738,
+            61.8442
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            61.8442
+          ],
+          "source_touch_to_paint_ms": 133.8777,
+          "scheduled_touch_to_paint_ms": 134.3555
+        },
+        {
+          "contact_id": 2,
+          "touch_sample": 60871,
+          "published_sample": 60960,
+          "raw_release_trigger": 60970,
+          "source_confirmation_sample_span": 99,
+          "source_confirmation_time_ms": 101.9667,
+          "enqueue_host_bounds_ns": [
+            460109375415200,
+            460109383562400
+          ],
+          "dequeue_host_bounds_ns": [
+            460109383562400,
+            460109457146200
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            81.731
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            73.5838
+          ],
+          "publication_host_bounds_ns": [
+            460109383562400,
+            460109457146200
+          ],
+          "source_trigger_to_publication_ms": [
+            8.1472,
+            81.731
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -11.1362,
+            62.4476
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            62.4476
+          ],
+          "source_touch_to_paint_ms": 172.5615,
+          "scheduled_touch_to_paint_ms": 173.0474
+        },
+        {
+          "contact_id": 4,
+          "touch_sample": 61475,
+          "published_sample": 61541,
+          "raw_release_trigger": 61551,
+          "source_confirmation_sample_span": 76,
+          "source_confirmation_time_ms": 63.6647,
+          "enqueue_host_bounds_ns": [
+            460109955028500,
+            460110036395400
+          ],
+          "dequeue_host_bounds_ns": [
+            460109927742100,
+            460110036395400
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            81.3669
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            108.6533
+          ],
+          "publication_host_bounds_ns": [
+            460109955028500,
+            460110036395400
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            81.3669
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -3.9383,
+            77.4286
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            77.4286
+          ],
+          "source_touch_to_paint_ms": 141.0933,
+          "scheduled_touch_to_paint_ms": 141.1423
+        },
+        {
+          "contact_id": 5,
+          "touch_sample": 62050,
+          "published_sample": 62111,
+          "raw_release_trigger": 62121,
+          "source_confirmation_sample_span": 71,
+          "source_confirmation_time_ms": 62.7805,
+          "enqueue_host_bounds_ns": [
+            460110538284400,
+            460110627627000
+          ],
+          "dequeue_host_bounds_ns": [
+            460110509601500,
+            460110627627000
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            89.3426
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            118.0255
+          ],
+          "publication_host_bounds_ns": [
+            460110538284400,
+            460110627627000
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            89.3426
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -53.3325,
+            36.0101
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            36.0101
+          ],
+          "source_touch_to_paint_ms": 98.7906,
+          "scheduled_touch_to_paint_ms": 117.1008
+        },
+        {
+          "contact_id": 6,
+          "touch_sample": 62626,
+          "published_sample": 62693,
+          "raw_release_trigger": 62703,
+          "source_confirmation_sample_span": 77,
+          "source_confirmation_time_ms": 77.2718,
+          "enqueue_host_bounds_ns": [
+            460111107014000,
+            460111157353400
+          ],
+          "dequeue_host_bounds_ns": [
+            460111091322700,
+            460111157353400
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            50.3394
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            66.0307
+          ],
+          "publication_host_bounds_ns": [
+            460111107014000,
+            460111157353400
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            50.3394
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -11.8326,
+            38.5068
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            38.5068
+          ],
+          "source_touch_to_paint_ms": 115.7786,
+          "scheduled_touch_to_paint_ms": 116.2457
+        },
+        {
+          "contact_id": 7,
+          "touch_sample": 63199,
+          "published_sample": 63258,
+          "raw_release_trigger": 63268,
+          "source_confirmation_sample_span": 69,
+          "source_confirmation_time_ms": 84.8386,
+          "enqueue_host_bounds_ns": [
+            460111689029200,
+            460111756203500
+          ],
+          "dequeue_host_bounds_ns": [
+            460111638696100,
+            460111756203500
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            67.1743
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            117.5074
+          ],
+          "publication_host_bounds_ns": [
+            460111689029200,
+            460111756203500
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            67.1743
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -8.286,
+            58.8883
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            58.8883
+          ],
+          "source_touch_to_paint_ms": 143.7269,
+          "scheduled_touch_to_paint_ms": 144.769
+        },
+        {
+          "contact_id": 8,
+          "touch_sample": 63747,
+          "published_sample": 63806,
+          "raw_release_trigger": 63816,
+          "source_confirmation_sample_span": 69,
+          "source_confirmation_time_ms": 68.2682,
+          "enqueue_host_bounds_ns": [
+            460112218988800,
+            460112247184700
+          ],
+          "dequeue_host_bounds_ns": [
+            460112154425800,
+            460112247184700
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            28.1959
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            92.7589
+          ],
+          "publication_host_bounds_ns": [
+            460112218988800,
+            460112247184700
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            28.1959
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            33.8367,
+            62.0326
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            33.8367,
+            62.0326
+          ],
+          "source_touch_to_paint_ms": 130.3008,
+          "scheduled_touch_to_paint_ms": 130.9456
+        },
+        {
+          "contact_id": 10,
+          "touch_sample": 64328,
+          "published_sample": 64397,
+          "raw_release_trigger": 64407,
+          "source_confirmation_sample_span": 79,
+          "source_confirmation_time_ms": 68.9925,
+          "enqueue_host_bounds_ns": [
+            460112814465400,
+            460112829509900
+          ],
+          "dequeue_host_bounds_ns": [
+            460112829509900,
+            460112897167100
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            82.7017
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            67.6572
+          ],
+          "publication_host_bounds_ns": [
+            460112829509900,
+            460112897167100
+          ],
+          "source_trigger_to_publication_ms": [
+            15.0445,
+            82.7017
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -25.7618,
+            41.8954
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            41.8954
+          ],
+          "source_touch_to_paint_ms": 125.9324,
+          "scheduled_touch_to_paint_ms": 127.5415
+        },
+        {
+          "contact_id": 11,
+          "touch_sample": 64883,
+          "published_sample": 64947,
+          "raw_release_trigger": 64957,
+          "source_confirmation_sample_span": 74,
+          "source_confirmation_time_ms": 83.4843,
+          "enqueue_host_bounds_ns": [
+            460113373059000,
+            460113418637100
+          ],
+          "dequeue_host_bounds_ns": [
+            460113346654800,
+            460113418637100
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            45.5781
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            71.9823
+          ],
+          "publication_host_bounds_ns": [
+            460113373059000,
+            460113418637100
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            45.5781
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -4.4887,
+            41.0894
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            41.0894
+          ],
+          "source_touch_to_paint_ms": 124.5737,
+          "scheduled_touch_to_paint_ms": 126.0654
+        }
+      ],
+      "max_latency_ms": 172.5615,
+      "scheduled_max_ms": 173.0474,
+      "input_lateness_ms": 87.0736,
+      "observed_queue_lower": 83,
+      "queue_upper": 158,
+      "work": {
+        "video": 798,
+        "inferences": 405,
+        "model_wall_ms_median": 22.42839999962598,
+        "model_wall_ms_mean": 26.781410617426175,
+        "precontact_model_calls": 142,
+        "precontact_model_wall_ms_median": 22.001300007104874,
+        "sdk": {
+          "start_success": true,
+          "stop_success": true,
+          "ready_events": [
+            {
+              "method": "tracking_start",
+              "code": 0,
+              "sdk_pid": 21892,
+              "gui_pid": 19044,
+              "observed_ns": 460092797434200
+            }
+          ],
+          "errors": [],
+          "tracking_decisions": 481,
+          "nonzero_speeds": 399
+        },
+        "draws": {
+          "all": 637,
+          "valid": 637,
+          "disabled_calls": 0
+        }
+      },
+      "context": {
+        "context_reads_pass": true,
+        "role_pids": {
+          "gui": 19044,
+          "model": 19044,
+          "consumer": 19044
+        },
+        "foreground_self": {
+          "consumer/59904": true,
+          "gui/59904": true,
+          "model/59904": true,
+          "gui/65904": true,
+          "consumer/65904": true,
+          "model/65904": true
+        },
+        "foreground_gui": {
+          "consumer/59904": true,
+          "gui/59904": true,
+          "model/59904": true,
+          "gui/65904": true,
+          "consumer/65904": true,
+          "model/65904": true
+        },
+        "policy": {
+          "consumer/59904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "gui/59904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "model/59904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "gui/65904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "consumer/65904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "model/65904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          }
+        },
+        "scope": "Two phase checkpoints after original calls; not continuous scheduler coverage or observer-disturbance qualification."
+      },
+      "original_return_model_confirmed": false,
+      "complete": true,
+      "semantics_pass": true,
+      "native_SDK_pass": true,
+      "mode": "bridge",
+      "pair": 4
+    },
+    "pair04_original": {
+      "backend": "original",
+      "raw_frames": 33188,
+      "queue": {
+        "combined_observed_deque_peak_lower_bound": 92,
+        "continuous_deque_peak_upper_bound": 147,
+        "observations": 520,
+        "first_observed_host_ns": 460191450047000,
+        "last_observed_host_ns": 460224642720400
+      },
+      "queue_crosscheck": {
+        "oldest_pending_receipts_independently_matched": 234,
+        "max_post_arm_inflight": 0,
+        "queue_common_monotone": true
+      },
+      "contacts": [
+        {
+          "contact_id": 0,
+          "touch_sample": 60188,
+          "published_sample": 60251,
+          "raw_release_trigger": 60261,
+          "source_confirmation_sample_span": 73,
+          "source_confirmation_time_ms": 72.9851,
+          "enqueue_host_bounds_ns": [
+            460206310758200,
+            460206313416000
+          ],
+          "dequeue_host_bounds_ns": [
+            460206313416000,
+            460206390551300
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            79.7931
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            77.1353
+          ],
+          "publication_host_bounds_ns": [
+            460206313416000,
+            460206390551300
+          ],
+          "source_trigger_to_publication_ms": [
+            2.6578,
+            79.7931
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -17.446,
+            59.6893
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            59.6893
+          ],
+          "source_touch_to_paint_ms": 135.3322,
+          "scheduled_touch_to_paint_ms": 137.1571
+        },
+        {
+          "contact_id": 2,
+          "touch_sample": 60871,
+          "published_sample": 60960,
+          "raw_release_trigger": 60970,
+          "source_confirmation_sample_span": 99,
+          "source_confirmation_time_ms": 99.7486,
+          "enqueue_host_bounds_ns": [
+            460207018238500,
+            460207029234000
+          ],
+          "dequeue_host_bounds_ns": [
+            460207029234000,
+            460207099929900
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            81.6914
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            70.6959
+          ],
+          "publication_host_bounds_ns": [
+            460207029234000,
+            460207099929900
+          ],
+          "source_trigger_to_publication_ms": [
+            10.9955,
+            81.6914
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -19.047,
+            51.6489
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            51.6489
+          ],
+          "source_touch_to_paint_ms": 162.393,
+          "scheduled_touch_to_paint_ms": 162.9692
+        },
+        {
+          "contact_id": 4,
+          "touch_sample": 61475,
+          "published_sample": 61541,
+          "raw_release_trigger": 61551,
+          "source_confirmation_sample_span": 76,
+          "source_confirmation_time_ms": 62.9578,
+          "enqueue_host_bounds_ns": [
+            460207600584800,
+            460207672041000
+          ],
+          "dequeue_host_bounds_ns": [
+            460207556825800,
+            460207672041000
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            71.4562
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            115.2152
+          ],
+          "publication_host_bounds_ns": [
+            460207600584800,
+            460207672041000
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            71.4562
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -11.2957,
+            60.1605
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            60.1605
+          ],
+          "source_touch_to_paint_ms": 123.1183,
+          "scheduled_touch_to_paint_ms": 124.4794
+        },
+        {
+          "contact_id": 5,
+          "touch_sample": 62050,
+          "published_sample": 62111,
+          "raw_release_trigger": 62121,
+          "source_confirmation_sample_span": 71,
+          "source_confirmation_time_ms": 83.063,
+          "enqueue_host_bounds_ns": [
+            460208185350200,
+            460208274514600
+          ],
+          "dequeue_host_bounds_ns": [
+            460208153447400,
+            460208274514600
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            89.1644
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            121.0672
+          ],
+          "publication_host_bounds_ns": [
+            460208185350200,
+            460208274514600
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            89.1644
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -53.1794,
+            35.985
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            35.985
+          ],
+          "source_touch_to_paint_ms": 119.048,
+          "scheduled_touch_to_paint_ms": 119.1904
+        },
+        {
+          "contact_id": 6,
+          "touch_sample": 62626,
+          "published_sample": 62693,
+          "raw_release_trigger": 62703,
+          "source_confirmation_sample_span": 77,
+          "source_confirmation_time_ms": 77.9932,
+          "enqueue_host_bounds_ns": [
+            460208752805600,
+            460208809847100
+          ],
+          "dequeue_host_bounds_ns": [
+            460208745977900,
+            460208809847100
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            57.0415
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            63.8692
+          ],
+          "publication_host_bounds_ns": [
+            460208752805600,
+            460208809847100
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            57.0415
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -13.7775,
+            43.264
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            43.264
+          ],
+          "source_touch_to_paint_ms": 121.2572,
+          "scheduled_touch_to_paint_ms": 121.8434
+        },
+        {
+          "contact_id": 7,
+          "touch_sample": 63199,
+          "published_sample": 63258,
+          "raw_release_trigger": 63268,
+          "source_confirmation_sample_span": 69,
+          "source_confirmation_time_ms": 82.8992,
+          "enqueue_host_bounds_ns": [
+            460209331951800,
+            460209409273900
+          ],
+          "dequeue_host_bounds_ns": [
+            460209281572600,
+            460209409273900
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            77.3221
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            127.7013
+          ],
+          "publication_host_bounds_ns": [
+            460209331951800,
+            460209409273900
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            77.3221
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -14.8996,
+            62.4225
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            62.4225
+          ],
+          "source_touch_to_paint_ms": 145.3217,
+          "scheduled_touch_to_paint_ms": 146.2747
+        },
+        {
+          "contact_id": 8,
+          "touch_sample": 63747,
+          "published_sample": 63806,
+          "raw_release_trigger": 63816,
+          "source_confirmation_sample_span": 69,
+          "source_confirmation_time_ms": 66.1463,
+          "enqueue_host_bounds_ns": [
+            460209863279200,
+            460209883171600
+          ],
+          "dequeue_host_bounds_ns": [
+            460209883171600,
+            460209991303300
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            128.0241
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            108.1317
+          ],
+          "publication_host_bounds_ns": [
+            460209883171600,
+            460209991303300
+          ],
+          "source_trigger_to_publication_ms": [
+            19.8924,
+            128.0241
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -73.8111,
+            34.3206
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            34.3206
+          ],
+          "source_touch_to_paint_ms": 120.3593,
+          "scheduled_touch_to_paint_ms": 122.4653
+        },
+        {
+          "contact_id": 10,
+          "touch_sample": 64328,
+          "published_sample": 64397,
+          "raw_release_trigger": 64407,
+          "source_confirmation_sample_span": 79,
+          "source_confirmation_time_ms": 69.5481,
+          "enqueue_host_bounds_ns": [
+            460210459249700,
+            460210472350600
+          ],
+          "dequeue_host_bounds_ns": [
+            460210472350600,
+            460210579007800
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            119.7581
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            106.6572
+          ],
+          "publication_host_bounds_ns": [
+            460210472350600,
+            460210579007800
+          ],
+          "source_trigger_to_publication_ms": [
+            13.1009,
+            119.7581
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -67.3827,
+            39.2745
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            39.2745
+          ],
+          "source_touch_to_paint_ms": 121.9235,
+          "scheduled_touch_to_paint_ms": 122.8102
+        },
+        {
+          "contact_id": 11,
+          "touch_sample": 64883,
+          "published_sample": 64947,
+          "raw_release_trigger": 64957,
+          "source_confirmation_sample_span": 74,
+          "source_confirmation_time_ms": 82.1541,
+          "enqueue_host_bounds_ns": [
+            460211017407800,
+            460211068949200
+          ],
+          "dequeue_host_bounds_ns": [
+            460210999227000,
+            460211068949200
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            51.5414
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            69.7222
+          ],
+          "publication_host_bounds_ns": [
+            460211017407800,
+            460211068949200
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            51.5414
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -12.5997,
+            38.9417
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            38.9417
+          ],
+          "source_touch_to_paint_ms": 121.0958,
+          "scheduled_touch_to_paint_ms": 123.3154
+        }
+      ],
+      "max_latency_ms": 162.393,
+      "scheduled_max_ms": 162.9692,
+      "input_lateness_ms": 88.1977,
+      "observed_queue_lower": 92,
+      "queue_upper": 147,
+      "work": {
+        "video": 800,
+        "inferences": 408,
+        "model_wall_ms_median": 22.95544999651611,
+        "model_wall_ms_mean": 26.26929706000773,
+        "precontact_model_calls": 142,
+        "precontact_model_wall_ms_median": 22.2397499892395,
+        "sdk": {
+          "start_success": true,
+          "stop_success": true,
+          "ready_events": [
+            {
+              "method": "tracking_start",
+              "code": 0,
+              "sdk_pid": 9768,
+              "gui_pid": 12424,
+              "observed_ns": 460190444539800
+            }
+          ],
+          "errors": [],
+          "tracking_decisions": 479,
+          "nonzero_speeds": 397
+        },
+        "draws": {
+          "all": 633,
+          "valid": 633,
+          "disabled_calls": 0
+        }
+      },
+      "context": {
+        "context_reads_pass": true,
+        "role_pids": {
+          "gui": 12424,
+          "model": 12424,
+          "consumer": 12424
+        },
+        "foreground_self": {
+          "consumer/59904": true,
+          "gui/59904": true,
+          "model/59904": true,
+          "consumer/65904": true,
+          "gui/65904": true,
+          "model/65904": true
+        },
+        "foreground_gui": {
+          "consumer/59904": true,
+          "gui/59904": true,
+          "model/59904": true,
+          "consumer/65904": true,
+          "gui/65904": true,
+          "model/65904": true
+        },
+        "policy": {
+          "consumer/59904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "gui/59904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "model/59904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "consumer/65904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "gui/65904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "model/65904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          }
+        },
+        "scope": "Two phase checkpoints after original calls; not continuous scheduler coverage or observer-disturbance qualification."
+      },
+      "original_return_model_confirmed": false,
+      "complete": true,
+      "semantics_pass": true,
+      "native_SDK_pass": true,
+      "mode": "original",
+      "pair": 4
+    }
+  },
+  "cohort_complete": true,
+  "cohort_errors": [],
+  "interpretation": "One finite paired causal experiment. Dynamic model/GUI/SDK policies are unchanged; delivered selections can be mediated by scheduling. No GIL duration/CPU shares.",
+  "old_calibration_upgraded": false,
+  "formal_program_modified": false,
+  "bindings": {
+    "plan_sha256": "1ff2ef320f9293947e774ef23fdc91d8f7b78bdbbceca543b6292709318e95a2",
+    "analyzer_sha256": "7c3965a8bfb45d2c4d937639a364a520e7d895ee717ac4049a741b388f99feee",
+    "archive_sha256": "ca786be00bee394dc8e9f47ef1f37221c3888013558b00a5875b2a925b7102b8"
+  }
+}
