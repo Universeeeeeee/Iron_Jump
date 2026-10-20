@@ -56,7 +56,8 @@ def main():
             except BaseException as failure:
                 write(stage/'pipeline_failure.json',dict(error=repr(failure),traceback=__import__('traceback').format_exc()));raise
             write(stage/'pipeline_review.json',review)
-            if not final['metadata_finalization_pass']:raise RuntimeError('Model finalization failed')
+            if case['vision_mode']=='original' and not final['metadata_finalization_pass']:raise RuntimeError('Local model finalization failed')
+            if case['vision_mode']=='process' and not (boundary['proxy'] and boundary['proxy']['model_closed']):raise RuntimeError('Child model finalization failed')
         restore(contexts);CameraControlService.__init__=original_control;local.LocalSession=original_local
 
 if __name__=='__main__':main()

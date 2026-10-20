@@ -1,0 +1,16 @@
+{
+  "plan": "plan02.json",
+  "completed_windows": ["aa01", "aa02", "aa03", "aa04", "pair01_original"],
+  "failed_window": "pair01_process",
+  "not_attempted_windows": ["pair02_process", "pair02_original", "pair03_original", "pair03_process", "pair04_process", "pair04_original"],
+  "failure": "video/model child decoded zero frames before the session ended",
+  "causes": [
+    "child computed media offset from the full raw file rather than SourceClock.original_start_ns for the cropped source",
+    "parent-only model finalizer was incorrectly required when the model service lived in the child"
+  ],
+  "measurement_report_and_footprints_completed": true,
+  "candidate_performance_evidence": false,
+  "replacement_window_used": false,
+  "complete_remote_archive_sha256": "ac3f5fbd7bbad92ad972a65ece94b17dc7dc965e83af486a9e94637fab134f65",
+  "remote_manifest_sha256": "57f50f7912ed3249acdbf3973306c94e4f1f9f74f1fa80888d597ebf7db886db"
+}

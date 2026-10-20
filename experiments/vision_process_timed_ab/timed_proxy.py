@@ -18,6 +18,9 @@ ROOT=HERE.parents[1]
 
 def pose_payload(pose):return None if pose is None else asdict(pose)
 
+def media_due_ns(anchor_ns,record_start_ns,source_original_start_ns,elapsed_s):
+    return anchor_ns+(record_start_ns-source_original_start_ns)+round(elapsed_s*1e9)
+
 
 def payload_pose(value):
     if value is None:return None
@@ -36,7 +39,7 @@ def receive(connection,kind,timeout=180):
     return message
 
 
-def run_actor(connection,controls,memory_name,capacity,anchor_ns,input_root,model_path,checkpoints,folder):
+def run_actor(connection,controls,memory_name,capacity,anchor_ns,original_start_ns,input_root,model_path,checkpoints,folder):
     import cv2
     import sys
     sys.path.insert(0,str(ROOT))
@@ -86,12 +89,10 @@ def run_actor(connection,controls,memory_name,capacity,anchor_ns,input_root,mode
         root=Path(input_root);rows=[]
         with (root/'camera.csv').open(newline='') as source:rows=list(csv.DictReader(source))
         record_start=json.loads((root/'camera_record_start.json').read_text())['host_ns']
-        import numpy as np
-        with np.load(root/'raw_frames.npz') as raw:original_start=int(raw['received_ns'][0])
-        relative_ns=record_start-original_start;last_elapsed=-1.0
+        last_elapsed=-1.0
         vision.pose_updates.connect(update);vision.start();connection.send(dict(kind='ready',pid=record['pid'],tid=record['tid']))
         deadline=time.monotonic()+30
-        while anchor_ns.value<=0:
+        while anchor_ns.value<=0 or original_start_ns.value<=0:
             drain_controls();drain_updates()
             if time.monotonic()>=deadline:raise TimeoutError('Source anchor unavailable')
             time.sleep(.005)
@@ -100,7 +101,7 @@ def run_actor(connection,controls,memory_name,capacity,anchor_ns,input_root,mode
                 if drain_controls():break
                 elapsed=float(row['record_elapsed_seconds'])
                 if elapsed-last_elapsed<1/30:continue
-                last_elapsed=elapsed;due=lambda:anchor_ns.value+relative_ns+round(elapsed*1e9)
+                last_elapsed=elapsed;due=lambda:media_due_ns(anchor_ns.value,record_start,original_start_ns.value,elapsed)
                 while time.perf_counter_ns()<due():
                     if drain_controls():break
                     drain_updates();time.sleep(min(.005,max(0,(due()-time.perf_counter_ns())/1e9)))
@@ -138,16 +139,17 @@ class TimedVisionProcess:
         from vision.service import EventHook
         self.input_root=Path(input_root);self.model_path=Path(model_path);self.folder=Path(folder);self.preview_callback=preview_callback;self.clock=clock;self.checkpoints=list(checkpoints);self.capacity=capacity
         self.pose_updates=EventHook();self._lock=threading.RLock();self._pose=None;self._status='正在加载人体识别…';self._check=None
-        self.process=None;self.connection=None;self.controls=None;self.memory=None;self.anchor=None;self.receiver=None;self.result=None;self.errors=[]
+        self.process=None;self.connection=None;self.controls=None;self.memory=None;self.anchor=None;self.original_start=None;self.receiver=None;self.result=None;self.errors=[]
         self.preview_ids=[];self.inference_ids=[];self.snapshot_count=0;self.accepting_preview=True
     def start(self):
         self.folder.mkdir(exist_ok=False);(self.folder/'active.lock').mkdir();context=multiprocessing.get_context('spawn')
-        self.memory=shared_memory.SharedMemory(create=True,size=self.capacity);self.anchor=context.Value('q',0,lock=False);self.controls=context.Queue(maxsize=128);self.connection,child=context.Pipe()
-        self.process=context.Process(target=run_actor,args=(child,self.controls,self.memory.name,self.capacity,self.anchor,str(self.input_root),str(self.model_path),self.checkpoints,str(self.folder)))
+        self.memory=shared_memory.SharedMemory(create=True,size=self.capacity);self.anchor=context.Value('q',0,lock=False);self.original_start=context.Value('q',0,lock=False);self.controls=context.Queue(maxsize=128);self.connection,child=context.Pipe()
+        self.process=context.Process(target=run_actor,args=(child,self.controls,self.memory.name,self.capacity,self.anchor,self.original_start,str(self.input_root),str(self.model_path),self.checkpoints,str(self.folder)))
         self.process.start();child.close();self.receiver=threading.Thread(target=self._receive,name='TimedVisionReceiver',daemon=True);self.receiver.start()
         with (self.folder/'controller.json').open('x') as target:json.dump(dict(parent_pid=os.getpid(),child_pid=self.process.pid,shared_memory=self.memory.name),target,indent=2)
     def update_anchor(self):
         if self.clock.anchor_ns is not None:self.anchor.value=int(self.clock.anchor_ns)
+        if self.clock.original_start_ns is not None:self.original_start.value=int(self.clock.original_start_ns)
     def _receive(self):
         previews=updates=0;child_record=None
         try:

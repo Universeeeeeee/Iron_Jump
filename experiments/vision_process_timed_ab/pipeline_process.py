@@ -7,7 +7,7 @@ read=lambda p:json.loads(p.read_text(encoding='utf-8-sig'))
 def verify_pipeline(stage,parent_anchors,boundary):
     stage=Path(stage);gui=read(stage/'gui_result.json');local=read(stage/'client/actor/result.json');status=read(stage/'client/status.json')
     sdk=read(stage/'sdk_backend.json');final=read(stage/'finalization.json');vision=boundary['proxy']
-    assert gui['complete'] and local['complete'] and status['complete'] and final['metadata_finalization_pass']
+    assert gui['complete'] and local['complete'] and status['complete']
     assert gui['backend']=='original' and local['backend']=='original_same_process' and not local['ipc_enabled'] and not status['ipc_enabled']
     assert gui['pid']==local['pid']==gui['measurement_pid']==status['measurement_pid'] and gui['actor_pid'] is None
     assert local['thread_ids']['gui']!=local['thread_ids']['consumer'] and local['reader_stopped'] and local['qt_thread_stopped'] and local['controller_released']
@@ -31,5 +31,5 @@ def verify_pipeline(stage,parent_anchors,boundary):
     return dict(timed_video_model_process_delivery_pass=True,original_controller_and_qthread=True,no_measurement_ipc=True,
         gui_and_measurement_pid=gui['pid'],vision_pid=vision['child_pid'],sdk_pid=sdk['pid'],qpc=clocks,
         actual_model_calls=vision['inference_count'],actual_video_frames=vision['preview_count'],stale_frames_skipped=vision['stale_frames_skipped'],
-        original_return_model_confirmed=final['application_return_model_confirmed'],final_model_cleanup_confirmed=True,
+        parent_model_observer_not_applicable=not final['metadata_finalization_pass'],final_model_cleanup_confirmed=True,
         actual_load_disturbance_pass=False,performance_or_field_fix_qualification=False)

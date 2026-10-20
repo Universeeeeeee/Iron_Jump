@@ -1,5 +1,6 @@
 import unittest
 from boundary import verify
+from timed_proxy import media_due_ns
 
 class BoundaryTests(unittest.TestCase):
     def test_original_requires_no_proxy(self):verify(dict(mode='original',restored=True,installed=False,proxy=None),'original')
@@ -9,5 +10,7 @@ class BoundaryTests(unittest.TestCase):
     def test_process_rejects_live_child(self):
         value=dict(mode='process',restored=True,installed=True,proxy=dict(complete=True,errors=[],model_closed=True,child_alive=True,shared_memory_unlinked=False))
         with self.assertRaises(AssertionError):verify(value,'process')
+    def test_media_due_uses_cropped_source_origin(self):
+        self.assertEqual(media_due_ns(1000,900,700,.0000002),1400)
 
 if __name__=='__main__':unittest.main()
