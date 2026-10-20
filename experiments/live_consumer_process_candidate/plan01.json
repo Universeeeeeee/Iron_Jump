@@ -1,0 +1,34 @@
+{
+  "sources": {
+    "actor.py": "8b9a9682664a0426ba9163e9d8868dd1fecf07b8cc2dc12319495ba4dd72b330",
+    "client.py": "0e2440d2631d516495b3b3500125dd3f5c5b201a83a038a453c14cae960ae06e",
+    "inbox.py": "e43459ff62480f0222bf829fc504b4a1c17e190dbbaae872b545d013a235b567",
+    "outbox.py": "d56d6057847b910eb658ce44a2fe4761152d40cbfc08d6d460ab623f359eb04a",
+    "preflight.py": "253dd4e0c57addf66d9149ea7ca9b588cae37abe6e4528f33e7088b31d8a788a",
+    "protocol.py": "ffd3274ba1386fb312d2f4ff7778ed3645eab8e674b8729b43f4c84d3a28ba23",
+    "test_boundary.py": "b44a4f0f21cdfe6bd0944cc89b445981385a1520899140d8bbc70a6fb5d84f6f",
+    "test_protocol.py": "e725d0c0fae62fb353871a8aa61d9e4b53b697a2dee081e11d7bc9e654e388b9"
+  },
+  "formal_sha256": {
+    "ui/session_controller.py": "548b7acfb92f7f622d07adf8dd46ab1bfb5e7f9c97f8e7de51e09558bba6d409",
+    "hardware/usb_worker.py": "57ca85b42401f242026fdfded5d4002d06e85d5da866980dcc2ab99771a9041d",
+    "engine/device_quality_session.py": "60bcda47899b3bd320e2f4870103d14202e15ad905cbd502a376195f91e6d2cb",
+    "engine/gait_engine.py": "063f13a5b1bc14dbaba54febaf835746dc1758a6104d2b5ecb8276d42e344075",
+    "engine/overground_session.py": "c5ceaf0d0f44818a6d3b077d4025249c0285b9666b41b15275f30d20c7759c67",
+    "engine/walking_session.py": "7986c9bd40d6ca0918878355e58b53fde372caa45403861e88a1d16bb8f98afc",
+    "engine/modes/walking_processor.py": "c71a9e657142966c6036cc1f8090e26a7731cefde2b4f80393f8e06ed37829ba",
+    "hardware/beam_filter.py": "3b4e9a1b1ac278eb4b7011cd54b4bbce49b4346fb65ee2371aa21a06807bb846",
+    "config/test_report.py": "54f13aca41ac4041b2589443c65e5515de0297610df7200b29f40d37113b534b"
+  },
+  "batch_size": 40,
+  "scope": "Live USB child SessionController protocol and lifecycle preparation only. No target started by preflight.",
+  "acceptance": [
+    "ordered bounded commands and outputs",
+    "original SessionController and default UsbWorker",
+    "batch40 only in child",
+    "stop/discard after QThread/reader/writer confirmation",
+    "local report/state/raw evidence retained on failure"
+  ],
+  "formal_program_modified": false,
+  "field_fix_verified": false
+}
