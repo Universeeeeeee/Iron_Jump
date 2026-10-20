@@ -7,7 +7,7 @@ from config.walking_config import WalkingConfig
 from client import LiveSessionProcess
 if __name__=='__main__':
  plan=json.loads((HERE/'plan03.json').read_text(encoding='utf-8'));fixture=Path(plan['fixture_root']);meta=json.loads((fixture/'report.json').read_text(encoding='utf-8'))['report_config_snapshot'];cfg=WalkingConfig(**{k:v for k,v in meta.items() if k in WalkingConfig.__dataclass_fields__ and WalkingConfig.__dataclass_fields__[k].init})
- app=QCoreApplication([]);client=LiveSessionProcess(HERE/'runs/smoke01',fixture_root=str(fixture));started=[];reports=[];closed=[];errors=[]
+ app=QCoreApplication([]);runs=HERE/'runs';runs.mkdir(exist_ok=False);client=LiveSessionProcess(runs/'smoke01',fixture_root=str(fixture));started=[];reports=[];closed=[];errors=[]
  def ready(value):
   if value.get('ready') and not started and not client._start_pending:client.start(acknowledge_quality=True,quality_key=value['device_key'])
  def armed():started.append(True);QTimer.singleShot(3000,client.stop)
