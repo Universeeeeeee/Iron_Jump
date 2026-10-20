@@ -1,22 +1,20 @@
 {
-  "scope": "Read-only localization inside the retained isolated-consumer early queue-build phase; no new workload.",
-  "inputs": [
-    "2.27s queue build and 2.50s recovery boundaries",
-    "isolated consumer actor events and exact report",
-    "model/GUI phase records and offline original-chain stage costs"
+  "scope": "Productionize the saved-input-passing consumer-process plus batch40 boundary behind a reversible ground-mode controller.",
+  "requirements": [
+    "live USB frames delivered in order without loss or coalescing",
+    "same quality/filter/Processor/report semantics and bad-beam handling",
+    "bounded commands/output transport and confirmed child shutdown",
+    "existing lifecycle, walking, report and UI tests pass"
   ],
-  "outputs": [
-    "input/sample subrange responsible for the 5% residual",
-    "whether residual is sustained compute or intermittent batch/event-loop stall",
-    "one stage candidate capable of at least0.056ms/frame without report changes"
+  "field_acceptance": [
+    "single USB Walk reproduces 1000Hz input",
+    "FIFO upper <=250 and scheduled contact-to-paint <=250ms",
+    "all expected footprints and exact quality/report semantics",
+    "no camera/SDK/model or process cleanup failure"
   ],
-  "decisions": {
-    "next_candidate": "only a measured stage closing >=5% or0.056ms/frame may enter offline semantic/performance A/B",
-    "insufficient": "no single stage or boundary explains enough of the transient"
-  },
   "constraints": [
-    "No new reboot,human,USB,Run or ordinary fast-state window",
+    "No Run or unrelated business changes",
     "No CPU/GIL/frequency percentage from failed PMC accounting",
-    "No formal optimization before exact-output offline validation"
+    "Keep a reversible original-controller fallback until field acceptance"
   ]
 }

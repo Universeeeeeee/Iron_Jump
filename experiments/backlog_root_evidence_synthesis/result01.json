@@ -1,5 +1,5 @@
 {
-  "current_root_conclusion": "The primary actionable software root is inadequate worst-state capacity when the consumer shares the GUI process. Consumer isolation restores sustained throughput to about995fps, proving this boundary matters, but an early input-dependent transient still violates250 frames/250ms. The physical execution-state cause and exact function remain unidentified.",
+  "current_root_conclusion": "The primary actionable software root is Qt-event-loop wake dependent consumer capacity in the GUI-process architecture. Consumer process isolation removes the sustained deficit; increasing the isolated inbox batch cap from20 to40 removes the remaining wake-sensitive transient on saved input. The physical execution-state cause remains unidentified, and formal/field verification is still pending.",
   "matrix": [
     {
       "question": "Is the old PMC CPU share quantitatively usable?",
@@ -44,6 +44,13 @@
       "next": "Localize at least5% or0.056ms/frame in the isolated early phase."
     },
     {
+      "question": "Does reducing isolated-consumer Qt wake frequency close the retained gap?",
+      "finding": "Yes for saved input",
+      "evidence": "Batch cap40 produced queue lower/upper51/117, scheduled contact-to-paint207.6ms and input lateness79.8ms with exact reports.",
+      "grade": "saved-input candidate pass",
+      "next": "Productionize consumer isolation plus batch40; then perform one real single-USB Walk acceptance."
+    },
+    {
       "question": "Do model and consumer share a slow execution state?",
       "finding": "Strong covariance",
       "evidence": "Severe A/A model medians were 40.5-40.8ms with queue lower 3981-4239; fast A/A model medians 23.1-23.9ms with queue lower 91, while work counts differed only 3-4%. PMC also retained Core/OS about1.00 slow versus1.66-1.68 fast.",
@@ -81,25 +88,23 @@
     }
   ],
   "next_minimal_validation": {
-    "scope": "Read-only localization inside the retained isolated-consumer early queue-build phase; no new workload.",
-    "inputs": [
-      "2.27s queue build and 2.50s recovery boundaries",
-      "isolated consumer actor events and exact report",
-      "model/GUI phase records and offline original-chain stage costs"
+    "scope": "Productionize the saved-input-passing consumer-process plus batch40 boundary behind a reversible ground-mode controller.",
+    "requirements": [
+      "live USB frames delivered in order without loss or coalescing",
+      "same quality/filter/Processor/report semantics and bad-beam handling",
+      "bounded commands/output transport and confirmed child shutdown",
+      "existing lifecycle, walking, report and UI tests pass"
     ],
-    "outputs": [
-      "input/sample subrange responsible for the 5% residual",
-      "whether residual is sustained compute or intermittent batch/event-loop stall",
-      "one stage candidate capable of at least0.056ms/frame without report changes"
+    "field_acceptance": [
+      "single USB Walk reproduces 1000Hz input",
+      "FIFO upper <=250 and scheduled contact-to-paint <=250ms",
+      "all expected footprints and exact quality/report semantics",
+      "no camera/SDK/model or process cleanup failure"
     ],
-    "decisions": {
-      "next_candidate": "only a measured stage closing >=5% or0.056ms/frame may enter offline semantic/performance A/B",
-      "insufficient": "no single stage or boundary explains enough of the transient"
-    },
     "constraints": [
-      "No new reboot,human,USB,Run or ordinary fast-state window",
+      "No Run or unrelated business changes",
       "No CPU/GIL/frequency percentage from failed PMC accounting",
-      "No formal optimization before exact-output offline validation"
+      "Keep a reversible original-controller fallback until field acceptance"
     ]
   },
   "root_function_identified": false,
@@ -133,6 +138,10 @@
     "consumer_capacity": {
       "path": "experiments/consumer_capacity_synthesis/result01.json",
       "sha256": "560d538ea201ba1a2bb4c5e789e7e1d5756fc44b339a6b2ea4759ece0a21608c"
+    },
+    "batch40": {
+      "path": "experiments/consumer_batch40_candidate/evidence/summary01.json",
+      "sha256": "9be8ed9351ff1ee37ced5afe3b6b97c9a58e78c3de4d8b51e043d28f440a44dd"
     },
     "field": {
       "path": "experiments/p1_field_reentry_review/result01.json",

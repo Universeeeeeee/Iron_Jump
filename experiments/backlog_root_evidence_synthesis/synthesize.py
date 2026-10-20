@@ -13,6 +13,7 @@ if __name__=='__main__':
       'preview_bridge':ROOT/'experiments/preview_gil_ab/result01.json',
       'cold_process':ROOT/'experiments/cold_boot_vision_process_ab/evidence/two_window_result03.json',
       'consumer_capacity':ROOT/'experiments/consumer_capacity_synthesis/result01.json',
+      'batch40':ROOT/'experiments/consumer_batch40_candidate/evidence/summary01.json',
       'field':ROOT/'experiments/p1_field_reentry_review/result01.json'}
     values={name:read(path) for name,path in sources.items()};pmc=values['pmc'];timed=values['timed'];spacing=values['spacing']
     assert abs(pmc['unresolved_residual_ms']-83.5967)<1e-6 and not pmc['original_four_window_usability']['frozen_cross_state_quantitative_attribution']
@@ -26,6 +27,7 @@ if __name__=='__main__':
       dict(question='Does video+MediaPipe process isolation give stable fast-state benefit?',finding='No meaningful stable benefit',evidence='Four timed pairs changed latency -3.6%, +0.9%, +5.5%, -5.3%; geometric change -0.69%, with process queue lower bounds slightly higher in all pairs.',grade='rejected in fast state',next='Do not optimize or merge this boundary based on fast windows.'),
       dict(question='Is video+MediaPipe process isolation sufficient in a severe cold-first window?',finding='No',evidence='The process-first cold window still reached queue lower/upper 1614/1694 and scheduled contact-to-paint 1491ms with input lateness 93ms.',grade='rejected as a sufficient fix',next='Return to consumer worst-state service capacity; do not add more visual isolation windows.'),
       dict(question='Does isolating the consumer close the capacity deficit?',finding='Mostly, but not to acceptance',evidence='Whole-contact service rose to994.7fps, but the first2.27s ran at846.8fps, peaked346 frames and reached646ms before recovering at1129fps.',grade='supported primary software boundary; insufficient fix',next='Localize at least5% or0.056ms/frame in the isolated early phase.'),
+      dict(question='Does reducing isolated-consumer Qt wake frequency close the retained gap?',finding='Yes for saved input',evidence='Batch cap40 produced queue lower/upper51/117, scheduled contact-to-paint207.6ms and input lateness79.8ms with exact reports.',grade='saved-input candidate pass',next='Productionize consumer isolation plus batch40; then perform one real single-USB Walk acceptance.'),
       dict(question='Do model and consumer share a slow execution state?',finding='Strong covariance',evidence='Severe A/A model medians were 40.5-40.8ms with queue lower 3981-4239; fast A/A model medians 23.1-23.9ms with queue lower 91, while work counts differed only 3-4%. PMC also retained Core/OS about1.00 slow versus1.66-1.68 fast.',grade='supported common-state hypothesis',next='Name only execution-delivery state; frequency, cache, power, thermal and exact native function remain unknown.'),
       dict(question='Do process restart or five-minute quiet gaps control the state?',finding='No',evidence='Six fixed-work windows stayed slow across 5s and qualified 300s low-load gaps; other GUI sequences recovered after two windows.',grade='rejected as sufficient conditions',next='Do not add ordinary spacing windows.')]
     ranking=[
@@ -33,12 +35,11 @@ if __name__=='__main__':
       dict(rank=2,hypothesis='Shared native/CPU execution-delivery state and input-dependent work amplify the early deficit',status='supported covariance; mechanism unnamed'),
       dict(rank=3,hypothesis='Moving video/model alone controls severe backlog',status='rejected as sufficient in a severe process-first cold window'),
       dict(rank=4,hypothesis='USB/grating power state is the primary cause',status='weak field correlation only; host saved-input severe state exists without live USB')]
-    capacity=dict(scope='Read-only localization inside the retained isolated-consumer early queue-build phase; no new workload.',
-      inputs=['2.27s queue build and 2.50s recovery boundaries','isolated consumer actor events and exact report','model/GUI phase records and offline original-chain stage costs'],
-      outputs=['input/sample subrange responsible for the 5% residual','whether residual is sustained compute or intermittent batch/event-loop stall','one stage candidate capable of at least0.056ms/frame without report changes'],
-      decisions={'next_candidate':'only a measured stage closing >=5% or0.056ms/frame may enter offline semantic/performance A/B','insufficient':'no single stage or boundary explains enough of the transient'},
-      constraints=['No new reboot,human,USB,Run or ordinary fast-state window','No CPU/GIL/frequency percentage from failed PMC accounting','No formal optimization before exact-output offline validation'])
-    result=dict(current_root_conclusion='The primary actionable software root is inadequate worst-state capacity when the consumer shares the GUI process. Consumer isolation restores sustained throughput to about995fps, proving this boundary matters, but an early input-dependent transient still violates250 frames/250ms. The physical execution-state cause and exact function remain unidentified.',
+    capacity=dict(scope='Productionize the saved-input-passing consumer-process plus batch40 boundary behind a reversible ground-mode controller.',
+      requirements=['live USB frames delivered in order without loss or coalescing','same quality/filter/Processor/report semantics and bad-beam handling','bounded commands/output transport and confirmed child shutdown','existing lifecycle, walking, report and UI tests pass'],
+      field_acceptance=['single USB Walk reproduces 1000Hz input','FIFO upper <=250 and scheduled contact-to-paint <=250ms','all expected footprints and exact quality/report semantics','no camera/SDK/model or process cleanup failure'],
+      constraints=['No Run or unrelated business changes','No CPU/GIL/frequency percentage from failed PMC accounting','Keep a reversible original-controller fallback until field acceptance'])
+    result=dict(current_root_conclusion='The primary actionable software root is Qt-event-loop wake dependent consumer capacity in the GUI-process architecture. Consumer process isolation removes the sustained deficit; increasing the isolated inbox batch cap from20 to40 removes the remaining wake-sensitive transient on saved input. The physical execution-state cause remains unidentified, and formal/field verification is still pending.',
       matrix=matrix,hypothesis_ranking=ranking,next_minimal_validation=capacity,root_function_identified=False,formal_fix_verified=False,field_fix_verified=False,
       bindings={name:dict(path=str(path.relative_to(ROOT)),sha256=sha(path)) for name,path in sources.items()})
     (HERE/'result01.json').write_text(json.dumps(result,indent=2)+'\n')
