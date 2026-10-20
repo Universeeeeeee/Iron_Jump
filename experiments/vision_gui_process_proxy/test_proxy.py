@@ -1,7 +1,10 @@
 from dataclasses import dataclass
 import hashlib
+from pathlib import Path
+import sys
 import unittest
 import numpy as np
+sys.path.insert(0,str(Path(__file__).resolve().parents[2]))
 from proxy import digest,frame_identity,payload_pose,pose_payload
 
 

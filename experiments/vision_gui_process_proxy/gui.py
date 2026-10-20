@@ -13,8 +13,8 @@ read=lambda p:json.loads(p.read_text(encoding='utf-8-sig'))
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 
 if __name__=='__main__':
-    plan=read(HERE/'plan01.json');gate=read(HERE/'preflight_passed01.json')
-    assert gate['passed'] and gate['plan_sha256']==sha(HERE/'plan01.json') and gate['tests_sha256']==sha(HERE/'windows_tests01.json')
+    plan=read(HERE/'plan02.json');gate=read(HERE/'preflight_passed02.json')
+    assert gate['passed'] and gate['plan_sha256']==sha(HERE/'plan02.json') and gate['tests_sha256']==sha(HERE/'windows_tests02.json')
     assert all(sha(HERE/n)==v for n,v in plan['sources'].items()) and all(sha(ROOT/n)==v for n,v in plan['existing_sources'].items())
     from qtpy.QtCore import QTimer,QEventLoop
     from qtpy.QtWidgets import QApplication,QWidget,QVBoxLayout,QHBoxLayout,QLabel

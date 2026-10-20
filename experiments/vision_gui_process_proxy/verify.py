@@ -8,7 +8,7 @@ read=lambda p:json.loads(p.read_text(encoding='utf-8-sig'))
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 
 if __name__=='__main__':
-    plan=read(HERE/'plan01.json');stage=HERE/'runs01';gui=read(stage/'gui_result.json');vision=read(stage/'vision/result.json')
+    plan=read(HERE/'plan02.json');stage=HERE/'runs01';gui=read(stage/'gui_result.json');vision=read(stage/'vision/result.json')
     child=read(stage/'vision/child_result.json');client=read(stage/'client/status.json');actor=read(stage/'client/actor/result.json');sdk=read(stage/'sdk_backend.json')
     assert all(sha(HERE/name)==digest for name,digest in plan['sources'].items())
     assert gui['complete'] and not gui['errors'] and vision['complete'] and not vision['errors'] and child['closed'] and not child['errors']
@@ -30,6 +30,6 @@ if __name__=='__main__':
         original_measurement_report_quality_and_raw_exact=True,model_close_child_exit_and_shared_memory_cleanup=True,
         actual_camera_recording_qualified=False,performance_qualification=False,field_fix_verified=False,
         next_step='Freeze a timed same-input original/process A/A and AB/BA only after this semantic gate; require severe original backlog and unchanged report semantics.',
-        bindings={name:sha(path) for name,path in {'plan01.json':HERE/'plan01.json','gui_result.json':stage/'gui_result.json','vision_result.json':stage/'vision/result.json','actor_result.json':stage/'client/actor/result.json'}.items()})
-    with (HERE/'result01.json').open('x') as target:json.dump(result,target,indent=2)
+        bindings={name:sha(path) for name,path in {'plan02.json':HERE/'plan02.json','gui_result.json':stage/'gui_result.json','vision_result.json':stage/'vision/result.json','actor_result.json':stage/'client/actor/result.json'}.items()})
+    with (HERE/'result02.json').open('x') as target:json.dump(result,target,indent=2)
     print(json.dumps(result,indent=2))

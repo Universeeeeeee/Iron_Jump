@@ -1,0 +1,12 @@
+{
+  "plan": "plan01.json",
+  "phase": "new_protocol_tests",
+  "workload_started": false,
+  "failure": "ModuleNotFoundError: No module named 'vision'",
+  "cause": "test process launched with the experiment directory as cwd did not add the repository root to sys.path",
+  "new_tests_from_repository_root": "passed but rejected as a cwd-dependent false loop",
+  "new_tests_from_experiment_directory": "3 run, 1 error",
+  "existing_session_gui_vision_tests": "23 run, passed",
+  "replacement_run_used": false,
+  "remote_failure_directory_retained": "experiments/vision_gui_process_proxy"
+}
