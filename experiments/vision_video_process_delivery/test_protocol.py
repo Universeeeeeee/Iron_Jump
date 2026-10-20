@@ -4,7 +4,7 @@ from pathlib import Path
 import tempfile
 import unittest
 import numpy as np
-from common import frame_identity
+from common import frame_identity,preview_identity
 from process_delivery import receive,reference_path
 
 
@@ -20,6 +20,10 @@ class Protocol(unittest.TestCase):
         value=frame_identity(frame,meta)
         self.assertEqual(value['shape'],[2,3,3]);self.assertEqual(value['strides'],list(frame.strides))
         self.assertEqual(value['pixels_sha256'],hashlib.sha256(frame.tobytes()).hexdigest())
+
+    def test_preview_identity_includes_message_ordinal(self):
+        frame=np.zeros((1,1,3),dtype=np.uint8);value=preview_identity(frame,dict(frame_index=7),12)
+        self.assertEqual(value['ordinal'],12)
 
     def test_wrong_kind_rejected(self):
         with self.assertRaises(ValueError):receive(FakeConnection(dict(kind='other')),'ready')

@@ -10,7 +10,7 @@ import threading
 import time
 
 import numpy as np
-from common import Media,canonical_pose,frame_identity,sha
+from common import Media,canonical_pose,preview_identity,sha
 
 HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[1]
@@ -37,7 +37,7 @@ def child(connection,shm_name,capacity,plan,schedule,folder):
         for call in schedule['inferences']:by_frame.setdefault(call['frame_index'],[]).append(call)
         with Media(plan['input_root'],plan['media_sha256']) as media:
             for ordinal,frame_id in enumerate(schedule['preview_frame_ids']):
-                frame,meta=media.decode(frame_id);identity=frame_identity(frame,meta);raw=frame.tobytes()
+                frame,meta=media.decode(frame_id);identity=preview_identity(frame,meta,ordinal);raw=frame.tobytes()
                 if len(raw)>capacity:raise ValueError('Shared frame capacity exceeded')
                 memory.buf[:len(raw)]=raw
                 connection.send(dict(kind='preview',ordinal=ordinal,identity=identity,nbytes=len(raw)))
@@ -67,7 +67,7 @@ def child(connection,shm_name,capacity,plan,schedule,folder):
 
 
 if __name__=='__main__':
-    plan=json.loads((HERE/'plan03.json').read_text());folder=Path(sys.argv[1]);folder.mkdir(exist_ok=False);(folder/'active.lock').mkdir()
+    plan=json.loads((HERE/'plan04.json').read_text());folder=Path(sys.argv[1]);folder.mkdir(exist_ok=False);(folder/'active.lock').mkdir()
     assert all(sha(HERE/n)==v for n,v in plan['sources'].items()) and sha(Path(plan['model_path']))==plan['model_sha256']
     schedule=json.loads((HERE/'selection01.json').read_text());reference=json.loads(reference_path(folder).read_text())
     assert reference['complete'] and not reference['errors']

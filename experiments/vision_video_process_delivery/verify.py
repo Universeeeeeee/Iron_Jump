@@ -8,7 +8,7 @@ read=lambda p:json.loads(p.read_text(encoding='utf-8-sig'))
 sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 
 if __name__=='__main__':
-    p=read(HERE/'plan03.json');runs=HERE/'runs';status=read(runs/'status.json')
+    p=read(HERE/'plan04.json');runs=HERE/'runs';status=read(runs/'status.json')
     assert status['complete'] and not status['errors'] and len(status['steps'])==2
     assert all(v['complete'] and not v['errors'] and not v['target_still_running'] and v['returncode']==0 for v in status['steps'])
     assert all(sha(HERE/n)==v for n,v in p['sources'].items()) and sha(HERE/'selection01.json')==p['selection_sha256']
@@ -24,6 +24,6 @@ if __name__=='__main__':
         shared_memory_acknowledgement_and_unlink=True,model_close_and_child_exit=True,
         actual_camera_recording_qualified=False,GUI_SDK_tracking_qualified=False,performance_qualification=False,field_fix_verified=False,
         next_step='Integrate the same child protocol behind an experiment-only camera/vision proxy; verify actual GUI preview,SDK decisions,recording andfull reports before any performance A/B.',
-        bindings={f.name:sha(f) for f in (Path(__file__),HERE/'plan03.json',HERE/'selection01.json',runs/'reference01.json',runs/'process01/result.json')})
+        bindings={f.name:sha(f) for f in (Path(__file__),HERE/'plan04.json',HERE/'selection01.json',runs/'reference01.json',runs/'process01/result.json')})
     with (HERE/'result01.json').open('x') as f:json.dump(out,f,indent=2)
     print(json.dumps(out,indent=2))

@@ -3,13 +3,13 @@ import json
 from pathlib import Path
 import sys
 
-from common import Media,canonical_pose,frame_identity,sha
+from common import Media,canonical_pose,preview_identity,sha
 
 HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[1]
 
 if __name__=='__main__':
-    plan=json.loads((HERE/'plan03.json').read_text());output=Path(sys.argv[1]);assert not output.exists()
+    plan=json.loads((HERE/'plan04.json').read_text());output=Path(sys.argv[1]);assert not output.exists()
     assert all(sha(HERE/n)==v for n,v in plan['sources'].items())
     assert sha(Path(plan['model_path']))==plan['model_sha256']
     sys.path.insert(0,str(ROOT));from vision.live_walking import _PreviewAdapter
@@ -20,7 +20,7 @@ if __name__=='__main__':
         adapter.open()
         with Media(plan['input_root'],plan['media_sha256']) as media:
             for ordinal,frame_id in enumerate(schedule['preview_frame_ids']):
-                frame,meta=media.decode(frame_id);identity=frame_identity(frame,meta);identity['ordinal']=ordinal;previews.append(identity)
+                frame,meta=media.decode(frame_id);previews.append(preview_identity(frame,meta,ordinal))
                 for call in by_frame.get(frame_id,[]):
                     pose=adapter.infer_bgr(frame,call['timestamp_ms'])
                     inferences.append(dict(**call,pose_sha256=canonical_pose(pose)))

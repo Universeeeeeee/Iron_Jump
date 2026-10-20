@@ -51,3 +51,7 @@ class Media:
 def frame_identity(frame,meta):
     return dict(**meta,shape=list(frame.shape),dtype=str(frame.dtype),strides=list(frame.strides),
         pixels_sha256=hashlib.sha256(frame.tobytes()).hexdigest())
+
+
+def preview_identity(frame,meta,ordinal):
+    value=frame_identity(frame,meta);value['ordinal']=ordinal;return value
