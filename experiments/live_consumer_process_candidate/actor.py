@@ -18,6 +18,7 @@ def run_actor(connection,output_root,batch_size=40,fixture_root=None):
  from ui.session_controller import SessionController,_GroundFrameInbox
  from protocol import validate_command,NOTIFICATIONS
  from outbox import Outbox,OutboxError
+ from queue_probe import QueueProbe
  folder=Path(output_root);folder.mkdir(exist_ok=False);(folder/'active.lock').mkdir();app=QCoreApplication([]);source=None
  if fixture_root is None:controller=SessionController()
  else:
@@ -26,7 +27,7 @@ def run_actor(connection,output_root,batch_size=40,fixture_root=None):
   source=Source(Path(fixture_root));controller=SessionController(worker_factory=lambda **kwargs:source)
  outbox=Outbox(connection)
  def readers():return [dict(tid=t.native_id,name=t.name) for t in threading.enumerate() if t.name=='CyUsbInterfaceReader']
- sequence=command_sequence=0;prepared=False;reports=[];errors=[];refs={};raw_batches=[];last_readiness=None;pending_control=None;completed_control=None;transport_fault=None
+ sequence=command_sequence=0;prepared=False;reports=[];errors=[];refs={};raw_batches=[];last_readiness=None;probe=None;consumer_tid=None;pending_control=None;completed_control=None;transport_fault=None
  original_drain=_GroundFrameInbox.drain;original_consume=_GroundFrameInbox._consume
  @Slot()
  def drain(inbox):
@@ -39,8 +40,12 @@ def run_actor(connection,output_root,batch_size=40,fixture_root=None):
   interval=0 if pending else 5
   if inbox._timer.interval()!=interval:inbox._timer.setInterval(interval)
  def consume(inbox,items):
+  nonlocal probe,consumer_tid
   if items:raw_batches.append(items)
-  return original_consume(inbox,items)
+  if items and probe is None:
+   first=next((value for issue,value in items if not issue),None)
+   if first is not None:probe=QueueProbe(first.sample_index,True);probe.start(inbox);consumer_tid=threading.get_native_id()
+  return probe.consume(inbox,items,original_consume) if probe is not None else original_consume(inbox,items)
  _GroundFrameInbox.drain=drain;_GroundFrameInbox._consume=consume
  def emit(kind,payload):
   nonlocal sequence,transport_fault
@@ -97,9 +102,14 @@ def run_actor(connection,output_root,batch_size=40,fixture_root=None):
  if controller._thread is not None:
   try:controller.stop('actor_failure') if controller.is_running else controller.discard()
   except BaseException as exc:errors.append('cleanup:'+repr(exc))
+ queue_final=probe.snapshot(refs['inbox']) if probe is not None and 'inbox' in refs else None
+ if probe is not None:probe.close()
  raw=[value for items in raw_batches for issue,value in items if not issue]
+ issues=[asdict(value) for items in raw_batches for issue,value in items if issue]
  if raw:
-  np.savez_compressed(folder/'raw_frames.npz',bits=np.array([np.frombuffer(v.contact_bits,np.uint8) for v in raw]),wire=np.array([np.frombuffer(v.wire_payload,np.uint8) for v in raw]),valid_bits=np.array([np.frombuffer(v.valid_bits,np.uint8) for v in raw]),sample_indices=np.array([v.sample_index for v in raw]),frame_indices=np.array([v.frame_index for v in raw]),received_ns=np.array([v.received_monotonic_ns for v in raw]),dropped_frames_before=np.array([v.dropped_frames_before for v in raw]))
+  np.savez_compressed(folder/'raw_frames.npz',bits=np.array([np.frombuffer(v.contact_bits,np.uint8) for v in raw]),wire=np.array([np.frombuffer(v.wire_payload,np.uint8) for v in raw]),valid_bits=np.array([np.frombuffer(v.valid_bits,np.uint8) for v in raw]),sample_indices=np.array([v.sample_index for v in raw]),frame_indices=np.array([v.frame_index for v in raw]),received_ns=np.array([v.received_monotonic_ns for v in raw]),dropped_frames_before=np.array([v.dropped_frames_before for v in raw]),stream_ids=np.array([v.stream_id for v in raw]))
+  acquisition=dict(issues=issues,frames=[dict(stream_id=v.stream_id,quality_flags=v.quality_flags) for v in raw],layouts={v.stream_id:asdict(v.layout) for v in raw})
+  (folder/'acquisition.json').write_text(json.dumps(acquisition,ensure_ascii=False),encoding='utf-8')
  if last_readiness is not None:(folder/'last_readiness.json').write_text(json.dumps(last_readiness,ensure_ascii=False,indent=2),encoding='utf-8')
  if reports:
   report=reports[0];(folder/'report.json').write_text(json.dumps(report,ensure_ascii=False));quality=refs['quality'];engine=refs['engine'];runtime=quality._runtime;window=hashlib.sha256()
@@ -109,6 +119,6 @@ def run_actor(connection,output_root,batch_size=40,fixture_root=None):
  complete=not errors and completed_control is not None and controller._thread is None and (completed_control['kind']=='discard' or len(reports)==1)
  emit('terminal',dict(complete=complete,errors=errors,batch_size=batch_size));writer_finished=outbox.finish(2);outbox.preserve(folder/'output_snapshot')
  result=dict(complete=complete and writer_finished,pid=os.getpid(),errors=errors,commands_received=command_sequence,completed_control=completed_control,report_saved=(folder/'report.json').exists(),batch_size=batch_size,output=outbox.snapshot(),transport_fault=transport_fault,
-  live_default_USB=fixture_root is None,worker_class=None if 'worker' not in refs else refs['worker'].__class__.__module__+'.'+refs['worker'].__class__.__name__,raw_frames_saved=(folder/'raw_frames.npz').exists(),last_readiness=last_readiness,readers_after_cleanup=readers(),formal_program_modified=False)
+  live_default_USB=fixture_root is None,worker_class=None if 'worker' not in refs else refs['worker'].__class__.__module__+'.'+refs['worker'].__class__.__name__,raw_frames_saved=(folder/'raw_frames.npz').exists(),last_readiness=last_readiness,queue_common=[] if probe is None else probe.common,queue_samples=[] if probe is None else probe.samples,queue_final=queue_final,consumer_tid=consumer_tid,readers_after_cleanup=readers(),formal_program_modified=False)
  (folder/'result.json').write_text(json.dumps(result,indent=2));_GroundFrameInbox.drain=original_drain;_GroundFrameInbox._consume=original_consume;connection.close()
  if not result['complete']:raise SystemExit(1)
