@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WindowsPerformanceRecorder Version="1.0" Author="IronJump PMC delivery control">
+  <Profiles>
+    <SystemCollector Id="Collector" Name="IronJumpPmcDelivery">
+      <BufferSize Value="128" /><Buffers Value="128" />
+    </SystemCollector>
+    <SystemProvider Id="Provider">
+      <Keywords><Keyword Value="ProcessThread" /><Keyword Value="CSwitch" /></Keywords>
+    </SystemProvider>
+    <HardwareCounter Id="PmcCounters">
+      <Counters>
+        <Counter Value="InstructionRetired" />
+        <Counter Value="UnhaltedCoreCycles" />
+        <Counter Value="UnhaltedReferenceCycles" />
+      </Counters>
+      <Events><Event Value="CSwitch" /></Events>
+    </HardwareCounter>
+    <Profile Id="PmcDelivery.Verbose.File" Name="PmcDelivery" Description="One bounded PMC delivery control; no stacks or periodic samples" LoggingMode="File" DetailLevel="Verbose">
+      <Collectors><SystemCollectorId Value="Collector"><SystemProviderId Value="Provider" /><HardwareCounterId Value="PmcCounters" /></SystemCollectorId></Collectors>
+    </Profile>
+  </Profiles>
+</WindowsPerformanceRecorder>
