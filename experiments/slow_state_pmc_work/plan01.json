@@ -1,0 +1,124 @@
+{
+  "replay_root": "E:/OptoJump/IronJump-walk-compute-offline-20261017-01",
+  "input_root": "E:/OptoJump/IronJump-single-usb-human-etw-20261017/experiments/single_usb_human_etw/runs/20261018_131910_3eef864f_walk_off/capture",
+  "input_sha256": {
+    "raw_frames.npz": "8ee4a9ea9ac835f5dc083d014eeaef9d337ee8c140f1cdc3a11f1be6fece2d47",
+    "raw_archive.npz": "6ec340e2ca62742235d6602cf38c4470a20cf5f29441c8387be9bb85522cdcd5",
+    "acquisition.json": "e84e6bd481eeadd408a61c377950cc878bf8d989b92f58596fccf6eee62c62cb",
+    "report.json": "0ae1bf2d9277c1e3d95d629e071cb3ff61d249c78c6d0b6d0901773f4fb68747",
+    "state.json": "bfb63086da795427cc2fbd5985a4ff56bcd1cdb964908dcc4a9408a79a6d914f",
+    "measurement.json": "a2b441f1367dd3d5eb7204c75eeebf05c344e8dd69b632ba29f57a4eed6febe9"
+  },
+  "raw_first": 42237,
+  "raw_after_last": 49061,
+  "replay_sha256": "fcde26dd2e707cc457623a971a97e68ebd9f49630126c51bd6ce83072a0d40a8",
+  "media_root": "E:\\OptoJump\\IronJump-ground-backlog-measurement-20261016\\experiments\\ground_backlog_measurement\\inputs\\walk",
+  "media_sha256": {
+    "camera.csv": "cc911dfd8e7aadf4da9f7c1e604e65ef33a02a4f7f790ba1e0ad1dfa7e890d88",
+    "camera.mjpg": "64d887e0c2817e3594e3bbad4193ab97b4abc1d0c2eed0229ac3d092fad04e52"
+  },
+  "model_path": "E:/OptoJump/IronJump-gil-gui-calibration-20261018-01/models/pose_landmarker_full.task",
+  "model_sha256": "5134a3aad27a58b93da0088d431f366da362b44e3ccfbe3462b3827a839011b1",
+  "frame_ids": [
+    4151,
+    4155,
+    4159,
+    4163,
+    4167,
+    4171,
+    4175,
+    4179,
+    4183,
+    4187,
+    4191
+  ],
+  "model_calls": 220,
+  "python_dll_sha256": "162e8557fbed5f39ae24983ee62b2d435b4796c937d9c1a34371888c7e43af00",
+  "numpy_pyd_sha256": "4fb4c5d62a6bd766eea716350eaf5396580e33cf7dc159e305488d1b7d72dad2",
+  "cases": [
+    "service01",
+    "interactive01",
+    "interactive02",
+    "service02"
+  ],
+  "case_variants": {
+    "service01": "serial",
+    "interactive01": "serial",
+    "interactive02": "serial",
+    "service02": "serial"
+  },
+  "progress_frames": [
+    1000,
+    2000,
+    3000,
+    4000,
+    5000,
+    6000,
+    6824
+  ],
+  "dependency_sources": {
+    "experiments/fixed_work_accounting/logical_clock.py": "309676131f0052886d8b32c1740ed461966cab39da98a625e5e23bd0b164c6e3",
+    "experiments/fixed_work_accounting/counters.py": "504cd67a5bbb9691eb4c8bfdf5a2a1e71d454317e70eaff559713767c3236a0d",
+    "experiments/fixed_work_accounting/run.py": "2cd5a0e2014ad1dc731b1cbcd87137405ad0d4205303982bc41d02bb69c884ba",
+    "experiments/cpu_state_observation/workload.py": "58572a6f4e21b2610ba32ca3ce694add4238b975d8739ef3856a703207d2cb23",
+    "experiments/qos_context_review/read_context.py": "5d7d7c83756ec879d72937c48fcd4fe96c59acf3c3077ad7116f61cc2347bd76"
+  },
+  "reference_origin_sha256": "f3590d951c53c29981b9389abf5ed86ff644969a0bd8cffe7b316b40d1fc7905",
+  "failure_policy": "Stop after any target/identity/accounting/spacing/cleanup failure; retain live PID and locks on timeout, no automatic kill/restart.",
+  "cv2_sha256": "ae833b9b5771f5932200bd3b8ad0f483f4fbec92cbdbd26d21d38fe524c60e66",
+  "state_rules": {
+    "slow_prepare_ms_min": 4300,
+    "fast_prepare_ms_max": 3500,
+    "slow_model_ms_min": 30,
+    "fast_model_ms_max": 26,
+    "basis": "Existing fixed-work preparation and model timing gaps. Joint labels only; intermediate retained. Not GHz/CPU/GIL orfield-symptom gates."
+  },
+  "budget": "Exactly4windows, retain all; do not extend towait forboth states.",
+  "sources": {
+    "spacing.py": "3d2ba0be8d79d08f25e9260e21daa718773e3771d35911b4e7bd25c6f9526201",
+    "boundary.py": "ef349103f2e7e6d068d4f2e30d89e017dddbb8abd8f8b788833cf57a76374022",
+    "ReadCounters04.cs": "96426a8971f205e83a6e2d65a24ccddfd49902b64785bbdda17574acf8a024b8",
+    "worker.ps1": "579b36f6ab29aab0cf2e3b175f9a80227acc6f6a1c026f66c48567d4cff7c910",
+    "classify.py": "52c97ec985448a9584750bf28085cb25a6afe447d6efcf9c8ee4b3436442461d",
+    "process_helper.ps1": "1d42f9d5e094c960e76ba3a062d00af37a5602821f1a8f4d5505be2d3f7e27c6",
+    "test_analysis.py": "8a3b296827fc8619fa6620ea8c00406204c095c2d75bbada434d16fc88c86a5e",
+    "workload.py": "df6b7bff64e5ed94963f7918ddcb7de8b2475186337372529f803821b24da074",
+    "boundary.rs": "c51d4c42080b920fc8bca5cbd4863ed4215c58845aab8318f3f9fcedc280a2b2",
+    "capture.py": "c199ab2839819b1bc4fa2f4bd52f75458c890aa915d2495eccfb30007e0947ed",
+    "winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+    "entry.py": "9271e340b5ef1d1c3b4dbb5b4c24d4f849d2f9c33b584e9e5061fc247dc94605",
+    "reference01.json": "01233f2b0afba0d1ac45a1d33ffded6f8fd3b21427b6fb0f9602adf4dffbbed8",
+    "target.py": "942a36fc53a4f5cf6fdceca666c19694408b50ee7086effacb2730ae40fee9bf",
+    "verify.py": "3a591c1d674f9a32f9fb7be9cb7c17ad0750b7fa078b7fa7ada9102aa54643a6",
+    "analyze.py": "428440de11a5af641473f356416ce799c0cf34267ee18d6d03133961dfebc8f8",
+    "cohort.ps1": "e5986f4a6e910a574a5e43dced7ade66d86010dad6597ab5fe8a453206b34b4c",
+    "preflight.py": "a6f8900e73465d7a62898ba1894378a15e3177de7e4c46d4ec7c5195a4718936",
+    "counters.wprp": "17b06f4176478d1ed2e356aec410cca96ad79f6ea4d1e28bb0452ae0f5930249"
+  },
+  "reference_source_sha256": "01233f2b0afba0d1ac45a1d33ffded6f8fd3b21427b6fb0f9602adf4dffbbed8",
+  "goal": "Observe retired instruction work andtime in original serial preparation/consumer. No primary root orfrequency claim.",
+  "old_native_stack_and_disturbance_failures_upgraded": false,
+  "expected_session": {
+    "service01": 0,
+    "interactive01": 1,
+    "interactive02": 1,
+    "service02": 0
+  },
+  "interpretation": "Instruction equality can constrain work-vs-execution explanations; no unique hardware cause from counters. Context is recorded, not the tested sole cause.",
+  "condition_gate": "All phase/context/identity gates +at least onejoint slow andfast before all cross-state comparisons. No CPU/GIL shares; disturbance gate unchanged.",
+  "boundary_dll_sha256": "a7a38010e7fa14be22ca805493e64bdc86c1312160352e2849d707fd347225f8",
+  "instance": "IJSlowPmcWork01",
+  "counter_order": [
+    "InstructionRetired",
+    "UnhaltedCoreCycles",
+    "UnhaltedReferenceCycles"
+  ],
+  "phase_gates": {
+    "maximum_edge_running_ns": 2000000,
+    "CPU_accounting_tolerance_ns": 31250000
+  },
+  "comparison_rules": {
+    "comparable_instruction_fraction": 0.05,
+    "minimum_wall_ratio": 1.3
+  }
+}

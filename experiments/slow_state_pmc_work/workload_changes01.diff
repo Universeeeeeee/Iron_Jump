@@ -1,0 +1,40 @@
+--- slow_state_context/workload.py
++++ slow_state_pmc_work/workload.py
+@@ -11,12 +11,14 @@
+ sys.path.insert(0,str(Path(__file__).resolve().parent.parent/'fixed_work_accounting'))
+ from logical_clock import for_thread
+ from counters import snapshot,validate
++from boundary import Boundary
+ 
+ HERE=Path(__file__).resolve().parent
+ sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+ 
+ def child(name):
+     plan=json.loads((HERE/'plan01.json').read_text());assert name in plan['cases'];folder=HERE/'runs'/name;folder.mkdir(parents=True,exist_ok=False);(folder/'active.lock').mkdir()
++    boundaries=Boundary(plan);phase_marks={}
+     variant=plan['case_variants'][name];assert variant in ('concurrent','serial')
+     result=dict(variant=variant,errors=[],model={},actual_load_disturbance_pass=False);real=time.perf_counter_ns;worker=None;go=threading.Event();ready=threading.Event();cancel=threading.Event();payloads=[];work_done=threading.Event();close_release=threading.Event()
+     try:
+@@ -62,10 +64,13 @@
+         def feed(i):
+             frame=trial.frames[i];trial.clock=frame.received_monotonic_ns;quality.on_frame(frame)
+             if i==trial.start-1:trial.arm(quality)
++        phase_marks['preparation_begin']=boundaries.mark('begin')
+         prep_begin=real();prep_cpu=time.thread_time_ns()
+         for i in range(plan['raw_first']):feed(i)
+         result['preparation']=dict(begin_ns=prep_begin,end_ns=real(),thread_cpu_ns=time.thread_time_ns()-prep_cpu,frames=plan['raw_first'])
++        phase_marks['preparation_end']=boundaries.mark('end')
+         result['process_before']=snapshot(real)
++        phase_marks['consumer_begin']=boundaries.mark('begin')
+         begin=real();cpu=time.thread_time_ns();progress=[]
+         if variant=='concurrent':go.set()
+         for i in range(plan['raw_first'],plan['raw_after_last']):
+@@ -74,6 +79,8 @@
+             if count in plan['progress_frames']:progress.append(dict(frames=count,raw_last=i,host_ns=real(),thread_cpu_ns=time.thread_time_ns()-cpu))
+         result['consumer']=dict(begin_ns=begin,end_ns=real(),thread_cpu_ns=time.thread_time_ns()-cpu,tid=threading.get_native_id(),frames=plan['raw_after_last']-plan['raw_first'])
+         result['consumer_progress']=progress
++        phase_marks['consumer_end']=boundaries.mark('end')
++        result['native_phase_marks']=phase_marks
+         if variant=='serial':go.set()
+         assert work_done.wait(180) and not result['model']['errors']
+         result['process_after']=snapshot(real);result['close_release_ns']=real();close_release.set()
