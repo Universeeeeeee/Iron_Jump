@@ -1,0 +1,29 @@
+{
+  "phases": {
+    "build": {
+      "packets": 40,
+      "packets_per_s": 17.587717863458103,
+      "kinds": {
+        "visual": 21,
+        "snapshot": 18,
+        "notification": 1
+      }
+    },
+    "recover": {
+      "packets": 61,
+      "packets_per_s": 24.381505165441702,
+      "kinds": {
+        "visual": 33,
+        "snapshot": 28
+      }
+    }
+  },
+  "outbox_peak_messages": 3,
+  "outbox_peak_bytes": 4654376,
+  "outbox_failure": null,
+  "conclusion": "Output packet rate is higher during consumer recovery and the outbox never backpressures; output transport volume does not explain the early service inversion.",
+  "bindings": {
+    "isolated01_client_status.json": "f53874f06351c6f1318536d6c30bcc1d330a30a60ffbabc72c0f96f48eba2d9f",
+    "isolated01_outbox_state.json": "3b3c452be6f88dc31fabd34f8b7e837e5254cde7bd888611da36ef40d5520d72"
+  }
+}
