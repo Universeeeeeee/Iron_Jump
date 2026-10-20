@@ -1,0 +1,82 @@
+{
+  "plan": "plan05.json",
+  "plan_sha256": "6d0aa2ed84ff6557e8ee1b48d00b1405113c909097d2579a001a02f139974821",
+  "source_sha256": {
+    "cohort.py": "36309d8d01a9a0b1e364c410e8ce792644bf8bf97ecaa4c22af6dbfb664e77df",
+    "common.py": "a101f4eb4132a9aa486ae29b90d5d8897de572d875891f7f2281ec0eb200e242",
+    "extract_reference.py": "edc811b020f6968acce683ac249494fb20fd8681196d5aeffe0ece39e98c9aa6",
+    "freeze.py": "4c21d48ae3872a5119e17ffcdffdefd644a67baf27d1727a9a7fe9ff67677c01",
+    "preflight.py": "4298f07fcf062b731f87159f1382f031b47e85f7b050fe2bc7998d26d64e6ca2",
+    "process_delivery.py": "464dd3d680a1ca3a5994a9ff5ec4762d677d6d537e28cff1ff1cc80a1feaa9f4",
+    "reference.py": "d870427d12f76450c32f05e58c8548ea6c1515c22548746cbc8ba00d96bb7d56",
+    "test_gate.py": "68048e36a15630ac02afb2b39edd350ac365c1494e3ff67bad2063594a11e7e1",
+    "test_protocol.py": "73c54ea30646d50959933c6aba8d3afe7396b9408c4eb40fabf20b3edc235860",
+    "test_reference.py": "17fe2fef4303053b569bf269e72102bd941b0172f6909a0e30802442623d1b16",
+    "verify.py": "e520655d7de83d40c56d5c04217a02ba6a1877130de9f57cd48e3c65e6a12d66",
+    "collector.py": "3db7079d323760656839b68a89f0dc2b4981d3d3f4374489d8328fce3e295820"
+  },
+  "target_status": {
+    "complete": true,
+    "controller_pid": 7972,
+    "steps": [
+      {
+        "name": "reference",
+        "command": [
+          "D:\\conda\\python.exe",
+          "E:\\OptoJump\\IronJump-gil-gui-calibration-20261018-01\\experiments\\vision_video_process_delivery_plan05\\reference.py",
+          "E:\\OptoJump\\IronJump-gil-gui-calibration-20261018-01\\experiments\\vision_video_process_delivery_plan05\\runs\\reference01.json"
+        ],
+        "complete": true,
+        "errors": [],
+        "pid": 19812,
+        "returncode": 0,
+        "target_still_running": false
+      },
+      {
+        "name": "process",
+        "command": [
+          "D:\\conda\\python.exe",
+          "E:\\OptoJump\\IronJump-gil-gui-calibration-20261018-01\\experiments\\vision_video_process_delivery_plan05\\process_delivery.py",
+          "E:\\OptoJump\\IronJump-gil-gui-calibration-20261018-01\\experiments\\vision_video_process_delivery_plan05\\runs\\process01"
+        ],
+        "complete": true,
+        "errors": [],
+        "pid": 18660,
+        "returncode": 0,
+        "target_still_running": false
+      }
+    ],
+    "errors": []
+  },
+  "files": {
+    "cohort.py": "36309d8d01a9a0b1e364c410e8ce792644bf8bf97ecaa4c22af6dbfb664e77df",
+    "collector.py": "3db7079d323760656839b68a89f0dc2b4981d3d3f4374489d8328fce3e295820",
+    "common.py": "a101f4eb4132a9aa486ae29b90d5d8897de572d875891f7f2281ec0eb200e242",
+    "extract_reference.py": "edc811b020f6968acce683ac249494fb20fd8681196d5aeffe0ece39e98c9aa6",
+    "freeze.py": "4c21d48ae3872a5119e17ffcdffdefd644a67baf27d1727a9a7fe9ff67677c01",
+    "plan05.json": "6d0aa2ed84ff6557e8ee1b48d00b1405113c909097d2579a001a02f139974821",
+    "preflight.py": "4298f07fcf062b731f87159f1382f031b47e85f7b050fe2bc7998d26d64e6ca2",
+    "preflight05.json": "8f667e191050c040df5ac4c538030a2af5b9558ca3537de20e3396209f773dbb",
+    "process_delivery.py": "464dd3d680a1ca3a5994a9ff5ec4762d677d6d537e28cff1ff1cc80a1feaa9f4",
+    "reference.py": "d870427d12f76450c32f05e58c8548ea6c1515c22548746cbc8ba00d96bb7d56",
+    "result01.json": "88f9a37f3ec477bb29f000c8b0b931f7f0d2135443ecd4f713006a88adecd9ad",
+    "runs/process.record.json": "f165411cd6c07f7db1901f740e6545dbbcc119265c1b6aaf49457f699494f303",
+    "runs/process.stderr": "95d08148f4face120452f4f37936415660c467924eeefb81f33718102a356c12",
+    "runs/process.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/process01/child_result.json": "8376f38a372701fb476fdd4f62e47df838b94130bc9410bf130bed3f1592a02f",
+    "runs/process01/controller.json": "e7426738f392c107445ec6183d1ce7da37105653633f6dada5c315e754521dfd",
+    "runs/process01/result.json": "ff1564d357965e41bfb162e1bbc7281e933f3ecd0ecb8e2fe56f69e2e508b177",
+    "runs/reference.record.json": "ce1983a2d5752c7a6ae96d3fad3153bab7ff9768f5913c2a32b883eed35dabb4",
+    "runs/reference.stderr": "b9807e4babe9d8cc7d1f48fbad17e2fc86a59967c583b181a73b875e0ee470d0",
+    "runs/reference.stdout": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "runs/reference01.json": "5032a1cf34ab92292b8fd11fc370f5a68c889e49bbee368755835df6f1e8cd0a",
+    "runs/status.json": "0e96de227bcefb4c5cd2490f9a48c7c3ab7a5e3e380fa4e8d1bf451fad3ea8cd",
+    "selection01.json": "0a21dab39e4b3325d330c7d46457e9070f46c185502ad13facd3b8addb982777",
+    "test_gate.py": "68048e36a15630ac02afb2b39edd350ac365c1494e3ff67bad2063594a11e7e1",
+    "test_protocol.py": "73c54ea30646d50959933c6aba8d3afe7396b9408c4eb40fabf20b3edc235860",
+    "test_reference.py": "17fe2fef4303053b569bf269e72102bd941b0172f6909a0e30802442623d1b16",
+    "verify.py": "e520655d7de83d40c56d5c04217a02ba6a1877130de9f57cd48e3c65e6a12d66"
+  },
+  "collector_started_target": false,
+  "collector_retried_target": false
+}
