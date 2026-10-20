@@ -13,4 +13,6 @@ for n in p['sources']:
 r=subprocess.run(['D:/conda/python.exe','-m','unittest','discover','-s',str(h),'-p','test_*.py'],capture_output=True)
 v=dict(returncode=r.returncode,stderr=r.stderr.decode(),all_source_input_oracle_hashes_pass=True,workload_started=False,preflight_attempt=1,checker_sha256=sha(Path(__file__)))
 with (h/'windows_tests02.json').open('x') as f:json.dump(v,f,indent=2)
+if r.returncode==0:
+ with (h/'preflight_passed02.json').open('x') as f:json.dump(dict(passed=True,plan_sha256=sha(h/'plan02.json'),tests_sha256=sha(h/'windows_tests02.json'),workload_started=False),f,indent=2)
 print(json.dumps(v));raise SystemExit(r.returncode)
