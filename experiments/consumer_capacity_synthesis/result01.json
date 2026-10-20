@@ -17,6 +17,19 @@
       "required_ms_per_frame_for_250": 1.044755704845815,
       "required_throughput_increase_for_250": 0.20105820105820116,
       "required_throughput_increase_for_zero_growth": 0.2571428571428571,
+      "peak_build_phase": {
+        "duration_s": 7.5801641,
+        "start_pending": 38,
+        "peak_pending": 1614,
+        "peak_latest_sample": 67870,
+        "arrival_fps": 1002.0891236378378,
+        "effective_service_fps": 794.1780574380969,
+        "required_fps_for_250": 974.1213913825427,
+        "required_throughput_increase_for_250": 0.2265780730897009,
+        "effective_ms_per_frame": 1.2591634717607973,
+        "required_ms_per_frame_for_250": 1.026566102383532,
+        "required_ms_reduction_per_frame": 0.23259736937726538
+      },
       "retained_peak_lower": 1614,
       "retained_peak_upper": 1694,
       "scheduled_max_ms": 1491.2546,
@@ -41,12 +54,62 @@
       "required_ms_per_frame_for_250": 1.0554834514842713,
       "required_throughput_increase_for_250": 0.33077830188679247,
       "required_throughput_increase_for_zero_growth": 0.40389150943396235,
+      "peak_build_phase": {
+        "duration_s": 7.9310457,
+        "start_pending": 2,
+        "peak_pending": 2541,
+        "peak_latest_sample": 68157,
+        "arrival_fps": 999.9942378342366,
+        "effective_service_fps": 679.8599080068344,
+        "required_fps_for_250": 968.7247168428244,
+        "required_throughput_increase_for_250": 0.4248887240356083,
+        "effective_ms_per_frame": 1.4708912648367953,
+        "required_ms_per_frame_for_250": 1.0322850058570872,
+        "required_ms_reduction_per_frame": 0.4386062589797082
+      },
       "retained_peak_lower": 2541,
       "retained_peak_upper": 2621,
       "scheduled_max_ms": 2408.6811,
       "extra_effective_ms_above_offline_chain_range": [
         0.8289431952358491,
         0.8551544952358492
+      ]
+    },
+    "isolated01": {
+      "first_touch_sample": 60188,
+      "last_release_sample": 64957,
+      "duration_s": 4.7762108,
+      "start_pending": 1,
+      "end_pending": 26,
+      "arrived_frames": 4776,
+      "completed_frames": 4751,
+      "arrival_fps": 999.955864594586,
+      "effective_service_fps": 994.7215897589779,
+      "queue_growth_fps": 5.2342748356081765,
+      "effective_ms_per_frame": 1.0053064197011157,
+      "required_fps_for_250": 947.8224872319287,
+      "required_ms_per_frame_for_250": 1.0550498785067375,
+      "required_throughput_increase_for_250": -0.047147968848663346,
+      "required_throughput_increase_for_zero_growth": 0.005262050094716919,
+      "peak_build_phase": {
+        "duration_s": 2.2743144,
+        "start_pending": 1,
+        "peak_pending": 346,
+        "peak_latest_sample": 62498,
+        "arrival_fps": 998.5426816978338,
+        "effective_service_fps": 846.8486151255076,
+        "required_fps_for_250": 889.059137997807,
+        "required_throughput_increase_for_250": 0.049844236760124616,
+        "effective_ms_per_frame": 1.1808485981308412,
+        "required_ms_per_frame_for_250": 1.1247845697329377,
+        "required_ms_reduction_per_frame": 0.056064028397903476
+      },
+      "retained_peak_lower": 346,
+      "retained_peak_upper": 406,
+      "scheduled_max_ms": 645.9789,
+      "extra_effective_ms_above_offline_chain_range": [
+        0.42963513970111566,
+        0.4558464397011157
       ]
     }
   },
@@ -73,11 +136,17 @@
       "exact responsible function"
     ]
   },
+  "consumer_isolation": {
+    "finding": "Consumer isolation closes the sustained contact-window deficit to 994.7fps but has an early 846.8fps phase that peaks at346 frames and646ms.",
+    "sufficient_fix": false,
+    "remaining_peak_gap_fps": 42.21052287229941,
+    "remaining_ms_reduction_per_frame": 0.056064028397903476
+  },
   "next_candidate": {
-    "name": "consumer session process isolation",
-    "reason": "It is the remaining existing boundary that removes GUI-process GIL/Qt contention while preserving the original filter/Processor/report chain.",
-    "current_evidence": "Semantic delivery already passed; severe-state performance has not been qualified.",
-    "required_gate": "Must close at least the measured 160fps / 0.21ms-per-frame process-cold gap and meet <=250 frames and <=250ms with exact reports."
+    "name": "isolated-consumer early-phase hotspot localization",
+    "reason": "The remaining acceptance gap is concentrated before the isolated consumer recovers above1000fps.",
+    "current_evidence": "Same original filter/Processor/report chain, separate GUI GIL, exact semantics; queue still peaks346 and latency646ms.",
+    "required_gate": "Locate at least 0.056ms/frame or 5% early-phase cost without changing data semantics before any optimization A/B."
   },
   "no_new_capture": true,
   "formal_fix_verified": false,
@@ -85,6 +154,7 @@
   "bindings": {
     "process_actor_sha256": "ebfce77b7b42984e26ff00c787879d84543aeb98460550ebec9a177589fcdaeb",
     "original_actor_sha256": "fce730c894fabfeefa67771a34c40807ffbe58c62fdc9012cfbb3d94687ca1b5",
+    "isolated_actor_sha256": "347a75bf38075d9de2992a4919925395d92f9cc3c6ba686a0d5b953b921bea67",
     "cold_result_sha256": "f45828a983f9a49a98d70047c8a9da7e14578a2dc423d9cce09ea6c3c665bcbb",
     "offline_chain_sha256": "28fa57348513443b44635617d022c32ec9003fd66f7982fd2940e7b792cf15a8"
   }
