@@ -1,0 +1,57 @@
+{
+  "cases": {
+    "cold01_process": {
+      "build": {
+        "duration_s": 7.5801641,
+        "consumer_effective_fps": 794.1780574380969,
+        "pending": [
+          38,
+          1614
+        ],
+        "model_calls": 95,
+        "model_wall_ms_median": 26.943099999925835,
+        "model_wall_ms_mean": 27.20644631579274
+      },
+      "recover": null
+    },
+    "isolated01": {
+      "build": {
+        "duration_s": 2.2743144,
+        "consumer_effective_fps": 846.8486151255076,
+        "pending": [
+          1,
+          346
+        ],
+        "model_calls": 25,
+        "model_wall_ms_median": 53.88449999986733,
+        "model_wall_ms_mean": 69.17742799997541
+      },
+      "recover": {
+        "duration_s": 2.5018964,
+        "consumer_effective_fps": 1129.1434769241444,
+        "pending": [
+          346,
+          26
+        ],
+        "model_calls": 32,
+        "model_wall_ms_median": 48.00369999998111,
+        "model_wall_ms_mean": 49.75751562498942
+      }
+    }
+  },
+  "conclusion": "Model-call wall time does not order consumer capacity across these retained windows. Consumer/GUI process separation is the stronger actionable boundary, while exact causal share remains confounded.",
+  "evidence": [
+    "cold visual-process window has relatively faster model calls but severe consumer capacity",
+    "isolated-consumer window has slower model calls yet recovers above1000fps"
+  ],
+  "limits": [
+    "Cross-window execution state and input timing are not randomized.",
+    "No GIL/Qt/CPU contribution percentage or responsible function."
+  ],
+  "bindings": {
+    "cold01_process_actor.json": "ebfce77b7b42984e26ff00c787879d84543aeb98460550ebec9a177589fcdaeb",
+    "cold01_process_workload_final.json": "b87b601c44ae5eaa1a70f775b6d7eb8422b07737bceedab4d7938e8f09b550f4",
+    "isolated01_actor.json": "347a75bf38075d9de2992a4919925395d92f9cc3c6ba686a0d5b953b921bea67",
+    "isolated01_workload_final.json": "db0dd5ad5df28a0d068a9770b03cc5ea6e18da895bb51d31ad163509cc742713"
+  }
+}
