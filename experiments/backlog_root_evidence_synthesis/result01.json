@@ -1,5 +1,5 @@
 {
-  "current_root_conclusion": "A shared slow execution-delivery state leaves the consumer without enough worst-state throughput margin. Real GIL/Qt waits coexist, but video/model isolation is not sufficient even in a severe process-first cold window. The physical cause remains unidentified.",
+  "current_root_conclusion": "The primary actionable software root is inadequate worst-state capacity when the consumer shares the GUI process. Consumer isolation restores sustained throughput to about995fps, proving this boundary matters, but an early input-dependent transient still violates250 frames/250ms. The physical execution-state cause and exact function remain unidentified.",
   "matrix": [
     {
       "question": "Is the old PMC CPU share quantitatively usable?",
@@ -37,6 +37,13 @@
       "next": "Return to consumer worst-state service capacity; do not add more visual isolation windows."
     },
     {
+      "question": "Does isolating the consumer close the capacity deficit?",
+      "finding": "Mostly, but not to acceptance",
+      "evidence": "Whole-contact service rose to994.7fps, but the first2.27s ran at846.8fps, peaked346 frames and reached646ms before recovering at1129fps.",
+      "grade": "supported primary software boundary; insufficient fix",
+      "next": "Localize at least5% or0.056ms/frame in the isolated early phase."
+    },
+    {
       "question": "Do model and consumer share a slow execution state?",
       "finding": "Strong covariance",
       "evidence": "Severe A/A model medians were 40.5-40.8ms with queue lower 3981-4239; fast A/A model medians 23.1-23.9ms with queue lower 91, while work counts differed only 3-4%. PMC also retained Core/OS about1.00 slow versus1.66-1.68 fast.",
@@ -54,13 +61,13 @@
   "hypothesis_ranking": [
     {
       "rank": 1,
-      "hypothesis": "Shared native/CPU execution-delivery state affects consumer and MediaPipe work",
-      "status": "best supported but mechanism unnamed"
+      "hypothesis": "Consumer sharing the GUI process lacks worst-state synchronization/scheduling margin",
+      "status": "strongest actionable boundary; isolation restores sustained rate but leaves a transient"
     },
     {
       "rank": 2,
-      "hypothesis": "GIL acquisition and Qt/system synchronization add contention within that state",
-      "status": "real paths, contribution unknown"
+      "hypothesis": "Shared native/CPU execution-delivery state and input-dependent work amplify the early deficit",
+      "status": "supported covariance; mechanism unnamed"
     },
     {
       "rank": 3,
@@ -74,26 +81,25 @@
     }
   ],
   "next_minimal_validation": {
-    "scope": "Read-only worst-state consumer capacity derivation from retained severe windows; no new workload.",
+    "scope": "Read-only localization inside the retained isolated-consumer early queue-build phase; no new workload.",
     "inputs": [
-      "cold process-first queue timeline and receipts",
-      "severe original A/A queue timelines",
-      "retained batch boundaries, consumer CPU/cycles and contact publications"
+      "2.27s queue build and 2.50s recovery boundaries",
+      "isolated consumer actor events and exact report",
+      "model/GUI phase records and offline original-chain stage costs"
     ],
     "outputs": [
-      "arrival rate, effective drain rate and queue growth by phase",
-      "required per-frame/batch service margin for 1000Hz and <=250-frame FIFO",
-      "code-stage candidates whose measured cost can close that margin"
+      "input/sample subrange responsible for the 5% residual",
+      "whether residual is sustained compute or intermittent batch/event-loop stall",
+      "one stage candidate capable of at least0.056ms/frame without report changes"
     ],
     "decisions": {
-      "software_capacity_root": "consumer service rate falls below 1000Hz in severe windows even after video/model isolation",
-      "next_candidate": "only a surgical stage with enough measured margin may enter offline A/B",
-      "insufficient": "no stage-level evidence large enough to close the measured deficit"
+      "next_candidate": "only a measured stage closing >=5% or0.056ms/frame may enter offline semantic/performance A/B",
+      "insufficient": "no single stage or boundary explains enough of the transient"
     },
     "constraints": [
       "No new reboot,human,USB,Run or ordinary fast-state window",
       "No CPU/GIL/frequency percentage from failed PMC accounting",
-      "No formal optimization until an offline candidate meets the required margin and semantics"
+      "No formal optimization before exact-output offline validation"
     ]
   },
   "root_function_identified": false,
@@ -123,6 +129,10 @@
     "cold_process": {
       "path": "experiments/cold_boot_vision_process_ab/evidence/two_window_result03.json",
       "sha256": "f45828a983f9a49a98d70047c8a9da7e14578a2dc423d9cce09ea6c3c665bcbb"
+    },
+    "consumer_capacity": {
+      "path": "experiments/consumer_capacity_synthesis/result01.json",
+      "sha256": "560d538ea201ba1a2bb4c5e789e7e1d5756fc44b339a6b2ea4759ece0a21608c"
     },
     "field": {
       "path": "experiments/p1_field_reentry_review/result01.json",

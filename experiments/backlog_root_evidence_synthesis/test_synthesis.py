@@ -6,6 +6,6 @@ class SynthesisTests(unittest.TestCase):
   self.assertFalse(self.value['root_function_identified']);self.assertFalse(self.value['formal_fix_verified']);self.assertFalse(self.value['field_fix_verified'])
  def test_old_pmc_and_fast_process_limits_remain(self):
   text=json.dumps(self.value);self.assertIn('83.5967',text);self.assertIn('rejected in fast state',text)
- def test_next_gate_returns_to_consumer_capacity(self):
-  self.assertIn('consumer service rate falls below 1000Hz',self.value['next_minimal_validation']['decisions']['software_capacity_root'])
+ def test_next_gate_targets_isolated_early_phase(self):
+  self.assertIn('0.056ms/frame',self.value['next_minimal_validation']['decisions']['next_candidate'])
 if __name__=='__main__':unittest.main()
