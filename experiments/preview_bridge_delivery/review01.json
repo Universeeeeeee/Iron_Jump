@@ -1,0 +1,40 @@
+{
+  "saved_GUI_safety_pass": true,
+  "preview_calls": 632,
+  "pose_preview_calls": 626,
+  "real_model_calls": 402,
+  "saved_video_frames": 794,
+  "original_report_state_raw_exact": {
+    "full_original_report": true,
+    "full_quality_runtime_state": true,
+    "raw_fields_exact": true,
+    "source_frames": 33188,
+    "checked_sample": 48903,
+    "performance_qualification": false
+  },
+  "restored": true,
+  "no_recorded_bridge_or_model_callback_errors": true,
+  "final_model_cleanup_confirmed": true,
+  "native_exit_code": 0,
+  "real_native_SDK_qualified": false,
+  "performance_AB_started": false,
+  "severe_baseline_reproduction_evaluated": false,
+  "limitations": [
+    "One finite safety window cannot prove arbitrary callback/lifetime schedules safe.",
+    "Runtime safety counters/checks add overhead; this is not the candidate performance fixture.",
+    "Native OBSBOT service is simulated. Real native SDK still needs qualification before causalAB.",
+    "Synthetic full pixels were verified separately; this window does not compare dynamic model pixel histories between modes.",
+    "Original application-return model status is not rewritten by the confirmed later cleanup.",
+    "No CPU/GIL share, severe-backlog benefit, 3%/1% calibration or formal repair follows."
+  ],
+  "root_cause_or_fix_complete": false,
+  "bindings": {
+    "review.py": "53daebacfb0353bb643fab7da070a1f05271accb8e475dae3a620f022eba30a7",
+    "plan01.json": "66ca79c85b374a1ad7e59167350176d19b61ad2e76b4bddef4d7fe3e1217e155",
+    "transport01.json": "5035ae6866b910fdcb264589a9314dcb780911b0924b832dfdefe6cd19c7e52c",
+    "bridge_safety01.json": "58b03f238c84b65cb40002f427cc4023268b50e7094598bb0e2c2d3760f205cd",
+    "pipeline_review01.json": "1af909edec10fb1877773d35965463db7f242f3cd65f8ecc66a168093739b409",
+    "record01.json": "e265efc5c9b8039e56bae827893a1cdd6cab52805ded19a0df644bb21c0ae31e",
+    "task_status01.json": "38647ecd7f2293b442ad6c6214fb9edd70767f6e8ff9d9aa157cb4316b1f9c79"
+  }
+}

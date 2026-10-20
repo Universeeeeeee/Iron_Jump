@@ -1,0 +1,33 @@
+--- label_call_identity/entry.py
++++ preview_bridge_delivery/entry.py
+@@ -30,16 +30,16 @@
+     from context import Phases,restore,check
+     rows=[];observer=Phases(rows,plan['context_checkpoints'],clock=lambda:None if links.client is None else links.client.clock)
+     audit=RetainedAudit();anchors=[native_anchor()];contexts=[]
+-    from identity_hook import Identity,verify as verify_identity
+-    identity=Identity(ROOT,plan['native_entry'])
++    from install import Installation,verify as verify_install
++    installation=Installation(ROOT)
+     try:
+         audit.install();contexts=observer.install(('gui','model','consumer') if case['backend']=='original' else ('gui','model'))
+         from gui import run
+-        identity.start()
++        installation.start()
+         raise SystemExit(run(case_plan,stage))
+     finally:
+-        identity_result=identity.close()
+-        if stage.exists():write(stage/'call_identity.json',identity_result)
++        installation_result=installation.close()
++        if stage.exists():write(stage/'bridge_safety.json',installation_result)
+         exc=sys.exc_info()[1];outcome=dict(success=exc is None or isinstance(exc,SystemExit) and exc.code in (0,None),exception_type=None if exc is None else type(exc).__name__,exit_code=getattr(exc,'code',None),error=None if exc is None else repr(exc))
+         if stage.exists():
+             final=finalize(audit,lambda name,value:write(stage/name,value),90,outcome)
+@@ -51,7 +51,7 @@
+                 else:from verify_pipeline02 import verify_pipeline
+                 review=verify_pipeline(stage,anchors);review['runtime_context']=check(rows,case['backend'])
+                 formal=json.loads((ROOT/plan['formal_baseline_manifest']).read_text(encoding='utf-8-sig'))['baseline_files']
+-                review['label_call_identity']=verify_identity(identity_result,plan['native_entry'],formal)
++                review['preview_bridge_safety']=verify_install(installation_result,review)
+             except BaseException as failure:
+                 write(stage/'pipeline_failure.json',dict(error=repr(failure),traceback=__import__('traceback').format_exc()));raise
+             write(stage/'pipeline_review.json',review)

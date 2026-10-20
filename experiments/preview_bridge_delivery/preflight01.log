@@ -1,0 +1,17 @@
+Traceback (most recent call last):
+  File "E:\OptoJump\IronJump-gil-gui-calibration-20261018-01\experiments\preview_bridge_delivery\preflight.py", line 12, in <module>
+    assert all(sha(ROOT/n)==v for n,v in p['existing_sources'].items())
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "E:\OptoJump\IronJump-gil-gui-calibration-20261018-01\experiments\preview_bridge_delivery\preflight.py", line 12, in <genexpr>
+    assert all(sha(ROOT/n)==v for n,v in p['existing_sources'].items())
+               ^^^^^^^^^^^
+  File "E:\OptoJump\IronJump-gil-gui-calibration-20261018-01\experiments\preview_bridge_delivery\preflight.py", line 8, in <lambda>
+    sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+                                ^^^^^^^^^^^^^^
+  File "D:\conda\Lib\pathlib.py", line 1050, in read_bytes
+    with self.open(mode='rb') as f:
+         ^^^^^^^^^^^^^^^^^^^^
+  File "D:\conda\Lib\pathlib.py", line 1044, in open
+    return io.open(self, mode, buffering, encoding, errors, newline)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: 'E:\\OptoJump\\IronJump-gil-gui-calibration-20261018-01\\experiments\\canvas_bridge_semantics\\derive.py'
