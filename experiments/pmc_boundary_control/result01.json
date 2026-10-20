@@ -1,0 +1,241 @@
+{
+  "all_blocks_have_disjoint_running_boundaries": true,
+  "no_reported_loss": true,
+  "counter_source_order_verified": true,
+  "rows": [
+    {
+      "ordinal": 0,
+      "iterations": 1,
+      "expected_instructions": 20,
+      "observed": {
+        "instructions": 1837841,
+        "core_cycles": 1925625,
+        "reference_counter": 19302,
+        "intervals": [
+          {
+            "cpu": 2,
+            "begin": 4766295960442,
+            "end": 4766295968487,
+            "values": [
+              1837841,
+              1925625,
+              19302
+            ]
+          }
+        ],
+        "running_qpc": 8045,
+        "marker_qpc": 995
+      },
+      "ratio": 91892.05,
+      "thread_cpu_ms": 0.0,
+      "running_ms": 0.8045
+    },
+    {
+      "ordinal": 1,
+      "iterations": 8000000,
+      "expected_instructions": 144000002,
+      "observed": {
+        "instructions": 146274528,
+        "core_cycles": 130758894,
+        "reference_counter": 1310642,
+        "intervals": [
+          {
+            "cpu": 2,
+            "begin": 4766296177466,
+            "end": 4766296724706,
+            "values": [
+              146274528,
+              130758894,
+              1310642
+            ]
+          }
+        ],
+        "running_qpc": 547240,
+        "marker_qpc": 539796
+      },
+      "ratio": 1.015795319225065,
+      "thread_cpu_ms": 46.875,
+      "running_ms": 54.724000000000004
+    },
+    {
+      "ordinal": 2,
+      "iterations": 32000000,
+      "expected_instructions": 576000002,
+      "observed": {
+        "instructions": 578333479,
+        "core_cycles": 515446538,
+        "reference_counter": 5166462,
+        "intervals": [
+          {
+            "cpu": 4,
+            "begin": 4766296939514,
+            "end": 4766299095616,
+            "values": [
+              578333479,
+              515446538,
+              5166462
+            ]
+          }
+        ],
+        "running_qpc": 2156102,
+        "marker_qpc": 2150100
+      },
+      "ratio": 1.0040511753331556,
+      "thread_cpu_ms": 218.75,
+      "running_ms": 215.6102
+    },
+    {
+      "ordinal": 3,
+      "iterations": 32000000,
+      "expected_instructions": 576000002,
+      "observed": {
+        "instructions": 578417996,
+        "core_cycles": 516759067,
+        "reference_counter": 5179663,
+        "intervals": [
+          {
+            "cpu": 2,
+            "begin": 4766299308627,
+            "end": 4766301471264,
+            "values": [
+              578417996,
+              516759067,
+              5179663
+            ]
+          }
+        ],
+        "running_qpc": 2162637,
+        "marker_qpc": 2155589
+      },
+      "ratio": 1.004197906235424,
+      "thread_cpu_ms": 218.75,
+      "running_ms": 216.2637
+    },
+    {
+      "ordinal": 4,
+      "iterations": 8000000,
+      "expected_instructions": 144000002,
+      "observed": {
+        "instructions": 145892537,
+        "core_cycles": 130421294,
+        "reference_counter": 1307253,
+        "intervals": [
+          {
+            "cpu": 2,
+            "begin": 4766301684032,
+            "end": 4766302229893,
+            "values": [
+              145892537,
+              130421294,
+              1307253
+            ]
+          }
+        ],
+        "running_qpc": 545861,
+        "marker_qpc": 539829
+      },
+      "ratio": 1.0131426039841305,
+      "thread_cpu_ms": 62.5,
+      "running_ms": 54.5861
+    },
+    {
+      "ordinal": 5,
+      "iterations": 8000000,
+      "expected_instructions": 144000002,
+      "observed": {
+        "instructions": 146340480,
+        "core_cycles": 130487822,
+        "reference_counter": 1307924,
+        "intervals": [
+          {
+            "cpu": 2,
+            "begin": 4766302442710,
+            "end": 4766302988736,
+            "values": [
+              146340480,
+              130487822,
+              1307924
+            ]
+          }
+        ],
+        "running_qpc": 546026,
+        "marker_qpc": 541210
+      },
+      "ratio": 1.016253319218704,
+      "thread_cpu_ms": 62.5,
+      "running_ms": 54.6026
+    },
+    {
+      "ordinal": 6,
+      "iterations": 32000000,
+      "expected_instructions": 576000002,
+      "observed": {
+        "instructions": 578146991,
+        "core_cycles": 514796858,
+        "reference_counter": 5159943,
+        "intervals": [
+          {
+            "cpu": 4,
+            "begin": 4766303203388,
+            "end": 4766305356608,
+            "values": [
+              578146991,
+              514796858,
+              5159943
+            ]
+          }
+        ],
+        "running_qpc": 2153220,
+        "marker_qpc": 2148343
+      },
+      "ratio": 1.003727411445391,
+      "thread_cpu_ms": 218.75,
+      "running_ms": 215.322
+    },
+    {
+      "ordinal": 7,
+      "iterations": 1,
+      "expected_instructions": 20,
+      "observed": {
+        "instructions": 1667860,
+        "core_cycles": 1520897,
+        "reference_counter": 15245,
+        "intervals": [
+          {
+            "cpu": 4,
+            "begin": 4766305578887,
+            "end": 4766305585239,
+            "values": [
+              1667860,
+              1520897,
+              15245
+            ]
+          }
+        ],
+        "running_qpc": 6352,
+        "marker_qpc": 854
+      },
+      "ratio": 83393.0,
+      "thread_cpu_ms": 0.0,
+      "running_ms": 0.6352000000000001
+    }
+  ],
+  "instruction_scaling_pass": true,
+  "blank_control_pass": false,
+  "OS_accounting_crosscheck_pass": true,
+  "known_work_boundary_calibration_pass": false,
+  "frequency_semantics_verified": false,
+  "actual_workload_disturbance_qualified": false,
+  "root_mechanism_identified": false,
+  "limitations": [
+    "Bounds include marker and switch overhead; no blank subtraction orfit.",
+    "Clock ratios are notGHz; core/reference semantics not separately qualified.",
+    "One synthetic delivery/calibration process, not independent performance trials orGUI attribution.",
+    "Old failures andwindows retained."
+  ],
+  "bindings": {
+    "analyze.py": "2b5e7475682af2bd9863d44b03ecc1bc718207fe7148f3e671535d1259f5227b",
+    "capture_plan02.json": "e0aab314e18a2f76f0d3764252bd783056d39a067b77509f0ac0b0b447a60c6e",
+    "evidence01.zip": "3cd138712705c6b7554492936910d36c9977d073ce9276d6ae96eaa372af2848"
+  }
+}
