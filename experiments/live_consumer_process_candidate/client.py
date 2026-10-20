@@ -8,7 +8,7 @@ from inbox import Inbox
 from outbox import Outbox
 from protocol import validate_output
 class LiveSessionProcess(QObject):
- hop_event=Signal(object);jump_quality_notice=Signal(dict);gait_step_event=Signal(object);gait_snapshot=Signal(dict);footprint_visual_frame=Signal(dict);device_message=Signal(str);device_state_changed=Signal(str,str);device_layout_changed=Signal(object);walking_readiness_changed=Signal(dict);led_health_changed=Signal(dict);beam_quality_notice=Signal(dict);pause_state_changed=Signal(bool);session_started=Signal();session_finished=Signal(object);closed=Signal(dict);failed=Signal(str)
+ hop_event=Signal(object);jump_quality_notice=Signal(dict);gait_step_event=Signal(object);gait_snapshot=Signal(dict);footprint_visual_frame=Signal(dict);device_message=Signal(str);device_state_changed=Signal(str,str);device_layout_changed=Signal(object);walking_readiness_changed=Signal(dict);led_health_changed=Signal(dict);beam_quality_notice=Signal(dict);pause_state_changed=Signal(bool);session_started=Signal();source_exhausted=Signal();session_finished=Signal(object);closed=Signal(dict);failed=Signal(str)
  def __init__(self,folder,parent=None,batch_size=40,fixture_root=None):
   super().__init__(parent);self.folder=Path(folder);self.batch_size=batch_size;self.fixture_root=fixture_root;self.process=None;self.connection=None;self.writer=None;self.reader=None;self.inbox=Inbox();self.timer=QTimer(self);self.timer.setInterval(5);self.timer.timeout.connect(self._tick);self.sequence=0;self.command_sequence=0;self.report=None;self.terminal=None;self.errors=[];self._running=False;self._start_pending=False;self._device_state='disconnected';self.quality_status={};self.quality_policy=None
  @property
@@ -49,6 +49,7 @@ class LiveSessionProcess(QObject):
    if signal=='device_state_changed':self._device_state=args[0]
    getattr(self,signal).emit(*args)
   elif kind=='started':self._start_pending=False;self._running=True;self.session_started.emit()
+  elif kind=='source_exhausted':self.source_exhausted.emit()
   elif kind=='command_completed':self._running=False
   elif kind=='report_value':self.report=value['report']
   elif kind=='terminal':self.terminal=value

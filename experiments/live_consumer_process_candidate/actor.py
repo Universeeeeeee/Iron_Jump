@@ -20,11 +20,19 @@ def run_actor(connection,output_root,batch_size=40,fixture_root=None):
  from outbox import Outbox,OutboxError
  from queue_probe import QueueProbe
  folder=Path(output_root);folder.mkdir(exist_ok=False);(folder/'active.lock').mkdir();app=QCoreApplication([]);source=None
+ finite_polls=[]
  if fixture_root is None:controller=SessionController()
  else:
   sys.path.insert(0,str(ROOT/'experiments/gil_gui_calibration'))
   from replay02 import Source
+  from engine.device_quality_session import DeviceQualitySession
+  from engine.overground_session import OvergroundSession
   source=Source(Path(fixture_root));controller=SessionController(worker_factory=lambda **kwargs:source)
+  for target in (DeviceQualitySession,OvergroundSession):
+   original_poll=target.poll;finite_polls.append((target,original_poll))
+   def finite_poll(self,_original=original_poll):
+    if getattr(source,'exhausted_ns',None) is None:return _original(self)
+   target.poll=finite_poll
  outbox=Outbox(connection)
  def readers():return [dict(tid=t.native_id,name=t.name) for t in threading.enumerate() if t.name=='CyUsbInterfaceReader']
  sequence=command_sequence=0;prepared=False;reports=[];errors=[];refs={};raw_batches=[];last_readiness=None;probe=None;consumer_tid=None;pending_control=None;completed_control=None;transport_fault=None
@@ -69,6 +77,8 @@ def run_actor(connection,output_root,batch_size=40,fixture_root=None):
   def started(self):
    if source is not None:source.arm_ready.set()
    emit('started',dict())
+  @Slot()
+  def exhausted(self):emit('source_exhausted',dict())
   @Slot(object)
   def finished(self,report):
    QCoreApplication.sendPostedEvents(None,QEvent.MetaCall);value=asdict(report);value.pop('export_frames',None);value.pop('export_timestamps',None);reports.append(json.loads(json.dumps(value,ensure_ascii=False)))
@@ -97,6 +107,7 @@ def run_actor(connection,output_root,batch_size=40,fixture_root=None):
      completed_control=dict(pending_control);emit('command_completed',dict(**completed_control,reader_stopped=True,qt_thread_stopped=True));timer.stop();app.quit()
    except BaseException as exc:errors.append(repr(exc));timer.stop();app.quit()
  delivery=Delivery();controller.walking_readiness_changed.connect(delivery.readiness);controller.gait_snapshot.connect(delivery.snapshot);controller.footprint_visual_frame.connect(delivery.visual);controller.session_started.connect(delivery.started);controller.session_finished.connect(delivery.finished)
+ if source is not None:source.exhausted.connect(delivery.exhausted)
  timer=QTimer();timer.setInterval(5);timer.timeout.connect(delivery.commands);timer.start();QTimer.singleShot(900000,lambda:(errors.append('watchdog_timeout'),app.quit()))
  emit('actor_ready',dict(batch_size=batch_size));app.exec();timer.stop()
  if controller._thread is not None:
@@ -112,13 +123,15 @@ def run_actor(connection,output_root,batch_size=40,fixture_root=None):
   (folder/'acquisition.json').write_text(json.dumps(acquisition,ensure_ascii=False),encoding='utf-8')
  if last_readiness is not None:(folder/'last_readiness.json').write_text(json.dumps(last_readiness,ensure_ascii=False,indent=2),encoding='utf-8')
  if reports:
-  report=reports[0];(folder/'report.json').write_text(json.dumps(report,ensure_ascii=False));quality=refs['quality'];engine=refs['engine'];runtime=quality._runtime;window=hashlib.sha256()
+  report=reports[0];(folder/'report.json').write_text(json.dumps(report,ensure_ascii=False),encoding='utf-8');quality=refs['quality'];engine=refs['engine'];runtime=quality._runtime;window=hashlib.sha256()
   for bits,changes in runtime._window:window.update(bits.tobytes());window.update(changes.tobytes())
-  state=dict(quality=quality.snapshot(),runtime_counts=runtime._counts.tolist(),runtime_transitions=runtime._transitions.tolist(),runtime_healthy=runtime.healthy_samples,runtime_window_sha256=window.hexdigest(),event_audit=engine.overground.processor.event_audit,timeline=list(engine.overground.processor.timeline),mirror_events=engine.overground._frame_filter.mirror_guard.events,raw_archive_sha256=hashlib.sha256(b''.join(engine.overground.frames)).hexdigest());(folder/'state.json').write_text(json.dumps(state,ensure_ascii=False))
+  state=dict(quality=quality.snapshot(),runtime_counts=runtime._counts.tolist(),runtime_transitions=runtime._transitions.tolist(),runtime_healthy=runtime.healthy_samples,runtime_window_sha256=window.hexdigest(),event_audit=engine.overground.processor.event_audit,timeline=list(engine.overground.processor.timeline),mirror_events=engine.overground._frame_filter.mirror_guard.events,raw_archive_sha256=hashlib.sha256(b''.join(engine.overground.frames)).hexdigest());(folder/'state.json').write_text(json.dumps(state,ensure_ascii=False),encoding='utf-8')
   emit('report_value',dict(report=report,raw_exports_child_owned=True))
  complete=not errors and completed_control is not None and controller._thread is None and (completed_control['kind']=='discard' or len(reports)==1)
  emit('terminal',dict(complete=complete,errors=errors,batch_size=batch_size));writer_finished=outbox.finish(2);outbox.preserve(folder/'output_snapshot')
  result=dict(complete=complete and writer_finished,pid=os.getpid(),errors=errors,commands_received=command_sequence,completed_control=completed_control,report_saved=(folder/'report.json').exists(),batch_size=batch_size,output=outbox.snapshot(),transport_fault=transport_fault,
   live_default_USB=fixture_root is None,worker_class=None if 'worker' not in refs else refs['worker'].__class__.__module__+'.'+refs['worker'].__class__.__name__,raw_frames_saved=(folder/'raw_frames.npz').exists(),last_readiness=last_readiness,queue_common=[] if probe is None else probe.common,queue_samples=[] if probe is None else probe.samples,queue_final=queue_final,consumer_tid=consumer_tid,readers_after_cleanup=readers(),formal_program_modified=False)
- (folder/'result.json').write_text(json.dumps(result,indent=2));_GroundFrameInbox.drain=original_drain;_GroundFrameInbox._consume=original_consume;connection.close()
+ (folder/'result.json').write_text(json.dumps(result,indent=2));_GroundFrameInbox.drain=original_drain;_GroundFrameInbox._consume=original_consume
+ for target,poll in finite_polls:target.poll=poll
+ connection.close()
  if not result['complete']:raise SystemExit(1)
