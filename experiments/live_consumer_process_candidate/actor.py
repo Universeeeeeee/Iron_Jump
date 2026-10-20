@@ -1,8 +1,13 @@
 """Child-owned original SessionController/UsbWorker with batch40 ground inbox."""
-from dataclasses import asdict
+from dataclasses import asdict,is_dataclass
 import hashlib,json,os,sys,time,threading
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
+def _json_default(value):
+ if is_dataclass(value):return asdict(value)
+ raise TypeError(f'Object of type {value.__class__.__name__} is not JSON serializable')
+def json_value(value):
+ return json.loads(json.dumps(value,ensure_ascii=False,default=_json_default))
 def run_actor(connection,output_root,batch_size=40,fixture_root=None):
  sys.path.insert(0,str(ROOT));sys.path.insert(0,str(Path(__file__).parent))
  import numpy as np
@@ -50,7 +55,7 @@ def run_actor(connection,output_root,batch_size=40,fixture_root=None):
   @Slot(dict)
   def readiness(self,value):
    nonlocal last_readiness
-   last_readiness=json.loads(json.dumps(value,ensure_ascii=False));emit('readiness',value)
+   last_readiness=json_value(value);emit('readiness',value)
   @Slot(dict)
   def snapshot(self,value):emit('snapshot',value)
   @Slot(dict)

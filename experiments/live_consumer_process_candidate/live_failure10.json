@@ -1,0 +1,15 @@
+{
+  "plan": "plan10.json",
+  "complete": false,
+  "classification": "readiness_evidence_serialization_failed",
+  "observed": {
+    "default_usb_open_attempted": true,
+    "session_started": false,
+    "human_test_started": false,
+    "first_readiness_received": true,
+    "failure": "TypeError: Object of type DeviceLayout is not JSON serializable",
+    "residual_target_processes_after_exit": 0
+  },
+  "evidence_retained": "Remote live_consumer_process_candidate10b with active locks, failure.json and console traceback",
+  "next_plan": "Serialize nested dataclasses in readiness evidence and cover DeviceLayout with a regression test."
+}
