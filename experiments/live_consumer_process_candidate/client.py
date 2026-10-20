@@ -55,7 +55,9 @@ class LiveSessionProcess(QObject):
  def _tick(self):
   try:
    for packet in self.inbox.take(16):self._packet(pickle.loads(packet))
-   if self.terminal is None:return
+   if self.terminal is None:
+    if self.process is not None and not self.process.is_alive() and self.inbox.snapshot()['reader_done']:raise RuntimeError('Live actor ended without terminal output')
+    return
    if self.process.is_alive():return
    self.process.join(0);self.writer.finish(2);self.inbox.close();self.connection.close();self.reader.join(1);self.timer.stop()
    status=dict(complete=self.terminal['complete'] and not self.terminal['errors'] and self.process.exitcode==0,actor_pid=self.process.pid,actor_exitcode=self.process.exitcode,commands=self.command_sequence,outputs=self.sequence,batch_size=self.batch_size)

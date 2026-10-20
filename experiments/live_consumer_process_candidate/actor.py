@@ -16,6 +16,7 @@ def run_actor(connection,output_root,batch_size=40,fixture_root=None):
  folder=Path(output_root);folder.mkdir(exist_ok=False);(folder/'active.lock').mkdir();app=QCoreApplication([]);source=None
  if fixture_root is None:controller=SessionController()
  else:
+  sys.path.insert(0,str(ROOT/'experiments/gil_gui_calibration'))
   from replay02 import Source
   source=Source(Path(fixture_root));controller=SessionController(worker_factory=lambda **kwargs:source)
  outbox=Outbox(connection)

@@ -1,0 +1,9 @@
+{
+  "plan": "plan05.json",
+  "phase": "fixture actor import",
+  "failure": "ModuleNotFoundError: replay02; parent detected only by smoke watchdog",
+  "live_USB_started": false,
+  "actor_started": true,
+  "fix": "add frozen fixture module path and fail parent when actor exits without terminal",
+  "replacement_window_used": false
+}
