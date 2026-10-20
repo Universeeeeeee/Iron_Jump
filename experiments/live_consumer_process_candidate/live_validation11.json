@@ -1,0 +1,48 @@
+{
+  "plan": "plan11.json",
+  "remote_directory": "E:/OptoJump/IronJump-gil-gui-calibration-20261018-01/experiments/live_consumer_process_candidate11",
+  "child_complete": true,
+  "parent_summary_complete": false,
+  "parent_summary_failure": "last_quality_status retained a DeviceLayout object during final JSON serialization",
+  "session_started": false,
+  "human_test_started": false,
+  "readiness": {
+    "ready": true,
+    "requires_acknowledgement": true,
+    "healthy_samples": 3000,
+    "source_segment_count": 8,
+    "used_segment_ids": ["2", "3", "4", "5", "6", "7", "8"],
+    "excluded_full_zero_segment_ids": ["1"],
+    "bad_indices": [480],
+    "bad_types": ["持续遮挡"],
+    "bad_index_interpretation": "Effective index 480 is the first LED of physical segment 7, matching the previously declared failed LED.",
+    "max_consecutive": 1,
+    "broad_change_events": 0
+  },
+  "raw_frame_checks": {
+    "frames": 6013,
+    "sample_index_first": 0,
+    "sample_index_last": 6012,
+    "frame_index_first": 0,
+    "frame_index_last": 6012,
+    "sample_indices_strictly_increasing": true,
+    "frame_indices_strictly_increasing": true,
+    "dropped_frames_before_total": 0
+  },
+  "cleanup": {
+    "completed_control": "discard",
+    "actor_exitcode": 0,
+    "actor_errors": [],
+    "output_failure": null,
+    "output_writer_alive": false,
+    "output_pending_sequences": [],
+    "readers_after_cleanup": []
+  },
+  "remote_evidence_sha256": {
+    "status.json": "af60dbe8652daad9a24f681fe7e6aab8c6acddb685a1d8cb8f7ddebd5cc47883",
+    "actor/result.json": "f5dd441df566f45a0d98395960f4a06ff442769727ac5f54d1f78b295d1d1f61",
+    "actor/last_readiness.json": "08698ba77b8b8ad51a4c8fd2a7e3091841d02831c35deaba4ca4cb7d5322c7c7",
+    "actor/raw_frames.npz": "a34bffbfcb94c8028dd1fd7e9a22f98348f940ab564ef1512846b66b0f863dfa"
+  },
+  "acceptance": "Real USB readiness and cleanup pass. No further restart or cold-start experiment is required; the remaining acceptance target is steady-state Walk."
+}

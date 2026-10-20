@@ -3,7 +3,7 @@ from dataclasses import asdict
 import json,multiprocessing,pickle,threading,time
 from pathlib import Path
 from qtpy.QtCore import QObject,QTimer,Signal
-from actor import run_actor
+from actor import json_value,run_actor
 from inbox import Inbox
 from outbox import Outbox
 from protocol import validate_output
@@ -41,7 +41,7 @@ class LiveSessionProcess(QObject):
   if kind=='actor_ready':
    from hardware.beam_quality import BeamQualityPolicy
    policy=self.quality_policy or BeamQualityPolicy();self._send('prepare',config=self._config.to_dict(),quality_policy=asdict(policy))
-  elif kind=='readiness':self.quality_status=dict(value);self.walking_readiness_changed.emit(value)
+  elif kind=='readiness':self.quality_status=json_value(value);self.walking_readiness_changed.emit(value)
   elif kind=='snapshot':self.gait_snapshot.emit(value)
   elif kind=='visual':self.footprint_visual_frame.emit(value)
   elif kind=='notification':

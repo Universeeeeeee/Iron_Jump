@@ -100,7 +100,7 @@ def run_actor(connection,output_root,batch_size=40,fixture_root=None):
  raw=[value for items in raw_batches for issue,value in items if not issue]
  if raw:
   np.savez_compressed(folder/'raw_frames.npz',bits=np.array([np.frombuffer(v.contact_bits,np.uint8) for v in raw]),wire=np.array([np.frombuffer(v.wire_payload,np.uint8) for v in raw]),valid_bits=np.array([np.frombuffer(v.valid_bits,np.uint8) for v in raw]),sample_indices=np.array([v.sample_index for v in raw]),frame_indices=np.array([v.frame_index for v in raw]),received_ns=np.array([v.received_monotonic_ns for v in raw]),dropped_frames_before=np.array([v.dropped_frames_before for v in raw]))
- if last_readiness is not None:(folder/'last_readiness.json').write_text(json.dumps(last_readiness,ensure_ascii=False,indent=2))
+ if last_readiness is not None:(folder/'last_readiness.json').write_text(json.dumps(last_readiness,ensure_ascii=False,indent=2),encoding='utf-8')
  if reports:
   report=reports[0];(folder/'report.json').write_text(json.dumps(report,ensure_ascii=False));quality=refs['quality'];engine=refs['engine'];runtime=quality._runtime;window=hashlib.sha256()
   for bits,changes in runtime._window:window.update(bits.tobytes());window.update(changes.tobytes())
