@@ -3,7 +3,7 @@ from dataclasses import asdict
 import hashlib,json,os,sys,time
 from pathlib import Path
 ROOT=Path(__file__).resolve().parents[2]
-def run_actor(connection,output_root,batch_size=40):
+def run_actor(connection,output_root,batch_size=40,fixture_root=None):
  sys.path.insert(0,str(ROOT));sys.path.insert(0,str(Path(__file__).parent))
  import numpy as np
  from qtpy.QtCore import QCoreApplication,QObject,QTimer,Slot,QEvent
@@ -13,7 +13,12 @@ def run_actor(connection,output_root,batch_size=40):
  from ui.session_controller import SessionController,_GroundFrameInbox
  from protocol import validate_command,NOTIFICATIONS
  from outbox import Outbox,OutboxError
- folder=Path(output_root);folder.mkdir(exist_ok=False);(folder/'active.lock').mkdir();app=QCoreApplication([]);controller=SessionController();outbox=Outbox(connection)
+ folder=Path(output_root);folder.mkdir(exist_ok=False);(folder/'active.lock').mkdir();app=QCoreApplication([]);source=None
+ if fixture_root is None:controller=SessionController()
+ else:
+  from replay02 import Source
+  source=Source(Path(fixture_root));controller=SessionController(worker_factory=lambda **kwargs:source)
+ outbox=Outbox(connection)
  sequence=command_sequence=0;prepared=False;reports=[];errors=[];refs={};raw_batches=[];pending_control=None;completed_control=None;transport_fault=None
  original_drain=_GroundFrameInbox.drain;original_consume=_GroundFrameInbox._consume
  def drain(inbox):
@@ -46,7 +51,9 @@ def run_actor(connection,output_root,batch_size=40):
   @Slot(dict)
   def visual(self,value):emit('visual',value)
   @Slot()
-  def started(self):emit('started',dict())
+  def started(self):
+   if source is not None:source.arm_ready.set()
+   emit('started',dict())
   @Slot(object)
   def finished(self,report):
    QCoreApplication.sendPostedEvents(None,QEvent.MetaCall);value=asdict(report);value.pop('export_frames',None);value.pop('export_timestamps',None);reports.append(json.loads(json.dumps(value,ensure_ascii=False)))
@@ -60,7 +67,9 @@ def run_actor(connection,output_root,batch_size=40):
      if kind=='prepare' and not prepared:
       values=command['config'];cls=WalkingConfig if values['test_type']=='Sprint and Gait Test' else OvergroundRunningConfig
       cfg=cls(**{k:v for k,v in values.items() if k in cls.__dataclass_fields__ and cls.__dataclass_fields__[k].init});controller.quality_policy=BeamQualityPolicy(**command['quality_policy']);controller.prepare(cfg);prepared=True
-      refs.update(engine=controller._engine,quality=controller._quality,inbox=controller._frame_inbox,thread=controller._thread,worker=controller._worker);emit('prepared',dict(batch_size=batch_size))
+      refs.update(engine=controller._engine,quality=controller._quality,inbox=controller._frame_inbox,thread=controller._thread,worker=controller._worker)
+      if source is not None:source.sdk_ready.set()
+      emit('prepared',dict(batch_size=batch_size,fixture=source is not None))
      elif kind=='start' and prepared and not controller.is_running:
       controller.start(acknowledge_quality=command.get('acknowledge_quality',False),quality_key=command.get('quality_key'))
      elif kind=='stop' and controller.is_running:

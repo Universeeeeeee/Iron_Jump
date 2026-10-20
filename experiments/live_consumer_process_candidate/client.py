@@ -9,8 +9,8 @@ from outbox import Outbox
 from protocol import validate_output
 class LiveSessionProcess(QObject):
  hop_event=Signal(object);jump_quality_notice=Signal(dict);gait_step_event=Signal(object);gait_snapshot=Signal(dict);footprint_visual_frame=Signal(dict);device_message=Signal(str);device_state_changed=Signal(str,str);device_layout_changed=Signal(object);walking_readiness_changed=Signal(dict);led_health_changed=Signal(dict);beam_quality_notice=Signal(dict);pause_state_changed=Signal(bool);session_started=Signal();session_finished=Signal(object);closed=Signal(dict);failed=Signal(str)
- def __init__(self,folder,parent=None,batch_size=40):
-  super().__init__(parent);self.folder=Path(folder);self.batch_size=batch_size;self.process=None;self.connection=None;self.writer=None;self.reader=None;self.inbox=Inbox();self.timer=QTimer(self);self.timer.setInterval(5);self.timer.timeout.connect(self._tick);self.sequence=0;self.command_sequence=0;self.report=None;self.terminal=None;self.errors=[];self._running=False;self._start_pending=False;self._device_state='disconnected';self.quality_status={};self.quality_policy=None
+ def __init__(self,folder,parent=None,batch_size=40,fixture_root=None):
+  super().__init__(parent);self.folder=Path(folder);self.batch_size=batch_size;self.fixture_root=fixture_root;self.process=None;self.connection=None;self.writer=None;self.reader=None;self.inbox=Inbox();self.timer=QTimer(self);self.timer.setInterval(5);self.timer.timeout.connect(self._tick);self.sequence=0;self.command_sequence=0;self.report=None;self.terminal=None;self.errors=[];self._running=False;self._start_pending=False;self._device_state='disconnected';self.quality_status={};self.quality_policy=None
  @property
  def is_running(self):return self._running
  @property
@@ -23,7 +23,7 @@ class LiveSessionProcess(QObject):
   self.command_sequence+=1;self.writer.enqueue(dict(sequence=self.command_sequence,kind=kind,**values));return self.command_sequence
  def prepare(self,config):
   if self.process is not None:raise ValueError('One live process per facade')
-  self.folder.mkdir(exist_ok=False);(self.folder/'active.lock').mkdir();ctx=multiprocessing.get_context('spawn');self.connection,child=ctx.Pipe();self.process=ctx.Process(target=run_actor,args=(child,str(self.folder/'actor'),self.batch_size));self.process.start();child.close();self.writer=Outbox(self.connection);self.reader=threading.Thread(target=self._receive,daemon=True);self.reader.start();self._config=config;self.timer.start()
+  self.folder.mkdir(exist_ok=False);(self.folder/'active.lock').mkdir();ctx=multiprocessing.get_context('spawn');self.connection,child=ctx.Pipe();self.process=ctx.Process(target=run_actor,args=(child,str(self.folder/'actor'),self.batch_size,self.fixture_root));self.process.start();child.close();self.writer=Outbox(self.connection);self.reader=threading.Thread(target=self._receive,daemon=True);self.reader.start();self._config=config;self.timer.start()
  def _receive(self):
   detail=None
   try:
