@@ -1,0 +1,39 @@
+{
+  "instance": "IJPmcBoundary01",
+  "attempts": 1,
+  "iterations": [
+    1,
+    8000000,
+    32000000,
+    32000000,
+    8000000,
+    8000000,
+    32000000,
+    1
+  ],
+  "code_sha256": "017e429f82cf91149486560c0203a980348194430004f2bf69c932683fae0287",
+  "counter_order": [
+    "InstructionRetired",
+    "UnhaltedCoreCycles",
+    "UnhaltedReferenceCycles"
+  ],
+  "instruction_ratio": [
+    0.97,
+    1.03
+  ],
+  "blank_max_fraction": 0.01,
+  "accounting_tolerance_ms": 31.25,
+  "sources": {
+    "ReadCounters04.cs": "96426a8971f205e83a6e2d65a24ccddfd49902b64785bbdda17574acf8a024b8",
+    "capture.py": "e39a380b4487c96da944f7b5a962ab2b8a220b791e08e271a96341d315584282",
+    "winapi.py": "5d86cc0d8bf8ae376d0ed2926d00c0dad21d515ea3e7d682cc6e3cb2a0f429b6",
+    "probe.py": "ad4206e1f1b65203767178743e2aebd2dbfa7658088d31af57d0526a7381851c",
+    "test_capture.py": "4611857aae7e14de3474fc56d8bf453ce42c7550c1f50a5b7214138247641131",
+    "target.py": "630cd5d627b63a6eee0dd3c26a75a3c32b68dded4f8e59f2f49e7d6d7965d75b",
+    "test_boundaries.py": "762b4eb791b22626760f1fb9de31e55ea8d3fcda8f4f2c4735f22b6d8b6483f0",
+    "analyze.py": "2b5e7475682af2bd9863d44b03ecc1bc718207fe7148f3e671535d1259f5227b",
+    "counters.wprp": "17b06f4176478d1ed2e356aec410cca96ad79f6ea4d1e28bb0452ae0f5930249"
+  },
+  "old_failure_replaced": false,
+  "production_or_model_work": false
+}
