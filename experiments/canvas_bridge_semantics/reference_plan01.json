@@ -1,0 +1,106 @@
+{
+  "base_commit": "9cdae1868b82fa65dbdc013de0a8e2c2985db057",
+  "sources": {
+    "bridge.py": "f84d147c8f9ca11547fcebba06d9e14dda620d4d824b53e8d75abff7438c2be4",
+    "control.py": "3e101ae0cc1e361195e14ade8a16f0440052846271f85bcf7bfad2213a26f2bc",
+    "check.py": "88cb1b3bc6f6b393c8214db6cb532343938338bdd18223461fc2bfede232eab8",
+    "test_check.py": "e0ceb8239cf796fab73d5d24dc91348198e52e83ffec9a24ed636b4f6b0a036c",
+    "freeze.py": "8ffcefdc8b596e26f9b9885334bda8a72a6501a0b2fafb887d886162e861bfcd",
+    "launch02.ps1": "d8ec2c0c23443b5fb07aa705ec90089963993a1d8660684947648359a627bf08",
+    "binding_review01.json": "72d63f5f6d0bc5a98f0c83d6ff75b259db9720628ea6c7c85e9cf01900ad7f6f",
+    "reference_plan01.json": "3b5679da43f709cccd00e09bebe361849105a758339e8d3bee4b460e0b711705"
+  },
+  "exact_modules": {
+    "D:/conda/python311.dll": "162e8557fbed5f39ae24983ee62b2d435b4796c937d9c1a34371888c7e43af00",
+    "D:/conda/Lib/site-packages/PySide6/Qt6Core.dll": "65fe6224b6c47a15b058738031d31dce9928c4d7a58e1b8db6434f6f5cddd702",
+    "D:/conda/Lib/site-packages/PySide6/Qt6Widgets.dll": "5a9f37dedd3dc5bcc1a4bb8ea919c49fc62df751a1450accc34379eb6710eab6",
+    "D:/conda/Lib/site-packages/PySide6/QtWidgets.pyd": "85cb6c2181b4b09887a7d8507dd950844d1b8f74a9c4002c7b71169f75bf6fda",
+    "D:/conda/Lib/site-packages/shiboken6/shiboken6.abi3.dll": "47f4f9b44c95037565dd14f4be04f350f20c53c05483b750e0be867c39a7441e",
+    "D:/conda/Lib/site-packages/PySide6/Qt6Gui.dll": "cd071161ad325ff2de92b0e33d71334ef20712544796949623ce92dfb3957e90"
+  },
+  "cases": [
+    {
+      "id": "opaque_a",
+      "size": [
+        233,
+        151
+      ],
+      "seed": 0,
+      "alpha": false,
+      "scaled": true,
+      "source_dpr": 1,
+      "target_dpr": 1
+    },
+    {
+      "id": "opaque_b",
+      "size": [
+        233,
+        151
+      ],
+      "seed": 1,
+      "alpha": false,
+      "scaled": true,
+      "source_dpr": 1,
+      "target_dpr": 1
+    },
+    {
+      "id": "alpha_fractional",
+      "size": [
+        257,
+        173
+      ],
+      "seed": 2,
+      "alpha": true,
+      "scaled": true,
+      "source_dpr": 1,
+      "target_dpr": 1.25
+    },
+    {
+      "id": "source_and_target_fractional",
+      "size": [
+        311,
+        211
+      ],
+      "seed": 3,
+      "alpha": true,
+      "scaled": true,
+      "source_dpr": 1.5,
+      "target_dpr": 1.5
+    },
+    {
+      "id": "double_dpr",
+      "size": [
+        337,
+        219
+      ],
+      "seed": 4,
+      "alpha": true,
+      "scaled": true,
+      "source_dpr": 2,
+      "target_dpr": 2
+    },
+    {
+      "id": "unscaled",
+      "size": [
+        239,
+        157
+      ],
+      "seed": 5,
+      "alpha": false,
+      "scaled": false,
+      "source_dpr": 1,
+      "target_dpr": 1
+    }
+  ],
+  "process_budget": 1,
+  "retry_budget": 0,
+  "maximum_valid_render_calls": 24,
+  "invalid_argument_calls": 8,
+  "None_helper_reference_calls": 17,
+  "performance_endpoints": [],
+  "error_policy": "Compare callback error location/identity with the unchanged binding reference; any pixel, ownership, cleanup, diagnostic or error-channel mismatch rejects this control.",
+  "performance_AB": false,
+  "formal_program_or_existing_paint_candidate_changed": false,
+  "field_attribution_ready": false,
+  "scope": "One offscreen synthetic correctness process only. No saved/human Walk, device, SDK, model, CPU sampler, trace or performance experiment."
+}

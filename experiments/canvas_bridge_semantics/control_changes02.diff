@@ -1,0 +1,70 @@
+--- failed/control.py
++++ font_ready/control02.py
+@@ -15,10 +15,10 @@
+ sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
+ 
+ if __name__=='__main__':
+-    (HERE/'active.lock').mkdir()
++    (HERE/'active02.lock').mkdir()
+     data=dict(errors=[],cases=[],faults=[],Qt_messages=[],handler_restored=False,original_method_unchanged=False)
+     try:
+-        plan=json.loads((HERE/'plan01.json').read_text())
++        plan=json.loads((HERE/'plan02.json').read_text())
+         assert sys.platform=='win32' and os.environ['QT_QPA_PLATFORM']=='offscreen' and os.environ['QT_SCALE_FACTOR']=='1.25'
+         assert all(sha(HERE/n)==v for n,v in plan['sources'].items())
+         assert all(sha(Path(n))==v for n,v in plan['exact_modules'].items())
+@@ -35,9 +35,9 @@
+         kernel=C.PyDLL('kernel32');kernel.GetCurrentThreadId.restype=C.c_uint32
+         data['gui_tid']=kernel.GetCurrentThreadId()
+         original=AnnotationCanvas.paintEvent
+-        generated,text,audit=derive(original,Bridge(),str(HERE/'runs/generated_annotation_paint.py'))
+-        with (HERE/'runs/generated_annotation_paint.py').open('x') as f:f.write(text)
+-        data['AST_audit']=audit;data['generated_source_sha256']=sha(HERE/'runs/generated_annotation_paint.py')
++        generated,text,audit=derive(original,Bridge(),str(HERE/'runs02/generated_annotation_paint.py'))
++        with (HERE/'runs02/generated_annotation_paint.py').open('x') as f:f.write(text)
++        data['AST_audit']=audit;data['generated_source_sha256']=sha(HERE/'runs02/generated_annotation_paint.py')
+         class BridgeCanvas(AnnotationCanvas):pass
+         BridgeCanvas.paintEvent=generated
+         tree=ast.parse((root/'ui/embedded_camera_panel.py').read_text(encoding='utf-8'))
+@@ -107,13 +107,16 @@
+         def messages(kind,context,message):data['Qt_messages'].append(dict(kind=str(kind),message=message))
+         previous=QtCore.qInstallMessageHandler(messages);references={}
+         try:
++            from font_probe import delivery
++            data['font_delivery']=delivery(app,HERE/'runs02')
++            assert data['font_delivery']['font_delivery_pass']
+             for case in plan['cases']:
+                 row=dict(id=case['id']);pixels={};data['cases'].append(row)
+                 for mode in ('original','bridge'):
+                     widget,events,calls,signals=setup(case,mode)
+                     try:
+                         raw,meta,caught=render(widget,events,calls,signals);assert not caught
+-                        with (HERE/'runs'/f"{case['id']}_{mode}.argb").open('xb') as f:f.write(raw)
++                        with (HERE/'runs02'/f"{case['id']}_{mode}.argb").open('xb') as f:f.write(raw)
+                         pixels[mode]=raw;row[mode]=meta
+                     finally:cleanup=dispose(widget,events)
+                     row[mode].update(cleanup)
+@@ -128,11 +131,11 @@
+                     fault_calls.append(1);painter.end();raise sentinel
+                 widget._draw_live_pose=fail;stderr=io.StringIO()
+                 with contextlib.redirect_stderr(stderr):raw,meta,caught=render(widget,events,calls,signals)
+-                with (HERE/'runs'/f'fault_{mode}.argb').open('xb') as f:f.write(raw)
+-                with (HERE/'runs'/f'fault_{mode}.stderr.txt').open('x') as f:f.write(stderr.getvalue())
++                with (HERE/'runs02'/f'fault_{mode}.argb').open('xb') as f:f.write(raw)
++                with (HERE/'runs02'/f'fault_{mode}.stderr.txt').open('x') as f:f.write(stderr.getvalue())
+                 widget._draw_live_pose=normal;events.refs.clear();events.tids.clear()
+                 recovered,_,recovery_errors=render(widget,events,calls,signals);assert not recovery_errors
+-                with (HERE/'runs'/f'recovery_{mode}.argb').open('xb') as f:f.write(recovered)
++                with (HERE/'runs02'/f'recovery_{mode}.argb').open('xb') as f:f.write(recovered)
+                 cleanup=dispose(widget,events)
+                 data['faults'].append(dict(mode=mode,fault_calls=len(fault_calls),caught_at_render=len(caught),same_instance=bool(caught) and all(e is sentinel for e in caught),
+                     stderr_contains_sentinel='fixture-canvas-error' in stderr.getvalue(),observed=bool(caught) or 'fixture-canvas-error' in stderr.getvalue(),
+@@ -142,6 +145,6 @@
+         data['qualification']=check(data,plan)
+     except Exception as exc:data['errors'].append(repr(exc))
+     data['passed']=not data['errors'] and data.get('qualification',{}).get('canvas_semantics_pass',False)
+-    data['plan_sha256']=sha(HERE/'plan01.json')
+-    with (HERE/'result01.json').open('x') as f:json.dump(data,f,indent=2)
++    data['plan_sha256']=sha(HERE/'plan02.json')
++    with (HERE/'result02.json').open('x') as f:json.dump(data,f,indent=2)
+     print(json.dumps(data,indent=2));raise SystemExit(0 if data['passed'] else 2)

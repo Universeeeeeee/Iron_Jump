@@ -1,0 +1,38 @@
+{
+  "scope": "Exact pinned helper ABI constraints only, not proof of correct rendering or performance.",
+  "shiboken_sha256": "47f4f9b44c95037565dd14f4be04f350f20c53c05483b750e0be867c39a7441e",
+  "marker_constructor": {
+    "begin_rva": 70656,
+    "end_rva": 70701,
+    "bytes": "65488b0425580000008b151984040041b808000000488b14d04a8b0402488d0445010000004a890402488bc1c3",
+    "object_storage_not_dereferenced": true
+  },
+  "marker_destructor": {
+    "begin_rva": 75568,
+    "end_rva": 75597,
+    "bytes": "8b0df270040065488b042558000000ba08000000488b04c848d12c10c3",
+    "object_storage_not_dereferenced": true
+  },
+  "normal_protected_entry_range": [
+    1738384,
+    1738659
+  ],
+  "canonical_releasing_wrapper_range": [
+    2749828,
+    2750056
+  ],
+  "policy": "Keep the original protected entry synchronous PythonContextMarker flag; changing setBlocking would alter an additional context/exception policy. Callback exception equivalence remains an actual-runtime gate.",
+  "QtWidgets_sha256": "85cb6c2181b4b09887a7d8507dd950844d1b8f74a9c4002c7b71169f75bf6fda",
+  "GilState_constructor": {
+    "begin_rva": 70528,
+    "end_rva": 70576,
+    "raw_disassembly_sha256": "21b7cd4ff30170c1ed4187908063865411d2c4d6d9862834f325fecefebd45f3",
+    "nearest_export_labels_not_used": true
+  },
+  "canonical_release": {
+    "begin_rva": 2749828,
+    "end_rva": 2750056,
+    "raw_disassembly_sha256": "466444bbcbc953456442ddba0d4cfdecd1b31edc8838650e5539ac653ad92372",
+    "nearest_export_labels_not_used": true
+  }
+}

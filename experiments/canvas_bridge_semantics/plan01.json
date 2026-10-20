@@ -1,0 +1,146 @@
+{
+  "base_commit": "d9fdbe9ef5126413b6009c0c162d1c6727cc766b",
+  "project_root": "E:/OptoJump/IronJump-gil-gui-calibration-20261018-01",
+  "formal_sources": {
+    "ui/annotation_canvas.py": "ab573f096bc859ce2550821973abd508e1484e8bf90494b048c42dd8cc162df4",
+    "ui/embedded_camera_panel.py": "dd03cb082d7d3c77071d1f47c208e8996dc7b489b0d21fc2e55b0a479269e936",
+    "camera/video_annotations.py": "c464d719894b67782902487a7f9ce03c4923d5cc4be3866e2533b96109ed4797",
+    "vision/pose_overlay.py": "5bacd34bc05ec0bf150340e2d763e28419bcc335282af44f6767391e852ca9f2",
+    "vision/foot_reference.py": "8ceafb540566f79856793b012af4a3088edcd0eb124246d36332114c65650ee9"
+  },
+  "sources": {
+    "derive.py": "662390da489fb9d038d82e9ceca5795cd1a05b9f5c1acc28e645ddf4953bdb46",
+    "bridge.py": "f84d147c8f9ca11547fcebba06d9e14dda620d4d824b53e8d75abff7438c2be4",
+    "binding_review01.json": "72d63f5f6d0bc5a98f0c83d6ff75b259db9720628ea6c7c85e9cf01900ad7f6f",
+    "control.py": "2c8789c04a35bfb921c5bd4bf400e1482386757c813d2462cd6ea6dd6e006d60",
+    "check.py": "fc540ae2787e1b0af9b734e1cf8572ab5825cbf226188ecfa5ac29dd5dd1fe74",
+    "test_derive.py": "40c3253bb1443f77afe5760b453b03e615ca8c040f3a614bf6205ca13d5f40e1",
+    "freeze.py": "7b0731c0094ef8fddc34bba8d8986c586600e97a2b33c6c1f32a8559c16b6fff",
+    "reference_plan01.json": "cf3f5f74477bf041a72bd081e9d4795475b3d0d010e43f1d171ac92d548297e7",
+    "process_helper.ps1": "099d1e68dd96aa0ca37c4bb0f831dbb9983d0ea6a26a51fe567524d12f7a0929",
+    "launch01.ps1": "ec0d43f43f143c53bce582238f236d542caac0c19589e576b4740480ea6e8a19"
+  },
+  "exact_modules": {
+    "D:/conda/python311.dll": "162e8557fbed5f39ae24983ee62b2d435b4796c937d9c1a34371888c7e43af00",
+    "D:/conda/Lib/site-packages/PySide6/Qt6Core.dll": "65fe6224b6c47a15b058738031d31dce9928c4d7a58e1b8db6434f6f5cddd702",
+    "D:/conda/Lib/site-packages/PySide6/Qt6Widgets.dll": "5a9f37dedd3dc5bcc1a4bb8ea919c49fc62df751a1450accc34379eb6710eab6",
+    "D:/conda/Lib/site-packages/PySide6/QtWidgets.pyd": "85cb6c2181b4b09887a7d8507dd950844d1b8f74a9c4002c7b71169f75bf6fda",
+    "D:/conda/Lib/site-packages/shiboken6/shiboken6.abi3.dll": "47f4f9b44c95037565dd14f4be04f350f20c53c05483b750e0be867c39a7441e",
+    "D:/conda/Lib/site-packages/PySide6/Qt6Gui.dll": "cd071161ad325ff2de92b0e33d71334ef20712544796949623ce92dfb3957e90"
+  },
+  "cases": [
+    {
+      "id": "empty",
+      "image": false,
+      "pose": false,
+      "low": false,
+      "mirrored": false,
+      "angles": false,
+      "interval": false,
+      "draft": false,
+      "drag": false,
+      "integrated": false
+    },
+    {
+      "id": "image_only",
+      "image": true,
+      "pose": false,
+      "low": false,
+      "mirrored": false,
+      "angles": false,
+      "interval": false,
+      "draft": false,
+      "drag": false,
+      "integrated": false
+    },
+    {
+      "id": "pose",
+      "image": true,
+      "pose": true,
+      "low": false,
+      "mirrored": false,
+      "angles": false,
+      "interval": false,
+      "draft": false,
+      "drag": false,
+      "integrated": false
+    },
+    {
+      "id": "low_quality",
+      "image": true,
+      "pose": true,
+      "low": true,
+      "mirrored": false,
+      "angles": false,
+      "interval": false,
+      "draft": false,
+      "drag": false,
+      "integrated": false
+    },
+    {
+      "id": "mirrored",
+      "image": true,
+      "pose": true,
+      "low": false,
+      "mirrored": true,
+      "angles": false,
+      "interval": false,
+      "draft": false,
+      "drag": false,
+      "integrated": false
+    },
+    {
+      "id": "angle_drag_draft",
+      "image": true,
+      "pose": false,
+      "low": false,
+      "mirrored": false,
+      "angles": true,
+      "interval": false,
+      "draft": true,
+      "drag": true,
+      "integrated": false
+    },
+    {
+      "id": "interval",
+      "image": true,
+      "pose": false,
+      "low": false,
+      "mirrored": false,
+      "angles": false,
+      "interval": true,
+      "draft": false,
+      "drag": false,
+      "integrated": false
+    },
+    {
+      "id": "combined",
+      "image": true,
+      "pose": true,
+      "low": false,
+      "mirrored": false,
+      "angles": true,
+      "interval": true,
+      "draft": true,
+      "drag": false,
+      "integrated": true
+    }
+  ],
+  "process_budget": 1,
+  "retries": 0,
+  "process_QT_SCALE_FACTOR": "1.25",
+  "observed_widget_size": [
+    784,
+    441
+  ],
+  "source_image_size": [
+    640,
+    360
+  ],
+  "pixmap_dpr": 1,
+  "maximum_render_calls": 20,
+  "performance_endpoints": [],
+  "performance_AB": false,
+  "field_fix_verified": false,
+  "scope": "Original AnnotationCanvas plus an experimental subclass with one base-call AST replacement. Synthetic RGB and dataclass pose only; no model, live SDK/device, human, USB or Run."
+}
