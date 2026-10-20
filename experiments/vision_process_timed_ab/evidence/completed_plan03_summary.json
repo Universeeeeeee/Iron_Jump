@@ -1,0 +1,202 @@
+{
+  "conclusion": "Process isolation has no stable meaningful benefit in the fast state; severe-state benefit remains untested because A/A transitioned before pairs.",
+  "decision": {
+    "advance": false,
+    "reason": "protocol_quality_failed",
+    "protocol_quality_pass": false,
+    "aa_quality_pass": false,
+    "aa_stable": false,
+    "aa_relative_ranges": {
+      "scheduled_max_ms": 19.052566616700574,
+      "observed_queue_lower": 45.582417582417584,
+      "video": 0.03299492385786795,
+      "inferences": 0.03759398496240607
+    },
+    "severe_baseline_reproduced": false,
+    "pairs": [
+      {
+        "original": "pair01_original",
+        "process": "pair01_process",
+        "quality": true,
+        "severe_original": false,
+        "process_absolute_bounds_pass": true,
+        "severe_pair_improved": false
+      },
+      {
+        "original": "pair02_original",
+        "process": "pair02_process",
+        "quality": true,
+        "severe_original": false,
+        "process_absolute_bounds_pass": true,
+        "severe_pair_improved": false
+      },
+      {
+        "original": "pair03_original",
+        "process": "pair03_process",
+        "quality": true,
+        "severe_original": false,
+        "process_absolute_bounds_pass": true,
+        "severe_pair_improved": false
+      },
+      {
+        "original": "pair04_original",
+        "process": "pair04_process",
+        "quality": true,
+        "severe_original": false,
+        "process_absolute_bounds_pass": true,
+        "severe_pair_improved": false
+      }
+    ],
+    "quantitative_root_share_identified": false,
+    "field_fix_verified": false
+  },
+  "severe_aa": [
+    {
+      "scheduled_max_ms": 3044.0802,
+      "observed_queue_lower": 3981,
+      "queue_upper": 4041,
+      "input_lateness_ms": 129.821,
+      "id": "aa01",
+      "model_median_ms": 40.75484996428713,
+      "video": 814,
+      "inferences": 414
+    },
+    {
+      "scheduled_max_ms": 3393.8588,
+      "observed_queue_lower": 4239,
+      "queue_upper": 4299,
+      "input_lateness_ms": 121.348,
+      "id": "aa02",
+      "model_median_ms": 40.54760001599789,
+      "video": 810,
+      "inferences": 411
+    }
+  ],
+  "fast_aa": [
+    {
+      "scheduled_max_ms": 178.4785,
+      "observed_queue_lower": 91,
+      "queue_upper": 167,
+      "input_lateness_ms": 92.942,
+      "id": "aa03",
+      "model_median_ms": 23.14869995461777,
+      "video": 788,
+      "inferences": 399
+    },
+    {
+      "scheduled_max_ms": 169.2481,
+      "observed_queue_lower": 91,
+      "queue_upper": 162,
+      "input_lateness_ms": 88.4876,
+      "id": "aa04",
+      "model_median_ms": 23.893299978226423,
+      "video": 793,
+      "inferences": 401
+    }
+  ],
+  "pairs": [
+    {
+      "pair": 1,
+      "original_ms": 175.4968,
+      "process_ms": 169.1614,
+      "relative_change": -0.036099803529181296,
+      "original_queue": [
+        102,
+        174
+      ],
+      "process_queue": [
+        106,
+        180
+      ],
+      "video": [
+        799,
+        801
+      ],
+      "inferences": [
+        402,
+        410
+      ]
+    },
+    {
+      "pair": 2,
+      "original_ms": 172.7343,
+      "process_ms": 174.3702,
+      "relative_change": 0.009470614695518131,
+      "original_queue": [
+        83,
+        155
+      ],
+      "process_queue": [
+        118,
+        194
+      ],
+      "video": [
+        793,
+        799
+      ],
+      "inferences": [
+        401,
+        409
+      ]
+    },
+    {
+      "pair": 3,
+      "original_ms": 168.7469,
+      "process_ms": 178.0467,
+      "relative_change": 0.055110938334274495,
+      "original_queue": [
+        90,
+        157
+      ],
+      "process_queue": [
+        108,
+        171
+      ],
+      "video": [
+        791,
+        792
+      ],
+      "inferences": [
+        400,
+        408
+      ]
+    },
+    {
+      "pair": 4,
+      "original_ms": 180.2479,
+      "process_ms": 170.7818,
+      "relative_change": -0.05251711670427217,
+      "original_queue": [
+        106,
+        171
+      ],
+      "process_queue": [
+        122,
+        182
+      ],
+      "video": [
+        797,
+        800
+      ],
+      "inferences": [
+        402,
+        408
+      ]
+    }
+  ],
+  "descriptive_geometric_latency_change": -0.0068866679375372275,
+  "supported": [
+    "A/A state transition is real and large",
+    "fast-state process latency stays within 250ms",
+    "model and consumer slow/fast states covary"
+  ],
+  "rejected": [
+    "stable meaningful fast-state process-isolation benefit"
+  ],
+  "insufficient": [
+    "severe-state process benefit",
+    "exclusive GIL/Qt/native CPU shares",
+    "frequency/cache/power/thermal/function root cause",
+    "field fix"
+  ]
+}
