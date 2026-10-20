@@ -79,5 +79,13 @@ class LiveSessionProcess(QObject):
  def _fail(self,error):
   if self.errors:return
   self.errors.append(error);self.timer.stop();self.inbox.close()
-  if self.writer:self.writer.abort('parent_failure')
+  if self.writer:self.writer.abort('parent_failure');self.writer.finish(1)
+  if self.connection:
+   try:self.connection.close()
+   except OSError:pass
   (self.folder/'failure.json').write_text(json.dumps(dict(error=error,actor_pid=None if self.process is None else self.process.pid,actor_alive=None if self.process is None else self.process.is_alive()),indent=2));self.failed.emit(error)
+ def finalize_failure(self,timeout=10):
+  if self.process is None:return True
+  self.process.join(timeout)
+  if self.reader is not None:self.reader.join(1)
+  return not self.process.is_alive()
