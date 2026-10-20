@@ -1,0 +1,14 @@
+{
+  "exact_algorithm_state": true,
+  "offline_build_us_per_frame": 320.37548068535824,
+  "offline_recover_us_per_frame": 384.5072163893805,
+  "offline_recover_relative_to_build": 0.20017679120396314,
+  "retained_live_build_fps": 846.8486151255076,
+  "retained_live_recover_fps": 1129.1434769241444,
+  "conclusion": "The saved algorithm chain is about20% more expensive in the live recovery input range, yet the isolated consumer runs about33% faster there. Input complexity cannot explain the transient recovery; Qt timer/scheduling/execution delivery dominates the inversion.",
+  "optimization_target": "Reduce repeated zero-interval Qt wake dependence; batch40 candidate is sized to the measured5% peak gap.",
+  "bindings": {
+    "result_sha256": "6cfebca3031c4b8fa7be70ae2734307bdab7dc1b8e504e2b35078dee90978200",
+    "summarizer_sha256": "20cbe64bbf47d2399490125bdf56e62760567d80c02fc8a677e2a953f9d8bbb4"
+  }
+}
