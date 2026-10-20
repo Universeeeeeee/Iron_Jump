@@ -1,0 +1,13 @@
+--- session_local_baseline/pipeline_review.py
++++ preview_native_sdk/pipeline_native.py
+@@ -14,7 +14,9 @@
+     assert local['reader_stopped'] and local['qt_thread_stopped'] and local['controller_released']
+     assert len(local['source_clock_history'])==2 and status['source_clock_history']==local['source_clock_history']
+     assert sdk['pid']!=gui['pid'] and sdk['parent_pid']==gui['pid']
+-    assert sdk['backend']=='simulated_native_SDK' and sdk['no_native_device_opened'] and sdk['serve_returncode']==0 and sdk['calls']['close']==1
++    assert sdk['backend']=='real_native_SDK' and not sdk['no_native_device_opened'] and sdk['serve_returncode']==0 and sdk['calls']['close']==1
++    assert sdk['error'] is None and {v['name'] for v in sdk['actual_loaded_modules']}=={'libdev.dll','obsbot_c_api.dll'}
++    assert all(v['sha256'] for v in sdk['actual_loaded_modules'])
+     assert local['source_ready_info']==status['sdk_ready_info']==gui['sdk']['ready_events'][0]
+     assert local['source_ready_info']['sdk_pid']==sdk['pid'] and local['source_ready_info']['gui_pid']==gui['pid']
+     assert gui['sdk']['start_success'] and gui['sdk']['stop_success'] and not gui['sdk']['errors'] and gui['sdk']['tracking_decisions']>0 and gui['sdk']['nonzero_speeds']>0

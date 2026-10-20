@@ -1,0 +1,58 @@
+{
+  "real_native_SDK_safety_window_pass": true,
+  "GUI_pid": 20192,
+  "SDK_pid": 22960,
+  "actual_loaded_modules": [
+    {
+      "name": "obsbot_c_api.dll",
+      "path": "E:\\OptoJump\\IronJump-gil-gui-calibration-20261018-01\\camera\\bin\\obsbot_c_api.dll",
+      "sha256": "c05b4d551fd5ba178a3bfce2cef9f35c81fd2322c010756c53114d924415bfaf"
+    },
+    {
+      "name": "libdev.dll",
+      "path": "E:\\OptoJump\\IronJump-gil-gui-calibration-20261018-01\\camera\\bin\\libdev.dll",
+      "sha256": "e2648a930fdefe033efe8284fe56f04a55cbef45c0a47763ccca25663b0d66df"
+    }
+  ],
+  "native_successful_call_counts": {
+    "init": 1,
+    "set_speed": 635,
+    "disable_ai": 1,
+    "close": 1
+  },
+  "SDK_stop_and_close_confirmed": true,
+  "preview_calls": 592,
+  "pose_preview_calls": 585,
+  "real_model_calls": 399,
+  "saved_video_frames": 789,
+  "full_original_semantics": {
+    "full_original_report": true,
+    "full_quality_runtime_state": true,
+    "raw_fields_exact": true,
+    "source_frames": 33188,
+    "checked_sample": 48903,
+    "performance_qualification": false
+  },
+  "model_final_cleanup_confirmed": true,
+  "method_restored": true,
+  "process_exit_code": 0,
+  "prior_subchecker_real_native_SDK_flag_scope": "Reused bridge-only checker conservatively returns false; this archive review independently verifies native loaded images, replies, close and PID.",
+  "limits": [
+    "One safety window is not proof of arbitrary reentry/lifecycle schedules.",
+    "Passive SDK and bridge bookkeeping add overhead; not a performance AB fixture.",
+    "No severe-baseline reproduction orlatency benefit has been evaluated.",
+    "No old native-stack or3%/1% gate is upgraded."
+  ],
+  "performance_AB_started": false,
+  "root_cause_or_fix_complete": false,
+  "bindings": {
+    "review.py": "01eec19d1a369f39beed8ba0c3d04374c382e914893fcb5a571cfeb6c71e791a",
+    "plan01.json": "6bb579fe2bf4283e21508cf0396c0c95886decc00d6a6dd2496c29847373748b",
+    "transport01.json": "0b75fb92587b59a018729b5386318914dbf530f9d026a20ef48dcccb7235c718",
+    "sdk_backend01.json": "4162d3617f5b6a183171d8a03a852279584d804343c1dbafb985cba0a1c4be97",
+    "pipeline_review01.json": "b9227681bba5dc92ddfc01851ae030eb387b917c69a17ec5ab4f365030ad06cd",
+    "bridge_safety01.json": "07bdd1ea856cc12023ac1163d144b2e73f845726fc632e0a59c2ea0c76d4479a",
+    "record01.json": "9359363f35be854656c8c96d820d5b0c371622f7dad89bc94e33288c3dfc8e57",
+    "task_status01.json": "621962da9454465f8f1c82a23a6c6932ed962cce39693d1c8c571f309e8586e7"
+  }
+}

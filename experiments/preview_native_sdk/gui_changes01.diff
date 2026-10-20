@@ -1,0 +1,11 @@
+--- session_local_baseline/gui.py
++++ preview_native_sdk/gui_native.py
+@@ -23,7 +23,7 @@
+         from client import SessionClient
+     else:raise ValueError('Unknown measurement backend')
+     import links
+-    assert links.sdk_patch_installed, 'Use guarded entry01.py; native SDK is forbidden'
++    assert links.sdk_patch_installed, 'Use the pinned guarded native SDK entry'
+     from links import bind_client,sdk
+     app=QApplication([]);assert app.platformName()=='windows';app.setQuitOnLastWindowClosed(False)
+     stage=Path(stage);stage.mkdir(exist_ok=False);(stage/'active.lock').mkdir()
