@@ -1,0 +1,31 @@
+--- preview_native_sdk/entry.py
++++ preview_gil_ab/entry.py
+@@ -30,8 +30,8 @@
+     from context import Phases,restore,check
+     rows=[];observer=Phases(rows,plan['context_checkpoints'],clock=lambda:None if links.client is None else links.client.clock)
+     audit=RetainedAudit();anchors=[native_anchor()];contexts=[]
+-    from install import Installation,verify as verify_install
+-    installation=Installation(ROOT)
++    from boundary import Boundary,verify as verify_boundary
++    installation=Boundary(ROOT,case['boundary'])
+     try:
+         audit.install();contexts=observer.install(('gui','model','consumer') if case['backend']=='original' else ('gui','model'))
+         from gui_native import run
+@@ -39,7 +39,7 @@
+         raise SystemExit(run(case_plan,stage))
+     finally:
+         installation_result=installation.close()
+-        if stage.exists():write(stage/'bridge_safety.json',installation_result)
++        if stage.exists():write(stage/'boundary.json',installation_result)
+         exc=sys.exc_info()[1];outcome=dict(success=exc is None or isinstance(exc,SystemExit) and exc.code in (0,None),exception_type=None if exc is None else type(exc).__name__,exit_code=getattr(exc,'code',None),error=None if exc is None else repr(exc))
+         if stage.exists():
+             final=finalize(audit,lambda name,value:write(stage/name,value),90,outcome)
+@@ -51,7 +51,7 @@
+                 else:from verify_pipeline02 import verify_pipeline
+                 review=verify_pipeline(stage,anchors);review['runtime_context']=check(rows,case['backend'])
+                 formal=json.loads((ROOT/plan['formal_baseline_manifest']).read_text(encoding='utf-8-sig'))['baseline_files']
+-                review['preview_bridge_safety']=verify_install(installation_result,review)
++                verify_boundary(installation_result,case['boundary']);review['preview_boundary']=installation_result
+             except BaseException as failure:
+                 write(stage/'pipeline_failure.json',dict(error=repr(failure),traceback=__import__('traceback').format_exc()));raise
+             write(stage/'pipeline_review.json',review)
