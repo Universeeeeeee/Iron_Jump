@@ -1,0 +1,101 @@
+{
+  "replay_root": "E:/OptoJump/IronJump-walk-compute-offline-20261017-01",
+  "input_root": "E:/OptoJump/IronJump-single-usb-human-etw-20261017/experiments/single_usb_human_etw/runs/20261018_131910_3eef864f_walk_off/capture",
+  "input_sha256": {
+    "raw_frames.npz": "8ee4a9ea9ac835f5dc083d014eeaef9d337ee8c140f1cdc3a11f1be6fece2d47",
+    "raw_archive.npz": "6ec340e2ca62742235d6602cf38c4470a20cf5f29441c8387be9bb85522cdcd5",
+    "acquisition.json": "e84e6bd481eeadd408a61c377950cc878bf8d989b92f58596fccf6eee62c62cb",
+    "report.json": "0ae1bf2d9277c1e3d95d629e071cb3ff61d249c78c6d0b6d0901773f4fb68747",
+    "state.json": "bfb63086da795427cc2fbd5985a4ff56bcd1cdb964908dcc4a9408a79a6d914f",
+    "measurement.json": "a2b441f1367dd3d5eb7204c75eeebf05c344e8dd69b632ba29f57a4eed6febe9"
+  },
+  "raw_first": 42237,
+  "raw_after_last": 49061,
+  "replay_sha256": "fcde26dd2e707cc457623a971a97e68ebd9f49630126c51bd6ce83072a0d40a8",
+  "media_root": "E:\\OptoJump\\IronJump-ground-backlog-measurement-20261016\\experiments\\ground_backlog_measurement\\inputs\\walk",
+  "media_sha256": {
+    "camera.csv": "cc911dfd8e7aadf4da9f7c1e604e65ef33a02a4f7f790ba1e0ad1dfa7e890d88",
+    "camera.mjpg": "64d887e0c2817e3594e3bbad4193ab97b4abc1d0c2eed0229ac3d092fad04e52"
+  },
+  "model_path": "E:/OptoJump/IronJump-gil-gui-calibration-20261018-01/models/pose_landmarker_full.task",
+  "model_sha256": "5134a3aad27a58b93da0088d431f366da362b44e3ccfbe3462b3827a839011b1",
+  "frame_ids": [
+    4151,
+    4155,
+    4159,
+    4163,
+    4167,
+    4171,
+    4175,
+    4179,
+    4183,
+    4187,
+    4191
+  ],
+  "model_calls": 220,
+  "python_dll_sha256": "162e8557fbed5f39ae24983ee62b2d435b4796c937d9c1a34371888c7e43af00",
+  "numpy_pyd_sha256": "4fb4c5d62a6bd766eea716350eaf5396580e33cf7dc159e305488d1b7d72dad2",
+  "cases": [
+    "service01",
+    "interactive01",
+    "interactive02",
+    "service02"
+  ],
+  "case_variants": {
+    "service01": "serial",
+    "interactive01": "serial",
+    "interactive02": "serial",
+    "service02": "serial"
+  },
+  "progress_frames": [
+    1000,
+    2000,
+    3000,
+    4000,
+    5000,
+    6000,
+    6824
+  ],
+  "dependency_sources": {
+    "experiments/fixed_work_accounting/logical_clock.py": "309676131f0052886d8b32c1740ed461966cab39da98a625e5e23bd0b164c6e3",
+    "experiments/fixed_work_accounting/counters.py": "504cd67a5bbb9691eb4c8bfdf5a2a1e71d454317e70eaff559713767c3236a0d",
+    "experiments/fixed_work_accounting/run.py": "2cd5a0e2014ad1dc731b1cbcd87137405ad0d4205303982bc41d02bb69c884ba",
+    "experiments/cpu_state_observation/workload.py": "58572a6f4e21b2610ba32ca3ce694add4238b975d8739ef3856a703207d2cb23",
+    "experiments/qos_context_review/read_context.py": "5d7d7c83756ec879d72937c48fcd4fe96c59acf3c3077ad7116f61cc2347bd76"
+  },
+  "reference_origin_sha256": "f3590d951c53c29981b9389abf5ed86ff644969a0bd8cffe7b316b40d1fc7905",
+  "failure_policy": "Stop after any target/identity/accounting/spacing/cleanup failure; retain live PID and locks on timeout, no automatic kill/restart.",
+  "cv2_sha256": "ae833b9b5771f5932200bd3b8ad0f483f4fbec92cbdbd26d21d38fe524c60e66",
+  "state_rules": {
+    "slow_prepare_ms_min": 4300,
+    "fast_prepare_ms_max": 3500,
+    "slow_model_ms_min": 30,
+    "fast_model_ms_max": 26,
+    "basis": "Existing fixed-work preparation and model timing gaps. Joint labels only; intermediate retained. Not GHz/CPU/GIL orfield-symptom gates."
+  },
+  "budget": "Exactly4 fixed-work windows, S4U/Interactive/Interactive/S4U. Stop at any task/runtime/semantics failure; no retries orreplacement. Task priority7 andQt offscreen common.",
+  "sources": {
+    "classify.py": "52c97ec985448a9584750bf28085cb25a6afe447d6efcf9c8ee4b3436442461d",
+    "cohort.ps1": "5627b2554597e658cb3ad594c94df32e0021510bdcc5fb1d4f2ecdf43d267beb",
+    "entry.py": "9271e340b5ef1d1c3b4dbb5b4c24d4f849d2f9c33b584e9e5061fc247dc94605",
+    "freeze.py": "ad60179b07d6f682e31428a0178bcbb786ba25541c2c25721952263fe1b1aa4d",
+    "preflight.py": "8d3efcc5c43bbb1c210fce2776229bd5e6ceee97346ccc45638826fce235cff3",
+    "process_helper.ps1": "1d42f9d5e094c960e76ba3a062d00af37a5602821f1a8f4d5505be2d3f7e27c6",
+    "reference01.json": "01233f2b0afba0d1ac45a1d33ffded6f8fd3b21427b6fb0f9602adf4dffbbed8",
+    "spacing.py": "3d2ba0be8d79d08f25e9260e21daa718773e3771d35911b4e7bd25c6f9526201",
+    "verify.py": "3a591c1d674f9a32f9fb7be9cb7c17ad0750b7fa078b7fa7ada9102aa54643a6",
+    "worker.ps1": "579b36f6ab29aab0cf2e3b175f9a80227acc6f6a1c026f66c48567d4cff7c910",
+    "workload.py": "0e4478c66bfcddf2b3d9bb9da80d8360fa3c4140254da57bb09a0415d0280d90"
+  },
+  "reference_source_sha256": "01233f2b0afba0d1ac45a1d33ffded6f8fd3b21427b6fb0f9602adf4dffbbed8",
+  "goal": "Test actual Windows launch/logon context with common fixed workload; no formal application optimization.",
+  "old_native_stack_and_disturbance_failures_upgraded": false,
+  "expected_session": {
+    "service01": 0,
+    "interactive01": 1,
+    "interactive02": 1,
+    "service02": 0
+  },
+  "interpretation": "Session alone is qualified only if actual process priority, process/thread policy andQt backend match. S4U/Interactive also changes logon context; do not claim physical frequency orunique session mechanism.",
+  "condition_gate": "Both observed service contexts slow andboth interactive contexts fast with full work identity/cleanup/context checks supports this launch-context condition. Anything else leaves cause unknown. No optional extension."
+}
