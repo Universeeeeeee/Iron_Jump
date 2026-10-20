@@ -1,0 +1,251 @@
+{
+  "all_blocks_have_disjoint_running_boundaries": true,
+  "no_reported_loss": true,
+  "counter_source_order_verified": true,
+  "rows": [
+    {
+      "ordinal": 0,
+      "iterations": 1,
+      "expected_instructions": 20,
+      "observed": {
+        "instructions": 18328,
+        "core_cycles": 69025,
+        "reference_counter": 692,
+        "intervals": [
+          {
+            "cpu": 2,
+            "begin": 4772274687458,
+            "end": 4772274687748,
+            "values": [
+              18328,
+              69025,
+              692
+            ]
+          }
+        ],
+        "running_qpc": 290,
+        "marker_qpc": 5
+      },
+      "ratio": 916.4,
+      "thread_cpu_ms": 15.625,
+      "running_ms": 0.029
+    },
+    {
+      "ordinal": 1,
+      "iterations": 8000000,
+      "expected_instructions": 144000002,
+      "observed": {
+        "instructions": 144641757,
+        "core_cycles": 128883105,
+        "reference_counter": 1291827,
+        "intervals": [
+          {
+            "cpu": 2,
+            "begin": 4772274889979,
+            "end": 4772275429749,
+            "values": [
+              144641757,
+              128883105,
+              1291827
+            ]
+          }
+        ],
+        "running_qpc": 539770,
+        "marker_qpc": 539610
+      },
+      "ratio": 1.0044566318825467,
+      "thread_cpu_ms": 46.875,
+      "running_ms": 53.977
+    },
+    {
+      "ordinal": 2,
+      "iterations": 32000000,
+      "expected_instructions": 576000002,
+      "observed": {
+        "instructions": 578548686,
+        "core_cycles": 517064530,
+        "reference_counter": 5182650,
+        "intervals": [
+          {
+            "cpu": 2,
+            "begin": 4772275647050,
+            "end": 4772277812782,
+            "values": [
+              578548686,
+              517064530,
+              5182650
+            ]
+          }
+        ],
+        "running_qpc": 2165732,
+        "marker_qpc": 2165577
+      },
+      "ratio": 1.0044247985957473,
+      "thread_cpu_ms": 203.125,
+      "running_ms": 216.57319999999999
+    },
+    {
+      "ordinal": 3,
+      "iterations": 32000000,
+      "expected_instructions": 576000002,
+      "observed": {
+        "instructions": 576677904,
+        "core_cycles": 513053394,
+        "reference_counter": 5142474,
+        "intervals": [
+          {
+            "cpu": 2,
+            "begin": 4772278021289,
+            "end": 4772280166924,
+            "values": [
+              576677904,
+              513053394,
+              5142474
+            ]
+          }
+        ],
+        "running_qpc": 2145635,
+        "marker_qpc": 2145519
+      },
+      "ratio": 1.0011769131903578,
+      "thread_cpu_ms": 203.125,
+      "running_ms": 214.56349999999998
+    },
+    {
+      "ordinal": 4,
+      "iterations": 8000000,
+      "expected_instructions": 144000002,
+      "observed": {
+        "instructions": 144194730,
+        "core_cycles": 128321236,
+        "reference_counter": 1286192,
+        "intervals": [
+          {
+            "cpu": 4,
+            "begin": 4772280379218,
+            "end": 4772280915789,
+            "values": [
+              144194730,
+              128321236,
+              1286192
+            ]
+          }
+        ],
+        "running_qpc": 536571,
+        "marker_qpc": 536456
+      },
+      "ratio": 1.001352277758996,
+      "thread_cpu_ms": 46.875,
+      "running_ms": 53.6571
+    },
+    {
+      "ordinal": 5,
+      "iterations": 8000000,
+      "expected_instructions": 144000002,
+      "observed": {
+        "instructions": 144677673,
+        "core_cycles": 128864859,
+        "reference_counter": 1291644,
+        "intervals": [
+          {
+            "cpu": 2,
+            "begin": 4772281135425,
+            "end": 4772281675252,
+            "values": [
+              144677673,
+              128864859,
+              1291644
+            ]
+          }
+        ],
+        "running_qpc": 539827,
+        "marker_qpc": 539661
+      },
+      "ratio": 1.0047060485457493,
+      "thread_cpu_ms": 46.875,
+      "running_ms": 53.9827
+    },
+    {
+      "ordinal": 6,
+      "iterations": 32000000,
+      "expected_instructions": 576000002,
+      "observed": {
+        "instructions": 578607966,
+        "core_cycles": 516821862,
+        "reference_counter": 5180228,
+        "intervals": [
+          {
+            "cpu": 2,
+            "begin": 4772281890398,
+            "end": 4772282370143,
+            "values": [
+              128669202,
+              114586813,
+              1148536
+            ]
+          },
+          {
+            "cpu": 2,
+            "begin": 4772282370232,
+            "end": 4772284054742,
+            "values": [
+              449938764,
+              402235049,
+              4031692
+            ]
+          }
+        ],
+        "running_qpc": 2164255,
+        "marker_qpc": 2164174
+      },
+      "ratio": 1.0045277152620566,
+      "thread_cpu_ms": 203.125,
+      "running_ms": 216.4255
+    },
+    {
+      "ordinal": 7,
+      "iterations": 1,
+      "expected_instructions": 20,
+      "observed": {
+        "instructions": 8017,
+        "core_cycles": 26817,
+        "reference_counter": 725,
+        "intervals": [
+          {
+            "cpu": 4,
+            "begin": 4772284265233,
+            "end": 4772284265675,
+            "values": [
+              8017,
+              26817,
+              725
+            ]
+          }
+        ],
+        "running_qpc": 442,
+        "marker_qpc": 7
+      },
+      "ratio": 400.85,
+      "thread_cpu_ms": 0.0,
+      "running_ms": 0.044199999999999996
+    }
+  ],
+  "instruction_scaling_pass": true,
+  "blank_control_pass": true,
+  "OS_accounting_crosscheck_pass": true,
+  "known_work_boundary_calibration_pass": true,
+  "frequency_semantics_verified": false,
+  "actual_workload_disturbance_qualified": false,
+  "root_mechanism_identified": false,
+  "limitations": [
+    "Bounds include marker and switch overhead; no blank subtraction orfit.",
+    "Clock ratios are notGHz; core/reference semantics not separately qualified.",
+    "One synthetic delivery/calibration process, not independent performance trials orGUI attribution.",
+    "Old failures andwindows retained."
+  ],
+  "bindings": {
+    "analyze.py": "68b2f467b6725df672e295aa74611c70b89eb5d6f15b250ed6c33490f0c49d82",
+    "capture_plan02.json": "118a8d99f20d142a2572f29e7cdfce695fa096ac903d516d586ffd0c7f252bfe",
+    "evidence01.zip": "c19324cfad19e071e637a32b3b83a80428bcfc62c367b3ff7867557d29631fb4"
+  }
+}
