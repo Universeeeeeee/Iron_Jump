@@ -1,0 +1,454 @@
+{
+  "exploratory": true,
+  "all_twelve_replays_retained": true,
+  "entrypoint_imports": [
+    "argparse",
+    "collections",
+    "config.walking_config",
+    "ctypes",
+    "dataclasses",
+    "engine.device_quality_session",
+    "engine.gait_engine",
+    "engine.modes.walking_processor",
+    "hardware.beam_filter",
+    "hardware.beam_quality",
+    "hardware.sensor_frame",
+    "hashlib",
+    "json",
+    "numpy",
+    "pathlib",
+    "platform",
+    "qtpy.QtCore",
+    "replay",
+    "sys",
+    "time"
+  ],
+  "cases": [
+    {
+      "case": "20261017_111818_dc83b931_walk_off",
+      "repeat": 0,
+      "preparation_wall_ms": 2659.382,
+      "formal_wall_ms": 11199.9167,
+      "formal_cpu_ms": 11093.75,
+      "first_five_blocks": [
+        {
+          "block": 0,
+          "wall_us_per_frame": 104.0364,
+          "cpu_us_per_frame": 109.375
+        },
+        {
+          "block": 1,
+          "wall_us_per_frame": 100.6,
+          "cpu_us_per_frame": 93.75
+        },
+        {
+          "block": 2,
+          "wall_us_per_frame": 101.42439999999999,
+          "cpu_us_per_frame": 109.375
+        },
+        {
+          "block": 3,
+          "wall_us_per_frame": 120.9669,
+          "cpu_us_per_frame": 109.375
+        },
+        {
+          "block": 4,
+          "wall_us_per_frame": 119.57889999999999,
+          "cpu_us_per_frame": 125.0
+        }
+      ]
+    },
+    {
+      "case": "20261017_111818_dc83b931_walk_off",
+      "repeat": 1,
+      "preparation_wall_ms": 4787.4677,
+      "formal_wall_ms": 14694.8003,
+      "formal_cpu_ms": 14578.125,
+      "first_five_blocks": [
+        {
+          "block": 0,
+          "wall_us_per_frame": 177.2561,
+          "cpu_us_per_frame": 171.875
+        },
+        {
+          "block": 1,
+          "wall_us_per_frame": 181.8893,
+          "cpu_us_per_frame": 187.5
+        },
+        {
+          "block": 2,
+          "wall_us_per_frame": 175.8615,
+          "cpu_us_per_frame": 171.875
+        },
+        {
+          "block": 3,
+          "wall_us_per_frame": 214.25320000000002,
+          "cpu_us_per_frame": 218.75
+        },
+        {
+          "block": 4,
+          "wall_us_per_frame": 212.5651,
+          "cpu_us_per_frame": 203.125
+        }
+      ]
+    },
+    {
+      "case": "20261017_111818_dc83b931_walk_off",
+      "repeat": 2,
+      "preparation_wall_ms": 4698.6479,
+      "formal_wall_ms": 14578.5168,
+      "formal_cpu_ms": 14453.125,
+      "first_five_blocks": [
+        {
+          "block": 0,
+          "wall_us_per_frame": 180.0747,
+          "cpu_us_per_frame": 187.5
+        },
+        {
+          "block": 1,
+          "wall_us_per_frame": 175.03560000000002,
+          "cpu_us_per_frame": 171.875
+        },
+        {
+          "block": 2,
+          "wall_us_per_frame": 175.2339,
+          "cpu_us_per_frame": 171.875
+        },
+        {
+          "block": 3,
+          "wall_us_per_frame": 212.45770000000002,
+          "cpu_us_per_frame": 218.75
+        },
+        {
+          "block": 4,
+          "wall_us_per_frame": 212.13879999999997,
+          "cpu_us_per_frame": 203.125
+        }
+      ]
+    },
+    {
+      "case": "20261017_112623_8416401b_walk_on",
+      "repeat": 0,
+      "preparation_wall_ms": 2674.3176,
+      "formal_wall_ms": 13351.7454,
+      "formal_cpu_ms": 13281.25,
+      "first_five_blocks": [
+        {
+          "block": 0,
+          "wall_us_per_frame": 176.7363,
+          "cpu_us_per_frame": 187.5
+        },
+        {
+          "block": 1,
+          "wall_us_per_frame": 174.3015,
+          "cpu_us_per_frame": 171.875
+        },
+        {
+          "block": 2,
+          "wall_us_per_frame": 172.1817,
+          "cpu_us_per_frame": 171.875
+        },
+        {
+          "block": 3,
+          "wall_us_per_frame": 211.2151,
+          "cpu_us_per_frame": 203.125
+        },
+        {
+          "block": 4,
+          "wall_us_per_frame": 212.29770000000002,
+          "cpu_us_per_frame": 218.75
+        }
+      ]
+    },
+    {
+      "case": "20261017_112623_8416401b_walk_on",
+      "repeat": 1,
+      "preparation_wall_ms": 2710.5878,
+      "formal_wall_ms": 14782.1594,
+      "formal_cpu_ms": 14578.125,
+      "first_five_blocks": [
+        {
+          "block": 0,
+          "wall_us_per_frame": 177.9785,
+          "cpu_us_per_frame": 171.875
+        },
+        {
+          "block": 1,
+          "wall_us_per_frame": 176.0326,
+          "cpu_us_per_frame": 187.5
+        },
+        {
+          "block": 2,
+          "wall_us_per_frame": 189.6103,
+          "cpu_us_per_frame": 187.5
+        },
+        {
+          "block": 3,
+          "wall_us_per_frame": 213.9133,
+          "cpu_us_per_frame": 203.125
+        },
+        {
+          "block": 4,
+          "wall_us_per_frame": 269.2155,
+          "cpu_us_per_frame": 265.625
+        }
+      ]
+    },
+    {
+      "case": "20261017_112623_8416401b_walk_on",
+      "repeat": 2,
+      "preparation_wall_ms": 2750.6306,
+      "formal_wall_ms": 12293.0977,
+      "formal_cpu_ms": 12187.5,
+      "first_five_blocks": [
+        {
+          "block": 0,
+          "wall_us_per_frame": 178.4674,
+          "cpu_us_per_frame": 171.875
+        },
+        {
+          "block": 1,
+          "wall_us_per_frame": 176.1425,
+          "cpu_us_per_frame": 156.25
+        },
+        {
+          "block": 2,
+          "wall_us_per_frame": 173.1643,
+          "cpu_us_per_frame": 171.875
+        },
+        {
+          "block": 3,
+          "wall_us_per_frame": 208.16029999999998,
+          "cpu_us_per_frame": 203.125
+        },
+        {
+          "block": 4,
+          "wall_us_per_frame": 209.7488,
+          "cpu_us_per_frame": 203.125
+        }
+      ]
+    },
+    {
+      "case": "20261017_113358_00ae9eca_walk_on",
+      "repeat": 0,
+      "preparation_wall_ms": 3283.6705,
+      "formal_wall_ms": 13363.1082,
+      "formal_cpu_ms": 13281.25,
+      "first_five_blocks": [
+        {
+          "block": 0,
+          "wall_us_per_frame": 175.7964,
+          "cpu_us_per_frame": 171.875
+        },
+        {
+          "block": 1,
+          "wall_us_per_frame": 175.56629999999998,
+          "cpu_us_per_frame": 187.5
+        },
+        {
+          "block": 2,
+          "wall_us_per_frame": 173.8594,
+          "cpu_us_per_frame": 171.875
+        },
+        {
+          "block": 3,
+          "wall_us_per_frame": 210.8673,
+          "cpu_us_per_frame": 203.125
+        },
+        {
+          "block": 4,
+          "wall_us_per_frame": 215.47560000000001,
+          "cpu_us_per_frame": 218.75
+        }
+      ]
+    },
+    {
+      "case": "20261017_113358_00ae9eca_walk_on",
+      "repeat": 1,
+      "preparation_wall_ms": 3326.889,
+      "formal_wall_ms": 13344.0282,
+      "formal_cpu_ms": 13234.375,
+      "first_five_blocks": [
+        {
+          "block": 0,
+          "wall_us_per_frame": 176.96220000000002,
+          "cpu_us_per_frame": 171.875
+        },
+        {
+          "block": 1,
+          "wall_us_per_frame": 174.96970000000002,
+          "cpu_us_per_frame": 171.875
+        },
+        {
+          "block": 2,
+          "wall_us_per_frame": 176.0194,
+          "cpu_us_per_frame": 171.875
+        },
+        {
+          "block": 3,
+          "wall_us_per_frame": 210.24470000000002,
+          "cpu_us_per_frame": 203.125
+        },
+        {
+          "block": 4,
+          "wall_us_per_frame": 214.3555,
+          "cpu_us_per_frame": 218.75
+        }
+      ]
+    },
+    {
+      "case": "20261017_113358_00ae9eca_walk_on",
+      "repeat": 2,
+      "preparation_wall_ms": 3278.8625,
+      "formal_wall_ms": 13410.5431,
+      "formal_cpu_ms": 13265.625,
+      "first_five_blocks": [
+        {
+          "block": 0,
+          "wall_us_per_frame": 181.2601,
+          "cpu_us_per_frame": 171.875
+        },
+        {
+          "block": 1,
+          "wall_us_per_frame": 196.3615,
+          "cpu_us_per_frame": 203.125
+        },
+        {
+          "block": 2,
+          "wall_us_per_frame": 178.9089,
+          "cpu_us_per_frame": 171.875
+        },
+        {
+          "block": 3,
+          "wall_us_per_frame": 224.40879999999999,
+          "cpu_us_per_frame": 234.375
+        },
+        {
+          "block": 4,
+          "wall_us_per_frame": 214.87529999999998,
+          "cpu_us_per_frame": 187.5
+        }
+      ]
+    },
+    {
+      "case": "20261017_113916_32a7af0d_walk_off",
+      "repeat": 0,
+      "preparation_wall_ms": 2291.8559,
+      "formal_wall_ms": 13629.288,
+      "formal_cpu_ms": 13437.5,
+      "first_five_blocks": [
+        {
+          "block": 0,
+          "wall_us_per_frame": 177.7562,
+          "cpu_us_per_frame": 171.875
+        },
+        {
+          "block": 1,
+          "wall_us_per_frame": 174.7722,
+          "cpu_us_per_frame": 171.875
+        },
+        {
+          "block": 2,
+          "wall_us_per_frame": 175.2547,
+          "cpu_us_per_frame": 171.875
+        },
+        {
+          "block": 3,
+          "wall_us_per_frame": 220.8326,
+          "cpu_us_per_frame": 218.75
+        },
+        {
+          "block": 4,
+          "wall_us_per_frame": 212.52179999999998,
+          "cpu_us_per_frame": 218.75
+        }
+      ]
+    },
+    {
+      "case": "20261017_113916_32a7af0d_walk_off",
+      "repeat": 1,
+      "preparation_wall_ms": 2345.8571,
+      "formal_wall_ms": 12958.9575,
+      "formal_cpu_ms": 12843.75,
+      "first_five_blocks": [
+        {
+          "block": 0,
+          "wall_us_per_frame": 182.4957,
+          "cpu_us_per_frame": 187.5
+        },
+        {
+          "block": 1,
+          "wall_us_per_frame": 176.1516,
+          "cpu_us_per_frame": 171.875
+        },
+        {
+          "block": 2,
+          "wall_us_per_frame": 173.5141,
+          "cpu_us_per_frame": 156.25
+        },
+        {
+          "block": 3,
+          "wall_us_per_frame": 211.7587,
+          "cpu_us_per_frame": 218.75
+        },
+        {
+          "block": 4,
+          "wall_us_per_frame": 212.24079999999998,
+          "cpu_us_per_frame": 203.125
+        }
+      ]
+    },
+    {
+      "case": "20261017_113916_32a7af0d_walk_off",
+      "repeat": 2,
+      "preparation_wall_ms": 2566.6833,
+      "formal_wall_ms": 13272.404,
+      "formal_cpu_ms": 13171.875,
+      "first_five_blocks": [
+        {
+          "block": 0,
+          "wall_us_per_frame": 187.7566,
+          "cpu_us_per_frame": 187.5
+        },
+        {
+          "block": 1,
+          "wall_us_per_frame": 188.6241,
+          "cpu_us_per_frame": 187.5
+        },
+        {
+          "block": 2,
+          "wall_us_per_frame": 206.9897,
+          "cpu_us_per_frame": 203.125
+        },
+        {
+          "block": 3,
+          "wall_us_per_frame": 210.69910000000002,
+          "cpu_us_per_frame": 203.125
+        },
+        {
+          "block": 4,
+          "wall_us_per_frame": 273.91909999999996,
+          "cpu_us_per_frame": 281.25
+        }
+      ]
+    }
+  ],
+  "first_case_preparation_later_to_first_ratios": [
+    1.8002181333858769,
+    1.76681947159152
+  ],
+  "interpretation": "The old synchronous consumer-only entrypoint invokes no model creation/inference. Repeated identical inputs show timing variation even in this fixture. This constrains active in-process MediaPipe inference as a necessary explanation; it does not prove the same latent state as current GUI or rule out external workload.",
+  "limitations": [
+    "No dynamic process-wide module/thread inventory was saved; entrypoint/source evidence is narrower than proof of no external MediaPipe process.",
+    "Old input/fixture differs from current6824-frame bundle. Do not transfer joint state labels orsubtract timings across protocols.",
+    "No current hardware delivery, trigger, thermal limit orGIL share is identified."
+  ],
+  "root_mechanism_identified": false,
+  "bindings": {
+    "experiments/model_absent_history_review/analyze.py": "46b86e4c4d9825d68e735de0a40b943826ef0cb2341725865588544b8c27ce9e",
+    "experiments/walk_compute_offline_diagnosis/chain.py": "ffc26904915219715e5a0295c00ac1b83701c6c1bb9276c9144f1584619adbfd",
+    "experiments/walk_compute_offline_diagnosis/replay.py": "fcde26dd2e707cc457623a971a97e68ebd9f49630126c51bd6ce83072a0d40a8",
+    "experiments/walk_compute_offline_diagnosis/windows_chain01/chain.json": "9a7504dda14470f798ef155a94c5a5be2e4bfc6b39bacfa41d931b22eed12e0d",
+    "experiments/walk_compute_offline_diagnosis/validation_manifest.json": "4c1249fcdf0aa5c914c1ce55aee533cf9f508438d0c4775fc90197a89c3d61bf"
+  }
+}

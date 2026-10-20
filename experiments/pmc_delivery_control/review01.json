@@ -1,0 +1,92 @@
+{
+  "actual_three_counter_attachments_delivered": true,
+  "source_order": [
+    "InstructionRetired",
+    "UnhaltedCoreCycles",
+    "UnhaltedReferenceCycles"
+  ],
+  "attachments": 6382,
+  "no_reported_loss": true,
+  "all_adjacent_per_CPU_thread_chains_match": true,
+  "adjacent_intervals_checked": 6374,
+  "target_lifecycle": [
+    {
+      "opcode": 1,
+      "qpc": 4742160245900,
+      "pid": 13080,
+      "tid": 12820
+    },
+    {
+      "opcode": 2,
+      "qpc": 4742171551461,
+      "pid": 13080,
+      "tid": 12820
+    }
+  ],
+  "target_switch_intervals": 45,
+  "expected_six_loop_instructions": 2160000012,
+  "combined_covering_interval": {
+    "cpu": 2,
+    "begin_qpc": 4742163312638,
+    "end_qpc": 4742171589370,
+    "delta": [
+      2213434936,
+      1976328522,
+      19809170
+    ]
+  },
+  "per_loop_bounds": [
+    {
+      "iterations": 8000000,
+      "expected_native_retired_instructions": 144000002,
+      "contained_switch_intervals": 0,
+      "overlapping_switch_intervals": 1
+    },
+    {
+      "iterations": 32000000,
+      "expected_native_retired_instructions": 576000002,
+      "contained_switch_intervals": 0,
+      "overlapping_switch_intervals": 1
+    },
+    {
+      "iterations": 32000000,
+      "expected_native_retired_instructions": 576000002,
+      "contained_switch_intervals": 0,
+      "overlapping_switch_intervals": 1
+    },
+    {
+      "iterations": 8000000,
+      "expected_native_retired_instructions": 144000002,
+      "contained_switch_intervals": 0,
+      "overlapping_switch_intervals": 1
+    },
+    {
+      "iterations": 8000000,
+      "expected_native_retired_instructions": 144000002,
+      "contained_switch_intervals": 0,
+      "overlapping_switch_intervals": 1
+    },
+    {
+      "iterations": 32000000,
+      "expected_native_retired_instructions": 576000002,
+      "contained_switch_intervals": 0,
+      "overlapping_switch_intervals": 1
+    }
+  ],
+  "per_loop_instruction_scaling_verified": false,
+  "hardware_attribution_ready": false,
+  "frequency_estimated": false,
+  "conclusion": "Actual PMC delivery established, but no per-loop switch boundaries. Known-work scaling calibration remains incomplete; no slow-state hardware attribution.",
+  "limits": [
+    "Combined interval also contains Python/bookkeeping and edge work; excess instructions are not attributed to a function.",
+    "Reference-counter units and architectural semantics require independent qualification; no GHz from ratios.",
+    "Zero reported loss is not a full observer disturbance qualification.",
+    "One fixed control only; no GUI/model/field capture orreplacement trial."
+  ],
+  "bindings": {
+    "review.py": "2dde5eafb7ab8c045beabcc44b2dd0daf52a9aa8581ef99f86fdb1f77ba0d2c7",
+    "metadata04.json": "e4a0b18ec685451e4fe9ba97cd8c277540e233055c85b3daf1d77afd66deec44",
+    "events04.jsonl": "bee063d2fc52c4c4b4dfb5619fc260a1b6137dac5cee14c7f530e3149905f1c0",
+    "capture_plan02.json": "2973c354ca24276d8c61146e305eb567324e5bf28b69383b23742ed096b25acf"
+  }
+}
