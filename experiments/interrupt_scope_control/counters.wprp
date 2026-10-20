@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<WindowsPerformanceRecorder Version="1.0" Author="IronJump interrupt scope control">
+  <Profiles>
+    <SystemCollector Id="Collector" Name="IronJumpInterruptScope"><BufferSize Value="128" /><Buffers Value="128" /></SystemCollector>
+    <SystemProvider Id="Provider"><Keywords>
+      <Keyword Value="ProcessThread" /><Keyword Value="CSwitch" />
+      <Keyword Value="DPC" /><Keyword Value="Interrupt" />
+    </Keywords></SystemProvider>
+    <Profile Id="PmcDelivery.Verbose.File" Name="PmcDelivery" Description="Single idle DPC ISR delivery check; no PMC orstacks" LoggingMode="File" DetailLevel="Verbose">
+      <Collectors><SystemCollectorId Value="Collector"><SystemProviderId Value="Provider" /></SystemCollectorId></Collectors>
+    </Profile>
+  </Profiles>
+</WindowsPerformanceRecorder>
