@@ -1,0 +1,87 @@
+{
+  "review": "Next actual condition candidate after interrupt-accounting scope check",
+  "cohorts": [
+    {
+      "source": "experiments/slow_state_context/result01.json",
+      "all_cases": [
+        {
+          "case": "service01",
+          "joint_state": "slow",
+          "actual_session": 0
+        },
+        {
+          "case": "interactive01",
+          "joint_state": "intermediate",
+          "actual_session": 1
+        },
+        {
+          "case": "interactive02",
+          "joint_state": "fast",
+          "actual_session": 1
+        },
+        {
+          "case": "service02",
+          "joint_state": "fast",
+          "actual_session": 0
+        }
+      ],
+      "hardware_phase_comparison_qualified": null,
+      "interpretation": "Initial service slow; after interactive launch, final service fast. This is order association, not a session-only oractivation causal claim."
+    },
+    {
+      "source": "experiments/slow_state_pmc_work/result01.json",
+      "all_cases": [
+        {
+          "case": "service01",
+          "joint_state": "slow",
+          "actual_session": 0
+        },
+        {
+          "case": "interactive01",
+          "joint_state": "fast",
+          "actual_session": 1
+        },
+        {
+          "case": "interactive02",
+          "joint_state": "fast",
+          "actual_session": 1
+        },
+        {
+          "case": "service02",
+          "joint_state": "fast",
+          "actual_session": 0
+        }
+      ],
+      "hardware_phase_comparison_qualified": false,
+      "interpretation": "Initial service slow; after interactive launch, final service fast. This is order association, not a session-only oractivation causal claim."
+    }
+  ],
+  "previous_SSH_spacing_labels": [
+    "slow",
+    "slow",
+    "slow",
+    "slow",
+    "slow",
+    "slow"
+  ],
+  "question": "Could an interactive logon/task activation trigger persistent execution-state recovery independently ofsubstantial model/compute work?",
+  "why_specific": "Two retained context cohorts associate recovery withinteractive launches, while the fixed SSH spacing cohort did not recover. Same-session historical GUI slow windows andfinal service fast windows alreadyrule out session number alone.",
+  "unproven_confounders": [
+    "elapsed time andprior original/model work",
+    "user/foreground activity",
+    "OS automatic policy andactual hardware execution state",
+    "temperature,cache andexternal activity"
+  ],
+  "minimal_distinguishing_control": "A bounded saved-input experiment comparing a sham service activation toan empty interactive activation, with actual task/session/exit evidence andno CPU primer. Require predeclared baseline state coverage; no retries orreplacement.",
+  "root_mechanism_identified": false,
+  "bindings": {
+    "experiments/slow_state_context/result01.json": "9362f1081d6caf2befb178435a175e6d13b6bb1114ed17815683c3880a9017c9",
+    "experiments/slow_state_pmc_work/result01.json": "c71cbdf2a25092b86060cb753941db7c947e45ee80c844e742c8d39b5759177b",
+    "experiments/slow_state_spacing/result01.json": "520ba6400eeb74c03a67004667996a7f4cfbed21e52e44c2ace3b8c25b91654d"
+  },
+  "not_started_or_changed_by_this_review": [
+    "No newworkload launched",
+    "No power/priority/affinity/GC/formal changes",
+    "No oldCPU gate relaxation ornewquantitative root share"
+  ]
+}
