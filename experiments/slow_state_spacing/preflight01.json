@@ -1,0 +1,28 @@
+{
+  "passed": true,
+  "tests_output": "...\n----------------------------------------------------------------------\nRan 3 tests in 0.000s\n\nOK\n",
+  "native_read_own_process_samples": [
+    {
+      "begin_ns": 469938420220600,
+      "end_ns": 469938420274300,
+      "idle_100ns": 35933616406250,
+      "kernel_including_idle_100ns": 36893829062500,
+      "user_100ns": 701189218750,
+      "ac": 1,
+      "battery_percent": 98
+    },
+    {
+      "begin_ns": 469938420280200,
+      "end_ns": 469938420293200,
+      "idle_100ns": 35933616406250,
+      "kernel_including_idle_100ns": 36893829062500,
+      "user_100ns": 701189218750,
+      "ac": 1,
+      "battery_percent": 98
+    }
+  ],
+  "plan_sha256": "3f223698109efc91f627f747b29da2ed5153e3a1745452265e79b2f90fdd2fbf",
+  "full_source_input_library_hashes_match": true,
+  "application_started": false,
+  "limitation": "Native reads work; no observer-equivalence, hardfault, GHz orper-core idle qualification."
+}

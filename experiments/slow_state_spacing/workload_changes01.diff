@@ -1,0 +1,11 @@
+--- cpu_state_observation/workload.py
++++ slow_state_spacing/workload.py
+@@ -41,7 +41,7 @@
+         def model_work():
+             adapter=_PreviewAdapter(model);m=result['model'];m.update(errors=[],calls=[],tid=threading.get_native_id(),closed=False)
+             try:
+-                adapter.open();m['ready_ns']=real();ready.set()
++                m['open_begin_ns']=real();adapter.open();m['open_end_ns']=real();m['ready_ns']=real();ready.set()
+                 if not go.wait(120):raise TimeoutError('Consumer start not received')
+                 if cancel.is_set():return
+                 m['begin_ns']=real();cpu=time.thread_time_ns()
