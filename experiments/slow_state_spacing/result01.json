@@ -1,0 +1,164 @@
+{
+  "all_fixed_windows_complete": true,
+  "cases": [
+    {
+      "id": "initial",
+      "state": {
+        "label": "slow",
+        "prepare_wall_ms": 4890.8542,
+        "prepare_cpu_ms": 4875.0,
+        "consumer_wall_ms": 3650.8652,
+        "consumer_cpu_ms": 3625.0,
+        "model_call_median_ms": 31.086750000000002
+      },
+      "spacing_quality": null,
+      "model_open_ms": 5235.5872,
+      "errors": [],
+      "complete": true
+    },
+    {
+      "id": "short01",
+      "state": {
+        "label": "slow",
+        "prepare_wall_ms": 5081.6784,
+        "prepare_cpu_ms": 5046.875,
+        "consumer_wall_ms": 3648.6064,
+        "consumer_cpu_ms": 3640.625,
+        "model_call_median_ms": 32.58584999999999
+      },
+      "spacing_quality": {
+        "actual_gap_seconds": 5.0031561,
+        "launch_lateness_seconds": 0.003156099999999995,
+        "spacing_pass": true,
+        "system_busy_median_percent": null,
+        "system_busy_max_percent": null,
+        "long_gap_quiet_and_AC": null,
+        "system_read_max_ns": 78700
+      },
+      "model_open_ms": 2412.1714,
+      "errors": [],
+      "complete": true
+    },
+    {
+      "id": "long01",
+      "state": {
+        "label": "slow",
+        "prepare_wall_ms": 4868.448,
+        "prepare_cpu_ms": 4828.125,
+        "consumer_wall_ms": 3638.2504,
+        "consumer_cpu_ms": 3625.0,
+        "model_call_median_ms": 32.452200000000005
+      },
+      "spacing_quality": {
+        "actual_gap_seconds": 300.0027911,
+        "launch_lateness_seconds": 0.0027911000000244712,
+        "spacing_pass": true,
+        "system_busy_median_percent": 1.2885591565794612,
+        "system_busy_max_percent": 5.228248146703082,
+        "long_gap_quiet_and_AC": true,
+        "system_read_max_ns": 196500
+      },
+      "model_open_ms": 2368.2877,
+      "errors": [],
+      "complete": true
+    },
+    {
+      "id": "short02",
+      "state": {
+        "label": "slow",
+        "prepare_wall_ms": 4899.6765,
+        "prepare_cpu_ms": 4890.625,
+        "consumer_wall_ms": 3659.6893,
+        "consumer_cpu_ms": 3515.625,
+        "model_call_median_ms": 32.5835
+      },
+      "spacing_quality": {
+        "actual_gap_seconds": 5.002331,
+        "launch_lateness_seconds": 0.002330999999999861,
+        "spacing_pass": true,
+        "system_busy_median_percent": null,
+        "system_busy_max_percent": null,
+        "long_gap_quiet_and_AC": null,
+        "system_read_max_ns": 67400
+      },
+      "model_open_ms": 2362.38,
+      "errors": [],
+      "complete": true
+    },
+    {
+      "id": "short03",
+      "state": {
+        "label": "slow",
+        "prepare_wall_ms": 4862.88,
+        "prepare_cpu_ms": 4843.75,
+        "consumer_wall_ms": 3671.2436,
+        "consumer_cpu_ms": 3656.25,
+        "model_call_median_ms": 32.352000000000004
+      },
+      "spacing_quality": {
+        "actual_gap_seconds": 5.0024284,
+        "launch_lateness_seconds": 0.0024284000000003303,
+        "spacing_pass": true,
+        "system_busy_median_percent": null,
+        "system_busy_max_percent": null,
+        "long_gap_quiet_and_AC": null,
+        "system_read_max_ns": 105900
+      },
+      "model_open_ms": 2418.1428,
+      "errors": [],
+      "complete": true
+    },
+    {
+      "id": "long02",
+      "state": {
+        "label": "slow",
+        "prepare_wall_ms": 4914.9042,
+        "prepare_cpu_ms": 4828.125,
+        "consumer_wall_ms": 3800.8673,
+        "consumer_cpu_ms": 3781.25,
+        "model_call_median_ms": 32.280249999999995
+      },
+      "spacing_quality": {
+        "actual_gap_seconds": 300.0027535,
+        "launch_lateness_seconds": 0.002753499999982978,
+        "spacing_pass": true,
+        "system_busy_median_percent": 1.483216237314598,
+        "system_busy_max_percent": 4.568527918781726,
+        "long_gap_quiet_and_AC": true,
+        "system_read_max_ns": 238300
+      },
+      "model_open_ms": 2386.8582,
+      "errors": [],
+      "complete": true
+    }
+  ],
+  "transitions": [
+    {
+      "previous": "short01",
+      "current": "long01",
+      "observed_fast_to_slow": false,
+      "qualified_spacing": true
+    },
+    {
+      "previous": "short03",
+      "current": "long02",
+      "observed_fast_to_slow": false,
+      "qualified_spacing": true
+    }
+  ],
+  "controlled_five_minute_condition_supported": false,
+  "conclusion": "This fixed budget does not establish the proposed five-minute recurrence condition. Other idle durations or mechanisms remain unknown.",
+  "limits": [
+    "No native hardware frequency, instruction, cache ormemory mechanism identified.",
+    "System aggregate quiet does not prove no per-core competitor or thermal change.",
+    "No GUI orSDK input; positive spacing result cannot be called a formal real-time fix.",
+    "No additional windows, threshold fitting, warmup removal orfailure substitution."
+  ],
+  "old_calibration_upgraded": false,
+  "root_mechanism_confirmed": false,
+  "bindings": {
+    "plan_sha256": "3f223698109efc91f627f747b29da2ed5153e3a1745452265e79b2f90fdd2fbf",
+    "analysis_sha256": "fd743f7b0aa2f4df24821fdf9f65fc046c55fdf62b6c74525287ec873a9246ae",
+    "archive_sha256": "4e28c2d9124ed18b11616ca65a4bb187be7b857dab43ba1dcd6c96696101390f"
+  }
+}

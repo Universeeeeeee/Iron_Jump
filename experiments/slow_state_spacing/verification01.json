@@ -1,0 +1,32 @@
+{
+  "six_original_windows_match": true,
+  "all_slow": true,
+  "qualified_long_gaps": [
+    {
+      "case": "long01",
+      "actual_seconds": 300.0027911,
+      "system_busy_median_percent": 1.2885591565794612,
+      "system_busy_max_percent": 5.228248146703082
+    },
+    {
+      "case": "long02",
+      "actual_seconds": 300.0027535,
+      "system_busy_median_percent": 1.483216237314598,
+      "system_busy_max_percent": 4.568527918781726
+    }
+  ],
+  "model_open_first_ms": 5235.5872,
+  "model_open_subsequent_range_ms": [
+    2362.38,
+    2418.1428
+  ],
+  "distinction": "Model-open became shorter while preparation/consumer/model execution stayed slow. Startup/open overhead and persistent slow execution cannot be conflated.",
+  "fast_to_slow_condition_identified": false,
+  "root_mechanism_identified": false,
+  "bindings": {
+    "verify_result.py": "2dcdb4aa307b78bd371543e3ea470f34a7f128166808aee84ff3cdaadd97ce7d",
+    "plan01.json": "3f223698109efc91f627f747b29da2ed5153e3a1745452265e79b2f90fdd2fbf",
+    "result01.json": "520ba6400eeb74c03a67004667996a7f4cfbed21e52e44c2ace3b8c25b91654d",
+    "transport01.json": "b88e3a8301f1261fb5dd6f0b4d688316ee08b20e63a762e511c4f4236a135a37"
+  }
+}
