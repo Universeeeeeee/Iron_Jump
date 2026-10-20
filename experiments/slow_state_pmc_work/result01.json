@@ -1,0 +1,289 @@
+{
+  "four_windows_complete": true,
+  "all_work_outputs_exact": true,
+  "phase_context_quality_pass": false,
+  "cases": [
+    {
+      "case": "service01",
+      "state": {
+        "label": "slow",
+        "prepare_wall_ms": 5491.729,
+        "prepare_cpu_ms": 5406.25,
+        "consumer_wall_ms": 3971.3853,
+        "consumer_cpu_ms": 3968.75,
+        "model_call_median_ms": 32.32195
+      },
+      "context": {
+        "pid": 17252,
+        "session_id": 0,
+        "foreground_pid": null,
+        "priority_class": 16384,
+        "qpa": "offscreen",
+        "perf_counter_ns": 477818181566100,
+        "utc_ns": 1792482014066247900,
+        "source_sha256": "5d7d7c83756ec879d72937c48fcd4fe96c59acf3c3077ad7116f61cc2347bd76",
+        "scope": "Fresh startup process only. NoGUI/model/SDK or actual workload policy measurement.",
+        "process": {
+          "success": true,
+          "error": 0,
+          "version": 1,
+          "control_mask": 0,
+          "state_mask": 0
+        },
+        "thread": {
+          "success": true,
+          "error": 0,
+          "version": 1,
+          "control_mask": 0,
+          "state_mask": 0
+        }
+      },
+      "phases": {
+        "preparation": {
+          "retired_instruction_outer": 18384487149,
+          "core_counter_outer": 13091124235,
+          "reference_counter_outer": 131217462,
+          "running_outer_ns": 5489862400.0,
+          "marker_wall_ns": 5491781400.0,
+          "thread_cpu_ns": 5406250000,
+          "OS_cycles": 13104727920,
+          "outside_marker_running_ns": 15700.0,
+          "switch_intervals": 589,
+          "edge_quality_pass": true,
+          "CPU_accounting_pass": false
+        },
+        "consumer": {
+          "retired_instruction_outer": 11658530448,
+          "core_counter_outer": 9458362566,
+          "reference_counter_outer": 94804701,
+          "running_outer_ns": 3969713600.0,
+          "marker_wall_ns": 3971428500.0,
+          "thread_cpu_ns": 3968750000,
+          "OS_cycles": 9460972320,
+          "outside_marker_running_ns": 13000.0,
+          "switch_intervals": 449,
+          "edge_quality_pass": true,
+          "CPU_accounting_pass": true
+        }
+      }
+    },
+    {
+      "case": "interactive01",
+      "state": {
+        "label": "fast",
+        "prepare_wall_ms": 2775.0415,
+        "prepare_cpu_ms": 2750.0,
+        "consumer_wall_ms": 2084.3039,
+        "consumer_cpu_ms": 2062.5,
+        "model_call_median_ms": 19.524549999999998
+      },
+      "context": {
+        "pid": 13388,
+        "session_id": 1,
+        "foreground_pid": 12424,
+        "priority_class": 16384,
+        "qpa": "offscreen",
+        "perf_counter_ns": 477911842189000,
+        "utc_ns": 1792482107727158700,
+        "source_sha256": "5d7d7c83756ec879d72937c48fcd4fe96c59acf3c3077ad7116f61cc2347bd76",
+        "scope": "Fresh startup process only. NoGUI/model/SDK or actual workload policy measurement.",
+        "process": {
+          "success": true,
+          "error": 0,
+          "version": 1,
+          "control_mask": 0,
+          "state_mask": 0
+        },
+        "thread": {
+          "success": true,
+          "error": 0,
+          "version": 1,
+          "control_mask": 0,
+          "state_mask": 0
+        }
+      },
+      "phases": {
+        "preparation": {
+          "retired_instruction_outer": 18383666920,
+          "core_counter_outer": 11105065311,
+          "reference_counter_outer": 65988560,
+          "running_outer_ns": 2774933800.0,
+          "marker_wall_ns": 2775080900.0,
+          "thread_cpu_ns": 2750000000,
+          "OS_cycles": 6644106960,
+          "outside_marker_running_ns": 10100.0,
+          "switch_intervals": 10,
+          "edge_quality_pass": true,
+          "CPU_accounting_pass": true
+        },
+        "consumer": {
+          "retired_instruction_outer": 11686958409,
+          "core_counter_outer": 8298087192,
+          "reference_counter_outer": 49886237,
+          "running_outer_ns": 2084062500.0,
+          "marker_wall_ns": 2084344900.0,
+          "thread_cpu_ns": 2062500000,
+          "OS_cycles": 4990155840,
+          "outside_marker_running_ns": 10100.0,
+          "switch_intervals": 17,
+          "edge_quality_pass": true,
+          "CPU_accounting_pass": true
+        }
+      }
+    },
+    {
+      "case": "interactive02",
+      "state": {
+        "label": "fast",
+        "prepare_wall_ms": 2757.6338,
+        "prepare_cpu_ms": 2765.625,
+        "consumer_wall_ms": 2095.6081,
+        "consumer_cpu_ms": 2093.75,
+        "model_call_median_ms": 19.4302
+      },
+      "context": {
+        "pid": 9768,
+        "session_id": 1,
+        "foreground_pid": 22240,
+        "priority_class": 16384,
+        "qpa": "offscreen",
+        "perf_counter_ns": 477992753252400,
+        "utc_ns": 1792482188638669100,
+        "source_sha256": "5d7d7c83756ec879d72937c48fcd4fe96c59acf3c3077ad7116f61cc2347bd76",
+        "scope": "Fresh startup process only. NoGUI/model/SDK or actual workload policy measurement.",
+        "process": {
+          "success": true,
+          "error": 0,
+          "version": 1,
+          "control_mask": 0,
+          "state_mask": 0
+        },
+        "thread": {
+          "success": true,
+          "error": 0,
+          "version": 1,
+          "control_mask": 0,
+          "state_mask": 0
+        }
+      },
+      "phases": {
+        "preparation": {
+          "retired_instruction_outer": 18373216806,
+          "core_counter_outer": 11038702646,
+          "reference_counter_outer": 65592256,
+          "running_outer_ns": 2757550100.0,
+          "marker_wall_ns": 2757672900.0,
+          "thread_cpu_ns": 2765625000,
+          "OS_cycles": 6606108720,
+          "outside_marker_running_ns": 10500.0,
+          "switch_intervals": 16,
+          "edge_quality_pass": true,
+          "CPU_accounting_pass": true
+        },
+        "consumer": {
+          "retired_instruction_outer": 11669811522,
+          "core_counter_outer": 8397025417,
+          "reference_counter_outer": 49708359,
+          "running_outer_ns": 2095237700.0,
+          "marker_wall_ns": 2095637900.0,
+          "thread_cpu_ns": 2093750000,
+          "OS_cycles": 5000728560,
+          "outside_marker_running_ns": 9800.0,
+          "switch_intervals": 18,
+          "edge_quality_pass": true,
+          "CPU_accounting_pass": true
+        }
+      }
+    },
+    {
+      "case": "service02",
+      "state": {
+        "label": "fast",
+        "prepare_wall_ms": 3051.4183,
+        "prepare_cpu_ms": 3031.25,
+        "consumer_wall_ms": 2404.592,
+        "consumer_cpu_ms": 2406.25,
+        "model_call_median_ms": 20.63545
+      },
+      "context": {
+        "pid": 23136,
+        "session_id": 0,
+        "foreground_pid": null,
+        "priority_class": 16384,
+        "qpa": "offscreen",
+        "perf_counter_ns": 478073330426500,
+        "utc_ns": 1792482269215846200,
+        "source_sha256": "5d7d7c83756ec879d72937c48fcd4fe96c59acf3c3077ad7116f61cc2347bd76",
+        "scope": "Fresh startup process only. NoGUI/model/SDK or actual workload policy measurement.",
+        "process": {
+          "success": true,
+          "error": 0,
+          "version": 1,
+          "control_mask": 0,
+          "state_mask": 0
+        },
+        "thread": {
+          "success": true,
+          "error": 0,
+          "version": 1,
+          "control_mask": 0,
+          "state_mask": 0
+        }
+      },
+      "phases": {
+        "preparation": {
+          "retired_instruction_outer": 18351689082,
+          "core_counter_outer": 12230711134,
+          "reference_counter_outer": 72364268,
+          "running_outer_ns": 3051049600.0,
+          "marker_wall_ns": 3051463800.0,
+          "thread_cpu_ns": 3031250000,
+          "OS_cycles": 7307477760,
+          "outside_marker_running_ns": 12400.0,
+          "switch_intervals": 146,
+          "edge_quality_pass": true,
+          "CPU_accounting_pass": true
+        },
+        "consumer": {
+          "retired_instruction_outer": 11647381510,
+          "core_counter_outer": 9668158105,
+          "reference_counter_outer": 56937511,
+          "running_outer_ns": 2404040300.0,
+          "marker_wall_ns": 2404626000.0,
+          "thread_cpu_ns": 2406250000,
+          "OS_cycles": 5749780080,
+          "outside_marker_running_ns": 9100.0,
+          "switch_intervals": 284,
+          "edge_quality_pass": true,
+          "CPU_accounting_pass": true
+        }
+      }
+    }
+  ],
+  "comparisons": {
+    "preparation": {
+      "available": false,
+      "reason": "Phase/context quality failed; no quantitative comparison."
+    },
+    "consumer": {
+      "available": false,
+      "reason": "Phase/context quality failed; no quantitative comparison."
+    }
+  },
+  "both_joint_states_observed": true,
+  "root_mechanism_identified": false,
+  "actual_workload_disturbance_qualified": false,
+  "hardware_frequency_semantics_verified": false,
+  "limitations": [
+    "Sleep boundary andWPR change the fixture; no originalGUI/3pct/1pct certification.",
+    "Outer instructions include bounded edge work; no blank subtraction orcycle normalization.",
+    "Retired counts do not identify a responsible function orunique power/cache mechanism.",
+    "Model/native pools exist; preparation andserial consumer precede formal inference.",
+    "All4windows retained; no extension towait forstates."
+  ],
+  "bindings": {
+    "analyze.py": "428440de11a5af641473f356416ce799c0cf34267ee18d6d03133961dfebc8f8",
+    "plan01.json": "5e389a5f3bff8f8d44d455c79fed52ceaa317b40d46f7ed3ea8733527b314ba7",
+    "evidence01.zip": "98418ba21ef9fe1c4c979b11d13b8cad0195639093a0da93a1299f4c5aa6f0c3"
+  }
+}

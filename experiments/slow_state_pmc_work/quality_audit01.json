@@ -1,0 +1,82 @@
+{
+  "phase_checks": [
+    {
+      "case": "service01",
+      "phase": "preparation",
+      "CPU_accounting_pass": false,
+      "edge_quality_pass": true,
+      "CSwitch_minus_GetThreadTimes_ms": 83.6124,
+      "edge_running_us": 15.7
+    },
+    {
+      "case": "service01",
+      "phase": "consumer",
+      "CPU_accounting_pass": true,
+      "edge_quality_pass": true,
+      "CSwitch_minus_GetThreadTimes_ms": 0.9636,
+      "edge_running_us": 13.0
+    },
+    {
+      "case": "interactive01",
+      "phase": "preparation",
+      "CPU_accounting_pass": true,
+      "edge_quality_pass": true,
+      "CSwitch_minus_GetThreadTimes_ms": 24.9338,
+      "edge_running_us": 10.1
+    },
+    {
+      "case": "interactive01",
+      "phase": "consumer",
+      "CPU_accounting_pass": true,
+      "edge_quality_pass": true,
+      "CSwitch_minus_GetThreadTimes_ms": 21.5625,
+      "edge_running_us": 10.1
+    },
+    {
+      "case": "interactive02",
+      "phase": "preparation",
+      "CPU_accounting_pass": true,
+      "edge_quality_pass": true,
+      "CSwitch_minus_GetThreadTimes_ms": -8.0749,
+      "edge_running_us": 10.5
+    },
+    {
+      "case": "interactive02",
+      "phase": "consumer",
+      "CPU_accounting_pass": true,
+      "edge_quality_pass": true,
+      "CSwitch_minus_GetThreadTimes_ms": 1.4877,
+      "edge_running_us": 9.8
+    },
+    {
+      "case": "service02",
+      "phase": "preparation",
+      "CPU_accounting_pass": true,
+      "edge_quality_pass": true,
+      "CSwitch_minus_GetThreadTimes_ms": 19.7996,
+      "edge_running_us": 12.4
+    },
+    {
+      "case": "service02",
+      "phase": "consumer",
+      "CPU_accounting_pass": true,
+      "edge_quality_pass": true,
+      "CSwitch_minus_GetThreadTimes_ms": -2.2097,
+      "edge_running_us": 9.1
+    }
+  ],
+  "original_CPU_tolerance_ns": 31250000,
+  "all_cross_state_comparisons_withheld": true,
+  "perfinfo_event_shapes": {
+    "ce1dbfb4-137e-4da6-87b0-3f59aa102cbc/34/v0/len24": 2,
+    "ce1dbfb4-137e-4da6-87b0-3f59aa102cbc/48/v2/len128": 1,
+    "ce1dbfb4-137e-4da6-87b0-3f59aa102cbc/49/v2/len44": 8,
+    "ce1dbfb4-137e-4da6-87b0-3f59aa102cbc/34/v0/len8": 1,
+    "ce1dbfb4-137e-4da6-87b0-3f59aa102cbc/34/v0/len12": 1
+  },
+  "DPC_ISR_events_present": false,
+  "GetThreadTimes_CSwitch_difference_cause_identified": false,
+  "interpretation": "CSwitch residency andOS thread CPU have different accounting scopes. This trace did not request/record DPC/ISR events, so interrupt overlap cannot be verified orsubtracted. Do not call the deficit GIL waiting orrelax tolerance.",
+  "followup": "Resolve the exact CPU-accounting scope mismatch with an independently validated interrupt/DPC observation before quantitative phase attribution; no replacement ofthese4windows.",
+  "root_mechanism_identified": false
+}
