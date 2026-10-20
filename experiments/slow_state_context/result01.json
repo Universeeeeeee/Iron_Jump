@@ -1,0 +1,172 @@
+{
+  "all_four_complete": true,
+  "actual_startup_contexts_matched_except_logon_session": true,
+  "cases": [
+    {
+      "id": "service01",
+      "state": {
+        "label": "slow",
+        "prepare_wall_ms": 5643.6327,
+        "prepare_cpu_ms": 5625.0,
+        "consumer_wall_ms": 4266.724,
+        "consumer_cpu_ms": 4234.375,
+        "model_call_median_ms": 33.546499999999995
+      },
+      "context": {
+        "pid": 5448,
+        "session_id": 0,
+        "foreground_pid": null,
+        "priority_class": 16384,
+        "qpa": "offscreen",
+        "perf_counter_ns": 472731693175300,
+        "utc_ns": 1792476927576084800,
+        "source_sha256": "5d7d7c83756ec879d72937c48fcd4fe96c59acf3c3077ad7116f61cc2347bd76",
+        "scope": "Fresh startup process only. NoGUI/model/SDK or actual workload policy measurement.",
+        "process": {
+          "success": true,
+          "error": 0,
+          "version": 1,
+          "control_mask": 0,
+          "state_mask": 0
+        },
+        "thread": {
+          "success": true,
+          "error": 0,
+          "version": 1,
+          "control_mask": 0,
+          "state_mask": 0
+        }
+      },
+      "expected_session_matches": true,
+      "complete": true
+    },
+    {
+      "id": "interactive01",
+      "state": {
+        "label": "intermediate",
+        "prepare_wall_ms": 4678.703,
+        "prepare_cpu_ms": 4562.5,
+        "consumer_wall_ms": 2953.6286,
+        "consumer_cpu_ms": 2953.125,
+        "model_call_median_ms": 19.5962
+      },
+      "context": {
+        "pid": 18352,
+        "session_id": 1,
+        "foreground_pid": 17168,
+        "priority_class": 16384,
+        "qpa": "offscreen",
+        "perf_counter_ns": 472842213706100,
+        "utc_ns": 1792477038096928800,
+        "source_sha256": "5d7d7c83756ec879d72937c48fcd4fe96c59acf3c3077ad7116f61cc2347bd76",
+        "scope": "Fresh startup process only. NoGUI/model/SDK or actual workload policy measurement.",
+        "process": {
+          "success": true,
+          "error": 0,
+          "version": 1,
+          "control_mask": 0,
+          "state_mask": 0
+        },
+        "thread": {
+          "success": true,
+          "error": 0,
+          "version": 1,
+          "control_mask": 0,
+          "state_mask": 0
+        }
+      },
+      "expected_session_matches": true,
+      "complete": true
+    },
+    {
+      "id": "interactive02",
+      "state": {
+        "label": "fast",
+        "prepare_wall_ms": 2728.3053,
+        "prepare_cpu_ms": 2718.75,
+        "consumer_wall_ms": 2040.956,
+        "consumer_cpu_ms": 2046.875,
+        "model_call_median_ms": 19.4278
+      },
+      "context": {
+        "pid": 8864,
+        "session_id": 1,
+        "foreground_pid": 17236,
+        "priority_class": 16384,
+        "qpa": "offscreen",
+        "perf_counter_ns": 472929712263000,
+        "utc_ns": 1792477125595393100,
+        "source_sha256": "5d7d7c83756ec879d72937c48fcd4fe96c59acf3c3077ad7116f61cc2347bd76",
+        "scope": "Fresh startup process only. NoGUI/model/SDK or actual workload policy measurement.",
+        "process": {
+          "success": true,
+          "error": 0,
+          "version": 1,
+          "control_mask": 0,
+          "state_mask": 0
+        },
+        "thread": {
+          "success": true,
+          "error": 0,
+          "version": 1,
+          "control_mask": 0,
+          "state_mask": 0
+        }
+      },
+      "expected_session_matches": true,
+      "complete": true
+    },
+    {
+      "id": "service02",
+      "state": {
+        "label": "fast",
+        "prepare_wall_ms": 3155.6562,
+        "prepare_cpu_ms": 3140.625,
+        "consumer_wall_ms": 2284.1245,
+        "consumer_cpu_ms": 2218.75,
+        "model_call_median_ms": 20.709249999999997
+      },
+      "context": {
+        "pid": 23516,
+        "session_id": 0,
+        "foreground_pid": null,
+        "priority_class": 16384,
+        "qpa": "offscreen",
+        "perf_counter_ns": 473010727185300,
+        "utc_ns": 1792477206610650800,
+        "source_sha256": "5d7d7c83756ec879d72937c48fcd4fe96c59acf3c3077ad7116f61cc2347bd76",
+        "scope": "Fresh startup process only. NoGUI/model/SDK or actual workload policy measurement.",
+        "process": {
+          "success": true,
+          "error": 0,
+          "version": 1,
+          "control_mask": 0,
+          "state_mask": 0
+        },
+        "thread": {
+          "success": true,
+          "error": 0,
+          "version": 1,
+          "control_mask": 0,
+          "state_mask": 0
+        }
+      },
+      "expected_session_matches": true,
+      "complete": true
+    }
+  ],
+  "service_slow_interactive_fast_condition_supported": false,
+  "conclusion": "No qualified repeated service-slow/interactive-fast contrast; the proposed condition remains unconfirmed.",
+  "limitations": [
+    "Logon mode changes more than a session number; no unique hardware mechanism follows.",
+    "Startup policy metadata does not certify continuous CPU delivery.",
+    "Original fixed work has no GUI/SDK, and no real-time repair orCPU/GIL share is certified.",
+    "No retries, posthoc state thresholds oradditional cases."
+  ],
+  "root_mechanism_identified": false,
+  "bindings": {
+    "plan_sha256": "c1882f5b99d37444745308f1ffba1315365394d40bc415331e01fb3a2460695c",
+    "analyzer_sha256": "97a2e655c22d4d8041e09a9592083295f3b994653ecd57f2a1d34f3a3db948c7",
+    "archive_sha256": "d52080a1ab9af6914b7243225e3f6beb9ca9e04ac441f1ea71f0b3fcc10081f3"
+  }
+}

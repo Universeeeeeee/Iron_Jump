@@ -1,0 +1,7 @@
+{
+  "stage": "Posthoc XML assertion",
+  "error": "Verifier incorrectly required an explicit Priority node; all exports omit the schema default.",
+  "recovery": "Use documented optional Priority default7 and cross-check actual Python priority16384. No task or target rerun.",
+  "source": "https://learn.microsoft.com/en-us/windows/win32/taskschd/taskschedulerschema-priority-settingstype-element",
+  "quote": "<xs:element name=\"Priority\" type=\"priorityType\" default=\"7\" minOccurs=\"0\" />"
+}

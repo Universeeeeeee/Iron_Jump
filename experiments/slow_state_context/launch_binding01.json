@@ -1,0 +1,6 @@
+{
+  "plan_sha256": "c1882f5b99d37444745308f1ffba1315365394d40bc415331e01fb3a2460695c",
+  "analyzer_sha256": "97a2e655c22d4d8041e09a9592083295f3b994653ecd57f2a1d34f3a3db948c7",
+  "cohort_sha256": "5627b2554597e658cb3ad594c94df32e0021510bdcc5fb1d4f2ecdf43d267beb",
+  "script": "$ErrorActionPreference='Continue';[Console]::OutputEncoding=New-Object System.Text.UTF8Encoding;$env:QT_API='pyside6';$env:QT_QPA_PLATFORM='offscreen';$env:PYTHONUTF8='1';Set-Location 'E:/OptoJump/IronJump-gil-gui-calibration-20261018-01';& powershell.exe -NoProfile -NonInteractive -File 'E:/OptoJump/IronJump-gil-gui-calibration-20261018-01/experiments/slow_state_context/cohort.ps1';exit $LASTEXITCODE"
+}

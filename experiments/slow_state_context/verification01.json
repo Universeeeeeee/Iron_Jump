@@ -1,0 +1,50 @@
+{
+  "task_xml_and_native_exits_verified": true,
+  "full_work_identity_verified": true,
+  "all_four_windows": [
+    {
+      "case": "service01",
+      "session_id": 0,
+      "priority_class": 16384,
+      "label": "slow",
+      "preparation_ms": 5643.6327,
+      "consumer_ms": 4266.724,
+      "model_median_ms": 33.546499999999995
+    },
+    {
+      "case": "interactive01",
+      "session_id": 1,
+      "priority_class": 16384,
+      "label": "intermediate",
+      "preparation_ms": 4678.703,
+      "consumer_ms": 2953.6286,
+      "model_median_ms": 19.5962
+    },
+    {
+      "case": "interactive02",
+      "session_id": 1,
+      "priority_class": 16384,
+      "label": "fast",
+      "preparation_ms": 2728.3053,
+      "consumer_ms": 2040.956,
+      "model_median_ms": 19.4278
+    },
+    {
+      "case": "service02",
+      "session_id": 0,
+      "priority_class": 16384,
+      "label": "fast",
+      "preparation_ms": 3155.6562,
+      "consumer_ms": 2284.1245,
+      "model_median_ms": 20.709249999999997
+    }
+  ],
+  "service_slow_interactive_fast_condition_supported": false,
+  "root_mechanism_identified": false,
+  "bindings": {
+    "verify_result.py": "5647fab020e23409493d8dc0f65bdd5520335d0c3ce6af4871bc46a0e8dadd62",
+    "result01.json": "9362f1081d6caf2befb178435a175e6d13b6bb1114ed17815683c3880a9017c9",
+    "plan01.json": "c1882f5b99d37444745308f1ffba1315365394d40bc415331e01fb3a2460695c",
+    "transport01.json": "64ee2a73ad940c6c37d7b0b3b65c112533bf84e31db7d3994c8e60fca19595ae"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "question": "Does model CPU work contribute to slow execution, and is Windows GPU a drop-in option?",
+  "conclusions": {
+    "model_pipeline_overlap_contribution_supported": true,
+    "pure_mediapipe_inference_CPU_share_identified": false,
+    "persistent_slow_state_trigger_identified": false,
+    "installed_windows_python_GPU_officially_supported": false,
+    "windows_GPU_alternative_engine_feasibility": "Possible engineering direction; model conversion, full temporal pipeline, accuracy anddelivered execution have not been validated."
+  },
+  "evidence": {
+    "fixed_overlap": {
+      "pairs": 4,
+      "consumer_wall_reduction_geometric_percent": 25.3737194595387,
+      "all_pairs_same_direction": true,
+      "scope": "Full _PreviewAdapter pipeline, including OpenCV resize/RGB copy/Python/native work. Not inference-only CPU share."
+    },
+    "current_context": {
+      "labels": [
+        "slow",
+        "intermediate",
+        "fast",
+        "fast"
+      ],
+      "service_fast_observed": true,
+      "matched_context_gate": true,
+      "declared_context_hypothesis_supported": false
+    },
+    "installed": {
+      "version": "0.10.35",
+      "base_options_sha256": "79960c3e00b467d014f306865cf28756808630d8fc16acadf48db9dac06a6492",
+      "quote": "GPU support is currently limited to Ubuntu platforms.",
+      "cpu_selected_by": "vision/mediapipe_pose.py open()"
+    }
+  },
+  "limitations": [
+    "Model is open but blocked on go during preparation; this does not remove its initialization/background/native pool effects.",
+    "No claim that GPU removes persistent slow state orall CPU work.",
+    "Enums/configuration/inventory are not delivered GPU execution.",
+    "Old disturbance, stack andfield-fix failures remain unchanged."
+  ],
+  "bindings": {
+    "experiments/fixed_overlap_comparison/result01.json": "bc4f9a4b5dd37a46755e37b3fc916ce7088a8a5573335e237182df8ff08265fd",
+    "experiments/fixed_state_review/result01.json": "7ef114d82dd351cb4893fcd8da8839476a2614e4660a597391c3e447844ab000",
+    "experiments/slow_state_context/result01.json": "9362f1081d6caf2befb178435a175e6d13b6bb1114ed17815683c3880a9017c9",
+    "vision/mediapipe_pose.py": "b4b771ce3e18d88c50fd1c698ac006bd0b87d2be9c5f50feb5f080a48f6c43e1",
+    "vision/live_walking.py": "7f7ca4dd66bafe59ae43b2b2f25e528c9349faa8c5de20d177d5e2cd7642e228"
+  }
+}
