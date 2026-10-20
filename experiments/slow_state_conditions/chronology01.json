@@ -1,0 +1,2195 @@
+{
+  "scope": "Six existing GUI cohorts only. All windows retained; no new workload orintervention. Chronological state proxies, no causal/CPU/GIL shares.",
+  "classifier": {
+    "slow_base_median_at_least_ms": 30,
+    "fast_at_most_ms": 26,
+    "basis": "Prior startup-accounting exploratory labels reused, not optimized on this timeline. First-touch actual receipt cutoff; no claim of identical selected model work."
+  },
+  "archives": [
+    {
+      "cohort": "session_gui_comparison",
+      "cases": 12,
+      "manifest_files_verified": 270
+    },
+    {
+      "cohort": "session_startup_accounting",
+      "cases": 4,
+      "manifest_files_verified": 111
+    },
+    {
+      "cohort": "label_call_identity",
+      "cases": 1,
+      "manifest_files_verified": 44
+    },
+    {
+      "cohort": "preview_bridge_delivery",
+      "cases": 1,
+      "manifest_files_verified": 41
+    },
+    {
+      "cohort": "preview_native_sdk",
+      "cases": 1,
+      "manifest_files_verified": 44
+    },
+    {
+      "cohort": "preview_gil_ab",
+      "cases": 8,
+      "manifest_files_verified": 178
+    }
+  ],
+  "rows": [
+    {
+      "cohort": "session_gui_comparison",
+      "case": "aa01",
+      "cohort_ordinal": 1,
+      "pid": 18336,
+      "backend": "original",
+      "boundary": "original",
+      "sdk": "simulated",
+      "observation_start_perf_ns": 428671243251900,
+      "observation_end_perf_ns": 428767685144300,
+      "observation_start_utc_ns_bounds": [
+        1792432867116770600,
+        1792432867116790000
+      ],
+      "observation_end_utc_ns_bounds": [
+        1792432963558711800,
+        1792432963558720700
+      ],
+      "UTC_elapsed_minus_perf_ns_bounds": [
+        29400,
+        57700
+      ],
+      "observation_start_UTC": "2026-10-19T18:01:07.116771+00:00",
+      "observation_start_China": "2026-10-20T02:01:07.116771+08:00",
+      "open_wall_ms": 2859.506,
+      "first_base_call_wall_ms": 64.92,
+      "precontact_base_calls": 142,
+      "precontact_base_median_ms": 35.3993,
+      "exploratory_state": "slow",
+      "precontact_first10_wall_ms": [
+        64.92,
+        61.0315,
+        44.17,
+        35.5206,
+        38.9381,
+        34.0532,
+        32.68,
+        35.83,
+        36.2064,
+        37.4855
+      ],
+      "model_calls": 417,
+      "video_frames": 822,
+      "session_id": 1,
+      "priority_class": 16384,
+      "qpa": "windows",
+      "process_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "thread_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "original_report_raw_state_exact": true,
+      "model_closed_in_tail": {
+        "single_service": true,
+        "committed_prefix": true,
+        "service_exited": true,
+        "service_markers": true,
+        "one_model": true,
+        "no_callback_faults": true,
+        "model_identity": true,
+        "close_return_confirmed": true
+      },
+      "preceding_retained_window": null,
+      "gap_between_observation_brackets_s": null
+    },
+    {
+      "cohort": "session_gui_comparison",
+      "case": "aa02",
+      "cohort_ordinal": 2,
+      "pid": 18452,
+      "backend": "original",
+      "boundary": "original",
+      "sdk": "simulated",
+      "observation_start_perf_ns": 428772353598200,
+      "observation_end_perf_ns": 428860375794000,
+      "observation_start_utc_ns_bounds": [
+        1792432968227168100,
+        1792432968227179900
+      ],
+      "observation_end_utc_ns_bounds": [
+        1792433056249408000,
+        1792433056249417400
+      ],
+      "UTC_elapsed_minus_perf_ns_bounds": [
+        32300,
+        53500
+      ],
+      "observation_start_UTC": "2026-10-19T18:02:48.227168+00:00",
+      "observation_start_China": "2026-10-20T02:02:48.227168+08:00",
+      "open_wall_ms": 1794.8765,
+      "first_base_call_wall_ms": 34.9521,
+      "precontact_base_calls": 142,
+      "precontact_base_median_ms": 20.27915,
+      "exploratory_state": "fast",
+      "precontact_first10_wall_ms": [
+        34.9521,
+        22.1362,
+        19.9708,
+        18.3292,
+        22.1622,
+        19.4761,
+        21.6435,
+        21.3855,
+        18.3716,
+        79.9873
+      ],
+      "model_calls": 403,
+      "video_frames": 794,
+      "session_id": 1,
+      "priority_class": 16384,
+      "qpa": "windows",
+      "process_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "thread_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "original_report_raw_state_exact": true,
+      "model_closed_in_tail": {
+        "single_service": true,
+        "committed_prefix": true,
+        "service_exited": true,
+        "service_markers": true,
+        "one_model": true,
+        "no_callback_faults": true,
+        "model_identity": true,
+        "close_return_confirmed": true
+      },
+      "preceding_retained_window": {
+        "cohort": "session_gui_comparison",
+        "case": "aa01",
+        "state": "slow"
+      },
+      "gap_between_observation_brackets_s": 4.6684539
+    },
+    {
+      "cohort": "session_gui_comparison",
+      "case": "aa03",
+      "cohort_ordinal": 3,
+      "pid": 11152,
+      "backend": "original",
+      "boundary": "original",
+      "sdk": "simulated",
+      "observation_start_perf_ns": 428864069727000,
+      "observation_end_perf_ns": 428953161106100,
+      "observation_start_utc_ns_bounds": [
+        1792433059943342700,
+        1792433059943354800
+      ],
+      "observation_end_utc_ns_bounds": [
+        1792433149034766300,
+        1792433149034775700
+      ],
+      "UTC_elapsed_minus_perf_ns_bounds": [
+        32400,
+        53900
+      ],
+      "observation_start_UTC": "2026-10-19T18:04:19.943343+00:00",
+      "observation_start_China": "2026-10-20T02:04:19.943343+08:00",
+      "open_wall_ms": 1790.395,
+      "first_base_call_wall_ms": 34.6287,
+      "precontact_base_calls": 142,
+      "precontact_base_median_ms": 20.233,
+      "exploratory_state": "fast",
+      "precontact_first10_wall_ms": [
+        34.6287,
+        25.576,
+        20.4099,
+        18.2741,
+        20.2007,
+        22.9229,
+        20.016,
+        20.2089,
+        20.6616,
+        18.8042
+      ],
+      "model_calls": 416,
+      "video_frames": 817,
+      "session_id": 1,
+      "priority_class": 16384,
+      "qpa": "windows",
+      "process_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "thread_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "original_report_raw_state_exact": true,
+      "model_closed_in_tail": {
+        "single_service": true,
+        "committed_prefix": true,
+        "service_exited": true,
+        "service_markers": true,
+        "one_model": true,
+        "no_callback_faults": true,
+        "model_identity": true,
+        "close_return_confirmed": true
+      },
+      "preceding_retained_window": {
+        "cohort": "session_gui_comparison",
+        "case": "aa02",
+        "state": "fast"
+      },
+      "gap_between_observation_brackets_s": 3.693933
+    },
+    {
+      "cohort": "session_gui_comparison",
+      "case": "aa04",
+      "cohort_ordinal": 4,
+      "pid": 10052,
+      "backend": "original",
+      "boundary": "original",
+      "sdk": "simulated",
+      "observation_start_perf_ns": 428956875304100,
+      "observation_end_perf_ns": 429045259064300,
+      "observation_start_utc_ns_bounds": [
+        1792433152748966200,
+        1792433152748978000
+      ],
+      "observation_end_utc_ns_bounds": [
+        1792433241132770600,
+        1792433241132780400
+      ],
+      "UTC_elapsed_minus_perf_ns_bounds": [
+        32400,
+        54000
+      ],
+      "observation_start_UTC": "2026-10-19T18:05:52.748966+00:00",
+      "observation_start_China": "2026-10-20T02:05:52.748966+08:00",
+      "open_wall_ms": 1805.2011,
+      "first_base_call_wall_ms": 34.5748,
+      "precontact_base_calls": 142,
+      "precontact_base_median_ms": 20.0931,
+      "exploratory_state": "fast",
+      "precontact_first10_wall_ms": [
+        34.5748,
+        18.4911,
+        21.5596,
+        19.8621,
+        20.4078,
+        20.588,
+        19.1633,
+        19.5612,
+        21.2315,
+        21.1858
+      ],
+      "model_calls": 403,
+      "video_frames": 795,
+      "session_id": 1,
+      "priority_class": 16384,
+      "qpa": "windows",
+      "process_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "thread_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "original_report_raw_state_exact": true,
+      "model_closed_in_tail": {
+        "single_service": true,
+        "committed_prefix": true,
+        "service_exited": true,
+        "service_markers": true,
+        "one_model": true,
+        "no_callback_faults": true,
+        "model_identity": true,
+        "close_return_confirmed": true
+      },
+      "preceding_retained_window": {
+        "cohort": "session_gui_comparison",
+        "case": "aa03",
+        "state": "fast"
+      },
+      "gap_between_observation_brackets_s": 3.714198
+    },
+    {
+      "cohort": "session_gui_comparison",
+      "case": "pair01_original",
+      "cohort_ordinal": 5,
+      "pid": 2288,
+      "backend": "original",
+      "boundary": "original",
+      "sdk": "simulated",
+      "observation_start_perf_ns": 429048955659700,
+      "observation_end_perf_ns": 429137802354900,
+      "observation_start_utc_ns_bounds": [
+        1792433244829367900,
+        1792433244829379800
+      ],
+      "observation_end_utc_ns_bounds": [
+        1792433333676107300,
+        1792433333676118200
+      ],
+      "UTC_elapsed_minus_perf_ns_bounds": [
+        32300,
+        55100
+      ],
+      "observation_start_UTC": "2026-10-19T18:07:24.829368+00:00",
+      "observation_start_China": "2026-10-20T02:07:24.829368+08:00",
+      "open_wall_ms": 1972.4823,
+      "first_base_call_wall_ms": 35.1722,
+      "precontact_base_calls": 142,
+      "precontact_base_median_ms": 20.1113,
+      "exploratory_state": "fast",
+      "precontact_first10_wall_ms": [
+        35.1722,
+        24.658,
+        24.9061,
+        19.3642,
+        19.4552,
+        20.6133,
+        22.4255,
+        18.447,
+        19.6691,
+        20.4923
+      ],
+      "model_calls": 409,
+      "video_frames": 807,
+      "session_id": 1,
+      "priority_class": 16384,
+      "qpa": "windows",
+      "process_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "thread_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "original_report_raw_state_exact": true,
+      "model_closed_in_tail": {
+        "single_service": true,
+        "committed_prefix": true,
+        "service_exited": true,
+        "service_markers": true,
+        "one_model": true,
+        "no_callback_faults": true,
+        "model_identity": true,
+        "close_return_confirmed": true
+      },
+      "preceding_retained_window": {
+        "cohort": "session_gui_comparison",
+        "case": "aa04",
+        "state": "fast"
+      },
+      "gap_between_observation_brackets_s": 3.6965954
+    },
+    {
+      "cohort": "session_gui_comparison",
+      "case": "pair01_isolated",
+      "cohort_ordinal": 6,
+      "pid": 12920,
+      "backend": "isolated",
+      "boundary": "original",
+      "sdk": "simulated",
+      "observation_start_perf_ns": 429141686805000,
+      "observation_end_perf_ns": 429233612653800,
+      "observation_start_utc_ns_bounds": [
+        1792433337560559500,
+        1792433337560571200
+      ],
+      "observation_end_utc_ns_bounds": [
+        1792433429486454300,
+        1792433429486464100
+      ],
+      "UTC_elapsed_minus_perf_ns_bounds": [
+        34300,
+        55800
+      ],
+      "observation_start_UTC": "2026-10-19T18:08:57.560560+00:00",
+      "observation_start_China": "2026-10-20T02:08:57.560560+08:00",
+      "open_wall_ms": 1474.5938,
+      "first_base_call_wall_ms": 34.3969,
+      "precontact_base_calls": 142,
+      "precontact_base_median_ms": 19.67425,
+      "exploratory_state": "fast",
+      "precontact_first10_wall_ms": [
+        34.3969,
+        18.6701,
+        21.3722,
+        20.1753,
+        20.6236,
+        20.6627,
+        20.9446,
+        18.2064,
+        18.8917,
+        22.3517
+      ],
+      "model_calls": 420,
+      "video_frames": 825,
+      "session_id": 1,
+      "priority_class": 16384,
+      "qpa": "windows",
+      "process_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "thread_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "original_report_raw_state_exact": true,
+      "model_closed_in_tail": {
+        "single_service": true,
+        "committed_prefix": true,
+        "service_exited": true,
+        "service_markers": true,
+        "one_model": true,
+        "no_callback_faults": true,
+        "model_identity": true,
+        "close_return_confirmed": true
+      },
+      "preceding_retained_window": {
+        "cohort": "session_gui_comparison",
+        "case": "pair01_original",
+        "state": "fast"
+      },
+      "gap_between_observation_brackets_s": 3.8844501
+    },
+    {
+      "cohort": "session_gui_comparison",
+      "case": "pair02_isolated",
+      "cohort_ordinal": 7,
+      "pid": 10524,
+      "backend": "isolated",
+      "boundary": "original",
+      "sdk": "simulated",
+      "observation_start_perf_ns": 429237301977400,
+      "observation_end_perf_ns": 429328470053600,
+      "observation_start_utc_ns_bounds": [
+        1792433433175779700,
+        1792433433175791200
+      ],
+      "observation_end_utc_ns_bounds": [
+        1792433524343901400,
+        1792433524343911800
+      ],
+      "UTC_elapsed_minus_perf_ns_bounds": [
+        34000,
+        55900
+      ],
+      "observation_start_UTC": "2026-10-19T18:10:33.175780+00:00",
+      "observation_start_China": "2026-10-20T02:10:33.175780+08:00",
+      "open_wall_ms": 1597.5018,
+      "first_base_call_wall_ms": 38.6833,
+      "precontact_base_calls": 142,
+      "precontact_base_median_ms": 19.651600000000002,
+      "exploratory_state": "fast",
+      "precontact_first10_wall_ms": [
+        38.6833,
+        21.6268,
+        18.3901,
+        18.8493,
+        23.4505,
+        19.0782,
+        19.2263,
+        21.7438,
+        20.1588,
+        20.5151
+      ],
+      "model_calls": 416,
+      "video_frames": 818,
+      "session_id": 1,
+      "priority_class": 16384,
+      "qpa": "windows",
+      "process_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "thread_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "original_report_raw_state_exact": true,
+      "model_closed_in_tail": {
+        "single_service": true,
+        "committed_prefix": true,
+        "service_exited": true,
+        "service_markers": true,
+        "one_model": true,
+        "no_callback_faults": true,
+        "model_identity": true,
+        "close_return_confirmed": true
+      },
+      "preceding_retained_window": {
+        "cohort": "session_gui_comparison",
+        "case": "pair01_isolated",
+        "state": "fast"
+      },
+      "gap_between_observation_brackets_s": 3.6893236
+    },
+    {
+      "cohort": "session_gui_comparison",
+      "case": "pair02_original",
+      "cohort_ordinal": 8,
+      "pid": 21908,
+      "backend": "original",
+      "boundary": "original",
+      "sdk": "simulated",
+      "observation_start_perf_ns": 429332083538200,
+      "observation_end_perf_ns": 429421280691900,
+      "observation_start_utc_ns_bounds": [
+        1792433527957387900,
+        1792433527957400700
+      ],
+      "observation_end_utc_ns_bounds": [
+        1792433617154586000,
+        1792433617154596800
+      ],
+      "UTC_elapsed_minus_perf_ns_bounds": [
+        31600,
+        55200
+      ],
+      "observation_start_UTC": "2026-10-19T18:12:07.957388+00:00",
+      "observation_start_China": "2026-10-20T02:12:07.957388+08:00",
+      "open_wall_ms": 1937.2696,
+      "first_base_call_wall_ms": 36.5575,
+      "precontact_base_calls": 142,
+      "precontact_base_median_ms": 20.18285,
+      "exploratory_state": "fast",
+      "precontact_first10_wall_ms": [
+        36.5575,
+        37.1263,
+        20.382,
+        19.7852,
+        19.7129,
+        21.0306,
+        18.9565,
+        19.1563,
+        20.8991,
+        87.357
+      ],
+      "model_calls": 400,
+      "video_frames": 786,
+      "session_id": 1,
+      "priority_class": 16384,
+      "qpa": "windows",
+      "process_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "thread_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "original_report_raw_state_exact": true,
+      "model_closed_in_tail": {
+        "single_service": true,
+        "committed_prefix": true,
+        "service_exited": true,
+        "service_markers": true,
+        "one_model": true,
+        "no_callback_faults": true,
+        "model_identity": true,
+        "close_return_confirmed": true
+      },
+      "preceding_retained_window": {
+        "cohort": "session_gui_comparison",
+        "case": "pair02_isolated",
+        "state": "fast"
+      },
+      "gap_between_observation_brackets_s": 3.6134846
+    },
+    {
+      "cohort": "session_gui_comparison",
+      "case": "pair03_original",
+      "cohort_ordinal": 9,
+      "pid": 16324,
+      "backend": "original",
+      "boundary": "original",
+      "sdk": "simulated",
+      "observation_start_perf_ns": 429425078136100,
+      "observation_end_perf_ns": 429512709063000,
+      "observation_start_utc_ns_bounds": [
+        1792433620952032200,
+        1792433620952044000
+      ],
+      "observation_end_utc_ns_bounds": [
+        1792433708583002900,
+        1792433708583012100
+      ],
+      "UTC_elapsed_minus_perf_ns_bounds": [
+        32000,
+        53000
+      ],
+      "observation_start_UTC": "2026-10-19T18:13:40.952032+00:00",
+      "observation_start_China": "2026-10-20T02:13:40.952032+08:00",
+      "open_wall_ms": 1802.8805,
+      "first_base_call_wall_ms": 33.6103,
+      "precontact_base_calls": 140,
+      "precontact_base_median_ms": 19.95265,
+      "exploratory_state": "fast",
+      "precontact_first10_wall_ms": [
+        33.6103,
+        24.9606,
+        20.8502,
+        19.568,
+        21.1535,
+        18.9028,
+        21.112,
+        21.9821,
+        22.1983,
+        20.4412
+      ],
+      "model_calls": 398,
+      "video_frames": 789,
+      "session_id": 1,
+      "priority_class": 16384,
+      "qpa": "windows",
+      "process_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "thread_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "original_report_raw_state_exact": true,
+      "model_closed_in_tail": {
+        "single_service": true,
+        "committed_prefix": true,
+        "service_exited": true,
+        "service_markers": true,
+        "one_model": true,
+        "no_callback_faults": true,
+        "model_identity": true,
+        "close_return_confirmed": true
+      },
+      "preceding_retained_window": {
+        "cohort": "session_gui_comparison",
+        "case": "pair02_original",
+        "state": "fast"
+      },
+      "gap_between_observation_brackets_s": 3.7974442
+    },
+    {
+      "cohort": "session_gui_comparison",
+      "case": "pair03_isolated",
+      "cohort_ordinal": 10,
+      "pid": 7884,
+      "backend": "isolated",
+      "boundary": "original",
+      "sdk": "simulated",
+      "observation_start_perf_ns": 429516465702100,
+      "observation_end_perf_ns": 429607899447300,
+      "observation_start_utc_ns_bounds": [
+        1792433712339644000,
+        1792433712339655600
+      ],
+      "observation_end_utc_ns_bounds": [
+        1792433803773434900,
+        1792433803773445500
+      ],
+      "UTC_elapsed_minus_perf_ns_bounds": [
+        34100,
+        56300
+      ],
+      "observation_start_UTC": "2026-10-19T18:15:12.339644+00:00",
+      "observation_start_China": "2026-10-20T02:15:12.339644+08:00",
+      "open_wall_ms": 1458.0752,
+      "first_base_call_wall_ms": 34.6265,
+      "precontact_base_calls": 142,
+      "precontact_base_median_ms": 19.562150000000003,
+      "exploratory_state": "fast",
+      "precontact_first10_wall_ms": [
+        34.6265,
+        18.3152,
+        22.5521,
+        21.735,
+        20.1851,
+        19.7847,
+        21.2937,
+        19.108,
+        19.0414,
+        21.0441
+      ],
+      "model_calls": 416,
+      "video_frames": 819,
+      "session_id": 1,
+      "priority_class": 16384,
+      "qpa": "windows",
+      "process_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "thread_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "original_report_raw_state_exact": true,
+      "model_closed_in_tail": {
+        "single_service": true,
+        "committed_prefix": true,
+        "service_exited": true,
+        "service_markers": true,
+        "one_model": true,
+        "no_callback_faults": true,
+        "model_identity": true,
+        "close_return_confirmed": true
+      },
+      "preceding_retained_window": {
+        "cohort": "session_gui_comparison",
+        "case": "pair03_original",
+        "state": "fast"
+      },
+      "gap_between_observation_brackets_s": 3.7566391
+    },
+    {
+      "cohort": "session_gui_comparison",
+      "case": "pair04_isolated",
+      "cohort_ordinal": 11,
+      "pid": 14480,
+      "backend": "isolated",
+      "boundary": "original",
+      "sdk": "simulated",
+      "observation_start_perf_ns": 429611481348400,
+      "observation_end_perf_ns": 429704222120200,
+      "observation_start_utc_ns_bounds": [
+        1792433807355337800,
+        1792433807355349500
+      ],
+      "observation_end_utc_ns_bounds": [
+        1792433900096156000,
+        1792433900096165400
+      ],
+      "UTC_elapsed_minus_perf_ns_bounds": [
+        34700,
+        55800
+      ],
+      "observation_start_UTC": "2026-10-19T18:16:47.355338+00:00",
+      "observation_start_China": "2026-10-20T02:16:47.355338+08:00",
+      "open_wall_ms": 1473.1876,
+      "first_base_call_wall_ms": 34.8996,
+      "precontact_base_calls": 142,
+      "precontact_base_median_ms": 19.7969,
+      "exploratory_state": "fast",
+      "precontact_first10_wall_ms": [
+        34.8996,
+        20.6729,
+        19.4179,
+        19.0439,
+        22.7603,
+        18.8331,
+        18.6151,
+        20.8601,
+        21.8981,
+        18.9651
+      ],
+      "model_calls": 416,
+      "video_frames": 817,
+      "session_id": 1,
+      "priority_class": 16384,
+      "qpa": "windows",
+      "process_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "thread_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "original_report_raw_state_exact": true,
+      "model_closed_in_tail": {
+        "single_service": true,
+        "committed_prefix": true,
+        "service_exited": true,
+        "service_markers": true,
+        "one_model": true,
+        "no_callback_faults": true,
+        "model_identity": true,
+        "close_return_confirmed": true
+      },
+      "preceding_retained_window": {
+        "cohort": "session_gui_comparison",
+        "case": "pair03_isolated",
+        "state": "fast"
+      },
+      "gap_between_observation_brackets_s": 3.5819011
+    },
+    {
+      "cohort": "session_gui_comparison",
+      "case": "pair04_original",
+      "cohort_ordinal": 12,
+      "pid": 11140,
+      "backend": "original",
+      "boundary": "original",
+      "sdk": "simulated",
+      "observation_start_perf_ns": 429707957447400,
+      "observation_end_perf_ns": 429797080589500,
+      "observation_start_utc_ns_bounds": [
+        1792433903831485000,
+        1792433903831496700
+      ],
+      "observation_end_utc_ns_bounds": [
+        1792433992954671600,
+        1792433992954680800
+      ],
+      "UTC_elapsed_minus_perf_ns_bounds": [
+        32800,
+        53700
+      ],
+      "observation_start_UTC": "2026-10-19T18:18:23.831485+00:00",
+      "observation_start_China": "2026-10-20T02:18:23.831485+08:00",
+      "open_wall_ms": 1717.2294,
+      "first_base_call_wall_ms": 36.8057,
+      "precontact_base_calls": 142,
+      "precontact_base_median_ms": 20.29335,
+      "exploratory_state": "fast",
+      "precontact_first10_wall_ms": [
+        36.8057,
+        39.2167,
+        24.2538,
+        18.9626,
+        18.9898,
+        19.4507,
+        22.5443,
+        19.9067,
+        75.2493,
+        23.1873
+      ],
+      "model_calls": 399,
+      "video_frames": 790,
+      "session_id": 1,
+      "priority_class": 16384,
+      "qpa": "windows",
+      "process_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "thread_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "original_report_raw_state_exact": true,
+      "model_closed_in_tail": {
+        "single_service": true,
+        "committed_prefix": true,
+        "service_exited": true,
+        "service_markers": true,
+        "one_model": true,
+        "no_callback_faults": true,
+        "model_identity": true,
+        "close_return_confirmed": true
+      },
+      "preceding_retained_window": {
+        "cohort": "session_gui_comparison",
+        "case": "pair04_isolated",
+        "state": "fast"
+      },
+      "gap_between_observation_brackets_s": 3.7353272
+    },
+    {
+      "cohort": "session_startup_accounting",
+      "case": "startup01",
+      "cohort_ordinal": 1,
+      "pid": 21412,
+      "backend": "original",
+      "boundary": "original",
+      "sdk": "simulated",
+      "observation_start_perf_ns": 433958214116500,
+      "observation_end_perf_ns": 434049656261600,
+      "observation_start_utc_ns_bounds": [
+        1792438154090278600,
+        1792438154090293800
+      ],
+      "observation_end_utc_ns_bounds": [
+        1792438245532470200,
+        1792438245532478900
+      ],
+      "UTC_elapsed_minus_perf_ns_bounds": [
+        31300,
+        55200
+      ],
+      "observation_start_UTC": "2026-10-19T19:29:14.090279+00:00",
+      "observation_start_China": "2026-10-20T03:29:14.090279+08:00",
+      "open_wall_ms": 2908.4986,
+      "first_base_call_wall_ms": 86.9431,
+      "precontact_base_calls": 141,
+      "precontact_base_median_ms": 33.8786,
+      "exploratory_state": "slow",
+      "precontact_first10_wall_ms": [
+        86.9431,
+        39.2858,
+        30.1464,
+        38.9286,
+        33.6188,
+        31.5411,
+        32.2657,
+        34.6229,
+        32.6524,
+        29.9432
+      ],
+      "model_calls": 404,
+      "video_frames": 795,
+      "session_id": 1,
+      "priority_class": 16384,
+      "qpa": "windows",
+      "process_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "thread_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "original_report_raw_state_exact": true,
+      "model_closed_in_tail": {
+        "single_service": true,
+        "committed_prefix": true,
+        "service_exited": true,
+        "service_markers": true,
+        "one_model": true,
+        "no_callback_faults": true,
+        "model_identity": true,
+        "close_return_confirmed": true
+      },
+      "preceding_retained_window": {
+        "cohort": "session_gui_comparison",
+        "case": "pair04_original",
+        "state": "fast"
+      },
+      "gap_between_observation_brackets_s": 4161.133527
+    },
+    {
+      "cohort": "session_startup_accounting",
+      "case": "startup02",
+      "cohort_ordinal": 2,
+      "pid": 5684,
+      "backend": "original",
+      "boundary": "original",
+      "sdk": "simulated",
+      "observation_start_perf_ns": 434054415712600,
+      "observation_end_perf_ns": 434142861667400,
+      "observation_start_utc_ns_bounds": [
+        1792438250291923500,
+        1792438250291932900
+      ],
+      "observation_end_utc_ns_bounds": [
+        1792438338737922600,
+        1792438338737931600
+      ],
+      "UTC_elapsed_minus_perf_ns_bounds": [
+        34900,
+        53300
+      ],
+      "observation_start_UTC": "2026-10-19T19:30:50.291924+00:00",
+      "observation_start_China": "2026-10-20T03:30:50.291924+08:00",
+      "open_wall_ms": 1815.1588,
+      "first_base_call_wall_ms": 37.0675,
+      "precontact_base_calls": 143,
+      "precontact_base_median_ms": 20.1437,
+      "exploratory_state": "fast",
+      "precontact_first10_wall_ms": [
+        37.0675,
+        19.7674,
+        23.8752,
+        21.0915,
+        18.6788,
+        18.5659,
+        19.8082,
+        19.6902,
+        19.822,
+        20.1958
+      ],
+      "model_calls": 407,
+      "video_frames": 799,
+      "session_id": 1,
+      "priority_class": 16384,
+      "qpa": "windows",
+      "process_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "thread_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "original_report_raw_state_exact": true,
+      "model_closed_in_tail": {
+        "single_service": true,
+        "committed_prefix": true,
+        "service_exited": true,
+        "service_markers": true,
+        "one_model": true,
+        "no_callback_faults": true,
+        "model_identity": true,
+        "close_return_confirmed": true
+      },
+      "preceding_retained_window": {
+        "cohort": "session_startup_accounting",
+        "case": "startup01",
+        "state": "slow"
+      },
+      "gap_between_observation_brackets_s": 4.759451
+    },
+    {
+      "cohort": "session_startup_accounting",
+      "case": "startup03",
+      "cohort_ordinal": 3,
+      "pid": 23304,
+      "backend": "original",
+      "boundary": "original",
+      "sdk": "simulated",
+      "observation_start_perf_ns": 434146839540100,
+      "observation_end_perf_ns": 434234727791300,
+      "observation_start_utc_ns_bounds": [
+        1792438342715797200,
+        1792438342715806500
+      ],
+      "observation_end_utc_ns_bounds": [
+        1792438430604092300,
+        1792438430604101000
+      ],
+      "UTC_elapsed_minus_perf_ns_bounds": [
+        34600,
+        52600
+      ],
+      "observation_start_UTC": "2026-10-19T19:32:22.715797+00:00",
+      "observation_start_China": "2026-10-20T03:32:22.715797+08:00",
+      "open_wall_ms": 1799.1669,
+      "first_base_call_wall_ms": 36.8799,
+      "precontact_base_calls": 142,
+      "precontact_base_median_ms": 20.80255,
+      "exploratory_state": "fast",
+      "precontact_first10_wall_ms": [
+        36.8799,
+        32.2788,
+        20.3331,
+        18.9929,
+        19.532,
+        20.96,
+        19.2582,
+        19.0988,
+        21.3759,
+        20.4447
+      ],
+      "model_calls": 404,
+      "video_frames": 796,
+      "session_id": 1,
+      "priority_class": 16384,
+      "qpa": "windows",
+      "process_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "thread_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "original_report_raw_state_exact": true,
+      "model_closed_in_tail": {
+        "single_service": true,
+        "committed_prefix": true,
+        "service_exited": true,
+        "service_markers": true,
+        "one_model": true,
+        "no_callback_faults": true,
+        "model_identity": true,
+        "close_return_confirmed": true
+      },
+      "preceding_retained_window": {
+        "cohort": "session_startup_accounting",
+        "case": "startup02",
+        "state": "fast"
+      },
+      "gap_between_observation_brackets_s": 3.9778727
+    },
+    {
+      "cohort": "session_startup_accounting",
+      "case": "startup04",
+      "cohort_ordinal": 4,
+      "pid": 23320,
+      "backend": "original",
+      "boundary": "original",
+      "sdk": "simulated",
+      "observation_start_perf_ns": 434238701880800,
+      "observation_end_perf_ns": 434327725128800,
+      "observation_start_utc_ns_bounds": [
+        1792438434578183800,
+        1792438434578193300
+      ],
+      "observation_end_utc_ns_bounds": [
+        1792438523601476400,
+        1792438523601485400
+      ],
+      "UTC_elapsed_minus_perf_ns_bounds": [
+        35100,
+        53600
+      ],
+      "observation_start_UTC": "2026-10-19T19:33:54.578184+00:00",
+      "observation_start_China": "2026-10-20T03:33:54.578184+08:00",
+      "open_wall_ms": 1811.985,
+      "first_base_call_wall_ms": 34.8589,
+      "precontact_base_calls": 142,
+      "precontact_base_median_ms": 20.000799999999998,
+      "exploratory_state": "fast",
+      "precontact_first10_wall_ms": [
+        34.8589,
+        22.9851,
+        20.0257,
+        19.4511,
+        18.373,
+        20.9097,
+        20.9675,
+        20.8702,
+        21.4178,
+        22.0835
+      ],
+      "model_calls": 406,
+      "video_frames": 799,
+      "session_id": 1,
+      "priority_class": 16384,
+      "qpa": "windows",
+      "process_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "thread_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "original_report_raw_state_exact": true,
+      "model_closed_in_tail": {
+        "single_service": true,
+        "committed_prefix": true,
+        "service_exited": true,
+        "service_markers": true,
+        "one_model": true,
+        "no_callback_faults": true,
+        "model_identity": true,
+        "close_return_confirmed": true
+      },
+      "preceding_retained_window": {
+        "cohort": "session_startup_accounting",
+        "case": "startup03",
+        "state": "fast"
+      },
+      "gap_between_observation_brackets_s": 3.9740895
+    },
+    {
+      "cohort": "label_call_identity",
+      "case": "identity01",
+      "cohort_ordinal": 1,
+      "pid": 20384,
+      "backend": "original",
+      "boundary": "original",
+      "sdk": "simulated",
+      "observation_start_perf_ns": 443757916402100,
+      "observation_end_perf_ns": 443852104504800,
+      "observation_start_utc_ns_bounds": [
+        1792447953797464000,
+        1792447953797486700
+      ],
+      "observation_end_utc_ns_bounds": [
+        1792448047985614500,
+        1792448047985626300
+      ],
+      "UTC_elapsed_minus_perf_ns_bounds": [
+        25100,
+        59600
+      ],
+      "observation_start_UTC": "2026-10-19T22:12:33.797464+00:00",
+      "observation_start_China": "2026-10-20T06:12:33.797464+08:00",
+      "open_wall_ms": 2965.4905,
+      "first_base_call_wall_ms": 89.9476,
+      "precontact_base_calls": 141,
+      "precontact_base_median_ms": 34.5589,
+      "exploratory_state": "slow",
+      "precontact_first10_wall_ms": [
+        89.9476,
+        34.99,
+        33.6208,
+        40.2987,
+        34.185,
+        31.6238,
+        35.1045,
+        40.1606,
+        38.6463,
+        33.1859
+      ],
+      "model_calls": 401,
+      "video_frames": 794,
+      "session_id": 1,
+      "priority_class": 16384,
+      "qpa": "windows",
+      "process_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "thread_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "original_report_raw_state_exact": true,
+      "model_closed_in_tail": {
+        "single_service": true,
+        "committed_prefix": true,
+        "service_exited": true,
+        "service_markers": true,
+        "one_model": true,
+        "no_callback_faults": true,
+        "model_identity": true,
+        "close_return_confirmed": true
+      },
+      "preceding_retained_window": {
+        "cohort": "session_startup_accounting",
+        "case": "startup04",
+        "state": "fast"
+      },
+      "gap_between_observation_brackets_s": 9430.1912733
+    },
+    {
+      "cohort": "preview_bridge_delivery",
+      "case": "safety01",
+      "cohort_ordinal": 1,
+      "pid": 18540,
+      "backend": "original",
+      "boundary": "bridge",
+      "sdk": "simulated",
+      "observation_start_perf_ns": 456894431737900,
+      "observation_end_perf_ns": 456987315970300,
+      "observation_start_utc_ns_bounds": [
+        1792461090312010300,
+        1792461090312034400
+      ],
+      "observation_end_utc_ns_bounds": [
+        1792461183196020300,
+        1792461183196032500
+      ],
+      "UTC_elapsed_minus_perf_ns_bounds": [
+        -246500,
+        -210200
+      ],
+      "observation_start_UTC": "2026-10-20T01:51:30.312010+00:00",
+      "observation_start_China": "2026-10-20T09:51:30.312010+08:00",
+      "open_wall_ms": 3115.6116,
+      "first_base_call_wall_ms": 65.2394,
+      "precontact_base_calls": 142,
+      "precontact_base_median_ms": 33.3477,
+      "exploratory_state": "slow",
+      "precontact_first10_wall_ms": [
+        65.2394,
+        36.0714,
+        39.5281,
+        35.0673,
+        36.8541,
+        30.9807,
+        37.3046,
+        34.4331,
+        29.8481,
+        33.5247
+      ],
+      "model_calls": 402,
+      "video_frames": 794,
+      "session_id": 1,
+      "priority_class": 16384,
+      "qpa": "windows",
+      "process_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "thread_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "original_report_raw_state_exact": true,
+      "model_closed_in_tail": {
+        "single_service": true,
+        "committed_prefix": true,
+        "service_exited": true,
+        "service_markers": true,
+        "one_model": true,
+        "no_callback_faults": true,
+        "model_identity": true,
+        "close_return_confirmed": true
+      },
+      "preceding_retained_window": {
+        "cohort": "label_call_identity",
+        "case": "identity01",
+        "state": "slow"
+      },
+      "gap_between_observation_brackets_s": 13042.3272331
+    },
+    {
+      "cohort": "preview_native_sdk",
+      "case": "native_safety01",
+      "cohort_ordinal": 1,
+      "pid": 20192,
+      "backend": "original",
+      "boundary": "bridge",
+      "sdk": "real",
+      "observation_start_perf_ns": 458091834936800,
+      "observation_end_perf_ns": 458190661648700,
+      "observation_start_utc_ns_bounds": [
+        1792462287712712300,
+        1792462287712732300
+      ],
+      "observation_end_utc_ns_bounds": [
+        1792462386539464300,
+        1792462386539490700
+      ],
+      "UTC_elapsed_minus_perf_ns_bounds": [
+        20100,
+        66500
+      ],
+      "observation_start_UTC": "2026-10-20T02:11:27.712712+00:00",
+      "observation_start_China": "2026-10-20T10:11:27.712712+08:00",
+      "open_wall_ms": 2971.4015,
+      "first_base_call_wall_ms": 64.9922,
+      "precontact_base_calls": 141,
+      "precontact_base_median_ms": 34.0714,
+      "exploratory_state": "slow",
+      "precontact_first10_wall_ms": [
+        64.9922,
+        34.5878,
+        41.9563,
+        34.2927,
+        34.5034,
+        36.7223,
+        29.5405,
+        43.1355,
+        40.0822,
+        43.4798
+      ],
+      "model_calls": 399,
+      "video_frames": 789,
+      "session_id": 1,
+      "priority_class": 16384,
+      "qpa": "windows",
+      "process_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "thread_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "original_report_raw_state_exact": true,
+      "model_closed_in_tail": {
+        "single_service": true,
+        "committed_prefix": true,
+        "service_exited": true,
+        "service_markers": true,
+        "one_model": true,
+        "no_callback_faults": true,
+        "model_identity": true,
+        "close_return_confirmed": true
+      },
+      "preceding_retained_window": {
+        "cohort": "preview_bridge_delivery",
+        "case": "safety01",
+        "state": "slow"
+      },
+      "gap_between_observation_brackets_s": 1104.5189665
+    },
+    {
+      "cohort": "preview_gil_ab",
+      "case": "pair01_original",
+      "cohort_ordinal": 1,
+      "pid": 7232,
+      "backend": "original",
+      "boundary": "original",
+      "sdk": "real",
+      "observation_start_perf_ns": 459461848090900,
+      "observation_end_perf_ns": 459581292605100,
+      "observation_start_utc_ns_bounds": [
+        1792463657726414200,
+        1792463657726435300
+      ],
+      "observation_end_utc_ns_bounds": [
+        1792463777170976300,
+        1792463777170999500
+      ],
+      "UTC_elapsed_minus_perf_ns_bounds": [
+        26800,
+        71100
+      ],
+      "observation_start_UTC": "2026-10-20T02:34:17.726414+00:00",
+      "observation_start_China": "2026-10-20T10:34:17.726414+08:00",
+      "open_wall_ms": 6272.3122,
+      "first_base_call_wall_ms": 68.481,
+      "precontact_base_calls": 142,
+      "precontact_base_median_ms": 34.74225,
+      "exploratory_state": "slow",
+      "precontact_first10_wall_ms": [
+        68.481,
+        49.6651,
+        47.4734,
+        41.9782,
+        32.0694,
+        36.0184,
+        38.5321,
+        35.8408,
+        39.2263,
+        42.9221
+      ],
+      "model_calls": 425,
+      "video_frames": 837,
+      "session_id": 1,
+      "priority_class": 16384,
+      "qpa": "windows",
+      "process_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "thread_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "original_report_raw_state_exact": true,
+      "model_closed_in_tail": {
+        "single_service": true,
+        "committed_prefix": true,
+        "service_exited": true,
+        "service_markers": true,
+        "one_model": true,
+        "no_callback_faults": true,
+        "model_identity": true,
+        "close_return_confirmed": true
+      },
+      "preceding_retained_window": {
+        "cohort": "preview_native_sdk",
+        "case": "native_safety01",
+        "state": "slow"
+      },
+      "gap_between_observation_brackets_s": 1271.1864422
+    },
+    {
+      "cohort": "preview_gil_ab",
+      "case": "pair01_bridge",
+      "cohort_ordinal": 2,
+      "pid": 17116,
+      "backend": "original",
+      "boundary": "bridge",
+      "sdk": "real",
+      "observation_start_perf_ns": 459588680680900,
+      "observation_end_perf_ns": 459686627241300,
+      "observation_start_utc_ns_bounds": [
+        1792463784559055100,
+        1792463784559074500
+      ],
+      "observation_end_utc_ns_bounds": [
+        1792463882505655300,
+        1792463882505668300
+      ],
+      "UTC_elapsed_minus_perf_ns_bounds": [
+        20400,
+        52800
+      ],
+      "observation_start_UTC": "2026-10-20T02:36:24.559055+00:00",
+      "observation_start_China": "2026-10-20T10:36:24.559055+08:00",
+      "open_wall_ms": 2903.805,
+      "first_base_call_wall_ms": 81.0705,
+      "precontact_base_calls": 141,
+      "precontact_base_median_ms": 35.7883,
+      "exploratory_state": "slow",
+      "precontact_first10_wall_ms": [
+        81.0705,
+        53.3616,
+        41.7986,
+        40.7979,
+        39.7241,
+        39.4078,
+        130.7245,
+        47.1866,
+        38.869,
+        35.4406
+      ],
+      "model_calls": 403,
+      "video_frames": 796,
+      "session_id": 1,
+      "priority_class": 16384,
+      "qpa": "windows",
+      "process_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "thread_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "original_report_raw_state_exact": true,
+      "model_closed_in_tail": {
+        "single_service": true,
+        "committed_prefix": true,
+        "service_exited": true,
+        "service_markers": true,
+        "one_model": true,
+        "no_callback_faults": true,
+        "model_identity": true,
+        "close_return_confirmed": true
+      },
+      "preceding_retained_window": {
+        "cohort": "preview_gil_ab",
+        "case": "pair01_original",
+        "state": "slow"
+      },
+      "gap_between_observation_brackets_s": 7.3880758
+    },
+    {
+      "cohort": "preview_gil_ab",
+      "case": "pair02_bridge",
+      "cohort_ordinal": 3,
+      "pid": 11120,
+      "backend": "original",
+      "boundary": "bridge",
+      "sdk": "real",
+      "observation_start_perf_ns": 459690423961100,
+      "observation_end_perf_ns": 459784029023400,
+      "observation_start_utc_ns_bounds": [
+        1792463886302376600,
+        1792463886302389000
+      ],
+      "observation_end_utc_ns_bounds": [
+        1792463979907476200,
+        1792463979907488700
+      ],
+      "UTC_elapsed_minus_perf_ns_bounds": [
+        24900,
+        49800
+      ],
+      "observation_start_UTC": "2026-10-20T02:38:06.302377+00:00",
+      "observation_start_China": "2026-10-20T10:38:06.302377+08:00",
+      "open_wall_ms": 1809.4853,
+      "first_base_call_wall_ms": 33.9794,
+      "precontact_base_calls": 141,
+      "precontact_base_median_ms": 19.9431,
+      "exploratory_state": "fast",
+      "precontact_first10_wall_ms": [
+        33.9794,
+        28.2638,
+        19.3016,
+        21.2747,
+        20.5024,
+        19.6838,
+        19.486,
+        20.5607,
+        18.1433,
+        20.0348
+      ],
+      "model_calls": 404,
+      "video_frames": 800,
+      "session_id": 1,
+      "priority_class": 16384,
+      "qpa": "windows",
+      "process_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "thread_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "original_report_raw_state_exact": true,
+      "model_closed_in_tail": {
+        "single_service": true,
+        "committed_prefix": true,
+        "service_exited": true,
+        "service_markers": true,
+        "one_model": true,
+        "no_callback_faults": true,
+        "model_identity": true,
+        "close_return_confirmed": true
+      },
+      "preceding_retained_window": {
+        "cohort": "preview_gil_ab",
+        "case": "pair01_bridge",
+        "state": "slow"
+      },
+      "gap_between_observation_brackets_s": 3.7967198
+    },
+    {
+      "cohort": "preview_gil_ab",
+      "case": "pair02_original",
+      "cohort_ordinal": 4,
+      "pid": 10216,
+      "backend": "original",
+      "boundary": "original",
+      "sdk": "real",
+      "observation_start_perf_ns": 459787837850000,
+      "observation_end_perf_ns": 459882120524000,
+      "observation_start_utc_ns_bounds": [
+        1792463983716304500,
+        1792463983716316700
+      ],
+      "observation_end_utc_ns_bounds": [
+        1792464077999016200,
+        1792464077999030400
+      ],
+      "UTC_elapsed_minus_perf_ns_bounds": [
+        25500,
+        51900
+      ],
+      "observation_start_UTC": "2026-10-20T02:39:43.716304+00:00",
+      "observation_start_China": "2026-10-20T10:39:43.716304+08:00",
+      "open_wall_ms": 1833.5569,
+      "first_base_call_wall_ms": 33.4695,
+      "precontact_base_calls": 141,
+      "precontact_base_median_ms": 19.9241,
+      "exploratory_state": "fast",
+      "precontact_first10_wall_ms": [
+        33.4695,
+        35.9654,
+        21.2765,
+        19.6135,
+        21.1984,
+        20.6559,
+        19.9117,
+        23.0099,
+        20.2857,
+        18.9959
+      ],
+      "model_calls": 409,
+      "video_frames": 811,
+      "session_id": 1,
+      "priority_class": 16384,
+      "qpa": "windows",
+      "process_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "thread_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "original_report_raw_state_exact": true,
+      "model_closed_in_tail": {
+        "single_service": true,
+        "committed_prefix": true,
+        "service_exited": true,
+        "service_markers": true,
+        "one_model": true,
+        "no_callback_faults": true,
+        "model_identity": true,
+        "close_return_confirmed": true
+      },
+      "preceding_retained_window": {
+        "cohort": "preview_gil_ab",
+        "case": "pair02_bridge",
+        "state": "fast"
+      },
+      "gap_between_observation_brackets_s": 3.8088266
+    },
+    {
+      "cohort": "preview_gil_ab",
+      "case": "pair03_original",
+      "cohort_ordinal": 5,
+      "pid": 19308,
+      "backend": "original",
+      "boundary": "original",
+      "sdk": "real",
+      "observation_start_perf_ns": 459885923072700,
+      "observation_end_perf_ns": 459979936330600,
+      "observation_start_utc_ns_bounds": [
+        1792464081801566400,
+        1792464081801578900
+      ],
+      "observation_end_utc_ns_bounds": [
+        1792464175814861800,
+        1792464175814874800
+      ],
+      "UTC_elapsed_minus_perf_ns_bounds": [
+        25000,
+        50500
+      ],
+      "observation_start_UTC": "2026-10-20T02:41:21.801566+00:00",
+      "observation_start_China": "2026-10-20T10:41:21.801566+08:00",
+      "open_wall_ms": 1825.3779,
+      "first_base_call_wall_ms": 34.3378,
+      "precontact_base_calls": 142,
+      "precontact_base_median_ms": 20.45865,
+      "exploratory_state": "fast",
+      "precontact_first10_wall_ms": [
+        34.3378,
+        18.6855,
+        21.792,
+        73.5468,
+        21.6392,
+        23.27,
+        18.3102,
+        18.6606,
+        23.7266,
+        19.0658
+      ],
+      "model_calls": 405,
+      "video_frames": 798,
+      "session_id": 1,
+      "priority_class": 16384,
+      "qpa": "windows",
+      "process_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "thread_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "original_report_raw_state_exact": true,
+      "model_closed_in_tail": {
+        "single_service": true,
+        "committed_prefix": true,
+        "service_exited": true,
+        "service_markers": true,
+        "one_model": true,
+        "no_callback_faults": true,
+        "model_identity": true,
+        "close_return_confirmed": true
+      },
+      "preceding_retained_window": {
+        "cohort": "preview_gil_ab",
+        "case": "pair02_original",
+        "state": "fast"
+      },
+      "gap_between_observation_brackets_s": 3.8025487
+    },
+    {
+      "cohort": "preview_gil_ab",
+      "case": "pair03_bridge",
+      "cohort_ordinal": 6,
+      "pid": 13216,
+      "backend": "original",
+      "boundary": "bridge",
+      "sdk": "real",
+      "observation_start_perf_ns": 459983729852500,
+      "observation_end_perf_ns": 460077643863400,
+      "observation_start_utc_ns_bounds": [
+        1792464179608385400,
+        1792464179608397200
+      ],
+      "observation_end_utc_ns_bounds": [
+        1792464273522433800,
+        1792464273522446300
+      ],
+      "UTC_elapsed_minus_perf_ns_bounds": [
+        25700,
+        50000
+      ],
+      "observation_start_UTC": "2026-10-20T02:42:59.608385+00:00",
+      "observation_start_China": "2026-10-20T10:42:59.608385+08:00",
+      "open_wall_ms": 1838.0638,
+      "first_base_call_wall_ms": 34.5117,
+      "precontact_base_calls": 142,
+      "precontact_base_median_ms": 20.12975,
+      "exploratory_state": "fast",
+      "precontact_first10_wall_ms": [
+        34.5117,
+        25.3645,
+        23.2222,
+        20.7118,
+        18.4324,
+        19.0249,
+        21.9473,
+        18.1329,
+        20.0725,
+        26.4816
+      ],
+      "model_calls": 405,
+      "video_frames": 801,
+      "session_id": 1,
+      "priority_class": 16384,
+      "qpa": "windows",
+      "process_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "thread_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "original_report_raw_state_exact": true,
+      "model_closed_in_tail": {
+        "single_service": true,
+        "committed_prefix": true,
+        "service_exited": true,
+        "service_markers": true,
+        "one_model": true,
+        "no_callback_faults": true,
+        "model_identity": true,
+        "close_return_confirmed": true
+      },
+      "preceding_retained_window": {
+        "cohort": "preview_gil_ab",
+        "case": "pair03_original",
+        "state": "fast"
+      },
+      "gap_between_observation_brackets_s": 3.7935219
+    },
+    {
+      "cohort": "preview_gil_ab",
+      "case": "pair04_bridge",
+      "cohort_ordinal": 7,
+      "pid": 19044,
+      "backend": "original",
+      "boundary": "bridge",
+      "sdk": "real",
+      "observation_start_perf_ns": 460081430210300,
+      "observation_end_perf_ns": 460175278615500,
+      "observation_start_utc_ns_bounds": [
+        1792464277308782300,
+        1792464277308794100
+      ],
+      "observation_end_utc_ns_bounds": [
+        1792464371157225000,
+        1792464371157239400
+      ],
+      "UTC_elapsed_minus_perf_ns_bounds": [
+        25700,
+        51900
+      ],
+      "observation_start_UTC": "2026-10-20T02:44:37.308782+00:00",
+      "observation_start_China": "2026-10-20T10:44:37.308782+08:00",
+      "open_wall_ms": 1835.2693,
+      "first_base_call_wall_ms": 33.7223,
+      "precontact_base_calls": 142,
+      "precontact_base_median_ms": 20.10465,
+      "exploratory_state": "fast",
+      "precontact_first10_wall_ms": [
+        33.7223,
+        25.3774,
+        19.1592,
+        19.1878,
+        21.9535,
+        24.443,
+        18.7684,
+        20.3886,
+        20.0052,
+        18.7046
+      ],
+      "model_calls": 405,
+      "video_frames": 798,
+      "session_id": 1,
+      "priority_class": 16384,
+      "qpa": "windows",
+      "process_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "thread_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "original_report_raw_state_exact": true,
+      "model_closed_in_tail": {
+        "single_service": true,
+        "committed_prefix": true,
+        "service_exited": true,
+        "service_markers": true,
+        "one_model": true,
+        "no_callback_faults": true,
+        "model_identity": true,
+        "close_return_confirmed": true
+      },
+      "preceding_retained_window": {
+        "cohort": "preview_gil_ab",
+        "case": "pair03_bridge",
+        "state": "fast"
+      },
+      "gap_between_observation_brackets_s": 3.7863469
+    },
+    {
+      "cohort": "preview_gil_ab",
+      "case": "pair04_original",
+      "cohort_ordinal": 8,
+      "pid": 12424,
+      "backend": "original",
+      "boundary": "original",
+      "sdk": "real",
+      "observation_start_perf_ns": 460179066383500,
+      "observation_end_perf_ns": 460273684234600,
+      "observation_start_utc_ns_bounds": [
+        1792464374944994400,
+        1792464374945018400
+      ],
+      "observation_end_utc_ns_bounds": [
+        1792464469562883400,
+        1792464469562895200
+      ],
+      "UTC_elapsed_minus_perf_ns_bounds": [
+        13900,
+        49700
+      ],
+      "observation_start_UTC": "2026-10-20T02:46:14.944994+00:00",
+      "observation_start_China": "2026-10-20T10:46:14.944994+08:00",
+      "open_wall_ms": 1830.6357,
+      "first_base_call_wall_ms": 38.1858,
+      "precontact_base_calls": 142,
+      "precontact_base_median_ms": 19.9351,
+      "exploratory_state": "fast",
+      "precontact_first10_wall_ms": [
+        38.1858,
+        18.1529,
+        19.149,
+        23.4215,
+        18.9551,
+        19.9273,
+        20.4339,
+        18.2345,
+        20.7465,
+        21.0013
+      ],
+      "model_calls": 408,
+      "video_frames": 800,
+      "session_id": 1,
+      "priority_class": 16384,
+      "qpa": "windows",
+      "process_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "thread_power_policy": {
+        "success": true,
+        "error": 0,
+        "version": 1,
+        "control_mask": 0,
+        "state_mask": 0
+      },
+      "original_report_raw_state_exact": true,
+      "model_closed_in_tail": {
+        "single_service": true,
+        "committed_prefix": true,
+        "service_exited": true,
+        "service_markers": true,
+        "one_model": true,
+        "no_callback_faults": true,
+        "model_identity": true,
+        "close_return_confirmed": true
+      },
+      "preceding_retained_window": {
+        "cohort": "preview_gil_ab",
+        "case": "pair04_bridge",
+        "state": "fast"
+      },
+      "gap_between_observation_brackets_s": 3.787768
+    }
+  ],
+  "findings": {
+    "total_windows": 27,
+    "slow": 7,
+    "fast": 20,
+    "same_recorded_session": true,
+    "same_recorded_priority": true,
+    "slow_windows_not_first_in_their_cohort": [
+      {
+        "cohort": "preview_gil_ab",
+        "case": "pair01_bridge"
+      }
+    ],
+    "fast_to_slow_across_retained_windows": [
+      {
+        "cohort": "session_startup_accounting",
+        "case": "startup01",
+        "gap_s": 4161.133527
+      },
+      {
+        "cohort": "label_call_identity",
+        "case": "identity01",
+        "gap_s": 9430.1912733
+      }
+    ]
+  },
+  "limits": [
+    "A cohort ordinal is not the first application use since boot. Observation brackets are not process birth/death.",
+    "Gaps contain unretained other work/preparation; no claim of idle time or reset by elapsed time.",
+    "These cohorts differ in measurement, SDK and intervention. No pooled effect estimates orcross-cohort CPU subtraction.",
+    "Same session/priority and successful policy getters do not prove unchanged hardware delivery.",
+    "Model wall-time proxies do not distinguish calculation, GIL, memory, worker activity orCPU delivery."
+  ],
+  "root_condition_confirmed": false,
+  "new_windows": false,
+  "bindings": {
+    "inputs": {
+      "experiments/session_gui_comparison/evidence01.zip": "6bb7407cdddb8a620015baa7f3797ed75ccca749379b262d27e960d583591fb6",
+      "experiments/session_gui_comparison/plan02.json": "8a42d4b70e8299f097311b718b9b060c5340fe0bd5bcc786e37bf3ec6397cb6b",
+      "experiments/session_startup_accounting/evidence01.zip": "631909bbeab1806b3a7546300a8d95b4dcb1420718e22dccb892304db69a41ef",
+      "experiments/session_startup_accounting/plan01.json": "59aac78f9ce4b49db182cefbccc22cd6c09c958d5dc081c428d9a327654ec4b0",
+      "experiments/label_call_identity/runs/evidence01.zip": "281ddbd1e8adcf25d38d700a0f2c109071a8d80c11f17d1e56b093a70e72a59a",
+      "experiments/label_call_identity/plan02.json": "af4980ea70a9b9a9aacc6d88346f38e161a429f0db9a6d4207c0938dd4593001",
+      "experiments/preview_bridge_delivery/runs/evidence01.zip": "63f6d1d8b0781274d47ad84e64a383e7841a13652b1ab373cc55236ae08374f3",
+      "experiments/preview_bridge_delivery/plan01.json": "66ca79c85b374a1ad7e59167350176d19b61ad2e76b4bddef4d7fe3e1217e155",
+      "experiments/preview_native_sdk/runs/evidence01.zip": "011aa1a88cb4db9fe31cb5c61346a98651808b9bcdb6b305e0e2b76d234847c0",
+      "experiments/preview_native_sdk/plan01.json": "6bb579fe2bf4283e21508cf0396c0c95886decc00d6a6dd2496c29847373748b",
+      "experiments/preview_gil_ab/runs/evidence01.zip": "ca786be00bee394dc8e9f47ef1f37221c3888013558b00a5875b2a925b7102b8",
+      "experiments/preview_gil_ab/plan01.json": "1ff2ef320f9293947e774ef23fdc91d8f7b78bdbbceca543b6292709318e95a2"
+    },
+    "script_sha256": "292134648a59bc84f9e2c1ed309be8081ee21527b0607b7f7f58a6001beb17e0"
+  }
+}
