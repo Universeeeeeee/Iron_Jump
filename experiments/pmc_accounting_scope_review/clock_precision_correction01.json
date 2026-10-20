@@ -1,0 +1,9 @@
+{
+  "original_derived_file": "clock_and_delivery01.json",
+  "original_max_residual_100ns": 16.0,
+  "cause": "The first derived analysis converted approximately 1.34e17 FILETIME integers to binary64 before subtraction; the ULP at that magnitude is 16.",
+  "correction": "clock_and_delivery02.json uses integer affine numerators before division. All 54 FILETIME/QPC offsets are exactly identical, so the actual fixed-slope residual and span are zero.",
+  "raw_metadata_changed": false,
+  "capture_or_decoder_repeated": false,
+  "old_gate_or_failure_changed": false
+}

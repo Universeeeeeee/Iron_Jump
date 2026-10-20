@@ -1,0 +1,171 @@
+{
+  "cpuid": {
+    "vendor": "GenuineIntel",
+    "max_basic_leaf": 22,
+    "family": 6,
+    "model": 158,
+    "stepping": 10,
+    "leaf15": {
+      "denominator": 2,
+      "numerator": 200,
+      "crystal_hz": 0,
+      "edx": 0
+    },
+    "leaf16": {
+      "base_mhz": 0,
+      "max_mhz": 0,
+      "bus_mhz": 0
+    },
+    "source_sha256": "a2c492ea294d8a6388a25fe5c51ff2745bcc1f13a854151599374d4f39c821d9",
+    "scope": "Read CPUID leaves0,1,15,16 only; noMSR, policy, affinity, power or workload."
+  },
+  "CPUID_TSC_per_crystal_ratio": 100.0,
+  "CPUID_crystal_hz_available": false,
+  "QPC_FILETIME_sample_count": 54,
+  "QPC_FILETIME_fixed_slope_max_abs_residual_100ns": 0.0,
+  "QPC_FILETIME_fixed_slope_span_100ns": 0.0,
+  "float_precision_artifact_avoided": true,
+  "OS_cycles_per_reference_matches_CPUID_ratio_within_2pct_all_phases": true,
+  "rows": [
+    {
+      "case": "service01",
+      "phase": "preparation",
+      "state": "slow",
+      "retired_instructions": 18384487149,
+      "CSwitch_clipped_running_ms": 5489.8467,
+      "GetThreadTimes_ms": 5406.25,
+      "raw_CPU_gate_pass": false,
+      "reference_counter_hz_during_residency": 23901844.472269144,
+      "core_counter_hz_during_residency": 2384606520.0691304,
+      "core_per_reference": 99.76663193653296,
+      "OS_cycles_per_reference": 99.87030476172447,
+      "core_cycles_per_OS_cycle": 0.9989619254147781,
+      "OS_reference_vs_CPUID_ratio_relative_difference": -0.0012969523827552898
+    },
+    {
+      "case": "service01",
+      "phase": "consumer",
+      "state": "slow",
+      "retired_instructions": 11658530448,
+      "CSwitch_clipped_running_ms": 3969.7006,
+      "GetThreadTimes_ms": 3968.75,
+      "raw_CPU_gate_pass": true,
+      "reference_counter_hz_during_residency": 23882078.411656536,
+      "core_counter_hz_during_residency": 2382638772.808206,
+      "core_per_reference": 99.76680972813784,
+      "OS_cycles_per_reference": 99.79433741371116,
+      "core_cycles_per_OS_cycle": 0.9997241558360251,
+      "OS_reference_vs_CPUID_ratio_relative_difference": -0.0020566258628883505
+    },
+    {
+      "case": "interactive01",
+      "phase": "preparation",
+      "state": "fast",
+      "retired_instructions": 18383666920,
+      "CSwitch_clipped_running_ms": 2774.9237,
+      "GetThreadTimes_ms": 2750.0,
+      "raw_CPU_gate_pass": true,
+      "reference_counter_hz_during_residency": 23780315.112808328,
+      "core_counter_hz_during_residency": 4001935372.4933047,
+      "core_per_reference": 168.28773519228181,
+      "OS_cycles_per_reference": 100.68573946756831,
+      "core_cycles_per_OS_cycle": 1.671415794155126,
+      "OS_reference_vs_CPUID_ratio_relative_difference": 0.006857394675683137
+    },
+    {
+      "case": "interactive01",
+      "phase": "consumer",
+      "state": "fast",
+      "retired_instructions": 11686958409,
+      "CSwitch_clipped_running_ms": 2084.0524,
+      "GetThreadTimes_ms": 2062.5,
+      "raw_CPU_gate_pass": true,
+      "reference_counter_hz_during_residency": 23937131.81108114,
+      "core_counter_hz_during_residency": 3981707557.8329988,
+      "core_per_reference": 166.34021106863602,
+      "OS_cycles_per_reference": 100.03071267933078,
+      "core_cycles_per_OS_cycle": 1.6628913921854593,
+      "OS_reference_vs_CPUID_ratio_relative_difference": 0.0003071267933076882
+    },
+    {
+      "case": "interactive02",
+      "phase": "preparation",
+      "state": "fast",
+      "retired_instructions": 18373216806,
+      "CSwitch_clipped_running_ms": 2757.5396,
+      "GetThreadTimes_ms": 2765.625,
+      "raw_CPU_gate_pass": true,
+      "reference_counter_hz_during_residency": 23786514.616145495,
+      "core_counter_hz_during_residency": 4003098503.4630146,
+      "core_per_reference": 168.29277294563553,
+      "OS_cycles_per_reference": 100.7147660845817,
+      "core_cycles_per_OS_cycle": 1.6709841018178095,
+      "OS_reference_vs_CPUID_ratio_relative_difference": 0.007147660845816972
+    },
+    {
+      "case": "interactive02",
+      "phase": "consumer",
+      "state": "fast",
+      "retired_instructions": 11669811522,
+      "CSwitch_clipped_running_ms": 2095.2279,
+      "GetThreadTimes_ms": 2093.75,
+      "raw_CPU_gate_pass": true,
+      "reference_counter_hz_during_residency": 23724559.509731617,
+      "core_counter_hz_during_residency": 4007690722.808722,
+      "core_per_reference": 168.92582225456286,
+      "OS_cycles_per_reference": 100.60136082947336,
+      "core_cycles_per_OS_cycle": 1.6791604095783994,
+      "OS_reference_vs_CPUID_ratio_relative_difference": 0.006013608294733741
+    },
+    {
+      "case": "service02",
+      "phase": "preparation",
+      "state": "fast",
+      "retired_instructions": 18351689082,
+      "CSwitch_clipped_running_ms": 3051.0372,
+      "GetThreadTimes_ms": 3031.25,
+      "raw_CPU_gate_pass": true,
+      "reference_counter_hz_during_residency": 23717923.85881103,
+      "core_counter_hz_during_residency": 4008706001.3558664,
+      "core_per_reference": 169.01588963768694,
+      "OS_cycles_per_reference": 100.98185142976918,
+      "core_cycles_per_OS_cycle": 1.673725399610385,
+      "OS_reference_vs_CPUID_ratio_relative_difference": 0.009818514297691872
+    },
+    {
+      "case": "service02",
+      "phase": "consumer",
+      "state": "fast",
+      "retired_instructions": 11647381510,
+      "CSwitch_clipped_running_ms": 2404.0312,
+      "GetThreadTimes_ms": 2406.25,
+      "raw_CPU_gate_pass": true,
+      "reference_counter_hz_during_residency": 23684181.3866642,
+      "core_counter_hz_during_residency": 4021644188.7276673,
+      "core_per_reference": 169.8029635506898,
+      "OS_cycles_per_reference": 100.98404336641973,
+      "core_cycles_per_OS_cycle": 1.6814831124810603,
+      "OS_reference_vs_CPUID_ratio_relative_difference": 0.00984043366419729
+    }
+  ],
+  "established": [
+    "Raw-QPC and converted-FILETIME passes preserve a fixed one-second-per-second slope across retained events.",
+    "OS cycles divided by the delivered Reference counter match the CPUID TSC/crystal ratio within the descriptive 2% cross-check in all phases.",
+    "Core/OS-cycle ratios are near 1.00 in the slow window and 1.66-1.68 in the fast windows; this is a hardware-delivery signal independent of retired-instruction similarity."
+  ],
+  "boundaries": [
+    "This validates the delivered counter scale for these eight retained phases; it does not repair the failed GetThreadTimes/CSwitch gate.",
+    "CPUID leaf15 ECX is zero on this machine, so no absolute crystal or GHz value is invented. Only the delivered 100:1 scale relation and dimensionless Core/OS ratio are used.",
+    "No retired-instruction similarity is used by itself to name frequency, cache, GIL or a responsible function.",
+    "Original cross-state comparisons remain withheld under the original plan."
+  ],
+  "original_31_25ms_gate_unchanged": true,
+  "original_cross_state_comparison_released": false,
+  "bindings": {
+    "experiments/pmc_accounting_scope_review/analyze_clock_and_delivery.py": "d3003435452589405a438cd6965892a6696d245cdc418edf90a382f421c87002",
+    "experiments/pmc_accounting_scope_review/audit01.json": "149aef3902e740a3e28caa909ea3ce832bef9e4acc909cda9ae7dc61650014e1",
+    "experiments/pmc_accounting_scope_review/clock_metadata01.json": "4718e4802d29b370210e0b7554e109fdf47c16715dc266f785332c3b31b37bef",
+    "experiments/pmc_accounting_scope_review/cpuid.rs": "a2c492ea294d8a6388a25fe5c51ff2745bcc1f13a854151599374d4f39c821d9",
+    "experiments/slow_state_pmc_work/result01.json": "c71cbdf2a25092b86060cb753941db7c947e45ee80c844e742c8d39b5759177b"
+  }
+}

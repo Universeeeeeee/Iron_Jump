@@ -1,0 +1,6 @@
+{
+  "executable_sha256": "a839fc2f9a7526b84344adbf8d7128b33a3349b13d11e228b79cc88c8e35a7e5",
+  "original_source_sha256": "fb20ca77da7dfb4a26167ef3b54a75ee94633cc6b6d88c79a69220a9088d2476",
+  "script": "if((Get-FileHash 'E:/OptoJump/IronJump-gil-gui-calibration-20261018-01/experiments/pmc_delivery_control/ReadStacksBase.exe').Hash.ToLower() -ne 'a839fc2f9a7526b84344adbf8d7128b33a3349b13d11e228b79cc88c8e35a7e5'){throw 'Reader binary hash'};if(Test-Path 'E:/OptoJump/IronJump-gil-gui-calibration-20261018-01/experiments/slow_state_pmc_work/clock_audit01'){throw 'Preserve clock audit output'};& 'E:/OptoJump/IronJump-gil-gui-calibration-20261018-01/experiments/pmc_delivery_control/ReadStacksBase.exe' 'E:/OptoJump/IronJump-gil-gui-calibration-20261018-01/experiments/slow_state_pmc_work/trace01.etl' 17252 7984 'E:/OptoJump/IronJump-gil-gui-calibration-20261018-01/experiments/slow_state_pmc_work/clock_audit01';exit $LASTEXITCODE",
+  "scope": "Two offline ProcessTrace passes rawQPC andconvertedFILETIME onthe same oldETL; no recording orworkload."
+}

@@ -1,0 +1,144 @@
+{
+  "cases": [
+    {
+      "case": "service01",
+      "phase": "preparation",
+      "CPUs": [
+        0,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "switch_intervals": 589,
+      "clipped_summed_running_ms": 5489.8467,
+      "clipped_unique_running_ms": 5489.8467,
+      "simultaneous_CPU_overlap_ms": 0.0,
+      "unique_running_minus_GetThreadTimes_ms": 83.59670000000006
+    },
+    {
+      "case": "service01",
+      "phase": "consumer",
+      "CPUs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "switch_intervals": 449,
+      "clipped_summed_running_ms": 3969.7006,
+      "clipped_unique_running_ms": 3969.7006,
+      "simultaneous_CPU_overlap_ms": 0.0,
+      "unique_running_minus_GetThreadTimes_ms": 0.9506000000001222
+    },
+    {
+      "case": "interactive01",
+      "phase": "preparation",
+      "CPUs": [
+        1,
+        2,
+        3,
+        4,
+        5,
+        6
+      ],
+      "switch_intervals": 10,
+      "clipped_summed_running_ms": 2774.9237,
+      "clipped_unique_running_ms": 2774.9237,
+      "simultaneous_CPU_overlap_ms": 0.0,
+      "unique_running_minus_GetThreadTimes_ms": 24.923699999999826
+    },
+    {
+      "case": "interactive01",
+      "phase": "consumer",
+      "CPUs": [
+        2,
+        4,
+        5,
+        6,
+        7
+      ],
+      "switch_intervals": 17,
+      "clipped_summed_running_ms": 2084.0524,
+      "clipped_unique_running_ms": 2084.0524,
+      "simultaneous_CPU_overlap_ms": 0.0,
+      "unique_running_minus_GetThreadTimes_ms": 21.552400000000034
+    },
+    {
+      "case": "interactive02",
+      "phase": "preparation",
+      "CPUs": [
+        3,
+        4,
+        5,
+        6,
+        7
+      ],
+      "switch_intervals": 16,
+      "clipped_summed_running_ms": 2757.5396,
+      "clipped_unique_running_ms": 2757.5396,
+      "simultaneous_CPU_overlap_ms": 0.0,
+      "unique_running_minus_GetThreadTimes_ms": -8.085399999999936
+    },
+    {
+      "case": "interactive02",
+      "phase": "consumer",
+      "CPUs": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5
+      ],
+      "switch_intervals": 18,
+      "clipped_summed_running_ms": 2095.2279,
+      "clipped_unique_running_ms": 2095.2279,
+      "simultaneous_CPU_overlap_ms": 0.0,
+      "unique_running_minus_GetThreadTimes_ms": 1.4778999999998632
+    },
+    {
+      "case": "service02",
+      "phase": "preparation",
+      "CPUs": [
+        0,
+        1,
+        2,
+        4,
+        5,
+        6
+      ],
+      "switch_intervals": 146,
+      "clipped_summed_running_ms": 3051.0372,
+      "clipped_unique_running_ms": 3051.0372,
+      "simultaneous_CPU_overlap_ms": 0.0,
+      "unique_running_minus_GetThreadTimes_ms": 19.78720000000021
+    },
+    {
+      "case": "service02",
+      "phase": "consumer",
+      "CPUs": [
+        0,
+        2,
+        3,
+        4
+      ],
+      "switch_intervals": 284,
+      "clipped_summed_running_ms": 2404.0312,
+      "clipped_unique_running_ms": 2404.0312,
+      "simultaneous_CPU_overlap_ms": 0.0,
+      "unique_running_minus_GetThreadTimes_ms": -2.218800000000101
+    }
+  ],
+  "any_double_counted_residency": false,
+  "original_gate_or_failure_changed": false,
+  "binding": {
+    "audit_sha256": "149aef3902e740a3e28caa909ea3ce832bef9e4acc909cda9ae7dc61650014e1"
+  }
+}

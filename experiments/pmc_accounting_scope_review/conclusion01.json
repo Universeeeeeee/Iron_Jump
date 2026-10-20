@@ -1,0 +1,63 @@
+{
+  "P0_review_complete": true,
+  "original_difference_ms": 83.61239999999998,
+  "exactly_clipped_difference_ms": 83.59670000000006,
+  "boundary_overhang_ms": 0.01569999999992433,
+  "GetThreadTimes_total_ms": 5406.25,
+  "GetThreadTimes_in_15_625ms_ticks": 346.0,
+  "CSwitch_clipped_in_15_625ms_ticks": 351.3501888,
+  "QPC_FILETIME_max_residual_us": 1.6,
+  "explained_components": {
+    "CSwitch_boundary_overhang_ms": 0.01569999999992433,
+    "simultaneous_cross_CPU_double_count_ms": 0.0,
+    "lifecycle_or_TID_reuse": false,
+    "timebase_drift_at_83ms_scale": false
+  },
+  "unresolved_residual_ms": 83.59670000000006,
+  "mechanism_status": {
+    "established": [
+      "CSwitch residency and GetThreadTimes are different accounting scopes in this evidence; exact marker clipping does not reconcile them.",
+      "GetThreadTimes and Python thread_time are the same Windows accounting family and both expose 15.625ms quantization here.",
+      "Later DPC/ISR control validates event structure but exposes coarse independent endpoint counters.",
+      "Old ETL lacks DPC/ISR events, so historical interrupt overlap is not reconstructible.",
+      "Dimensionless Core/OS-cycle delivery is about1.00 in slow phases and1.66-1.68 in fast phases, with OS/Reference matching CPUID100:1."
+    ],
+    "reasonable_hypotheses": [
+      "Unrecorded ISR/DPC occupancy may contribute because it can occur while a thread remains current.",
+      "Statistical/quantized Windows thread-time accounting and other kernel accounting-scope differences may contribute."
+    ],
+    "not_established": [
+      "The fraction of the83.5967ms caused by interrupts, timer quantization oranother kernel mechanism.",
+      "A unique power, thermal, cache, GIL orfunction-level cause.",
+      "An absolute GHz value; CPUID did not publish the crystal frequency on this machine."
+    ]
+  },
+  "original_four_window_usability": {
+    "input_output_model_and_report_identity": true,
+    "PID_TID_lifecycle_and_phase_boundaries": true,
+    "raw_PMC_and_OS_cycle_values_descriptive_only": true,
+    "independent_hardware_delivery_signal": true,
+    "frozen_cross_state_quantitative_attribution": false,
+    "CPU_GIL_cache_frequency_contribution_percentages": false,
+    "original_31_25ms_gate_pass": false
+  },
+  "acceptance": {
+    "reviewable_explanation_or_boundary_recorded": true,
+    "original_gate_and_failure_preserved": true,
+    "seven_passing_phases_do_not_release_comparison": true,
+    "retired_instruction_similarity_not_used_alone_for_cause": true
+  },
+  "P1_transition": {
+    "allowed_scope": "Proceed with real 1000Hz queue-age, consumer-throughput andcontact-to-paint metrics that do not require the failed CPU-share attribution.",
+    "required_if_CPU_mechanism_is_remeasured": "One finite actual-load capture with DPC/ISR plus CSwitch/PMC/native boundaries andpredeclared gates; never rewrite the old result.",
+    "synthetic_controls_are_not_field_fix": true
+  },
+  "goal_complete": false,
+  "bindings": {
+    "experiments/pmc_accounting_scope_review/conclude.py": "df7f7e4a137bbda30d482fda539ad01aa0c1d8b79d807c084fee1c05186fbe29",
+    "experiments/pmc_accounting_scope_review/audit01.json": "149aef3902e740a3e28caa909ea3ce832bef9e4acc909cda9ae7dc61650014e1",
+    "experiments/pmc_accounting_scope_review/overlap01.json": "1b2bf20bce0636edc8ffa9fa10a20c0e409f5a7e37d29b17ac445bd40fa76287",
+    "experiments/pmc_accounting_scope_review/clock_and_delivery01.json": "7a799d42908bf00ab2604a7fe41e128a2f023a1752b8ce0ceb2e1453a1d57e0a",
+    "experiments/interrupt_scope_control/scope_audit01.json": "7014ef6afb8c6872cc24dba00313b14ef15db1ca14fc460f89ff61cd579caab2"
+  }
+}
