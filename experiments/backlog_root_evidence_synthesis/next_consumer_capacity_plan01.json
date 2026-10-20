@@ -1,0 +1,23 @@
+{
+  "scope": "Read-only worst-state consumer capacity derivation from retained severe windows; no new workload.",
+  "inputs": [
+    "cold process-first queue timeline and receipts",
+    "severe original A/A queue timelines",
+    "retained batch boundaries, consumer CPU/cycles and contact publications"
+  ],
+  "outputs": [
+    "arrival rate, effective drain rate and queue growth by phase",
+    "required per-frame/batch service margin for 1000Hz and <=250-frame FIFO",
+    "code-stage candidates whose measured cost can close that margin"
+  ],
+  "decisions": {
+    "software_capacity_root": "consumer service rate falls below 1000Hz in severe windows even after video/model isolation",
+    "next_candidate": "only a surgical stage with enough measured margin may enter offline A/B",
+    "insufficient": "no stage-level evidence large enough to close the measured deficit"
+  },
+  "constraints": [
+    "No new reboot,human,USB,Run or ordinary fast-state window",
+    "No CPU/GIL/frequency percentage from failed PMC accounting",
+    "No formal optimization until an offline candidate meets the required margin and semantics"
+  ]
+}

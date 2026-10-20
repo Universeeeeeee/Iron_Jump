@@ -5,7 +5,7 @@ class SynthesisTests(unittest.TestCase):
  def test_no_false_completion(self):
   self.assertFalse(self.value['root_function_identified']);self.assertFalse(self.value['formal_fix_verified']);self.assertFalse(self.value['field_fix_verified'])
  def test_old_pmc_and_fast_process_limits_remain(self):
-  text=json.dumps(self.value);self.assertIn('83.5967',text);self.assertIn('fast-state benefit rejected',text)
- def test_next_gate_requires_replicated_cold_original(self):
-  self.assertIn('both original-first windows severe',self.value['next_minimal_validation']['acceptance'][0])
+  text=json.dumps(self.value);self.assertIn('83.5967',text);self.assertIn('rejected in fast state',text)
+ def test_next_gate_returns_to_consumer_capacity(self):
+  self.assertIn('consumer service rate falls below 1000Hz',self.value['next_minimal_validation']['decisions']['software_capacity_root'])
 if __name__=='__main__':unittest.main()

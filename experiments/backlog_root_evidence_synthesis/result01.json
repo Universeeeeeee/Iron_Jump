@@ -1,5 +1,5 @@
 {
-  "current_root_conclusion": "A shared slow execution-delivery state is the leading explanation for the multi-second backlog. Real GIL/Qt waits coexist, but video/model isolation has no stable fast-state benefit and has not been tested under severe state. The physical cause remains unidentified.",
+  "current_root_conclusion": "A shared slow execution-delivery state leaves the consumer without enough worst-state throughput margin. Real GIL/Qt waits coexist, but video/model isolation is not sufficient even in a severe process-first cold window. The physical cause remains unidentified.",
   "matrix": [
     {
       "question": "Is the old PMC CPU share quantitatively usable?",
@@ -30,11 +30,11 @@
       "next": "Do not optimize or merge this boundary based on fast windows."
     },
     {
-      "question": "Was severe-state isolation tested?",
+      "question": "Is video+MediaPipe process isolation sufficient in a severe cold-first window?",
       "finding": "No",
-      "evidence": "A/A aa01/aa02 were severe, then aa03/aa04 recovered before all four formal pairs; paired originals were all fast.",
-      "grade": "missing condition",
-      "next": "Only a controlled cold-start order crossover can test this."
+      "evidence": "The process-first cold window still reached queue lower/upper 1614/1694 and scheduled contact-to-paint 1491ms with input lateness 93ms.",
+      "grade": "rejected as a sufficient fix",
+      "next": "Return to consumer worst-state service capacity; do not add more visual isolation windows."
     },
     {
       "question": "Do model and consumer share a slow execution state?",
@@ -65,7 +65,7 @@
     {
       "rank": 3,
       "hypothesis": "Moving video/model alone controls severe backlog",
-      "status": "fast-state benefit rejected; severe state untested"
+      "status": "rejected as sufficient in a severe process-first cold window"
     },
     {
       "rank": 4,
@@ -74,26 +74,26 @@
     }
   ],
   "next_minimal_validation": {
-    "scope": "Four reboot-separated first-window cases, order process/original/original/process. Each boot runs exactly one saved-input GUI window after a fixed two-minute post-login settle.",
-    "prerequisites": [
-      "User authorizes Windows restarts and confirms automatic/login availability",
-      "record boot identifier, uptime, session, AC, process/thread policy and no prior target in that boot",
-      "same frozen input/model/real SDK and existing semantic gates"
+    "scope": "Read-only worst-state consumer capacity derivation from retained severe windows; no new workload.",
+    "inputs": [
+      "cold process-first queue timeline and receipts",
+      "severe original A/A queue timelines",
+      "retained batch boundaries, consumer CPU/cycles and contact publications"
     ],
-    "acceptance": [
-      "both original-first windows severe: queue lower >=1000 and scheduled contact-to-paint >=1000ms",
-      "both process-first windows queue upper <=250 and scheduled contact-to-paint <=250ms",
-      "input lateness <=100ms, full report/quality/raw exact, all process cleanup confirmed"
+    "outputs": [
+      "arrival rate, effective drain rate and queue growth by phase",
+      "required per-frame/batch service margin for 1000Hz and <=250-frame FIFO",
+      "code-stage candidates whose measured cost can close that margin"
     ],
     "decisions": {
-      "support_candidate": "original severe twice and process bounded twice",
-      "reject_candidate": "process severe in either qualified cold window",
-      "inconclusive": "cold original severity not reproduced or any boot/context/input gate fails"
+      "software_capacity_root": "consumer service rate falls below 1000Hz in severe windows even after video/model isolation",
+      "next_candidate": "only a surgical stage with enough measured margin may enter offline A/B",
+      "insufficient": "no stage-level evidence large enough to close the measured deficit"
     },
     "constraints": [
-      "No human,USB,Run or formal program change",
-      "No extra boots/windows after frozen four",
-      "No CPU/GIL percentage even if candidate succeeds"
+      "No new reboot,human,USB,Run or ordinary fast-state window",
+      "No CPU/GIL/frequency percentage from failed PMC accounting",
+      "No formal optimization until an offline candidate meets the required margin and semantics"
     ]
   },
   "root_function_identified": false,
@@ -119,6 +119,10 @@
     "preview_bridge": {
       "path": "experiments/preview_gil_ab/result01.json",
       "sha256": "30a8aa2b37ae3c1d59f3e8751e74236bbad6c8de07b02cda6a0fbfdcb40fe8d2"
+    },
+    "cold_process": {
+      "path": "experiments/cold_boot_vision_process_ab/evidence/two_window_result03.json",
+      "sha256": "f45828a983f9a49a98d70047c8a9da7e14578a2dc423d9cce09ea6c3c665bcbb"
     },
     "field": {
       "path": "experiments/p1_field_reentry_review/result01.json",

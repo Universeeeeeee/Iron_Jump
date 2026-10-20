@@ -11,32 +11,34 @@ if __name__=='__main__':
       'spacing':ROOT/'experiments/slow_state_spacing/result01.json',
       'qt_gil':ROOT/'experiments/native_thread_accounting_review/qt_label_wait_summary01.json',
       'preview_bridge':ROOT/'experiments/preview_gil_ab/result01.json',
+      'cold_process':ROOT/'experiments/cold_boot_vision_process_ab/evidence/two_window_result03.json',
       'field':ROOT/'experiments/p1_field_reentry_review/result01.json'}
     values={name:read(path) for name,path in sources.items()};pmc=values['pmc'];timed=values['timed'];spacing=values['spacing']
     assert abs(pmc['unresolved_residual_ms']-83.5967)<1e-6 and not pmc['original_four_window_usability']['frozen_cross_state_quantitative_attribution']
     assert timed['decision']['advance'] is False and timed['decision']['aa_stable'] is False
     assert spacing['controlled_five_minute_condition_supported'] is False
+    assert values['cold_process']['process_first_severe'] is True
     matrix=[
       dict(question='Is the old PMC CPU share quantitatively usable?',finding='No',evidence='83.5967ms remains unresolved after lifecycle, clipping, duplicate and clock checks; old 31.25ms gate remains failed.',grade='verified boundary',next='Do not compute CPU/GIL/cache/frequency contribution shares from the old four windows.'),
       dict(question='Where does field latency accumulate?',finding='Host consumer FIFO before publication/paint',evidence='1000Hz receipt remained accurate while pending age and contact-to-paint reached seconds; final drain does not restore real-time compliance.',grade='verified',next='Keep FIFO age and scheduled contact-to-paint as field endpoints.'),
       dict(question='Is a real GIL/Qt synchronization path present?',finding='Yes, as an additive mechanism',evidence='Consumer take_gil chains and Qt QLabel/latch overlap are retained; waiter stacks do not identify the holder or quantitative share.',grade='verified mechanism, unquantified contribution',next='Do not relabel all waiting or wall-minus-CPU as GIL.'),
       dict(question='Does video+MediaPipe process isolation give stable fast-state benefit?',finding='No meaningful stable benefit',evidence='Four timed pairs changed latency -3.6%, +0.9%, +5.5%, -5.3%; geometric change -0.69%, with process queue lower bounds slightly higher in all pairs.',grade='rejected in fast state',next='Do not optimize or merge this boundary based on fast windows.'),
-      dict(question='Was severe-state isolation tested?',finding='No',evidence='A/A aa01/aa02 were severe, then aa03/aa04 recovered before all four formal pairs; paired originals were all fast.',grade='missing condition',next='Only a controlled cold-start order crossover can test this.'),
+      dict(question='Is video+MediaPipe process isolation sufficient in a severe cold-first window?',finding='No',evidence='The process-first cold window still reached queue lower/upper 1614/1694 and scheduled contact-to-paint 1491ms with input lateness 93ms.',grade='rejected as a sufficient fix',next='Return to consumer worst-state service capacity; do not add more visual isolation windows.'),
       dict(question='Do model and consumer share a slow execution state?',finding='Strong covariance',evidence='Severe A/A model medians were 40.5-40.8ms with queue lower 3981-4239; fast A/A model medians 23.1-23.9ms with queue lower 91, while work counts differed only 3-4%. PMC also retained Core/OS about1.00 slow versus1.66-1.68 fast.',grade='supported common-state hypothesis',next='Name only execution-delivery state; frequency, cache, power, thermal and exact native function remain unknown.'),
       dict(question='Do process restart or five-minute quiet gaps control the state?',finding='No',evidence='Six fixed-work windows stayed slow across 5s and qualified 300s low-load gaps; other GUI sequences recovered after two windows.',grade='rejected as sufficient conditions',next='Do not add ordinary spacing windows.')]
     ranking=[
       dict(rank=1,hypothesis='Shared native/CPU execution-delivery state affects consumer and MediaPipe work',status='best supported but mechanism unnamed'),
       dict(rank=2,hypothesis='GIL acquisition and Qt/system synchronization add contention within that state',status='real paths, contribution unknown'),
-      dict(rank=3,hypothesis='Moving video/model alone controls severe backlog',status='fast-state benefit rejected; severe state untested'),
+      dict(rank=3,hypothesis='Moving video/model alone controls severe backlog',status='rejected as sufficient in a severe process-first cold window'),
       dict(rank=4,hypothesis='USB/grating power state is the primary cause',status='weak field correlation only; host saved-input severe state exists without live USB')]
-    cold=dict(scope='Four reboot-separated first-window cases, order process/original/original/process. Each boot runs exactly one saved-input GUI window after a fixed two-minute post-login settle.',
-      prerequisites=['User authorizes Windows restarts and confirms automatic/login availability','record boot identifier, uptime, session, AC, process/thread policy and no prior target in that boot','same frozen input/model/real SDK and existing semantic gates'],
-      acceptance=['both original-first windows severe: queue lower >=1000 and scheduled contact-to-paint >=1000ms','both process-first windows queue upper <=250 and scheduled contact-to-paint <=250ms','input lateness <=100ms, full report/quality/raw exact, all process cleanup confirmed'],
-      decisions={'support_candidate':'original severe twice and process bounded twice','reject_candidate':'process severe in either qualified cold window','inconclusive':'cold original severity not reproduced or any boot/context/input gate fails'},
-      constraints=['No human,USB,Run or formal program change','No extra boots/windows after frozen four','No CPU/GIL percentage even if candidate succeeds'])
-    result=dict(current_root_conclusion='A shared slow execution-delivery state is the leading explanation for the multi-second backlog. Real GIL/Qt waits coexist, but video/model isolation has no stable fast-state benefit and has not been tested under severe state. The physical cause remains unidentified.',
-      matrix=matrix,hypothesis_ranking=ranking,next_minimal_validation=cold,root_function_identified=False,formal_fix_verified=False,field_fix_verified=False,
+    capacity=dict(scope='Read-only worst-state consumer capacity derivation from retained severe windows; no new workload.',
+      inputs=['cold process-first queue timeline and receipts','severe original A/A queue timelines','retained batch boundaries, consumer CPU/cycles and contact publications'],
+      outputs=['arrival rate, effective drain rate and queue growth by phase','required per-frame/batch service margin for 1000Hz and <=250-frame FIFO','code-stage candidates whose measured cost can close that margin'],
+      decisions={'software_capacity_root':'consumer service rate falls below 1000Hz in severe windows even after video/model isolation','next_candidate':'only a surgical stage with enough measured margin may enter offline A/B','insufficient':'no stage-level evidence large enough to close the measured deficit'},
+      constraints=['No new reboot,human,USB,Run or ordinary fast-state window','No CPU/GIL/frequency percentage from failed PMC accounting','No formal optimization until an offline candidate meets the required margin and semantics'])
+    result=dict(current_root_conclusion='A shared slow execution-delivery state leaves the consumer without enough worst-state throughput margin. Real GIL/Qt waits coexist, but video/model isolation is not sufficient even in a severe process-first cold window. The physical cause remains unidentified.',
+      matrix=matrix,hypothesis_ranking=ranking,next_minimal_validation=capacity,root_function_identified=False,formal_fix_verified=False,field_fix_verified=False,
       bindings={name:dict(path=str(path.relative_to(ROOT)),sha256=sha(path)) for name,path in sources.items()})
     (HERE/'result01.json').write_text(json.dumps(result,indent=2)+'\n')
-    (HERE/'next_cold_boot_plan01.json').write_text(json.dumps(cold,indent=2)+'\n')
+    (HERE/'next_consumer_capacity_plan01.json').write_text(json.dumps(capacity,indent=2)+'\n')
     print(json.dumps(result,indent=2))

@@ -1,0 +1,1135 @@
+{
+  "cases": {
+    "cold01_process": {
+      "backend": "original",
+      "raw_frames": 33188,
+      "queue": {
+        "combined_observed_deque_peak_lower_bound": 1614,
+        "continuous_deque_peak_upper_bound": 1694,
+        "observations": 520,
+        "first_observed_host_ns": 698269322800,
+        "last_observed_host_ns": 731461039400
+      },
+      "queue_crosscheck": {
+        "oldest_pending_receipts_independently_matched": 330,
+        "max_post_arm_inflight": 0,
+        "queue_common_monotone": true
+      },
+      "contacts": [
+        {
+          "contact_id": 0,
+          "touch_sample": 60188,
+          "published_sample": 60251,
+          "raw_release_trigger": 60261,
+          "source_confirmation_sample_span": 73,
+          "source_confirmation_time_ms": 75.9435,
+          "enqueue_host_bounds_ns": [
+            713133938300,
+            713159295500
+          ],
+          "dequeue_host_bounds_ns": [
+            713159295500,
+            713334965700
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            201.0274
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            175.6702
+          ],
+          "publication_host_bounds_ns": [
+            713159295500,
+            713334965700
+          ],
+          "source_trigger_to_publication_ms": [
+            25.3572,
+            201.0274
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -81.3205,
+            94.3497
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            94.3497
+          ],
+          "source_touch_to_paint_ms": 195.6504,
+          "scheduled_touch_to_paint_ms": 197.4724
+        },
+        {
+          "contact_id": 2,
+          "touch_sample": 60871,
+          "published_sample": 60960,
+          "raw_release_trigger": 60970,
+          "source_confirmation_sample_span": 99,
+          "source_confirmation_time_ms": 98.7509,
+          "enqueue_host_bounds_ns": [
+            713838632100,
+            713858510100
+          ],
+          "dequeue_host_bounds_ns": [
+            714054478000,
+            714160853700
+          ],
+          "queue_residence_bounds_ms": [
+            195.9679,
+            322.2216
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            106.3757
+          ],
+          "publication_host_bounds_ns": [
+            714054478000,
+            714160853700
+          ],
+          "source_trigger_to_publication_ms": [
+            215.8459,
+            322.2216
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -25.1331,
+            81.2426
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            81.2426
+          ],
+          "source_touch_to_paint_ms": 395.8394,
+          "scheduled_touch_to_paint_ms": 397.5823
+        },
+        {
+          "contact_id": 4,
+          "touch_sample": 61475,
+          "published_sample": 61541,
+          "raw_release_trigger": 61551,
+          "source_confirmation_sample_span": 76,
+          "source_confirmation_time_ms": 58.3631,
+          "enqueue_host_bounds_ns": [
+            714420646200,
+            714443753700
+          ],
+          "dequeue_host_bounds_ns": [
+            714741886100,
+            714906425200
+          ],
+          "queue_residence_bounds_ms": [
+            298.1324,
+            485.779
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            164.5391
+          ],
+          "publication_host_bounds_ns": [
+            714741886100,
+            714906425200
+          ],
+          "source_trigger_to_publication_ms": [
+            321.2399,
+            485.779
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -19.3399,
+            145.1992
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            145.1992
+          ],
+          "source_touch_to_paint_ms": 524.8022,
+          "scheduled_touch_to_paint_ms": 530.5948
+        },
+        {
+          "contact_id": 5,
+          "touch_sample": 62050,
+          "published_sample": 62111,
+          "raw_release_trigger": 62121,
+          "source_confirmation_sample_span": 71,
+          "source_confirmation_time_ms": 86.3627,
+          "enqueue_host_bounds_ns": [
+            715009187000,
+            715033970300
+          ],
+          "dequeue_host_bounds_ns": [
+            715486044600,
+            715624114400
+          ],
+          "queue_residence_bounds_ms": [
+            452.0743,
+            614.9274
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            138.0698
+          ],
+          "publication_host_bounds_ns": [
+            715486044600,
+            715624114400
+          ],
+          "source_trigger_to_publication_ms": [
+            476.8576,
+            614.9274
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -73.6069,
+            64.4629
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            64.4629
+          ],
+          "source_touch_to_paint_ms": 627.6832,
+          "scheduled_touch_to_paint_ms": 628.1381
+        },
+        {
+          "contact_id": 6,
+          "touch_sample": 62626,
+          "published_sample": 62693,
+          "raw_release_trigger": 62703,
+          "source_confirmation_sample_span": 77,
+          "source_confirmation_time_ms": 77.8885,
+          "enqueue_host_bounds_ns": [
+            715572466000,
+            715624114400
+          ],
+          "dequeue_host_bounds_ns": [
+            716147815300,
+            716310471000
+          ],
+          "queue_residence_bounds_ms": [
+            523.7009,
+            738.005
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            162.6557
+          ],
+          "publication_host_bounds_ns": [
+            716147815300,
+            716310471000
+          ],
+          "source_trigger_to_publication_ms": [
+            575.3493,
+            738.005
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -21.798,
+            140.8577
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            140.8577
+          ],
+          "source_touch_to_paint_ms": 794.0955,
+          "scheduled_touch_to_paint_ms": 794.2222
+        },
+        {
+          "contact_id": 7,
+          "touch_sample": 63199,
+          "published_sample": 63258,
+          "raw_release_trigger": 63268,
+          "source_confirmation_sample_span": 69,
+          "source_confirmation_time_ms": 78.3898,
+          "enqueue_host_bounds_ns": [
+            716155179800,
+            716310471000
+          ],
+          "dequeue_host_bounds_ns": [
+            716912678200,
+            717055696800
+          ],
+          "queue_residence_bounds_ms": [
+            602.2072,
+            900.517
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            143.0186
+          ],
+          "publication_host_bounds_ns": [
+            716912678200,
+            717055696800
+          ],
+          "source_trigger_to_publication_ms": [
+            757.4984,
+            900.517
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            4.3926,
+            147.4112
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            4.3926,
+            147.4112
+          ],
+          "source_touch_to_paint_ms": 983.2994,
+          "scheduled_touch_to_paint_ms": 991.7652
+        },
+        {
+          "contact_id": 8,
+          "touch_sample": 63747,
+          "published_sample": 63806,
+          "raw_release_trigger": 63816,
+          "source_confirmation_sample_span": 69,
+          "source_confirmation_time_ms": 69.2626,
+          "enqueue_host_bounds_ns": [
+            716685526500,
+            716770837700
+          ],
+          "dequeue_host_bounds_ns": [
+            717534131200,
+            717593904600
+          ],
+          "queue_residence_bounds_ms": [
+            763.2935,
+            908.3781
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            59.7734
+          ],
+          "publication_host_bounds_ns": [
+            717534131200,
+            717593904600
+          ],
+          "source_trigger_to_publication_ms": [
+            848.6047,
+            908.3781
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            108.1737,
+            167.9471
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            108.1737,
+            167.9471
+          ],
+          "source_touch_to_paint_ms": 1085.8144,
+          "scheduled_touch_to_paint_ms": 1086.8268
+        },
+        {
+          "contact_id": 10,
+          "touch_sample": 64328,
+          "published_sample": 64397,
+          "raw_release_trigger": 64407,
+          "source_confirmation_sample_span": 79,
+          "source_confirmation_time_ms": 68.3793,
+          "enqueue_host_bounds_ns": [
+            717277944000,
+            717283977600
+          ],
+          "dequeue_host_bounds_ns": [
+            718393378600,
+            718534897200
+          ],
+          "queue_residence_bounds_ms": [
+            1109.401,
+            1256.9532
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            141.5186
+          ],
+          "publication_host_bounds_ns": [
+            718393378600,
+            718534897200
+          ],
+          "source_trigger_to_publication_ms": [
+            1115.4346,
+            1256.9532
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -98.8427,
+            42.6759
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            42.6759
+          ],
+          "source_touch_to_paint_ms": 1226.4898,
+          "scheduled_touch_to_paint_ms": 1227.015
+        },
+        {
+          "contact_id": 11,
+          "touch_sample": 64883,
+          "published_sample": 64947,
+          "raw_release_trigger": 64957,
+          "source_confirmation_sample_span": 74,
+          "source_confirmation_time_ms": 83.3129,
+          "enqueue_host_bounds_ns": [
+            717837798600,
+            717902486400
+          ],
+          "dequeue_host_bounds_ns": [
+            719103613900,
+            719250984600
+          ],
+          "queue_residence_bounds_ms": [
+            1201.1275,
+            1413.186
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            147.3707
+          ],
+          "publication_host_bounds_ns": [
+            719103613900,
+            719250984600
+          ],
+          "source_trigger_to_publication_ms": [
+            1265.8153,
+            1413.186
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -6.4713,
+            140.8994
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            140.8994
+          ],
+          "source_touch_to_paint_ms": 1490.0276,
+          "scheduled_touch_to_paint_ms": 1491.2546
+        }
+      ],
+      "max_latency_ms": 1490.0276,
+      "scheduled_max_ms": 1491.2546,
+      "input_lateness_ms": 92.9558,
+      "observed_queue_lower": 1614,
+      "queue_upper": 1694,
+      "work": {
+        "video": 815,
+        "inferences": 384,
+        "model_wall_ms_median": 26.179949999971086,
+        "model_wall_ms_mean": 26.397413541668396,
+        "precontact_model_calls": 107,
+        "precontact_model_wall_ms_median": 25.299299999915092,
+        "sdk": {
+          "start_success": true,
+          "stop_success": true,
+          "ready_events": [
+            {
+              "method": "tracking_start",
+              "code": 0,
+              "sdk_pid": 12392,
+              "gui_pid": 12108,
+              "observed_ns": 697265555800
+            }
+          ],
+          "errors": [],
+          "tracking_decisions": 430,
+          "nonzero_speeds": 389
+        },
+        "draws": {
+          "all": 546,
+          "valid": 546,
+          "disabled_calls": 0
+        }
+      },
+      "context": {
+        "context_reads_pass": true,
+        "role_pids": {
+          "gui": 12108,
+          "model": 13536,
+          "consumer": 12108
+        },
+        "foreground_gui": {
+          "consumer/59904": false,
+          "gui/59904": false,
+          "gui/65904": false,
+          "consumer/65904": false,
+          "model/59904": false,
+          "model/65904": false
+        },
+        "policy": {
+          "consumer/59904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "gui/59904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "gui/65904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "consumer/65904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "model/59904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "model/65904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          }
+        },
+        "scope": "Two phase checkpoints after original calls in GUI/consumer and after child model inference; not continuous scheduler coverage."
+      },
+      "original_return_model_confirmed": false,
+      "boot": {
+        "boot_100ns": 134369835918769659,
+        "uptime_seconds": 621.25,
+        "session_id": 1,
+        "priority_class": 16384,
+        "ac_online": 1
+      },
+      "vision_mode": "process"
+    },
+    "cold02_original": {
+      "backend": "original",
+      "raw_frames": 33188,
+      "queue": {
+        "combined_observed_deque_peak_lower_bound": 2541,
+        "continuous_deque_peak_upper_bound": 2621,
+        "observations": 520,
+        "first_observed_host_ns": 400326439800,
+        "last_observed_host_ns": 433525140000
+      },
+      "queue_crosscheck": {
+        "oldest_pending_receipts_independently_matched": 323,
+        "max_post_arm_inflight": 0,
+        "queue_common_monotone": true
+      },
+      "contacts": [
+        {
+          "contact_id": 0,
+          "touch_sample": 60188,
+          "published_sample": 60251,
+          "raw_release_trigger": 60261,
+          "source_confirmation_sample_span": 73,
+          "source_confirmation_time_ms": 72.1193,
+          "enqueue_host_bounds_ns": [
+            415190319100,
+            415308439000
+          ],
+          "dequeue_host_bounds_ns": [
+            415154831800,
+            415308439000
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            118.1199
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            153.6072
+          ],
+          "publication_host_bounds_ns": [
+            415190319100,
+            415308439000
+          ],
+          "source_trigger_to_publication_ms": [
+            0.0,
+            118.1199
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -14.7117,
+            103.4082
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            103.4082
+          ],
+          "source_touch_to_paint_ms": 175.5275,
+          "scheduled_touch_to_paint_ms": 176.8115
+        },
+        {
+          "contact_id": 2,
+          "touch_sample": 60871,
+          "published_sample": 60960,
+          "raw_release_trigger": 60970,
+          "source_confirmation_sample_span": 99,
+          "source_confirmation_time_ms": 99.2278,
+          "enqueue_host_bounds_ns": [
+            415898274100,
+            415930776200
+          ],
+          "dequeue_host_bounds_ns": [
+            415930776200,
+            416033080900
+          ],
+          "queue_residence_bounds_ms": [
+            0.0,
+            134.8068
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            102.3047
+          ],
+          "publication_host_bounds_ns": [
+            415930776200,
+            416033080900
+          ],
+          "source_trigger_to_publication_ms": [
+            32.5021,
+            134.8068
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -33.7454,
+            68.5593
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            68.5593
+          ],
+          "source_touch_to_paint_ms": 200.2892,
+          "scheduled_touch_to_paint_ms": 200.4542
+        },
+        {
+          "contact_id": 4,
+          "touch_sample": 61475,
+          "published_sample": 61541,
+          "raw_release_trigger": 61551,
+          "source_confirmation_sample_span": 76,
+          "source_confirmation_time_ms": 64.1533,
+          "enqueue_host_bounds_ns": [
+            416482136800,
+            416510907100
+          ],
+          "dequeue_host_bounds_ns": [
+            416597191500,
+            416688974800
+          ],
+          "queue_residence_bounds_ms": [
+            86.2844,
+            206.838
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            91.7833
+          ],
+          "publication_host_bounds_ns": [
+            416597191500,
+            416688974800
+          ],
+          "source_trigger_to_publication_ms": [
+            115.0547,
+            206.838
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -9.4471,
+            82.3362
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            82.3362
+          ],
+          "source_touch_to_paint_ms": 261.5442,
+          "scheduled_touch_to_paint_ms": 262.2942
+        },
+        {
+          "contact_id": 5,
+          "touch_sample": 62050,
+          "published_sample": 62111,
+          "raw_release_trigger": 62121,
+          "source_confirmation_sample_span": 71,
+          "source_confirmation_time_ms": 77.5426,
+          "enqueue_host_bounds_ns": [
+            417065060600,
+            417087040000
+          ],
+          "dequeue_host_bounds_ns": [
+            417343634700,
+            417477802100
+          ],
+          "queue_residence_bounds_ms": [
+            256.5947,
+            412.7415
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            134.1674
+          ],
+          "publication_host_bounds_ns": [
+            417343634700,
+            417477802100
+          ],
+          "source_trigger_to_publication_ms": [
+            278.5741,
+            412.7415
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -11.0221,
+            123.1453
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            123.1453
+          ],
+          "source_touch_to_paint_ms": 479.262,
+          "scheduled_touch_to_paint_ms": 483.6676
+        },
+        {
+          "contact_id": 6,
+          "touch_sample": 62626,
+          "published_sample": 62693,
+          "raw_release_trigger": 62703,
+          "source_confirmation_sample_span": 77,
+          "source_confirmation_time_ms": 108.1765,
+          "enqueue_host_bounds_ns": [
+            417663849200,
+            417717444800
+          ],
+          "dequeue_host_bounds_ns": [
+            418065534100,
+            418276811000
+          ],
+          "queue_residence_bounds_ms": [
+            348.0893,
+            612.9618
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            211.2769
+          ],
+          "publication_host_bounds_ns": [
+            418065534100,
+            418276811000
+          ],
+          "source_trigger_to_publication_ms": [
+            401.6849,
+            612.9618
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -15.1197,
+            196.1572
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            196.1572
+          ],
+          "source_touch_to_paint_ms": 706.0186,
+          "scheduled_touch_to_paint_ms": 706.4975
+        },
+        {
+          "contact_id": 7,
+          "touch_sample": 63199,
+          "published_sample": 63258,
+          "raw_release_trigger": 63268,
+          "source_confirmation_sample_span": 69,
+          "source_confirmation_time_ms": 54.0065,
+          "enqueue_host_bounds_ns": [
+            418214533500,
+            418276811000
+          ],
+          "dequeue_host_bounds_ns": [
+            419130873100,
+            419330965400
+          ],
+          "queue_residence_bounds_ms": [
+            854.0621,
+            1116.4319
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            200.0923
+          ],
+          "publication_host_bounds_ns": [
+            419130873100,
+            419330965400
+          ],
+          "source_trigger_to_publication_ms": [
+            916.3396,
+            1116.4319
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            32.6148,
+            232.7071
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            32.6148,
+            232.7071
+          ],
+          "source_touch_to_paint_ms": 1203.0532,
+          "scheduled_touch_to_paint_ms": 1234.513
+        },
+        {
+          "contact_id": 8,
+          "touch_sample": 63747,
+          "published_sample": 63806,
+          "raw_release_trigger": 63816,
+          "source_confirmation_sample_span": 69,
+          "source_confirmation_time_ms": 68.6658,
+          "enqueue_host_bounds_ns": [
+            418745902700,
+            418810118800
+          ],
+          "dequeue_host_bounds_ns": [
+            420113448800,
+            420263293300
+          ],
+          "queue_residence_bounds_ms": [
+            1303.33,
+            1517.3906
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            149.8445
+          ],
+          "publication_host_bounds_ns": [
+            420113448800,
+            420263293300
+          ],
+          "source_trigger_to_publication_ms": [
+            1367.5461,
+            1517.3906
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            99.3988,
+            249.2433
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            99.3988,
+            249.2433
+          ],
+          "source_touch_to_paint_ms": 1685.4552,
+          "scheduled_touch_to_paint_ms": 1686.6976
+        },
+        {
+          "contact_id": 10,
+          "touch_sample": 64328,
+          "published_sample": 64397,
+          "raw_release_trigger": 64407,
+          "source_confirmation_sample_span": 79,
+          "source_confirmation_time_ms": 67.0415,
+          "enqueue_host_bounds_ns": [
+            419338648600,
+            419472377000
+          ],
+          "dequeue_host_bounds_ns": [
+            421526354500,
+            421657620800
+          ],
+          "queue_residence_bounds_ms": [
+            2053.9775,
+            2318.9722
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            131.2663
+          ],
+          "publication_host_bounds_ns": [
+            421526354500,
+            421657620800
+          ],
+          "source_trigger_to_publication_ms": [
+            2187.7059,
+            2318.9722
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -55.3474,
+            75.9189
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            75.9189
+          ],
+          "source_touch_to_paint_ms": 2330.6663,
+          "scheduled_touch_to_paint_ms": 2332.4909
+        },
+        {
+          "contact_id": 11,
+          "touch_sample": 64883,
+          "published_sample": 64947,
+          "raw_release_trigger": 64957,
+          "source_confirmation_sample_span": 74,
+          "source_confirmation_time_ms": 84.0899,
+          "enqueue_host_bounds_ns": [
+            419898847400,
+            419919284100
+          ],
+          "dequeue_host_bounds_ns": [
+            422083861800,
+            422233393500
+          ],
+          "queue_residence_bounds_ms": [
+            2164.5777,
+            2334.5461
+          ],
+          "dequeue_to_publication_bounds_ms": [
+            0.0,
+            149.5317
+          ],
+          "publication_host_bounds_ns": [
+            422083861800,
+            422233393500
+          ],
+          "source_trigger_to_publication_ms": [
+            2185.0144,
+            2334.5461
+          ],
+          "publication_to_paint_raw_bounds_ms": [
+            -10.7107,
+            138.821
+          ],
+          "publication_to_paint_nonnegative_bounds_ms": [
+            0,
+            138.821
+          ],
+          "source_touch_to_paint_ms": 2407.9253,
+          "scheduled_touch_to_paint_ms": 2408.6811
+        }
+      ],
+      "max_latency_ms": 2407.9253,
+      "scheduled_max_ms": 2408.6811,
+      "input_lateness_ms": 348.0253,
+      "observed_queue_lower": 2541,
+      "queue_upper": 2621,
+      "work": {
+        "video": 629,
+        "inferences": 319,
+        "model_wall_ms_median": 30.98669999997128,
+        "model_wall_ms_mean": 36.35801943573753,
+        "precontact_model_calls": 51,
+        "precontact_model_wall_ms_median": 26.083499999970172,
+        "sdk": {
+          "start_success": true,
+          "stop_success": true,
+          "ready_events": [
+            {
+              "method": "tracking_start",
+              "code": 0,
+              "sdk_pid": 14524,
+              "gui_pid": 15736,
+              "observed_ns": 399322476900
+            }
+          ],
+          "errors": [],
+          "tracking_decisions": 363,
+          "nonzero_speeds": 315
+        },
+        "draws": {
+          "all": 419,
+          "valid": 419,
+          "disabled_calls": 0
+        }
+      },
+      "context": {
+        "context_reads_pass": true,
+        "role_pids": {
+          "gui": 15736,
+          "model": 15736,
+          "consumer": 15736
+        },
+        "foreground_self": {
+          "consumer/59904": false,
+          "model/59904": false,
+          "gui/59904": false,
+          "gui/65904": false,
+          "model/65904": false,
+          "consumer/65904": false
+        },
+        "foreground_gui": {
+          "consumer/59904": false,
+          "model/59904": false,
+          "gui/59904": false,
+          "gui/65904": false,
+          "model/65904": false,
+          "consumer/65904": false
+        },
+        "policy": {
+          "consumer/59904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "model/59904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "gui/59904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "gui/65904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "model/65904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          },
+          "consumer/65904": {
+            "process": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            },
+            "thread": {
+              "success": true,
+              "error": 0,
+              "version": 1,
+              "control_mask": 0,
+              "state_mask": 0
+            }
+          }
+        },
+        "scope": "Two phase checkpoints after original calls; not continuous scheduler coverage or observer-disturbance qualification."
+      },
+      "original_return_model_confirmed": false,
+      "boot": {
+        "boot_100ns": 134369844338831911,
+        "uptime_seconds": 318.625,
+        "session_id": 1,
+        "priority_class": 16384,
+        "ac_online": 1
+      },
+      "vision_mode": "original"
+    }
+  },
+  "process_first_severe": true,
+  "process_first_bounded": false,
+  "original_second_severe": true,
+  "conclusion": "Process isolation is not sufficient to prevent a severe cold-first backlog.",
+  "original_four_window_crossover_completed": false,
+  "user_limited_to_two_reboots": true,
+  "root_function_identified": false,
+  "formal_fix_verified": false,
+  "field_fix_verified": false,
+  "bindings": {
+    "retained_manifest_sha256": "6db449c826aab2d7dd53d515b9c264e54a0a5120c8558d3256c1dc461edc86a5",
+    "retained_archive_sha256": "2380b97fd777bad0adf1284aaa6136a4d4a68668041800ab85e7c4152f0466db",
+    "retained_plan_sha256": "8cb18e2306f2ed5cbc197694a3ff34a728cc6de5e372894ccc87fcd0d0cd0dfb",
+    "review_sha256": "79402d65dc4ac509121dee1271c82c79b4f200d465ccdbfdf38a65fb9036df45"
+  }
+}
