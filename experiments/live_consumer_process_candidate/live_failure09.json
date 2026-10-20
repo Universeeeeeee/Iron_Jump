@@ -1,0 +1,24 @@
+{
+  "plan": "plan09.json",
+  "complete": false,
+  "classification": "readiness_gate_failed",
+  "observed": {
+    "default_usb_worker_opened": true,
+    "worker_class": "hardware.usb_worker.UsbWorker",
+    "healthy_samples_last_observed": 9,
+    "readiness_message": "设备布局或数据流变化，重新自检",
+    "protocol_segments": 8,
+    "used_segments": 7,
+    "excluded_full_zero_segment": 1,
+    "session_started": false,
+    "human_test_started": false,
+    "readers_after_cleanup": []
+  },
+  "secondary_failure": {
+    "parent_timeout_seconds": 90,
+    "output_backpressure_after_parent_stopped_reading": true,
+    "actor_error": "OutboxError('message_limit')"
+  },
+  "evidence_retained": "Remote live_consumer_process_candidate09, including active locks, result.json and output_snapshot/unconfirmed packets",
+  "next_plan": "Persist raw frames and last readiness even without a session report; close the failed parent transport and let the actor clean up before inspecting stream/layout stability."
+}

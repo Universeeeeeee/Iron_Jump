@@ -21,8 +21,9 @@ def run_actor(connection,output_root,batch_size=40,fixture_root=None):
   source=Source(Path(fixture_root));controller=SessionController(worker_factory=lambda **kwargs:source)
  outbox=Outbox(connection)
  def readers():return [dict(tid=t.native_id,name=t.name) for t in threading.enumerate() if t.name=='CyUsbInterfaceReader']
- sequence=command_sequence=0;prepared=False;reports=[];errors=[];refs={};raw_batches=[];pending_control=None;completed_control=None;transport_fault=None
+ sequence=command_sequence=0;prepared=False;reports=[];errors=[];refs={};raw_batches=[];last_readiness=None;pending_control=None;completed_control=None;transport_fault=None
  original_drain=_GroundFrameInbox.drain;original_consume=_GroundFrameInbox._consume
+ @Slot()
  def drain(inbox):
   deadline=time.perf_counter()+.004
   while True:
@@ -47,7 +48,9 @@ def run_actor(connection,output_root,batch_size=40,fixture_root=None):
   callback=lambda *args,_name=name:relay(_name,*args);getattr(controller,name).connect(callback);callbacks.append(callback)
  class Delivery(QObject):
   @Slot(dict)
-  def readiness(self,value):emit('readiness',value)
+  def readiness(self,value):
+   nonlocal last_readiness
+   last_readiness=json.loads(json.dumps(value,ensure_ascii=False));emit('readiness',value)
   @Slot(dict)
   def snapshot(self,value):emit('snapshot',value)
   @Slot(dict)
@@ -89,15 +92,18 @@ def run_actor(connection,output_root,batch_size=40,fixture_root=None):
  if controller._thread is not None:
   try:controller.stop('actor_failure') if controller.is_running else controller.discard()
   except BaseException as exc:errors.append('cleanup:'+repr(exc))
+ raw=[value for items in raw_batches for issue,value in items if not issue]
+ if raw:
+  np.savez_compressed(folder/'raw_frames.npz',bits=np.array([np.frombuffer(v.contact_bits,np.uint8) for v in raw]),wire=np.array([np.frombuffer(v.wire_payload,np.uint8) for v in raw]),valid_bits=np.array([np.frombuffer(v.valid_bits,np.uint8) for v in raw]),sample_indices=np.array([v.sample_index for v in raw]),frame_indices=np.array([v.frame_index for v in raw]),received_ns=np.array([v.received_monotonic_ns for v in raw]),dropped_frames_before=np.array([v.dropped_frames_before for v in raw]))
+ if last_readiness is not None:(folder/'last_readiness.json').write_text(json.dumps(last_readiness,ensure_ascii=False,indent=2))
  if reports:
   report=reports[0];(folder/'report.json').write_text(json.dumps(report,ensure_ascii=False));quality=refs['quality'];engine=refs['engine'];runtime=quality._runtime;window=hashlib.sha256()
   for bits,changes in runtime._window:window.update(bits.tobytes());window.update(changes.tobytes())
   state=dict(quality=quality.snapshot(),runtime_counts=runtime._counts.tolist(),runtime_transitions=runtime._transitions.tolist(),runtime_healthy=runtime.healthy_samples,runtime_window_sha256=window.hexdigest(),event_audit=engine.overground.processor.event_audit,timeline=list(engine.overground.processor.timeline),mirror_events=engine.overground._frame_filter.mirror_guard.events,raw_archive_sha256=hashlib.sha256(b''.join(engine.overground.frames)).hexdigest());(folder/'state.json').write_text(json.dumps(state,ensure_ascii=False))
-  raw=[value for items in raw_batches for issue,value in items if not issue];np.savez_compressed(folder/'raw_frames.npz',bits=np.array([np.frombuffer(v.contact_bits,np.uint8) for v in raw]),wire=np.array([np.frombuffer(v.wire_payload,np.uint8) for v in raw]),valid_bits=np.array([np.frombuffer(v.valid_bits,np.uint8) for v in raw]),sample_indices=np.array([v.sample_index for v in raw]),frame_indices=np.array([v.frame_index for v in raw]),received_ns=np.array([v.received_monotonic_ns for v in raw]),dropped_frames_before=np.array([v.dropped_frames_before for v in raw]))
   emit('report_value',dict(report=report,raw_exports_child_owned=True))
  complete=not errors and completed_control is not None and controller._thread is None and (completed_control['kind']=='discard' or len(reports)==1)
  emit('terminal',dict(complete=complete,errors=errors,batch_size=batch_size));writer_finished=outbox.finish(2);outbox.preserve(folder/'output_snapshot')
  result=dict(complete=complete and writer_finished,pid=os.getpid(),errors=errors,commands_received=command_sequence,completed_control=completed_control,report_saved=(folder/'report.json').exists(),batch_size=batch_size,output=outbox.snapshot(),transport_fault=transport_fault,
-  live_default_USB=fixture_root is None,worker_class=None if 'worker' not in refs else refs['worker'].__class__.__module__+'.'+refs['worker'].__class__.__name__,readers_after_cleanup=readers(),formal_program_modified=False)
+  live_default_USB=fixture_root is None,worker_class=None if 'worker' not in refs else refs['worker'].__class__.__module__+'.'+refs['worker'].__class__.__name__,raw_frames_saved=(folder/'raw_frames.npz').exists(),last_readiness=last_readiness,readers_after_cleanup=readers(),formal_program_modified=False)
  (folder/'result.json').write_text(json.dumps(result,indent=2));_GroundFrameInbox.drain=original_drain;_GroundFrameInbox._consume=original_consume;connection.close()
  if not result['complete']:raise SystemExit(1)
