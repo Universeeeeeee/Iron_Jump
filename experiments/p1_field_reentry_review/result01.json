@@ -1,0 +1,625 @@
+{
+  "cases": [
+    {
+      "case": "20261017_213018",
+      "source_sha256": {
+        "raw_frames.npz": "9c78d84b9d3de94c1f97a712173f80f12efe0bd65f303bafebd3abc5cb9bf1da",
+        "state.json": "6cc12cbb6b3117e613c4d7c45664e93108c29d5c821454332239ec10e58d48d1",
+        "report.json": "7d46bfda236ac2dfcff21b93df13f00d493fd42572a685632cf76491f12064fa",
+        "acquisition.json": "7f821fb745e2297bbc28665b20d4dd2c0fed51eefd8a115e93f425c6b82abbdb",
+        "measurement.json": "aca4ddb469b985b71163fbe42c75fab8013681e8fb73a470262ac7b008aa9abb",
+        "controller_result.json": "ced7b16c033df4e3450463c798468a03bcfb3b4f621521d1aeaa31e2fb14fd1b",
+        "case.json": "506101cf6b37c8fbc93390c4f3e4149baf3bfb1ffac2a84cf153b0ff634104f7"
+      },
+      "onsite": {
+        "first_foot": "left",
+        "actual_steps": 11,
+        "perceived_delay": "obvious_and_increasing",
+        "skeleton_tracking": "normal",
+        "video_reference": "D:/86150/Videos/\u5c4f\u5e55\u5f55\u5236/\u5c4f\u5e55\u5f55\u5236 2026-10-17 213118.mp4, 40-50s"
+      },
+      "controller_child_returncode": 1,
+      "raw_frames_with_preparation": 64209,
+      "formal_archive_frames": 41459,
+      "formal_frames": 41442,
+      "actual_receipt_rate_fps": 999.9911899620315,
+      "max_receipt_gap_ms": 125.1354,
+      "initial_empty": {
+        "observations": 128,
+        "observed_s": 4.9571614,
+        "enqueued_fps": 1000.1691693960175,
+        "consumer_fps": 999.9674410439812,
+        "throughput_gap_to_actual_fps": 0.20172835203629802,
+        "pending": {
+          "count": 128,
+          "p95": 4.0,
+          "max": 7.0
+        },
+        "oldest_pending_ms": {
+          "count": 128,
+          "p95": 4.0445400000000005,
+          "max": 5.4717
+        },
+        "completed_receipt_age_ms": {
+          "count": 128,
+          "p95": 5.196744999999999,
+          "max": 7.6399
+        },
+        "age_slope_ms_per_device_second": 0.19207325067022105,
+        "heavy_observed_span_s": 0.0,
+        "max_observation_gap_ms": 67.0911,
+        "sustained_shortage": false
+      },
+      "contact_window": {
+        "observations": 776,
+        "observed_s": 32.7361851,
+        "enqueued_fps": 1000.085987417025,
+        "consumer_fps": 885.8393215769054,
+        "throughput_gap_to_actual_fps": 114.24666584011959,
+        "pending": {
+          "count": 776,
+          "p95": 3421.25,
+          "max": 3814.0
+        },
+        "oldest_pending_ms": {
+          "count": 776,
+          "p95": 3414.419625,
+          "max": 3814.0855
+        },
+        "completed_receipt_age_ms": {
+          "count": 776,
+          "p95": 3416.5269749999998,
+          "max": 3821.4277
+        },
+        "age_slope_ms_per_device_second": 92.92309508931334,
+        "heavy_observed_span_s": 14.4692457,
+        "max_observation_gap_ms": 147.4429,
+        "sustained_shortage": true
+      },
+      "observed_pending_max": 3814,
+      "observed_oldest_pending_max_ms": 3814.0855,
+      "completed_receipt_age_max_ms": 3821.4277,
+      "active_publications": 11,
+      "active_publications_painted": 11,
+      "algorithm_touch_count": 11,
+      "algorithm_lift_count": 8,
+      "receipt_to_paint": [
+        {
+          "contact_id": 0,
+          "touch_sample": 32048,
+          "receipt_to_paint_ms": 152.77
+        },
+        {
+          "contact_id": 1,
+          "touch_sample": 32709,
+          "receipt_to_paint_ms": 193.5986
+        },
+        {
+          "contact_id": 2,
+          "touch_sample": 33292,
+          "receipt_to_paint_ms": 286.7295
+        },
+        {
+          "contact_id": 3,
+          "touch_sample": 33867,
+          "receipt_to_paint_ms": 343.4299
+        },
+        {
+          "contact_id": 4,
+          "touch_sample": 34461,
+          "receipt_to_paint_ms": 326.2948
+        },
+        {
+          "contact_id": 5,
+          "touch_sample": 35002,
+          "receipt_to_paint_ms": 417.8083
+        },
+        {
+          "contact_id": 7,
+          "touch_sample": 35531,
+          "receipt_to_paint_ms": 489.2228
+        },
+        {
+          "contact_id": 8,
+          "touch_sample": 36098,
+          "receipt_to_paint_ms": 617.0801
+        },
+        {
+          "contact_id": 9,
+          "touch_sample": 36687,
+          "receipt_to_paint_ms": 655.1111
+        },
+        {
+          "contact_id": 10,
+          "touch_sample": 37269,
+          "receipt_to_paint_ms": 771.2162
+        },
+        {
+          "contact_id": 11,
+          "touch_sample": 37875,
+          "receipt_to_paint_ms": 835.2699
+        }
+      ],
+      "receipt_to_paint_max_ms": 835.2699,
+      "receipt_to_paint_p95_ms": 803.24305,
+      "severe_real_backlog": true,
+      "field_integrity_pass": true
+    },
+    {
+      "case": "20261017_214905",
+      "source_sha256": {
+        "raw_frames.npz": "2042f146705f24efaa49d43df29a8ad655810f41eb812fef93f444cf88df2ac5",
+        "state.json": "7376b4b8f38fa0bc8453b66bf488cc54c6a3d0bcc8ba950b6b60edc5c69169ef",
+        "report.json": "73b70921e611785bcb57258c0d9fbd92d5b7fdbf37756c67e40222df6ab7842c",
+        "acquisition.json": "83f2911ea7bfe37f89e3952b51b375901b48128bef6faec159a8b7be89b25aef",
+        "measurement.json": "cf44031761530ace41869ef568252fbb8b20a0a7ed624a84ac6144a1c7912d30",
+        "controller_result.json": "ced7b16c033df4e3450463c798468a03bcfb3b4f621521d1aeaa31e2fb14fd1b",
+        "case.json": "5fab5657e561e505e9e7cc359db32b97fb1bb371fa9039d335a1bbba03ed3558"
+      },
+      "onsite": {
+        "first_foot": "left",
+        "actual_steps": 11,
+        "perceived_delay": "obvious_and_increasing",
+        "skeleton_tracking": "normal",
+        "video_reference": "D:/86150/Videos/\u5c4f\u5e55\u5f55\u5236/\u5c4f\u5e55\u5f55\u5236 2026-10-17 215004.mp4, 40-50s"
+      },
+      "controller_child_returncode": 1,
+      "raw_frames_with_preparation": 60108,
+      "formal_archive_frames": 40442,
+      "formal_frames": 40439,
+      "actual_receipt_rate_fps": 1000.0048692061613,
+      "max_receipt_gap_ms": 267.5586,
+      "initial_empty": {
+        "observations": 128,
+        "observed_s": 4.9448458,
+        "enqueued_fps": 1000.2334147608808,
+        "consumer_fps": 1000.4356455362065,
+        "throughput_gap_to_actual_fps": -0.20223077532568823,
+        "pending": {
+          "count": 128,
+          "p95": 4.6499999999999915,
+          "max": 6.0
+        },
+        "oldest_pending_ms": {
+          "count": 128,
+          "p95": 4.076069999999999,
+          "max": 5.2503
+        },
+        "completed_receipt_age_ms": {
+          "count": 128,
+          "p95": 5.503354999999996,
+          "max": 15.2246
+        },
+        "age_slope_ms_per_device_second": -0.08667426409525428,
+        "heavy_observed_span_s": 0.0,
+        "max_observation_gap_ms": 82.8471,
+        "sustained_shortage": false
+      },
+      "contact_window": {
+        "observations": 784,
+        "observed_s": 30.9059626,
+        "enqueued_fps": 999.9688539065274,
+        "consumer_fps": 1001.8455144315744,
+        "throughput_gap_to_actual_fps": -1.8766605250469865,
+        "pending": {
+          "count": 784,
+          "p95": 1005.0999999999995,
+          "max": 1314.0
+        },
+        "oldest_pending_ms": {
+          "count": 784,
+          "p95": 1007.2468949999999,
+          "max": 1314.1764
+        },
+        "completed_receipt_age_ms": {
+          "count": 784,
+          "p95": 1023.466115,
+          "max": 1319.5335
+        },
+        "age_slope_ms_per_device_second": -17.166344087338096,
+        "heavy_observed_span_s": 3.6984128,
+        "max_observation_gap_ms": 340.2361,
+        "sustained_shortage": false
+      },
+      "observed_pending_max": 1314,
+      "observed_oldest_pending_max_ms": 1314.1764,
+      "completed_receipt_age_max_ms": 1319.5335,
+      "active_publications": 11,
+      "active_publications_painted": 11,
+      "algorithm_touch_count": 11,
+      "algorithm_lift_count": 10,
+      "receipt_to_paint": [
+        {
+          "contact_id": 0,
+          "touch_sample": 27535,
+          "receipt_to_paint_ms": 156.0101
+        },
+        {
+          "contact_id": 2,
+          "touch_sample": 28167,
+          "receipt_to_paint_ms": 149.7962
+        },
+        {
+          "contact_id": 3,
+          "touch_sample": 28717,
+          "receipt_to_paint_ms": 210.6312
+        },
+        {
+          "contact_id": 4,
+          "touch_sample": 29232,
+          "receipt_to_paint_ms": 259.7906
+        },
+        {
+          "contact_id": 5,
+          "touch_sample": 29796,
+          "receipt_to_paint_ms": 667.1326
+        },
+        {
+          "contact_id": 6,
+          "touch_sample": 30327,
+          "receipt_to_paint_ms": 482.3706
+        },
+        {
+          "contact_id": 7,
+          "touch_sample": 30861,
+          "receipt_to_paint_ms": 453.2228
+        },
+        {
+          "contact_id": 8,
+          "touch_sample": 31398,
+          "receipt_to_paint_ms": 530.298
+        },
+        {
+          "contact_id": 9,
+          "touch_sample": 31944,
+          "receipt_to_paint_ms": 644.6888
+        },
+        {
+          "contact_id": 10,
+          "touch_sample": 32483,
+          "receipt_to_paint_ms": 763.2255
+        },
+        {
+          "contact_id": 11,
+          "touch_sample": 33063,
+          "receipt_to_paint_ms": 1380.2746
+        }
+      ],
+      "receipt_to_paint_max_ms": 1380.2746,
+      "receipt_to_paint_p95_ms": 1071.75005,
+      "severe_real_backlog": true,
+      "field_integrity_pass": true
+    },
+    {
+      "case": "20261017_220528",
+      "source_sha256": {
+        "raw_frames.npz": "8659e2e6015c5b7c96b34fec1b7752c2026f44e69ad9ac940c8fa9530ff0d7f8",
+        "state.json": "3de7bd05ac59cb5126ee5d8ef9337690534a7eae01d30ea6a0facadb073a586c",
+        "report.json": "8c8a194182688fcac8d2c4713d768a287c55c7462c1f0cabf0c40cee2e5d01c2",
+        "acquisition.json": "552c766ac727cde6863aa995e14320b91701bdf1e0a9e16368adbc5ffc3a980f",
+        "measurement.json": "cb048704337ff601f2571e2331035f636ad88d20c34a7656a249142fd77ed30a",
+        "controller_result.json": "ced7b16c033df4e3450463c798468a03bcfb3b4f621521d1aeaa31e2fb14fd1b",
+        "case.json": "f2241fa0153c0770f26e6c8e370f64e97ac51aaf978f5dc6c522c97dda156823"
+      },
+      "onsite": {
+        "first_foot": "left",
+        "actual_steps": 11,
+        "perceived_delay": "low",
+        "skeleton_tracking": "normal",
+        "video_reference": "D:/86150/Videos/\u5c4f\u5e55\u5f55\u5236/\u5c4f\u5e55\u5f55\u5236 2026-10-17 220627.mp4, 42-52s"
+      },
+      "controller_child_returncode": 1,
+      "raw_frames_with_preparation": 60112,
+      "formal_archive_frames": 38451,
+      "formal_frames": 38448,
+      "actual_receipt_rate_fps": 999.9970739024939,
+      "max_receipt_gap_ms": 186.8601,
+      "initial_empty": {
+        "observations": 128,
+        "observed_s": 4.9402232,
+        "enqueued_fps": 999.9548198551029,
+        "consumer_fps": 1000.1572398591221,
+        "throughput_gap_to_actual_fps": -0.20242000401924543,
+        "pending": {
+          "count": 128,
+          "p95": 4.0,
+          "max": 5.0
+        },
+        "oldest_pending_ms": {
+          "count": 128,
+          "p95": 3.8487449999999996,
+          "max": 17.2678
+        },
+        "completed_receipt_age_ms": {
+          "count": 128,
+          "p95": 5.11656,
+          "max": 25.6381
+        },
+        "age_slope_ms_per_device_second": -0.23389996230205,
+        "heavy_observed_span_s": 0.0,
+        "max_observation_gap_ms": 72.6304,
+        "sustained_shortage": false
+      },
+      "contact_window": {
+        "observations": 767,
+        "observed_s": 30.1363274,
+        "enqueued_fps": 993.8171829126067,
+        "consumer_fps": 995.6754053581194,
+        "throughput_gap_to_actual_fps": -1.8582224455127516,
+        "pending": {
+          "count": 767,
+          "p95": 352.39999999999986,
+          "max": 431.0
+        },
+        "oldest_pending_ms": {
+          "count": 767,
+          "p95": 351.10751999999997,
+          "max": 431.0678
+        },
+        "completed_receipt_age_ms": {
+          "count": 767,
+          "p95": 365.98565999999994,
+          "max": 439.6873
+        },
+        "age_slope_ms_per_device_second": -7.778216873198273,
+        "heavy_observed_span_s": 5.9303441,
+        "max_observation_gap_ms": 251.3071,
+        "sustained_shortage": false
+      },
+      "observed_pending_max": 431,
+      "observed_oldest_pending_max_ms": 431.0678,
+      "completed_receipt_age_max_ms": 439.6873,
+      "active_publications": 11,
+      "active_publications_painted": 11,
+      "algorithm_touch_count": 11,
+      "algorithm_lift_count": 9,
+      "receipt_to_paint": [
+        {
+          "contact_id": 0,
+          "touch_sample": 29955,
+          "receipt_to_paint_ms": 203.0862
+        },
+        {
+          "contact_id": 2,
+          "touch_sample": 30580,
+          "receipt_to_paint_ms": 213.3277
+        },
+        {
+          "contact_id": 3,
+          "touch_sample": 31107,
+          "receipt_to_paint_ms": 313.8758
+        },
+        {
+          "contact_id": 4,
+          "touch_sample": 31629,
+          "receipt_to_paint_ms": 372.0194
+        },
+        {
+          "contact_id": 5,
+          "touch_sample": 32163,
+          "receipt_to_paint_ms": 351.458
+        },
+        {
+          "contact_id": 6,
+          "touch_sample": 32673,
+          "receipt_to_paint_ms": 370.5515
+        },
+        {
+          "contact_id": 7,
+          "touch_sample": 33185,
+          "receipt_to_paint_ms": 392.8089
+        },
+        {
+          "contact_id": 8,
+          "touch_sample": 33666,
+          "receipt_to_paint_ms": 456.8594
+        },
+        {
+          "contact_id": 9,
+          "touch_sample": 34231,
+          "receipt_to_paint_ms": 444.6842
+        },
+        {
+          "contact_id": 10,
+          "touch_sample": 34739,
+          "receipt_to_paint_ms": 479.3505
+        },
+        {
+          "contact_id": 11,
+          "touch_sample": 35292,
+          "receipt_to_paint_ms": 479.5654
+        }
+      ],
+      "receipt_to_paint_max_ms": 479.5654,
+      "receipt_to_paint_p95_ms": 479.45795,
+      "severe_real_backlog": false,
+      "field_integrity_pass": true
+    },
+    {
+      "case": "20261018_131910",
+      "source_sha256": {
+        "raw_frames.npz": "8ee4a9ea9ac835f5dc083d014eeaef9d337ee8c140f1cdc3a11f1be6fece2d47",
+        "state.json": "bfb63086da795427cc2fbd5985a4ff56bcd1cdb964908dcc4a9408a79a6d914f",
+        "report.json": "0ae1bf2d9277c1e3d95d629e071cb3ff61d249c78c6d0b6d0901773f4fb68747",
+        "acquisition.json": "e84e6bd481eeadd408a61c377950cc878bf8d989b92f58596fccf6eee62c62cb",
+        "measurement.json": "a2b441f1367dd3d5eb7204c75eeebf05c344e8dd69b632ba29f57a4eed6febe9",
+        "controller_result.json": "ced7b16c033df4e3450463c798468a03bcfb3b4f621521d1aeaa31e2fb14fd1b",
+        "case.json": "17066a785f2b0a6722ab6a6e23f14a3e5c23f1606e4441b33464dc4053cf5230"
+      },
+      "onsite": {
+        "first_foot": "left",
+        "actual_steps": 11,
+        "perceived_delay": "low_then_slight_last_two",
+        "skeleton_tracking": "normal",
+        "video_reference": "D:/86150/Videos/\u5c4f\u5e55\u5f55\u5236/\u5c4f\u5e55\u5f55\u5236 2026-10-18 132059.mp4, 1:33-1:42"
+      },
+      "controller_child_returncode": 1,
+      "raw_frames_with_preparation": 74883,
+      "formal_archive_frames": 40977,
+      "formal_frames": 40969,
+      "actual_receipt_rate_fps": 1000.0011325925735,
+      "max_receipt_gap_ms": 108.2746,
+      "initial_empty": {
+        "observations": 127,
+        "observed_s": 4.9270066,
+        "enqueued_fps": 999.9986604442543,
+        "consumer_fps": 999.7956974524856,
+        "throughput_gap_to_actual_fps": 0.20296299176868615,
+        "pending": {
+          "count": 127,
+          "p95": 5.0,
+          "max": 39.0
+        },
+        "oldest_pending_ms": {
+          "count": 127,
+          "p95": 4.062079999999997,
+          "max": 16.0851
+        },
+        "completed_receipt_age_ms": {
+          "count": 127,
+          "p95": 7.402639999999998,
+          "max": 78.386
+        },
+        "age_slope_ms_per_device_second": -0.269278206871402,
+        "heavy_observed_span_s": 0.0,
+        "max_observation_gap_ms": 82.0905,
+        "sustained_shortage": false
+      },
+      "contact_window": {
+        "observations": 830,
+        "observed_s": 32.6922445,
+        "enqueued_fps": 996.4748673037728,
+        "consumer_fps": 996.4748673037728,
+        "throughput_gap_to_actual_fps": 0.0,
+        "pending": {
+          "count": 830,
+          "p95": 377.54999999999995,
+          "max": 598.0
+        },
+        "oldest_pending_ms": {
+          "count": 830,
+          "p95": 378.1093799999999,
+          "max": 555.3186
+        },
+        "completed_receipt_age_ms": {
+          "count": 830,
+          "p95": 384.16179999999963,
+          "max": 568.8625
+        },
+        "age_slope_ms_per_device_second": -1.5152900472470576,
+        "heavy_observed_span_s": 4.1147948,
+        "max_observation_gap_ms": 182.6087,
+        "sustained_shortage": false
+      },
+      "observed_pending_max": 598,
+      "observed_oldest_pending_max_ms": 555.3186,
+      "completed_receipt_age_max_ms": 568.8625,
+      "active_publications": 11,
+      "active_publications_painted": 11,
+      "algorithm_touch_count": 11,
+      "algorithm_lift_count": 9,
+      "receipt_to_paint": [
+        {
+          "contact_id": 0,
+          "touch_sample": 42237,
+          "receipt_to_paint_ms": 174.6832
+        },
+        {
+          "contact_id": 2,
+          "touch_sample": 42916,
+          "receipt_to_paint_ms": 187.3675
+        },
+        {
+          "contact_id": 3,
+          "touch_sample": 43506,
+          "receipt_to_paint_ms": 202.8191
+        },
+        {
+          "contact_id": 4,
+          "touch_sample": 44065,
+          "receipt_to_paint_ms": 198.1864
+        },
+        {
+          "contact_id": 5,
+          "touch_sample": 44639,
+          "receipt_to_paint_ms": 144.1451
+        },
+        {
+          "contact_id": 8,
+          "touch_sample": 45225,
+          "receipt_to_paint_ms": 192.8043
+        },
+        {
+          "contact_id": 9,
+          "touch_sample": 45775,
+          "receipt_to_paint_ms": 269.2682
+        },
+        {
+          "contact_id": 10,
+          "touch_sample": 46345,
+          "receipt_to_paint_ms": 259.9561
+        },
+        {
+          "contact_id": 11,
+          "touch_sample": 46918,
+          "receipt_to_paint_ms": 347.909
+        },
+        {
+          "contact_id": 12,
+          "touch_sample": 47488,
+          "receipt_to_paint_ms": 475.4695
+        },
+        {
+          "contact_id": 13,
+          "touch_sample": 48113,
+          "receipt_to_paint_ms": 636.9176
+        }
+      ],
+      "receipt_to_paint_max_ms": 636.9176,
+      "receipt_to_paint_p95_ms": 556.19355,
+      "severe_real_backlog": false,
+      "field_integrity_pass": true
+    }
+  ],
+  "conclusions": [
+    "All four retained runs deliver approximately1000fps into the host after USB assembly; severe delay is not required by low input rate.",
+    "At least one real single-USB run has host-side FIFO and contact-to-paint delay above1s; later runs can be fast without production code changes.",
+    "Onsite perceived delay is retained independently and may disagree with sparse queue observations; neither source is silently rewritten.",
+    "These original-only runs establish the field symptom range, not a candidate A/B or CPU/GIL contribution."
+  ],
+  "P0_CPU_gate_used_for_P1_metrics": false,
+  "next_experiment": {
+    "candidate": "Combined camera/video plus MediaPipe process boundary, not model-only isolation.",
+    "prerequisite": "First pass delivery/semantic equivalence on saved input: exact selected frames/pixels/model outputs/pose decisions/SDK commands andfinal report.",
+    "field_design": "Order-balanced fresh-system blocks. Record original andcandidate under matched Core/OS delivery bands; severe original required before a repair claim. Do not pair a slow original with a naturally recovered candidate.",
+    "endpoints": [
+      "actual receipt rate",
+      "consumer fps",
+      "continuous FIFO upper bound",
+      "oldest pending age",
+      "receipt contact-to-paint",
+      "planned contact-to-paint",
+      "input lateness",
+      "all active publications painted"
+    ],
+    "absolute_candidate_limits": {
+      "continuous_FIFO_frames": 250,
+      "max_planned_contact_to_paint_ms": 250,
+      "max_input_lateness_ms": 150
+    },
+    "semantic_gates": [
+      "raw wire/bits/validity/counters",
+      "quality/runtime/audit/timeline/mirror",
+      "complete report",
+      "actual video/model/SDK work",
+      "human step/first-foot kept separate"
+    ],
+    "CPU_attribution_gate": "Historical31.25ms failure remains. Any new CPU mechanism capture must include DPC/ISR,CSwitch,PMC andnative boundaries; no percentages otherwise."
+  },
+  "goal_complete": false,
+  "bindings": {
+    "experiments/p1_field_reentry_review/analyze.py": "959fc864bdc3268015151ffe5994ecc020546dc796216abbd44b84741e82d968",
+    "experiments/p1_field_reentry_review/onsite_observations01.json": "b2f5f2e693067be1c35a8fde5112da2048e9ee923a0b8fed4b23aab6ad300464",
+    "experiments/single_usb_field/analyze.py": "5fa16df3e598b83e7b0628cdfd65a0446ea603fb4a22c2142d7206b19cf9dbfa"
+  }
+}

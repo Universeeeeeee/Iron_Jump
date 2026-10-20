@@ -1,0 +1,7 @@
+{
+  "stage": "Second offline analysis before result creation",
+  "failure": "The analysis required child_returncode==0, but all four historical controller records intentionally retain child_returncode=1 while valid_capture=true, cleanup is confirmed, errors are empty and no owned trace remains.",
+  "field_source_files_modified": false,
+  "result_created": false,
+  "recovery": "Apply the historical controller contract: require valid_capture, terminated_after_child_cleanup, empty errors and no owned trace; retain child_returncode=1 explicitly in every derived row rather than rewriting it."
+}

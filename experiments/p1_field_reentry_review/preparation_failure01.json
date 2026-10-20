@@ -1,0 +1,10 @@
+{
+  "stage": "Local tests and first offline analysis before result creation",
+  "failures": [
+    "Synthetic test accidentally set completed_sample and latest_sample to the same 1000fps progression, so the intended consumer-shortage assertion failed.",
+    "Analysis incorrectly required measurement.raw_total to equal raw_frames.npz length. raw_total is the formal archived engine count; raw_frames also includes preparation acquisition."
+  ],
+  "field_source_files_modified": false,
+  "result_created": false,
+  "recovery": "Use independent 500fps completed progression in the test; validate raw_frames length against acquisition.frames and retain raw_total as a separate formal archive count."
+}
