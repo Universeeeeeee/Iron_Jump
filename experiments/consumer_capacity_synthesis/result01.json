@@ -1,0 +1,91 @@
+{
+  "conclusion": "The immediate software root is insufficient worst-state consumer service capacity: arrivals remain about1000Hz while the consumer completes about797fps even after video/model isolation.",
+  "cases": {
+    "cold01_process": {
+      "first_touch_sample": 60188,
+      "last_release_sample": 64957,
+      "duration_s": 4.7431909,
+      "start_pending": 38,
+      "end_pending": 1010,
+      "arrived_frames": 4752,
+      "completed_frames": 3780,
+      "arrival_fps": 1001.8572096687063,
+      "effective_service_fps": 796.93187132738,
+      "queue_growth_fps": 204.9253383413263,
+      "effective_ms_per_frame": 1.2548124074074074,
+      "required_fps_for_250": 957.1615597424088,
+      "required_ms_per_frame_for_250": 1.044755704845815,
+      "required_throughput_increase_for_250": 0.20105820105820116,
+      "required_throughput_increase_for_zero_growth": 0.2571428571428571,
+      "retained_peak_lower": 1614,
+      "retained_peak_upper": 1694,
+      "scheduled_max_ms": 1491.2546,
+      "extra_effective_ms_above_offline_chain_range": [
+        0.6791411274074074,
+        0.7053524274074074
+      ]
+    },
+    "cold02_original": {
+      "first_touch_sample": 60188,
+      "last_release_sample": 64957,
+      "duration_s": 4.7644523,
+      "start_pending": 2,
+      "end_pending": 1372,
+      "arrived_frames": 4762,
+      "completed_frames": 3392,
+      "arrival_fps": 999.4852923598374,
+      "effective_service_fps": 711.939124671266,
+      "queue_growth_fps": 287.5461676885715,
+      "effective_ms_per_frame": 1.4046144752358491,
+      "required_fps_for_250": 947.4331393767967,
+      "required_ms_per_frame_for_250": 1.0554834514842713,
+      "required_throughput_increase_for_250": 0.33077830188679247,
+      "required_throughput_increase_for_zero_growth": 0.40389150943396235,
+      "retained_peak_lower": 2541,
+      "retained_peak_upper": 2621,
+      "scheduled_max_ms": 2408.6811,
+      "extra_effective_ms_above_offline_chain_range": [
+        0.8289431952358491,
+        0.8551544952358492
+      ]
+    }
+  },
+  "offline_contact_chain_median_us_range": [
+    549.45998,
+    575.67128
+  ],
+  "minimum_gap_to_close": {
+    "process_cold_required_additional_fps": 160.22968841502882,
+    "process_cold_required_ms_reduction_per_frame": 0.21005670256159248
+  },
+  "localization": {
+    "excluded_as_sufficient_fix": [
+      "video decode and MediaPipe process isolation"
+    ],
+    "supported": [
+      "consumer/GUI-process execution and synchronization overhead beyond the offline algorithm chain",
+      "slow execution-delivery state affecting consumer capacity"
+    ],
+    "unknown": [
+      "share from GIL acquisition",
+      "share from Qt/event-loop batching",
+      "share from native computation/CPU delivery",
+      "exact responsible function"
+    ]
+  },
+  "next_candidate": {
+    "name": "consumer session process isolation",
+    "reason": "It is the remaining existing boundary that removes GUI-process GIL/Qt contention while preserving the original filter/Processor/report chain.",
+    "current_evidence": "Semantic delivery already passed; severe-state performance has not been qualified.",
+    "required_gate": "Must close at least the measured 160fps / 0.21ms-per-frame process-cold gap and meet <=250 frames and <=250ms with exact reports."
+  },
+  "no_new_capture": true,
+  "formal_fix_verified": false,
+  "field_fix_verified": false,
+  "bindings": {
+    "process_actor_sha256": "ebfce77b7b42984e26ff00c787879d84543aeb98460550ebec9a177589fcdaeb",
+    "original_actor_sha256": "fce730c894fabfeefa67771a34c40807ffbe58c62fdc9012cfbb3d94687ca1b5",
+    "cold_result_sha256": "f45828a983f9a49a98d70047c8a9da7e14578a2dc423d9cce09ea6c3c665bcbb",
+    "offline_chain_sha256": "28fa57348513443b44635617d022c32ec9003fd66f7982fd2940e7b792cf15a8"
+  }
+}
