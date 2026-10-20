@@ -4,7 +4,7 @@ from pathlib import Path
 import tempfile
 import unittest
 import numpy as np
-from common import frame_identity,preview_identity
+from common import canonical_pose,frame_identity,pose_payload,preview_identity
 from process_delivery import receive,reference_path
 
 
@@ -34,6 +34,13 @@ class Protocol(unittest.TestCase):
     def test_pose_message_requires_parent_rehash(self):
         message=dict(kind='pose',ordinal=0,pose_sha256='bad')
         self.assertEqual(receive(FakeConnection(message),'pose')['pose_sha256'],'bad')
+
+    def test_pose_payload_has_no_business_class_dependency(self):
+        from dataclasses import dataclass
+        @dataclass
+        class Pose: x:float
+        value=pose_payload(Pose(1.5))
+        self.assertEqual(value,{'x':1.5});self.assertEqual(canonical_pose(value),canonical_pose(Pose(1.5)))
 
     def test_process_reads_cohort_reference_from_runs(self):
         self.assertEqual(reference_path(Path('runs')/'process01'),Path('runs')/'reference01.json')

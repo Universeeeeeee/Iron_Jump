@@ -10,7 +10,7 @@ import threading
 import time
 
 import numpy as np
-from common import Media,canonical_pose,preview_identity,sha
+from common import Media,canonical_pose,pose_payload,preview_identity,sha
 
 HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[1]
@@ -46,7 +46,7 @@ def child(connection,shm_name,capacity,plan,schedule,folder):
                 record['preview_messages']+=1
                 for call in by_frame.get(frame_id,[]):
                     begin=time.perf_counter_ns();pose=adapter.infer_bgr(frame,call['timestamp_ms']);end=time.perf_counter_ns()
-                    connection.send(dict(kind='pose',ordinal=call['ordinal'],frame_index=frame_id,pose=pose,
+                    connection.send(dict(kind='pose',ordinal=call['ordinal'],frame_index=frame_id,pose=pose_payload(pose),
                         pose_sha256=canonical_pose(pose),begin_ns=begin,end_ns=end))
                     ack=receive(connection,'pose_ack')
                     if ack['ordinal']!=call['ordinal']:raise ValueError('Pose acknowledgement mismatch')
@@ -67,7 +67,7 @@ def child(connection,shm_name,capacity,plan,schedule,folder):
 
 
 if __name__=='__main__':
-    plan=json.loads((HERE/'plan04.json').read_text());folder=Path(sys.argv[1]);folder.mkdir(exist_ok=False);(folder/'active.lock').mkdir()
+    plan=json.loads((HERE/'plan05.json').read_text());folder=Path(sys.argv[1]);folder.mkdir(exist_ok=False);(folder/'active.lock').mkdir()
     assert all(sha(HERE/n)==v for n,v in plan['sources'].items()) and sha(Path(plan['model_path']))==plan['model_sha256']
     schedule=json.loads((HERE/'selection01.json').read_text());reference=json.loads(reference_path(folder).read_text())
     assert reference['complete'] and not reference['errors']

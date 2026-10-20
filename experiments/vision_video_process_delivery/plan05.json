@@ -1,0 +1,41 @@
+{
+  "input_root": "E:\\OptoJump\\IronJump-ground-backlog-measurement-20261016\\experiments\\ground_backlog_measurement\\inputs\\walk",
+  "media_sha256": {
+    "camera.csv": "cc911dfd8e7aadf4da9f7c1e604e65ef33a02a4f7f790ba1e0ad1dfa7e890d88",
+    "camera.mjpg": "64d887e0c2817e3594e3bbad4193ab97b4abc1d0c2eed0229ac3d092fad04e52"
+  },
+  "model_path": "E:/OptoJump/IronJump-gil-gui-calibration-20261018-01/models/pose_landmarker_full.task",
+  "model_sha256": "5134a3aad27a58b93da0088d431f366da362b44e3ccfbe3462b3827a839011b1",
+  "selection_sha256": "0a21dab39e4b3325d330c7d46457e9070f46c185502ad13facd3b8addb982777",
+  "reference_archive_sha256": "6bb7407cdddb8a620015baa7f3797ed75ccca749379b262d27e960d583591fb6",
+  "reference_source_sha256": {
+    "gui_result.json": "409979a5889e1f5c180de2676229175981424dcae883eb7a45a99809226995f4",
+    "workload_final.json": "5035d0c65e82ba98802a0f501bfd9bffe05fc3668e4d6bdc5513f24026c8bc56"
+  },
+  "counts": {
+    "preview_frames": 822,
+    "inferences": 417,
+    "stale_frames_skipped": 31
+  },
+  "shared_frame_capacity_bytes": 8388608,
+  "sources": {
+    "cohort.py": "36309d8d01a9a0b1e364c410e8ce792644bf8bf97ecaa4c22af6dbfb664e77df",
+    "common.py": "a101f4eb4132a9aa486ae29b90d5d8897de572d875891f7f2281ec0eb200e242",
+    "extract_reference.py": "edc811b020f6968acce683ac249494fb20fd8681196d5aeffe0ece39e98c9aa6",
+    "freeze.py": "4c21d48ae3872a5119e17ffcdffdefd644a67baf27d1727a9a7fe9ff67677c01",
+    "preflight.py": "4298f07fcf062b731f87159f1382f031b47e85f7b050fe2bc7998d26d64e6ca2",
+    "process_delivery.py": "464dd3d680a1ca3a5994a9ff5ec4762d677d6d537e28cff1ff1cc80a1feaa9f4",
+    "reference.py": "d870427d12f76450c32f05e58c8548ea6c1515c22548746cbc8ba00d96bb7d56",
+    "test_gate.py": "68048e36a15630ac02afb2b39edd350ac365c1494e3ff67bad2063594a11e7e1",
+    "test_protocol.py": "73c54ea30646d50959933c6aba8d3afe7396b9408c4eb40fabf20b3edc235860",
+    "test_reference.py": "17fe2fef4303053b569bf269e72102bd941b0172f6909a0e30802442623d1b16",
+    "verify.py": "e520655d7de83d40c56d5c04217a02ba6a1877130de9f57cd48e3c65e6a12d66",
+    "collector.py": "3db7079d323760656839b68a89f0dc2b4981d3d3f4374489d8328fce3e295820"
+  },
+  "budget": "Exactly one same-process reference and one child-process delivery under plan05. Stop on identity/runtime/cleanup failure; no replacement, performance claim or GUI/device run. Preserve failed plan02 through plan04 windows.",
+  "acceptance": "Every preview source/decoded pixel identity andevery full pose hash must match; actual childPID, message order, shared-memory acknowledgement, close/exit/unlink all required.",
+  "scope": "Saved video decode plus original PreviewAdapter only. No camera recording,GUI,SDK,USB,human orformal change.",
+  "performance_qualification": false,
+  "field_fix_verified": false,
+  "supersedes_preparation_plan": "plan04.json is retained with its failed 2026-10-20 first-pose deserialization window; plan05 changes source SHAs only to send the complete pose as a module-independent dictionary."
+}

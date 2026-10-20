@@ -11,8 +11,8 @@ sha=lambda p:hashlib.sha256(p.read_bytes()).hexdigest()
 read=lambda p:json.loads(p.read_text(encoding='utf-8-sig'))
 
 def require():
-    p=read(HERE/'plan04.json');proof=read(HERE/'preflight04.json')
-    assert proof['passed'] and proof['plan_sha256']==sha(HERE/'plan04.json')
+    p=read(HERE/'plan05.json');proof=read(HERE/'preflight05.json')
+    assert proof['passed'] and proof['plan_sha256']==sha(HERE/'plan05.json')
     assert all(sha(HERE/n)==v for n,v in p['sources'].items())
     assert sha(HERE/'selection01.json')==p['selection_sha256']
     return p

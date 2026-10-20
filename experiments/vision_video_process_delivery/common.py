@@ -12,8 +12,12 @@ def sha(path):
     return hashlib.sha256(Path(path).read_bytes()).hexdigest()
 
 
+def pose_payload(pose):
+    return None if pose is None else pose if isinstance(pose,dict) else asdict(pose)
+
+
 def canonical_pose(pose):
-    value=None if pose is None else asdict(pose)
+    value=pose_payload(pose)
     data=json.dumps(value,sort_keys=True,separators=(',',':'),allow_nan=False).encode()
     return hashlib.sha256(data).hexdigest()
 

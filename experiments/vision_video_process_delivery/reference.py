@@ -9,7 +9,7 @@ HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[1]
 
 if __name__=='__main__':
-    plan=json.loads((HERE/'plan04.json').read_text());output=Path(sys.argv[1]);assert not output.exists()
+    plan=json.loads((HERE/'plan05.json').read_text());output=Path(sys.argv[1]);assert not output.exists()
     assert all(sha(HERE/n)==v for n,v in plan['sources'].items())
     assert sha(Path(plan['model_path']))==plan['model_sha256']
     sys.path.insert(0,str(ROOT));from vision.live_walking import _PreviewAdapter
