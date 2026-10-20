@@ -15,7 +15,7 @@ def signature(context):
     return dict(policy=context['policy'],foreground_gui=context['foreground_gui'])
 
 if __name__=='__main__':
-    plan=read(HERE/'plan01.json');stage=HERE/'runs/cohort01';status=read(stage/'status.json');rows={}
+    plan=read(HERE/'plan02.json');stage=HERE/'runs/cohort01';status=read(stage/'status.json');rows={}
     original=ROOT/'experiments/session_isolation_throughput/runs/recorded_source01.npz';assert sha(original)==plan['input_sha256']['raw_frames.npz']
     for case in plan['cases']:
         folder=stage/case['id'];record=folder/'record.json'
@@ -36,6 +36,6 @@ if __name__=='__main__':
         old_3pct_1pct_observer_gate_upgraded=False,formal_program_modified=False,field_fix_verified=False,
         limits=['All 12 frozen windows retained; no replacement or extension.','A/A range gate is required for quantitative attribution; descriptive pairs do not override its failure.',
             'Dynamic frame/model selections remain outcomes and are never posthoc equalized.','Saved input and real SDK are not a live USB/camera field fix.'],
-        bindings=dict(plan_sha256=sha(HERE/'plan01.json'),analyzer_sha256=sha(Path(__file__))))
+        bindings=dict(plan_sha256=sha(HERE/'plan02.json'),analyzer_sha256=sha(Path(__file__))))
     with (HERE/'result01.json').open('x') as target:json.dump(result,target,indent=2)
     print(json.dumps(dict(complete=complete,decision=outcome,cases={name:{k:value.get(k) for k in ('vision_mode','scheduled_max_ms','observed_queue_lower','queue_upper','input_lateness_ms','complete','failed','not_attempted')} for name,value in rows.items()}),indent=2))

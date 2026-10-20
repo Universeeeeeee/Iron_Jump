@@ -1,0 +1,9 @@
+{
+  "plan": "plan01.json",
+  "phase": "source_compile",
+  "workload_started": false,
+  "failure": "UnicodeDecodeError: gbk codec could not decode UTF-8 source",
+  "cause": "preflight used Path.read_text() without an explicit encoding on Windows",
+  "old_directory_retained": "experiments/vision_process_timed_ab",
+  "replacement_window_used": false
+}
