@@ -1,0 +1,23 @@
+{
+  "scope": "Four reboot-separated first-window cases, order process/original/original/process. Each boot runs exactly one saved-input GUI window after a fixed two-minute post-login settle.",
+  "prerequisites": [
+    "User authorizes Windows restarts and confirms automatic/login availability",
+    "record boot identifier, uptime, session, AC, process/thread policy and no prior target in that boot",
+    "same frozen input/model/real SDK and existing semantic gates"
+  ],
+  "acceptance": [
+    "both original-first windows severe: queue lower >=1000 and scheduled contact-to-paint >=1000ms",
+    "both process-first windows queue upper <=250 and scheduled contact-to-paint <=250ms",
+    "input lateness <=100ms, full report/quality/raw exact, all process cleanup confirmed"
+  ],
+  "decisions": {
+    "support_candidate": "original severe twice and process bounded twice",
+    "reject_candidate": "process severe in either qualified cold window",
+    "inconclusive": "cold original severity not reproduced or any boot/context/input gate fails"
+  },
+  "constraints": [
+    "No human,USB,Run or formal program change",
+    "No extra boots/windows after frozen four",
+    "No CPU/GIL percentage even if candidate succeeds"
+  ]
+}
