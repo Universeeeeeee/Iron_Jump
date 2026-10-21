@@ -1,0 +1,78 @@
+........................................................................ [  3%]
+........................................................................ [  6%]
+........................................................................ [  9%]
+...................................................................... [ 12%]
+........................................................................ [ 15%]
+........................................................................ [ 19%]
+........................................................................ [ 22%]
+........................................................................ [ 25%]
+........................................................................ [ 28%]
+........................................................................ [ 31%]
+........................................................................ [ 35%]
+........................................................................ [ 38%]
+........................................................................ [ 41%]
+........................................................................ [ 44%]
+............................................ss.......................... [ 48%]
+........................................................................ [ 51%]
+........................................................................ [ 54%]
+........................................................................ [ 57%]
+........................................................................ [ 60%]
+........................................................................ [ 64%]
+........................................................................ [ 67%]
+...................................................................................................................................... [ 73%]
+........................................................................ [ 76%]
+........................................................................ [ 79%]
+........................................................................ [ 82%]
+........................................................................ [ 86%]
+........................................................................ [ 89%]
+........................................................................ [ 92%]
+........................................................................ [ 95%]
+........................................................................ [ 98%]
+.........................                                                [100%]
+============================== warnings summary ===============================
+config\test_config.py:21
+  E:\OptoJump\IronJump-production-integrated-20261021\config\test_config.py:21: PytestCollectionWarning: cannot collect test class 'TestConfig' because it has a __init__ constructor (from: tests/test_execution_view_footprint.py)
+    @dataclass
+
+D:\conda\Lib\site-packages\pipecat\audio\utils.py:14
+  D:\conda\Lib\site-packages\pipecat\audio\utils.py:14: DeprecationWarning: 'audioop' is deprecated and slated for removal in Python 3.13
+    import audioop
+
+tests/test_sync_regressions.py::test_complete_pose_cache_survives_raw_image_eviction
+  tests\test_sync_regressions.py:31: PytestWarning: record_property is incompatible with junit_family 'xunit2' (use 'legacy' or 'xunit1')
+    def test_complete_pose_cache_survives_raw_image_eviction(record_property):
+
+tests/test_sync_regressions.py::test_high_rate_frames_do_not_expire_an_ontime_event
+  tests\test_sync_regressions.py:44: PytestWarning: record_property is incompatible with junit_family 'xunit2' (use 'legacy' or 'xunit1')
+    def test_high_rate_frames_do_not_expire_an_ontime_event(record_property):
+
+tests/test_sync_regressions.py::test_ready_event_is_decided_before_unrelated_inference
+  tests\test_sync_regressions.py:58: PytestWarning: record_property is incompatible with junit_family 'xunit2' (use 'legacy' or 'xunit1')
+    def test_ready_event_is_decided_before_unrelated_inference(record_property):
+
+tests/test_sync_regressions.py::test_classifier_completion_must_meet_deadline
+  tests\test_sync_regressions.py:75: PytestWarning: record_property is incompatible with junit_family 'xunit2' (use 'legacy' or 'xunit1')
+    def test_classifier_completion_must_meet_deadline(record_property):
+
+tests/test_sync_regressions.py::test_masked_beam_cannot_contribute_valid_step[walk-crosses_bad_beam]
+tests/test_sync_regressions.py::test_masked_beam_cannot_contribute_valid_step[walk-far_from_bad_beam]
+tests/test_sync_regressions.py::test_masked_beam_cannot_contribute_valid_step[run-crosses_bad_beam]
+tests/test_sync_regressions.py::test_masked_beam_cannot_contribute_valid_step[run-far_from_bad_beam]
+  tests\test_sync_regressions.py:144: PytestWarning: record_property is incompatible with junit_family 'xunit2' (use 'legacy' or 'xunit1')
+    @pytest.mark.parametrize('second_start', [571, 620], ids=['crosses_bad_beam', 'far_from_bad_beam'])
+
+tests/test_sync_regressions.py::test_source_timeout_preserves_every_received_tail_frame[data_timeout-0]
+tests/test_sync_regressions.py::test_source_timeout_preserves_every_received_tail_frame[data_timeout-100]
+tests/test_sync_regressions.py::test_source_timeout_preserves_every_received_tail_frame[data_timeout-1200]
+tests/test_sync_regressions.py::test_source_timeout_preserves_every_received_tail_frame[disconnected-0]
+tests/test_sync_regressions.py::test_source_timeout_preserves_every_received_tail_frame[disconnected-100]
+tests/test_sync_regressions.py::test_source_timeout_preserves_every_received_tail_frame[disconnected-1200]
+  tests\test_sync_regressions.py:165: PytestWarning: record_property is incompatible with junit_family 'xunit2' (use 'legacy' or 'xunit1')
+    @pytest.mark.parametrize('pending', [0, 100, 1200])
+
+tests/test_sync_regressions.py::test_halt_publishes_contact_confirmed_in_filter_tail
+  tests\test_sync_regressions.py:203: PytestWarning: record_property is incompatible with junit_family 'xunit2' (use 'legacy' or 'xunit1')
+    def test_halt_publishes_contact_confirmed_in_filter_tail(ground, record_property):
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+2243 passed, 2 skipped, 17 warnings, 12 subtests passed in 912.35s (0:15:12)
