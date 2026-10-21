@@ -134,7 +134,7 @@ class Run(QObject):
   write(self.output/'parent.json',result);write(self.output/'SDK_events.json',self.sdk_events);self.window.close();self.app.quit()
 
 def main(output):
- plan=json.loads((HERE/'plan16.json').read_text(encoding='utf-8'));os.environ['DAYU_DLL']=plan['dll_path'];app=QApplication([]);run=Run(output,app,plan)
+ plan=json.loads((HERE/'plan17.json').read_text(encoding='utf-8'));os.environ['DAYU_DLL']=plan['dll_path'];app=QApplication([]);run=Run(output,app,plan)
  try:app.exec()
  except BaseException as exc:run.errors.append(''.join(traceback.format_exception(type(exc),exc,exc.__traceback__)));run.cancel()
  return 0 if (output/'parent.json').exists() and json.loads((output/'parent.json').read_text(encoding='utf-8'))['complete'] else 1

@@ -19,6 +19,7 @@ def run_actor(connection,output_root,batch_size=40,fixture_root=None):
  from protocol import validate_command,NOTIFICATIONS
  from outbox import Outbox,OutboxError
  from queue_probe import QueueProbe
+ from report_artifact import report_reference
  folder=Path(output_root);folder.mkdir(exist_ok=False);(folder/'active.lock').mkdir();app=QCoreApplication([]);source=None
  finite_polls=[]
  if fixture_root is None:controller=SessionController()
@@ -126,7 +127,7 @@ def run_actor(connection,output_root,batch_size=40,fixture_root=None):
   report=reports[0];(folder/'report.json').write_text(json.dumps(report,ensure_ascii=False),encoding='utf-8');quality=refs['quality'];engine=refs['engine'];runtime=quality._runtime;window=hashlib.sha256()
   for bits,changes in runtime._window:window.update(bits.tobytes());window.update(changes.tobytes())
   state=dict(quality=quality.snapshot(),runtime_counts=runtime._counts.tolist(),runtime_transitions=runtime._transitions.tolist(),runtime_healthy=runtime.healthy_samples,runtime_window_sha256=window.hexdigest(),event_audit=engine.overground.processor.event_audit,timeline=list(engine.overground.processor.timeline),mirror_events=engine.overground._frame_filter.mirror_guard.events,raw_archive_sha256=hashlib.sha256(b''.join(engine.overground.frames)).hexdigest());(folder/'state.json').write_text(json.dumps(state,ensure_ascii=False),encoding='utf-8')
-  emit('report_value',dict(report=report,raw_exports_child_owned=True))
+  emit('report_value',dict(report_reference=report_reference(folder),raw_exports_child_owned=True))
  complete=not errors and completed_control is not None and controller._thread is None and (completed_control['kind']=='discard' or len(reports)==1)
  emit('terminal',dict(complete=complete,errors=errors,batch_size=batch_size));writer_finished=outbox.finish(2);outbox.preserve(folder/'output_snapshot')
  result=dict(complete=complete and writer_finished,pid=os.getpid(),errors=errors,commands_received=command_sequence,completed_control=completed_control,report_saved=(folder/'report.json').exists(),batch_size=batch_size,output=outbox.snapshot(),transport_fault=transport_fault,
