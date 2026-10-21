@@ -28,8 +28,7 @@ def main():
             results={}
             for n,name in enumerate(order):
                 path=folder/f'{label}_{case}_{pair}_{n}_{name}.json'
-                cmd=[sys.executable,str(LAB/'experiment.py'),'bench','--case',case,
-                     '--variant',name,'--target','pipeline','--output',str(path)]
+                cmd=[sys.executable,str(LAB/'consumer_bench.py'),'one',case,name,str(path)]
                 with path.with_suffix('.stdout').open('w') as out,path.with_suffix('.stderr').open('w') as err:
                     subprocess.run(cmd,stdout=out,stderr=err,check=True)
                 results[name]=json.loads(path.read_text())
@@ -48,7 +47,7 @@ def main():
     plan=json.loads((root/'experiments/live_consumer_process_candidate16/plan16.json').read_text(encoding='utf-8'))
     assert all(hashlib.sha256((root/n).read_bytes()).hexdigest()==v for n,v in plan['formal_sha256'].items())
     result={'complete':True,'results':rows,'platform':platform.platform(),'python':sys.version,
-            'formal_sources_unchanged':True,'scope':'Windows original NumPy, CPU-only unpaced pipeline. No GUI, process+batch40 transport, camera, SDK, ETW or physical acquisition. No FIFO/contact-to-paint conclusion.'}
+            'formal_sources_unchanged':True,'scope':'Windows original NumPy, consumer-only unpaced computation. Decoding excluded. No GUI, process+batch40 transport, camera, SDK, ETW or physical acquisition. No FIFO/contact-to-paint conclusion.'}
     (LAB/(label+'.native.json')).write_text(json.dumps(result,indent=2))
     print('complete',label,flush=True)
 

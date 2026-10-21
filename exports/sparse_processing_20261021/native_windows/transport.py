@@ -29,7 +29,7 @@ def main():
     action=sys.argv[1]
     if action=='upload':
         archive=Path('/tmp/ironjump_sparse_processing_20261021.tar')
-        files=[LAB/n for n in ('experiment.py','candidates.py','run_suite.py',
+        files=[LAB/n for n in ('experiment.py','candidates.py','run_suite.py','consumer_bench.py',
                               'per_experiment_checks.py','manifest.json','input_package.json')]
         files += [p for parent in ('baseline','inputs') for p in (LAB/parent).rglob('*')
                   if p.is_file() and p.suffix!='.pyc']
@@ -67,6 +67,49 @@ print({sha!r})
             'remote_verified_same_sha':True,'files':len(files),
             'scope':'Offline algorithm CPU validation; no GUI, IPC, hardware or capture.'},indent=2))
         print('uploaded and SHA verified',len(files),flush=True)
+    elif action=='stream_upload':
+        # One bounded SSH connection avoids requiring three successive
+        # connections when the host is intermittently reachable.
+        archive=Path('/tmp/ironjump_sparse_processing_20261021_consumer.tar')
+        files=[LAB/n for n in ('experiment.py','candidates.py','consumer_bench.py',
+                              'manifest.json','input_package.json')]
+        files += [p for parent in ('baseline','inputs') for p in (LAB/parent).rglob('*')
+                  if p.is_file() and p.suffix!='.pyc']
+        files += [HERE/'compute.py']
+        with tarfile.open(archive,'w') as tar:
+            for p in files:tar.add(p,arcname=str(p.relative_to(LAB)),recursive=False)
+        payload=archive.read_bytes();sha=hashlib.sha256(payload).hexdigest()
+        code=f'''from pathlib import Path
+import hashlib,json,platform,sys,tarfile
+root=Path('E:/OptoJump/IronJump-gil-gui-calibration-20261018-01')
+plan=json.loads((root/'experiments/live_consumer_process_candidate16/plan16.json').read_text(encoding='utf-8'))
+checks={{n:hashlib.sha256((root/n).read_bytes()).hexdigest()==v for n,v in plan['formal_sha256'].items()}}
+assert all(checks.values()),checks
+p=Path({REMOTE!r})
+if p.exists():assert (p/'native_preflight.json').exists(),'Unowned directory'
+else:p.mkdir(parents=True)
+data=sys.stdin.buffer.read()
+assert hashlib.sha256(data).hexdigest()=={sha!r},('transport hash mismatch',len(data))
+(p/'package.tar').write_bytes(data)
+with tarfile.open(p/'package.tar') as tar:
+ assert all(not Path(m.name).is_absolute() and '..' not in Path(m.name).parts and not m.issym() and not m.islnk() for m in tar.getmembers())
+ tar.extractall(p)
+result={{'archive_sha256':{sha!r},'formal_plan16_hashes':checks,'host':platform.node(),'python':sys.version,'scope':'Saved-data consumer CPU only; no hardware/GUI/SDK capture'}}
+(p/'native_preflight.json').write_text(json.dumps(result,indent=2))
+print(json.dumps(result))
+'''
+        encoded=base64.b64encode(code.encode()).decode()
+        cmd='D:\\conda\\python.exe -c "import base64;exec(base64.b64decode(\''+encoded+'\'))"'
+        result=subprocess.run(['ssh','-o','BatchMode=yes','-o','StrictHostKeyChecking=yes',
+            '-o','ConnectTimeout=20','-o','ConnectionAttempts=1','-o','ControlMaster=no',
+            '-o','ControlPath=none','-o','ControlPersist=no',HOST,cmd],input=payload,capture_output=True)
+        (HERE/'stream_upload.stdout').write_bytes(result.stdout)
+        (HERE/'stream_upload.stderr').write_bytes(result.stderr)
+        if result.returncode:raise RuntimeError(('stream_upload',result.returncode,result.stderr.decode(errors='replace')))
+        assert json.loads(result.stdout)['archive_sha256']==sha
+        (HERE/'transport.json').write_text(json.dumps({'archive_sha256':sha,'remote_verified_same_sha':True,
+                'files':len(files),'method':'single SSH binary stdin transfer','scope':'consumer computation only'},indent=2))
+        print('uploaded and SHA verified',len(files),flush=True)
     elif action=='run':
         label,variant=sys.argv[2:4]
         code=f'''import subprocess,sys
@@ -100,7 +143,7 @@ print(json.dumps({{'archive_sha256':hashlib.sha256(f.read_bytes()).hexdigest(),'
             assert all(not Path(m.name).is_absolute() and '..' not in Path(m.name).parts for m in tar.getmembers())
             tar.extractall(folder)
         print('downloaded SHA-verified',label,flush=True)
-    else:raise SystemExit('upload | run LABEL VARIANT | download LABEL')
+    else:raise SystemExit('upload | stream_upload | run LABEL VARIANT | download LABEL')
 
 
 if __name__=='__main__':main()
