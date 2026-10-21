@@ -1,0 +1,27 @@
+{
+  "plan": "plan16.json",
+  "plan_sha256": "486bea017afb144fc4a2218c88e99ff5e843624695e7f5e0257883f329e638df",
+  "windows": {
+    "tests_run": 15,
+    "passed": 15,
+    "skipped": 0,
+    "returncode": 0,
+    "test_output_sha256": "8549c3c780a0751e5c776d34cd95f233e65d61cdeb2109f7d5c8a9615e01391c",
+    "actual_GUI_constructor_and_signal_delivery": true,
+    "hardware_methods_mocked": [
+      "EmbeddedCameraPanel.start_preview",
+      "LiveSessionProcess.prepare"
+    ],
+    "USB_camera_human_started": false
+  },
+  "macOS": {
+    "tests_run": 15,
+    "passed": 14,
+    "skipped": 1,
+    "skip_reason": "cv2 is absent; actual Qt GUI constructor test executed and passed on Windows"
+  },
+  "previous_failures_preserved": true,
+  "formal_program_modified": false,
+  "field_ready_claim": false,
+  "remaining": "Real steady-state Walk is pending user readiness; no remote acquisition or repeated restart was performed."
+}

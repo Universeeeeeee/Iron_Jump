@@ -1,0 +1,33 @@
+{
+  "previous_plan": "plan15.json",
+  "classification": "two_confirmed_validation_defects",
+  "gui_failure": "Windows Run constructor: TypeError: argument 1 has unexpected type 'dict'",
+  "old_gui_preflight_sufficient": false,
+  "old_field_ready_claim_withdrawn": true,
+  "queue_correction": {
+    "old_scope": "deque only: E - dequeue prefix",
+    "new_scope": "all unfinished work including inflight: E_next - completed_previous",
+    "batch40_counterexample": {
+      "old_upper": 250,
+      "corrected_upper": 260,
+      "threshold": 250,
+      "old_gate": "pass",
+      "corrected_gate": "fail"
+    },
+    "require_final_completed_witness": true
+  },
+  "saved_plan14_reanalysis": {
+    "queue_bound_valid": true,
+    "corrected_continuous_unfinished_upper": 96,
+    "original_result_sha256": "5931b5e2edb8c9c9ab16d4fbc15e74598464739a30a2cbbd862a67be71fbdd08",
+    "no_resampling": true
+  },
+  "synthetic_analyzer_positive_control": {
+    "complete": true,
+    "max_latency_ms": 100.0,
+    "field_performance_evidence": false
+  },
+  "historical_plans_preserved": true,
+  "live_or_human_capture_started": false,
+  "field_status": "unavailable until user confirms readiness"
+}

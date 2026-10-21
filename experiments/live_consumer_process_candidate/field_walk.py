@@ -61,13 +61,13 @@ class Run(QObject):
   scroll=QScrollArea();scroll.setWidgetResizable(True);layout.addWidget(scroll,1);content=QWidget();body=QHBoxLayout(content);scroll.setWidget(content);self.view=ExecutionView();body.addWidget(self.view,4);body.addWidget(self.view._ground_track,1)
   self.cfg=WalkingConfig(stop_type='Software command');self.view.configure(self.cfg);self.view._camera_start_timer.stop();self.view.set_quality_preflight_required(True);self.view.btn_start.hide();self.panel=self.view._camera_panel;self.panel.setEnabled(True);self.panel.set_camera_type('tinyse');self.panel._show_pose_action.setChecked(True);self.panel._chk_sdk_tracking.setChecked(True)
   for button in (self.view.btn_logi_camera,self.view.btn_tinyse_camera,self.view.btn_basic_camera):button.setEnabled(False)
-  self.client=LiveSessionProcess(output/'client',batch_size=40);self.client.device_state_changed.connect(self.view.on_device_state);self.client.device_layout_changed.connect(self.view.on_device_layout);self.client.walking_readiness_changed.connect(self.view.on_walking_readiness);self.client.beam_quality_notice.connect(self.view.on_beam_quality_notice);self.client.session_started.connect(self.view.on_session_started);self.client.gait_snapshot.connect(self.view.on_gait_snapshot);self.client.device_message.connect(self.view.on_device_message);self.client.footprint_visual_frame.connect(self.visual);self.client.footprint_visual_frame.connect(self.view.on_footprint_visual_frame);self.client.walking_readiness_changed.connect(self.ready);self.client.session_started.connect(self.armed);self.client.session_finished.connect(self.finished);self.client.closed.connect(self.done);self.client.failed.connect(self.failed);self.view.stop_requested.connect(self.stop)
+  self.client=LiveSessionProcess(output/'client',batch_size=40);self.client.device_state_changed.connect(self.view.on_device_state);self.client.device_layout_changed.connect(self.view.on_device_layout);self.client.walking_readiness_changed.connect(self.view.on_walking_readiness);self.client.beam_quality_notice.connect(self.view.on_beam_quality_notice);self.client.session_started.connect(self.view.on_session_started);self.client.gait_snapshot.connect(self.view.on_gait_snapshot);self.client.device_message.connect(self.view.on_device_message);self.client.footprint_visual_frame.connect(self.on_visual_frame);self.client.footprint_visual_frame.connect(self.view.on_footprint_visual_frame);self.client.walking_readiness_changed.connect(self.ready);self.client.session_started.connect(self.armed);self.client.session_finished.connect(self.finished);self.client.closed.connect(self.done);self.client.failed.connect(self.failed);self.view.stop_requested.connect(self.stop)
   self.timer=QTimer(self);self.timer.setInterval(1000);self.timer.timeout.connect(self.progress);self.tail=QTimer(self);self.tail.setSingleShot(True);self.tail.timeout.connect(self.stop);self.watchdog=QTimer(self);self.watchdog.setSingleShot(True);self.watchdog.timeout.connect(self.timeout)
   self.window.show();self.panel.start_preview();self.client.quality_policy=None;self.client.prepare(self.cfg);self.timer.start();self.watchdog.start(300000)
  @Slot(dict)
  def ready(self,value):self.status=value
  @Slot(dict)
- def visual(self,value):
+ def on_visual_frame(self,value):
   stamp=now()
   for foot in value.get('feet',[]):
    cid=foot.get('contact_id')
@@ -134,7 +134,7 @@ class Run(QObject):
   write(self.output/'parent.json',result);write(self.output/'SDK_events.json',self.sdk_events);self.window.close();self.app.quit()
 
 def main(output):
- plan=json.loads((HERE/'plan15.json').read_text(encoding='utf-8'));os.environ['DAYU_DLL']=plan['dll_path'];app=QApplication([]);run=Run(output,app,plan)
+ plan=json.loads((HERE/'plan16.json').read_text(encoding='utf-8'));os.environ['DAYU_DLL']=plan['dll_path'];app=QApplication([]);run=Run(output,app,plan)
  try:app.exec()
  except BaseException as exc:run.errors.append(''.join(traceback.format_exception(type(exc),exc,exc.__traceback__)));run.cancel()
  return 0 if (output/'parent.json').exists() and json.loads((output/'parent.json').read_text(encoding='utf-8'))['complete'] else 1

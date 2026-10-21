@@ -6,7 +6,7 @@ HERE=Path(__file__).resolve().parent;ROOT=HERE.parents[1];sys.path.insert(0,str(
 from config.walking_config import WalkingConfig
 from client import LiveSessionProcess
 if __name__=='__main__':
- plan=json.loads((HERE/'plan15.json').read_text(encoding='utf-8'));os.environ['DAYU_DLL']=plan['dll_path'];app=QCoreApplication([]);runs=HERE/'runs';runs.mkdir(exist_ok=False);client=LiveSessionProcess(runs/'live_discard01');ready=[];closed=[];errors=[];discarded=[]
+ plan=json.loads((HERE/'plan16.json').read_text(encoding='utf-8'));os.environ['DAYU_DLL']=plan['dll_path'];app=QCoreApplication([]);runs=HERE/'runs';runs.mkdir(exist_ok=False);client=LiveSessionProcess(runs/'live_discard01');ready=[];closed=[];errors=[];discarded=[]
  def readiness(value):
   if value.get('ready') and not discarded:ready.append(value);discarded.append(True);client.discard()
  client.walking_readiness_changed.connect(readiness);client.closed.connect(lambda value:(closed.append(value),app.quit()));client.failed.connect(lambda value:(errors.append(value),app.quit()))
