@@ -1,0 +1,26 @@
+Traceback (most recent call last):
+  File "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/run_suite.py", line 228, in <module>
+    main()
+  File "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/run_suite.py", line 170, in main
+    rows.append(paired(name,variant,target))
+                ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/run_suite.py", line 105, in paired
+    row = run_benchmark(case, name, target, label)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/run_suite.py", line 94, in run_benchmark
+    subprocess.run(cmd, stdout=stdout, stderr=stderr, check=True, cwd=ROOT)
+  File "/Users/vae/miniconda3/envs/Iron_Jump/lib/python3.11/subprocess.py", line 550, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vae/miniconda3/envs/Iron_Jump/lib/python3.11/subprocess.py", line 1201, in communicate
+    self.wait()
+  File "/Users/vae/miniconda3/envs/Iron_Jump/lib/python3.11/subprocess.py", line 1264, in wait
+    return self._wait(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vae/miniconda3/envs/Iron_Jump/lib/python3.11/subprocess.py", line 2053, in _wait
+    (pid, sts) = self._try_wait(0)
+                 ^^^^^^^^^^^^^^^^^
+  File "/Users/vae/miniconda3/envs/Iron_Jump/lib/python3.11/subprocess.py", line 2011, in _try_wait
+    (pid, sts) = os.waitpid(self.pid, wait_flags)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

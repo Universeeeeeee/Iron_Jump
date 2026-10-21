@@ -1,0 +1,22 @@
+Traceback (most recent call last):
+  File "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/execute.py", line 46, in <module>
+    sys.exit(main())
+             ^^^^^^
+  File "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/execute.py", line 27, in main
+    r=subprocess.run([sys.executable,str(HERE/'run_suite.py'),action],cwd=ROOT,stdout=out,stderr=err)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vae/miniconda3/envs/Iron_Jump/lib/python3.11/subprocess.py", line 550, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vae/miniconda3/envs/Iron_Jump/lib/python3.11/subprocess.py", line 1201, in communicate
+    self.wait()
+  File "/Users/vae/miniconda3/envs/Iron_Jump/lib/python3.11/subprocess.py", line 1264, in wait
+    return self._wait(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vae/miniconda3/envs/Iron_Jump/lib/python3.11/subprocess.py", line 2053, in _wait
+    (pid, sts) = self._try_wait(0)
+                 ^^^^^^^^^^^^^^^^^
+  File "/Users/vae/miniconda3/envs/Iron_Jump/lib/python3.11/subprocess.py", line 2011, in _try_wait
+    (pid, sts) = os.waitpid(self.pid, wait_flags)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt

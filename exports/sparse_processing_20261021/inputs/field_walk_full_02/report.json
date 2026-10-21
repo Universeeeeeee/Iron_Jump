@@ -1,0 +1,3667 @@
+{
+  "report_config_snapshot": {
+    "test_type": "Sprint and Gait Test",
+    "stop_type": "Software command",
+    "starting_foot": "Right",
+    "min_contact_time": 60,
+    "confirmation_ms": 8,
+    "release_ms": 10,
+    "exit_clear_ms": 500,
+    "stop_threshold_s": 2.0,
+    "device": {
+      "layout": {
+        "segments": [
+          {
+            "segment_id": "1",
+            "wire_index": 0,
+            "origin_m": 0.0,
+            "pitch_m": 0.0104,
+            "reversed": false
+          },
+          {
+            "segment_id": "2",
+            "wire_index": 1,
+            "origin_m": 1.0,
+            "pitch_m": 0.0104,
+            "reversed": false
+          },
+          {
+            "segment_id": "3",
+            "wire_index": 2,
+            "origin_m": 2.0,
+            "pitch_m": 0.0104,
+            "reversed": false
+          },
+          {
+            "segment_id": "4",
+            "wire_index": 3,
+            "origin_m": 3.0,
+            "pitch_m": 0.0104,
+            "reversed": false
+          },
+          {
+            "segment_id": "5",
+            "wire_index": 4,
+            "origin_m": 4.0,
+            "pitch_m": 0.0104,
+            "reversed": false
+          },
+          {
+            "segment_id": "6",
+            "wire_index": 5,
+            "origin_m": 5.0,
+            "pitch_m": 0.0104,
+            "reversed": false
+          },
+          {
+            "segment_id": "7",
+            "wire_index": 6,
+            "origin_m": 6.0,
+            "pitch_m": 0.0104,
+            "reversed": false
+          },
+          {
+            "segment_id": "8",
+            "wire_index": 7,
+            "origin_m": 7.0,
+            "pitch_m": 0.0104,
+            "reversed": false
+          }
+        ],
+        "invalid_bit_indices": []
+      },
+      "stream_id": "bd83bc1554b84edd8cedd9059827c86d",
+      "checked_sample_index": 160332,
+      "checked_monotonic_ns": 457399375034100,
+      "healthy_samples": 3000,
+      "sample_rate_hz": 1000,
+      "policy": {
+        "max_bad_ratio": 0.025,
+        "max_consecutive": 2,
+        "observation_seconds": 3.0
+      },
+      "bad_indices": [
+        576
+      ],
+      "bad_types": [
+        "持续遮挡"
+      ],
+      "stability": {
+        "confirmation_ms": 10,
+        "minimum_frames": 3,
+        "time_source": "device_frame_counter",
+        "scope": "preflight_only",
+        "transient_beam_pulses": 15,
+        "transient_indices": [
+          64
+        ],
+        "broad_change_events": 0
+      },
+      "segment_selection": {
+        "criterion": "all_zero_during_preflight_window",
+        "observation_samples": 3000,
+        "source_segment_count": 8,
+        "source_segment_indices": [
+          0,
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7
+        ],
+        "excluded_segment_indices": [],
+        "source_layout": {
+          "segments": [
+            {
+              "segment_id": "1",
+              "wire_index": 0,
+              "origin_m": 0.0,
+              "pitch_m": 0.0104,
+              "reversed": false
+            },
+            {
+              "segment_id": "2",
+              "wire_index": 1,
+              "origin_m": 1.0,
+              "pitch_m": 0.0104,
+              "reversed": false
+            },
+            {
+              "segment_id": "3",
+              "wire_index": 2,
+              "origin_m": 2.0,
+              "pitch_m": 0.0104,
+              "reversed": false
+            },
+            {
+              "segment_id": "4",
+              "wire_index": 3,
+              "origin_m": 3.0,
+              "pitch_m": 0.0104,
+              "reversed": false
+            },
+            {
+              "segment_id": "5",
+              "wire_index": 4,
+              "origin_m": 4.0,
+              "pitch_m": 0.0104,
+              "reversed": false
+            },
+            {
+              "segment_id": "6",
+              "wire_index": 5,
+              "origin_m": 5.0,
+              "pitch_m": 0.0104,
+              "reversed": false
+            },
+            {
+              "segment_id": "7",
+              "wire_index": 6,
+              "origin_m": 6.0,
+              "pitch_m": 0.0104,
+              "reversed": false
+            },
+            {
+              "segment_id": "8",
+              "wire_index": 7,
+              "origin_m": 7.0,
+              "pitch_m": 0.0104,
+              "reversed": false
+            }
+          ],
+          "invalid_bit_indices": []
+        }
+      },
+      "segment_count": 8,
+      "nominal_length_m": 8,
+      "positions_m": [
+        0.0,
+        0.0104,
+        0.0208,
+        0.0312,
+        0.0416,
+        0.052,
+        0.0624,
+        0.0728,
+        0.0832,
+        0.09359999999999999,
+        0.104,
+        0.1144,
+        0.1248,
+        0.1352,
+        0.1456,
+        0.156,
+        0.1664,
+        0.17679999999999998,
+        0.18719999999999998,
+        0.1976,
+        0.208,
+        0.21839999999999998,
+        0.2288,
+        0.2392,
+        0.2496,
+        0.26,
+        0.2704,
+        0.2808,
+        0.2912,
+        0.3016,
+        0.312,
+        0.32239999999999996,
+        0.3328,
+        0.3432,
+        0.35359999999999997,
+        0.364,
+        0.37439999999999996,
+        0.3848,
+        0.3952,
+        0.40559999999999996,
+        0.416,
+        0.4264,
+        0.43679999999999997,
+        0.4472,
+        0.4576,
+        0.46799999999999997,
+        0.4784,
+        0.48879999999999996,
+        0.4992,
+        0.5095999999999999,
+        0.52,
+        0.5304,
+        0.5408,
+        0.5512,
+        0.5616,
+        0.572,
+        0.5824,
+        0.5928,
+        0.6032,
+        0.6135999999999999,
+        0.624,
+        0.6344,
+        0.6447999999999999,
+        0.6552,
+        0.6656,
+        0.6759999999999999,
+        0.6864,
+        0.6968,
+        0.7071999999999999,
+        0.7176,
+        0.728,
+        0.7384,
+        0.7487999999999999,
+        0.7592,
+        0.7696,
+        0.7799999999999999,
+        0.7904,
+        0.8008,
+        0.8111999999999999,
+        0.8216,
+        0.832,
+        0.8423999999999999,
+        0.8528,
+        0.8632,
+        0.8735999999999999,
+        0.884,
+        0.8944,
+        0.9047999999999999,
+        0.9152,
+        0.9256,
+        0.9359999999999999,
+        0.9463999999999999,
+        0.9568,
+        0.9672,
+        0.9775999999999999,
+        0.988,
+        1.0,
+        1.0104,
+        1.0208,
+        1.0312,
+        1.0416,
+        1.052,
+        1.0624,
+        1.0728,
+        1.0832,
+        1.0936,
+        1.104,
+        1.1144,
+        1.1248,
+        1.1352,
+        1.1456,
+        1.156,
+        1.1663999999999999,
+        1.1768,
+        1.1872,
+        1.1976,
+        1.208,
+        1.2184,
+        1.2288000000000001,
+        1.2392,
+        1.2496,
+        1.26,
+        1.2704,
+        1.2808,
+        1.2912,
+        1.3016,
+        1.312,
+        1.3224,
+        1.3328,
+        1.3432,
+        1.3536,
+        1.3639999999999999,
+        1.3744,
+        1.3848,
+        1.3952,
+        1.4056,
+        1.416,
+        1.4264000000000001,
+        1.4367999999999999,
+        1.4472,
+        1.4576,
+        1.468,
+        1.4784,
+        1.4888,
+        1.4992,
+        1.5095999999999998,
+        1.52,
+        1.5304,
+        1.5408,
+        1.5512000000000001,
+        1.5615999999999999,
+        1.572,
+        1.5824,
+        1.5928,
+        1.6032,
+        1.6136,
+        1.624,
+        1.6343999999999999,
+        1.6448,
+        1.6552,
+        1.6656,
+        1.676,
+        1.6864,
+        1.6968,
+        1.7071999999999998,
+        1.7176,
+        1.728,
+        1.7384,
+        1.7488,
+        1.7591999999999999,
+        1.7696,
+        1.7799999999999998,
+        1.7904,
+        1.8008,
+        1.8112,
+        1.8216,
+        1.8319999999999999,
+        1.8424,
+        1.8528,
+        1.8632,
+        1.8736,
+        1.884,
+        1.8944,
+        1.9047999999999998,
+        1.9152,
+        1.9256,
+        1.936,
+        1.9464,
+        1.9567999999999999,
+        1.9672,
+        1.9775999999999998,
+        1.988,
+        2.0,
+        2.0104,
+        2.0208,
+        2.0312,
+        2.0416,
+        2.052,
+        2.0624,
+        2.0728,
+        2.0832,
+        2.0936,
+        2.104,
+        2.1144,
+        2.1248,
+        2.1352,
+        2.1456,
+        2.156,
+        2.1664,
+        2.1768,
+        2.1872,
+        2.1976,
+        2.208,
+        2.2184,
+        2.2288,
+        2.2392,
+        2.2496,
+        2.26,
+        2.2704,
+        2.2808,
+        2.2912,
+        2.3016,
+        2.312,
+        2.3224,
+        2.3327999999999998,
+        2.3432,
+        2.3536,
+        2.364,
+        2.3744,
+        2.3848,
+        2.3952,
+        2.4055999999999997,
+        2.416,
+        2.4264,
+        2.4368,
+        2.4472,
+        2.4576000000000002,
+        2.468,
+        2.4784,
+        2.4888,
+        2.4992,
+        2.5096,
+        2.52,
+        2.5304,
+        2.5408,
+        2.5512,
+        2.5616,
+        2.572,
+        2.5824,
+        2.5928,
+        2.6032,
+        2.6136,
+        2.624,
+        2.6344,
+        2.6448,
+        2.6552,
+        2.6656,
+        2.676,
+        2.6864,
+        2.6968,
+        2.7072,
+        2.7176,
+        2.7279999999999998,
+        2.7384,
+        2.7488,
+        2.7592,
+        2.7696,
+        2.78,
+        2.7904,
+        2.8007999999999997,
+        2.8112,
+        2.8216,
+        2.832,
+        2.8424,
+        2.8528000000000002,
+        2.8632,
+        2.8735999999999997,
+        2.884,
+        2.8944,
+        2.9048,
+        2.9152,
+        2.9256,
+        2.936,
+        2.9463999999999997,
+        2.9568,
+        2.9672,
+        2.9776,
+        2.988,
+        3.0,
+        3.0104,
+        3.0208,
+        3.0312,
+        3.0416,
+        3.052,
+        3.0624,
+        3.0728,
+        3.0832,
+        3.0936,
+        3.104,
+        3.1144,
+        3.1248,
+        3.1352,
+        3.1456,
+        3.156,
+        3.1664,
+        3.1768,
+        3.1872,
+        3.1976,
+        3.208,
+        3.2184,
+        3.2288,
+        3.2392,
+        3.2496,
+        3.26,
+        3.2704,
+        3.2808,
+        3.2912,
+        3.3016,
+        3.312,
+        3.3224,
+        3.3327999999999998,
+        3.3432,
+        3.3536,
+        3.364,
+        3.3744,
+        3.3848,
+        3.3952,
+        3.4055999999999997,
+        3.416,
+        3.4264,
+        3.4368,
+        3.4472,
+        3.4576000000000002,
+        3.468,
+        3.4784,
+        3.4888,
+        3.4992,
+        3.5096,
+        3.52,
+        3.5304,
+        3.5408,
+        3.5512,
+        3.5616,
+        3.572,
+        3.5824,
+        3.5928,
+        3.6032,
+        3.6136,
+        3.624,
+        3.6344,
+        3.6448,
+        3.6552,
+        3.6656,
+        3.676,
+        3.6864,
+        3.6968,
+        3.7072,
+        3.7176,
+        3.7279999999999998,
+        3.7384,
+        3.7488,
+        3.7592,
+        3.7696,
+        3.78,
+        3.7904,
+        3.8007999999999997,
+        3.8112,
+        3.8216,
+        3.832,
+        3.8424,
+        3.8528000000000002,
+        3.8632,
+        3.8735999999999997,
+        3.884,
+        3.8944,
+        3.9048,
+        3.9152,
+        3.9256,
+        3.936,
+        3.9463999999999997,
+        3.9568,
+        3.9672,
+        3.9776,
+        3.988,
+        4.0,
+        4.0104,
+        4.0208,
+        4.0312,
+        4.0416,
+        4.052,
+        4.0624,
+        4.0728,
+        4.0832,
+        4.0936,
+        4.104,
+        4.1144,
+        4.1248,
+        4.1352,
+        4.1456,
+        4.156,
+        4.1664,
+        4.1768,
+        4.1872,
+        4.1975999999999996,
+        4.208,
+        4.2184,
+        4.2288,
+        4.2392,
+        4.2496,
+        4.26,
+        4.2704,
+        4.2808,
+        4.2912,
+        4.3016,
+        4.312,
+        4.3224,
+        4.3328,
+        4.3432,
+        4.3536,
+        4.364,
+        4.3744,
+        4.3848,
+        4.3952,
+        4.4056,
+        4.416,
+        4.4264,
+        4.4368,
+        4.4472,
+        4.4576,
+        4.468,
+        4.4784,
+        4.4888,
+        4.4992,
+        4.5096,
+        4.52,
+        4.5304,
+        4.5408,
+        4.5512,
+        4.5616,
+        4.572,
+        4.5824,
+        4.5928,
+        4.6032,
+        4.6136,
+        4.624,
+        4.6344,
+        4.6448,
+        4.6552,
+        4.6655999999999995,
+        4.676,
+        4.6864,
+        4.6968,
+        4.7072,
+        4.7176,
+        4.728,
+        4.7384,
+        4.7488,
+        4.7592,
+        4.7696,
+        4.78,
+        4.7904,
+        4.8008,
+        4.8111999999999995,
+        4.8216,
+        4.832,
+        4.8424,
+        4.8528,
+        4.8632,
+        4.8736,
+        4.884,
+        4.8944,
+        4.9048,
+        4.9152000000000005,
+        4.9256,
+        4.936,
+        4.9464,
+        4.9568,
+        4.9672,
+        4.9776,
+        4.9879999999999995,
+        5.0,
+        5.0104,
+        5.0208,
+        5.0312,
+        5.0416,
+        5.052,
+        5.0624,
+        5.0728,
+        5.0832,
+        5.0936,
+        5.104,
+        5.1144,
+        5.1248,
+        5.1352,
+        5.1456,
+        5.156,
+        5.1664,
+        5.1768,
+        5.1872,
+        5.1975999999999996,
+        5.208,
+        5.2184,
+        5.2288,
+        5.2392,
+        5.2496,
+        5.26,
+        5.2704,
+        5.2808,
+        5.2912,
+        5.3016,
+        5.312,
+        5.3224,
+        5.3328,
+        5.3432,
+        5.3536,
+        5.364,
+        5.3744,
+        5.3848,
+        5.3952,
+        5.4056,
+        5.416,
+        5.4264,
+        5.4368,
+        5.4472,
+        5.4576,
+        5.468,
+        5.4784,
+        5.4888,
+        5.4992,
+        5.5096,
+        5.52,
+        5.5304,
+        5.5408,
+        5.5512,
+        5.5616,
+        5.572,
+        5.5824,
+        5.5928,
+        5.6032,
+        5.6136,
+        5.624,
+        5.6344,
+        5.6448,
+        5.6552,
+        5.6655999999999995,
+        5.676,
+        5.6864,
+        5.6968,
+        5.7072,
+        5.7176,
+        5.728,
+        5.7384,
+        5.7488,
+        5.7592,
+        5.7696,
+        5.78,
+        5.7904,
+        5.8008,
+        5.8111999999999995,
+        5.8216,
+        5.832,
+        5.8424,
+        5.8528,
+        5.8632,
+        5.8736,
+        5.884,
+        5.8944,
+        5.9048,
+        5.9152000000000005,
+        5.9256,
+        5.936,
+        5.9464,
+        5.9568,
+        5.9672,
+        5.9776,
+        5.9879999999999995,
+        6.0,
+        6.0104,
+        6.0208,
+        6.0312,
+        6.0416,
+        6.052,
+        6.0624,
+        6.0728,
+        6.0832,
+        6.0936,
+        6.104,
+        6.1144,
+        6.1248,
+        6.1352,
+        6.1456,
+        6.156,
+        6.1664,
+        6.1768,
+        6.1872,
+        6.1975999999999996,
+        6.208,
+        6.2184,
+        6.2288,
+        6.2392,
+        6.2496,
+        6.26,
+        6.2704,
+        6.2808,
+        6.2912,
+        6.3016,
+        6.312,
+        6.3224,
+        6.3328,
+        6.3432,
+        6.3536,
+        6.364,
+        6.3744,
+        6.3848,
+        6.3952,
+        6.4056,
+        6.416,
+        6.4264,
+        6.4368,
+        6.4472,
+        6.4576,
+        6.468,
+        6.4784,
+        6.4888,
+        6.4992,
+        6.5096,
+        6.52,
+        6.5304,
+        6.5408,
+        6.5512,
+        6.5616,
+        6.572,
+        6.5824,
+        6.5928,
+        6.6032,
+        6.6136,
+        6.624,
+        6.6344,
+        6.6448,
+        6.6552,
+        6.6655999999999995,
+        6.676,
+        6.6864,
+        6.6968,
+        6.7072,
+        6.7176,
+        6.728,
+        6.7384,
+        6.7488,
+        6.7592,
+        6.7696,
+        6.78,
+        6.7904,
+        6.8008,
+        6.8111999999999995,
+        6.8216,
+        6.832,
+        6.8424,
+        6.8528,
+        6.8632,
+        6.8736,
+        6.884,
+        6.8944,
+        6.9048,
+        6.9152000000000005,
+        6.9256,
+        6.936,
+        6.9464,
+        6.9568,
+        6.9672,
+        6.9776,
+        6.9879999999999995,
+        7.0,
+        7.0104,
+        7.0208,
+        7.0312,
+        7.0416,
+        7.052,
+        7.0624,
+        7.0728,
+        7.0832,
+        7.0936,
+        7.104,
+        7.1144,
+        7.1248,
+        7.1352,
+        7.1456,
+        7.156,
+        7.1664,
+        7.1768,
+        7.1872,
+        7.1975999999999996,
+        7.208,
+        7.2184,
+        7.2288,
+        7.2392,
+        7.2496,
+        7.26,
+        7.2704,
+        7.2808,
+        7.2912,
+        7.3016,
+        7.312,
+        7.3224,
+        7.3328,
+        7.3432,
+        7.3536,
+        7.364,
+        7.3744,
+        7.3848,
+        7.3952,
+        7.4056,
+        7.416,
+        7.4264,
+        7.4368,
+        7.4472,
+        7.4576,
+        7.468,
+        7.4784,
+        7.4888,
+        7.4992,
+        7.5096,
+        7.52,
+        7.5304,
+        7.5408,
+        7.5512,
+        7.5616,
+        7.572,
+        7.5824,
+        7.5928,
+        7.6032,
+        7.6136,
+        7.624,
+        7.6344,
+        7.6448,
+        7.6552,
+        7.6655999999999995,
+        7.676,
+        7.6864,
+        7.6968,
+        7.7072,
+        7.7176,
+        7.728,
+        7.7384,
+        7.7488,
+        7.7592,
+        7.7696,
+        7.78,
+        7.7904,
+        7.8008,
+        7.8111999999999995,
+        7.8216,
+        7.832,
+        7.8424,
+        7.8528,
+        7.8632,
+        7.8736,
+        7.884,
+        7.8944,
+        7.9048,
+        7.9152000000000005,
+        7.9256,
+        7.936,
+        7.9464,
+        7.9568,
+        7.9672,
+        7.9776,
+        7.9879999999999995
+      ],
+      "time_source": "device_frame_counter"
+    },
+    "algorithm": "overground_walking_v1.15",
+    "metric_policy": "independent_boundaries_terminal_source_review_v3",
+    "fragment_association": "valid_previous_blocked_overlap_per_island",
+    "source_uncertainty_recovery": "all_sources_attributed_to_established_owner",
+    "footprint_publication": "active_touch_independent_of_current_shape",
+    "narrow_candidate_policy": "local_candidate_evidence_before_identity",
+    "candidate_exclusion_policy": "closed_isolated_single_beam_single_sample",
+    "immature_coalescence_policy": "local_tracking_with_unresolved_identity",
+    "raw_buffer": {
+      "total_received_frames": 27312,
+      "retained_frames": 27312,
+      "truncated": false,
+      "budget_bytes": 67108864,
+      "raw_only_tail_frames": 0
+    },
+    "payload_mirror_guard": {
+      "rule_version": "isolated_32_byte_mirror_30ms_v1",
+      "events": [
+        {
+          "sample_index": 167239,
+          "frame_index": 167239,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            165769,
+            166999,
+            167239
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 167329,
+          "frame_index": 167329,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            166999,
+            167239,
+            167329
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 167749,
+          "frame_index": 167749,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            167239,
+            167329,
+            167749
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 167839,
+          "frame_index": 167839,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            167329,
+            167749,
+            167839
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 168289,
+          "frame_index": 168289,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            167749,
+            167839,
+            168289
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 168409,
+          "frame_index": 168409,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            167839,
+            168289,
+            168409
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 168529,
+          "frame_index": 168529,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            168289,
+            168409,
+            168529
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 169339,
+          "frame_index": 169339,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            168289,
+            168409,
+            168529
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 169969,
+          "frame_index": 169969,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            168289,
+            168409,
+            168529
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 170839,
+          "frame_index": 170839,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 1,
+          "phase_evidence_frames": [
+            168409,
+            168529,
+            170839
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 170989,
+          "frame_index": 170989,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            168529,
+            170839,
+            170989
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 171349,
+          "frame_index": 171349,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170839,
+            170989,
+            171349
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 171859,
+          "frame_index": 171859,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 173269,
+          "frame_index": 173269,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 174559,
+          "frame_index": 174559,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 175039,
+          "frame_index": 175039,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 175189,
+          "frame_index": 175189,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 175399,
+          "frame_index": 175399,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 175519,
+          "frame_index": 175519,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 175699,
+          "frame_index": 175699,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 176269,
+          "frame_index": 176269,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 176509,
+          "frame_index": 176509,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 177229,
+          "frame_index": 177229,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 177349,
+          "frame_index": 177349,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 177589,
+          "frame_index": 177589,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 177709,
+          "frame_index": 177709,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 178009,
+          "frame_index": 178009,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 178099,
+          "frame_index": 178099,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 178459,
+          "frame_index": 178459,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 178579,
+          "frame_index": 178579,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 179299,
+          "frame_index": 179299,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 179659,
+          "frame_index": 179659,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 179779,
+          "frame_index": 179779,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 179959,
+          "frame_index": 179959,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 180079,
+          "frame_index": 180079,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 180109,
+          "frame_index": 180109,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 180139,
+          "frame_index": 180139,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 180169,
+          "frame_index": 180169,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 180199,
+          "frame_index": 180199,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 180229,
+          "frame_index": 180229,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 180469,
+          "frame_index": 180469,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 180859,
+          "frame_index": 180859,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 181099,
+          "frame_index": 181099,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 181399,
+          "frame_index": 181399,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 181519,
+          "frame_index": 181519,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 181999,
+          "frame_index": 181999,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 182119,
+          "frame_index": 182119,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 183289,
+          "frame_index": 183289,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 183439,
+          "frame_index": 183439,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 183709,
+          "frame_index": 183709,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 183799,
+          "frame_index": 183799,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 183919,
+          "frame_index": 183919,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 184189,
+          "frame_index": 184189,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 184429,
+          "frame_index": 184429,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 184669,
+          "frame_index": 184669,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 184849,
+          "frame_index": 184849,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 185269,
+          "frame_index": 185269,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 185509,
+          "frame_index": 185509,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 185749,
+          "frame_index": 185749,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 186319,
+          "frame_index": 186319,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 186709,
+          "frame_index": 186709,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 187009,
+          "frame_index": 187009,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 187069,
+          "frame_index": 187069,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 187189,
+          "frame_index": 187189,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 187309,
+          "frame_index": 187309,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 187429,
+          "frame_index": 187429,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        },
+        {
+          "sample_index": 187549,
+          "frame_index": 187549,
+          "rule_version": "isolated_32_byte_mirror_30ms_v1",
+          "wire_byte_range": [
+            0,
+            32
+          ],
+          "mirror_source_byte_range": [
+            64,
+            96
+          ],
+          "period_samples": 30,
+          "phase": 19,
+          "mismatch_bits": 0,
+          "phase_evidence_frames": [
+            170989,
+            171349,
+            171859
+          ],
+          "action": "exclude_confirmation_votes",
+          "raw_reconstructed": false
+        }
+      ],
+      "unconfirmed_tails": [],
+      "raw_reconstructed": false
+    },
+    "beam_quality": {
+      "preflight": {
+        "layout": {
+          "segments": [
+            {
+              "segment_id": "1",
+              "wire_index": 0,
+              "origin_m": 0.0,
+              "pitch_m": 0.0104,
+              "reversed": false
+            },
+            {
+              "segment_id": "2",
+              "wire_index": 1,
+              "origin_m": 1.0,
+              "pitch_m": 0.0104,
+              "reversed": false
+            },
+            {
+              "segment_id": "3",
+              "wire_index": 2,
+              "origin_m": 2.0,
+              "pitch_m": 0.0104,
+              "reversed": false
+            },
+            {
+              "segment_id": "4",
+              "wire_index": 3,
+              "origin_m": 3.0,
+              "pitch_m": 0.0104,
+              "reversed": false
+            },
+            {
+              "segment_id": "5",
+              "wire_index": 4,
+              "origin_m": 4.0,
+              "pitch_m": 0.0104,
+              "reversed": false
+            },
+            {
+              "segment_id": "6",
+              "wire_index": 5,
+              "origin_m": 5.0,
+              "pitch_m": 0.0104,
+              "reversed": false
+            },
+            {
+              "segment_id": "7",
+              "wire_index": 6,
+              "origin_m": 6.0,
+              "pitch_m": 0.0104,
+              "reversed": false
+            },
+            {
+              "segment_id": "8",
+              "wire_index": 7,
+              "origin_m": 7.0,
+              "pitch_m": 0.0104,
+              "reversed": false
+            }
+          ],
+          "invalid_bit_indices": []
+        },
+        "stream_id": "bd83bc1554b84edd8cedd9059827c86d",
+        "checked_sample_index": 160332,
+        "checked_monotonic_ns": 457399375034100,
+        "healthy_samples": 3000,
+        "sample_rate_hz": 1000,
+        "policy": {
+          "max_bad_ratio": 0.025,
+          "max_consecutive": 2,
+          "observation_seconds": 3.0
+        },
+        "bad_indices": [
+          576
+        ],
+        "bad_types": [
+          "持续遮挡"
+        ],
+        "stability": {
+          "confirmation_ms": 10,
+          "minimum_frames": 3,
+          "time_source": "device_frame_counter",
+          "scope": "preflight_only",
+          "transient_beam_pulses": 15,
+          "transient_indices": [
+            64
+          ],
+          "broad_change_events": 0
+        },
+        "segment_selection": {
+          "criterion": "all_zero_during_preflight_window",
+          "observation_samples": 3000,
+          "source_segment_count": 8,
+          "source_segment_indices": [
+            0,
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7
+          ],
+          "excluded_segment_indices": [],
+          "source_layout": {
+            "segments": [
+              {
+                "segment_id": "1",
+                "wire_index": 0,
+                "origin_m": 0.0,
+                "pitch_m": 0.0104,
+                "reversed": false
+              },
+              {
+                "segment_id": "2",
+                "wire_index": 1,
+                "origin_m": 1.0,
+                "pitch_m": 0.0104,
+                "reversed": false
+              },
+              {
+                "segment_id": "3",
+                "wire_index": 2,
+                "origin_m": 2.0,
+                "pitch_m": 0.0104,
+                "reversed": false
+              },
+              {
+                "segment_id": "4",
+                "wire_index": 3,
+                "origin_m": 3.0,
+                "pitch_m": 0.0104,
+                "reversed": false
+              },
+              {
+                "segment_id": "5",
+                "wire_index": 4,
+                "origin_m": 4.0,
+                "pitch_m": 0.0104,
+                "reversed": false
+              },
+              {
+                "segment_id": "6",
+                "wire_index": 5,
+                "origin_m": 5.0,
+                "pitch_m": 0.0104,
+                "reversed": false
+              },
+              {
+                "segment_id": "7",
+                "wire_index": 6,
+                "origin_m": 6.0,
+                "pitch_m": 0.0104,
+                "reversed": false
+              },
+              {
+                "segment_id": "8",
+                "wire_index": 7,
+                "origin_m": 7.0,
+                "pitch_m": 0.0104,
+                "reversed": false
+              }
+            ],
+            "invalid_bit_indices": []
+          }
+        },
+        "segment_count": 8,
+        "nominal_length_m": 8,
+        "positions_m": [
+          0.0,
+          0.0104,
+          0.0208,
+          0.0312,
+          0.0416,
+          0.052,
+          0.0624,
+          0.0728,
+          0.0832,
+          0.09359999999999999,
+          0.104,
+          0.1144,
+          0.1248,
+          0.1352,
+          0.1456,
+          0.156,
+          0.1664,
+          0.17679999999999998,
+          0.18719999999999998,
+          0.1976,
+          0.208,
+          0.21839999999999998,
+          0.2288,
+          0.2392,
+          0.2496,
+          0.26,
+          0.2704,
+          0.2808,
+          0.2912,
+          0.3016,
+          0.312,
+          0.32239999999999996,
+          0.3328,
+          0.3432,
+          0.35359999999999997,
+          0.364,
+          0.37439999999999996,
+          0.3848,
+          0.3952,
+          0.40559999999999996,
+          0.416,
+          0.4264,
+          0.43679999999999997,
+          0.4472,
+          0.4576,
+          0.46799999999999997,
+          0.4784,
+          0.48879999999999996,
+          0.4992,
+          0.5095999999999999,
+          0.52,
+          0.5304,
+          0.5408,
+          0.5512,
+          0.5616,
+          0.572,
+          0.5824,
+          0.5928,
+          0.6032,
+          0.6135999999999999,
+          0.624,
+          0.6344,
+          0.6447999999999999,
+          0.6552,
+          0.6656,
+          0.6759999999999999,
+          0.6864,
+          0.6968,
+          0.7071999999999999,
+          0.7176,
+          0.728,
+          0.7384,
+          0.7487999999999999,
+          0.7592,
+          0.7696,
+          0.7799999999999999,
+          0.7904,
+          0.8008,
+          0.8111999999999999,
+          0.8216,
+          0.832,
+          0.8423999999999999,
+          0.8528,
+          0.8632,
+          0.8735999999999999,
+          0.884,
+          0.8944,
+          0.9047999999999999,
+          0.9152,
+          0.9256,
+          0.9359999999999999,
+          0.9463999999999999,
+          0.9568,
+          0.9672,
+          0.9775999999999999,
+          0.988,
+          1.0,
+          1.0104,
+          1.0208,
+          1.0312,
+          1.0416,
+          1.052,
+          1.0624,
+          1.0728,
+          1.0832,
+          1.0936,
+          1.104,
+          1.1144,
+          1.1248,
+          1.1352,
+          1.1456,
+          1.156,
+          1.1663999999999999,
+          1.1768,
+          1.1872,
+          1.1976,
+          1.208,
+          1.2184,
+          1.2288000000000001,
+          1.2392,
+          1.2496,
+          1.26,
+          1.2704,
+          1.2808,
+          1.2912,
+          1.3016,
+          1.312,
+          1.3224,
+          1.3328,
+          1.3432,
+          1.3536,
+          1.3639999999999999,
+          1.3744,
+          1.3848,
+          1.3952,
+          1.4056,
+          1.416,
+          1.4264000000000001,
+          1.4367999999999999,
+          1.4472,
+          1.4576,
+          1.468,
+          1.4784,
+          1.4888,
+          1.4992,
+          1.5095999999999998,
+          1.52,
+          1.5304,
+          1.5408,
+          1.5512000000000001,
+          1.5615999999999999,
+          1.572,
+          1.5824,
+          1.5928,
+          1.6032,
+          1.6136,
+          1.624,
+          1.6343999999999999,
+          1.6448,
+          1.6552,
+          1.6656,
+          1.676,
+          1.6864,
+          1.6968,
+          1.7071999999999998,
+          1.7176,
+          1.728,
+          1.7384,
+          1.7488,
+          1.7591999999999999,
+          1.7696,
+          1.7799999999999998,
+          1.7904,
+          1.8008,
+          1.8112,
+          1.8216,
+          1.8319999999999999,
+          1.8424,
+          1.8528,
+          1.8632,
+          1.8736,
+          1.884,
+          1.8944,
+          1.9047999999999998,
+          1.9152,
+          1.9256,
+          1.936,
+          1.9464,
+          1.9567999999999999,
+          1.9672,
+          1.9775999999999998,
+          1.988,
+          2.0,
+          2.0104,
+          2.0208,
+          2.0312,
+          2.0416,
+          2.052,
+          2.0624,
+          2.0728,
+          2.0832,
+          2.0936,
+          2.104,
+          2.1144,
+          2.1248,
+          2.1352,
+          2.1456,
+          2.156,
+          2.1664,
+          2.1768,
+          2.1872,
+          2.1976,
+          2.208,
+          2.2184,
+          2.2288,
+          2.2392,
+          2.2496,
+          2.26,
+          2.2704,
+          2.2808,
+          2.2912,
+          2.3016,
+          2.312,
+          2.3224,
+          2.3327999999999998,
+          2.3432,
+          2.3536,
+          2.364,
+          2.3744,
+          2.3848,
+          2.3952,
+          2.4055999999999997,
+          2.416,
+          2.4264,
+          2.4368,
+          2.4472,
+          2.4576000000000002,
+          2.468,
+          2.4784,
+          2.4888,
+          2.4992,
+          2.5096,
+          2.52,
+          2.5304,
+          2.5408,
+          2.5512,
+          2.5616,
+          2.572,
+          2.5824,
+          2.5928,
+          2.6032,
+          2.6136,
+          2.624,
+          2.6344,
+          2.6448,
+          2.6552,
+          2.6656,
+          2.676,
+          2.6864,
+          2.6968,
+          2.7072,
+          2.7176,
+          2.7279999999999998,
+          2.7384,
+          2.7488,
+          2.7592,
+          2.7696,
+          2.78,
+          2.7904,
+          2.8007999999999997,
+          2.8112,
+          2.8216,
+          2.832,
+          2.8424,
+          2.8528000000000002,
+          2.8632,
+          2.8735999999999997,
+          2.884,
+          2.8944,
+          2.9048,
+          2.9152,
+          2.9256,
+          2.936,
+          2.9463999999999997,
+          2.9568,
+          2.9672,
+          2.9776,
+          2.988,
+          3.0,
+          3.0104,
+          3.0208,
+          3.0312,
+          3.0416,
+          3.052,
+          3.0624,
+          3.0728,
+          3.0832,
+          3.0936,
+          3.104,
+          3.1144,
+          3.1248,
+          3.1352,
+          3.1456,
+          3.156,
+          3.1664,
+          3.1768,
+          3.1872,
+          3.1976,
+          3.208,
+          3.2184,
+          3.2288,
+          3.2392,
+          3.2496,
+          3.26,
+          3.2704,
+          3.2808,
+          3.2912,
+          3.3016,
+          3.312,
+          3.3224,
+          3.3327999999999998,
+          3.3432,
+          3.3536,
+          3.364,
+          3.3744,
+          3.3848,
+          3.3952,
+          3.4055999999999997,
+          3.416,
+          3.4264,
+          3.4368,
+          3.4472,
+          3.4576000000000002,
+          3.468,
+          3.4784,
+          3.4888,
+          3.4992,
+          3.5096,
+          3.52,
+          3.5304,
+          3.5408,
+          3.5512,
+          3.5616,
+          3.572,
+          3.5824,
+          3.5928,
+          3.6032,
+          3.6136,
+          3.624,
+          3.6344,
+          3.6448,
+          3.6552,
+          3.6656,
+          3.676,
+          3.6864,
+          3.6968,
+          3.7072,
+          3.7176,
+          3.7279999999999998,
+          3.7384,
+          3.7488,
+          3.7592,
+          3.7696,
+          3.78,
+          3.7904,
+          3.8007999999999997,
+          3.8112,
+          3.8216,
+          3.832,
+          3.8424,
+          3.8528000000000002,
+          3.8632,
+          3.8735999999999997,
+          3.884,
+          3.8944,
+          3.9048,
+          3.9152,
+          3.9256,
+          3.936,
+          3.9463999999999997,
+          3.9568,
+          3.9672,
+          3.9776,
+          3.988,
+          4.0,
+          4.0104,
+          4.0208,
+          4.0312,
+          4.0416,
+          4.052,
+          4.0624,
+          4.0728,
+          4.0832,
+          4.0936,
+          4.104,
+          4.1144,
+          4.1248,
+          4.1352,
+          4.1456,
+          4.156,
+          4.1664,
+          4.1768,
+          4.1872,
+          4.1975999999999996,
+          4.208,
+          4.2184,
+          4.2288,
+          4.2392,
+          4.2496,
+          4.26,
+          4.2704,
+          4.2808,
+          4.2912,
+          4.3016,
+          4.312,
+          4.3224,
+          4.3328,
+          4.3432,
+          4.3536,
+          4.364,
+          4.3744,
+          4.3848,
+          4.3952,
+          4.4056,
+          4.416,
+          4.4264,
+          4.4368,
+          4.4472,
+          4.4576,
+          4.468,
+          4.4784,
+          4.4888,
+          4.4992,
+          4.5096,
+          4.52,
+          4.5304,
+          4.5408,
+          4.5512,
+          4.5616,
+          4.572,
+          4.5824,
+          4.5928,
+          4.6032,
+          4.6136,
+          4.624,
+          4.6344,
+          4.6448,
+          4.6552,
+          4.6655999999999995,
+          4.676,
+          4.6864,
+          4.6968,
+          4.7072,
+          4.7176,
+          4.728,
+          4.7384,
+          4.7488,
+          4.7592,
+          4.7696,
+          4.78,
+          4.7904,
+          4.8008,
+          4.8111999999999995,
+          4.8216,
+          4.832,
+          4.8424,
+          4.8528,
+          4.8632,
+          4.8736,
+          4.884,
+          4.8944,
+          4.9048,
+          4.9152000000000005,
+          4.9256,
+          4.936,
+          4.9464,
+          4.9568,
+          4.9672,
+          4.9776,
+          4.9879999999999995,
+          5.0,
+          5.0104,
+          5.0208,
+          5.0312,
+          5.0416,
+          5.052,
+          5.0624,
+          5.0728,
+          5.0832,
+          5.0936,
+          5.104,
+          5.1144,
+          5.1248,
+          5.1352,
+          5.1456,
+          5.156,
+          5.1664,
+          5.1768,
+          5.1872,
+          5.1975999999999996,
+          5.208,
+          5.2184,
+          5.2288,
+          5.2392,
+          5.2496,
+          5.26,
+          5.2704,
+          5.2808,
+          5.2912,
+          5.3016,
+          5.312,
+          5.3224,
+          5.3328,
+          5.3432,
+          5.3536,
+          5.364,
+          5.3744,
+          5.3848,
+          5.3952,
+          5.4056,
+          5.416,
+          5.4264,
+          5.4368,
+          5.4472,
+          5.4576,
+          5.468,
+          5.4784,
+          5.4888,
+          5.4992,
+          5.5096,
+          5.52,
+          5.5304,
+          5.5408,
+          5.5512,
+          5.5616,
+          5.572,
+          5.5824,
+          5.5928,
+          5.6032,
+          5.6136,
+          5.624,
+          5.6344,
+          5.6448,
+          5.6552,
+          5.6655999999999995,
+          5.676,
+          5.6864,
+          5.6968,
+          5.7072,
+          5.7176,
+          5.728,
+          5.7384,
+          5.7488,
+          5.7592,
+          5.7696,
+          5.78,
+          5.7904,
+          5.8008,
+          5.8111999999999995,
+          5.8216,
+          5.832,
+          5.8424,
+          5.8528,
+          5.8632,
+          5.8736,
+          5.884,
+          5.8944,
+          5.9048,
+          5.9152000000000005,
+          5.9256,
+          5.936,
+          5.9464,
+          5.9568,
+          5.9672,
+          5.9776,
+          5.9879999999999995,
+          6.0,
+          6.0104,
+          6.0208,
+          6.0312,
+          6.0416,
+          6.052,
+          6.0624,
+          6.0728,
+          6.0832,
+          6.0936,
+          6.104,
+          6.1144,
+          6.1248,
+          6.1352,
+          6.1456,
+          6.156,
+          6.1664,
+          6.1768,
+          6.1872,
+          6.1975999999999996,
+          6.208,
+          6.2184,
+          6.2288,
+          6.2392,
+          6.2496,
+          6.26,
+          6.2704,
+          6.2808,
+          6.2912,
+          6.3016,
+          6.312,
+          6.3224,
+          6.3328,
+          6.3432,
+          6.3536,
+          6.364,
+          6.3744,
+          6.3848,
+          6.3952,
+          6.4056,
+          6.416,
+          6.4264,
+          6.4368,
+          6.4472,
+          6.4576,
+          6.468,
+          6.4784,
+          6.4888,
+          6.4992,
+          6.5096,
+          6.52,
+          6.5304,
+          6.5408,
+          6.5512,
+          6.5616,
+          6.572,
+          6.5824,
+          6.5928,
+          6.6032,
+          6.6136,
+          6.624,
+          6.6344,
+          6.6448,
+          6.6552,
+          6.6655999999999995,
+          6.676,
+          6.6864,
+          6.6968,
+          6.7072,
+          6.7176,
+          6.728,
+          6.7384,
+          6.7488,
+          6.7592,
+          6.7696,
+          6.78,
+          6.7904,
+          6.8008,
+          6.8111999999999995,
+          6.8216,
+          6.832,
+          6.8424,
+          6.8528,
+          6.8632,
+          6.8736,
+          6.884,
+          6.8944,
+          6.9048,
+          6.9152000000000005,
+          6.9256,
+          6.936,
+          6.9464,
+          6.9568,
+          6.9672,
+          6.9776,
+          6.9879999999999995,
+          7.0,
+          7.0104,
+          7.0208,
+          7.0312,
+          7.0416,
+          7.052,
+          7.0624,
+          7.0728,
+          7.0832,
+          7.0936,
+          7.104,
+          7.1144,
+          7.1248,
+          7.1352,
+          7.1456,
+          7.156,
+          7.1664,
+          7.1768,
+          7.1872,
+          7.1975999999999996,
+          7.208,
+          7.2184,
+          7.2288,
+          7.2392,
+          7.2496,
+          7.26,
+          7.2704,
+          7.2808,
+          7.2912,
+          7.3016,
+          7.312,
+          7.3224,
+          7.3328,
+          7.3432,
+          7.3536,
+          7.364,
+          7.3744,
+          7.3848,
+          7.3952,
+          7.4056,
+          7.416,
+          7.4264,
+          7.4368,
+          7.4472,
+          7.4576,
+          7.468,
+          7.4784,
+          7.4888,
+          7.4992,
+          7.5096,
+          7.52,
+          7.5304,
+          7.5408,
+          7.5512,
+          7.5616,
+          7.572,
+          7.5824,
+          7.5928,
+          7.6032,
+          7.6136,
+          7.624,
+          7.6344,
+          7.6448,
+          7.6552,
+          7.6655999999999995,
+          7.676,
+          7.6864,
+          7.6968,
+          7.7072,
+          7.7176,
+          7.728,
+          7.7384,
+          7.7488,
+          7.7592,
+          7.7696,
+          7.78,
+          7.7904,
+          7.8008,
+          7.8111999999999995,
+          7.8216,
+          7.832,
+          7.8424,
+          7.8528,
+          7.8632,
+          7.8736,
+          7.884,
+          7.8944,
+          7.9048,
+          7.9152000000000005,
+          7.9256,
+          7.936,
+          7.9464,
+          7.9568,
+          7.9672,
+          7.9776,
+          7.9879999999999995
+        ],
+        "time_source": "device_frame_counter"
+      },
+      "degraded": true,
+      "empty_field_acknowledged": true,
+      "mask_frozen": true,
+      "events": [
+        {
+          "code": "runtime_obstruction",
+          "start_s": 3.0,
+          "end_s": 3.087,
+          "indices": [
+            64
+          ],
+          "impact": "运行中存在持续遮挡或高频变化，已保留原始记录供复核"
+        },
+        {
+          "code": "runtime_obstruction",
+          "start_s": 3.968,
+          "end_s": 5.888,
+          "indices": [
+            64
+          ],
+          "impact": "运行中存在持续遮挡或高频变化，已保留原始记录供复核"
+        },
+        {
+          "code": "runtime_obstruction",
+          "start_s": 5.889,
+          "end_s": 8.286,
+          "indices": [
+            7,
+            64
+          ],
+          "impact": "运行中存在持续遮挡或高频变化，已保留原始记录供复核"
+        },
+        {
+          "code": "runtime_obstruction",
+          "start_s": 8.287,
+          "end_s": 8.437,
+          "indices": [
+            7
+          ],
+          "impact": "运行中存在持续遮挡或高频变化，已保留原始记录供复核"
+        },
+        {
+          "code": "runtime_obstruction",
+          "start_s": 9.638,
+          "end_s": 9.666,
+          "indices": [
+            64
+          ],
+          "impact": "运行中存在持续遮挡或高频变化，已保留原始记录供复核"
+        },
+        {
+          "code": "runtime_obstruction",
+          "start_s": 10.271,
+          "end_s": 10.82,
+          "indices": [
+            517
+          ],
+          "impact": "运行中存在持续遮挡或高频变化，已保留原始记录供复核"
+        },
+        {
+          "code": "runtime_obstruction",
+          "start_s": 10.821,
+          "end_s": 11.639,
+          "indices": [
+            517,
+            522
+          ],
+          "impact": "运行中存在持续遮挡或高频变化，已保留原始记录供复核"
+        },
+        {
+          "code": "runtime_obstruction",
+          "start_s": 11.64,
+          "end_s": 13.268,
+          "indices": [
+            517,
+            522,
+            665
+          ],
+          "impact": "运行中存在持续遮挡或高频变化，已保留原始记录供复核"
+        },
+        {
+          "code": "runtime_obstruction",
+          "start_s": 13.269,
+          "end_s": 13.621,
+          "indices": [
+            522,
+            665
+          ],
+          "impact": "运行中存在持续遮挡或高频变化，已保留原始记录供复核"
+        },
+        {
+          "code": "runtime_obstruction",
+          "start_s": 13.622,
+          "end_s": 14.617,
+          "indices": [
+            665
+          ],
+          "impact": "运行中存在持续遮挡或高频变化，已保留原始记录供复核"
+        },
+        {
+          "code": "runtime_obstruction",
+          "start_s": 17.018,
+          "end_s": 17.226,
+          "indices": [
+            64
+          ],
+          "impact": "运行中存在持续遮挡或高频变化，已保留原始记录供复核"
+        },
+        {
+          "code": "runtime_obstruction",
+          "start_s": 17.258,
+          "end_s": 18.936,
+          "indices": [
+            64
+          ],
+          "impact": "运行中存在持续遮挡或高频变化，已保留原始记录供复核"
+        },
+        {
+          "code": "runtime_obstruction",
+          "start_s": 18.968,
+          "end_s": 19.176,
+          "indices": [
+            64
+          ],
+          "impact": "运行中存在持续遮挡或高频变化，已保留原始记录供复核"
+        },
+        {
+          "code": "runtime_obstruction",
+          "start_s": 19.328,
+          "end_s": 22.836,
+          "indices": [
+            64
+          ],
+          "impact": "运行中存在持续遮挡或高频变化，已保留原始记录供复核"
+        },
+        {
+          "code": "runtime_obstruction",
+          "start_s": 23.468,
+          "end_s": 23.526,
+          "indices": [
+            64
+          ],
+          "impact": "运行中存在持续遮挡或高频变化，已保留原始记录供复核"
+        },
+        {
+          "code": "runtime_obstruction",
+          "start_s": 23.588,
+          "end_s": 23.766,
+          "indices": [
+            64
+          ],
+          "impact": "运行中存在持续遮挡或高频变化，已保留原始记录供复核"
+        },
+        {
+          "code": "runtime_obstruction",
+          "start_s": 23.858,
+          "end_s": 24.066,
+          "indices": [
+            64
+          ],
+          "impact": "运行中存在持续遮挡或高频变化，已保留原始记录供复核"
+        },
+        {
+          "code": "runtime_obstruction",
+          "start_s": 24.098,
+          "end_s": 24.186,
+          "indices": [
+            64
+          ],
+          "impact": "运行中存在持续遮挡或高频变化，已保留原始记录供复核"
+        },
+        {
+          "code": "runtime_obstruction",
+          "start_s": 24.338,
+          "end_s": 24.786,
+          "indices": [
+            64
+          ],
+          "impact": "运行中存在持续遮挡或高频变化，已保留原始记录供复核"
+        },
+        {
+          "code": "runtime_obstruction",
+          "start_s": 24.938,
+          "end_s": 26.586,
+          "indices": [
+            64
+          ],
+          "impact": "运行中存在持续遮挡或高频变化，已保留原始记录供复核"
+        },
+        {
+          "code": "runtime_obstruction",
+          "start_s": 26.678,
+          "end_s": 27.312,
+          "indices": [
+            64
+          ],
+          "impact": "运行中存在持续遮挡或高频变化，已保留原始记录供复核"
+        },
+        {
+          "code": "data_timeout",
+          "start_s": 27.312,
+          "end_s": 27.312,
+          "indices": [],
+          "impact": "持续无数据，结束采集，保留已有结果"
+        }
+      ],
+      "event_time_reference": "seconds_after_preflight_checked_sample",
+      "event_count": 22,
+      "events_truncated": false,
+      "limitation": "屏蔽光束不可用于测量；邻近不可用点的事件已排除。运行中新增疑似异常未动态屏蔽，需结合原始数据复核。"
+    }
+  }
+}
