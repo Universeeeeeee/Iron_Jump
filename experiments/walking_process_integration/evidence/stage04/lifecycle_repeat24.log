@@ -1,0 +1,653 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.5, pytest-9.0.3, pluggy-1.6.0 -- D:\conda\python.exe
+cachedir: .pytest_cache
+PySide6 6.11.1 -- Qt runtime 6.11.1 -- Qt compiled 6.11.1
+rootdir: E:\OptoJump\IronJump-production-integrated-20261021
+configfile: pytest.ini
+plugins: anyio-4.12.1, logfire-4.37.0, qt-4.5.0
+collecting ... collected 40 items
+
+lifecycle_repeat24.py::test_immediate_gui_close[0] QFontDatabase: Cannot find font directory D:/conda/Lib/site-packages/PySide6/lib/fonts.
+Note that Qt no longer ships fonts. Deploy some (from https://dejavu-fonts.github.io/ for example) or switch to fontconfig.
+CREATED QThread_1955292335424   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1955292335424
+PASSEDQUIT QThread_1955292335424
+WAIT QThread_1955292335424 True
+DESTROYED QThread_1955292335424
+
+lifecycle_repeat24.py::test_immediate_gui_close[1] CREATED QThread_1955386965888   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1955386965888
+PASSEDQUIT QThread_1955386965888
+WAIT QThread_1955386965888 True
+DESTROYED QThread_1955386965888
+
+lifecycle_repeat24.py::test_immediate_gui_close[2] CREATED QThread_1955386670976   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1955386670976
+PASSEDQUIT QThread_1955386670976
+WAIT QThread_1955386670976 True
+DESTROYED QThread_1955386670976
+
+lifecycle_repeat24.py::test_immediate_gui_close[3] CREATED QThread_1955388459456   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1955388459456
+PASSEDQUIT QThread_1955388459456
+WAIT QThread_1955388459456 True
+DESTROYED QThread_1955388459456
+
+lifecycle_repeat24.py::test_immediate_gui_close[4] CREATED QThread_1955391834560   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1955391834560
+PASSEDQUIT QThread_1955391834560
+WAIT QThread_1955391834560 True
+DESTROYED QThread_1955391834560
+
+lifecycle_repeat24.py::test_immediate_gui_close[5] CREATED QThread_1954225293824   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1954225293824
+PASSEDQUIT QThread_1954225293824
+WAIT QThread_1954225293824 True
+DESTROYED QThread_1954225293824
+
+lifecycle_repeat24.py::test_immediate_gui_close[6] CREATED QThread_1954225781440   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1954225781440
+PASSEDQUIT QThread_1954225781440
+WAIT QThread_1954225781440 True
+DESTROYED QThread_1954225781440
+
+lifecycle_repeat24.py::test_immediate_gui_close[7] CREATED QThread_1954226491392   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1954226491392
+PASSEDQUIT QThread_1954226491392
+WAIT QThread_1954226491392 True
+DESTROYED QThread_1954226491392
+
+lifecycle_repeat24.py::test_immediate_gui_close[8] CREATED QThread_1954227179520   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1954227179520
+PASSEDQUIT QThread_1954227179520
+WAIT QThread_1954227179520 True
+DESTROYED QThread_1954227179520
+
+lifecycle_repeat24.py::test_immediate_gui_close[9] CREATED QThread_1954228195328   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1954228195328
+PASSEDQUIT QThread_1954228195328
+WAIT QThread_1954228195328 True
+DESTROYED QThread_1954228195328
+
+lifecycle_repeat24.py::test_immediate_gui_close[10] CREATED QThread_1954229047296   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1954229047296
+PASSEDQUIT QThread_1954229047296
+WAIT QThread_1954229047296 True
+DESTROYED QThread_1954229047296
+
+lifecycle_repeat24.py::test_immediate_gui_close[11] CREATED QThread_1955388084224   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1955388084224
+PASSEDQUIT QThread_1955388084224
+WAIT QThread_1955388084224 True
+DESTROYED QThread_1955388084224
+
+lifecycle_repeat24.py::test_immediate_gui_close[12] CREATED QThread_1955391983616   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1955391983616
+PASSEDQUIT QThread_1955391983616
+WAIT QThread_1955391983616 True
+DESTROYED QThread_1955391983616
+
+lifecycle_repeat24.py::test_immediate_gui_close[13] CREATED QThread_1954231683136   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1954231683136
+PASSEDQUIT QThread_1954231683136
+WAIT QThread_1954231683136 True
+DESTROYED QThread_1954231683136
+
+lifecycle_repeat24.py::test_immediate_gui_close[14] CREATED QThread_1954234304768   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1954234304768
+PASSEDQUIT QThread_1954234304768
+WAIT QThread_1954234304768 True
+DESTROYED QThread_1954234304768
+
+lifecycle_repeat24.py::test_immediate_gui_close[15] CREATED QThread_1954234436032   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1954234436032
+PASSEDQUIT QThread_1954234436032
+WAIT QThread_1954234436032 True
+DESTROYED QThread_1954234436032
+
+lifecycle_repeat24.py::test_immediate_gui_close[16] CREATED QThread_1954235826048   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1954235826048
+PASSEDQUIT QThread_1954235826048
+WAIT QThread_1954235826048 True
+DESTROYED QThread_1954235826048
+
+lifecycle_repeat24.py::test_immediate_gui_close[17] CREATED QThread_1954236246976   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1954236246976
+PASSEDQUIT QThread_1954236246976
+WAIT QThread_1954236246976 True
+DESTROYED QThread_1954236246976
+
+lifecycle_repeat24.py::test_immediate_gui_close[18] CREATED QThread_1954236983488   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1954236983488
+PASSEDQUIT QThread_1954236983488
+WAIT QThread_1954236983488 True
+DESTROYED QThread_1954236983488
+
+lifecycle_repeat24.py::test_immediate_gui_close[19] CREATED QThread_1954238072896   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1954238072896
+PASSEDQUIT QThread_1954238072896
+WAIT QThread_1954238072896 True
+DESTROYED QThread_1954238072896
+
+lifecycle_repeat24.py::test_immediate_gui_close[20] CREATED QThread_1954237918144   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1954237918144
+PASSEDQUIT QThread_1954237918144
+WAIT QThread_1954237918144 True
+DESTROYED QThread_1954237918144
+
+lifecycle_repeat24.py::test_immediate_gui_close[21] CREATED QThread_1954318176256   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1954318176256
+PASSEDQUIT QThread_1954318176256
+WAIT QThread_1954318176256 True
+DESTROYED QThread_1954318176256
+
+lifecycle_repeat24.py::test_immediate_gui_close[22] CREATED QThread_1954319165440   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1954319165440
+PASSEDQUIT QThread_1954319165440
+WAIT QThread_1954319165440 True
+DESTROYED QThread_1954319165440
+
+lifecycle_repeat24.py::test_immediate_gui_close[23] CREATED QThread_1954320145088   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1954320145088
+PASSEDQUIT QThread_1954320145088
+WAIT QThread_1954320145088 True
+DESTROYED QThread_1954320145088
+
+lifecycle_repeat24.py::test_immediate_gui_close[24] CREATED QThread_1954318241792   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1954318241792
+PASSEDQUIT QThread_1954318241792
+WAIT QThread_1954318241792 True
+DESTROYED QThread_1954318241792
+
+lifecycle_repeat24.py::test_immediate_gui_close[25] CREATED QThread_1954352236800   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1954352236800
+PASSEDQUIT QThread_1954352236800
+WAIT QThread_1954352236800 True
+DESTROYED QThread_1954352236800
+
+lifecycle_repeat24.py::test_immediate_gui_close[26] CREATED QThread_1954383675264   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1954383675264
+PASSEDQUIT QThread_1954383675264
+WAIT QThread_1954383675264 True
+DESTROYED QThread_1954383675264
+
+lifecycle_repeat24.py::test_immediate_gui_close[27] CREATED QThread_1954383931968   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1954383931968
+PASSEDQUIT QThread_1954383931968
+WAIT QThread_1954383931968 True
+DESTROYED QThread_1954383931968
+
+lifecycle_repeat24.py::test_immediate_gui_close[28] CREATED QThread_1954385168832   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1954385168832
+PASSEDQUIT QThread_1954385168832
+WAIT QThread_1954385168832 True
+DESTROYED QThread_1954385168832
+
+lifecycle_repeat24.py::test_immediate_gui_close[29] CREATED QThread_1954233077760   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1954233077760
+PASSEDQUIT QThread_1954233077760
+WAIT QThread_1954233077760 True
+DESTROYED QThread_1954233077760
+
+lifecycle_repeat24.py::test_immediate_gui_close[30] CREATED QThread_1954233405440   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1954233405440
+PASSEDQUIT QThread_1954233405440
+WAIT QThread_1954233405440 True
+DESTROYED QThread_1954233405440
+
+lifecycle_repeat24.py::test_immediate_gui_close[31] CREATED QThread_1954449936384   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1954449936384
+PASSEDQUIT QThread_1954449936384
+WAIT QThread_1954449936384 True
+DESTROYED QThread_1954449936384
+
+lifecycle_repeat24.py::test_immediate_gui_close[32] CREATED QThread_1954235207680   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1954235207680
+PASSEDQUIT QThread_1954235207680
+WAIT QThread_1954235207680 True
+DESTROYED QThread_1954235207680
+
+lifecycle_repeat24.py::test_immediate_gui_close[33] CREATED QThread_1954482096576   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1954482096576
+PASSEDQUIT QThread_1954482096576
+WAIT QThread_1954482096576 True
+DESTROYED QThread_1954482096576
+
+lifecycle_repeat24.py::test_immediate_gui_close[34] CREATED QThread_1954481113536   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1954481113536
+PASSEDQUIT QThread_1954481113536
+WAIT QThread_1954481113536 True
+DESTROYED QThread_1954481113536
+
+lifecycle_repeat24.py::test_immediate_gui_close[35] CREATED QThread_1954547449728   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1954547449728
+PASSEDQUIT QThread_1954547449728
+WAIT QThread_1954547449728 True
+DESTROYED QThread_1954547449728
+
+lifecycle_repeat24.py::test_immediate_gui_close[36] CREATED QThread_1954548305920   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1954548305920
+PASSEDQUIT QThread_1954548305920
+WAIT QThread_1954548305920 True
+DESTROYED QThread_1954548305920
+
+lifecycle_repeat24.py::test_immediate_gui_close[37] CREATED QThread_1954579693440   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1954579693440
+PASSEDQUIT QThread_1954579693440
+WAIT QThread_1954579693440 True
+DESTROYED QThread_1954579693440
+
+lifecycle_repeat24.py::test_immediate_gui_close[38] CREATED QThread_1954579974592   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1954579974592
+PASSEDQUIT QThread_1954579974592
+WAIT QThread_1954579974592 True
+DESTROYED QThread_1954579974592
+
+lifecycle_repeat24.py::test_immediate_gui_close[39] CREATED QThread_1954611890624   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_1954611890624
+PASSEDQUIT QThread_1954611890624
+WAIT QThread_1954611890624 True
+DESTROYED QThread_1954611890624
+
+
+======================== 40 passed in 78.54s (0:01:18) ========================
