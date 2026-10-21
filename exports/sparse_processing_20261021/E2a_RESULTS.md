@@ -1,16 +1,16 @@
 ## E2a：独立阶段与完整消费者 CPU 对照
 
-每项输入执行 AB、BA、AB、BA 四组配对，每次新进程。下表为完整消费者线程 CPU 的配对改善中位数，含同样的原始解码、质量、滤波、步态处理和停止 flush；不含输入构造与结果保存。负值表示退化。
+每项输入执行 AB、BA、AB、BA 四组配对，每次新进程。下表为消费者专用 CPU 的配对改善中位数。范围：原质量、滤波、Processor、发布和停止 flush；解码、输入构造及保存位于计时之外。负值表示退化。
 
-| 输入 | 候选 | 完整消费者 CPU 改善 | 改善配对 |
+| 输入 | 候选 | 消费者专用 CPU 改善 | 改善配对 |
 |---|---|---:|---:|
-| empty | runtime | 6.56% | 4/4 |
-| sparse | runtime | 3.57% | 3/4 |
-| cross | runtime | 4.37% | 4/4 |
-| plateau | runtime | 4.02% | 4/4 |
-| stress | runtime | -1.68% | 1/4 |
-| field_run_20261015_02 | runtime | 4.26% | 3/4 |
-| field_walk_full_02 | runtime | 2.40% | 4/4 |
+| empty | runtime | 7.77% | 4/4 |
+| sparse | runtime | 3.37% | 4/4 |
+| cross | runtime | 4.55% | 4/4 |
+| plateau | runtime | 4.88% | 4/4 |
+| stress | runtime | 0.81% | 4/4 |
+| field_run_20261015_02 | runtime | 6.12% | 4/4 |
+| field_walk_full_02 | runtime | 9.44% | 3/4 |
 
 - runtime：本地 CPU 门槛通过。
 

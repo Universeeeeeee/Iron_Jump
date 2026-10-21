@@ -5,6 +5,7 @@
     {
       "variant": "runtime",
       "local_cpu_gate": true,
+      "measurement_scope": "consumer_only",
       "reason": "Requires >=5% complete-consumer CPU saving in at least one intended case (>=3/4 improving pairs) and no case median regression >5%.",
       "windows_latency_and_queue_gate": "not measured by these CPU runs"
     }
