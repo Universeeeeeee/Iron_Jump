@@ -93,7 +93,7 @@ def build_report_workbook(report: TestReport) -> Workbook:
         ws_device = wb.create_sheet("Device and Config")
         for key, value in snapshot.items():
             ws_device.append([key, json.dumps(value, ensure_ascii=False)])
-        for key in ("contacts", "steps", "cycles", "stops", "issues") + (
+        for key in (("footfalls",) if "footfalls" in summary else ()) + ("contacts", "steps", "cycles", "stops", "issues") + (
                 ("candidate_decisions",) if "candidate_decisions" in summary else ()) + (
                 tuple(k for k in ('event_publications', 'event_audit', 'ownership_recoveries') if k in summary)
                 if 'metric_policy' in summary else ()):

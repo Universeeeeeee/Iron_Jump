@@ -105,6 +105,9 @@ class ReportDataPackageBuilder:
 
         schema_version = "1.1" if is_ground else SCHEMA_VERSION
         builder_version = "report-package-builder/1.1-ground" if is_ground else BUILDER_VERSION
+        if isinstance(report, GaitTestReport) and 'footfalls' in report.walking_summary:
+            schema_version = '1.2'
+            builder_version = 'report-package-builder/1.2-footfalls'
         package_id = _stable_id("package", context.session_id, expected_type, schema_version)
         if is_ground:
             from .ground import build_ground_data

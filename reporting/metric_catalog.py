@@ -6,6 +6,9 @@ from .models import MetricDefinition
 
 
 _METRICS = (
+    MetricDefinition(metric_code="recognized_steps", unit="count", label="识别步数", record_types=("report",), numeric_tolerance=0),
+    MetricDefinition(metric_code="footfall_time_s", unit="s", label="可靠落脚时间", record_types=("ground_footfall",), numeric_tolerance=0.001),
+    MetricDefinition(metric_code="raw_landing_position_m", unit="m", label="发布时原始落脚位置", record_types=("ground_footfall",), numeric_tolerance=0.001),
     MetricDefinition(metric_code="touch_count", unit="count", label="触地次数", record_types=("report",), numeric_tolerance=0),
     MetricDefinition(metric_code="lift_count", unit="count", label="离地次数", record_types=("report",), numeric_tolerance=0),
     MetricDefinition(metric_code="jump_count", unit="count", label="有效跳跃次数", record_types=("report",), numeric_tolerance=0),

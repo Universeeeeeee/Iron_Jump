@@ -1243,7 +1243,7 @@ def _report_detail(report: TestReport) -> dict[str, Any]:
         detail.pop("export_timestamps", None)
         return {
             "report_type": "gait",
-            "report_schema_version": 1,
+            "report_schema_version": 2 if 'footfalls' in report.walking_summary else 1,
             **detail,
         }
 
@@ -1513,6 +1513,7 @@ def _report_summary(report: TestReport) -> dict[str, Any]:
         base.update(
             {
                 "report_type": "gait",
+                **({"recognized_steps": report.recognized_steps} if 'footfalls' in report.walking_summary else {}),
                 "avg_stride": report.avg_stride,
                 "max_stride": report.max_stride,
                 "avg_velocity": report.avg_velocity,

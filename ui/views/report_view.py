@@ -1432,6 +1432,7 @@ class ReportView(QWidget):
         stats = [
             ("设备长度", f"{s['segment_count']} 段 / {s['nominal_length_m']} 米", "本次通过自检的标称长度；距离计算使用光束坐标。"),
             ("可靠触地 / 离地", f"{r.touch_count} / {r.lift_count}", "分别按触地与离地边界证据计数。"),
+            ("识别步数", str(r.recognized_steps), "当前仍有效的可靠落脚事件去重计数；独立于步间与周期指标。"),
             ("有效步间 / 周期", f"{s['valid_steps']} / {s['valid_cycles']}", "触地时间与身份关系可靠的间隔数；位置、离地和支撑分别判断。"),
             metric("平均步长", "mean_step_m", "m", f"相邻可靠落脚位置的距离，共 {s.get('valid_step_lengths', s['valid_steps'])} 个有效间隔。"),
             metric("平均跨步长", "mean_stride_m", "m", "同脚连续两次有效落脚点距离。"),
@@ -1464,7 +1465,15 @@ class ReportView(QWidget):
                       "unresolved_fragment_join": "遮挡来源归属未决，单脚边界未知",
                       "unresolved_multiple_islands": "多处遮挡来源未决，脚印身份未知",
                       "local_unknown_timeout": "相关区域数据不足", "masked_contact_boundary": "坏束附近边界未知"}
-        content = table("接触记录", ["序号", "脚 / 身份段", "触地(s)", "离地(s)", "位置(m)", "短中断合并", "排除原因"],
+        content = ''
+        if 'footfalls' in s:
+            content += table("逐次落脚记录", ["序号", "contact_id", "事件", "采样序号", "触地(s)", "原始落脚位置(m)", "左右脚", "证据来源", "指标缺失原因"],
+                [[i + 1, row['contact_id'], row['event_id'], row['touch_sample'], row['timestamp_s'],
+                  row['raw_landing_position_m'], row['side'] if row['side'] != 'unknown' else '未知', row['source_ref'],
+                  '; '.join(f"{key}: {row[key]['missing_reason']}" for key in
+                            ('lift_s', 'contact_s', 'centre_m', 'step_time_s', 'step_length_m') if not row[key]['valid'])]
+                 for i, row in enumerate(s['footfalls'])])
+        content += table("接触记录", ["序号", "脚 / 身份段", "触地(s)", "离地(s)", "位置(m)", "短中断合并", "排除原因"],
                         [[c["id"], c["side"] if c["side"] != "unknown" else f"{c['label']} / {c['epoch']}",
                           c["start"] if c['confirmed'] and c.get('touch_known', True) else None,
                           (c['lift_s']['value'] if c['lift_s']['valid'] else None) if 'lift_s' in c else

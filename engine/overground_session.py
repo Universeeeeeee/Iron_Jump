@@ -121,10 +121,10 @@ class OvergroundSession(QObject):
     def _consume_frames(self, frames):
         for frame in frames:
             masked_contact = uncertain_contact(frame, self.processor.device.bad_indices)
-            audit_start = len(self.processor.event_audit)
+            audit_start = len(getattr(self.processor, 'event_audit', ()))
             self.processor.process(frame, masked_contact=masked_contact)
             if any(e['action'] in {'publish', 'retract', 'sequence_retracted'}
-                   for e in self.processor.event_audit[audit_start:]):
+                   for e in getattr(self.processor, 'event_audit', ())[audit_start:]):
                 self._publication_changed = True
                 self.processor._record_visual(frame, force=True)
             self._last_frame = frame
@@ -194,7 +194,8 @@ class OvergroundSession(QObject):
         running = p.name == "overground_running"
         lengths = s["step_lengths_m"]
         speed = s["running_speed_m_s" if running else "walking_speed_m_s"]
-        self.snapshot.emit({"touch_count": p.reliable_touch_count,
+        self.snapshot.emit({"touch_count": getattr(p, 'reliable_touch_count', sum(c.confirmed for c in p.contacts)),
+                            **({'recognized_steps': s['recognized_steps']} if not running else {}),
                             "device_timing": ({
                                 "stream_id": self._last_frame.stream_id,
                                 "sample_time_s": self._last_frame.sample_time_s,

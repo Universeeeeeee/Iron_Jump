@@ -44,7 +44,11 @@ def export_reports():
     walking_snapshot.pop('metric_policy', None)
     walking_snapshot.pop('candidate_exclusion_policy', None)
     walking_snapshot.pop('immature_coalescence_policy', None)
+    walking_snapshot.pop('source_uncertainty_recovery', None)
+    walking_snapshot.pop('footprint_publication', None)
     walking_summary = dict(walking.walking_summary)
+    for key in ('footfall_schema_version', 'footfalls', 'recognized_steps', 'landing_positions_m'):
+        walking_summary.pop(key, None)
     for key in ('event_publications', 'event_audit', 'ownership_recoveries', 'record_count', 'confirmed_contacts', 'valid_touches', 'valid_step_times',
                 'valid_step_lengths', 'valid_cycle_times', 'valid_stride_lengths',
                 'valid_support_cycles', 'valid_contact_durations', 'candidate_decisions', 'metric_policy', 'valid_step_speeds'):
@@ -68,6 +72,7 @@ def export_reports():
     # Freeze the saved v1.3 running schema; current candidate diagnostics are
     # separately covered by the current-report roundtrip tests.
     running_summary = dict(ground_running.running_summary)
+    running_summary.pop('landing_positions_m', None)
     for key in ('event_publications', 'event_audit', 'ownership_recoveries', 'candidate_decisions', 'record_count', 'confirmed_contacts', 'valid_touches',
                 'valid_contact_durations', 'valid_step_lengths', 'valid_step_speeds',
                 'valid_stride_lengths', 'valid_support_cycles', 'metric_policy'):

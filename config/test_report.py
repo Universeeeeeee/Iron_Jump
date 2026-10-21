@@ -109,7 +109,7 @@ class JumpTestReport:
 
 @dataclass(frozen=True)
 class GaitTestReport:
-    """步态测试结果快照（不可变）"""
+    """步态快照；walking_summary 的识别落脚与有效步间/周期分别计数。"""
     touch_count: int
     lift_count: int
     stride_lengths: tuple
@@ -133,6 +133,10 @@ class GaitTestReport:
     visual_timeline: tuple = ()
     walking_summary: dict = field(default_factory=dict)
     report_config_snapshot: dict = field(default_factory=dict)
+
+    @property
+    def recognized_steps(self):
+        return self.walking_summary.get('recognized_steps', self.touch_count)
 
 
 # 统一类型别名

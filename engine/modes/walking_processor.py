@@ -1739,7 +1739,7 @@ class WalkingProcessor:
                     and not any(c.start < b and c.end > a for a, b in stops)]
         spatial_steps = [s for s in steps if s['length_m'] is not None]
         avg = lambda values: sum(values) / len(values) if values else None
-        return {"segment_count": len(self.device.layout.segments),
+        summary = {"segment_count": len(self.device.layout.segments),
                 "nominal_length_m": len(self.device.layout.segments),
                 "duration_s": duration, "passage_speed_m_s": speed,
                 "direction": self.direction, "valid_steps": len(steps), "valid_cycles": len(cycles),
@@ -1802,6 +1802,11 @@ class WalkingProcessor:
                                                             else "incomplete_contact" if c.end is None else None)}
                              for c in self.contacts],
                 "excluded_contacts": sum(not valid(c) for c in self.contacts)}
+        from engine.footfall_records import FOOTFALL_SCHEMA, footfall_records
+        summary['footfall_schema_version'] = FOOTFALL_SCHEMA
+        summary['footfalls'] = footfall_records(summary)
+        summary['recognized_steps'] = len(summary['footfalls'])
+        return summary
 
     def build_report(self, reason, export_frames=(), export_timestamps=()):
         self._close_ownership_groups(reason, self.last_sample)

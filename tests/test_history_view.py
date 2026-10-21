@@ -342,6 +342,7 @@ class HistoryViewTest(unittest.TestCase):
                 """
             )
 
+        conn.close()
         store = SubjectStore(legacy_path)
         self.assertTrue(store.get_session(7).is_temporary)
         store.link_session_to_subject(7, 1)

@@ -302,11 +302,23 @@ def test_visible_cycle_summary_preserves_max_camera_at_height_threshold(qtbot):
 
     preview = view._camera_panel._preview
     container = view._camera_panel._preview_container
-    assert not view._cycle_panel.isVisible()
-
-    view.resize(1280, 812)
+    # Font metrics vary between Qt platforms. Find the delivered transition
+    # instead of assuming that all hosts share the 810/812 px boundary.
+    hidden_height = None
+    visible_height = None
+    for height in range(700, 1002, 2):
+        view.resize(1280, height)
+        QApplication.processEvents()
+        if view._cycle_panel.isVisible():
+            visible_height = height
+            break
+        hidden_height = height
+    assert hidden_height is not None and visible_height is not None
+    view.resize(1280, hidden_height)
     QApplication.processEvents()
-
+    assert not view._cycle_panel.isVisible()
+    view.resize(1280, visible_height)
+    QApplication.processEvents()
     assert view._cycle_panel.isVisible()
     assert preview.width() == (container.width() // 16) * 16
     assert preview.width() * 9 == preview.height() * 16

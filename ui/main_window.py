@@ -38,7 +38,7 @@ from ui.app_shell import (
     MODULE_TEST,
     ApplicationShell,
 )
-from ui.session_controller import SessionController
+from ui.measurement_controller import MeasurementController as SessionController
 from ui.views.athletes_view import AthletesView
 from ui.views.setup_view import SessionSetup, SetupView
 from ui.views.execution_view import ExecutionView
@@ -532,7 +532,7 @@ class MainWindow(QMainWindow):
         self._exec_view.reset()
         self._exec_view.configure(config)
         self._controller.prepare(config)
-        self._exec_view.set_quality_preflight_required(getattr(self._controller, "_quality", None) is not None)
+        self._exec_view.set_quality_preflight_required(getattr(self._controller, 'quality_preflight_required', getattr(self._controller, "_quality", None) is not None))
         self._go_to_execution()
 
     def _on_history_requested(self, subject_result):
@@ -581,7 +581,7 @@ class MainWindow(QMainWindow):
         from ui.quality_settings import save_policy
         save_policy(policy)
         self._controller.quality_policy = policy
-        if self._controller.engine is not None:
+        if getattr(self._controller, 'has_prepared_session', self._controller.engine is not None):
             self._discard_prepared_session()
 
     def _update_voice_context(self, *_args):
@@ -768,6 +768,14 @@ class MainWindow(QMainWindow):
 
     def closeEvent(self, event):
         """关闭窗口时清理所有资源。"""
+        shutdown = getattr(self._controller, 'shutdown', None)
+        if callable(shutdown):
+            try:
+                shutdown()
+            except Exception:
+                log.exception('Measurement shutdown unconfirmed; keeping the window open')
+                event.ignore()
+                return
         if getattr(self, '_close_cleanup_complete', False):
             if self._exec_view._camera_panel._closing_control is not None:
                 event.ignore()

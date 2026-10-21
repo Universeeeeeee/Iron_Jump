@@ -39,6 +39,9 @@ def walking_position_value(contact):
 def build_ground_data(builder, package_id, report):
     walking = isinstance(report, GaitTestReport)
     summary = report.walking_summary if walking else report.running_summary
+    if walking and 'footfalls' in summary:
+        from engine.footfall_records import validate_footfalls
+        validate_footfalls(summary)
     source_name = "walking_summary" if walking else "running_summary"
     mappings = _WALK_METRICS if walking else _RUN_METRICS
     if walking and any('centre_m' in row for row in summary['contacts']):
@@ -163,10 +166,29 @@ def build_ground_data(builder, package_id, report):
                                           "event_audit": deepcopy(summary.get('event_audit', [])),
                                           "ownership_recoveries": deepcopy(summary.get('ownership_recoveries', []))}
                                          if 'metric_policy' in summary else {})}))
+    footfall_set_id = None
+    if walking and 'footfalls' in summary:
+        footfall_set_id = _stable_id(package_id, 'record_set', 'ground_footfall')
+        rows = []
+        # Existing gait metrics remain exclusively in their original record sets.
+        # A footfall adds identity/onset evidence, not duplicate step statistics.
+        codes = {'footfall_time_s': 'touch_s'}
+        for ordinal, row in enumerate(summary['footfalls']):
+            record_id = _stable_id(footfall_set_id, 'record', row['event_id'])
+            sources[record_id] = dict(source_ref=f'{source_name}:footfalls:{ordinal}', row=deepcopy(row))
+            values = {code: _running_metric(code, row[field]) for code, field in codes.items()}
+            values['raw_landing_position_m'] = _metric_value('raw_landing_position_m', row['raw_landing_position_m'])
+            rows.append(SemanticRecord(record_id=record_id, ordinal=ordinal, source_index=row['contact_id'],
+                timestamp_s=row['timestamp_s'], side=row['side'] if anchored else 'unknown',
+                status=RecordStatus(validity='valid', inclusion='included'), values=values))
+        record_sets.append(RecordSet(record_set_id=footfall_set_id, record_type='ground_footfall',
+                           metric_codes=tuple(codes) + ('raw_landing_position_m',), records=tuple(rows)))
+        add_fact('recognized_steps', summary['recognized_steps'], 1, source_name + ':recognized_steps', 'count')
     payload = GroundPayload(kind="overground_walk" if walking else "overground_run",
                             contact_record_set_id=record_sets[0].record_set_id,
                             step_record_set_id=record_sets[1].record_set_id,
                             gait_cycle_record_set_id=record_sets[2].record_set_id,
                             spatial_reference="contact_center" if walking else "stable_toe_proxy",
-                            record_sources=sources)
+                            record_sources=sources, footfall_record_set_id=footfall_set_id,
+                            recognized_steps=summary.get('recognized_steps') if walking else None)
     return record_sets, facts, flags, payload

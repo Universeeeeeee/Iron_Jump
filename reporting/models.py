@@ -131,7 +131,7 @@ class SemanticRecord(FrozenModel):
 
 class RecordSet(FrozenModel):
     record_set_id: str
-    record_type: Literal["jump", "step", "gait_cycle", "ground_contact", "ground_step", "ground_cycle"]
+    record_type: Literal["jump", "step", "gait_cycle", "ground_contact", "ground_step", "ground_cycle", "ground_footfall"]
     metric_codes: tuple[str, ...]
     records: tuple[SemanticRecord, ...]
 
@@ -257,6 +257,8 @@ class GroundPayload(FrozenModel):
     gait_cycle_record_set_id: str
     spatial_reference: Literal["contact_center", "stable_toe_proxy"]
     record_sources: dict[str, dict[str, Any]]
+    footfall_record_set_id: str | None = None
+    recognized_steps: int | None = Field(default=None, ge=0)
 
 
 ReportPayload = JumpPayload | TreadmillGaitPayload | TreadmillRunningPayload | GroundPayload
