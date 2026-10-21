@@ -15,13 +15,15 @@ LAB=HERE.parent
 
 def main():
     label,variant=sys.argv[1:3]
+    os.environ['PYTHONUTF8']='1'
     if ',' in variant:
         os.environ['IRON_SPARSE_FEATURES']=variant
         variant='combined'
     rows=[]
     folder=LAB/'benchmarks';folder.mkdir(exist_ok=True)
-    for case in ('empty','sparse','cross','plateau','stress',
-                 'field_run_20261015_02','field_walk_full_02'):
+    cases=(sys.argv[3].split(',') if len(sys.argv)>3 else
+           ['empty','sparse','cross','plateau','stress','field_run_20261015_02','field_walk_full_02'])
+    for case in cases:
         pairs=[]
         for pair,order in enumerate((('baseline',variant),(variant,'baseline'),
                                      ('baseline',variant),(variant,'baseline'))):
@@ -31,7 +33,7 @@ def main():
                 cmd=[sys.executable,str(LAB/'consumer_bench.py'),'one',case,name,str(path)]
                 with path.with_suffix('.stdout').open('w') as out,path.with_suffix('.stderr').open('w') as err:
                     subprocess.run(cmd,stdout=out,stderr=err,check=True)
-                results[name]=json.loads(path.read_text())
+                results[name]=json.loads(path.read_text(encoding='utf-8'))
             a,b=results['baseline'],results[variant]
             assert a['report_sha256']==b['report_sha256'],(case,pair,'report')
             pairs.append({'pair':pair,'order':order,'baseline':a,'candidate':b,
@@ -42,12 +44,13 @@ def main():
                      'positive_pairs':sum(x>0 for x in reductions)})
         (LAB/(label+'.native.json')).write_text(json.dumps({'complete':False,'results':rows},indent=2))
         print(case,round(statistics.median(reductions)*100,2),flush=True)
-    pins=json.loads((LAB/'native_preflight.json').read_text())['formal_plan16_hashes']
+    pins=json.loads((LAB/'native_preflight.json').read_text(encoding='utf-8'))['formal_plan16_hashes']
     root=LAB.parents[1]
     plan=json.loads((root/'experiments/live_consumer_process_candidate16/plan16.json').read_text(encoding='utf-8'))
     assert all(hashlib.sha256((root/n).read_bytes()).hexdigest()==v for n,v in plan['formal_sha256'].items())
     result={'complete':True,'results':rows,'platform':platform.platform(),'python':sys.version,
-            'formal_sources_unchanged':True,'scope':'Windows original NumPy, consumer-only unpaced computation. Decoding excluded. No GUI, process+batch40 transport, camera, SDK, ETW or physical acquisition. No FIFO/contact-to-paint conclusion.'}
+            'formal_sources_unchanged':True,'cases':cases,'python_utf8_environment':True,
+            'scope':'Windows original NumPy, consumer-only unpaced computation. Decoding excluded. No GUI, process+batch40 transport, camera, SDK, ETW or physical acquisition. No FIFO/contact-to-paint conclusion.'}
     (LAB/(label+'.native.json')).write_text(json.dumps(result,indent=2))
     print('complete',label,flush=True)
 

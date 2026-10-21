@@ -1,0 +1,14 @@
+{
+  "experiment": "E3",
+  "complete": true,
+  "decisions": [
+    {
+      "variant": "clusters",
+      "local_cpu_gate": false,
+      "measurement_scope": "consumer_only",
+      "reason": "Requires >=5% complete-consumer CPU saving in at least one intended case (>=3/4 improving pairs) and no case median regression >5%.",
+      "windows_latency_and_queue_gate": "not measured by these CPU runs"
+    }
+  ],
+  "segmented_decoder_beats_simple_cache": null
+}

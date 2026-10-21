@@ -25,7 +25,7 @@ def normalised(folder):
                    state['quality']['preflight']):
         assert isinstance(branch['checked_monotonic_ns'],int)
         del branch['checked_monotonic_ns']
-    return report,state
+    return [report,state]
 
 
 def first_diff(a,b,path=''):
