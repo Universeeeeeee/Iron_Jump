@@ -1,0 +1,102 @@
+{
+  "candidate_plan": "plan17.json",
+  "validation_plan": "gui_validation_plan17.json",
+  "run": "gui_walk_20261021_230117",
+  "scope": "Real GUI report receipt, shutdown state, live real-time endpoints and independent human feedback; single Walk.",
+  "technical_validation_complete": true,
+  "GUI_validation": {
+    "full_report_exact": true,
+    "report_bytes": 9832911,
+    "report_sha256": "65ab2ceb5910f902f94e2a3262336861e072f1e35d3763fe9899c8ae2a7c4a15",
+    "received_on_GUI_thread": true,
+    "callbacks_in_order": [
+      "report_received",
+      "closed"
+    ],
+    "checks_passed": 12
+  },
+  "real_time": {
+    "input_fps": 999.9886802596551,
+    "raw_frames": 60818,
+    "dropped_frames": 0,
+    "continuous_unfinished_frame_upper": 101,
+    "unfinished_frame_gate": 250,
+    "oldest_pending_age_ms_peak": 10.2234,
+    "max_USB_receipt_to_paint_ms": 146.3069,
+    "latency_gate_ms": 250,
+    "all_active_contacts_painted": true
+  },
+  "shutdown": {
+    "candidate_checks": {
+      "actor_exitcode": 0,
+      "actor_stopped": true,
+      "client_running": false,
+      "start_pending": false,
+      "reader_stopped": true,
+      "writer_stopped": true,
+      "inbox_closed": true,
+      "client_timer_stopped": true,
+      "field_timers_stopped": true,
+      "window_closed": true,
+      "camera_released": true,
+      "model_released": true,
+      "SDK_released": true,
+      "status_complete": true
+    },
+    "independent_OS_task_state": "Ready",
+    "independent_OS_task_exitcode": 0,
+    "independent_remaining_target_processes": 0
+  },
+  "human": {
+    "observation_file": "manual_observation17_02.json",
+    "physical_steps": 12,
+    "confirmed_contacts": 12,
+    "painted_contacts": 12,
+    "count_matches": true,
+    "lead_foot_reported": "left",
+    "skeleton_continuous_reported": true,
+    "progressive_lag_reported": false,
+    "automatic_close_reported": true
+  },
+  "screen_review": {
+    "source_sha256": "b08bfaafea8934e7aba93595f100b5d2c78e038c23361b2f4403cc85c01aebe3",
+    "interval_s": [
+      75,
+      85
+    ],
+    "sampled_seconds": [
+      75,
+      76.5,
+      78,
+      79.5,
+      81,
+      82.5,
+      84,
+      85
+    ],
+    "observed": "Skeleton overlays and advancing footprints visible in sampled walking frames; first/last frames include waiting/exit.",
+    "limits": "Sparse screenshots do not prove every-frame continuity or a latency value; human feedback and native receipt/paint timestamps supply those observations.",
+    "media_pushed_to_GitHub": false
+  },
+  "metric_limits": {
+    "confirmed_contacts": 12,
+    "valid_metric_steps": 7,
+    "valid_cycles": 4,
+    "issue_codes": [
+      "ambiguous_contacts"
+    ],
+    "GUI_effective_step_card": 7,
+    "automatic_left_right_verification": "not confirmed",
+    "meaning": "Contact-count agreement and full report equality do not independently validate all step/stride/support metrics. Source ambiguities and visual side verification remain outside this acceptance.",
+    "all_gait_metrics_correctness_proven": false
+  },
+  "history": {
+    "plan16_failed_report_handoff_still_failed": true,
+    "cancelled_gui_window_preserved": "gui_walk_20261021_225532",
+    "old_PMC_31_25ms_gate_pass": false,
+    "CPU_GIL_frequency_cache_shares_allowed": false
+  },
+  "formal_program_modified": false,
+  "additional_human_runs_started": false,
+  "conclusion": "Current candidate passes this real-GUI report/shutdown/real-time validation and contact-count/human-observation cross-check. No claim of all gait-metric correctness, production integration or universal performance."
+}
