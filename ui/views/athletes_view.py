@@ -111,6 +111,7 @@ class AthletesView(QWidget):
     """Search and maintain athletes stored in the local SQLite database."""
 
     test_requested = Signal(object)  # SubjectSearchResult
+    rfid_card_detected = Signal(str)  # UID, once per tap (also after binding)
     results_requested = Signal(object)  # SubjectSearchResult
     team_results_requested = Signal(object)  # TeamProfile
     ALL_TEAMS = "all-teams"
@@ -128,6 +129,7 @@ class AthletesView(QWidget):
         self._results: list[SubjectSearchResult] = []
         self._rfid_reader = rfid_reader
         self._rfid_uid: str | None = None
+        self._rfid_present_uid: str | None = None
         self._rfid_read_status: int | None = None
         self._rfid_error: str | None = None
         if self._rfid_reader is None and sys.platform == "win32":
@@ -314,6 +316,11 @@ class AthletesView(QWidget):
             return
         result = self._rfid_reader.request_uid()
         uid = result.uid
+        if uid is None and result.status == STATUS_NO_CARD:
+            self._rfid_present_uid = None
+        new_tap = uid is not None and uid != self._rfid_present_uid
+        if uid is not None:
+            self._rfid_present_uid = uid
         if uid == self._rfid_uid and result.status == self._rfid_read_status:
             return
         self._rfid_uid = uid
@@ -326,13 +333,13 @@ class AthletesView(QWidget):
         if uid is None or self._subject_store is None:
             return
         subject = self._subject_store.get_subject_by_card_uid(uid)
-        if subject is None:
-            return
-        if not self._select_subject_id(subject.id):
+        if subject is not None and not subject.archived and not self._select_subject_id(subject.id):
             self._search.clear()
             self._team_filter.setCurrentIndex(0)
             self.refresh()
             self._select_subject_id(subject.id)
+        if new_tap:
+            self.rfid_card_detected.emit(uid)
 
     def _select_subject_id(self, subject_id: int) -> bool:
         for row, result in enumerate(self._results):
@@ -362,6 +369,8 @@ class AthletesView(QWidget):
             )
             if subject is None:
                 self._rfid_status.setText(f"RFID：已读到 {self._rfid_uid}，未绑定运动员")
+            elif subject.archived:
+                self._rfid_status.setText(f"RFID：{subject.display_name} 已归档，请先恢复档案")
             else:
                 self._rfid_status.setText(
                     f"RFID：已识别 {subject.display_name}  ({self._rfid_uid})"
@@ -384,6 +393,7 @@ class AthletesView(QWidget):
             QMessageBox.warning(self, "RFID", str(exc))
             return
         self.refresh()
+        self.rfid_card_detected.emit(self._rfid_uid)
 
     def _unbind_selected_card(self) -> None:
         selected = self._selected_result()

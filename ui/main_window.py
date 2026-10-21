@@ -324,6 +324,7 @@ class MainWindow(QMainWindow):
 
         # AthletesView → test/results modules
         self._athletes_view.test_requested.connect(self._on_athlete_test_requested)
+        self._athletes_view.rfid_card_detected.connect(self._on_rfid_card_detected)
         self._athletes_view.results_requested.connect(self._on_history_requested)
         self._athletes_view.team_results_requested.connect(
             self._on_team_history_requested
@@ -549,6 +550,42 @@ class MainWindow(QMainWindow):
     def _on_athlete_test_requested(self, subject_result):
         self._setup_view.select_subject(subject_result.subject.id)
         self._go_to_setup()
+
+    def _on_rfid_card_detected(self, uid: str) -> None:
+        if getattr(self, "_close_cleanup_complete", False):
+            return
+        if (self._controller.is_running
+                or getattr(self._controller, "_start_pending", False)
+                or self._stack.currentWidget() is self._exec_view):
+            self.statusBar().showMessage(
+                "RFID：当前测试已进入准备或采集阶段，请返回参数配置后重新刷卡。", 8000
+            )
+            return
+        if QApplication.activeModalWidget() is not None:
+            self.statusBar().showMessage("RFID：请关闭当前对话框后重新刷卡。", 8000)
+            return
+        if self._subject_store is None:
+            self.statusBar().showMessage("RFID：运动员数据库不可用。", 8000)
+            return
+        subject = self._subject_store.get_subject_by_card_uid(uid)
+        if subject is None:
+            self._go_to_athletes()
+            self.statusBar().showMessage(
+                f"RFID：卡 {uid} 未绑定，请选择或新建运动员，再点击“绑定当前卡”。", 8000
+            )
+            return
+        if subject.archived:
+            self.statusBar().showMessage(
+                f"RFID：{subject.display_name} 已归档，请先恢复档案后重新刷卡。", 8000
+            )
+            return
+        if not self._setup_view.select_subject(subject.id):
+            self.statusBar().showMessage("RFID：运动员资料加载失败，请重新刷卡。", 8000)
+            return
+        self._go_to_setup()
+        self.statusBar().showMessage(
+            f"RFID：已加载 {subject.display_name}，请配置本次测试参数。", 8000
+        )
 
     def _on_history_load_config(self, config: TestConfig):
         self._setup_view.load_config_from_history(config)
