@@ -35,6 +35,7 @@ def main():
         stages=json.loads((HERE/f'{label}_stage.json').read_text())
         pipelines=json.loads((HERE/f'{label}_pipeline.json').read_text())
         assert stages['complete'] and pipelines['complete']
+        consumer_only=pipelines.get('scope')=='consumer_only'
         rows=[]
         for r in pipelines['results']:
             rows.append(f"| {r['case']} | {r['variant']} | {r['median_cpu_reduction']*100:.2f}% | {r['positive_pairs']}/4 |")
@@ -44,15 +45,25 @@ def main():
             qualify=bool(rs and any(r['median_cpu_reduction']>=.05 and r['positive_pairs']>=3 for r in rs)
                          and all(r['median_cpu_reduction']>=-.05 for r in rs))
             decisions.append({'variant':variant,'local_cpu_gate':qualify,
+                'measurement_scope':'consumer_only' if consumer_only else 'serial_reader_and_consumer',
                 'reason':'Requires >=5% complete-consumer CPU saving in at least one intended case (>=3/4 improving pairs) and no case median regression >5%.',
                 'windows_latency_and_queue_gate':'not measured by these CPU runs'})
         summary={'experiment':label,'complete':True,'decisions':decisions,
                  'segmented_decoder_beats_simple_cache':pipelines.get('segmented_decoder_beats_simple_cache')}
+        if label=='E1':
+            summary['reader_decoder_gate']=any(r['median_cpu_reduction']>=.2 and r['positive_pairs']>=3
+                                               for r in stages['results'] if r['variant']=='decode_full')
+            summary['reader_benefit_is_not_consumer_thread_benefit']=True
+        scope=('原质量、滤波、Processor、发布和停止 flush；解码、输入构造及保存位于计时之外。'
+               if consumer_only else '接收端解码、质量、滤波、Processor、发布和停止 flush 的串行模型；不等同于生产消费者线程。')
+        title='消费者专用' if consumer_only else '含读端解码的串行处理链路'
         text=(f'## {label}：独立阶段与完整消费者 CPU 对照\n\n'
-              '每项输入执行 AB、BA、AB、BA 四组配对，每次新进程。下表为完整消费者线程 CPU 的配对改善中位数，含同样的原始解码、质量、滤波、步态处理和停止 flush；不含输入构造与结果保存。负值表示退化。\n\n'
-              '| 输入 | 候选 | 完整消费者 CPU 改善 | 改善配对 |\n|---|---|---:|---:|\n'
+              f'每项输入执行 AB、BA、AB、BA 四组配对，每次新进程。下表为{title} CPU 的配对改善中位数。范围：{scope}负值表示退化。\n\n'
+              f'| 输入 | 候选 | {title} CPU 改善 | 改善配对 |\n|---|---|---:|---:|\n'
               +'\n'.join(rows)+'\n\n'+ '\n'.join(f"- {d['variant']}：本地 CPU 门槛{'通过' if d['local_cpu_gate'] else '未通过'}。" for d in decisions)
               +'\n\n这些是本地 macOS、无节奏、无 GUI/硬件的计算成本结果；不能据此声称 Windows FIFO、显示延迟或现场积压已经改善。\n')
+        if label=='E1':
+            text+='\nE1 的主要作用于读端。消费者计时是否通过与解码计时是否通过分别报告；旧串行模型数据保留在 E1_serial_pipeline.json，计时口径修正见 CONSUMER_SCOPE_CORRECTION.md。\n'
     elif label=='E4':
         data=json.loads((HERE/'diagnostic.json').read_text())
         controls=data['shadow_adversarial']

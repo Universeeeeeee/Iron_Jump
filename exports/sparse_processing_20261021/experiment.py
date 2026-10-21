@@ -381,6 +381,33 @@ def benchmark(name, variant, target):
         def run():
             for f in frames:
                 runtime.observe(f)
+    elif target in {'formal_processor', 'formal_clusters'}:
+        # Stage inputs must be the actual quality-masked, filtered frames,
+        # including each formal frame's masked-contact argument. Preparing
+        # this stream is not part of the scored stage CPU interval.
+        prepare_q, prepare_s = pipeline(mode, layout, frames, 'baseline', meta)
+        formal = []
+        original_process = prepare_s.processor.process
+        def capture(f, observation=None, *, masked_contact=False):
+            assert observation is None
+            formal.append((f, masked_contact))
+            return original_process(f, masked_contact=masked_contact)
+        prepare_s.processor.process = capture
+        for f in frames:
+            feed_quality(prepare_q, f)
+        prepare_s.halt()
+        assert len(formal) == len(frames), (name, 'formal stage input coverage')
+        cls = WalkingProcessor if mode == 'walk' else OvergroundRunningProcessor
+        processor = processor_class(cls, variant)(config_for(mode, meta), prepare_s.processor.device)
+        if target == 'formal_processor':
+            def run():
+                for f, masked in formal:
+                    processor.process(f, masked_contact=masked)
+        else:
+            method = processor._clusters if mode == 'walk' else processor._groups
+            def run():
+                for f, _ in formal:
+                    method(f.contact_bits)
     else:
         cls = WalkingProcessor if mode == 'walk' else OvergroundRunningProcessor
         dev = PreparedDevice(layout, frames[0].stream_id, frames[0].sample_index-1, 0, 3000)
@@ -442,7 +469,8 @@ def main():
     parser.add_argument('action', choices=('check', 'bench', 'suite', 'verify'))
     parser.add_argument('--case', default='sparse')
     parser.add_argument('--variant', choices=VARIANTS, default='baseline')
-    parser.add_argument('--target', choices=('pipeline', 'decode', 'runtime', 'clusters', 'processor'), default='pipeline')
+    parser.add_argument('--target', choices=('pipeline', 'decode', 'runtime', 'clusters', 'processor',
+                                            'formal_processor', 'formal_clusters'), default='pipeline')
     parser.add_argument('--output', type=Path)
     args = parser.parse_args()
     if args.action == 'bench':
