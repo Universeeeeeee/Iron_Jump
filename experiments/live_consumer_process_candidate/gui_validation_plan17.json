@@ -1,0 +1,20 @@
+{
+  "candidate_plan": "plan17.json",
+  "candidate_plan_sha256": "275416313243dfafb5061408de9eb756de5a5a4b0f7055eafa7bf5625923079a",
+  "observer": "verify_gui17.py",
+  "observer_sha256": "90efb0f64e430f3561ab1097e1bf5b64b29265cbdbdc25b8a96e36f5cb386723",
+  "scope": "Observe real GUI full report receipt and close state on current unchanged candidate; one operator-started Walk.",
+  "checks": [
+    "full report equality with actor artifact on GUI thread",
+    "report_received before closed",
+    "actor exit zero and reader/writer stopped",
+    "idle flags and timers stopped",
+    "camera/model/SDK released and window closed",
+    "existing 250-frame/250-ms gates",
+    "human independently reports new-run step count, lead foot, skeleton continuity and perceived latency"
+  ],
+  "old_failed_run_preserved": true,
+  "automatic_human_start": false,
+  "restart_device": false,
+  "Run_or_AB": false
+}
