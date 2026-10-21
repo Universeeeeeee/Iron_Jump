@@ -4,8 +4,10 @@ import pytest
 from qtpy.QtWidgets import QApplication, QDialog
 
 from config.test_config import default_jump_config
+from data.subject_store import SubjectStore
 from hardware.rc200u import SimulatedRc200u, UidRead
 from tests.test_main_window_navigation import _window
+from ui.views.athletes_view import AthletesView
 from ui.views.setup_view import SessionSetup
 
 
@@ -27,6 +29,35 @@ def _rfid_window(qtbot, tmp_path, monkeypatch):
 def _tap(window, reader, uid):
     reader.queue_uid(uid)
     window._athletes_view._poll_rfid()
+
+
+@pytest.mark.parametrize("bound", [False, True])
+def test_reader_beeps_once_per_valid_tap(qtbot, tmp_path, monkeypatch, bound):
+    store = SubjectStore(tmp_path / "beep.sqlite3")
+    subject_id = store.create_subject("Alice", 1990)
+    if bound:
+        store.bind_card_uid(subject_id, "AABBCCDD")
+    reader = SimulatedRc200u()
+    view = AthletesView(store, rfid_reader=reader)
+    qtbot.addWidget(view)
+    view._rfid_timer.stop()
+    for result, expected_beeps in [
+        (UidRead(None, 8, "no card"), 0),
+        (UidRead(None, 24, "timeout"), 0),
+        (UidRead("AABBCCDD", 0, "ok"), 1),
+        (UidRead("AABBCCDD", 0, "ok"), 1),
+        (UidRead("AABBCCDD", 10, "card halted"), 1),
+        (UidRead(None, 24, "timeout"), 1),
+        (UidRead("AABBCCDD", 0, "ok"), 1),
+        (UidRead(None, 8, "no card"), 1),
+        (UidRead("AABBCCDD", 0, "ok"), 2),
+        (UidRead("11223344", 0, "ok"), 3),
+    ]:
+        monkeypatch.setattr(reader, "request_uid", lambda result=result: result)
+        view._poll_rfid()
+        assert reader.beep_count == expected_beeps
+    view._bind_current_card()
+    assert reader.beep_count == 3
 
 
 @pytest.mark.parametrize("page", ["athletes", "setup", "history", "settings"])

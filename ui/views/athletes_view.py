@@ -321,6 +321,8 @@ class AthletesView(QWidget):
         new_tap = uid is not None and uid != self._rfid_present_uid
         if uid is not None:
             self._rfid_present_uid = uid
+        if new_tap:
+            self._rfid_reader.beep(100)
         if uid == self._rfid_uid and result.status == self._rfid_read_status:
             return
         self._rfid_uid = uid
