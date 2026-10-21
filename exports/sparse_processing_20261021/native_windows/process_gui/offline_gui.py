@@ -6,9 +6,12 @@ import json
 import os
 from pathlib import Path
 import sys
+import threading
 import time
 
 os.environ.setdefault('QT_QPA_PLATFORM','offscreen')
+if os.name=='nt':
+    os.environ.setdefault('QT_QPA_FONTDIR','C:/Windows/Fonts')
 HERE=Path(__file__).resolve().parent
 ROOT=HERE.parents[1]
 sys.path.insert(0,str(ROOT));sys.path.insert(0,str(HERE))
@@ -25,6 +28,7 @@ def main():
     os.environ['IRON_OFFLINE_VARIANT']=args.variant
     os.environ['IRON_SPARSE_FEATURES']=args.features
     import cv2
+    import qtpy
     import numpy as np
     from qtpy.QtCore import QTimer
     from qtpy.QtWidgets import QApplication,QWidget,QHBoxLayout
@@ -86,29 +90,39 @@ def main():
         if record_start+round(t*1e9)<original_checked or t-previous<1/30:continue
         selected.append((record_start+round(t*1e9)-original_checked,row));previous=t
     source=(args.fixture/'camera.mjpg').open('rb')
-    video_stats={'decoded_frames':0,'discarded_due_frames':0,'expected_due_frames':0}
-    cursor=0;anchor=None
-    def video_tick():
-        nonlocal cursor
-        if anchor is None:return
-        elapsed=time.perf_counter_ns()-anchor;chosen=None;due_count=0
-        while cursor<len(selected) and selected[cursor][0]<=elapsed:
-            chosen=selected[cursor][1];cursor+=1;video_stats['expected_due_frames']+=1
-            due_count+=1
-        video_stats['discarded_due_frames']+=max(0,due_count-1)
-        if chosen is None:return
-        source.seek(int(chosen['offset']));data=source.read(int(chosen['length']))
-        image=cv2.imdecode(np.frombuffer(data,np.uint8),cv2.IMREAD_COLOR)
-        if image is None:errors.append('JPEG decode failed');return
-        if panel._chk_mirror.isChecked():image=cv2.flip(image,1)
-        panel._queue_preview_frame(image);video_stats['decoded_frames']+=1
-    video_timer=QTimer();video_timer.setInterval(33);video_timer.timeout.connect(video_tick)
+    video_stats={'decoded_frames':0,'discarded_due_frames':0,'expected_due_frames':0,
+                 'displayed_frames':0,'max_decode_lateness_ms':0}
+    anchor=None;video_thread=None;video_cancel=threading.Event()
+    mirror_saved_video=panel._chk_mirror.isChecked()
+    original_on_frame=panel._on_frame
+    def on_preview_frame(frame):
+        original_on_frame(frame)
+        video_stats['displayed_frames']+=1
+    panel._on_frame=on_preview_frame
+    def read_video():
+        try:
+            for due,row in selected:
+                if video_cancel.wait(max(0,(anchor+due-time.perf_counter_ns())/1e9)):
+                    return
+                video_stats['expected_due_frames']+=1
+                source.seek(int(row['offset']));data=source.read(int(row['length']))
+                image=cv2.imdecode(np.frombuffer(data,np.uint8),cv2.IMREAD_COLOR)
+                if image is None:raise RuntimeError('Saved JPEG decode failed')
+                if mirror_saved_video:image=cv2.flip(image,1)
+                panel._queue_preview_frame(image)
+                video_stats['decoded_frames']+=1
+                video_stats['max_decode_lateness_ms']=max(video_stats['max_decode_lateness_ms'],
+                    (time.perf_counter_ns()-anchor-due)/1e6)
+        except BaseException as exc:
+            errors.append('saved_video:'+repr(exc))
     def armed():
-        nonlocal anchor
-        started.append(time.perf_counter_ns());anchor=started[-1];video_timer.start()
+        nonlocal anchor,video_thread
+        started.append(time.perf_counter_ns());anchor=started[-1]
+        video_thread=threading.Thread(target=read_video,name='SavedJPEGReplay')
+        video_thread.start()
     client.session_started.connect(armed)
     def stop():
-        stop_ns.append(time.perf_counter_ns());video_timer.stop();client.stop('manual')
+        stop_ns.append(time.perf_counter_ns());video_cancel.set();client.stop('manual')
     client.source_exhausted.connect(lambda:QTimer.singleShot(250,stop))
     client.session_finished.connect(reports.append)
     client.closed.connect(lambda value:(closed.append(value),app.quit()))
@@ -120,9 +134,14 @@ def main():
         if not client.finalize_failure(10) and client.process is not None:
             client.process.terminate();client.process.join(10)
             errors.append('forced offline actor cleanup')
+    video_cancel.set()
+    if video_thread is not None:
+        video_thread.join(5)
+        if video_thread.is_alive():errors.append('saved_video_thread_still_alive')
     video_was_visible=panel._display_frame is not None
     vision_was_active=panel._vision is not None
-    video_timer.stop();source.close();panel._preview_active=False;panel.shutdown()
+    if video_thread is None or not video_thread.is_alive():source.close()
+    panel._preview_active=False;panel.shutdown()
     window.hide();GroundChannelWidget.paintEvent=original_paint
     assert client.process is None or not client.process.is_alive(),'Offline actor still alive'
     actor_folder=args.output/'client/actor'
@@ -158,6 +177,8 @@ def main():
             'prepared_sample':report.get('report_config_snapshot',{}).get('device',{}).get('checked_sample_index'),
             'expected_prepared_sample':meta['device']['checked_sample_index'],
             'qt_platform':app.platformName(),'dpr':window.devicePixelRatioF(),
+            'qt_api':qtpy.API_NAME,'qt_version':qtpy.QT_VERSION,
+            'font_directory':os.environ.get('QT_QPA_FONTDIR'),
             'view_size':[view.width(),view.height()],
             'saved_video_visible':video_was_visible,
             'pose_worker_started':vision_was_active,

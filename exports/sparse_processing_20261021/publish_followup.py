@@ -46,7 +46,8 @@ def main():
         raise SystemExit('combined | E5v2_E2a | E5v2_E2b | E5_GUI | closeout')
     destination=WORKTREE/REL
     shutil.copytree(HERE,destination,dirs_exist_ok=True,
-        ignore=shutil.ignore_patterns('__pycache__','*.pyc','native_v2_stream.log'))
+        ignore=shutil.ignore_patterns('__pycache__','*.pyc','native_v2_stream.log',
+                                      'gui_v3_stream.log','gui_v4_stream.log'))
     git('add','--',str(REL))
     names=git('diff','--cached','--name-only').splitlines()
     assert names and all(n.startswith(str(REL)+'/') for n in names),names

@@ -1,0 +1,153 @@
+{
+  "delivered_archives_sha_verified": true,
+  "raw_full_streams_equal": true,
+  "complete_reports_quality_runtime_events_timeline_equal": true,
+  "host_clock_normalisation_verified_against_raw_receipts": true,
+  "unfinished_bound_independently_reconstructed": true,
+  "candidate_short_window_age_slope_gate": true,
+  "candidate_age_slope_median": 0.03905079472341303,
+  "runs": [
+    {
+      "pair": 0,
+      "arm": "baseline",
+      "name": "pair0_0_baseline",
+      "raw_frames": 33188,
+      "formal_report_frames": 29687,
+      "unfinished_upper_bound": 98,
+      "oldest_unfinished_age_live_p99_ms": 21.788361999999996,
+      "oldest_unfinished_age_live_max_ms": 57.9964,
+      "active_age_slope_ms_per_device_second": 0.020870591282672178,
+      "slope_points": 151,
+      "active_interval_samples": [
+        60188,
+        66083
+      ],
+      "scope": "Age sampled at batch/common/probe boundaries; includes inflight. No continuous-age maximum claim."
+    },
+    {
+      "pair": 0,
+      "arm": "candidate",
+      "name": "pair0_1_combined",
+      "raw_frames": 33188,
+      "formal_report_frames": 29687,
+      "unfinished_upper_bound": 83,
+      "oldest_unfinished_age_live_p99_ms": 7.412033999999983,
+      "oldest_unfinished_age_live_max_ms": 10.7162,
+      "active_age_slope_ms_per_device_second": 0.09300730536195521,
+      "slope_points": 150,
+      "active_interval_samples": [
+        60188,
+        66083
+      ],
+      "scope": "Age sampled at batch/common/probe boundaries; includes inflight. No continuous-age maximum claim."
+    },
+    {
+      "pair": 1,
+      "arm": "baseline",
+      "name": "pair1_1_baseline",
+      "raw_frames": 33188,
+      "formal_report_frames": 29687,
+      "unfinished_upper_bound": 80,
+      "oldest_unfinished_age_live_p99_ms": 5.839939999999996,
+      "oldest_unfinished_age_live_max_ms": 60.1495,
+      "active_age_slope_ms_per_device_second": 0.0787317383319249,
+      "slope_points": 151,
+      "active_interval_samples": [
+        60188,
+        66083
+      ],
+      "scope": "Age sampled at batch/common/probe boundaries; includes inflight. No continuous-age maximum claim."
+    },
+    {
+      "pair": 1,
+      "arm": "candidate",
+      "name": "pair1_0_combined",
+      "raw_frames": 33188,
+      "formal_report_frames": 29687,
+      "unfinished_upper_bound": 78,
+      "oldest_unfinished_age_live_p99_ms": 6.701510999999999,
+      "oldest_unfinished_age_live_max_ms": 56.4153,
+      "active_age_slope_ms_per_device_second": -0.05609618619263328,
+      "slope_points": 151,
+      "active_interval_samples": [
+        60188,
+        66083
+      ],
+      "scope": "Age sampled at batch/common/probe boundaries; includes inflight. No continuous-age maximum claim."
+    },
+    {
+      "pair": 2,
+      "arm": "baseline",
+      "name": "pair2_0_baseline",
+      "raw_frames": 33188,
+      "formal_report_frames": 29687,
+      "unfinished_upper_bound": 92,
+      "oldest_unfinished_age_live_p99_ms": 6.999717999999997,
+      "oldest_unfinished_age_live_max_ms": 58.3433,
+      "active_age_slope_ms_per_device_second": -0.1006717479518513,
+      "slope_points": 151,
+      "active_interval_samples": [
+        60188,
+        66083
+      ],
+      "scope": "Age sampled at batch/common/probe boundaries; includes inflight. No continuous-age maximum claim."
+    },
+    {
+      "pair": 2,
+      "arm": "candidate",
+      "name": "pair2_1_combined",
+      "raw_frames": 33188,
+      "formal_report_frames": 29687,
+      "unfinished_upper_bound": 92,
+      "oldest_unfinished_age_live_p99_ms": 6.64373399999999,
+      "oldest_unfinished_age_live_max_ms": 58.4815,
+      "active_age_slope_ms_per_device_second": 0.1314818723923059,
+      "slope_points": 151,
+      "active_interval_samples": [
+        60188,
+        66083
+      ],
+      "scope": "Age sampled at batch/common/probe boundaries; includes inflight. No continuous-age maximum claim."
+    },
+    {
+      "pair": 3,
+      "arm": "baseline",
+      "name": "pair3_1_baseline",
+      "raw_frames": 33188,
+      "formal_report_frames": 29687,
+      "unfinished_upper_bound": 77,
+      "oldest_unfinished_age_live_p99_ms": 7.349733999999995,
+      "oldest_unfinished_age_live_max_ms": 59.2185,
+      "active_age_slope_ms_per_device_second": -0.030108139198780942,
+      "slope_points": 151,
+      "active_interval_samples": [
+        60188,
+        66083
+      ],
+      "scope": "Age sampled at batch/common/probe boundaries; includes inflight. No continuous-age maximum claim."
+    },
+    {
+      "pair": 3,
+      "arm": "candidate",
+      "name": "pair3_0_combined",
+      "raw_frames": 33188,
+      "formal_report_frames": 29687,
+      "unfinished_upper_bound": 83,
+      "oldest_unfinished_age_live_p99_ms": 7.3943829999999915,
+      "oldest_unfinished_age_live_max_ms": 59.7631,
+      "active_age_slope_ms_per_device_second": -0.01490571591512915,
+      "slope_points": 151,
+      "active_interval_samples": [
+        60188,
+        66083
+      ],
+      "scope": "Age sampled at batch/common/probe boundaries; includes inflight. No continuous-age maximum claim."
+    }
+  ],
+  "limits": [
+    "One recorded walking input, repeated four pairs.",
+    "No physical capture, SDK or pose inference.",
+    "GUI is offscreen Qt paint completion, not display presentation.",
+    "Candidate performance gates do not imply stable latency improvement."
+  ]
+}
