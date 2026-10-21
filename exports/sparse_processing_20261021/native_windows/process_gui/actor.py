@@ -114,6 +114,8 @@ def run_actor(connection,output_root,batch_size=40,fixture_root=None):
  if source is not None:source.exhausted.connect(delivery.exhausted)
  timer=QTimer();timer.setInterval(5);timer.timeout.connect(delivery.commands);timer.start();QTimer.singleShot(900000,lambda:(errors.append('watchdog_timeout'),app.quit()))
  emit('actor_ready',dict(batch_size=batch_size));app.exec();timer.stop()
+ from bootstrap import CALLBACK_ERRORS,HARDWARE_ATTEMPTS
+ errors.extend(CALLBACK_ERRORS);errors.extend('hardware:'+v for v in HARDWARE_ATTEMPTS)
  if controller._thread is not None:
   try:controller.stop('actor_failure') if controller.is_running else controller.discard()
   except BaseException as exc:errors.append('cleanup:'+repr(exc))
@@ -132,6 +134,7 @@ def run_actor(connection,output_root,batch_size=40,fixture_root=None):
   for bits,changes in runtime._window:window.update(bits.tobytes());window.update(changes.tobytes())
   state=dict(quality=quality.snapshot(),runtime_counts=runtime._counts.tolist(),runtime_transitions=runtime._transitions.tolist(),runtime_healthy=runtime.healthy_samples,runtime_window_sha256=window.hexdigest(),event_audit=engine.overground.processor.event_audit,timeline=list(engine.overground.processor.timeline),mirror_events=engine.overground._frame_filter.mirror_guard.events,raw_archive_sha256=hashlib.sha256(b''.join(engine.overground.frames)).hexdigest());(folder/'state.json').write_text(json.dumps(state,ensure_ascii=False),encoding='utf-8')
   emit('report_value',dict(report=report,raw_exports_child_owned=True))
+ if source.reader is not None and source.reader.is_alive():errors.append('fixture_reader_still_alive')
  complete=not errors and completed_control is not None and controller._thread is None and (completed_control['kind']=='discard' or len(reports)==1)
  emit('terminal',dict(complete=complete,errors=errors,batch_size=batch_size));writer_finished=outbox.finish(2);outbox.preserve(folder/'output_snapshot')
  result=dict(complete=complete and writer_finished,pid=os.getpid(),errors=errors,commands_received=command_sequence,completed_control=completed_control,report_saved=(folder/'report.json').exists(),batch_size=batch_size,output=outbox.snapshot(),transport_fault=transport_fault,
