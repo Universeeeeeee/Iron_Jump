@@ -1,0 +1,15 @@
+Traceback (most recent call last):
+  File "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/publish_followup.py", line 70, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/publish_followup.py", line 53, in main
+    git('diff','--cached','--check','--',str(REL),
+  File "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/publish_followup.py", line 15, in git
+    return subprocess.check_output(['git',*args],cwd=WORKTREE,text=True).strip()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vae/miniconda3/envs/Iron_Jump/lib/python3.11/subprocess.py", line 466, in check_output
+    return run(*popenargs, stdout=PIPE, timeout=timeout, check=True,
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vae/miniconda3/envs/Iron_Jump/lib/python3.11/subprocess.py", line 571, in run
+    raise CalledProcessError(retcode, process.args,
+subprocess.CalledProcessError: Command '['git', 'diff', '--cached', '--check', '--', 'exports/sparse_processing_20261021', ':(exclude)exports/sparse_processing_20261021/baseline', ':(exclude,glob)exports/sparse_processing_20261021/**/*.stdout', ':(exclude,glob)exports/sparse_processing_20261021/**/*.stderr']' returned non-zero exit status 2.

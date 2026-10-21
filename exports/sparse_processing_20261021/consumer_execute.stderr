@@ -1,0 +1,24 @@
+Traceback (most recent call last):
+  File "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/execute_consumer.py", line 87, in <module>
+    try:main()
+        ^^^^^^
+  File "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/execute_consumer.py", line 81, in main
+    run('combined_regression_final','regression.py','combined')
+  File "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/execute_consumer.py", line 16, in run
+    r=subprocess.run([sys.executable,str(HERE/script),*args],cwd=ROOT,stdout=out,stderr=err)
+      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vae/miniconda3/envs/Iron_Jump/lib/python3.11/subprocess.py", line 550, in run
+    stdout, stderr = process.communicate(input, timeout=timeout)
+                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vae/miniconda3/envs/Iron_Jump/lib/python3.11/subprocess.py", line 1201, in communicate
+    self.wait()
+  File "/Users/vae/miniconda3/envs/Iron_Jump/lib/python3.11/subprocess.py", line 1264, in wait
+    return self._wait(timeout=timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/vae/miniconda3/envs/Iron_Jump/lib/python3.11/subprocess.py", line 2053, in _wait
+    (pid, sts) = self._try_wait(0)
+                 ^^^^^^^^^^^^^^^^^
+  File "/Users/vae/miniconda3/envs/Iron_Jump/lib/python3.11/subprocess.py", line 2011, in _try_wait
+    (pid, sts) = os.waitpid(self.pid, wait_flags)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+KeyboardInterrupt
