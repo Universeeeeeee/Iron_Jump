@@ -499,6 +499,10 @@ class SessionController(QObject):
         return self._engine
 
     @property
+    def walking_ready(self):
+        return self._walking_ready
+
+    @property
     def config(self) -> Optional[AnyTestConfig]:
         return self._config
 
@@ -540,6 +544,13 @@ class SessionController(QObject):
 
     @Slot(str, str)
     def _on_device_state(self, state: str, message: str):
+        # A queued signal can outlive discard and otherwise reopen USB via
+        # the connected -> health-refresh path during window shutdown.
+        if self._worker is None or self._thread is None:
+            return
+        sender = self.sender()
+        if sender is not None and sender is not self._worker:
+            return
         if state == "error":
             log.error("USB: %s", message)
         self._device_state = state

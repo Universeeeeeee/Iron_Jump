@@ -1,0 +1,22 @@
+F                                                                        [100%]
+================================== FAILURES ===================================
+______ test_discard_ignores_queued_connected_callback_without_reopening _______
+
+qtbot = <pytestqt.qtbot.QtBot object at 0x0000025F171B9FD0>
+
+    def test_discard_ignores_queued_connected_callback_without_reopening(qtbot):
+        from qtpy.QtCore import QCoreApplication,QEvent
+        from hardware.simulated_worker import SimulatedGaitWorker
+        controller=session_controller.SessionController(worker_factory=SimulatedGaitWorker)
+        controller.ensure_device_connected()
+        controller.discard()
+        try:
+            qtbot.wait(100)
+>           assert controller._thread is None and controller._worker is None
+E           assert (<PySide6.QtCore.QThread(0x25f06040b70) at 0x0000025F16E0E680> is None)
+E            +  where <PySide6.QtCore.QThread(0x25f06040b70) at 0x0000025F16E0E680> = <ui.session_controller.SessionController(0x25f05c74d90) at 0x0000025F17459440>._thread
+
+tests\test_session_controller_lifecycle.py:164: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_session_controller_lifecycle.py::test_discard_ignores_queued_connected_callback_without_reopening
+1 failed in 1.25s

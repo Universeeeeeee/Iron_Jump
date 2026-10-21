@@ -839,6 +839,8 @@ class AgentConfigPanel(QWidget):
 
     def _on_llm_finished(self, config, reply: str) -> None:
         worker = self.sender()
+        if isinstance(worker, QThread) and worker.isRunning():
+            worker.wait()  # Result delivery can precede return from run().
         if getattr(worker, 'request_id', None) != self._active_request_id:
             if worker is self._llm_worker:
                 self._llm_worker = None
@@ -892,6 +894,8 @@ class AgentConfigPanel(QWidget):
 
     def _on_llm_error(self, message: str) -> None:
         worker = self.sender()
+        if isinstance(worker, QThread) and worker.isRunning():
+            worker.wait()  # Result delivery can precede return from run().
         if getattr(worker, 'request_id', None) != self._active_request_id:
             if worker is self._llm_worker:
                 self._llm_worker = None

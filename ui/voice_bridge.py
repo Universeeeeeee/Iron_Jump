@@ -160,7 +160,7 @@ class VoiceBridge(QObject):
                 elif getattr(c, "quality_status", {}).get("requires_acknowledgement"):
                     self.say("部分感应点异常。请检查测量区域无人且无遮挡，再在界面点击确认并开始。")
                 elif (c.config.test_type in {"Sprint and Gait Test", "Overground Running Test"}
-                      and not c._walking_ready):
+                      and not getattr(c, 'walking_ready', getattr(c, '_walking_ready', False))):
                     self.say("空场自检尚未通过，请保持测量区域无遮挡，等待界面提示就绪后再开始。")
                 elif c.config.test_type in {"Sprint and Gait Test", "Overground Running Test"}:
                     self.say("请核对界面显示的设备段数，并点击“确认共 N 段并开始”。")

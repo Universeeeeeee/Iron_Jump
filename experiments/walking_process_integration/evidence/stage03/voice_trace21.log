@@ -1,0 +1,468 @@
+============================= test session starts =============================
+platform win32 -- Python 3.11.5, pytest-9.0.3, pluggy-1.6.0 -- D:\conda\python.exe
+cachedir: .pytest_cache
+PySide6 6.11.1 -- Qt runtime 6.11.1 -- Qt compiled 6.11.1
+rootdir: E:\OptoJump\IronJump-production-integrated-20261021
+configfile: pytest.ini
+plugins: anyio-4.12.1, logfire-4.37.0, qt-4.5.0
+collecting ... collected 30 items
+
+tests/test_voice_session.py::test_voice_start_pause_resume_stop_changes_real_engine FT_New_Face failed with index 0 : 2
+CREATED QThread_3164894875584   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_3164894875584
+QUIT QThread_3164894875584
+WAIT QThread_3164894875584 True
+DESTROYED QThread_3164894875584
+PASSED
+tests/test_voice_session.py::test_voice_gait_question_and_followup_update_current_report CREATED QThread_3164913290752   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_3164913290752
+PASSEDQUIT QThread_3164913290752
+WAIT QThread_3164913290752 True
+DESTROYED QThread_3164913290752
+
+tests/test_voice_session.py::test_greeting_does_not_submit_to_configuration_agent CREATED QThread_3164913746496   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_3164913746496
+PASSEDQUIT QThread_3164913746496
+WAIT QThread_3164913746496 True
+DESTROYED QThread_3164913746496
+
+tests/test_voice_session.py::test_demo_disabled_configuration_is_not_reported_as_temporarily_busy CREATED QThread_3164912968128   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\demo.py", line 51, in __init__
+    super().__init__(
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_3164912968128
+QUIT QThread_3164912968128
+WAIT QThread_3164912968128 True
+PASSED
+tests/test_voice_session.py::test_no_false_success_on_wrong_state_or_failed_device CREATED QThread_3163260543296   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_3163260543296
+PASSEDQUIT QThread_3163260543296
+WAIT QThread_3163260543296 True
+DESTROYED QThread_3163260543296
+
+tests/test_voice_session.py::test_partial_and_stale_agent_responses_do_not_mutate_or_speak CREATED QThread_3163262599552   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_3163262599552
+PASSEDQUIT QThread_3163262599552
+WAIT QThread_3163262599552 True
+DESTROYED QThread_3163262599552
+
+tests/test_voice_session.py::test_voice_config_confirmation_and_prepare_use_existing_validation CREATED QThread_3163262714112   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_3163262714112
+QUIT QThread_3163262714112
+WAIT QThread_3163262714112 True
+DESTROYED QThread_3163262714112
+PASSED
+tests/test_voice_session.py::test_missing_key_worker_exits_and_manual_ui_remains_available CREATED QThread_3164913574912   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_3164913574912
+PASSEDQUIT QThread_3164913574912
+WAIT QThread_3164913574912 True
+DESTROYED QThread_3164913574912
+
+tests/test_voice_session.py::test_voice_agent_config_and_report_callbacks_use_current_turn CREATED QThread_3164913586112   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_3164913586112
+CREATED _LLMHttpWorker_3163262912192   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\voice_bridge.py", line 232, in handle_text
+    if panel.submit_voice(text):
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\views\agent_config_panel.py", line 837, in submit_voice
+    self._on_send_message()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\views\agent_config_panel.py", line 805, in _on_send_message
+    self._llm_worker = _LLMHttpWorker(
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\views\agent_config_panel.py", line 179, in __init__
+    super().__init__()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START _LLMHttpWorker_3163262912192
+DESTROYED _LLMHttpWorker_3163262912192
+CREATED _ReportAnalysisWorker_3164914418368   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\views\report_view.py", line 1004, in set_analysis_availability
+    self._request_latest_if_available()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\views\report_view.py", line 1184, in _request_latest_if_available
+    self._start_analysis_request("latest")
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\views\report_view.py", line 1160, in _start_analysis_request
+    worker = _ReportAnalysisWorker(
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\views\report_view.py", line 580, in __init__
+    super().__init__(parent)
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START _ReportAnalysisWorker_3164914418368
+CREATED _ReportAnalysisWorker_3164895154304   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\voice_bridge.py", line 218, in handle_text
+    elif w._report_view.request_voice_analysis():
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\views\report_view.py", line 1154, in request_voice_analysis
+    self._start_analysis_request("analyze")
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\views\report_view.py", line 1160, in _start_analysis_request
+    worker = _ReportAnalysisWorker(
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\views\report_view.py", line 580, in __init__
+    super().__init__(parent)
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START _ReportAnalysisWorker_3164895154304
+PASSEDQUIT QThread_3164913586112
+WAIT QThread_3164913586112 True
+DESTROYED QThread_3164913586112
+
+tests/test_voice_session.py::test_voice_gait_session_persists_answers_and_exports CREATED QThread_3164913347392   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\demo.py", line 51, in __init__
+    super().__init__(
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_3164913347392
+DESTROYED _ReportAnalysisWorker_3164914418368
+DESTROYED _ReportAnalysisWorker_3164895154304
+QUIT QThread_3164913347392
+WAIT QThread_3164913347392 True
+PASSED
+tests/test_voice_session.py::test_voice_config_summary_reads_values_before_confirmation PASSED
+tests/test_voice_session.py::test_demo_agent_uses_project_interpreter_and_gait_mode CREATED QThread_3163263566464   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\demo.py", line 51, in __init__
+    super().__init__(
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_3163263566464
+QUIT QThread_3163263566464
+WAIT QThread_3163263566464 True
+PASSED
+tests/test_voice_ui.py::test_voice_is_embedded_and_diagnostics_do_not_hide_microphone CREATED QThread_3163263090240   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_3163263090240
+PASSEDQUIT QThread_3163263090240
+WAIT QThread_3163263090240 True
+DESTROYED QThread_3163263090240
+
+tests/test_voice_ui.py::test_voice_feedback_stays_visible_in_current_page CREATED QThread_3163264238656   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_3163264238656
+PASSEDQUIT QThread_3163264238656
+WAIT QThread_3163264238656 True
+DESTROYED QThread_3163264238656
+
+tests/test_voice_ui.py::test_overground_pause_is_rejected_without_waiting CREATED QThread_3163262602496   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_3163262602496
+PASSEDQUIT QThread_3163262602496
+WAIT QThread_3163262602496 True
+DESTROYED QThread_3163262602496
+
+tests/test_voice_ui.py::test_stop_speaking_invalidates_old_reply_without_stopping_test CREATED QThread_3164913746496   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_3164913746496
+PASSEDQUIT QThread_3164913746496
+WAIT QThread_3164913746496 True
+DESTROYED QThread_3164913746496
+
+tests/test_voice_ui.py::test_voice_error_survives_worker_exit CREATED QThread_3164913079232   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_3164913079232
+PASSEDQUIT QThread_3164913079232
+WAIT QThread_3164913079232 True
+DESTROYED QThread_3164913079232
+
+tests/test_voice_ui.py::test_late_transcript_after_closing_does_not_execute CREATED QThread_3164890743232   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_3164890743232
+PASSEDQUIT QThread_3164890743232
+WAIT QThread_3164890743232 True
+DESTROYED QThread_3164890743232
+
+tests/test_voice_ui.py::test_voice_configuration_reveals_existing_conversation CREATED QThread_3163263089920   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_3163263089920
+PASSEDQUIT QThread_3163263089920
+WAIT QThread_3163263089920 True
+DESTROYED QThread_3163263089920
+
+tests/test_voice_ui.py::test_overground_start_requires_preflight_and_cannot_apply_old_agent_config CREATED QThread_3164895160448   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_3164895160448
+PASSEDQUIT QThread_3164895160448
+WAIT QThread_3164895160448 True
+DESTROYED QThread_3164895160448
+
+tests/test_voice_windows_ipc.py::test_chinese_transcript_survives_gbk_stdout PASSED
+tests/test_voice_windows_ipc.py::test_pythonw_worker_uses_same_environment_console_python PASSED
+tests/test_voice_windows_ipc.py::test_missing_console_python_is_explicit PASSED
+tests/test_voice_windows_ipc.py::test_chinese_reply_is_ascii_json_for_worker_stdin CREATED QThread_3164913505216   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_3164913505216
+PASSEDQUIT QThread_3164913505216
+WAIT QThread_3164913505216 True
+DESTROYED QThread_3164913505216
+
+tests/test_voice_windows_ipc.py::test_transcript_pipe_reaches_business_router CREATED QThread_3163266728512   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_3163266728512
+PASSEDQUIT QThread_3163266728512
+WAIT QThread_3163266728512 True
+DESTROYED QThread_3163266728512
+
+tests/test_voice_windows_ipc.py::test_bad_pipe_encoding_is_visible_and_startup_timeout_stops_waiting CREATED QThread_3163266804096   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_3163266804096
+PASSEDQUIT QThread_3163266804096
+WAIT QThread_3163266804096 True
+DESTROYED QThread_3163266804096
+
+tests/test_voice_windows_ipc.py::test_ready_cancels_startup_timeout CREATED QThread_3164913705856   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_3164913705856
+PASSEDQUIT QThread_3164913705856
+WAIT QThread_3164913705856 True
+DESTROYED QThread_3164913705856
+
+tests/test_voice_windows_ipc.py::test_blank_lines_and_split_transcript_keep_following_events CREATED QThread_3163320762880   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_3163320762880
+PASSEDQUIT QThread_3163320762880
+WAIT QThread_3163320762880 True
+DESTROYED QThread_3163320762880
+
+tests/test_voice_windows_ipc.py::test_invalid_message_is_reported_without_dropping_next_transcript CREATED QThread_3163321242560   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_3163321242560
+PASSEDQUIT QThread_3163321242560
+WAIT QThread_3163321242560 True
+DESTROYED QThread_3163321242560
+
+tests/test_voice_windows_ipc.py::test_real_subprocess_pipe_roundtrip_with_windows_encoding CREATED QThread_3163323108160   File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 304, in __init__
+    self._go_to_setup()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\main_window.py", line 439, in _go_to_setup
+    ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\measurement_controller.py", line 133, in ensure_device_connected
+    self._local.ensure_device_connected()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\ui\session_controller.py", line 206, in ensure_device_connected
+    self._thread = QThread()
+  File "E:\OptoJump\IronJump-production-integrated-20261021\thread_lifecycle_probe.py", line 7, in init
+    print('CREATED',label,''.join(traceback.format_stack(limit=5)),flush=True)
+
+START QThread_3163323108160
+PASSEDQUIT QThread_3163323108160
+WAIT QThread_3163323108160 True
+DESTROYED QThread_3163323108160
+
+
+============================= 30 passed in 54.58s =============================

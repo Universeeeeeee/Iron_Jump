@@ -65,6 +65,10 @@ class MeasurementController(QObject):
         return self._child.device_state if self._child else self._local.device_state
 
     @property
+    def walking_ready(self):
+        return bool(self._child.quality_status.get('ready')) if self._child else self._local.walking_ready
+
+    @property
     def engine(self):
         return None if self._child else self._local.engine
 
@@ -143,3 +147,11 @@ class MeasurementController(QObject):
     def toggle_pause(self):
         if self._child is None:
             self._local.toggle_pause()
+
+    def pause(self):
+        if self._child is None:
+            self._local.pause()
+
+    def resume(self):
+        if self._child is None:
+            self._local.resume()

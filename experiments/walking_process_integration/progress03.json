@@ -1,0 +1,23 @@
+{
+  "status": "integration_not_yet_merged",
+  "frozen_plan": "plan04.json",
+  "full_suite": {
+    "file": "full_tests05.log",
+    "exit_code": 9,
+    "completed": 2031,
+    "success": false,
+    "cause": "under investigation; isolated 30 voice/IPC tests pass"
+  },
+  "lifecycle_fixes": [
+    "defer close until prepared handshake",
+    "reject stale worker connected callbacks after discard",
+    "wait for QThread return before releasing LLM result worker"
+  ],
+  "passing": {
+    "voice_ipc_group": 30,
+    "walking_regressions": 201,
+    "lifecycle_group": 26
+  },
+  "scope": "No human Walk, device reboot, physical acquisition or metric threshold changes",
+  "next": "Trace full-suite thread lifetime before production merge"
+}

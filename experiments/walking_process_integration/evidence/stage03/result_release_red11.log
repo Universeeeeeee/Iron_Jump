@@ -1,0 +1,60 @@
+FF                                                                       [100%]
+================================== FAILURES ===================================
+______ test_result_waits_for_actual_thread_exit_before_releasing[False] _______
+
+qtbot = <pytestqt.qtbot.QtBot object at 0x000001C89328A250>, error = False
+
+    @pytest.mark.parametrize('error',[False,True])
+    def test_result_waits_for_actual_thread_exit_before_releasing(qtbot,error):
+        class LateReturnWorker(_LLMHttpWorker):
+            tail_returned=False
+            def run(self):
+                if error:self.error.emit('injected error')
+                else:self.finished.emit(None,'test reply')
+                QThread.msleep(150)
+                self.tail_returned=True
+        panel=AgentConfigPanel(llm_client=_FakeClient());qtbot.addWidget(panel)
+        panel._startup_timer.stop();panel._active_request_id=1
+        worker=LateReturnWorker(panel._llm_client,'test',panel._current_athlete_profile(),request_id=1)
+        worker.mode_revision=panel._mode_revision;panel._llm_worker=worker
+        worker.finished.connect(panel._on_llm_finished);worker.error.connect(panel._on_llm_error)
+        worker.start()
+        try:
+            qtbot.waitUntil(lambda:panel._llm_worker is None,timeout=3000)
+>           assert worker.tail_returned and not worker.isRunning()
+E           assert (False)
+E            +  where False = <tests.test_agent_result_lifecycle.LateReturnWorker(0x1c8913e1190) at 0x000001C8932A41C0>.tail_returned
+
+tests\test_agent_result_lifecycle.py:24: AssertionError
+---------------------------- Captured Qt messages -----------------------------
+QtDebugMsg: FT_New_Face failed with index 0 : 2
+_______ test_result_waits_for_actual_thread_exit_before_releasing[True] _______
+
+qtbot = <pytestqt.qtbot.QtBot object at 0x000001C89328AB10>, error = True
+
+    @pytest.mark.parametrize('error',[False,True])
+    def test_result_waits_for_actual_thread_exit_before_releasing(qtbot,error):
+        class LateReturnWorker(_LLMHttpWorker):
+            tail_returned=False
+            def run(self):
+                if error:self.error.emit('injected error')
+                else:self.finished.emit(None,'test reply')
+                QThread.msleep(150)
+                self.tail_returned=True
+        panel=AgentConfigPanel(llm_client=_FakeClient());qtbot.addWidget(panel)
+        panel._startup_timer.stop();panel._active_request_id=1
+        worker=LateReturnWorker(panel._llm_client,'test',panel._current_athlete_profile(),request_id=1)
+        worker.mode_revision=panel._mode_revision;panel._llm_worker=worker
+        worker.finished.connect(panel._on_llm_finished);worker.error.connect(panel._on_llm_error)
+        worker.start()
+        try:
+            qtbot.waitUntil(lambda:panel._llm_worker is None,timeout=3000)
+>           assert worker.tail_returned and not worker.isRunning()
+E           assert (False)
+E            +  where False = <tests.test_agent_result_lifecycle.LateReturnWorker(0x1c8916868e0) at 0x000001C89330C780>.tail_returned
+
+tests\test_agent_result_lifecycle.py:24: AssertionError
+=========================== short test summary info ===========================
+FAILED tests/test_agent_result_lifecycle.py::test_result_waits_for_actual_thread_exit_before_releasing[False]
+FAILED tests/test_agent_result_lifecycle.py::test_result_waits_for_actual_thread_exit_before_releasing[True]
+2 failed in 3.80s

@@ -105,3 +105,11 @@ def test_main_window_process_report_reaches_storage_and_report_view(qtbot,tmp_pa
     assert restored.walking_summary==report.walking_summary
     qtbot.waitUntil(lambda:controller._child is None,timeout=5000)
     window.close()
+
+
+def test_close_immediately_after_prepare_waits_for_child_handshake(qtbot,tmp_path):
+    controller=MeasurementController(worker_factory=SyntheticWorker,evidence_root=tmp_path)
+    controller.prepare(WalkingConfig(stop_type='Software command'));child=controller._child
+    controller.discard()
+    assert child.complete and not child.process.is_alive()
+    assert controller._child is None

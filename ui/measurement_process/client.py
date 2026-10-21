@@ -48,6 +48,8 @@ class ProcessSession(QObject):
         self.quality_status = {}
         self.quality_policy = None
         self.complete = False
+        self._prepared = False
+        self._deferred_control = None
 
     def _send(self, kind, **values):
         self.command_sequence += 1
@@ -90,6 +92,12 @@ class ProcessSession(QObject):
         kind, value = message['kind'], message['payload']
         if kind == 'actor_ready':
             self._send('prepare', config=self.config.to_dict(), quality_policy=asdict(self.quality_policy))
+        elif kind == 'prepared':
+            self._prepared = True
+            if self._deferred_control is not None:
+                kind, values = self._deferred_control
+                self._deferred_control = None
+                self._send(kind, **values)
         elif kind == 'readiness':
             self.quality_status = value
             if value.get('start_rejected'):
@@ -157,7 +165,10 @@ class ProcessSession(QObject):
         if self._control_pending:
             return
         self._control_pending = True
-        self._send(kind, **values)
+        if self._prepared:
+            self._send(kind, **values)
+        else:
+            self._deferred_control = (kind, values)
 
     def close_and_wait(self, timeout_ms=30000):
         if self.complete:
