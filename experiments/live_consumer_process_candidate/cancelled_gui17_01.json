@@ -1,0 +1,24 @@
+{
+  "plan": "plan17.json",
+  "run": "gui_walk_20261021_225532",
+  "classification": "operator_cancel_before_session",
+  "human_session_started": false,
+  "session_started_ns": null,
+  "full_report_acceptance": "not exercised",
+  "cleanup": {
+    "command": "discard",
+    "actor_exitcode": 0,
+    "actor_errors": [],
+    "reader_stopped": true,
+    "writer_stopped": true,
+    "client_idle": true,
+    "all_timers_stopped": true,
+    "window_closed": true,
+    "camera_model_SDK_released": true,
+    "SDK_errors": [],
+    "remaining_target_processes": 0
+  },
+  "original_window_and_locks_preserved": true,
+  "operator_constraint": "Windows software recording must start before IronJump starts.",
+  "next_action": "Wait for operator to start Windows recording and explicitly report ready; launch a separate GUI window afterward. Do not restart cancelled window or power-cycle device."
+}
