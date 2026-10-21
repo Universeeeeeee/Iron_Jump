@@ -6,6 +6,9 @@ from .models import MetricDefinition
 
 
 _METRICS = (
+    MetricDefinition(metric_code="recognized_steps", unit="count", label="识别步数", record_types=("report",), numeric_tolerance=0),
+    MetricDefinition(metric_code="footfall_time_s", unit="s", label="可靠落脚时间", record_types=("ground_footfall",), numeric_tolerance=0.001),
+    MetricDefinition(metric_code="raw_landing_position_m", unit="m", label="发布时原始落脚位置", record_types=("ground_footfall",), numeric_tolerance=0.001),
     MetricDefinition(metric_code="touch_count", unit="count", label="触地次数", record_types=("report",), numeric_tolerance=0),
     MetricDefinition(metric_code="lift_count", unit="count", label="离地次数", record_types=("report",), numeric_tolerance=0),
     MetricDefinition(metric_code="jump_count", unit="count", label="有效跳跃次数", record_types=("report",), numeric_tolerance=0),
@@ -38,6 +41,7 @@ _METRICS = (
     MetricDefinition(metric_code="imbalance_percent", unit="%", label="不平衡率", record_types=("step",), numeric_tolerance=0.1),
     MetricDefinition(metric_code="gap_between_feet_cm", unit="cm", label="双足间距", record_types=("step",), numeric_tolerance=0.1),
     MetricDefinition(metric_code="step_length_m", unit="m", label="地面步长", record_types=("ground_step",), numeric_tolerance=0.001),
+    MetricDefinition(metric_code="centre_m", unit="m", label="地面走路中心位置", record_types=("ground_contact",), numeric_tolerance=0.001),
     MetricDefinition(metric_code="stride_length_m", unit="m", label="地面步幅", record_types=("ground_cycle",), numeric_tolerance=0.001),
     MetricDefinition(metric_code="duration_s", unit="s", label="单次通过时长", record_types=("report",), numeric_tolerance=0.001),
     MetricDefinition(metric_code="passage_speed_m_s", unit="m/s", label="落点推进距离与通过时长之比", record_types=("report",), numeric_tolerance=0.01),

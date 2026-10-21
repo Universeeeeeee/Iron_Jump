@@ -93,13 +93,19 @@ def build_report_workbook(report: TestReport) -> Workbook:
         ws_device = wb.create_sheet("Device and Config")
         for key, value in snapshot.items():
             ws_device.append([key, json.dumps(value, ensure_ascii=False)])
-        for key in ("contacts", "steps", "cycles", "stops", "issues") + (
-                ("candidate_decisions",) if "candidate_decisions" in summary else ()):
+        for key in (("footfalls",) if "footfalls" in summary else ()) + ("contacts", "steps", "cycles", "stops", "issues") + (
+                ("candidate_decisions",) if "candidate_decisions" in summary else ()) + (
+                tuple(k for k in ('event_publications', 'event_audit', 'ownership_recoveries') if k in summary)
+                if 'metric_policy' in summary else ()):
             records = summary[key]
+            if key == 'contacts' and any('centre_m' in record for record in records):
+                from reporting.ground import walking_position_value
+                records = [{**record, 'position_m': walking_position_value(record),
+                            'diagnostic_position_m': record.get('position_m')} for record in records]
             ws = wb.create_sheet("Walking " + key)
             if records:
                 columns = (list(dict.fromkeys(column for record in records for column in record))
-                           if key == 'candidate_decisions' else list(records[0]))
+                           if key in {'contacts', 'candidate_decisions', 'event_audit', 'ownership_recoveries'} else list(records[0]))
                 ws.append(columns)
                 for record in records:
                     ws.append([json.dumps(value, ensure_ascii=False) if isinstance(value, (list, dict)) else value

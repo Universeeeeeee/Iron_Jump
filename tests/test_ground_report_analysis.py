@@ -126,7 +126,7 @@ def test_empty_ground_report_keeps_metrics_missing(mode):
     processor = walking_processor() if mode == "walking" else running_processor()
     result = package(processor.build_report("manual"), mode)
     assert all(not record_set.records for record_set in result.record_sets)
-    assert all(fact.state == "missing" for fact in result.scalar_facts if fact.metric_code not in {"touch_count", "lift_count"})
+    assert all(fact.state == "missing" for fact in result.scalar_facts if fact.metric_code not in {"touch_count", "lift_count", "recognized_steps"})
     assert "side" not in ReportManifestBuilder().build(result).available_dimensions
 
 

@@ -3,10 +3,11 @@
 from __future__ import annotations
 
 import os
+import math
 from bisect import bisect_left
 
-from qtpy.QtCore import QLineF, QRectF, Qt, QTimer
-from qtpy.QtGui import QColor, QPainter, QPixmap
+from qtpy.QtCore import QLineF, QPointF, QRectF, Qt, QTimer
+from qtpy.QtGui import QColor, QImage, QPainter, QPixmap
 from qtpy.QtWidgets import QFrame, QHBoxLayout, QLabel, QSlider, QVBoxLayout, QWidget
 
 from dayu_widgets.push_button import MPushButton
@@ -82,6 +83,9 @@ class FootprintChannelWidget(QFrame):
         self._positions_m = None
         self._feet: list[dict] = []
         self.history: list[dict] = []
+        self._tinted_feet = {}
+        self._beam_layer = None
+        self._foot_sprites = {}
         self.valid_bits = [1] * _LED_COUNT
         self._direction = "Interface side"
         self._left_foot = self._load_pixmap("left_foot.png")
@@ -193,6 +197,7 @@ class FootprintChannelWidget(QFrame):
         super().paintEvent(event)
         painter = QPainter(self)
         painter.setRenderHint(QPainter.Antialiasing)
+        painter.setRenderHint(QPainter.SmoothPixmapTransform)
 
         rect = self.rect().adjusted(14, 14, -14, -14)
         rail_left_x = rect.left() + 12
@@ -202,38 +207,55 @@ class FootprintChannelWidget(QFrame):
         top, height = int(lane.top()), int(lane.height())
 
         integrated = bool(self.property("integrated"))
-        painter.setPen(Qt.NoPen if integrated else QColor(70, 70, 76))
-        painter.setBrush(QColor(255, 255, 255, 5) if integrated else QColor(28, 28, 32))
-        painter.drawRoundedRect(lane_left, top, lane_right - lane_left, height, 8, 8)
+        key = (self.width(), self.height(), self.devicePixelRatioF(), integrated,
+               self._direction, tuple(self._positions_m or ()),
+               tuple(self._contact_bits), tuple(self.valid_bits))
+        screen_painter = painter
+        if self._beam_layer is None or self._beam_layer[0] != key:
+            dpr = self.devicePixelRatioF()
+            layer = QPixmap(math.ceil(self.width() * dpr), math.ceil(self.height() * dpr))
+            layer.setDevicePixelRatio(dpr)
+            layer.fill(Qt.transparent)
+            painter = QPainter(layer)
+            painter.setRenderHint(QPainter.Antialiasing)
+            painter.setRenderHint(QPainter.SmoothPixmapTransform)
+            painter.setPen(Qt.NoPen if integrated else QColor(70, 70, 76))
+            painter.setBrush(QColor(255, 255, 255, 5) if integrated else QColor(28, 28, 32))
+            painter.drawRoundedRect(lane_left, top, lane_right - lane_left, height, 8, 8)
 
-        painter.setPen(Qt.NoPen)
-        painter.setBrush(QColor(42, 42, 48))
-        painter.drawRoundedRect(
-            QRectF(rail_left_x - 3.0, top - 2.0, 6.0, height + 4.0),
-            3.0,
-            3.0,
-        )
-        painter.drawRoundedRect(
-            QRectF(rail_right_x - 3.0, top - 2.0, 6.0, height + 4.0),
-            3.0,
-            3.0,
-        )
-
-        left_markers = self._rail_marker_rects(rail_left_x, top, height)
-        right_markers = self._rail_marker_rects(rail_right_x, top, height)
-        for idx, active in enumerate(self._contact_bits):
-            y = self._y_for_index(idx, top, height)
-            valid = idx < len(self.valid_bits) and self.valid_bits[idx]
-            color = QColor("#ddaa57") if not valid else QColor(70, 220, 125) if active else QColor(70, 70, 76)
             painter.setPen(Qt.NoPen)
-            painter.setBrush(color)
-            painter.drawRoundedRect(left_markers[idx], 2.0, 2.0)
-            painter.drawRoundedRect(right_markers[idx], 2.0, 2.0)
-            if active and valid:
-                painter.setPen(QColor(70, 220, 125, 60))
-                painter.drawLine(
-                    QLineF(float(lane_left), y, float(lane_right), y)
-                )
+            painter.setBrush(QColor(42, 42, 48))
+            painter.drawRoundedRect(
+                QRectF(rail_left_x - 3.0, top - 2.0, 6.0, height + 4.0),
+                3.0,
+                3.0,
+            )
+            painter.drawRoundedRect(
+                QRectF(rail_right_x - 3.0, top - 2.0, 6.0, height + 4.0),
+                3.0,
+                3.0,
+            )
+
+            left_markers = self._rail_marker_rects(rail_left_x, top, height)
+            right_markers = self._rail_marker_rects(rail_right_x, top, height)
+            for idx, active in enumerate(self._contact_bits):
+                y = self._y_for_index(idx, top, height)
+                valid = idx < len(self.valid_bits) and self.valid_bits[idx]
+                color = QColor("#ddaa57") if not valid else QColor(70, 220, 125) if active else QColor(70, 70, 76)
+                painter.setPen(Qt.NoPen)
+                painter.setBrush(color)
+                painter.drawRoundedRect(left_markers[idx], 2.0, 2.0)
+                painter.drawRoundedRect(right_markers[idx], 2.0, 2.0)
+                if active and valid:
+                    painter.setPen(QColor(70, 220, 125, 60))
+                    painter.drawLine(
+                        QLineF(float(lane_left), y, float(lane_right), y)
+                    )
+
+            painter.end()
+            self._beam_layer = (key, layer)
+        painter = screen_painter
+        painter.drawPixmap(0, 0, self._beam_layer[1])
 
         painter.save()
         if self._positions_m:
@@ -246,6 +268,11 @@ class FootprintChannelWidget(QFrame):
             for foot in self._feet:
                 centre = foot.get("centroid_cm")
                 length = foot.get("length_cm")
+                if centre is not None and foot.get('shape_valid') is False:
+                    # A published landing marker does not assert a measured
+                    # current foot shape or a known lift boundary.
+                    self._paint_foot(painter, foot, lane_left, lane_right, top, height)
+                    continue
                 if centre is None or length is None:
                     continue
                 positions = self._positions_m or [i * .0104 for i in range(len(self._contact_bits))]
@@ -282,6 +309,8 @@ class FootprintChannelWidget(QFrame):
             QColor(82, 170, 255, alpha)
             if side == "right"
             else QColor(82, 220, 130, alpha)
+            if side == "left"
+            else QColor(174, 183, 197, alpha)
         )
         pixmap = self._right_foot if side == "right" else self._left_foot
         foot_w, foot_h = self._foot_size_for_lane(
@@ -295,20 +324,50 @@ class FootprintChannelWidget(QFrame):
         target_x = int(x_center - foot_w / 2)
         target_y = int(y - foot_h / 2)
 
-        if pixmap.isNull() or side == "unknown":
+        if pixmap.isNull():
             painter.setPen(Qt.NoPen)
             painter.setBrush(color)
             painter.drawEllipse(target_x, target_y, foot_w, foot_h)
             return
 
-        tinted = QPixmap(pixmap.size())
-        tinted.fill(Qt.transparent)
-        tint_painter = QPainter(tinted)
-        tint_painter.drawPixmap(0, 0, pixmap)
-        tint_painter.setCompositionMode(_SOURCE_IN)
-        tint_painter.fillRect(tinted.rect(), color)
-        tint_painter.end()
-        painter.drawPixmap(target_x, target_y, foot_w, foot_h, tinted)
+        key = (pixmap.cacheKey(), color.rgba())
+        tinted = self._tinted_feet.get(key)
+        if tinted is None:
+            tinted = QPixmap(pixmap.size())
+            tinted.fill(Qt.transparent)
+            tint_painter = QPainter(tinted)
+            tint_painter.drawPixmap(0, 0, pixmap)
+            tint_painter.setCompositionMode(_SOURCE_IN)
+            tint_painter.fillRect(tinted.rect(), color)
+            tint_painter.end()
+            if len(self._tinted_feet) >= 6:
+                self._tinted_feet.clear()
+            self._tinted_feet[key] = tinted
+        dpr = self.devicePixelRatioF()
+        device_point = painter.deviceTransform().map(QPointF(target_x, target_y))
+        phase_x = device_point.x() % 1
+        phase_y = device_point.y() % 1
+        smooth = painter.testRenderHint(QPainter.SmoothPixmapTransform)
+        opacity = painter.opacity()
+        key = (tinted.cacheKey(), foot_w, foot_h, dpr, phase_x, phase_y, smooth, opacity)
+        sprite = self._foot_sprites.get(key)
+        if sprite is None:
+            sprite = QImage(math.ceil(foot_w * dpr + 1), math.ceil(foot_h * dpr + 1),
+                            QImage.Format_RGBA64_Premultiplied)
+            sprite.setDevicePixelRatio(dpr)
+            sprite.fill(Qt.transparent)
+            sprite_painter = QPainter(sprite)
+            sprite_painter.setRenderHint(QPainter.SmoothPixmapTransform, smooth)
+            sprite_painter.setOpacity(opacity)
+            sprite_painter.drawPixmap(QRectF(phase_x / dpr, phase_y / dpr, foot_w, foot_h),
+                                      tinted, QRectF(tinted.rect()))
+            sprite_painter.end()
+            if len(self._foot_sprites) >= 32:
+                self._foot_sprites.clear()
+            self._foot_sprites[key] = sprite
+        painter.setOpacity(1)
+        painter.drawImage(QPointF(target_x - phase_x / dpr, target_y - phase_y / dpr), sprite)
+        painter.setOpacity(opacity)
 
 
 class FootprintReplayPanel(QWidget):

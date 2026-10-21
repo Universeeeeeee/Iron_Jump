@@ -36,9 +36,10 @@ log = logging.getLogger(__name__)
 class _GroundFrameInbox(QObject):
     """Drain ordered reader callbacks on the measurement thread without 1000 Qt posts/s."""
 
-    def __init__(self, quality):
+    def __init__(self, quality, batch_size=20):
         super().__init__(quality)
         self.quality = quality
+        self._batch_size = batch_size
         self._pending = deque()
         self._lock = threading.Lock()
         self._accepting = True
@@ -73,7 +74,7 @@ class _GroundFrameInbox(QObject):
         deadline = time.perf_counter() + .004
         while True:
             with self._lock:
-                items = [self._pending.popleft() for _ in range(min(20, len(self._pending)))]
+                items = [self._pending.popleft() for _ in range(min(self._batch_size, len(self._pending)))]
             self._consume(items)
             if not items or time.perf_counter() >= deadline:
                 break
@@ -153,9 +154,10 @@ class SessionController(QObject):
     session_finished = Signal(object)       # TestReport
     pause_state_changed = Signal(bool)
 
-    def __init__(self, parent=None, *, worker_factory=None):
+    def __init__(self, parent=None, *, worker_factory=None, ground_batch_size=20):
         super().__init__(parent)
         self._worker_factory = worker_factory or UsbWorker
+        self._ground_batch_size = ground_batch_size
 
         # 后台资源 (懒初始化)
         self._thread: Optional[QThread] = None
@@ -279,7 +281,7 @@ class SessionController(QObject):
             self._engine.quality = self._quality
             self._walking_ready = False
             if self._engine.overground is not None:
-                self._frame_inbox = _GroundFrameInbox(self._quality)
+                self._frame_inbox = _GroundFrameInbox(self._quality, self._ground_batch_size)
                 self._worker.sensor_frame_received.connect(self._frame_inbox.on_frame, Qt.DirectConnection)
                 self._worker.acquisition_issue.connect(self._frame_inbox.on_issue, Qt.DirectConnection)
                 self.prepare_walking_requested.connect(self._frame_inbox.monitor)
@@ -497,6 +499,10 @@ class SessionController(QObject):
         return self._engine
 
     @property
+    def walking_ready(self):
+        return self._walking_ready
+
+    @property
     def config(self) -> Optional[AnyTestConfig]:
         return self._config
 
@@ -538,6 +544,13 @@ class SessionController(QObject):
 
     @Slot(str, str)
     def _on_device_state(self, state: str, message: str):
+        # A queued signal can outlive discard and otherwise reopen USB via
+        # the connected -> health-refresh path during window shutdown.
+        if self._worker is None or self._thread is None:
+            return
+        sender = self.sender()
+        if sender is not None and sender is not self._worker:
+            return
         if state == "error":
             log.error("USB: %s", message)
         self._device_state = state

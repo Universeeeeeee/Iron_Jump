@@ -184,7 +184,7 @@ def test_exclusion_report_history_ai_and_raw_export(qtbot):
     package = ReportDataPackageBuilder().build(restored, ReportContextInput(session_id=1, test_type='Jump Test'))
     assert any(flag.code == 'beam_quality' for flag in package.quality_flags)
     view = ReportView(); qtbot.addWidget(view); view.load_report(restored)
-    assert '自动剔除持续全零段：2、3' in view._reason_label.text()
+    assert '未使用段：2、3' in view._reason_label.text()
     gate.halt()
     if engine._stop_timer:
         engine._stop_timer.stop()

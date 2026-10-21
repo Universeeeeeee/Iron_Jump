@@ -6,6 +6,7 @@ from qtpy.QtGui import QColor, QPainter
 from qtpy.QtWidgets import QLabel, QVBoxLayout, QWidget
 
 from ui.footprint_channel import FootprintChannelWidget
+from reporting.ground import walking_position_value
 
 
 class GroundChannelWidget(FootprintChannelWidget):
@@ -32,7 +33,7 @@ class GroundChannelWidget(FootprintChannelWidget):
     def render_state(self, frame):
         super().render_state(frame)
         self.segment_ids = frame.get("segment_ids", tuple(str(i + 1) for i in range(len(self._contact_bits) // 96)))
-        if len(self.valid_bits) != len(self._contact_bits) or not all(self.valid_bits):
+        if len(self.valid_bits) != len(self._contact_bits):
             self._feet = []
         self.selected_segment = min(self.selected_segment, max(0, len(self._contact_bits) // 96 - 1))
 
@@ -116,13 +117,14 @@ class GroundTrackPanel(QWidget):
         self.device_label = QLabel("等待识别设备段数")
         self.direction_label = QLabel("上方为接口侧 · 等待进入")
         self.channel = GroundChannelWidget()
-        self.legend = QLabel("淡色：历史脚印 · 居中：左右未知\n黄色光束：数据未知 · 图标大小非实测")
+        self.legend = QLabel("淡色：历史脚印 · 灰色居中：左右未知\n绿：左脚 · 蓝：右脚 · 黄色光束：数据未知\n图标大小非实测")
         self.legend.setWordWrap(True)
         self.legend.setStyleSheet("font-size: 10pt; color: #768394;")
         for item in (self.title, self.device_label, self.direction_label):
             layout.addWidget(item)
         layout.addWidget(self.channel, 1)
-        layout.addWidget(self.legend)
+        self.channel.setToolTip(self.legend.text())
+        self.legend.hide()
         self.setMinimumWidth(240)
         self.setMaximumWidth(340)
         self.setStyleSheet("GroundTrackPanel { background: transparent; border: none; } QLabel { color: #aeb7c5; background: transparent; border: none; }")
@@ -140,7 +142,7 @@ class GroundTrackPanel(QWidget):
         for item in (self.detail_title, self.detail_range):
             detail_layout.addWidget(item)
         detail_layout.addWidget(self.detail_channel, 1)
-        detail_layout.addWidget(self.detail_status)
+        self.detail_status.hide()
         self.detail.setMinimumWidth(190)
         self.detail.setMaximumWidth(280)
         self.detail.setStyleSheet("QWidget { background: transparent; border: none; color: #aeb7c5; }")
@@ -186,15 +188,36 @@ class GroundTrackPanel(QWidget):
     def _render_history(self):
         now = self._frame.get("timestamp_s", 0)
         history = []
+        events = {e['contact_id']: e for e in self._summary.get('event_publications', []) if e['active']}
+        landings = self._summary.get('landing_positions_m', {})
+        active = {foot.get('contact_id') for foot in self._frame.get('feet', [])}
         for contact in self._summary.get("contacts", []):
+            event = events.get(contact.get('id'))
+            if event and str(contact.get('id')) in landings:
+                start = contact.get('start',contact.get('touch_s',{}).get('value'))
+                if contact['id'] in active or start is None or start > now:
+                    continue
+                sample = self._frame.get('sample_index')
+                if sample is not None and event.get('published_sample',sample) > sample:
+                    continue
+                toe = contact.get('toe_m')
+                position = (toe['value'] if toe['valid'] else None) if toe is not None else walking_position_value(contact)
+                known = position is not None
+                position = position if known else landings[str(contact['id'])]
+                history.append({'centroid_cm':position*100,
+                    'side':contact.get('side','unknown') if known else 'unknown', 'status':'confirmed',
+                    'shape_valid':known, 'contact_id':contact['id']})
+                continue
             if "toe_m" in contact:
                 if not all(contact.get(k, {}).get("valid") for k in ("toe_m", "lift_s", "contact_s")):
                     continue
                 position, end = contact["toe_m"]["value"], contact["lift_s"]["value"]
             else:
-                if not contact.get("confirmed") or contact.get("exclusion"):
+                if not contact.get("confirmed") or ('centre_m' not in contact and contact.get("exclusion")):
                     continue
-                position, end = contact.get("position_m"), contact.get("end")
+                position = walking_position_value(contact)
+                lift = contact.get('lift_s')
+                end = (lift['value'] if lift['valid'] else None) if lift is not None else contact.get('end')
             if position is not None and end is not None and end <= now:
                 history.append({"centroid_cm": position * 100, "side": contact.get("side", "unknown"),
                                 "status": "confirmed"})
@@ -217,12 +240,14 @@ class GroundTrackPanel(QWidget):
                                                    and positions[0] <= foot["centroid_cm"] / 100 <= positions[-1]]})
         invalid = [i + 1 for i, v in enumerate(valid) if not v]
         blocked = [i + 1 for i, b in enumerate(bits) if b and i < len(valid) and valid[i]]
+        confirmation_ms = self._frame.get("preflight_display_confirmation_ms", 0)
         if invalid:
             status = "数据无效 / 未知：" + self._indices(invalid)
         elif blocked:
-            status = "遮挡光束：" + self._indices(blocked)
+            status = ("稳定确认遮挡：" if confirmation_ms else "遮挡光束：") + self._indices(blocked)
         else:
-            status = "本段当前帧：96 路数据有效 · 无遮挡"
+            status = ("稳定显示：96 路无确认遮挡" if confirmation_ms
+                      else "本段当前帧：96 路数据有效 · 无遮挡")
         if "preflight_bad_indices" in self._frame:
             bad = [i - start + 1 for i in self._frame["preflight_bad_indices"] if start <= i < end]
             transient = [i - start + 1 for i in self._frame.get("preflight_transient_indices", ()) if start <= i < end]
@@ -230,15 +255,13 @@ class GroundTrackPanel(QWidget):
                 status += "\n观察窗异常束：" + self._indices(bad)
             if transient:
                 status += "\n短暂遮挡束：" + self._indices(transient)
-            pending = [i - start + 1 for i in self._frame.get("preflight_pending_indices", ()) if start <= i < end]
-            filtered = [i - start + 1 for i in self._frame.get("preflight_filtered_indices", ()) if start <= i < end]
-            if pending:
-                status += "\n待稳定确认束：" + self._indices(pending)
-            if filtered:
-                status += "\n短时变化（未计入坏灯）：" + self._indices(filtered)
-            status += "\n全程自检请查看上方全部设备段的结果"
+            if confirmation_ms:
+                status += f"\n显示采用 {confirmation_ms}ms 稳定确认；自检结论请看上方"
+            else:
+                status += "\n全程自检请查看上方全部设备段的结果"
         self.detail_status.setText(status)
         self.detail_status.setToolTip(status)
+        self.detail_channel.setToolTip(status)
 
     @staticmethod
     def _indices(indices):

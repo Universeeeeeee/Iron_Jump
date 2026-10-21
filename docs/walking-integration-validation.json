@@ -1,0 +1,33 @@
+{
+  "validated_candidate": "b4a008a4",
+  "production_base": "a58bcd5ae8267af3ea2ee76519982afb8f27104d",
+  "semantics_contract": "docs/walking-count-contract.md",
+  "real_retained_run": "gui_walk_20261021_230117",
+  "original_report_sha256": "65ab2ceb5910f902f94e2a3262336861e072f1e35d3763fe9899c8ae2a7c4a15",
+  "counts": {
+    "reliable_footprints": 12,
+    "recognized_steps": 12,
+    "footfall_rows": 12,
+    "valid_step_relationships": 7,
+    "valid_cycles": 4
+  },
+  "raw_exports_preserved": 41388,
+  "original_summary_and_report_exact_except_additive_footfalls": true,
+  "original_metric_thresholds_unchanged": true,
+  "full_windows_suite": {
+    "passed": 2243,
+    "skipped": 2,
+    "subtests_passed": 12,
+    "exit_code": 0,
+    "trace_plugin": false,
+    "junit_sha256": "041531616c2d88570b037a366a29f675e6adf7368faf0ead8adc05445d7d9e0d"
+  },
+  "skipped_reason": "Two pose-control cases require saved field evidence absent from the clean checkout.",
+  "evidence": {
+    "branch": "codex/native-stack-capture-calibration",
+    "plan": "experiments/walking_process_integration/plan05.json",
+    "standard_suite": "experiments/walking_process_integration/evidence/stage05/full_tests07.xml",
+    "relationship_mapping": "experiments/walking_process_integration/retained_relationship_mapping.json"
+  },
+  "scope": "Automated tests, retained offline data and synthetic USB worker only. No new human Walk, device restart, physical Run or optimization A/B."
+}

@@ -367,6 +367,12 @@ def test_adjacent_unknown_does_not_split_a_foot_rolling_across_seam(mode, contin
     c = p.contacts[0]
     assert time_ms(p, c, 'start') == 100
     assert time_ms(p, c, 'end') == (400 if continues else 203.5)
+    if continues and mode == 'walk':
+        assert c.exclusion == 'unresolved_fragment_join'
+        assert c.has_unknown and c.touch_known and not c.position_known
+        assert p.summary()['contacts'][0]['lift_sample'] is None
+        assert p.summary()['valid_steps'] == 1 and p.summary()['valid_cycles'] == 0
+        return
     assert not getattr(c, 'problem', None) and not getattr(c, 'exclusion', None)
     assert p.summary()['valid_steps'] == 2 and p.summary()['valid_cycles'] == 1
     if mode == 'run':

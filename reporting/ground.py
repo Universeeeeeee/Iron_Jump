@@ -28,11 +28,24 @@ def _running_metric(code, source):
     return MetricValue(metric_code=code, state="invalid", reason=source.get("missing_reason") or "not_observed")
 
 
+def walking_position_value(contact):
+    """New certificates are authoritative; only absent fields use legacy rules."""
+    if 'centre_m' in contact:
+        centre = contact['centre_m']
+        return centre['value'] if centre and centre.get('valid') else None
+    return contact.get('position_m') if contact.get('position_known', True) else None
+
+
 def build_ground_data(builder, package_id, report):
     walking = isinstance(report, GaitTestReport)
     summary = report.walking_summary if walking else report.running_summary
+    if walking and 'footfalls' in summary:
+        from engine.footfall_records import validate_footfalls
+        validate_footfalls(summary)
     source_name = "walking_summary" if walking else "running_summary"
     mappings = _WALK_METRICS if walking else _RUN_METRICS
+    if walking and any('centre_m' in row for row in summary['contacts']):
+        mappings = {**mappings, 'contacts': {**mappings['contacts'], 'centre_m': 'centre_m'}}
     contacts = {row["id"]: row for row in summary["contacts"]}
     if len(contacts) != len(summary["contacts"]):
         raise ValueError("duplicate ground contact ids")
@@ -61,7 +74,17 @@ def build_ground_data(builder, package_id, report):
                     raw["contact_time_s"] = row["end"] - row["start"] if complete else None
                     if not exclusion and any(row["start"] < stop["end_s"] and row["end"] > stop["start_s"] for stop in summary["stops"]):
                         exclusion = "stop_interval"
-                values = {code: _metric_value(code, raw.get(field)) for code, field in mappings[kind].items()}
+                if kind == 'contacts' and 'contact_s' in row:
+                    timestamp = row['touch_s']['value'] if row['touch_s']['valid'] else None
+                    values = {"contact_time_s": _running_metric("contact_time_s", row['contact_s'])}
+                    exclusion = None if row['contact_s']['valid'] else row['contact_s']['missing_reason']
+                else:
+                    values = {code: _metric_value(code, raw.get(field)) for code, field in mappings[kind].items()
+                              if code != 'centre_m'}
+                if kind == 'contacts' and 'centre_m' in row:
+                    values['centre_m'] = _running_metric('centre_m', row['centre_m'])
+                    if values['centre_m'].state == 'present':
+                        exclusion = None
             else:
                 touch = row.get("touch_s") if kind == "contacts" else target.get("touch_s")
                 if kind == "cycles":
@@ -72,7 +95,10 @@ def build_ground_data(builder, package_id, report):
             if not has_values and exclusion is None:
                 exclusion = "no_valid_metrics"
             reasons = tuple(dict.fromkeys([exclusion] if exclusion else []))
-            if walking and kind == 'contacts' and row.get('exclusion') == 'pending_touch_order':
+            if walking and kind == 'contacts' and 'centre_m' in row and row.get('exclusion') and row['exclusion'] not in reasons:
+                reasons += (row['exclusion'],)
+            if walking and kind == 'contacts' and row.get('exclusion') == 'pending_touch_order' and (
+                    'centre_m' not in row or 'pending_touch_order' not in reasons):
                 reasons += ('pending_touch_order',)
             reasons += tuple(dict.fromkeys(value.reason for value in values.values() if value.reason and value.reason not in reasons))
             row_flags = builder._row_quality_flags(package_id, record_id, reasons)
@@ -99,7 +125,7 @@ def build_ground_data(builder, package_id, report):
             ("step_length_m", "mean_step_m", summary.get("valid_step_lengths", summary["valid_steps"])),
             ("stride_length_m", "mean_stride_m", len(summary["stride_lengths_m"])),
             ("contact_time_s", "mean_contact_s", summary.get("valid_contact_durations", contact_count)),
-            ("speed_m_s", "walking_speed_m_s", summary.get("valid_step_lengths", summary["valid_steps"])),
+            ("speed_m_s", "walking_speed_m_s", summary.get("valid_step_speeds", summary.get("valid_step_lengths", summary["valid_steps"]))),
             ("cadence_steps_per_min", "cadence_per_min", summary["valid_steps"]),
             ("single_support_s", "single_support_s", summary.get("valid_support_cycles", summary["valid_cycles"])),
             ("total_double_support_s", "double_support_s", summary.get("valid_support_cycles", summary["valid_cycles"])),
@@ -134,11 +160,35 @@ def build_ground_data(builder, package_id, report):
                                       "segment_count": summary["segment_count"],
                                       "steps_and_cycles": "producer records only; excluded candidates are not reconstructed",
                                       "walking_stride": "aggregate only; no invented cycle-to-stride pairing" if walking else None,
-                                      "finish_reason": report.finish_reason}))
+                                      "finish_reason": report.finish_reason,
+                                      **({"metric_policy": summary['metric_policy'],
+                                          "event_publications": deepcopy(summary.get('event_publications', [])),
+                                          "event_audit": deepcopy(summary.get('event_audit', [])),
+                                          "ownership_recoveries": deepcopy(summary.get('ownership_recoveries', []))}
+                                         if 'metric_policy' in summary else {})}))
+    footfall_set_id = None
+    if walking and 'footfalls' in summary:
+        footfall_set_id = _stable_id(package_id, 'record_set', 'ground_footfall')
+        rows = []
+        # Existing gait metrics remain exclusively in their original record sets.
+        # A footfall adds identity/onset evidence, not duplicate step statistics.
+        codes = {'footfall_time_s': 'touch_s'}
+        for ordinal, row in enumerate(summary['footfalls']):
+            record_id = _stable_id(footfall_set_id, 'record', row['event_id'])
+            sources[record_id] = dict(source_ref=f'{source_name}:footfalls:{ordinal}', row=deepcopy(row))
+            values = {code: _running_metric(code, row[field]) for code, field in codes.items()}
+            values['raw_landing_position_m'] = _metric_value('raw_landing_position_m', row['raw_landing_position_m'])
+            rows.append(SemanticRecord(record_id=record_id, ordinal=ordinal, source_index=row['contact_id'],
+                timestamp_s=row['timestamp_s'], side=row['side'] if anchored else 'unknown',
+                status=RecordStatus(validity='valid', inclusion='included'), values=values))
+        record_sets.append(RecordSet(record_set_id=footfall_set_id, record_type='ground_footfall',
+                           metric_codes=tuple(codes) + ('raw_landing_position_m',), records=tuple(rows)))
+        add_fact('recognized_steps', summary['recognized_steps'], 1, source_name + ':recognized_steps', 'count')
     payload = GroundPayload(kind="overground_walk" if walking else "overground_run",
                             contact_record_set_id=record_sets[0].record_set_id,
                             step_record_set_id=record_sets[1].record_set_id,
                             gait_cycle_record_set_id=record_sets[2].record_set_id,
                             spatial_reference="contact_center" if walking else "stable_toe_proxy",
-                            record_sources=sources)
+                            record_sources=sources, footfall_record_set_id=footfall_set_id,
+                            recognized_steps=summary.get('recognized_steps') if walking else None)
     return record_sets, facts, flags, payload

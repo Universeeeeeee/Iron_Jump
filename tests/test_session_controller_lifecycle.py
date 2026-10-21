@@ -151,3 +151,18 @@ def test_treadmill_routes_device_samples_once_and_ignores_legacy_duplicate(qtbot
         assert engine._processor._evidence_issues[-1]["reason"] == "missing_packet"
     finally:
         controller.stop()
+
+
+def test_discard_ignores_queued_connected_callback_without_reopening(qtbot):
+    from qtpy.QtCore import QCoreApplication,QEvent
+    from hardware.simulated_worker import SimulatedGaitWorker
+    controller=session_controller.SessionController(worker_factory=SimulatedGaitWorker)
+    controller.ensure_device_connected()
+    controller.discard()
+    try:
+        qtbot.wait(100)
+        assert controller._thread is None and controller._worker is None
+        assert controller.device_state=='disconnected'
+    finally:
+        controller.discard()
+        QCoreApplication.removePostedEvents(controller,QEvent.MetaCall)

@@ -14,6 +14,9 @@ Notes
 -----
 - Header: 4 bytes magic + 1 byte type + 2 bytes datalength, little-endian for the 16-bit length.
 - CRC: CRC-8 polynomial 0x07, init 0x00, no reflection, xorout 0x00; computed over (type + length + payload).
+- The original communication workbook describes an additive checksum instead.
+  Native USB captures on 2026-09-29 consistently match CRC-8; see the diagnostic
+  report and captured-packet regression test before changing this wire format.
 - Tail: 4 bytes magic (0xA5A5A5A5).
 - DATA_REPORT payload layout: DATA_INFO (frameIdx: uint32 little-endian (configurable for older firmware), packNum: u8, packIdx: u8) + raw bytes.
 - STATUS_REPORT payload layout: type: u8, value: u8 (fixing the apparent bug in C++ code that overwrote type twice).

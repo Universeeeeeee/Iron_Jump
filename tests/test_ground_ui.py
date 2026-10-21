@@ -69,7 +69,9 @@ def test_preflight_exposes_local_faults_and_stale_data_without_ready():
     gate.feed(sample)
     status = gate.status(sample.received_monotonic_ns)
     assert not status["ready"]
-    assert any(status["visual_frame"]["contact_bits"][384:480])
+    assert any(status["visual_frame"]["raw_contact_bits"][384:480])
+    assert not any(status["visual_frame"]["contact_bits"][384:480])
+    assert status["pending_indices"]
     assert all(status["visual_frame"]["valid_bits"])
     valid = bytearray([1] * layout.bit_count)
     valid[401] = 0
@@ -252,8 +254,8 @@ def test_preflight_detail_distinguishes_current_frame_from_window(qtbot):
     panel.channel.select_segment(6)
     assert '观察窗异常束：1' in panel.detail_status.text()
     assert '短暂遮挡束：2' in panel.detail_status.text()
-    assert '待稳定确认束：3' in panel.detail_status.text()
-    assert '短时变化（未计入坏灯）：4' in panel.detail_status.text()
+    assert '待稳定确认束' not in panel.detail_status.text()
+    assert '短时变化（未计入坏灯）' not in panel.detail_status.text()
     assert '当前帧' in panel.detail_status.text()
 
 

@@ -46,8 +46,8 @@ def test_existing_foot_can_split_into_heel_and_forefoot(filtered):
     assert c.end == pytest.approx(.4)
     assert p.summary()['mean_contact_s'] == pytest.approx(.3)
     snapshot = p.build_report('manual').report_config_snapshot
-    assert snapshot['algorithm'] == 'overground_walking_v1.10'
-    assert snapshot['fragment_association'] == 'unique_existing_envelope_with_match_margin'
+    assert snapshot['algorithm'] == 'overground_walking_v1.15'
+    assert snapshot['fragment_association'] == 'valid_previous_blocked_overlap_per_island'
 
 
 @pytest.mark.parametrize('reverse', [False, True])
@@ -119,10 +119,11 @@ def test_third_distant_foot_is_not_joined_to_an_existing_foot():
     p = replay(trajectory)
     assert any(i['code'] == 'ambiguous_contacts' for i in p.issues)
     assert p.summary()['valid_steps'] == 1  # retain only the pre-ambiguity interval
-    assert p.summary()['valid_step_lengths'] == 0
+    assert p.summary()['valid_step_lengths'] == 1  # remote reliable pair is preserved
+    assert p.contacts[2].has_unknown and not p.contacts[2].touch_known
 
 
-def test_two_shifted_islands_without_an_inner_anchor_remain_uncertain():
+def test_two_shifted_islands_each_with_blocked_overlap_keep_the_owner():
     def trajectory(n):
         if 100 <= n < 200:
             return [(20, 40)]
@@ -130,7 +131,7 @@ def test_two_shifted_islands_without_an_inner_anchor_remain_uncertain():
             return [(19, 23), (29, 41)]
         return []
     p = replay(trajectory)
-    assert any(i['code'] == 'ambiguous_contacts' for i in p.issues)
+    assert not any(i['code'] == 'ambiguous_contacts' for i in p.issues)
     assert p.summary()['valid_steps'] == 0
 
 

@@ -528,7 +528,7 @@ class ExecutionView(QWidget):
             "有效周期" if self.is_ground else "步态周期不对称率" if is_treadmill else "不平衡指数"
         )
         self._card_imbalance._unit.setText("个" if self.is_ground else "%")
-        self._card_steps._title.setText("有效步数" if self.is_ground else "步数")
+        self._card_steps._title.setText("识别步数" if config.test_type == 'Sprint and Gait Test' else "有效步数" if self.is_ground else "步数")
         self._footprint_channel.set_direction(getattr(config, "direction", None))
         self._camera_start_timer.start(0)
         if is_treadmill:
@@ -817,12 +817,14 @@ class ExecutionView(QWidget):
         if "walking" in snapshot or "running" in snapshot:
             self._mode_label.setText(("地面跑步" if "running" in snapshot else "地面走路") + " · " + snapshot["status"])
             data = snapshot.get("running", snapshot.get("walking"))
-            self._device_label.setText(f"{data['segment_count']} 段 / 标称 {data['nominal_length_m']} 米 · 有效步数 {data['valid_steps']} · 异常 {len(data['issues'])}")
+            count = data.get('recognized_steps', snapshot['touch_count']) if 'walking' in snapshot else data['valid_steps']
+            count_label = '识别步数' if 'walking' in snapshot else '有效步数'
+            self._device_label.setText(f"{data['segment_count']} 段 / 标称 {data['nominal_length_m']} 米 · {count_label} {count} · 异常 {len(data['issues'])}")
             self._ground_status.setText(self._device_label.text())
             if data["issues"]:
                 self._ground_status.setText(self._ground_status.text() + " · 采集存在异常，详见报告")
             self._ground_track.set_summary(data)
-            self._card_steps.set_value(str(data["valid_steps"]))
+            self._card_steps.set_value(str(count))
             self._card_imbalance.set_value(str(data["valid_cycles"]))
             self._card_stride.set_value(f"{snapshot['latest_stride']:.1f}" if snapshot.get("stride_count") else "--")
             self._card_velocity.set_value(f"{snapshot['velocity_sum'] / snapshot['velocity_count']:.1f}" if snapshot.get("velocity_count") else "--")
