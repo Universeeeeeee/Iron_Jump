@@ -1,0 +1,735 @@
+{
+  "complete": true,
+  "recognized_steps": 12,
+  "footfalls": 12,
+  "valid_step_relationships": 7,
+  "cycles": 4,
+  "existing_summary_exact": true,
+  "existing_report_exact": true,
+  "raw_frames_preserved": 41388,
+  "original_report_sha256": "65ab2ceb5910f902f94e2a3262336861e072f1e35d3763fe9899c8ae2a7c4a15",
+  "footfall_mapping": [
+    {
+      "event_id": "6a534908362e45a09a7d51d3648964ec:0:0",
+      "contact_id": 0,
+      "epoch": 0,
+      "revision": 1,
+      "touch_sample": 27207,
+      "published_sample": 27290,
+      "sample_time_s": 27.207,
+      "timestamp_s": 0.0,
+      "raw_landing_position_m": 0.0728,
+      "raw_position_missing_reason": null,
+      "side": "unknown",
+      "side_missing_reason": "anatomical_side_unknown",
+      "touch_s": {
+        "value": 0.0,
+        "valid": true,
+        "missing_reason": null
+      },
+      "lift_s": {
+        "value": null,
+        "valid": false,
+        "missing_reason": "competing_source"
+      },
+      "contact_s": {
+        "value": null,
+        "valid": false,
+        "missing_reason": "competing_source"
+      },
+      "centre_m": {
+        "value": null,
+        "valid": false,
+        "missing_reason": "unresolved_position_source"
+      },
+      "step_time_s": {
+        "value": null,
+        "valid": false,
+        "missing_reason": "no_valid_step_relationship"
+      },
+      "step_length_m": {
+        "value": null,
+        "valid": false,
+        "missing_reason": "no_valid_step_relationship"
+      },
+      "speed_m_s": {
+        "value": null,
+        "valid": false,
+        "missing_reason": "no_valid_step_relationship"
+      },
+      "step_refs": [],
+      "source_ref": "walking_summary:contacts:0",
+      "evidence": {
+        "publication_version": "reliable_touch_before_sequence_v1",
+        "position_source": "landing_positions_m_at_publication",
+        "metric_source": "independent_contact_and_relationship_evidence",
+        "issue_refs": []
+      },
+      "quality_exclusion": "unresolved_fragment_join"
+    },
+    {
+      "event_id": "6a534908362e45a09a7d51d3648964ec:0:3",
+      "contact_id": 3,
+      "epoch": 0,
+      "revision": 1,
+      "touch_sample": 27854,
+      "published_sample": 27926,
+      "sample_time_s": 27.854,
+      "timestamp_s": 0.6469999999999985,
+      "raw_landing_position_m": 0.7358,
+      "raw_position_missing_reason": null,
+      "side": "unknown",
+      "side_missing_reason": "anatomical_side_unknown",
+      "touch_s": {
+        "value": 0.6469999999999985,
+        "valid": true,
+        "missing_reason": null
+      },
+      "lift_s": {
+        "value": 1.3729999999999976,
+        "valid": true,
+        "missing_reason": null
+      },
+      "contact_s": {
+        "value": 0.7259999999999991,
+        "valid": true,
+        "missing_reason": null
+      },
+      "centre_m": {
+        "value": 0.806,
+        "valid": true,
+        "missing_reason": null
+      },
+      "step_time_s": {
+        "value": null,
+        "valid": false,
+        "missing_reason": "no_valid_step_relationship"
+      },
+      "step_length_m": {
+        "value": null,
+        "valid": false,
+        "missing_reason": "no_valid_step_relationship"
+      },
+      "speed_m_s": {
+        "value": null,
+        "valid": false,
+        "missing_reason": "no_valid_step_relationship"
+      },
+      "step_refs": [
+        0
+      ],
+      "source_ref": "walking_summary:contacts:3",
+      "evidence": {
+        "publication_version": "reliable_touch_before_sequence_v1",
+        "position_source": "landing_positions_m_at_publication",
+        "metric_source": "independent_contact_and_relationship_evidence",
+        "issue_refs": []
+      },
+      "quality_exclusion": "unresolved_fragment_join"
+    },
+    {
+      "event_id": "6a534908362e45a09a7d51d3648964ec:0:4",
+      "contact_id": 4,
+      "epoch": 0,
+      "revision": 1,
+      "touch_sample": 28393,
+      "published_sample": 28466,
+      "sample_time_s": 28.393,
+      "timestamp_s": 1.186,
+      "raw_landing_position_m": 1.3692,
+      "raw_position_missing_reason": null,
+      "side": "unknown",
+      "side_missing_reason": "anatomical_side_unknown",
+      "touch_s": {
+        "value": 1.186,
+        "valid": true,
+        "missing_reason": null
+      },
+      "lift_s": {
+        "value": 1.9329999999999998,
+        "valid": true,
+        "missing_reason": null
+      },
+      "contact_s": {
+        "value": 0.7469999999999999,
+        "valid": true,
+        "missing_reason": null
+      },
+      "centre_m": {
+        "value": 1.5095999999999998,
+        "valid": true,
+        "missing_reason": null
+      },
+      "step_time_s": {
+        "value": 0.5390000000000015,
+        "valid": true,
+        "missing_reason": null
+      },
+      "step_length_m": {
+        "value": 0.7035999999999998,
+        "valid": true,
+        "missing_reason": null
+      },
+      "speed_m_s": {
+        "value": 1.3053803339517585,
+        "valid": true,
+        "missing_reason": null
+      },
+      "step_refs": [
+        0,
+        1
+      ],
+      "source_ref": "walking_summary:contacts:4",
+      "evidence": {
+        "publication_version": "reliable_touch_before_sequence_v1",
+        "position_source": "landing_positions_m_at_publication",
+        "metric_source": "independent_contact_and_relationship_evidence",
+        "issue_refs": []
+      },
+      "quality_exclusion": null
+    },
+    {
+      "event_id": "6a534908362e45a09a7d51d3648964ec:0:5",
+      "contact_id": 5,
+      "epoch": 0,
+      "revision": 1,
+      "touch_sample": 28977,
+      "published_sample": 29054,
+      "sample_time_s": 28.977,
+      "timestamp_s": 1.7699999999999996,
+      "raw_landing_position_m": 2.0936,
+      "raw_position_missing_reason": null,
+      "side": "unknown",
+      "side_missing_reason": "anatomical_side_unknown",
+      "touch_s": {
+        "value": 1.7699999999999996,
+        "valid": true,
+        "missing_reason": null
+      },
+      "lift_s": {
+        "value": 2.503,
+        "valid": true,
+        "missing_reason": null
+      },
+      "contact_s": {
+        "value": 0.7330000000000005,
+        "valid": true,
+        "missing_reason": null
+      },
+      "centre_m": {
+        "value": 2.2106000000000003,
+        "valid": true,
+        "missing_reason": null
+      },
+      "step_time_s": {
+        "value": 0.5839999999999996,
+        "valid": true,
+        "missing_reason": null
+      },
+      "step_length_m": {
+        "value": 0.7010000000000005,
+        "valid": true,
+        "missing_reason": null
+      },
+      "speed_m_s": {
+        "value": 1.2003424657534263,
+        "valid": true,
+        "missing_reason": null
+      },
+      "step_refs": [
+        1,
+        2
+      ],
+      "source_ref": "walking_summary:contacts:5",
+      "evidence": {
+        "publication_version": "reliable_touch_before_sequence_v1",
+        "position_source": "landing_positions_m_at_publication",
+        "metric_source": "independent_contact_and_relationship_evidence",
+        "issue_refs": []
+      },
+      "quality_exclusion": "unresolved_fragment_join"
+    },
+    {
+      "event_id": "6a534908362e45a09a7d51d3648964ec:0:6",
+      "contact_id": 6,
+      "epoch": 0,
+      "revision": 1,
+      "touch_sample": 29541,
+      "published_sample": 29618,
+      "sample_time_s": 29.541,
+      "timestamp_s": 2.3339999999999996,
+      "raw_landing_position_m": 2.7696,
+      "raw_position_missing_reason": null,
+      "side": "unknown",
+      "side_missing_reason": "anatomical_side_unknown",
+      "touch_s": {
+        "value": 2.3339999999999996,
+        "valid": true,
+        "missing_reason": null
+      },
+      "lift_s": {
+        "value": null,
+        "valid": false,
+        "missing_reason": "competing_source"
+      },
+      "contact_s": {
+        "value": null,
+        "valid": false,
+        "missing_reason": "competing_source"
+      },
+      "centre_m": {
+        "value": null,
+        "valid": false,
+        "missing_reason": "unresolved_position_source"
+      },
+      "step_time_s": {
+        "value": 0.5640000000000001,
+        "valid": true,
+        "missing_reason": null
+      },
+      "step_length_m": {
+        "value": null,
+        "valid": false,
+        "missing_reason": "position_not_observed"
+      },
+      "speed_m_s": {
+        "value": null,
+        "valid": false,
+        "missing_reason": "position_not_observed"
+      },
+      "step_refs": [
+        2
+      ],
+      "source_ref": "walking_summary:contacts:6",
+      "evidence": {
+        "publication_version": "reliable_touch_before_sequence_v1",
+        "position_source": "landing_positions_m_at_publication",
+        "metric_source": "independent_contact_and_relationship_evidence",
+        "issue_refs": []
+      },
+      "quality_exclusion": "unresolved_fragment_join"
+    },
+    {
+      "event_id": "6a534908362e45a09a7d51d3648964ec:0:9",
+      "contact_id": 9,
+      "epoch": 0,
+      "revision": 1,
+      "touch_sample": 30114,
+      "published_sample": 30177,
+      "sample_time_s": 30.114,
+      "timestamp_s": 2.907,
+      "raw_landing_position_m": 3.4784,
+      "raw_position_missing_reason": null,
+      "side": "unknown",
+      "side_missing_reason": "anatomical_side_unknown",
+      "touch_s": {
+        "value": 2.907,
+        "valid": true,
+        "missing_reason": null
+      },
+      "lift_s": {
+        "value": 3.6239999999999988,
+        "valid": true,
+        "missing_reason": null
+      },
+      "contact_s": {
+        "value": 0.7169999999999987,
+        "valid": true,
+        "missing_reason": null
+      },
+      "centre_m": {
+        "value": 3.598,
+        "valid": true,
+        "missing_reason": null
+      },
+      "step_time_s": {
+        "value": null,
+        "valid": false,
+        "missing_reason": "no_valid_step_relationship"
+      },
+      "step_length_m": {
+        "value": null,
+        "valid": false,
+        "missing_reason": "no_valid_step_relationship"
+      },
+      "speed_m_s": {
+        "value": null,
+        "valid": false,
+        "missing_reason": "no_valid_step_relationship"
+      },
+      "step_refs": [
+        3
+      ],
+      "source_ref": "walking_summary:contacts:9",
+      "evidence": {
+        "publication_version": "reliable_touch_before_sequence_v1",
+        "position_source": "landing_positions_m_at_publication",
+        "metric_source": "independent_contact_and_relationship_evidence",
+        "issue_refs": []
+      },
+      "quality_exclusion": null
+    },
+    {
+      "event_id": "6a534908362e45a09a7d51d3648964ec:0:10",
+      "contact_id": 10,
+      "epoch": 0,
+      "revision": 1,
+      "touch_sample": 30640,
+      "published_sample": 30713,
+      "sample_time_s": 30.64,
+      "timestamp_s": 3.433,
+      "raw_landing_position_m": 4.156000000000001,
+      "raw_position_missing_reason": null,
+      "side": "unknown",
+      "side_missing_reason": "anatomical_side_unknown",
+      "touch_s": {
+        "value": 3.433,
+        "valid": true,
+        "missing_reason": null
+      },
+      "lift_s": {
+        "value": 4.161999999999999,
+        "valid": true,
+        "missing_reason": null
+      },
+      "contact_s": {
+        "value": 0.7289999999999992,
+        "valid": true,
+        "missing_reason": null
+      },
+      "centre_m": {
+        "value": 4.2808,
+        "valid": true,
+        "missing_reason": null
+      },
+      "step_time_s": {
+        "value": 0.5259999999999998,
+        "valid": true,
+        "missing_reason": null
+      },
+      "step_length_m": {
+        "value": 0.6828000000000003,
+        "valid": true,
+        "missing_reason": null
+      },
+      "speed_m_s": {
+        "value": 1.2980988593155904,
+        "valid": true,
+        "missing_reason": null
+      },
+      "step_refs": [
+        3,
+        4
+      ],
+      "source_ref": "walking_summary:contacts:10",
+      "evidence": {
+        "publication_version": "reliable_touch_before_sequence_v1",
+        "position_source": "landing_positions_m_at_publication",
+        "metric_source": "independent_contact_and_relationship_evidence",
+        "issue_refs": []
+      },
+      "quality_exclusion": null
+    },
+    {
+      "event_id": "6a534908362e45a09a7d51d3648964ec:0:11",
+      "contact_id": 11,
+      "epoch": 0,
+      "revision": 1,
+      "touch_sample": 31210,
+      "published_sample": 31282,
+      "sample_time_s": 31.21,
+      "timestamp_s": 4.003,
+      "raw_landing_position_m": 4.8944,
+      "raw_position_missing_reason": null,
+      "side": "unknown",
+      "side_missing_reason": "anatomical_side_unknown",
+      "touch_s": {
+        "value": 4.003,
+        "valid": true,
+        "missing_reason": null
+      },
+      "lift_s": {
+        "value": null,
+        "valid": false,
+        "missing_reason": "competing_source"
+      },
+      "contact_s": {
+        "value": null,
+        "valid": false,
+        "missing_reason": "competing_source"
+      },
+      "centre_m": {
+        "value": null,
+        "valid": false,
+        "missing_reason": "unresolved_position_source"
+      },
+      "step_time_s": {
+        "value": 0.5700000000000003,
+        "valid": true,
+        "missing_reason": null
+      },
+      "step_length_m": {
+        "value": null,
+        "valid": false,
+        "missing_reason": "position_not_observed"
+      },
+      "speed_m_s": {
+        "value": null,
+        "valid": false,
+        "missing_reason": "position_not_observed"
+      },
+      "step_refs": [
+        4
+      ],
+      "source_ref": "walking_summary:contacts:11",
+      "evidence": {
+        "publication_version": "reliable_touch_before_sequence_v1",
+        "position_source": "landing_positions_m_at_publication",
+        "metric_source": "independent_contact_and_relationship_evidence",
+        "issue_refs": []
+      },
+      "quality_exclusion": "unresolved_fragment_join"
+    },
+    {
+      "event_id": "6a534908362e45a09a7d51d3648964ec:0:12",
+      "contact_id": 12,
+      "epoch": 0,
+      "revision": 1,
+      "touch_sample": 31773,
+      "published_sample": 31847,
+      "sample_time_s": 31.773,
+      "timestamp_s": 4.565999999999999,
+      "raw_landing_position_m": 5.5928,
+      "raw_position_missing_reason": null,
+      "side": "unknown",
+      "side_missing_reason": "anatomical_side_unknown",
+      "touch_s": {
+        "value": 4.565999999999999,
+        "valid": true,
+        "missing_reason": null
+      },
+      "lift_s": {
+        "value": 5.295999999999999,
+        "valid": true,
+        "missing_reason": null
+      },
+      "contact_s": {
+        "value": 0.7300000000000004,
+        "valid": true,
+        "missing_reason": null
+      },
+      "centre_m": {
+        "value": 5.7072,
+        "valid": true,
+        "missing_reason": null
+      },
+      "step_time_s": {
+        "value": null,
+        "valid": false,
+        "missing_reason": "no_valid_step_relationship"
+      },
+      "step_length_m": {
+        "value": null,
+        "valid": false,
+        "missing_reason": "no_valid_step_relationship"
+      },
+      "speed_m_s": {
+        "value": null,
+        "valid": false,
+        "missing_reason": "no_valid_step_relationship"
+      },
+      "step_refs": [
+        5
+      ],
+      "source_ref": "walking_summary:contacts:12",
+      "evidence": {
+        "publication_version": "reliable_touch_before_sequence_v1",
+        "position_source": "landing_positions_m_at_publication",
+        "metric_source": "independent_contact_and_relationship_evidence",
+        "issue_refs": []
+      },
+      "quality_exclusion": null
+    },
+    {
+      "event_id": "6a534908362e45a09a7d51d3648964ec:0:13",
+      "contact_id": 13,
+      "epoch": 0,
+      "revision": 1,
+      "touch_sample": 32327,
+      "published_sample": 32409,
+      "sample_time_s": 32.327,
+      "timestamp_s": 5.119999999999997,
+      "raw_landing_position_m": 6.332800000000001,
+      "raw_position_missing_reason": null,
+      "side": "unknown",
+      "side_missing_reason": "anatomical_side_unknown",
+      "touch_s": {
+        "value": 5.119999999999997,
+        "valid": true,
+        "missing_reason": null
+      },
+      "lift_s": {
+        "value": 5.887999999999998,
+        "valid": true,
+        "missing_reason": null
+      },
+      "contact_s": {
+        "value": 0.7680000000000007,
+        "valid": true,
+        "missing_reason": null
+      },
+      "centre_m": {
+        "value": 6.4524,
+        "valid": true,
+        "missing_reason": null
+      },
+      "step_time_s": {
+        "value": 0.5539999999999985,
+        "valid": true,
+        "missing_reason": null
+      },
+      "step_length_m": {
+        "value": 0.7451999999999996,
+        "valid": true,
+        "missing_reason": null
+      },
+      "speed_m_s": {
+        "value": 1.3451263537906166,
+        "valid": true,
+        "missing_reason": null
+      },
+      "step_refs": [
+        5,
+        6
+      ],
+      "source_ref": "walking_summary:contacts:13",
+      "evidence": {
+        "publication_version": "reliable_touch_before_sequence_v1",
+        "position_source": "landing_positions_m_at_publication",
+        "metric_source": "independent_contact_and_relationship_evidence",
+        "issue_refs": []
+      },
+      "quality_exclusion": null
+    },
+    {
+      "event_id": "6a534908362e45a09a7d51d3648964ec:0:14",
+      "contact_id": 14,
+      "epoch": 0,
+      "revision": 1,
+      "touch_sample": 32914,
+      "published_sample": 32982,
+      "sample_time_s": 32.914,
+      "timestamp_s": 5.707000000000001,
+      "raw_landing_position_m": 7.010400000000001,
+      "raw_position_missing_reason": null,
+      "side": "unknown",
+      "side_missing_reason": "anatomical_side_unknown",
+      "touch_s": {
+        "value": 5.707000000000001,
+        "valid": true,
+        "missing_reason": null
+      },
+      "lift_s": {
+        "value": null,
+        "valid": false,
+        "missing_reason": "competing_source"
+      },
+      "contact_s": {
+        "value": null,
+        "valid": false,
+        "missing_reason": "competing_source"
+      },
+      "centre_m": {
+        "value": null,
+        "valid": false,
+        "missing_reason": "unresolved_position_source"
+      },
+      "step_time_s": {
+        "value": 0.5870000000000033,
+        "valid": true,
+        "missing_reason": null
+      },
+      "step_length_m": {
+        "value": null,
+        "valid": false,
+        "missing_reason": "position_not_observed"
+      },
+      "speed_m_s": {
+        "value": null,
+        "valid": false,
+        "missing_reason": "position_not_observed"
+      },
+      "step_refs": [
+        6
+      ],
+      "source_ref": "walking_summary:contacts:14",
+      "evidence": {
+        "publication_version": "reliable_touch_before_sequence_v1",
+        "position_source": "landing_positions_m_at_publication",
+        "metric_source": "independent_contact_and_relationship_evidence",
+        "issue_refs": []
+      },
+      "quality_exclusion": "unresolved_fragment_join"
+    },
+    {
+      "event_id": "6a534908362e45a09a7d51d3648964ec:0:16",
+      "contact_id": 16,
+      "epoch": 0,
+      "revision": 1,
+      "touch_sample": 33523,
+      "published_sample": 33594,
+      "sample_time_s": 33.523,
+      "timestamp_s": 6.3160000000000025,
+      "raw_landing_position_m": 7.6448,
+      "raw_position_missing_reason": null,
+      "side": "unknown",
+      "side_missing_reason": "anatomical_side_unknown",
+      "touch_s": {
+        "value": 6.3160000000000025,
+        "valid": true,
+        "missing_reason": null
+      },
+      "lift_s": {
+        "value": 7.170999999999999,
+        "valid": true,
+        "missing_reason": null
+      },
+      "contact_s": {
+        "value": 0.8549999999999969,
+        "valid": true,
+        "missing_reason": null
+      },
+      "centre_m": {
+        "value": 7.7748,
+        "valid": true,
+        "missing_reason": null
+      },
+      "step_time_s": {
+        "value": null,
+        "valid": false,
+        "missing_reason": "no_valid_step_relationship"
+      },
+      "step_length_m": {
+        "value": null,
+        "valid": false,
+        "missing_reason": "no_valid_step_relationship"
+      },
+      "speed_m_s": {
+        "value": null,
+        "valid": false,
+        "missing_reason": "no_valid_step_relationship"
+      },
+      "step_refs": [],
+      "source_ref": "walking_summary:contacts:16",
+      "evidence": {
+        "publication_version": "reliable_touch_before_sequence_v1",
+        "position_source": "landing_positions_m_at_publication",
+        "metric_source": "independent_contact_and_relationship_evidence",
+        "issue_refs": []
+      },
+      "quality_exclusion": null
+    }
+  ],
+  "physical_devices_opened": false,
+  "human_test_started": false
+}

@@ -1,0 +1,54 @@
+{
+  "protected_runtime_files_unchanged": [],
+  "head": "89263f647975e2d4b5d273d8bff795d346578b60",
+  "recovery_stash": "11334e75f76758120f249cc47a5e1dd7d543ac59",
+  "unrelated_dirty_hashes_verified": 68,
+  "preexisting_untracked_paths_retained": 18589,
+  "overlays": [
+    {
+      "path": "tests/test_ground_local_observation.py",
+      "action": "preserve_preexisting_running_regression_for_uncommitted_running_processor",
+      "sha256": "d611be197bfe55f0766bbbe0a4fdb56cb2df71c19d1eb868d33c25bcae78e674"
+    },
+    {
+      "path": "tests/test_ground_ui.py",
+      "action": "three_way_overlay",
+      "sha256": "966aad041880227e41437934b92675d7f57062e8cc457430189dcdd25ea42b81"
+    },
+    {
+      "path": "tests/test_history_view.py",
+      "action": "three_way_overlay",
+      "sha256": "96905ec9367c444fd55d6d56b76247c3857b086512b3555478b7123f5c2e1e07"
+    },
+    {
+      "path": "tests/test_session_controller_lifecycle.py",
+      "action": "three_way_overlay",
+      "sha256": "1230d4a13213be9a4ac2d4398cb04d165b21ba75b822dc58236d83d5ec4524e2"
+    },
+    {
+      "path": "ui/main_window.py",
+      "action": "three_way_overlay",
+      "sha256": "179dd9a092f640025797a88158c7af8e9176f1573af3d87cfecb56c3ea9f9386"
+    },
+    {
+      "path": "ui/views/execution_view.py",
+      "action": "retain_b4_wording_with_count_changes",
+      "sha256": "02b7afbd1986c9d30a49e35aae0bdf3add27b93e502ec782b7a8b1b7c1235b9d"
+    },
+    {
+      "path": "ui/voice_bridge.py",
+      "action": "three_way_overlay",
+      "sha256": "e23dcb02f6b7ce8abd10013aa1c2e4aa9d0a07becb18ad7c0a4ec68387f9f771"
+    }
+  ],
+  "incorporated": [
+    "engine/modes/walking_processor.py",
+    "engine/overground_session.py",
+    "reporting/excel.py",
+    "reporting/ground.py",
+    "reporting/metric_catalog.py",
+    "tests/report_export_fixtures.py",
+    "ui/views/report_view.py"
+  ],
+  "staged_index_empty": true
+}
