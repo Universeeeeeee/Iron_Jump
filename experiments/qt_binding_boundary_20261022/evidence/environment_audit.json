@@ -1,0 +1,39 @@
+{
+  "desktop_launcher": {
+    "path": "C:\\Users\\86150\\Desktop\\IronJump-\u6b63\u5f0f\u7a0b\u5e8f.cmd",
+    "sha256": "27853eab991890e3b324952f8b83623dfa875a45f9856c7c250c7d8488d95670",
+    "text": "@echo off\nsetlocal\nset PYTHONUTF8=1\nset QT_API=pyside6\ncd /d \"E:\\OptoJump\\Iron_Jump\"\n\"D:\\conda\\python.exe\" -m ui.main_window\nif errorlevel 1 (\n  echo IronJump exited with an error. Keep this window for diagnosis.\n  pause\n)\nendlocal\n"
+  },
+  "test_overlap": {
+    "test_log": "E:\\OptoJump\\qt_binding_boundary_20261022\\evidence\\tests_pyside6.log",
+    "created_ns": 1792663995988606600,
+    "last_write_ns": 1792663999798211400,
+    "windows": [
+      {
+        "case": "01_pyside6_segmented_process40_qt",
+        "log_created_ns": 1792663938602499100,
+        "log_last_write_ns": 1792663964734976400,
+        "test_log_interval_overlaps": false
+      },
+      {
+        "case": "02_pyside6_segmented_process40_python",
+        "log_created_ns": 1792663965118895600,
+        "log_last_write_ns": 1792663991248826100,
+        "test_log_interval_overlaps": false
+      },
+      {
+        "case": "03_pyside6_segmented_process40_python",
+        "log_created_ns": 1792663991632556800,
+        "log_last_write_ns": 1792664018015633400,
+        "test_log_interval_overlaps": true
+      },
+      {
+        "case": "04_pyside6_segmented_process40_qt",
+        "log_created_ns": 1792664018400635200,
+        "log_last_write_ns": 1792664044547935500,
+        "test_log_interval_overlaps": false
+      }
+    ],
+    "limitation": "File creation/final write bound launch/log activity, not precise CPU execution. Conservatively exclude overlapping windows from clean causal comparisons; retain all results."
+  }
+}

@@ -1,0 +1,1534 @@
+{
+  "source_report_sha256": "a0524a91f6d0ab1a7be7c83e6ce9dc8887b5ab49e6bb006f0e7be5bb8b263486",
+  "source_exports_sha256": "9954e658db3b8c1134e160a5a135d968830a2472474f1f70bdb1159d9dc271b3",
+  "production_head": "10014b5cd0d317d931ac63618b24e930ee9660ad",
+  "cases": [
+    {
+      "case": "01_pyqt5_segmented_local20",
+      "mode": "local20",
+      "trace": true,
+      "report_equal": true,
+      "recognized_steps": 11,
+      "valid_steps": 8,
+      "valid_cycles": 6,
+      "run_wall_s": 12.5495496,
+      "parent_cpu_s": 10.796875,
+      "events": [
+        {
+          "recognized_count": 1,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:0",
+          "published_sample": 58275,
+          "paint_source_packet": 92,
+          "timestamps_ns": {
+            "source_nominal": 152724034156500,
+            "source_received": 152724023193700,
+            "consumer_complete": 152724048337300,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 152724048533000,
+            "gui_dispatch": 152724048533000,
+            "paint_complete": 152724089185900
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -10.9628,
+            "input_to_consumer": 25.1436,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 40.6529,
+            "consumer_to_receive": 0.1957,
+            "nominal_to_paint": 55.0294
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 2,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:2",
+          "published_sample": 58910,
+          "paint_source_packet": 105,
+          "timestamps_ns": {
+            "source_nominal": 152724669156500,
+            "source_received": 152724664851400,
+            "consumer_complete": 152724731901200,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 152724732078300,
+            "gui_dispatch": 152724732078300,
+            "paint_complete": 152724760338100
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -4.3051,
+            "input_to_consumer": 67.0498,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 28.2598,
+            "consumer_to_receive": 0.1771,
+            "nominal_to_paint": 91.1816
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 3,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:3",
+          "published_sample": 59585,
+          "paint_source_packet": 120,
+          "timestamps_ns": {
+            "source_nominal": 152725344156500,
+            "source_received": 152725341774100,
+            "consumer_complete": 152725540099800,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 152725540236800,
+            "gui_dispatch": 152725540236800,
+            "paint_complete": 152725568948900
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -2.3824,
+            "input_to_consumer": 198.3257,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 28.7121,
+            "consumer_to_receive": 0.137,
+            "nominal_to_paint": 224.7924
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 4,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:4",
+          "published_sample": 60197,
+          "paint_source_packet": 133,
+          "timestamps_ns": {
+            "source_nominal": 152725956156500,
+            "source_received": 152725959950700,
+            "consumer_complete": 152726198869600,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 152726199014700,
+            "gui_dispatch": 152726199014700,
+            "paint_complete": 152726222695500
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": 3.7942,
+            "input_to_consumer": 238.9189,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 23.6808,
+            "consumer_to_receive": 0.1451,
+            "nominal_to_paint": 266.539
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 5,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:5",
+          "published_sample": 60857,
+          "paint_source_packet": 148,
+          "timestamps_ns": {
+            "source_nominal": 152726616156500,
+            "source_received": 152726606430400,
+            "consumer_complete": 152726878818400,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 152726879069500,
+            "gui_dispatch": 152726879069500,
+            "paint_complete": 152726905365500
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -9.7261,
+            "input_to_consumer": 272.388,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 26.296,
+            "consumer_to_receive": 0.2511,
+            "nominal_to_paint": 289.209
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 6,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:6",
+          "published_sample": 61468,
+          "paint_source_packet": 159,
+          "timestamps_ns": {
+            "source_nominal": 152727227156500,
+            "source_received": 152727225217700,
+            "consumer_complete": 152727455219300,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 152727455425400,
+            "gui_dispatch": 152727455425400,
+            "paint_complete": 152727478504800
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -1.9388,
+            "input_to_consumer": 230.0016,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 23.0794,
+            "consumer_to_receive": 0.2061,
+            "nominal_to_paint": 251.3483
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 7,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:7",
+          "published_sample": 62058,
+          "paint_source_packet": 172,
+          "timestamps_ns": {
+            "source_nominal": 152727817156500,
+            "source_received": 152727808103900,
+            "consumer_complete": 152728179301700,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 152728179667900,
+            "gui_dispatch": 152728179667900,
+            "paint_complete": 152728203146600
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -9.0526,
+            "input_to_consumer": 371.1978,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 23.4787,
+            "consumer_to_receive": 0.3662,
+            "nominal_to_paint": 385.9901
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 8,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:8",
+          "published_sample": 62657,
+          "paint_source_packet": 185,
+          "timestamps_ns": {
+            "source_nominal": 152728416156500,
+            "source_received": 152728407292300,
+            "consumer_complete": 152728846639300,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 152728846792400,
+            "gui_dispatch": 152728846792400,
+            "paint_complete": 152728871912100
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -8.8642,
+            "input_to_consumer": 439.347,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 25.1197,
+            "consumer_to_receive": 0.1531,
+            "nominal_to_paint": 455.7556
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 9,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:9",
+          "published_sample": 63266,
+          "paint_source_packet": 198,
+          "timestamps_ns": {
+            "source_nominal": 152729025156500,
+            "source_received": 152729024772400,
+            "consumer_complete": 152729517811600,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 152729518651000,
+            "gui_dispatch": 152729518651000,
+            "paint_complete": 152729541300800
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -0.3841,
+            "input_to_consumer": 493.0392,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 22.6498,
+            "consumer_to_receive": 0.8394,
+            "nominal_to_paint": 516.1443
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 10,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:10",
+          "published_sample": 63865,
+          "paint_source_packet": 211,
+          "timestamps_ns": {
+            "source_nominal": 152729624156500,
+            "source_received": 152729621991300,
+            "consumer_complete": 152730252864400,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 152730253568700,
+            "gui_dispatch": 152730253568700,
+            "paint_complete": 152730269069900
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -2.1652,
+            "input_to_consumer": 630.8731,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 15.5012,
+            "consumer_to_receive": 0.7043,
+            "nominal_to_paint": 644.9134
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 11,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:11",
+          "published_sample": 64480,
+          "paint_source_packet": 224,
+          "timestamps_ns": {
+            "source_nominal": 152730239156500,
+            "source_received": 152730241158700,
+            "consumer_complete": 152730914315000,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 152730914506700,
+            "gui_dispatch": 152730914506700,
+            "paint_complete": 152730933395600
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": 2.0022,
+            "input_to_consumer": 673.1563,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 18.8889,
+            "consumer_to_receive": 0.1917,
+            "nominal_to_paint": 694.2391
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        }
+      ],
+      "device_progress_s": 6.205,
+      "progress_growth_ms": {
+        "source_received": 12.965000000000337,
+        "consumer_complete": 660.9777000000001,
+        "main_receive": 660.9736999999996,
+        "gui_dispatch": 660.9736999999996,
+        "paint_complete": 639.2097000000003
+      },
+      "segment_growth_ms": {
+        "source_nominal_phase_offset": 12.965,
+        "input_to_consumer": 648.0127,
+        "receive_to_dispatch": 0.0,
+        "dispatch_to_paint": -21.764000000000003,
+        "consumer_to_receive": -0.0040000000000000036
+      },
+      "interval_summary_ms": {
+        "source_nominal_phase_offset": {
+          "median": -2.3824,
+          "maximum": 3.7942
+        },
+        "input_to_consumer": {
+          "median": 272.388,
+          "maximum": 673.1563
+        },
+        "receive_to_dispatch": {
+          "median": 0.0,
+          "maximum": 0.0
+        },
+        "dispatch_to_paint": {
+          "median": 23.6808,
+          "maximum": 40.6529
+        },
+        "consumer_to_receive": {
+          "median": 0.1957,
+          "maximum": 0.8394
+        },
+        "nominal_to_paint": {
+          "median": 289.209,
+          "maximum": 694.2391
+        }
+      },
+      "observer_direct_extra_ms": 20.3712,
+      "wire": [
+        {
+          "shape": "segmented",
+          "verified_frames": 12540,
+          "parser_calls": 102201,
+          "bytes": 3009600,
+          "source_thread_cpu_ns": 3750000000,
+          "parser_errors": [],
+          "errors": [],
+          "native_usb_opened": false,
+          "original_arrival_pattern_available": false
+        }
+      ],
+      "shape": "segmented",
+      "binding_context": [
+        {
+          "pid": 8016,
+          "expected": "pyqt5",
+          "actual": "PyQt5",
+          "qt_version": "5.15.2",
+          "qobject_module": "PyQt5.QtCore",
+          "qapplication_module": "PyQt5.QtWidgets",
+          "loaded_bindings": [
+            "PyQt5"
+          ],
+          "qtcore_path": "D:\\conda\\Lib\\site-packages\\PyQt5\\QtCore.pyd",
+          "qtcore_sha256": "d6e45fd8c3b3f93f52c4d1b6f9e3ee220454a73f80f65f3d70504bd55415ea37",
+          "session_id": 0,
+          "priority_class": 32,
+          "qpa_requested": "offscreen",
+          "scope": "Read once before workload; startup context only, no setters."
+        }
+      ]
+    },
+    {
+      "case": "02_pyside6_segmented_process40",
+      "mode": "process40",
+      "trace": true,
+      "report_equal": true,
+      "recognized_steps": 11,
+      "valid_steps": 8,
+      "valid_cycles": 6,
+      "run_wall_s": 14.4006025,
+      "parent_cpu_s": 4.296875,
+      "events": [
+        {
+          "recognized_count": 1,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:0",
+          "published_sample": 58275,
+          "paint_source_packet": 104,
+          "timestamps_ns": {
+            "source_nominal": 152748244322800,
+            "source_received": 152748234689000,
+            "consumer_complete": 152748262123100,
+            "child_send_begin": 152748263564600,
+            "child_send_return": 152748263849200,
+            "main_receive": 152748263692400,
+            "gui_dispatch": 152748267712800,
+            "paint_complete": 152748326344300
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -9.6338,
+            "input_to_consumer": 27.4341,
+            "receive_to_dispatch": 4.0204,
+            "dispatch_to_paint": 58.6315,
+            "consumer_to_send": 1.4415,
+            "send_to_receive": 0.1278,
+            "nominal_to_paint": 82.0215
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 2,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:2",
+          "published_sample": 58910,
+          "paint_source_packet": 119,
+          "timestamps_ns": {
+            "source_nominal": 152748879322800,
+            "source_received": 152748873788900,
+            "consumer_complete": 152748903708400,
+            "child_send_begin": 152748906291000,
+            "child_send_return": 152748923043500,
+            "main_receive": 152748926013000,
+            "gui_dispatch": 152748930852500,
+            "paint_complete": 152748967163800
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -5.5339,
+            "input_to_consumer": 29.9195,
+            "receive_to_dispatch": 4.8395,
+            "dispatch_to_paint": 36.3113,
+            "consumer_to_send": 2.5826,
+            "send_to_receive": 19.722,
+            "nominal_to_paint": 87.841
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 3,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:3",
+          "published_sample": 59585,
+          "paint_source_packet": 133,
+          "timestamps_ns": {
+            "source_nominal": 152749554322800,
+            "source_received": 152749551280700,
+            "consumer_complete": 152749579562300,
+            "child_send_begin": 152749582417100,
+            "child_send_return": 152749582779300,
+            "main_receive": 152749582559100,
+            "gui_dispatch": 152749587628000,
+            "paint_complete": 152749631497900
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -3.0421,
+            "input_to_consumer": 28.2816,
+            "receive_to_dispatch": 5.0689,
+            "dispatch_to_paint": 43.8699,
+            "consumer_to_send": 2.8548,
+            "send_to_receive": 0.142,
+            "nominal_to_paint": 77.1751
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 4,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:4",
+          "published_sample": 60197,
+          "paint_source_packet": 146,
+          "timestamps_ns": {
+            "source_nominal": 152750166322800,
+            "source_received": 152750156167500,
+            "consumer_complete": 152750185694900,
+            "child_send_begin": 152750187783700,
+            "child_send_return": 152750188071200,
+            "main_receive": 152750187926600,
+            "gui_dispatch": 152750193497500,
+            "paint_complete": 152750229091400
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -10.1553,
+            "input_to_consumer": 29.5274,
+            "receive_to_dispatch": 5.5709,
+            "dispatch_to_paint": 35.5939,
+            "consumer_to_send": 2.0888,
+            "send_to_receive": 0.1429,
+            "nominal_to_paint": 62.7686
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 5,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:5",
+          "published_sample": 60857,
+          "paint_source_packet": 161,
+          "timestamps_ns": {
+            "source_nominal": 152750826322800,
+            "source_received": 152750818487400,
+            "consumer_complete": 152750899998400,
+            "child_send_begin": 152750901265600,
+            "child_send_return": 152750901630500,
+            "main_receive": 152750901406900,
+            "gui_dispatch": 152750903321500,
+            "paint_complete": 152750941595500
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -7.8354,
+            "input_to_consumer": 81.511,
+            "receive_to_dispatch": 1.9146,
+            "dispatch_to_paint": 38.274,
+            "consumer_to_send": 1.2672,
+            "send_to_receive": 0.1413,
+            "nominal_to_paint": 115.2727
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 6,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:6",
+          "published_sample": 61468,
+          "paint_source_packet": 174,
+          "timestamps_ns": {
+            "source_nominal": 152751437322800,
+            "source_received": 152751433786400,
+            "consumer_complete": 152751566892000,
+            "child_send_begin": 152751568368800,
+            "child_send_return": 152751568559000,
+            "main_receive": 152751568506900,
+            "gui_dispatch": 152751573969800,
+            "paint_complete": 152751605689200
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -3.5364,
+            "input_to_consumer": 133.1056,
+            "receive_to_dispatch": 5.4629,
+            "dispatch_to_paint": 31.7194,
+            "consumer_to_send": 1.4768,
+            "send_to_receive": 0.1381,
+            "nominal_to_paint": 168.3664
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 7,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:7",
+          "published_sample": 62058,
+          "paint_source_packet": 188,
+          "timestamps_ns": {
+            "source_nominal": 152752027322800,
+            "source_received": 152752019900800,
+            "consumer_complete": 152752226975600,
+            "child_send_begin": 152752229556400,
+            "child_send_return": 152752232132200,
+            "main_receive": 152752234037600,
+            "gui_dispatch": 152752238204800,
+            "paint_complete": 152752271422100
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -7.422,
+            "input_to_consumer": 207.0748,
+            "receive_to_dispatch": 4.1672,
+            "dispatch_to_paint": 33.2173,
+            "consumer_to_send": 2.5808,
+            "send_to_receive": 4.4812,
+            "nominal_to_paint": 244.0993
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 8,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:8",
+          "published_sample": 62657,
+          "paint_source_packet": 201,
+          "timestamps_ns": {
+            "source_nominal": 152752626322800,
+            "source_received": 152752617361400,
+            "consumer_complete": 152752896803600,
+            "child_send_begin": 152752900045400,
+            "child_send_return": 152752925333000,
+            "main_receive": 152752925145600,
+            "gui_dispatch": 152752928636500,
+            "paint_complete": 152752960938100
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -8.9614,
+            "input_to_consumer": 279.4422,
+            "receive_to_dispatch": 3.4909,
+            "dispatch_to_paint": 32.3016,
+            "consumer_to_send": 3.2418,
+            "send_to_receive": 25.1002,
+            "nominal_to_paint": 334.6153
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 9,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:9",
+          "published_sample": 63266,
+          "paint_source_packet": 212,
+          "timestamps_ns": {
+            "source_nominal": 152753235322800,
+            "source_received": 152753233056300,
+            "consumer_complete": 152753656628700,
+            "child_send_begin": 152753658242300,
+            "child_send_return": 152753658602400,
+            "main_receive": 152753658397200,
+            "gui_dispatch": 152753664755800,
+            "paint_complete": 152753698989100
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -2.2665,
+            "input_to_consumer": 423.5724,
+            "receive_to_dispatch": 6.3586,
+            "dispatch_to_paint": 34.2333,
+            "consumer_to_send": 1.6136,
+            "send_to_receive": 0.1549,
+            "nominal_to_paint": 463.6663
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 10,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:10",
+          "published_sample": 63865,
+          "paint_source_packet": 225,
+          "timestamps_ns": {
+            "source_nominal": 152753834322800,
+            "source_received": 152753842607500,
+            "consumer_complete": 152754422903800,
+            "child_send_begin": 152754423994900,
+            "child_send_return": 152754424151600,
+            "main_receive": 152754424121000,
+            "gui_dispatch": 152754428363700,
+            "paint_complete": 152754461052900
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": 8.2847,
+            "input_to_consumer": 580.2963,
+            "receive_to_dispatch": 4.2427,
+            "dispatch_to_paint": 32.6892,
+            "consumer_to_send": 1.0911,
+            "send_to_receive": 0.1261,
+            "nominal_to_paint": 626.7301
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 11,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:11",
+          "published_sample": 64480,
+          "paint_source_packet": 238,
+          "timestamps_ns": {
+            "source_nominal": 152754449322800,
+            "source_received": 152754450263500,
+            "consumer_complete": 152755150098500,
+            "child_send_begin": 152755153850300,
+            "child_send_return": 152755154051600,
+            "main_receive": 152755153966700,
+            "gui_dispatch": 152755159532600,
+            "paint_complete": 152755196815100
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": 0.9407,
+            "input_to_consumer": 699.835,
+            "receive_to_dispatch": 5.5659,
+            "dispatch_to_paint": 37.2825,
+            "consumer_to_send": 3.7518,
+            "send_to_receive": 0.1164,
+            "nominal_to_paint": 747.4923
+          },
+          "child_send_missing_reason": null
+        }
+      ],
+      "device_progress_s": 6.205,
+      "progress_growth_ms": {
+        "source_received": 10.57449999999971,
+        "consumer_complete": 682.9754000000001,
+        "main_receive": 685.2742999999997,
+        "gui_dispatch": 686.8198000000003,
+        "paint_complete": 665.4707999999996
+      },
+      "segment_growth_ms": {
+        "source_nominal_phase_offset": 10.5745,
+        "input_to_consumer": 672.4009000000001,
+        "receive_to_dispatch": 1.5454999999999997,
+        "dispatch_to_paint": -21.349000000000004,
+        "consumer_to_send": 2.3103,
+        "send_to_receive": -0.011399999999999993
+      },
+      "interval_summary_ms": {
+        "source_nominal_phase_offset": {
+          "median": -5.5339,
+          "maximum": 8.2847
+        },
+        "input_to_consumer": {
+          "median": 133.1056,
+          "maximum": 699.835
+        },
+        "receive_to_dispatch": {
+          "median": 4.8395,
+          "maximum": 6.3586
+        },
+        "dispatch_to_paint": {
+          "median": 35.5939,
+          "maximum": 58.6315
+        },
+        "consumer_to_send": {
+          "median": 2.0888,
+          "maximum": 3.7518
+        },
+        "send_to_receive": {
+          "median": 0.142,
+          "maximum": 25.1002
+        },
+        "nominal_to_paint": {
+          "median": 168.3664,
+          "maximum": 747.4923
+        }
+      },
+      "observer_direct_extra_ms": 89.2738,
+      "wire": [
+        {
+          "shape": "segmented",
+          "verified_frames": 12880,
+          "parser_calls": 104972,
+          "bytes": 3091200,
+          "source_thread_cpu_ns": 4156250000,
+          "parser_errors": [],
+          "errors": [],
+          "native_usb_opened": false,
+          "original_arrival_pattern_available": false
+        }
+      ],
+      "shape": "segmented",
+      "binding_context": [
+        {
+          "pid": 10668,
+          "expected": "pyside6",
+          "actual": "PySide6",
+          "qt_version": "6.11.1",
+          "qobject_module": "PySide6.QtCore",
+          "qapplication_module": "PySide6.QtWidgets",
+          "loaded_bindings": [
+            "PySide6"
+          ],
+          "qtcore_path": "D:\\conda\\Lib\\site-packages\\PySide6\\QtCore.pyd",
+          "qtcore_sha256": "be52341a5df1f76ecca2fb1e94eb429dfa46f0b659ed6536f25119b565b21ea8",
+          "session_id": 0,
+          "priority_class": 32,
+          "qpa_requested": "offscreen",
+          "scope": "Read once before workload; startup context only, no setters."
+        },
+        {
+          "pid": 19300,
+          "expected": "pyside6",
+          "actual": "PySide6",
+          "qt_version": "6.11.1",
+          "qobject_module": "PySide6.QtCore",
+          "qapplication_module": "PySide6.QtWidgets",
+          "loaded_bindings": [
+            "PySide6"
+          ],
+          "qtcore_path": "D:\\conda\\Lib\\site-packages\\PySide6\\QtCore.pyd",
+          "qtcore_sha256": "be52341a5df1f76ecca2fb1e94eb429dfa46f0b659ed6536f25119b565b21ea8",
+          "session_id": 0,
+          "priority_class": 32,
+          "qpa_requested": "offscreen",
+          "scope": "Read once before workload; startup context only, no setters."
+        }
+      ]
+    },
+    {
+      "case": "03_pyside6_segmented_local20",
+      "mode": "local20",
+      "trace": true,
+      "report_equal": true,
+      "recognized_steps": 11,
+      "valid_steps": 8,
+      "valid_cycles": 6,
+      "run_wall_s": 16.7779013,
+      "parent_cpu_s": 15.921875,
+      "events": [
+        {
+          "recognized_count": 1,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:0",
+          "published_sample": 58275,
+          "paint_source_packet": 92,
+          "timestamps_ns": {
+            "source_nominal": 152769674101600,
+            "source_received": 152769665917000,
+            "consumer_complete": 152769690460800,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 152769693262900,
+            "gui_dispatch": 152769693262900,
+            "paint_complete": 152769810027400
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -8.1846,
+            "input_to_consumer": 24.5438,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 116.7645,
+            "consumer_to_receive": 2.8021,
+            "nominal_to_paint": 135.9258
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 2,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:2",
+          "published_sample": 58910,
+          "paint_source_packet": 107,
+          "timestamps_ns": {
+            "source_nominal": 152770309101600,
+            "source_received": 152770328435900,
+            "consumer_complete": 152770675688900,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 152770678321000,
+            "gui_dispatch": 152770678321000,
+            "paint_complete": 152770775021900
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": 19.3343,
+            "input_to_consumer": 347.253,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 96.7009,
+            "consumer_to_receive": 2.6321,
+            "nominal_to_paint": 465.9203
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 3,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:3",
+          "published_sample": 59585,
+          "paint_source_packet": 120,
+          "timestamps_ns": {
+            "source_nominal": 152770984101600,
+            "source_received": 152770982471600,
+            "consumer_complete": 152771769907800,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 152771770730900,
+            "gui_dispatch": 152771770730900,
+            "paint_complete": 152771855003000
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -1.63,
+            "input_to_consumer": 787.4362,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 84.2721,
+            "consumer_to_receive": 0.8231,
+            "nominal_to_paint": 870.9014
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 4,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:4",
+          "published_sample": 60197,
+          "paint_source_packet": 135,
+          "timestamps_ns": {
+            "source_nominal": 152771596101600,
+            "source_received": 152771587666900,
+            "consumer_complete": 152772837281500,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 152772854222100,
+            "gui_dispatch": 152772854222100,
+            "paint_complete": 152772916108400
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -8.4347,
+            "input_to_consumer": 1249.6146,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 61.8863,
+            "consumer_to_receive": 16.9406,
+            "nominal_to_paint": 1320.0068
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 5,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:5",
+          "published_sample": 60857,
+          "paint_source_packet": 148,
+          "timestamps_ns": {
+            "source_nominal": 152772256101600,
+            "source_received": 152772286751900,
+            "consumer_complete": 152773797655800,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 152773800323000,
+            "gui_dispatch": 152773800323000,
+            "paint_complete": 152773870430300
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": 30.6503,
+            "input_to_consumer": 1510.9039,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 70.1073,
+            "consumer_to_receive": 2.6672,
+            "nominal_to_paint": 1614.3287
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 6,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:6",
+          "published_sample": 61468,
+          "paint_source_packet": 159,
+          "timestamps_ns": {
+            "source_nominal": 152772867101600,
+            "source_received": 152772882043000,
+            "consumer_complete": 152774775590800,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 152774778709400,
+            "gui_dispatch": 152774778709400,
+            "paint_complete": 152774851289600
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": 14.9414,
+            "input_to_consumer": 1893.5478,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 72.5802,
+            "consumer_to_receive": 3.1186,
+            "nominal_to_paint": 1984.188
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 7,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:7",
+          "published_sample": 62058,
+          "paint_source_packet": 172,
+          "timestamps_ns": {
+            "source_nominal": 152773457101600,
+            "source_received": 152773454243700,
+            "consumer_complete": 152775789381500,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 152775790915300,
+            "gui_dispatch": 152775790915300,
+            "paint_complete": 152775837823300
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -2.8579,
+            "input_to_consumer": 2335.1378,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 46.908,
+            "consumer_to_receive": 1.5338,
+            "nominal_to_paint": 2380.7217
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 8,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:8",
+          "published_sample": 62657,
+          "paint_source_packet": 185,
+          "timestamps_ns": {
+            "source_nominal": 152774056101600,
+            "source_received": 152774048428300,
+            "consumer_complete": 152776694521900,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 152776709804400,
+            "gui_dispatch": 152776709804400,
+            "paint_complete": 152776793689900
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -7.6733,
+            "input_to_consumer": 2646.0936,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 83.8855,
+            "consumer_to_receive": 15.2825,
+            "nominal_to_paint": 2737.5883
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 9,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:9",
+          "published_sample": 63266,
+          "paint_source_packet": 198,
+          "timestamps_ns": {
+            "source_nominal": 152774665101600,
+            "source_received": 152774690001200,
+            "consumer_complete": 152777766590500,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 152777767865700,
+            "gui_dispatch": 152777767865700,
+            "paint_complete": 152777839025100
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": 24.8996,
+            "input_to_consumer": 3076.5893,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 71.1594,
+            "consumer_to_receive": 1.2752,
+            "nominal_to_paint": 3173.9235
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 10,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:10",
+          "published_sample": 63865,
+          "paint_source_packet": 209,
+          "timestamps_ns": {
+            "source_nominal": 152775264101600,
+            "source_received": 152775270297700,
+            "consumer_complete": 152778829001900,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 152778829932100,
+            "gui_dispatch": 152778829932100,
+            "paint_complete": 152778877225700
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": 6.1961,
+            "input_to_consumer": 3558.7042,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 47.2936,
+            "consumer_to_receive": 0.9302,
+            "nominal_to_paint": 3613.1241
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 11,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:11",
+          "published_sample": 64480,
+          "paint_source_packet": 222,
+          "timestamps_ns": {
+            "source_nominal": 152775879101600,
+            "source_received": 152775880615700,
+            "consumer_complete": 152780000717900,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 152780002374900,
+            "gui_dispatch": 152780002374900,
+            "paint_complete": 152780094665200
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": 1.5141,
+            "input_to_consumer": 4120.1022,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 92.2903,
+            "consumer_to_receive": 1.657,
+            "nominal_to_paint": 4215.5636
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        }
+      ],
+      "device_progress_s": 6.205,
+      "progress_growth_ms": {
+        "source_received": 9.698699999999505,
+        "consumer_complete": 4105.257099999999,
+        "main_receive": 4104.112000000001,
+        "gui_dispatch": 4104.112000000001,
+        "paint_complete": 4079.6378000000004
+      },
+      "segment_growth_ms": {
+        "source_nominal_phase_offset": 9.698699999999999,
+        "input_to_consumer": 4095.5584000000003,
+        "receive_to_dispatch": 0.0,
+        "dispatch_to_paint": -24.474199999999996,
+        "consumer_to_receive": -1.1450999999999998
+      },
+      "interval_summary_ms": {
+        "source_nominal_phase_offset": {
+          "median": 1.5141,
+          "maximum": 30.6503
+        },
+        "input_to_consumer": {
+          "median": 1893.5478,
+          "maximum": 4120.1022
+        },
+        "receive_to_dispatch": {
+          "median": 0.0,
+          "maximum": 0.0
+        },
+        "dispatch_to_paint": {
+          "median": 72.5802,
+          "maximum": 116.7645
+        },
+        "consumer_to_receive": {
+          "median": 2.6321,
+          "maximum": 16.9406
+        },
+        "nominal_to_paint": {
+          "median": 1984.188,
+          "maximum": 4215.5636
+        }
+      },
+      "observer_direct_extra_ms": 21.9111,
+      "wire": [
+        {
+          "shape": "segmented",
+          "verified_frames": 15515,
+          "parser_calls": 126447,
+          "bytes": 3723600,
+          "source_thread_cpu_ns": 5281250000,
+          "parser_errors": [],
+          "errors": [],
+          "native_usb_opened": false,
+          "original_arrival_pattern_available": false
+        }
+      ],
+      "shape": "segmented",
+      "binding_context": [
+        {
+          "pid": 6008,
+          "expected": "pyside6",
+          "actual": "PySide6",
+          "qt_version": "6.11.1",
+          "qobject_module": "PySide6.QtCore",
+          "qapplication_module": "PySide6.QtWidgets",
+          "loaded_bindings": [
+            "PySide6"
+          ],
+          "qtcore_path": "D:\\conda\\Lib\\site-packages\\PySide6\\QtCore.pyd",
+          "qtcore_sha256": "be52341a5df1f76ecca2fb1e94eb429dfa46f0b659ed6536f25119b565b21ea8",
+          "session_id": 0,
+          "priority_class": 32,
+          "qpa_requested": "offscreen",
+          "scope": "Read once before workload; startup context only, no setters."
+        }
+      ]
+    },
+    {
+      "case": "04_pyqt5_segmented_process40",
+      "mode": "process40",
+      "trace": true,
+      "report_equal": true,
+      "recognized_steps": 11,
+      "valid_steps": 8,
+      "valid_cycles": 6,
+      "run_wall_s": 13.5765773,
+      "parent_cpu_s": 3.34375,
+      "events": [
+        {
+          "recognized_count": 1,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:0",
+          "published_sample": 58275,
+          "paint_source_packet": 104,
+          "timestamps_ns": {
+            "source_nominal": 152795177498500,
+            "source_received": 152795166053600,
+            "consumer_complete": 152795192975500,
+            "child_send_begin": 152795193365400,
+            "child_send_return": 152795193687600,
+            "main_receive": 152795193513900,
+            "gui_dispatch": 152795196546500,
+            "paint_complete": 152795253453900
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -11.4449,
+            "input_to_consumer": 26.9219,
+            "receive_to_dispatch": 3.0326,
+            "dispatch_to_paint": 56.9074,
+            "consumer_to_send": 0.3899,
+            "send_to_receive": 0.1485,
+            "nominal_to_paint": 75.9554
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 2,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:2",
+          "published_sample": 58910,
+          "paint_source_packet": 119,
+          "timestamps_ns": {
+            "source_nominal": 152795812498500,
+            "source_received": 152795805364700,
+            "consumer_complete": 152795830154200,
+            "child_send_begin": 152795830553800,
+            "child_send_return": 152795849793100,
+            "main_receive": 152795849430700,
+            "gui_dispatch": 152795849672700,
+            "paint_complete": 152795876664500
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -7.1338,
+            "input_to_consumer": 24.7895,
+            "receive_to_dispatch": 0.242,
+            "dispatch_to_paint": 26.9918,
+            "consumer_to_send": 0.3996,
+            "send_to_receive": 18.8769,
+            "nominal_to_paint": 64.166
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 3,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:3",
+          "published_sample": 59585,
+          "paint_source_packet": 133,
+          "timestamps_ns": {
+            "source_nominal": 152796487498500,
+            "source_received": 152796485368700,
+            "consumer_complete": 152796502935200,
+            "child_send_begin": 152796504711700,
+            "child_send_return": 152796505855400,
+            "main_receive": 152796504863500,
+            "gui_dispatch": 152796506678800,
+            "paint_complete": 152796536870000
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -2.1298,
+            "input_to_consumer": 17.5665,
+            "receive_to_dispatch": 1.8153,
+            "dispatch_to_paint": 30.1912,
+            "consumer_to_send": 1.7765,
+            "send_to_receive": 0.1518,
+            "nominal_to_paint": 49.3715
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 4,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:4",
+          "published_sample": 60197,
+          "paint_source_packet": 146,
+          "timestamps_ns": {
+            "source_nominal": 152797099498500,
+            "source_received": 152797090337400,
+            "consumer_complete": 152797112488100,
+            "child_send_begin": 152797112701400,
+            "child_send_return": 152797112936600,
+            "main_receive": 152797112819300,
+            "gui_dispatch": 152797116651700,
+            "paint_complete": 152797143740800
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -9.1611,
+            "input_to_consumer": 22.1507,
+            "receive_to_dispatch": 3.8324,
+            "dispatch_to_paint": 27.0891,
+            "consumer_to_send": 0.2133,
+            "send_to_receive": 0.1179,
+            "nominal_to_paint": 44.2423
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 5,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:5",
+          "published_sample": 60857,
+          "paint_source_packet": 161,
+          "timestamps_ns": {
+            "source_nominal": 152797759498500,
+            "source_received": 152797751932600,
+            "consumer_complete": 152797791868200,
+            "child_send_begin": 152797792237800,
+            "child_send_return": 152797792481900,
+            "main_receive": 152797792380900,
+            "gui_dispatch": 152797796483100,
+            "paint_complete": 152797821016600
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -7.5659,
+            "input_to_consumer": 39.9356,
+            "receive_to_dispatch": 4.1022,
+            "dispatch_to_paint": 24.5335,
+            "consumer_to_send": 0.3696,
+            "send_to_receive": 0.1431,
+            "nominal_to_paint": 61.5181
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 6,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:6",
+          "published_sample": 61468,
+          "paint_source_packet": 174,
+          "timestamps_ns": {
+            "source_nominal": 152798370498500,
+            "source_received": 152798365920200,
+            "consumer_complete": 152798402246500,
+            "child_send_begin": 152798402591800,
+            "child_send_return": 152798402965500,
+            "main_receive": 152798402740700,
+            "gui_dispatch": 152798406746600,
+            "paint_complete": 152798435429400
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -4.5783,
+            "input_to_consumer": 36.3263,
+            "receive_to_dispatch": 4.0059,
+            "dispatch_to_paint": 28.6828,
+            "consumer_to_send": 0.3453,
+            "send_to_receive": 0.1489,
+            "nominal_to_paint": 64.9309
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 7,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:7",
+          "published_sample": 62058,
+          "paint_source_packet": 188,
+          "timestamps_ns": {
+            "source_nominal": 152798960498500,
+            "source_received": 152798950413000,
+            "consumer_complete": 152798978654300,
+            "child_send_begin": 152798979015300,
+            "child_send_return": 152798990330200,
+            "main_receive": 152798990068900,
+            "gui_dispatch": 152798990452800,
+            "paint_complete": 152799018600600
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -10.0855,
+            "input_to_consumer": 28.2413,
+            "receive_to_dispatch": 0.3839,
+            "dispatch_to_paint": 28.1478,
+            "consumer_to_send": 0.361,
+            "send_to_receive": 11.0536,
+            "nominal_to_paint": 58.1021
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 8,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:8",
+          "published_sample": 62657,
+          "paint_source_packet": 201,
+          "timestamps_ns": {
+            "source_nominal": 152799559498500,
+            "source_received": 152799547529800,
+            "consumer_complete": 152799580296300,
+            "child_send_begin": 152799580702900,
+            "child_send_return": 152799596451200,
+            "main_receive": 152799602398200,
+            "gui_dispatch": 152799610708200,
+            "paint_complete": 152799645974900
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -11.9687,
+            "input_to_consumer": 32.7665,
+            "receive_to_dispatch": 8.31,
+            "dispatch_to_paint": 35.2667,
+            "consumer_to_send": 0.4066,
+            "send_to_receive": 21.6953,
+            "nominal_to_paint": 86.4764
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 9,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:9",
+          "published_sample": 63266,
+          "paint_source_packet": 214,
+          "timestamps_ns": {
+            "source_nominal": 152800168498500,
+            "source_received": 152800165020800,
+            "consumer_complete": 152800193229900,
+            "child_send_begin": 152800193751800,
+            "child_send_return": 152800210273200,
+            "main_receive": 152800211841200,
+            "gui_dispatch": 152800212084200,
+            "paint_complete": 152800234957100
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -3.4777,
+            "input_to_consumer": 28.2091,
+            "receive_to_dispatch": 0.243,
+            "dispatch_to_paint": 22.8729,
+            "consumer_to_send": 0.5219,
+            "send_to_receive": 18.0894,
+            "nominal_to_paint": 66.4586
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 10,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:10",
+          "published_sample": 63865,
+          "paint_source_packet": 227,
+          "timestamps_ns": {
+            "source_nominal": 152800767498500,
+            "source_received": 152800764075500,
+            "consumer_complete": 152800796250500,
+            "child_send_begin": 152800797587400,
+            "child_send_return": 152800810757600,
+            "main_receive": 152800807853500,
+            "gui_dispatch": 152800826810200,
+            "paint_complete": 152800859980500
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -3.423,
+            "input_to_consumer": 32.175,
+            "receive_to_dispatch": 18.9567,
+            "dispatch_to_paint": 33.1703,
+            "consumer_to_send": 1.3369,
+            "send_to_receive": 10.2661,
+            "nominal_to_paint": 92.482
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 11,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:11",
+          "published_sample": 64480,
+          "paint_source_packet": 240,
+          "timestamps_ns": {
+            "source_nominal": 152801382498500,
+            "source_received": 152801383685700,
+            "consumer_complete": 152801402768400,
+            "child_send_begin": 152801403202800,
+            "child_send_return": 152801412316500,
+            "main_receive": 152801412285900,
+            "gui_dispatch": 152801412566400,
+            "paint_complete": 152801439999100
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": 1.1872,
+            "input_to_consumer": 19.0827,
+            "receive_to_dispatch": 0.2805,
+            "dispatch_to_paint": 27.4327,
+            "consumer_to_send": 0.4344,
+            "send_to_receive": 9.0831,
+            "nominal_to_paint": 57.5006
+          },
+          "child_send_missing_reason": null
+        }
+      ],
+      "device_progress_s": 6.205,
+      "progress_growth_ms": {
+        "source_received": 12.632100000000257,
+        "consumer_complete": 4.792899999999989,
+        "main_receive": 13.77200000000034,
+        "gui_dispatch": 11.019899999999971,
+        "paint_complete": -18.45479999999977
+      },
+      "segment_growth_ms": {
+        "source_nominal_phase_offset": 12.632100000000001,
+        "input_to_consumer": -7.839200000000002,
+        "receive_to_dispatch": -2.7521,
+        "dispatch_to_paint": -29.474700000000002,
+        "consumer_to_send": 0.044499999999999984,
+        "send_to_receive": 8.9346
+      },
+      "interval_summary_ms": {
+        "source_nominal_phase_offset": {
+          "median": -7.1338,
+          "maximum": 1.1872
+        },
+        "input_to_consumer": {
+          "median": 28.2091,
+          "maximum": 39.9356
+        },
+        "receive_to_dispatch": {
+          "median": 3.0326,
+          "maximum": 18.9567
+        },
+        "dispatch_to_paint": {
+          "median": 28.1478,
+          "maximum": 56.9074
+        },
+        "consumer_to_send": {
+          "median": 0.3996,
+          "maximum": 1.7765
+        },
+        "send_to_receive": {
+          "median": 9.0831,
+          "maximum": 21.6953
+        },
+        "nominal_to_paint": {
+          "median": 64.166,
+          "maximum": 92.482
+        }
+      },
+      "observer_direct_extra_ms": 68.0524,
+      "wire": [
+        {
+          "shape": "segmented",
+          "verified_frames": 12080,
+          "parser_calls": 98452,
+          "bytes": 2899200,
+          "source_thread_cpu_ns": 3625000000,
+          "parser_errors": [],
+          "errors": [],
+          "native_usb_opened": false,
+          "original_arrival_pattern_available": false
+        }
+      ],
+      "shape": "segmented",
+      "binding_context": [
+        {
+          "pid": 12756,
+          "expected": "pyqt5",
+          "actual": "PyQt5",
+          "qt_version": "5.15.2",
+          "qobject_module": "PyQt5.QtCore",
+          "qapplication_module": "PyQt5.QtWidgets",
+          "loaded_bindings": [
+            "PyQt5"
+          ],
+          "qtcore_path": "D:\\conda\\Lib\\site-packages\\PyQt5\\QtCore.pyd",
+          "qtcore_sha256": "d6e45fd8c3b3f93f52c4d1b6f9e3ee220454a73f80f65f3d70504bd55415ea37",
+          "session_id": 0,
+          "priority_class": 32,
+          "qpa_requested": "offscreen",
+          "scope": "Read once before workload; startup context only, no setters."
+        },
+        {
+          "pid": 14480,
+          "expected": "pyqt5",
+          "actual": "PyQt5",
+          "qt_version": "5.15.2",
+          "qobject_module": "PyQt5.QtCore",
+          "qapplication_module": "PyQt5.QtWidgets",
+          "loaded_bindings": [
+            "PyQt5"
+          ],
+          "qtcore_path": "D:\\conda\\Lib\\site-packages\\PyQt5\\QtCore.pyd",
+          "qtcore_sha256": "d6e45fd8c3b3f93f52c4d1b6f9e3ee220454a73f80f65f3d70504bd55415ea37",
+          "session_id": 0,
+          "priority_class": 32,
+          "qpa_requested": "offscreen",
+          "scope": "Read once before workload; startup context only, no setters."
+        }
+      ]
+    }
+  ],
+  "clock_bound_width_us": 64.3,
+  "limits": [
+    "Wire controls reconstruct packet bytes from retained decoded payloads. Segment packetization, fixed 2048-byte reads and 20ms timing are synthetic, not original USB traffic.",
+    "Native DLL/device, camera, MediaPipe and SDK are absent. Offscreen paintEvent completion is not DWM presentation.",
+    "Decoded and wire controls include different verification work. One run per case is not a calibrated perturbation or statistical performance comparison.",
+    "Source reader thread CPU includes parser, assembler, synchronous signal delivery and verification, not pure protocol cost; no GIL/CPU percentages are inferred.",
+    "Signed nominal phase offsets follow chunk-start pacing and are not causal waits. Actual same-event stages retain the original causality gates.",
+    "Qt binding and Qt major version change together. This small fixed matrix neither isolates a binding implementation mechanism nor calibrates live desktop/camera/SDK performance. Session 0 / offscreen is not Session 1 / windows."
+  ]
+}
