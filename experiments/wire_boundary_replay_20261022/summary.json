@@ -1,0 +1,72 @@
+{
+  "production_changed": false,
+  "default_backend": "local SessionController",
+  "source_hashes_equal_to_previous_matrix": true,
+  "raw_evidence_excluded_from_git": [
+    {
+      "path": "evidence/matrix02/04_decoded_process40/ipc/20261022_142540_6aa25eeb/actor/exports.npz",
+      "sha256": "f269378925fc0b9cb3f89c20e194259e1b6920d16ada98aa126edc661b2e21ad",
+      "bytes": 75519
+    },
+    {
+      "path": "evidence/matrix02/02_segmented_process40/ipc/20261022_142500_338f0e52/actor/exports.npz",
+      "sha256": "f269378925fc0b9cb3f89c20e194259e1b6920d16ada98aa126edc661b2e21ad",
+      "bytes": 75519
+    }
+  ],
+  "results": [
+    {
+      "case": "01_decoded_local20",
+      "paint_progress_growth_ms": -7.743200000000172,
+      "consumer_progress_growth_ms": 25.195499999999704,
+      "max_input_to_consumer_ms": 36.2666,
+      "wire": []
+    },
+    {
+      "case": "02_segmented_process40",
+      "paint_progress_growth_ms": -13.688799999999723,
+      "consumer_progress_growth_ms": -0.9275000000004141,
+      "max_input_to_consumer_ms": 34.0993,
+      "wire": [
+        {
+          "shape": "segmented",
+          "verified_frames": 12080,
+          "parser_calls": 98452,
+          "bytes": 2899200,
+          "source_thread_cpu_ns": 3546875000,
+          "parser_errors": [],
+          "errors": [],
+          "native_usb_opened": false,
+          "original_arrival_pattern_available": false
+        }
+      ]
+    },
+    {
+      "case": "03_segmented_local20",
+      "paint_progress_growth_ms": 589.2074999999996,
+      "consumer_progress_growth_ms": 621.1472000000002,
+      "max_input_to_consumer_ms": 628.4286,
+      "wire": [
+        {
+          "shape": "segmented",
+          "verified_frames": 12640,
+          "parser_calls": 103016,
+          "bytes": 3033600,
+          "source_thread_cpu_ns": 3546875000,
+          "parser_errors": [],
+          "errors": [],
+          "native_usb_opened": false,
+          "original_arrival_pattern_available": false
+        }
+      ]
+    },
+    {
+      "case": "04_decoded_process40",
+      "paint_progress_growth_ms": 5.2314999999998335,
+      "consumer_progress_growth_ms": 0.3522000000000247,
+      "max_input_to_consumer_ms": 29.4589,
+      "wire": []
+    }
+  ],
+  "conclusion": "Synthetic protocol/assembler load did not reproduce live process lag. Process isolation can help consumer progress but live main-GUI/vision/SDK load and true USB arrival remain unrepresented. No causal quantitative attribution or default reenabling."
+}

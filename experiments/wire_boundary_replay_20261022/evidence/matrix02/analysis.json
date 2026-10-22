@@ -1,0 +1,1399 @@
+{
+  "source_report_sha256": "a0524a91f6d0ab1a7be7c83e6ce9dc8887b5ab49e6bb006f0e7be5bb8b263486",
+  "source_exports_sha256": "9954e658db3b8c1134e160a5a135d968830a2472474f1f70bdb1159d9dc271b3",
+  "production_head": "10014b5cd0d317d931ac63618b24e930ee9660ad",
+  "cases": [
+    {
+      "case": "01_decoded_local20",
+      "mode": "local20",
+      "trace": true,
+      "report_equal": true,
+      "recognized_steps": 11,
+      "valid_steps": 8,
+      "valid_cycles": 6,
+      "run_wall_s": 12.0966,
+      "parent_cpu_s": 7.28125,
+      "events": [
+        {
+          "recognized_count": 1,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:0",
+          "published_sample": 58275,
+          "paint_source_packet": 88,
+          "timestamps_ns": {
+            "source_nominal": 139456104003900,
+            "source_received": 139456092740800,
+            "consumer_complete": 139456116143300,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 139456116826200,
+            "gui_dispatch": 139456116826200,
+            "paint_complete": 139456173273800
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -11.2631,
+            "input_to_consumer": 23.4025,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 56.4476,
+            "consumer_to_receive": 0.6829,
+            "nominal_to_paint": 69.2699
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 2,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:2",
+          "published_sample": 58910,
+          "paint_source_packet": 101,
+          "timestamps_ns": {
+            "source_nominal": 139456739003900,
+            "source_received": 139456730275900,
+            "consumer_complete": 139456753937400,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 139456754075200,
+            "gui_dispatch": 139456754075200,
+            "paint_complete": 139456778357100
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -8.728,
+            "input_to_consumer": 23.6615,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 24.2819,
+            "consumer_to_receive": 0.1378,
+            "nominal_to_paint": 39.3532
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 3,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:3",
+          "published_sample": 59585,
+          "paint_source_packet": 114,
+          "timestamps_ns": {
+            "source_nominal": 139457414003900,
+            "source_received": 139457409857000,
+            "consumer_complete": 139457418253700,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 139457418383100,
+            "gui_dispatch": 139457418383100,
+            "paint_complete": 139457439896900
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -4.1469,
+            "input_to_consumer": 8.3967,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 21.5138,
+            "consumer_to_receive": 0.1294,
+            "nominal_to_paint": 25.893
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 4,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:4",
+          "published_sample": 60197,
+          "paint_source_packet": 127,
+          "timestamps_ns": {
+            "source_nominal": 139458026003900,
+            "source_received": 139458009657200,
+            "consumer_complete": 139458036368400,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 139458036616400,
+            "gui_dispatch": 139458036616400,
+            "paint_complete": 139458060772200
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -16.3467,
+            "input_to_consumer": 26.7112,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 24.1558,
+            "consumer_to_receive": 0.248,
+            "nominal_to_paint": 34.7683
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 5,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:5",
+          "published_sample": 60857,
+          "paint_source_packet": 140,
+          "timestamps_ns": {
+            "source_nominal": 139458686003900,
+            "source_received": 139458670385700,
+            "consumer_complete": 139458701064400,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 139458701219900,
+            "gui_dispatch": 139458701219900,
+            "paint_complete": 139458721314300
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -15.6182,
+            "input_to_consumer": 30.6787,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 20.0944,
+            "consumer_to_receive": 0.1555,
+            "nominal_to_paint": 35.3104
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 6,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:6",
+          "published_sample": 61468,
+          "paint_source_packet": 153,
+          "timestamps_ns": {
+            "source_nominal": 139459297003900,
+            "source_received": 139459294967200,
+            "consumer_complete": 139459315122900,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 139459315348200,
+            "gui_dispatch": 139459315348200,
+            "paint_complete": 139459338477600
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -2.0367,
+            "input_to_consumer": 20.1557,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 23.1294,
+            "consumer_to_receive": 0.2253,
+            "nominal_to_paint": 41.4737
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 7,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:7",
+          "published_sample": 62058,
+          "paint_source_packet": 164,
+          "timestamps_ns": {
+            "source_nominal": 139459887003900,
+            "source_received": 139459870509500,
+            "consumer_complete": 139459897237100,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 139459897424800,
+            "gui_dispatch": 139459897424800,
+            "paint_complete": 139459916854800
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -16.4944,
+            "input_to_consumer": 26.7276,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 19.43,
+            "consumer_to_receive": 0.1877,
+            "nominal_to_paint": 29.8509
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 8,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:8",
+          "published_sample": 62657,
+          "paint_source_packet": 177,
+          "timestamps_ns": {
+            "source_nominal": 139460486003900,
+            "source_received": 139460470768500,
+            "consumer_complete": 139460500387000,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 139460500612700,
+            "gui_dispatch": 139460500612700,
+            "paint_complete": 139460527413200
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -15.2354,
+            "input_to_consumer": 29.6185,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 26.8005,
+            "consumer_to_receive": 0.2257,
+            "nominal_to_paint": 41.4093
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 9,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:9",
+          "published_sample": 63266,
+          "paint_source_packet": 190,
+          "timestamps_ns": {
+            "source_nominal": 139461095003900,
+            "source_received": 139461090237700,
+            "consumer_complete": 139461104046100,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 139461104252600,
+            "gui_dispatch": 139461104252600,
+            "paint_complete": 139461125706800
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -4.7662,
+            "input_to_consumer": 13.8084,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 21.4542,
+            "consumer_to_receive": 0.2065,
+            "nominal_to_paint": 30.7029
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 10,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:10",
+          "published_sample": 63865,
+          "paint_source_packet": 203,
+          "timestamps_ns": {
+            "source_nominal": 139461694003900,
+            "source_received": 139461691596200,
+            "consumer_complete": 139461710345200,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 139461710885300,
+            "gui_dispatch": 139461710885300,
+            "paint_complete": 139461729301500
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -2.4077,
+            "input_to_consumer": 18.749,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 18.4162,
+            "consumer_to_receive": 0.5401,
+            "nominal_to_paint": 35.2976
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 11,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:11",
+          "published_sample": 64480,
+          "paint_source_packet": 216,
+          "timestamps_ns": {
+            "source_nominal": 139462309003900,
+            "source_received": 139462310072200,
+            "consumer_complete": 139462346338800,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 139462346886700,
+            "gui_dispatch": 139462346886700,
+            "paint_complete": 139462370530600
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": 1.0683,
+            "input_to_consumer": 36.2666,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 23.6439,
+            "consumer_to_receive": 0.5479,
+            "nominal_to_paint": 61.5267
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        }
+      ],
+      "device_progress_s": 6.205,
+      "progress_growth_ms": {
+        "source_received": 12.331399999999881,
+        "consumer_complete": 25.195499999999704,
+        "main_receive": 25.060499999999486,
+        "gui_dispatch": 25.060499999999486,
+        "paint_complete": -7.743200000000172
+      },
+      "segment_growth_ms": {
+        "source_nominal_phase_offset": 12.3314,
+        "input_to_consumer": 12.864099999999997,
+        "receive_to_dispatch": 0.0,
+        "dispatch_to_paint": -32.803700000000006,
+        "consumer_to_receive": -0.1349999999999999
+      },
+      "interval_summary_ms": {
+        "source_nominal_phase_offset": {
+          "median": -8.728,
+          "maximum": 1.0683
+        },
+        "input_to_consumer": {
+          "median": 23.6615,
+          "maximum": 36.2666
+        },
+        "receive_to_dispatch": {
+          "median": 0.0,
+          "maximum": 0.0
+        },
+        "dispatch_to_paint": {
+          "median": 23.1294,
+          "maximum": 56.4476
+        },
+        "consumer_to_receive": {
+          "median": 0.2253,
+          "maximum": 0.6829
+        },
+        "nominal_to_paint": {
+          "median": 35.3104,
+          "maximum": 69.2699
+        }
+      },
+      "observer_direct_extra_ms": 18.9952,
+      "wire": [],
+      "shape": "decoded"
+    },
+    {
+      "case": "02_segmented_process40",
+      "mode": "process40",
+      "trace": true,
+      "report_equal": true,
+      "recognized_steps": 11,
+      "valid_steps": 8,
+      "valid_cycles": 6,
+      "run_wall_s": 13.5006778,
+      "parent_cpu_s": 3.046875,
+      "events": [
+        {
+          "recognized_count": 1,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:0",
+          "published_sample": 58275,
+          "paint_source_packet": 104,
+          "timestamps_ns": {
+            "source_nominal": 139476744591900,
+            "source_received": 139476736389100,
+            "consumer_complete": 139476759759200,
+            "child_send_begin": 139476760553100,
+            "child_send_return": 139476761114400,
+            "main_receive": 139476760703000,
+            "gui_dispatch": 139476763060100,
+            "paint_complete": 139476814381300
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -8.2028,
+            "input_to_consumer": 23.3701,
+            "receive_to_dispatch": 2.3571,
+            "dispatch_to_paint": 51.3212,
+            "consumer_to_send": 0.7939,
+            "send_to_receive": 0.1499,
+            "nominal_to_paint": 69.7894
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 2,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:2",
+          "published_sample": 58910,
+          "paint_source_packet": 119,
+          "timestamps_ns": {
+            "source_nominal": 139477379591900,
+            "source_received": 139477373356800,
+            "consumer_complete": 139477401118900,
+            "child_send_begin": 139477401534600,
+            "child_send_return": 139477416674900,
+            "main_receive": 139477415912200,
+            "gui_dispatch": 139477416227600,
+            "paint_complete": 139477441814100
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -6.2351,
+            "input_to_consumer": 27.7621,
+            "receive_to_dispatch": 0.3154,
+            "dispatch_to_paint": 25.5865,
+            "consumer_to_send": 0.4157,
+            "send_to_receive": 14.3776,
+            "nominal_to_paint": 62.2222
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 3,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:3",
+          "published_sample": 59585,
+          "paint_source_packet": 133,
+          "timestamps_ns": {
+            "source_nominal": 139478054591900,
+            "source_received": 139478052619700,
+            "consumer_complete": 139478082273500,
+            "child_send_begin": 139478082582500,
+            "child_send_return": 139478082878700,
+            "main_receive": 139478082729700,
+            "gui_dispatch": 139478087239400,
+            "paint_complete": 139478119729700
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -1.9722,
+            "input_to_consumer": 29.6538,
+            "receive_to_dispatch": 4.5097,
+            "dispatch_to_paint": 32.4903,
+            "consumer_to_send": 0.309,
+            "send_to_receive": 0.1472,
+            "nominal_to_paint": 65.1378
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 4,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:4",
+          "published_sample": 60197,
+          "paint_source_packet": 146,
+          "timestamps_ns": {
+            "source_nominal": 139478666591900,
+            "source_received": 139478654989800,
+            "consumer_complete": 139478681463500,
+            "child_send_begin": 139478681893100,
+            "child_send_return": 139478682104500,
+            "main_receive": 139478682065300,
+            "gui_dispatch": 139478682433400,
+            "paint_complete": 139478709356000
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -11.6021,
+            "input_to_consumer": 26.4737,
+            "receive_to_dispatch": 0.3681,
+            "dispatch_to_paint": 26.9226,
+            "consumer_to_send": 0.4296,
+            "send_to_receive": 0.1722,
+            "nominal_to_paint": 42.7641
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 5,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:5",
+          "published_sample": 60857,
+          "paint_source_packet": 161,
+          "timestamps_ns": {
+            "source_nominal": 139479326591900,
+            "source_received": 139479318392000,
+            "consumer_complete": 139479349717900,
+            "child_send_begin": 139479351117600,
+            "child_send_return": 139479351609000,
+            "main_receive": 139479351269000,
+            "gui_dispatch": 139479352636300,
+            "paint_complete": 139479378195900
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -8.1999,
+            "input_to_consumer": 31.3259,
+            "receive_to_dispatch": 1.3673,
+            "dispatch_to_paint": 25.5596,
+            "consumer_to_send": 1.3997,
+            "send_to_receive": 0.1514,
+            "nominal_to_paint": 51.604
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 6,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:6",
+          "published_sample": 61468,
+          "paint_source_packet": 174,
+          "timestamps_ns": {
+            "source_nominal": 139479937591900,
+            "source_received": 139479933008200,
+            "consumer_complete": 139479967107500,
+            "child_send_begin": 139479967383200,
+            "child_send_return": 139479967648100,
+            "main_receive": 139479967521600,
+            "gui_dispatch": 139479972381500,
+            "paint_complete": 139479996331800
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -4.5837,
+            "input_to_consumer": 34.0993,
+            "receive_to_dispatch": 4.8599,
+            "dispatch_to_paint": 23.9503,
+            "consumer_to_send": 0.2757,
+            "send_to_receive": 0.1384,
+            "nominal_to_paint": 58.7399
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 7,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:7",
+          "published_sample": 62058,
+          "paint_source_packet": 188,
+          "timestamps_ns": {
+            "source_nominal": 139480527591900,
+            "source_received": 139480515471300,
+            "consumer_complete": 139480546387000,
+            "child_send_begin": 139480546732000,
+            "child_send_return": 139480559307800,
+            "main_receive": 139480559207500,
+            "gui_dispatch": 139480559535600,
+            "paint_complete": 139480589892900
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -12.1206,
+            "input_to_consumer": 30.9157,
+            "receive_to_dispatch": 0.3281,
+            "dispatch_to_paint": 30.3573,
+            "consumer_to_send": 0.345,
+            "send_to_receive": 12.4755,
+            "nominal_to_paint": 62.301
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 8,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:8",
+          "published_sample": 62657,
+          "paint_source_packet": 201,
+          "timestamps_ns": {
+            "source_nominal": 139481126591900,
+            "source_received": 139481115720500,
+            "consumer_complete": 139481149560800,
+            "child_send_begin": 139481150505000,
+            "child_send_return": 139481166336500,
+            "main_receive": 139481168057900,
+            "gui_dispatch": 139481168430900,
+            "paint_complete": 139481190714800
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -10.8714,
+            "input_to_consumer": 33.8403,
+            "receive_to_dispatch": 0.373,
+            "dispatch_to_paint": 22.2839,
+            "consumer_to_send": 0.9442,
+            "send_to_receive": 17.5529,
+            "nominal_to_paint": 64.1229
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 9,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:9",
+          "published_sample": 63266,
+          "paint_source_packet": 214,
+          "timestamps_ns": {
+            "source_nominal": 139481735591900,
+            "source_received": 139481732505000,
+            "consumer_complete": 139481756258500,
+            "child_send_begin": 139481756766400,
+            "child_send_return": 139481767707400,
+            "main_receive": 139481771608500,
+            "gui_dispatch": 139481771899800,
+            "paint_complete": 139481794869000
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -3.0869,
+            "input_to_consumer": 23.7535,
+            "receive_to_dispatch": 0.2913,
+            "dispatch_to_paint": 22.9692,
+            "consumer_to_send": 0.5079,
+            "send_to_receive": 14.8421,
+            "nominal_to_paint": 59.2771
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 10,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:10",
+          "published_sample": 63865,
+          "paint_source_packet": 227,
+          "timestamps_ns": {
+            "source_nominal": 139482334591900,
+            "source_received": 139482331661400,
+            "consumer_complete": 139482354372800,
+            "child_send_begin": 139482359731900,
+            "child_send_return": 139482374920500,
+            "main_receive": 139482374602600,
+            "gui_dispatch": 139482374873800,
+            "paint_complete": 139482397822400
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -2.9305,
+            "input_to_consumer": 22.7114,
+            "receive_to_dispatch": 0.2712,
+            "dispatch_to_paint": 22.9486,
+            "consumer_to_send": 5.3591,
+            "send_to_receive": 14.8707,
+            "nominal_to_paint": 63.2305
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 11,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:11",
+          "published_sample": 64480,
+          "paint_source_packet": 240,
+          "timestamps_ns": {
+            "source_nominal": 139482949591900,
+            "source_received": 139482951494500,
+            "consumer_complete": 139482963831700,
+            "child_send_begin": 139482964610000,
+            "child_send_return": 139482977511500,
+            "main_receive": 139482977316600,
+            "gui_dispatch": 139482977631700,
+            "paint_complete": 139483005692500
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": 1.9026,
+            "input_to_consumer": 12.3372,
+            "receive_to_dispatch": 0.3151,
+            "dispatch_to_paint": 28.0608,
+            "consumer_to_send": 0.7783,
+            "send_to_receive": 12.7066,
+            "nominal_to_paint": 56.1006
+          },
+          "child_send_missing_reason": null
+        }
+      ],
+      "device_progress_s": 6.205,
+      "progress_growth_ms": {
+        "source_received": 10.105399999999598,
+        "consumer_complete": -0.9275000000004141,
+        "main_receive": 11.613599999999558,
+        "gui_dispatch": 9.571600000000124,
+        "paint_complete": -13.688799999999723
+      },
+      "segment_growth_ms": {
+        "source_nominal_phase_offset": 10.1054,
+        "input_to_consumer": -11.032900000000001,
+        "receive_to_dispatch": -2.042,
+        "dispatch_to_paint": -23.260399999999997,
+        "consumer_to_send": -0.015600000000000058,
+        "send_to_receive": 12.5567
+      },
+      "interval_summary_ms": {
+        "source_nominal_phase_offset": {
+          "median": -6.2351,
+          "maximum": 1.9026
+        },
+        "input_to_consumer": {
+          "median": 27.7621,
+          "maximum": 34.0993
+        },
+        "receive_to_dispatch": {
+          "median": 0.3681,
+          "maximum": 4.8599
+        },
+        "dispatch_to_paint": {
+          "median": 25.5865,
+          "maximum": 51.3212
+        },
+        "consumer_to_send": {
+          "median": 0.5079,
+          "maximum": 5.3591
+        },
+        "send_to_receive": {
+          "median": 12.4755,
+          "maximum": 17.5529
+        },
+        "nominal_to_paint": {
+          "median": 62.2222,
+          "maximum": 69.7894
+        }
+      },
+      "observer_direct_extra_ms": 66.1979,
+      "wire": [
+        {
+          "shape": "segmented",
+          "verified_frames": 12080,
+          "parser_calls": 98452,
+          "bytes": 2899200,
+          "source_thread_cpu_ns": 3546875000,
+          "parser_errors": [],
+          "errors": [],
+          "native_usb_opened": false,
+          "original_arrival_pattern_available": false
+        }
+      ],
+      "shape": "segmented"
+    },
+    {
+      "case": "03_segmented_local20",
+      "mode": "local20",
+      "trace": true,
+      "report_equal": true,
+      "recognized_steps": 11,
+      "valid_steps": 8,
+      "valid_cycles": 6,
+      "run_wall_s": 12.6510244,
+      "parent_cpu_s": 10.625,
+      "events": [
+        {
+          "recognized_count": 1,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:0",
+          "published_sample": 58275,
+          "paint_source_packet": 92,
+          "timestamps_ns": {
+            "source_nominal": 139495535150600,
+            "source_received": 139495526126200,
+            "consumer_complete": 139495550135400,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 139495550311700,
+            "gui_dispatch": 139495550311700,
+            "paint_complete": 139495603981600
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -9.0244,
+            "input_to_consumer": 24.0092,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 53.6699,
+            "consumer_to_receive": 0.1763,
+            "nominal_to_paint": 68.831
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 2,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:2",
+          "published_sample": 58910,
+          "paint_source_packet": 105,
+          "timestamps_ns": {
+            "source_nominal": 139496170150600,
+            "source_received": 139496162842400,
+            "consumer_complete": 139496230027900,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 139496230164400,
+            "gui_dispatch": 139496230164400,
+            "paint_complete": 139496251604300
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -7.3082,
+            "input_to_consumer": 67.1855,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 21.4399,
+            "consumer_to_receive": 0.1365,
+            "nominal_to_paint": 81.4537
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 3,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:3",
+          "published_sample": 59585,
+          "paint_source_packet": 120,
+          "timestamps_ns": {
+            "source_nominal": 139496845150600,
+            "source_received": 139496853960300,
+            "consumer_complete": 139497009653800,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 139497009883500,
+            "gui_dispatch": 139497009883500,
+            "paint_complete": 139497030487500
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": 8.8097,
+            "input_to_consumer": 155.6935,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 20.604,
+            "consumer_to_receive": 0.2297,
+            "nominal_to_paint": 185.3369
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 4,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:4",
+          "published_sample": 60197,
+          "paint_source_packet": 133,
+          "timestamps_ns": {
+            "source_nominal": 139497457150600,
+            "source_received": 139497445594200,
+            "consumer_complete": 139497615801000,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 139497616090700,
+            "gui_dispatch": 139497616090700,
+            "paint_complete": 139497634550900
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -11.5564,
+            "input_to_consumer": 170.2068,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 18.4602,
+            "consumer_to_receive": 0.2897,
+            "nominal_to_paint": 177.4003
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 5,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:5",
+          "published_sample": 60857,
+          "paint_source_packet": 146,
+          "timestamps_ns": {
+            "source_nominal": 139498117150600,
+            "source_received": 139498127565100,
+            "consumer_complete": 139498290818200,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 139498291059400,
+            "gui_dispatch": 139498291059400,
+            "paint_complete": 139498310495300
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": 10.4145,
+            "input_to_consumer": 163.2531,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 19.4359,
+            "consumer_to_receive": 0.2412,
+            "nominal_to_paint": 193.3447
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 6,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:6",
+          "published_sample": 61468,
+          "paint_source_packet": 159,
+          "timestamps_ns": {
+            "source_nominal": 139498728150600,
+            "source_received": 139498724286200,
+            "consumer_complete": 139498998870000,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 139498999019400,
+            "gui_dispatch": 139498999019400,
+            "paint_complete": 139499019781200
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -3.8644,
+            "input_to_consumer": 274.5838,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 20.7618,
+            "consumer_to_receive": 0.1494,
+            "nominal_to_paint": 291.6306
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 7,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:7",
+          "published_sample": 62058,
+          "paint_source_packet": 172,
+          "timestamps_ns": {
+            "source_nominal": 139499318150600,
+            "source_received": 139499306496000,
+            "consumer_complete": 139499672785500,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 139499672925800,
+            "gui_dispatch": 139499672925800,
+            "paint_complete": 139499702177800
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -11.6546,
+            "input_to_consumer": 366.2895,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 29.252,
+            "consumer_to_receive": 0.1403,
+            "nominal_to_paint": 384.0272
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 8,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:8",
+          "published_sample": 62657,
+          "paint_source_packet": 185,
+          "timestamps_ns": {
+            "source_nominal": 139499917150600,
+            "source_received": 139499907159700,
+            "consumer_complete": 139500320946200,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 139500321869900,
+            "gui_dispatch": 139500321869900,
+            "paint_complete": 139500351418600
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -9.9909,
+            "input_to_consumer": 413.7865,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 29.5487,
+            "consumer_to_receive": 0.9237,
+            "nominal_to_paint": 434.268
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 9,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:9",
+          "published_sample": 63266,
+          "paint_source_packet": 198,
+          "timestamps_ns": {
+            "source_nominal": 139500526150600,
+            "source_received": 139500526252900,
+            "consumer_complete": 139500970923500,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 139500971076100,
+            "gui_dispatch": 139500971076100,
+            "paint_complete": 139500991293000
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": 0.1023,
+            "input_to_consumer": 444.6706,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 20.2169,
+            "consumer_to_receive": 0.1526,
+            "nominal_to_paint": 465.1424
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 10,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:10",
+          "published_sample": 63865,
+          "paint_source_packet": 211,
+          "timestamps_ns": {
+            "source_nominal": 139501125150600,
+            "source_received": 139501122663600,
+            "consumer_complete": 139501658781500,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 139501658932100,
+            "gui_dispatch": 139501658932100,
+            "paint_complete": 139501689625700
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -2.487,
+            "input_to_consumer": 536.1179,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 30.6936,
+            "consumer_to_receive": 0.1506,
+            "nominal_to_paint": 564.4751
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        },
+        {
+          "recognized_count": 11,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:11",
+          "published_sample": 64480,
+          "paint_source_packet": 224,
+          "timestamps_ns": {
+            "source_nominal": 139501740150600,
+            "source_received": 139501747854000,
+            "consumer_complete": 139502376282600,
+            "child_send_begin": null,
+            "child_send_return": null,
+            "main_receive": 139502376650900,
+            "gui_dispatch": 139502376650900,
+            "paint_complete": 139502398189100
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": 7.7034,
+            "input_to_consumer": 628.4286,
+            "receive_to_dispatch": 0.0,
+            "dispatch_to_paint": 21.5382,
+            "consumer_to_receive": 0.3683,
+            "nominal_to_paint": 658.0385
+          },
+          "child_send_missing_reason": "not_applicable_local_path"
+        }
+      ],
+      "device_progress_s": 6.205,
+      "progress_growth_ms": {
+        "source_received": 16.72779999999996,
+        "consumer_complete": 621.1472000000002,
+        "main_receive": 621.3391999999996,
+        "gui_dispatch": 621.3391999999996,
+        "paint_complete": 589.2074999999996
+      },
+      "segment_growth_ms": {
+        "source_nominal_phase_offset": 16.727800000000002,
+        "input_to_consumer": 604.4194,
+        "receive_to_dispatch": 0.0,
+        "dispatch_to_paint": -32.131699999999995,
+        "consumer_to_receive": 0.192
+      },
+      "interval_summary_ms": {
+        "source_nominal_phase_offset": {
+          "median": -3.8644,
+          "maximum": 10.4145
+        },
+        "input_to_consumer": {
+          "median": 274.5838,
+          "maximum": 628.4286
+        },
+        "receive_to_dispatch": {
+          "median": 0.0,
+          "maximum": 0.0
+        },
+        "dispatch_to_paint": {
+          "median": 21.4399,
+          "maximum": 53.6699
+        },
+        "consumer_to_receive": {
+          "median": 0.1763,
+          "maximum": 0.9237
+        },
+        "nominal_to_paint": {
+          "median": 291.6306,
+          "maximum": 658.0385
+        }
+      },
+      "observer_direct_extra_ms": 19.8659,
+      "wire": [
+        {
+          "shape": "segmented",
+          "verified_frames": 12640,
+          "parser_calls": 103016,
+          "bytes": 3033600,
+          "source_thread_cpu_ns": 3546875000,
+          "parser_errors": [],
+          "errors": [],
+          "native_usb_opened": false,
+          "original_arrival_pattern_available": false
+        }
+      ],
+      "shape": "segmented"
+    },
+    {
+      "case": "04_decoded_process40",
+      "mode": "process40",
+      "trace": true,
+      "report_equal": true,
+      "recognized_steps": 11,
+      "valid_steps": 8,
+      "valid_cycles": 6,
+      "run_wall_s": 13.5469856,
+      "parent_cpu_s": 3.28125,
+      "events": [
+        {
+          "recognized_count": 1,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:0",
+          "published_sample": 58275,
+          "paint_source_packet": 98,
+          "timestamps_ns": {
+            "source_nominal": 139516118330100,
+            "source_received": 139516104413600,
+            "consumer_complete": 139516129840200,
+            "child_send_begin": 139516130109600,
+            "child_send_return": 139516130356700,
+            "main_receive": 139516130228700,
+            "gui_dispatch": 139516134901800,
+            "paint_complete": 139516182247800
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -13.9165,
+            "input_to_consumer": 25.4266,
+            "receive_to_dispatch": 4.6731,
+            "dispatch_to_paint": 47.346,
+            "consumer_to_send": 0.2694,
+            "send_to_receive": 0.1191,
+            "nominal_to_paint": 63.9177
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 2,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:2",
+          "published_sample": 58910,
+          "paint_source_packet": 111,
+          "timestamps_ns": {
+            "source_nominal": 139516753330100,
+            "source_received": 139516744471700,
+            "consumer_complete": 139516770954900,
+            "child_send_begin": 139516771370100,
+            "child_send_return": 139516781711300,
+            "main_receive": 139516781138700,
+            "gui_dispatch": 139516784585300,
+            "paint_complete": 139516832377900
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -8.8584,
+            "input_to_consumer": 26.4832,
+            "receive_to_dispatch": 3.4466,
+            "dispatch_to_paint": 47.7926,
+            "consumer_to_send": 0.4152,
+            "send_to_receive": 9.7686,
+            "nominal_to_paint": 79.0478
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 3,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:3",
+          "published_sample": 59585,
+          "paint_source_packet": 125,
+          "timestamps_ns": {
+            "source_nominal": 139517428330100,
+            "source_received": 139517423660000,
+            "consumer_complete": 139517439799400,
+            "child_send_begin": 139517440433200,
+            "child_send_return": 139517440841600,
+            "main_receive": 139517440591400,
+            "gui_dispatch": 139517444886100,
+            "paint_complete": 139517469798600
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -4.6701,
+            "input_to_consumer": 16.1394,
+            "receive_to_dispatch": 4.2947,
+            "dispatch_to_paint": 24.9125,
+            "consumer_to_send": 0.6338,
+            "send_to_receive": 0.1582,
+            "nominal_to_paint": 41.4685
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 4,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:4",
+          "published_sample": 60197,
+          "paint_source_packet": 138,
+          "timestamps_ns": {
+            "source_nominal": 139518040330100,
+            "source_received": 139518024532200,
+            "consumer_complete": 139518052662000,
+            "child_send_begin": 139518053047400,
+            "child_send_return": 139518058037200,
+            "main_receive": 139518058019300,
+            "gui_dispatch": 139518058458300,
+            "paint_complete": 139518090841500
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -15.7979,
+            "input_to_consumer": 28.1298,
+            "receive_to_dispatch": 0.439,
+            "dispatch_to_paint": 32.3832,
+            "consumer_to_send": 0.3854,
+            "send_to_receive": 4.9719,
+            "nominal_to_paint": 50.5114
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 5,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:5",
+          "published_sample": 60857,
+          "paint_source_packet": 151,
+          "timestamps_ns": {
+            "source_nominal": 139518700330100,
+            "source_received": 139518684159600,
+            "consumer_complete": 139518713618500,
+            "child_send_begin": 139518714016000,
+            "child_send_return": 139518714363500,
+            "main_receive": 139518714164400,
+            "gui_dispatch": 139518715063800,
+            "paint_complete": 139518740977400
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -16.1705,
+            "input_to_consumer": 29.4589,
+            "receive_to_dispatch": 0.8994,
+            "dispatch_to_paint": 25.9136,
+            "consumer_to_send": 0.3975,
+            "send_to_receive": 0.1484,
+            "nominal_to_paint": 40.6473
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 6,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:6",
+          "published_sample": 61468,
+          "paint_source_packet": 162,
+          "timestamps_ns": {
+            "source_nominal": 139519311330100,
+            "source_received": 139519304400600,
+            "consumer_complete": 139519321066800,
+            "child_send_begin": 139519321713700,
+            "child_send_return": 139519321870800,
+            "main_receive": 139519321847000,
+            "gui_dispatch": 139519324416200,
+            "paint_complete": 139519353262800
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -6.9295,
+            "input_to_consumer": 16.6662,
+            "receive_to_dispatch": 2.5692,
+            "dispatch_to_paint": 28.8466,
+            "consumer_to_send": 0.6469,
+            "send_to_receive": 0.1333,
+            "nominal_to_paint": 41.9327
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 7,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:7",
+          "published_sample": 62058,
+          "paint_source_packet": 176,
+          "timestamps_ns": {
+            "source_nominal": 139519901330100,
+            "source_received": 139519884039800,
+            "consumer_complete": 139519910544600,
+            "child_send_begin": 139519911237300,
+            "child_send_return": 139519911741800,
+            "main_receive": 139519911395400,
+            "gui_dispatch": 139519914464100,
+            "paint_complete": 139519940951600
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -17.2903,
+            "input_to_consumer": 26.5048,
+            "receive_to_dispatch": 3.0687,
+            "dispatch_to_paint": 26.4875,
+            "consumer_to_send": 0.6927,
+            "send_to_receive": 0.1581,
+            "nominal_to_paint": 39.6215
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 8,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:8",
+          "published_sample": 62657,
+          "paint_source_packet": 187,
+          "timestamps_ns": {
+            "source_nominal": 139520500330100,
+            "source_received": 139520484549400,
+            "consumer_complete": 139520509434900,
+            "child_send_begin": 139520510086700,
+            "child_send_return": 139520510677600,
+            "main_receive": 139520510243100,
+            "gui_dispatch": 139520514484600,
+            "paint_complete": 139520538130000
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -15.7807,
+            "input_to_consumer": 24.8855,
+            "receive_to_dispatch": 4.2415,
+            "dispatch_to_paint": 23.6454,
+            "consumer_to_send": 0.6518,
+            "send_to_receive": 0.1564,
+            "nominal_to_paint": 37.7999
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 9,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:9",
+          "published_sample": 63266,
+          "paint_source_packet": 200,
+          "timestamps_ns": {
+            "source_nominal": 139521109330100,
+            "source_received": 139521104366000,
+            "consumer_complete": 139521119141500,
+            "child_send_begin": 139521119409200,
+            "child_send_return": 139521119652800,
+            "main_receive": 139521119522300,
+            "gui_dispatch": 139521120003200,
+            "paint_complete": 139521144882400
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -4.9641,
+            "input_to_consumer": 14.7755,
+            "receive_to_dispatch": 0.4809,
+            "dispatch_to_paint": 24.8792,
+            "consumer_to_send": 0.2677,
+            "send_to_receive": 0.1131,
+            "nominal_to_paint": 35.5523
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 10,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:10",
+          "published_sample": 63865,
+          "paint_source_packet": 213,
+          "timestamps_ns": {
+            "source_nominal": 139521708330100,
+            "source_received": 139521705217100,
+            "consumer_complete": 139521720572000,
+            "child_send_begin": 139521721242000,
+            "child_send_return": 139521726337600,
+            "main_receive": 139521726274300,
+            "gui_dispatch": 139521726638900,
+            "paint_complete": 139521756201600
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": -3.113,
+            "input_to_consumer": 15.3549,
+            "receive_to_dispatch": 0.3646,
+            "dispatch_to_paint": 29.5627,
+            "consumer_to_send": 0.67,
+            "send_to_receive": 5.0323,
+            "nominal_to_paint": 47.8715
+          },
+          "child_send_missing_reason": null
+        },
+        {
+          "recognized_count": 11,
+          "event_id": "c4255935f9fb470fad0a49f292286623:0:11",
+          "published_sample": 64480,
+          "paint_source_packet": 226,
+          "timestamps_ns": {
+            "source_nominal": 139522323330100,
+            "source_received": 139522324904300,
+            "consumer_complete": 139522335192400,
+            "child_send_begin": 139522335604100,
+            "child_send_return": 139522336359200,
+            "main_receive": 139522336268900,
+            "gui_dispatch": 139522365785400,
+            "paint_complete": 139522392479300
+          },
+          "intervals_ms": {
+            "source_nominal_phase_offset": 1.5742,
+            "input_to_consumer": 10.2881,
+            "receive_to_dispatch": 29.5165,
+            "dispatch_to_paint": 26.6939,
+            "consumer_to_send": 0.4117,
+            "send_to_receive": 0.6648,
+            "nominal_to_paint": 69.1492
+          },
+          "child_send_missing_reason": null
+        }
+      ],
+      "device_progress_s": 6.205,
+      "progress_growth_ms": {
+        "source_received": 15.490699999999968,
+        "consumer_complete": 0.3522000000000247,
+        "main_receive": 1.0402000000002687,
+        "gui_dispatch": 25.88360000000023,
+        "paint_complete": 5.2314999999998335
+      },
+      "segment_growth_ms": {
+        "source_nominal_phase_offset": 15.490699999999999,
+        "input_to_consumer": -15.1385,
+        "receive_to_dispatch": 24.843400000000003,
+        "dispatch_to_paint": -20.652099999999997,
+        "consumer_to_send": 0.14230000000000004,
+        "send_to_receive": 0.5457
+      },
+      "interval_summary_ms": {
+        "source_nominal_phase_offset": {
+          "median": -8.8584,
+          "maximum": 1.5742
+        },
+        "input_to_consumer": {
+          "median": 24.8855,
+          "maximum": 29.4589
+        },
+        "receive_to_dispatch": {
+          "median": 3.0687,
+          "maximum": 29.5165
+        },
+        "dispatch_to_paint": {
+          "median": 26.6939,
+          "maximum": 47.7926
+        },
+        "consumer_to_send": {
+          "median": 0.4152,
+          "maximum": 0.6927
+        },
+        "send_to_receive": {
+          "median": 0.1581,
+          "maximum": 9.7686
+        },
+        "nominal_to_paint": {
+          "median": 41.9327,
+          "maximum": 79.0478
+        }
+      },
+      "observer_direct_extra_ms": 67.0303,
+      "wire": [],
+      "shape": "decoded"
+    }
+  ],
+  "clock_bound_width_us": 59.0,
+  "limits": [
+    "Wire controls reconstruct packet bytes from retained decoded payloads. Segment packetization, fixed 2048-byte reads and 20ms timing are synthetic, not original USB traffic.",
+    "Native DLL/device, camera, MediaPipe and SDK are absent. Offscreen paintEvent completion is not DWM presentation.",
+    "Decoded and wire controls include different verification work. One run per case is not a calibrated perturbation or statistical performance comparison.",
+    "Source reader thread CPU includes parser, assembler, synchronous signal delivery and verification, not pure protocol cost; no GIL/CPU percentages are inferred.",
+    "Signed nominal phase offsets follow chunk-start pacing and are not causal waits. Actual same-event stages retain the original causality gates."
+  ]
+}

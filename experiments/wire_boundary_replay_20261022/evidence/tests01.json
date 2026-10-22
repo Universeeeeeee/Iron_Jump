@@ -1,0 +1,20 @@
+{
+  "command": "D:/conda/python.exe -m pytest -q tests/test_sensor_interface.py tests/test_overground_walking.py E:/OptoJump/wire_boundary_replay_20261022/test_wire_source.py",
+  "exit_code": 1,
+  "passed": 95,
+  "failed": 1,
+  "subtests_passed": 6,
+  "duration_s": 56.63,
+  "failure": {
+    "test": "tests/test_overground_walking.py::test_real_usb_worker_monitor_and_stop_run_on_worker_thread",
+    "line": 454,
+    "exception": "pytestqt.exceptions.TimeoutError: waitUntil timed out in 5000 milliseconds",
+    "operation": "controller.start(); qtbot.waitUntil(lambda: controller.is_running)",
+    "independent_registered_beams": [
+      "7:1"
+    ],
+    "test_uses_quality_acknowledgement": false
+  },
+  "raw_terminal_output_retained_in_chat": true,
+  "production_modified": false
+}
