@@ -84,9 +84,10 @@ class WalkingPreflight:
     STABILITY_SAMPLES = 10  # 10 ms on the 1000 Hz device clock, not USB arrival time.
     STABILITY_REPEATS = 3
 
-    def __init__(self, policy=None, *, stabilize=True):
+    def __init__(self, policy=None, *, stabilize=True, known_bad_beams=()):
         self.policy = policy or BeamQualityPolicy()
         self.stabilize = stabilize
+        self.known_bad_beams = tuple(known_bad_beams)
         self.last_frame = None
         self.invalidate("等待完整数据帧，识别设备段数")
 
@@ -207,13 +208,15 @@ class WalkingPreflight:
         if not self.observe(frame):
             return
         # Re-evaluate every sample; confirmed changes invalidate a UI acknowledgement.
-        observed = tuple(sorted(i for i, count in self._counts.items() if count > 0))
+        from hardware.known_beams import known_bad_indices
+        known = set(known_bad_indices(frame.layout, self.known_bad_beams))
+        observed = tuple(sorted({i for i, count in self._counts.items() if count > 0} | known))
         persistent_threshold = self.policy.samples * .95
-        self.bad_indices = tuple(i for i in observed if self._counts[i] >= persistent_threshold
+        self.bad_indices = tuple(i for i in observed if i in known or self._counts[i] >= persistent_threshold
                                  or self._transitions[i] >= 4)
         bad_set = set(self.bad_indices)
         self.transient_indices = tuple(i for i in observed if i not in bad_set)
-        self.bad_types = tuple("持续遮挡" if self._counts[i] >= persistent_threshold else "闪烁"
+        self.bad_types = tuple("已登记坏束" if i in known else "持续遮挡" if self._counts[i] >= persistent_threshold else "闪烁"
                                for i in self.bad_indices)
         segment_counts = Counter(i // 96 for i in self.bad_indices)
         self.ratios = [segment_counts[s] / 96 for s in range(len(frame.layout.segments))]

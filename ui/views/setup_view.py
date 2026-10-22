@@ -1147,6 +1147,16 @@ class SetupView(QWidget):
             text = "● 设备已连接 · LED异常"
             disconnected = self._led_health_result.get("disconnected_leds", [])
             flickering = self._led_health_result.get("flickering_leds", [])
+            from hardware.known_beams import load_known_beams, known_bad_indices
+            known = {i + 1 for i in known_bad_indices(self._device_layout, load_known_beams())}
+            registered = sorted(known & (set(disconnected) | set(flickering)))
+            disconnected = [i for i in disconnected if i not in known]
+            flickering = [i for i in flickering if i not in known]
+            if registered:
+                health_lines.append("已登记坏束（不参与测量，保留坐标）：" + self._format_device_led_indices(registered))
+            if not disconnected and not flickering:
+                color = "#f0a24a"
+                text = "● 设备已连接 · 已登记坏束"
             if disconnected:
                 health_lines.append(
                     "未联通/持续遮挡 LED："

@@ -19,7 +19,8 @@ class DeviceQualitySession(QObject):
         super().__init__(parent)
         self.config = config
         self._ground_mode = config.test_type in {'Sprint and Gait Test', 'Overground Running Test'}
-        self.preflight = WalkingPreflight(policy)
+        from hardware.known_beams import load_known_beams
+        self.preflight = WalkingPreflight(policy, known_bad_beams=load_known_beams())
         self._segments = ActiveSegments(policy.samples)
         self.context = None
         self.done = False
