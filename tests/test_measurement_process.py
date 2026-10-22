@@ -113,3 +113,22 @@ def test_close_immediately_after_prepare_waits_for_child_handshake(qtbot,tmp_pat
     controller.discard()
     assert child.complete and not child.process.is_alive()
     assert controller._child is None
+
+
+def test_default_main_window_prepares_walking_in_local_controller(qtbot,tmp_path,monkeypatch):
+    import ui.session_controller as local
+    from ui.main_window import MainWindow
+    from ui.views.setup_view import SessionSetup
+    from ui.embedded_camera_panel import EmbeddedCameraPanel
+    from tests.test_main_window_navigation import _FakeLlmClient
+    monkeypatch.setattr(local,'UsbWorker',SyntheticWorker)
+    monkeypatch.setattr(EmbeddedCameraPanel,'start_preview',lambda self:None)
+    window=MainWindow(llm_client=_FakeLlmClient(),enable_background_checks=False)
+    qtbot.addWidget(window)
+    assert type(window._controller) is local.SessionController
+    window._on_ready(SessionSetup(WalkingConfig(stop_type='Software command')))
+    window._exec_view._camera_start_timer.stop()
+    qtbot.waitUntil(lambda:window._controller.walking_ready,timeout=15000)
+    assert window._controller.engine is not None
+    window._controller.discard()
+    window.close()

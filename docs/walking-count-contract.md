@@ -13,4 +13,4 @@ GUI 主卡片显示“识别步数”；报告同时展示识别落脚、有效�
 
 新明细标记 `footfall_schema_version = walking-footfalls/1.0`；保存的 gait 报告 schema 为 2，报告分析包为 1.2。旧报告仍按原 schema 读取，不从旧步间数据补造落脚。Excel 新增 `Walking footfalls`；原 `Walking steps` / `Walking cycles` 保持原含义。
 
-正式默认入口仅将地面走路交给独立测量子进程。子进程使用原 SessionController、质量门和 Processor，inbox batch 上限为已验证的 40；其他模式沿用原控制器。IPC 保留 128 条 / 8 MiB 有界队列；报告和原始导出经大小、SHA256 校验后还原为正式 TestReport。报告接收和 reader / QThread / writer / 子进程关闭均确认后才发出成功结果。失败目录及锁保留，不自动杀进程或重试采集。
+正式默认入口暂时恢复原本的本地 SessionController；地面走路子进程仍保留，可由实验显式注入 MeasurementController 使用。默认恢复不撤回识别步数、逐次落脚记录或已登记坏束配置。原本本地 inbox batch 上限为 20，保留的子进程方案为 40；对照时需另做相同 batch 的本地控制，不能把批量差异归因于进程边界。IPC 的有界队列和报告校验逻辑保持不变，历史验收和失败证据继续保留。当前不宣称正式现场的实时性问题已解决。

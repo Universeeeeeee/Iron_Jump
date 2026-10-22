@@ -41,7 +41,7 @@ from ui.app_shell import (
     MODULE_TEST,
     ApplicationShell,
 )
-from ui.measurement_controller import MeasurementController as SessionController
+from ui.session_controller import SessionController
 from ui.views.athletes_view import AthletesView
 from ui.views.setup_view import SessionSetup, SetupView
 from ui.views.execution_view import ExecutionView
