@@ -1,0 +1,9 @@
+{
+  "original_guard_failure": {
+    "case": "02_process40_on",
+    "event_id": "c4255935f9fb470fad0a49f292286623:0:0",
+    "source_nominal_offset_ms": -13.9829
+  },
+  "cause": "Incorrectly classified a signed reconstructed source pacing offset as a nonnegative causal wait. The replay sends a 20-frame chunk at its first nominal sample time.",
+  "correction": "Keep the signed offset; apply nonnegative causality bounds only to actual measured receive/consume/send/dispatch/paint intervals. No observations, clocks, admission bounds or replay source were changed; matrix was not rerun."
+}

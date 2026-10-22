@@ -1,0 +1,8 @@
+{
+  "functional_cases_passed": 6,
+  "stage_lineage_admitted": false,
+  "reason": "Local QObject subclass forwarding marker ran on the consumer thread; GUI callbacks were queued after its sequence context was cleared. First-paint packet origins were null. This matrix is retained but not used to attribute delay.",
+  "repair": "Use the unmodified SessionController class; local receipt and dispatch share the GUI callback entry timestamp, with local receipt sequence IDs. Process mode keeps actual pipe reception and transport packet IDs.",
+  "source_archive": "matrix01_source.zip",
+  "new_matrix": "matrix02"
+}

@@ -1,0 +1,66 @@
+{
+  "production_commit": "10014b5cd0d317d931ac63618b24e930ee9660ad",
+  "windows_updated": true,
+  "default_backend": "original local SessionController; process backend retained for explicit use",
+  "semantic_changes_retained": [
+    "recognized landing count",
+    "individual footfall records",
+    "registered bad beam 7:1 with coordinates preserved"
+  ],
+  "validation": {
+    "predeployment_tests": 25,
+    "postdeployment_smoke": 11,
+    "frozen_replay_cases": 6,
+    "report_event_metric_match": true,
+    "event_chains": 33,
+    "clock_offset_bound_us": 62.2
+  },
+  "rows": [
+    {
+      "mode": "process40",
+      "input_to_consumer_first_ms": 25.5837,
+      "input_to_consumer_last_ms": 19.1447,
+      "consumer_to_paint_first_ms": 58.2442,
+      "consumer_to_paint_last_ms": 61.9902,
+      "paint_progress_growth_ms": 12.112899999999982
+    },
+    {
+      "mode": "local20",
+      "input_to_consumer_first_ms": 66.066,
+      "input_to_consumer_last_ms": 566.4207,
+      "consumer_to_paint_first_ms": 74.1992,
+      "consumer_to_paint_last_ms": 37.5883,
+      "paint_progress_growth_ms": 478.1817999999998
+    },
+    {
+      "mode": "local40",
+      "input_to_consumer_first_ms": 63.799,
+      "input_to_consumer_last_ms": 539.7846,
+      "consumer_to_paint_first_ms": 85.7158,
+      "consumer_to_paint_last_ms": 54.5771,
+      "paint_progress_growth_ms": 471.1537999999997
+    }
+  ],
+  "clock_compatible": true,
+  "stage_lineage_admitted": true,
+  "observer_statistical_equivalence_established": false,
+  "live_delay_cause_established": false,
+  "observations": [
+    "In this instrumented decoded-frame replay, local20 and local40 accumulated delay before consumer completion.",
+    "The process40 replay did not show a second-scale IPC/GUI backlog.",
+    "These observations do not reproduce the recorded live USB/camera/MediaPipe load and do not justify re-enabling the process backend by default."
+  ],
+  "limits": [
+    "Qt paintEvent completion is not DWM/display presentation.",
+    "Camera, MediaPipe and SDK were disabled. Replay emits decoded SensorFrames, bypassing native USB reads and wire packet parsing. Source timing is reconstructed at nominal 1000Hz in 20-frame chunks; original receive timing and packetization are unavailable.",
+    "The signed source nominal phase offset includes 20-frame chunk-start pacing: frames later in a chunk can arrive up to 19ms before their per-frame nominal time. It is not a causal wait. Growth across events remains measurable; real USB delivery timing was not retained.",
+    "Measured observer execution cost is not an OFF/ON A/A perturbation-equivalence certificate. No CPU/GIL percentages are inferred.",
+    "One OFF/ON run per backend is a bounded observer control, not a statistical performance comparison."
+  ],
+  "matrix01_rejected": true,
+  "matrix01_rejection": "history/matrix01_rejection.json",
+  "runtime_sources_unchanged_during_matrix": true,
+  "no_new_human_or_device_tests": true,
+  "restart_application_to_apply_default": true,
+  "device_restart_needed": false
+}
