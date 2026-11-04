@@ -24,7 +24,7 @@ from .models import (
 
 
 ANALYSIS_METHOD_REGISTRY_VERSION = "analysis-method-registry/1.0"
-KERNEL_VERSION = "analysis-kernel/1.0"
+KERNEL_VERSION = "analysis-kernel/1.1"
 MIN_COMPARISON_GROUP_SIZE = 3
 _NAMESPACE = uuid.UUID("9ba0dc8f-5b90-4899-905c-5fc67083e4a7")
 
@@ -85,7 +85,7 @@ class AnalysisKernel:
             "verify_exclusion_robustness": self._exclusion_robustness,
             "quality_scope_check": self._quality_scope,
         }
-        predicates, values, counts, refs, quality_refs, limitations, record_set_id = dispatch[node.analysis_method](
+        predicates, values, counts, refs, quality_refs, limitations, record_set_id, groups = dispatch[node.analysis_method](
             package, node
         )
         tool_run_id = self._stable_id(
@@ -172,6 +172,7 @@ class AnalysisKernel:
             numeric_units=numeric_units,
             sample_counts=counts,
             record_refs=tuple(refs),
+            record_groups=groups,
             quality_flag_refs=tuple(quality_refs),
             limitations=tuple(limitations),
             tool_run_id=tool_run_id,
@@ -216,7 +217,7 @@ class AnalysisKernel:
             else {}
         )
         counts = {"first_half": len(first), "second_half": len(second)}
-        return predicates, values, counts, self._refs(records), self._quality_refs(package, records), limitations, record_set.record_set_id
+        return predicates, values, counts, self._refs(records), self._quality_refs(package, records), limitations, record_set.record_set_id, {"first_half": tuple(self._refs(first)), "second_half": tuple(self._refs(second))}
 
     def _side_segment_difference(self, package, node):
         record_set = self._record_set(package, node.inputs["record_set_id"])
@@ -225,6 +226,7 @@ class AnalysisKernel:
         side_counts: dict[str, int] = {}
         limitations: list[str] = []
         selected_records: list[SemanticRecord] = []
+        groups = {}
         supported = True
         for side in ("left", "right"):
             records = self._selected(record_set, metric, side, included_only=True)
@@ -233,6 +235,8 @@ class AnalysisKernel:
             group_supported, group_limitations = self._comparison_supported(package, metric, first, second)
             supported = supported and group_supported
             limitations.extend(f"{side}:{item}" for item in group_limitations)
+            groups[f"{side}_first"] = tuple(self._refs(first))
+            groups[f"{side}_second"] = tuple(self._refs(second))
             side_counts[f"{side}_first"] = len(first)
             side_counts[f"{side}_second"] = len(second)
             if group_supported:
@@ -254,7 +258,7 @@ class AnalysisKernel:
             PredicateEvidence(predicate="concentrated_on_side", supported=concentrated, metric_codes=(metric,), details={"target_side": target_side}),
         ]
         values = {f"{side}_change": value for side, value in side_changes.items()}
-        return predicates, values, side_counts, self._refs(selected_records), self._quality_refs(package, selected_records), tuple(dict.fromkeys(limitations)), record_set.record_set_id
+        return predicates, values, side_counts, self._refs(selected_records), self._quality_refs(package, selected_records), tuple(dict.fromkeys(limitations)), record_set.record_set_id, groups
 
     def _cross_metric_cochange(self, package, node):
         record_set = self._record_set(package, node.inputs["record_set_id"])
@@ -286,7 +290,7 @@ class AnalysisKernel:
             PredicateEvidence(predicate="co_change", supported=co_change, metric_codes=(metric_a, metric_b), details={"directions": directions, "causal_interpretation_allowed": False}),
         ]
         limitations = tuple(dict.fromkeys((*limitations_a, *limitations_b, "co_change_is_not_causation")))
-        return predicates, values, {"first_half": len(first), "second_half": len(second)}, self._refs(records), self._quality_refs(package, records), limitations, record_set.record_set_id
+        return predicates, values, {"first_half": len(first), "second_half": len(second)}, self._refs(records), self._quality_refs(package, records), limitations, record_set.record_set_id, {"first_half": tuple(self._refs(first)), "second_half": tuple(self._refs(second))}
 
     def _exclusion_robustness(self, package, node):
         record_set = self._record_set(package, node.inputs["record_set_id"])
@@ -314,14 +318,15 @@ class AnalysisKernel:
             values["included_difference"] = self._mean(included_second, metric) - self._mean(included_first, metric)
         counts = {"all_first": len(all_first), "all_second": len(all_second), "included_first": len(included_first), "included_second": len(included_second)}
         limitations = tuple(dict.fromkeys((*all_limits, *included_limits)))
-        return predicates, values, counts, self._refs(all_records), self._quality_refs(package, all_records), limitations, record_set.record_set_id
+        groups = {name: tuple(self._refs(rows)) for name, rows in (("all_first", all_first), ("all_second", all_second), ("included_first", included_first), ("included_second", included_second))}
+        return predicates, values, counts, self._refs(all_records), self._quality_refs(package, all_records), limitations, record_set.record_set_id, groups
 
     def _quality_scope(self, package, node):
         invalidates = any(flag.invalidates_report for flag in package.quality_flags)
         supported = not invalidates
         predicates = [PredicateEvidence(predicate="comparison_supported", supported=supported, metric_codes=())]
         limitations = ("report_quality_invalidates_analysis",) if invalidates else ()
-        return predicates, {}, {"quality_flag_count": len(package.quality_flags)}, [package.metadata.package_id], [flag.quality_flag_id for flag in package.quality_flags], limitations, None
+        return predicates, {}, {"quality_flag_count": len(package.quality_flags)}, [package.metadata.package_id], [flag.quality_flag_id for flag in package.quality_flags], limitations, None, {}
 
     def _record_set(self, package: ReportDataPackage, record_set_id: str) -> RecordSet:
         for record_set in package.record_sets:

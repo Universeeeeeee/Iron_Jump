@@ -586,6 +586,7 @@ class EvidenceItem(FrozenModel):
     numeric_units: dict[str, str] = Field(default_factory=dict)
     sample_counts: dict[str, int] = Field(default_factory=dict)
     record_refs: tuple[str, ...] = ()
+    record_groups: dict[str, tuple[str, ...]] = Field(default_factory=dict)
     quality_flag_refs: tuple[str, ...] = ()
     limitations: tuple[str, ...] = ()
     tool_run_id: str
@@ -818,6 +819,51 @@ class AnalysisClaim(FrozenModel):
     citation_refs: tuple[str, ...] = ()
 
 
+class ChartPoint(FrozenModel):
+    record_ref: str
+    ordinal: int
+    source_index: int | None = None
+    timestamp_s: float | None = None
+    side: Literal["left", "right", "unknown"] | None = None
+    value: float = Field(allow_inf_nan=False)
+
+
+class ChartGroup(FrozenModel):
+    group_id: str
+    label: str
+    points: tuple[ChartPoint, ...]
+    mean: float = Field(allow_inf_nan=False)
+
+
+class EvidenceChart(FrozenModel):
+    chart_id: str
+    evidence_ref: str
+    package_digest: str
+    record_set_id: str
+    record_type: str
+    metric_code: str
+    title: str
+    unit: str
+    chart_type: Literal["time_series", "side_distribution", "segment_comparison"]
+    grouping: str
+    groups: tuple[ChartGroup, ...]
+
+
+class InsightCard(FrozenModel):
+    claim_id: str
+    title: str
+    related_claim_ids: tuple[str, ...] = ()
+    chart_ids: tuple[str, ...] = ()
+    recommendation_ids: tuple[str, ...] = ()
+
+
+class ReportPresentation(FrozenModel):
+    version: Literal["report-presentation/1.0"] = "report-presentation/1.0"
+    headline_claim_ids: tuple[str, ...] = ()
+    insight_cards: tuple[InsightCard, ...] = ()
+    charts: tuple[EvidenceChart, ...] = ()
+
+
 class AnalysisPackage(FrozenModel):
     analysis_schema_version: str
     analysis_run_id: str
@@ -827,6 +873,8 @@ class AnalysisPackage(FrozenModel):
     data_access_scope: DataAccessScope
     summary: str
     claims: tuple[AnalysisClaim, ...]
+    evidence: tuple[EvidenceBundle, ...] = ()
+    presentation: ReportPresentation | None = None
     scope_expansion_suggestions: tuple[ScopeExpansionSuggestion, ...]
     overall_limitations: tuple[str, ...]
     literature_evidence: tuple[LiteratureEvidence, ...] = ()

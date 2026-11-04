@@ -2,7 +2,7 @@
 
 from __future__ import annotations
 
-from reporting.text import render_validated_claim_text
+from reporting.presentation import evidence_claim_text
 
 from .models import RecommendationClaim, ReportRAGContext
 
@@ -33,7 +33,7 @@ def build_report_rag_context(package, validated, evidence_bundles) -> ReportRAGC
         claims.append(
             RecommendationClaim(
                 claim_id=claim.claim_id,
-                text=render_validated_claim_text(claim),
+                text=evidence_claim_text(claim, package, evidence_bundles),
                 metric_codes=tuple(sorted(metric_codes)),
                 limitations=claim.limitations,
             )

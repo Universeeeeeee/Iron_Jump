@@ -11,6 +11,7 @@ from .models import (
     ValidatedAnalysisPackage,
 )
 from .text import format_numeric_value, render_validated_claim_text
+from .presentation import build_presentation, evidence_claim_text
 
 
 class AnalysisRenderer:
@@ -26,10 +27,14 @@ class AnalysisRenderer:
         prompt_version: str,
         prompt_content_digest: str | None = None,
         rag_result=None,
+        evidence=None,
     ) -> AnalysisPackage:
         claims = []
         for claim in validated.claims:
-            text = render_validated_claim_text(claim)
+            text = (
+                evidence_claim_text(claim, package, evidence)
+                if evidence is not None else render_validated_claim_text(claim)
+            )
             claims.append(
                 AnalysisClaim(
                     claim_id=claim.claim_id,
@@ -43,21 +48,27 @@ class AnalysisRenderer:
                     citation_refs=(),
                 )
             )
+        recommendations = rag_result.package.recommendations if rag_result else ()
+        presentation = (
+            build_presentation(claims, package, evidence, recommendations)
+            if evidence is not None else None
+        )
+        summary = "；".join(card.title for card in presentation.insight_cards) + "。" if presentation and presentation.insight_cards else ""
         return AnalysisPackage(
-            analysis_schema_version="analysis-schema/4.0",
+            analysis_schema_version="analysis-schema/5.0" if presentation else "analysis-schema/4.0",
             analysis_run_id=analysis_run_id,
             session_id=package.metadata.session_id,
             package_id=package.metadata.package_id,
             package_digest=package.metadata.package_digest,
             data_access_scope=access_scope,
-            summary=validated.summary,
+            summary=summary or validated.summary,
             claims=tuple(claims),
+            evidence=tuple(evidence or ()),
+            presentation=presentation,
             scope_expansion_suggestions=validated.scope_expansion_suggestions,
             overall_limitations=validated.overall_limitations,
             literature_evidence=rag_result.evidence if rag_result else (),
-            recommendations=(
-                rag_result.package.recommendations if rag_result else ()
-            ),
+            recommendations=recommendations,
             references=rag_result.package.citations if rag_result else (),
             references_markdown=(
                 rag_result.package.references_markdown if rag_result else ""

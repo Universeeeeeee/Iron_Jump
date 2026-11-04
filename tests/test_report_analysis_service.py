@@ -359,7 +359,7 @@ def test_service_returns_only_validated_rendered_analysis(tmp_path):
     metrics = json.loads(_metrics_rows(store)[0])
     assert metrics["analysis_tool_registry_version"] == "analysis-tool-registry/1.0"
     assert metrics["analysis_method_registry_version"] == "analysis-method-registry/1.0"
-    assert metrics["kernel_version"] == "analysis-kernel/1.0"
+    assert metrics["kernel_version"] == KERNEL_VERSION
     assert "operator_registry_version" not in metrics
     assert repository.get_latest_validated_analysis(
         session_id,
@@ -378,7 +378,7 @@ def test_service_runs_rag_only_after_claim_validation_and_degrades_independently
 
     result = service.analyze(session_id, DataAccessScope())
 
-    assert result.analysis_schema_version == "analysis-schema/4.0"
+    assert result.analysis_schema_version == "analysis-schema/5.0"
     assert result.claims[0].text.endswith("0.1 s。")
     assert rag_pipeline.contexts[0].claims[0].claim_id == "c1"
     assert rag_pipeline.contexts[0].claims[0].metric_codes == ("contact_time_s",)

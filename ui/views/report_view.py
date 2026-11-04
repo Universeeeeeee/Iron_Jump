@@ -19,7 +19,10 @@ import math
 import os
 import time
 from typing import Optional
-from urllib.parse import urlparse
+
+from reporting.analysis_html import analysis_html
+from reporting.models import EvidenceChart
+from ui.report_analysis import EvidenceChartWidget
 
 from reporting.excel import (
     build_report_workbook, has_export_data,
@@ -42,8 +45,8 @@ from ui.styles import CONTROL_QSS, CONTROL_STATES_QSS
 
 from ui.theme import PALETTE, qss
 
-from qtpy.QtCore import QThread, Signal, Qt
-from qtpy.QtGui import QColor, QFont, QFontMetrics, QPainter
+from qtpy.QtCore import QThread, Signal, Qt, QUrl
+from qtpy.QtGui import QColor, QFont, QFontMetrics, QPainter, QDesktopServices
 
 
 from config.test_report import TestReport, JumpTestReport, GaitTestReport
@@ -656,6 +659,8 @@ class ReportView(QWidget):
         self._session_id: int | None = None
         self._llm_client = llm_client
         self._analysis_available = False
+        self._analysis_data = None
+        self._evidence_charts = []
         self._latest_requested_for: int | None = None
         self._analysis_workers: set[_ReportAnalysisWorker] = set()
         self._finished_analysis_workers: list[_ReportAnalysisWorker] = []
@@ -689,6 +694,14 @@ class ReportView(QWidget):
             qss("""font-size: 13px; color: ${success}; padding: 2px 0;""")
         )
         main_layout.addWidget(self._reason_label)
+
+        self._analysis_headline = QLabel()
+        self._analysis_headline.setWordWrap(True)
+        self._analysis_headline.setTextFormat(Qt.RichText)
+        self._analysis_headline.setTextInteractionFlags(Qt.TextBrowserInteraction)
+        self._analysis_headline.linkActivated.connect(lambda _: self._open_analysis())
+        self._analysis_headline.hide()
+        main_layout.addWidget(self._analysis_headline)
 
         # ===== 内容区: 概览页 + 明细页 =====
         self._tabs = QTabWidget()
@@ -912,12 +925,18 @@ class ReportView(QWidget):
         self._analysis_result.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Preferred)
         self._analysis_result.setTextFormat(Qt.RichText)
         self._analysis_result.setTextInteractionFlags(Qt.TextBrowserInteraction)
-        self._analysis_result.setOpenExternalLinks(True)
+        self._analysis_result.setOpenExternalLinks(False)
+        self._analysis_result.linkActivated.connect(self._open_analysis_link)
         self._analysis_result.hide()
         self._analysis_scroll = QScrollArea()
         self._analysis_scroll.setFrameShape(QFrame.NoFrame)
         self._analysis_scroll.setWidgetResizable(True)
-        self._analysis_scroll.setWidget(self._analysis_result)
+        self._analysis_content = QWidget()
+        self._analysis_content.setObjectName("ReportAnalysisContent")
+        self._analysis_content.setStyleSheet(f"QWidget#ReportAnalysisContent {{ background: {PALETTE['background']}; }}")
+        self._analysis_content_layout = QVBoxLayout(self._analysis_content)
+        self._analysis_content_layout.addWidget(self._analysis_result)
+        self._analysis_scroll.setWidget(self._analysis_content)
         analysis_layout.addWidget(self._analysis_scroll, 1)
         self._analysis_close_button = QPushButton("关闭分析")
         self._analysis_close_button.clicked.connect(self._analysis_panel.close)
@@ -1114,114 +1133,44 @@ class ReportView(QWidget):
         self._analysis_status.setVisible(loading)
 
     def show_validated_analysis(self, analysis: dict) -> None:
-        claims = analysis.get("claims", [])
-        sections = []
-        claim_lines = []
-        for claim in claims:
-            text = claim.get("text", "").strip()
-            if not text:
-                continue
-            text = html.escape(text)
-            claim_limitations = claim.get("limitations", [])
-            if claim_limitations:
-                text += "<br><span style='color:#aeb7c5'>证据限制：" + "；".join(
-                    html.escape(str(item)) for item in claim_limitations
-                ) + "</span>"
-            claim_lines.append(f"<div style='margin-bottom:8px'>{text}</div>")
-        if claim_lines:
-            sections.append("<h3>分析结论</h3>" + "".join(claim_lines))
-
-        references = analysis.get("references", [])
-        reference_by_id = {
-            item.get("citation_id"): (index, item)
-            for index, item in enumerate(references, start=1)
-            if item.get("citation_id")
-        }
-        recommendation_lines = []
-        for recommendation in analysis.get("recommendations", []):
-            text = html.escape(str(recommendation.get("text", "")).strip())
-            if not text:
-                continue
-            links = []
-            for citation_id in recommendation.get("citation_refs", []):
-                resolved = reference_by_id.get(citation_id)
-                if resolved is not None:
-                    links.append(f"[{resolved[0]}]")
-            suffix = " " + " ".join(links) if links else ""
-            recommendation_limitations = recommendation.get(
-                "limitations", []
-            )
-            limitation_text = ""
-            if recommendation_limitations:
-                limitation_text = (
-                    "<br><span style='color:#aeb7c5'>建议限制："
-                    + "；".join(
-                        html.escape(str(item))
-                        for item in recommendation_limitations
-                    )
-                    + "</span>"
-                )
-            recommendation_lines.append(
-                f"<div style='margin-bottom:8px'>{text}{suffix}"
-                f"{limitation_text}</div>"
-            )
-        if recommendation_lines:
-            sections.append(
-                "<h3>循证行动建议</h3>" + "".join(recommendation_lines)
-            )
-
-        reference_lines = []
-        for index, reference in enumerate(references, start=1):
-            title = html.escape(str(reference.get("title", "参考资料")))
-            url = str(reference.get("url", ""))
-            parsed = urlparse(url)
-            if parsed.scheme not in {"http", "https"} or not parsed.netloc:
-                continue
-            locator = html.escape(str(reference.get("locator", "")))
-            details = f" — {locator}" if locator else ""
-            reference_lines.append(
-                f"<div>[{index}] <a href='{html.escape(url, quote=True)}'>{title}</a>{details}</div>"
-            )
-        if reference_lines:
-            sections.append("<h3>参考资料</h3>" + "".join(reference_lines))
-
-        rag_audit = analysis.get("rag_audit")
-        if isinstance(rag_audit, dict):
-            rag_status = rag_audit.get("status")
-            if rag_status == "degraded":
-                error_code = html.escape(
-                    str(rag_audit.get("error_code") or "unknown")
-                )
-                sections.append(
-                    "<div style='color:#aeb7c5'>循证建议暂时不可用，"
-                    "确定性分析不受影响。"
-                    f"（{error_code}）</div>"
-                )
-            elif rag_status == "no_evidence":
-                message = (
-                    "当前测试场景或已验证指标尚无适用的循证建议，因此未生成建议。"
-                    if rag_audit.get("error_code") == "no_supported_query"
-                    else "未检索到满足条件的文献证据，因此未生成建议。"
-                )
-                sections.append(
-                    f"<div style='color:#aeb7c5'>{message}</div>"
-                )
-
-        limitations = analysis.get("overall_limitations", [])
-        if limitations:
-            sections.append(
-                "<div><b>限制：</b>" + "；".join(
-                    html.escape(str(item)) for item in limitations
-                )
-                + "</div>"
-            )
-        self._analysis_result.setText(
-            "".join(sections) if sections else "未形成可验证的分析结论。"
+        self._clear_evidence_charts()
+        self._analysis_data = analysis
+        self._analysis_result.setText(analysis_html(analysis))
+        cards = (analysis.get("presentation") or {}).get("insight_cards", [])
+        self._analysis_headline.setText(
+            '<b>本次重点</b>　' + html.escape(analysis.get("summary", ""))
+            + '　<a style="color:#67dce9" href="analysis">查看依据</a>'
         )
+        self._analysis_headline.setVisible(bool(cards))
+        for payload in (analysis.get("presentation") or {}).get("charts", []):
+            chart = EvidenceChart.model_validate(payload)
+            widget = EvidenceChartWidget(chart, pg, self._analysis_content)
+            self._analysis_content_layout.addWidget(widget)
+            self._evidence_charts.append(widget)
         self._analysis_result.show()
         self._analysis_button.setText("重新分析")
 
+    def _clear_evidence_charts(self):
+        for widget in self._evidence_charts:
+            self._analysis_content_layout.removeWidget(widget)
+            widget.setParent(None)
+            widget.deleteLater()
+        self._evidence_charts.clear()
+
+    def _open_analysis_link(self, target):
+        url = QUrl(target)
+        if url.scheme() == "analysis-chart" and url.path().isdigit():
+            index = int(url.path())
+            if index < len(self._evidence_charts):
+                self._analysis_scroll.ensureWidgetVisible(self._evidence_charts[index])
+        elif url.scheme() in {"https", "http"} and url.host():
+            QDesktopServices.openUrl(url)
+
     def clear_analysis(self) -> None:
+        self._analysis_data = None
+        self._analysis_headline.clear()
+        self._analysis_headline.hide()
+        self._clear_evidence_charts()
         self.set_analysis_loading(False)
         self._analysis_result.clear()
         self._analysis_result.hide()
@@ -2079,10 +2028,18 @@ class ReportView(QWidget):
             path += ".pdf"
         try:
             from ui.report_pdf import write_report_pdf
+            analysis = self._analysis_data
+            if analysis and analysis.get("presentation"):
+                analysis = dict(analysis, presentation=dict(
+                    analysis["presentation"], charts=[
+                        widget.chart.model_copy(update={"chart_type": widget.kind.currentData()}).model_dump(mode="json")
+                        for widget in self._evidence_charts
+                    ],
+                ))
             write_report_pdf(path, self._report, title=self._title.text(),
                              stats=self._export_stats, reason=self._reason_label.text(),
                              detailed=detailed, subject=self._export_subject,
-                             started_at=self._export_started_at)
+                             started_at=self._export_started_at, analysis=analysis)
             QMessageBox.information(self, "导出成功", f"报告已保存至：\n{path}")
         except Exception as exc:
             QMessageBox.warning(self, "导出失败", f"保存报告失败：{exc}")

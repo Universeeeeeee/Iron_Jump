@@ -32,7 +32,7 @@ def _table(headers, rows):
     return '<table width="100%" cellspacing="0" cellpadding="5"><thead><tr>' + header + '</tr></thead>' + body + '</table>'
 
 
-def report_html(report, *, title, stats, reason, detailed=False, subject=None, started_at=None):
+def report_html(report, *, title, stats, reason, detailed=False, subject=None, started_at=None, analysis=None, chart_sources=None):
     """Include all rows in the chosen sections, regardless of UI filters."""
     title = title.removeprefix('📊').strip()
     version = '详细版' if detailed else '精简版'
@@ -60,6 +60,9 @@ def report_html(report, *, title, stats, reason, detailed=False, subject=None, s
     if ground:
         from reporting.contact_quality import contact_quality_html
         content += contact_quality_html(report)
+    if analysis:
+        from reporting.analysis_html import analysis_html
+        content += '<h2>运动分析</h2>' + analysis_html(analysis, chart_sources=chart_sources or {})
     if not detailed:
         return content
     content += '<p>逐帧数据与完整算法证据可另行导出 Excel。</p>'

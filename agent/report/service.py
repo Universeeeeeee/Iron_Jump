@@ -404,6 +404,7 @@ class ReportAnalysisService:
                 prompt_version=prompt_version,
                 prompt_content_digest=prompt_content_digest,
                 rag_result=rag_result,
+                evidence=result.evidence,
             )
             self._record_metrics(
                 run_id,
