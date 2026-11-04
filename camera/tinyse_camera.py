@@ -1,7 +1,7 @@
 """
 tinyse_camera.py — OBSBOT Tiny SE 摄像头独立预览窗口
 
-基于 dayu_widgets + qtpy + DirectShow 后端。
+基于 Qt Widgets + qtpy + DirectShow 后端。
 为步态分析系统提供实时视觉参考。
 
 使用方式::
@@ -9,7 +9,7 @@ tinyse_camera.py — OBSBOT Tiny SE 摄像头独立预览窗口
     python -m camera.tinyse_camera
 
 设计目标:
-- 独立运行，不与 ui/ 目录现有模块耦合
+- 独立运行，复用公共 Qt 样式和应用入口
 - 后期可导入主界面嵌入
 """
 
@@ -26,23 +26,16 @@ from pathlib import Path
 
 import cv2
 import numpy as np
-from qtpy.QtCore import QObject, QThread, Signal, Qt
-from qtpy.QtGui import QImage, QPixmap
 from qtpy.QtWidgets import (
-    QHBoxLayout,
-    QLabel,
-    QMessageBox,
-    QVBoxLayout,
+    QCheckBox, QComboBox, QLabel, QPushButton, QHBoxLayout, QMessageBox, QVBoxLayout,
     QWidget,
 )
-from dayu_widgets import dayu_theme
-from dayu_widgets.check_box import MCheckBox
-from dayu_widgets.collapse import MSectionItem
-from dayu_widgets.combo_box import MComboBox
-from dayu_widgets.divider import MDivider
-from dayu_widgets.label import MLabel
-from dayu_widgets.push_button import MPushButton
-from dayu_widgets.qt import application
+from ui.widgets import CollapsibleSection, SectionHeading
+from ui.application import application
+
+from qtpy.QtCore import QObject, QThread, Signal, Qt
+from qtpy.QtGui import QImage, QPixmap
+
 
 from .tinyse_dshow_capture import TinySeDShowCapture
 
@@ -608,7 +601,7 @@ class TinySeCameraWidget(QWidget):
         self._preview_active = False
 
         layout = QVBoxLayout(self)
-        layout.addWidget(MDivider("OBSBOT Tiny SE"))
+        layout.addWidget(SectionHeading("OBSBOT Tiny SE"))
 
         self._preview = QLabel("Preview")
         self._preview.setAlignment(Qt.AlignCenter)
@@ -616,13 +609,14 @@ class TinySeCameraWidget(QWidget):
         self._preview.setStyleSheet("background: #111; color: #aaa;")
         layout.addWidget(self._preview)
 
-        self._stats = MLabel("Idle")
+        self._stats = QLabel("Idle")
         layout.addWidget(self._stats)
 
         buttons = QHBoxLayout()
-        self._btn_start = MPushButton("Start Preview").primary()
-        self._btn_stop = MPushButton("Stop")
-        self._btn_record = MPushButton("Record")
+        self._btn_start = QPushButton("Start Preview")
+        self._btn_start.setProperty("role", "primary")
+        self._btn_stop = QPushButton("Stop")
+        self._btn_record = QPushButton("Record")
         self._btn_stop.setEnabled(False)
         self._btn_record.setEnabled(False)
         self._btn_start.clicked.connect(self._on_start)
@@ -640,66 +634,67 @@ class TinySeCameraWidget(QWidget):
         ctl.setSpacing(6)
 
         row1 = QHBoxLayout()
-        self._chk_mirror = MCheckBox("镜像")
+        self._chk_mirror = QCheckBox("镜像")
+        self._chk_mirror.setChecked(True)
         self._chk_mirror.stateChanged.connect(self._on_mirror)
         row1.addWidget(self._chk_mirror)
-        self._cmb_fov = MComboBox()
+        self._cmb_fov = QComboBox()
         for k, v in FOV_OPTIONS.items():
             self._cmb_fov.addItem(v, k)
         self._cmb_fov.currentIndexChanged.connect(self._on_fov_changed)
-        row1.addWidget(MLabel("视野:"))
+        row1.addWidget(QLabel("视野:"))
         row1.addWidget(self._cmb_fov)
         row1.addStretch()
         ctl.addLayout(row1)
 
         row2 = QHBoxLayout()
-        self._cmb_ai = MComboBox()
+        self._cmb_ai = QComboBox()
         for k, v in sorted(AI_SUB_MODE.items()):
             self._cmb_ai.addItem(v, k)
         self._cmb_ai.setCurrentIndex(4)  # 默认下半身
-        row2.addWidget(MLabel("AI 追踪:"))
+        row2.addWidget(QLabel("AI 追踪:"))
         row2.addWidget(self._cmb_ai)
-        self._btn_ai_go = MPushButton("激活")
+        self._btn_ai_go = QPushButton("激活")
         self._btn_ai_go.clicked.connect(self._on_ai_go)
         row2.addWidget(self._btn_ai_go)
-        self._btn_ai_off = MPushButton("关闭追踪")
+        self._btn_ai_off = QPushButton("关闭追踪")
         self._btn_ai_off.clicked.connect(self._on_ai_off)
         row2.addWidget(self._btn_ai_off)
         row2.addStretch()
         ctl.addLayout(row2)
 
         row3 = QHBoxLayout()
-        self._chk_af = MCheckBox("自动对焦")
+        self._chk_af = QCheckBox("自动对焦")
         self._chk_af.setChecked(True)
         self._chk_af.stateChanged.connect(self._on_af_changed)
         row3.addWidget(self._chk_af)
-        self._cmb_exp = MComboBox()
+        self._cmb_exp = QComboBox()
         for k, v in sorted(EXPOSURE_OPTIONS.items()):
             self._cmb_exp.addItem(v, k)
         self._cmb_exp.setCurrentText("+0.0 EV")
         self._cmb_exp.currentIndexChanged.connect(self._on_exp_changed)
-        row3.addWidget(MLabel("曝光:"))
+        row3.addWidget(QLabel("曝光:"))
         row3.addWidget(self._cmb_exp)
         row3.addStretch()
         ctl.addLayout(row3)
 
         row4 = QHBoxLayout()
-        self._cmb_flicker = MComboBox()
+        self._cmb_flicker = QComboBox()
         self._cmb_flicker.addItem("60Hz", 0)
         self._cmb_flicker.addItem("50Hz", 1)
         self._cmb_flicker.currentIndexChanged.connect(self._on_flicker_changed)
-        row4.addWidget(MLabel("抗频闪:"))
+        row4.addWidget(QLabel("抗频闪:"))
         row4.addWidget(self._cmb_flicker)
-        self._cmb_wdr = MComboBox()
+        self._cmb_wdr = QComboBox()
         for k, v in WDR_OPTIONS.items():
             self._cmb_wdr.addItem(v, k)
         self._cmb_wdr.currentIndexChanged.connect(self._on_wdr_changed)
-        row4.addWidget(MLabel("HDR:"))
+        row4.addWidget(QLabel("HDR:"))
         row4.addWidget(self._cmb_wdr)
         row4.addStretch()
         ctl.addLayout(row4)
 
-        self._ctl_section = MSectionItem(
+        self._ctl_section = CollapsibleSection(
             "摄像头控制", widget=ctl_container, expand=False
         )
         layout.addWidget(self._ctl_section)
@@ -940,6 +935,6 @@ class TinySeCameraWidget(QWidget):
 if __name__ == "__main__":
     with application() as app:
         widget = TinySeCameraWidget()
-        dayu_theme.apply(widget)
+
         widget.show()
         sys.exit(app.exec_())

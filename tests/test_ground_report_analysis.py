@@ -41,9 +41,9 @@ def test_ground_package_preserves_snapshot_units_sources_and_serialization(repor
     assert ReportDataPackage.model_validate_json(result.model_dump_json()) == result
     assert result.context.test_type == TYPES[mode]
     assert result.context.config_snapshot["device"] == json.loads(json.dumps(report.report_config_snapshot["device"]))
-    assert result.metadata.builder_version == "report-package-builder/1.1-ground"
+    assert result.metadata.builder_version == "report-package-builder/1.5-derived"
     assert result.payload.spatial_reference == ("contact_center" if mode == "walking" else "stable_toe_proxy")
-    assert {r.record_type for r in result.record_sets} == {"ground_contact", "ground_step", "ground_cycle"}
+    assert {r.record_type for r in result.record_sets} == {"ground_contact", "ground_step", "ground_cycle", "recognized_footprint"}
     definitions = {d.metric_code: d for d in result.metric_definitions}
     assert definitions["step_length_m"].unit == "m"
     assert definitions["contact_time_s"].unit == "s"
@@ -126,7 +126,7 @@ def test_empty_ground_report_keeps_metrics_missing(mode):
     processor = walking_processor() if mode == "walking" else running_processor()
     result = package(processor.build_report("manual"), mode)
     assert all(not record_set.records for record_set in result.record_sets)
-    assert all(fact.state == "missing" for fact in result.scalar_facts if fact.metric_code not in {"touch_count", "lift_count"})
+    assert all(fact.state == "missing" for fact in result.scalar_facts if fact.metric_code not in {"touch_count", "lift_count", "recognized_steps"})
     assert "side" not in ReportManifestBuilder().build(result).available_dimensions
 
 
@@ -177,6 +177,9 @@ def test_ground_service_history_and_ui_use_same_validated_snapshot(tmp_path, qtb
     view.set_analysis_availability(True)
     view.load_report(report, session_id)
     qtbot.waitUntil(lambda: not view._analysis_workers, timeout=5000)
+    assert view._analysis_panel.isHidden()
+    assert not view._analysis_entry.isHidden()
+    view._analysis_entry.click()
     assert not view._analysis_panel.isHidden()
     assert view.request_voice_analysis()
     qtbot.waitUntil(lambda: not view._analysis_workers, timeout=5000)

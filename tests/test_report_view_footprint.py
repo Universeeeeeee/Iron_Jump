@@ -2,7 +2,6 @@ from dataclasses import replace
 
 import pytest
 
-pytest.importorskip("dayu_widgets")
 
 from qtpy.QtWidgets import QApplication, QScrollArea, QTableWidget
 
@@ -647,13 +646,28 @@ def test_cycle_phase_bar_falls_back_when_detailed_stance_does_not_close():
     assert bar.toolTip() == "子阶段无法可靠拆分，按支撑相和摆动相绘制"
 
 
-def test_stat_card_reduces_font_for_long_values():
+def test_stat_card_reduces_font_for_long_values(qtbot):
     _app()
     card = StatCard("方向")
+    qtbot.addWidget(card)
+    card.resize(160, 100)
+    card.show()
+    card.set_value("123")
+    QApplication.processEvents()
+    short_size = card._value.font().pixelSize()
 
     card.set_value("Opposite side")
 
-    assert "font-size: 18pt" in card._value.styleSheet()
+    QApplication.processEvents()
+    assert card._value.font().pixelSize() < short_size
+    assert card._value.fontMetrics().horizontalAdvance(card._value.text()) <= card._value.width()
+
+    card.resize(134, 110)
+    # Force wrapping with both Windows and macOS font metrics.
+    card.set_value("0.300 s / 0.000 s / 0.300 s / 0.000 s")
+    QApplication.processEvents()
+    assert card._value.wordWrap()
+    assert card._value.height() >= card._value.heightForWidth(card._value.width())
 
 
 def test_jump_report_cards_fit_without_overlapping_at_minimum_height(qtbot):
@@ -696,7 +710,7 @@ def test_jump_report_cards_fit_without_overlapping_at_minimum_height(qtbot):
         for previous, current in zip(column, column[1:]):
             assert previous.geometry().bottom() < current.geometry().top()
 
-    assert len(visible_cards) == 9
+    assert len(visible_cards) == 6
     assert not hasattr(view, "_stats_scroll")
     assert view._tabs.objectName() == "ReportTabs"
     assert view.btn_export.objectName() == "ReportSecondaryButton"

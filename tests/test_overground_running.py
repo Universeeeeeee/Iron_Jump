@@ -277,7 +277,7 @@ def test_merged_contacts_and_noise_cannot_make_flight_or_bridge_identity():
         p.process(frame(p.device.layout, n, bounds))
     s = p.summary()
     assert any(i['code'] == 'ambiguous_contacts' for i in s['issues'])
-    assert all(c['side'] == 'unknown' for c in s['contacts'][1:])
+    assert [c['side'] for c in s['contacts'][1:]] == ['unknown', 'unknown', 'right', 'left', 'right']
     assert any(c['duration_s']['valid'] for c in s['cycles'])
     assert all(c['epoch'] == 0 for c in s['contacts'])
     assert any(i.get('scope') == 'local_projection_overlap' for i in s['issues'])
@@ -407,11 +407,12 @@ def test_cycle_support_does_not_require_future_release_outside_cycle():
     assert s['cycles'][0]['flight_s']['value'] == 0
 
 
-def test_overlapping_inferred_same_foot_loses_identity():
+def test_overlapping_inferred_same_foot_keeps_metric_veto_and_event_side():
     p = processor(starting_foot='Left')
     s = run(p, [(100, 850, .3), (400, 550, .7), (700, 1000, 1.1)])
     assert not s['cycles'][0]['duration_s']['valid']
-    assert s['contacts'][-1]['side'] == 'unknown'
+    assert s['contacts'][-1]['side'] == 'left'
+    assert p.contacts[-1].side == 'unknown'
 
 
 @pytest.mark.parametrize('segments', [3, 8, 12])
@@ -430,15 +431,17 @@ def test_flight_requires_actual_last_support_release(segments, reverse):
     assert s['steps'][1]['flight_s']['missing_reason'] == 'lift_not_observed'
 
 
-def test_uncertain_dropout_clears_current_and_future_side_anchor():
+def test_uncertain_dropout_preserves_event_sides_without_filling_contact():
     p = processor(8, starting_foot='Left')
     track = [(100, 180, .3), (181, 250, .3)] + [
         (400 + 300*i, 550 + 300*i, .9 + .6*i) for i in range(7)]
     s = run(p, track, 2700)
     assert s['contacts'][0]['contact_s']['missing_reason'] == 'uncertain_short_clear'
-    assert all(c['side'] == 'unknown' for c in s['contacts'])
+    assert [c['side'] for c in s['contacts']] == ['left', 'right'] * 4
     assert s['valid_cycles'] > 0  # Subsequent A/B measurements still recover.
-    assert not s['sides']['contact_s']['asymmetry_percent']['valid']
+    assert s['sides']['contact_s']['left_count'] == 3
+    assert s['sides']['contact_s']['right_count'] == 4
+    assert s['sides']['contact_s']['asymmetry_percent']['valid']
 
 
 @pytest.mark.parametrize('boundary', [False, True])

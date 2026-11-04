@@ -35,11 +35,11 @@ def test_first_asynchronous_short_islands_preserve_first_observed_touch(qtbot,re
     assert len([c for c in p.contacts if c.candidate_outcome!='associated_fragment'])==2 and not p.issues
     assert p.contacts[0].start==100 and p.contacts[0].end==350
     assert p.contacts[0].confirmed
-    assert not p.summary()['contacts'][0]['touch_s']['valid']
+    assert p.summary()['contacts'][0]['touch_s']['valid']
     assert p.summary()['contacts'][0]['first_seen_sample']==100
-    assert not p.summary()['contacts'][0]['toe_m']['valid']
+    assert p.summary()['contacts'][0]['toe_m']['valid']
     assert p.contacts[0].side=='unknown' and p.contacts[1].side=='unknown'
-    assert not p.summary()['steps'][0]['time_s']['valid']
+    assert p.summary()['steps'][0]['time_s']['valid']
     assert p.summary()['duration_s'] is None
 
 

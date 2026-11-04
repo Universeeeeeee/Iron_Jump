@@ -12,6 +12,7 @@ from engine.ground_source_review import (SHORT_ISLAND_MS, ownership_record, assi
 
 from engine.ground_metric_evidence import METRIC_POLICY, group_release_evidence, metric
 from engine.ground_position_evidence import running_position_history
+from engine.ground_contact_phases import ContactShapeRecorder, build_contact_phases
 from config.overground_running_report import OvergroundRunningReport
 from hardware.sensor_frame import blocked_indices
 
@@ -73,6 +74,7 @@ class OvergroundRunningProcessor:
     def __init__(self, config, device):
         self.config, self.device = config, device
         self.positions = device.layout.positions_m
+        self._shape_recorder = ContactShapeRecorder()
         self.contacts, self.active, self.issues, self.timeline = [], [], [], []
         self._preserved_stops = []
         self.phases = []  # [start, exclusive end, occupancy, epoch]
@@ -120,7 +122,7 @@ class OvergroundRunningProcessor:
         self._publication_closed = False
         self._split_ambiguous = set()
 
-    OWNERSHIP_RULE_VERSION = 'early_local_growth_v1'
+    OWNERSHIP_RULE_VERSION = 'early_local_continuity_v2'
 
     @property
     def touch_events(self):
@@ -283,7 +285,12 @@ class OvergroundRunningProcessor:
             return 'independent_mature_source'
         if sum(e.get('peak_width_m', 0) >= .08 for e in evidence) > 1:
             return 'competing_wide_sources'
-        if any(s['joined_sample'] - first > window for s in sources):
+        joined = min(s['joined_sample'] for s in sources)
+        latest = max(s['first_sample'] for s in sources if s['joined_sample'] == joined)
+        if (latest - first > window or joined - latest > window
+                or any(s['first_sample'] - joined > window
+                       or s['joined_sample'] - max(s['first_sample'], joined) > window
+                       for s in sources if s['joined_sample'] > joined)):
             return 'prolonged_separate_sources'
         allowed = {None, 'simultaneous_contacts', 'unresolved_multiple_islands'}
         if any(e.get('problem') not in allowed or e.get('exclusion') not in allowed
@@ -301,15 +308,20 @@ class OvergroundRunningProcessor:
         intervals = group['valid_sample_intervals']
         if intervals != [[first, group['last_sample'] + 1]] or any(not r[3] for r in runs):
             return 'discontinuous_observation'
-        if not runs or any(len(r[2]) != 1 for r in runs):
+        if not runs or any(not r[2] for r in runs):
             return 'separate_projection'
-        widths = [self.positions[r[2][0][1]] - self.positions[r[2][0][0]] for r in runs]
-        if any(r[2][0][0] == 0 or r[2][0][1] == len(self.positions)-1 for r in runs):
+        # Once connected, heel/toe islands may separate while the same local
+        # projection remains occupied. Keep the islands and clear beams intact;
+        # only their outer span constrains the conditional landing attribution.
+        widths = [self.positions[r[2][-1][1]] - self.positions[r[2][0][0]] for r in runs]
+        if any(r[2][0][0] == 0 or r[2][-1][1] == len(self.positions)-1 for r in runs):
             return 'boundary_projection'
         if max(widths) > .45 or any(abs(b-a) > .18 for a,b in zip(widths,widths[1:])):
             return 'incompatible_projection'
-        if max(widths) < .08 or max(widths) - widths[0] < .04:
-            return 'insufficient_growth'
+        # A stable joined sole is landing evidence even without further widening.
+        # Independent wide sources and unreliable histories were rejected above.
+        if max(widths) < .08:
+            return 'insufficient_width'
         if (group['observed_samples'] < window
                 or group['last_sample'] - runs[0][0] + 1 < max(10, self.config.confirmation_ms)):
             return 'awaiting_continuous_growth'
@@ -324,6 +336,30 @@ class OvergroundRunningProcessor:
                 # Later new sources can compete with attribution of occupancy;
                 # they do not automatically negate the earlier landing.
                 if assigned_sources(group) != {s['source_id'] for s in group['sources']}:
+                    # An early toe fragment may finish joining just after the
+                    # landing was published. Reuse the same source-evidence
+                    # rule instead of permanently blocking every later step.
+                    if self._ownership_rule(group) is None:
+                        added = {s['source_id'] for s in group['sources']} - assigned_sources(group)
+                        for source in group['sources']:
+                            if source['source_id'] in added:
+                                group.setdefault('source_decisions', []).append({
+                                    'source_id': source['source_id'], 'owner_id': recovery['owner_id'],
+                                    'outcome': 'associated', 'reason': 'continuous_early_local_projection',
+                                    'decided_sample': self.last_sample,
+                                    'source_valid_sample_intervals': deepcopy(source['valid_sample_intervals']),
+                                    'rule_version': self.OWNERSHIP_RULE_VERSION})
+                        for c in self.contacts:
+                            if c.id != recovery['owner_id'] and c.ownership_source_id in added:
+                                c.candidate_outcome = 'associated_fragment'
+                                if c in self.active:
+                                    self.active.remove(c)
+                        self.event_audit.append({'action': 'early_source_associated',
+                            'sample': self.last_sample, 'group_id': group['id'],
+                            'owner_id': recovery['owner_id'], 'source_ids': sorted(added),
+                            'rule_version': self.OWNERSHIP_RULE_VERSION})
+                        self._update_recovered_owner(group)
+                        continue
                     if 'post_recovery_ambiguity_sample' not in group:
                         group['post_recovery_ambiguity_sample'] = self.last_sample
                         self.event_audit.append({'action': 'ownership_competing_source',
@@ -365,9 +401,9 @@ class OvergroundRunningProcessor:
                 'valid_sample_intervals': deepcopy(group['valid_sample_intervals']),
                 'unique_samples': group['observed_samples'],
                 'budget_start_sample': group['unresolved_since_sample'],
-                'growth_m': max(self.positions[r[2][0][1]] - self.positions[r[2][0][0]]
+                'growth_m': max(self.positions[r[2][-1][1]] - self.positions[r[2][0][0]]
                                 for r in group['observation_runs'])
-                    - (self.positions[group['observation_runs'][0][2][0][1]]
+                    - (self.positions[group['observation_runs'][0][2][-1][1]]
                        - self.positions[group['observation_runs'][0][2][0][0]]),
                 'early_window_ms': max(self.config.min_contact_time, self.config.confirmation_ms),
                 'other_occupied_contacts': [c.id for c in self.active if c not in members and c is not owner
@@ -375,7 +411,7 @@ class OvergroundRunningProcessor:
                                            and not getattr(c, 'problem', None)
                                            and not getattr(c, 'exclusion', None)
                                            and not getattr(c, 'interrupted', None)],
-                'interpretation': 'conditional_local_growth_not_optical_identity_proof'}
+                'interpretation': 'conditional_local_continuity_not_optical_identity_proof'}
             self._update_recovered_owner(group)
             self.event_audit.append({'action': 'ownership_recovered', 'sample': self.last_sample,
                                     'group_id': group['id'], **deepcopy(group['recovery'])})
@@ -384,7 +420,7 @@ class OvergroundRunningProcessor:
         return c.start
 
     def _new_recovered_owner(self, group, first):
-        low, high = group['islands'][0]
+        low, high = group['islands'][0][0], group['islands'][-1][1]
         return Contact(len(self.contacts), self.epoch, '', 'unknown', first,
                        group['last_sample'], low, high, True, first_seen_sample=first)
 
@@ -903,6 +939,7 @@ class OvergroundRunningProcessor:
                              if r['outcome'] in {'pending','unresolved'})
         inherit_wait = (closed is not None or isinstance(candidate, Contact) and self._contact_competition_pending(candidate)
                         or not isinstance(candidate, Contact) and 'competing_group_id' in candidate)
+        self._shape_recorder.bind_source(source_id, candidate)
         return {**self._candidate_row(candidate, 'group_pending', 'ownership_pending'),
                 'source_id': source_id, 'unresolved_since_sample': since,
                 **({'observation_wait_since': wait_since} if inherit_wait else {}),
@@ -1357,6 +1394,7 @@ class OvergroundRunningProcessor:
                                     and self._previous_frame.sample_index == n - 1
                                     and self._local_clear(self._previous_frame, low, high))
                 seed = seeds.get((low, high))
+                self._shape_recorder.inherit(c, seed)
                 if seed is not None:
                     c.start, c.touch_known = seed['start'], seed['touch_known']
                     c.first_seen_sample = seed['start']
@@ -1580,7 +1618,26 @@ class OvergroundRunningProcessor:
                     and n - self._clear_since + 1 >= self.config.exit_clear_ms):
                 self.finished_reason = "passage_complete"
         self._previous_frame = frame
+        self._shape_recorder.observe(self, frame, observation)
         self._record_visual(frame)
+
+    def visual_feet(self):
+        from engine.footfall_sides import event_sides
+        sides = event_sides(self.touch_events, self.config.starting_foot, self.issues)
+        feet = [{"contact_id": c.id, "side": sides.get(c.id, 'unknown'),
+                 "side_authoritative": c.id in sides, "label": c.label,
+                 "centroid_cm": (self._landing_positions.get(c.id, (self.positions[c.low] + self.positions[c.high]) / 2) * 100
+                                 if c.problem or c.interrupted else (self.positions[c.low] + self.positions[c.high]) * 50),
+                 "length_cm": None if c.problem or c.interrupted else (self.positions[c.high] - self.positions[c.low]) * 100,
+                 "shape_valid": not c.problem and not c.interrupted,
+                 "status": "confirmed" if self._touch_events.get(c.id, {}).get('active') else "candidate"}
+                for c in self.active if c.observed_samples >= 3 or self._touch_events.get(c.id, {}).get('active')]
+        feet.extend({"contact_id": f"pending:{q['start']}:{q['low']}",
+                     "side": "unknown", "label": "",
+                     "centroid_cm": (self.positions[q['low']] + self.positions[q['high']]) * 50,
+                     "length_cm": None, "shape_valid": False, "status": "candidate"}
+                    for q in self._narrow_candidates if q['samples'] >= 3)
+        return feet
 
     def _record_visual(self, frame, *, force=False):
         n = frame.sample_index
@@ -1590,13 +1647,7 @@ class OvergroundRunningProcessor:
                                   "segment_ids": tuple(s.segment_id for s in self.device.layout.segments),
                                   "contact_bits": list(frame.contact_bits), "positions_m": self.positions,
                                   "valid_bits": list(frame.valid_bits), "quality_flags": list(frame.quality_flags),
-                                  "feet": [{"contact_id": c.id, "side": 'unknown' if c.problem or c.interrupted else c.side, "label": c.label,
-                                            "centroid_cm": (self._landing_positions.get(c.id, (self.positions[c.low] + self.positions[c.high]) / 2) * 100
-                                                            if c.problem or c.interrupted else (self.positions[c.low] + self.positions[c.high]) * 50),
-                                            "length_cm": None if c.problem or c.interrupted else (self.positions[c.high] - self.positions[c.low]) * 100,
-                                            "shape_valid": not c.problem and not c.interrupted,
-                                            "status": "confirmed" if self._touch_events.get(c.id, {}).get('active') else "candidate"}
-                                           for c in self.active]})
+                                  "feet": self.visual_feet()})
 
     def _phase(self, n, count):
         if self.phases and self.phases[-1][1:] == [n, count, self.epoch]:
@@ -1770,6 +1821,8 @@ class OvergroundRunningProcessor:
         return sorted(stops.items())
 
     def summary(self):
+        from engine.footfall_sides import event_sides, SIDE_POLICY
+        event_side = event_sides(self.touch_events, self.config.starting_foot, self.issues)
         origin = self.origin or 0
         stops = self._stop_intervals()
         def barrier(cs, temporal=False):
@@ -1821,8 +1874,8 @@ class OvergroundRunningProcessor:
                 "incomplete_contact" if not (touch["valid"] and lift["valid"]) else None)
             if any(c.start < b and (c.end or c.last + 1) > a for a, b in stops):
                 reason = "stop_interval"
-            rows.append({"id": c.id, "epoch": c.epoch, "label": c.label, "side": c.side,
-                         "identity_source": "manual_first_foot_and_alternation" if c.side != "unknown" else "alternation_only",
+            rows.append({"id": c.id, "epoch": c.epoch, "label": c.label, "side": event_side.get(c.id, 'unknown'),
+                         "identity_source": SIDE_POLICY,
                          "touch_s": touch, "lift_s": lift, "toe_m": self._toe(c),
                          "contact_s": metric((c.end - c.start) / 1000 if c.end is not None else None, reason),
                          "candidate_outcome": c.candidate_outcome,
@@ -1856,7 +1909,7 @@ class OvergroundRunningProcessor:
                                  or (None if br["touch_s"]["valid"] else "touch_not_observed")
                                  or self._flight_release_reason(a.start, b.start, a.epoch, rows))
             flight = metric(support[0] if support else None, flight_reason)
-            steps.append({"from_id": a.id, "to_id": b.id, "side": b.side,
+            steps.append({"from_id": a.id, "to_id": b.id, "side": event_side.get(b.id, 'unknown'),
                           "length_m": length, "time_s": dt, "speed_m_s": speed, "flight_s": flight})
             if i < 2:
                 continue
@@ -1871,7 +1924,8 @@ class OvergroundRunningProcessor:
             if any(c.last + 1 <= z.start and not rows[c.id]['lift_s']['valid'] for c in (x, y)):
                 phase_reason = phase_reason or "lift_not_observed"
             spatial_reason = barrier([x, y, z]) or why or (None if xr["toe_m"]["valid"] and zr["toe_m"]["valid"] else "toe_unavailable")
-            cycles.append({"from_id": x.id, "to_id": z.id, "label": x.label, "side": x.side,
+            cycles.append({"from_id": x.id, "to_id": z.id, "label": x.label,
+                           "side": event_side.get(x.id, 'unknown') if event_side.get(x.id) == event_side.get(z.id) else 'unknown',
                            "duration_s": metric((z.start - x.start) / 1000, time_reason),
                            "length_m": metric(abs(zr["toe_m"]["value"] - xr["toe_m"]["value"]) if not spatial_reason else None, spatial_reason),
                            "contact_s": metric(xr["contact_s"]["value"], xr["contact_s"]["missing_reason"]),
@@ -1913,7 +1967,8 @@ class OvergroundRunningProcessor:
                 (self._duration_censored and (self._duration_clear_upper is None
                                              or end is None or end < self._duration_clear_upper))):
             duration = None
-        return {"segment_count": len(self.device.layout.segments), "nominal_length_m": len(self.device.layout.segments),
+        summary = {"segment_count": len(self.device.layout.segments), "nominal_length_m": len(self.device.layout.segments),
+                "side_policy": SIDE_POLICY,
                 "direction": self.direction, "duration_s": duration, "valid_steps": sum(s["time_s"]["valid"] for s in steps),
                 "valid_cycles": sum(c["duration_s"]["valid"] for c in cycles), "step_lengths_m": lengths,
                 "running_speed_m_s": speed, "contacts": rows, "steps": steps, "cycles": cycles,
@@ -1943,19 +1998,33 @@ class OvergroundRunningProcessor:
                 "stops": [{"start_s": a / 1000 - origin, "end_s": b / 1000 - origin} for a, b in stops],
                 "issues": [{**x, "time_s": x["sample"] / 1000 - origin} for x in self.issues],
                 "status": "出口证据不足，可手动结束" if self._clear_since is not None and not self._exit_evidence else "跑步中"}
+        from engine.ground_bilateral import build_bilateral
+        summary['contact_phases'] = build_contact_phases(self, summary, 'run')
+        summary['bilateral'] = build_bilateral(summary, 'run', self.config.starting_foot)
+        return summary
 
     def build_report(self, reason, export_frames=(), export_timestamps=()):
         self._close_ownership_groups(reason, self.last_sample)
         self._publication_closed = True
         self._commit_contacts()
         summary = self.summary()
+        # Keep observed spans for explicitly labelled report estimates, even
+        # when strict single-foot boundary reconstruction is unavailable.
+        from engine.landing_reference import first_contact_reference
+        for row in summary['contacts']:
+            contact = self.contacts[row['id']]
+            row['landing_reference'] = first_contact_reference(
+                self.positions, contact.start, [(a, lo, hi, []) for a, b, lo, hi in contact.edges],
+                self.device.bad_indices)
+            row['observed_start_s'] = contact.start / 1000 - (self.origin or 0)
+            row['observed_end_s'] = contact.end / 1000 - (self.origin or 0) if contact.end is not None else None
         return OvergroundRunningReport(
             touch_count=summary['valid_touches'],
             lift_count=sum(r['lift_s']['valid'] for r in summary['contacts']),
             finish_reason=reason, running_summary=summary, visual_timeline=tuple(self.timeline),
             export_frames=export_frames, export_timestamps=export_timestamps,
             report_config_snapshot={**self.config.to_dict(), "device": self.device.snapshot(),
-                                    "algorithm": "overground_running_v1.12", "metric_policy": METRIC_POLICY, "spatial_reference": "toe_to_toe",
+                                    "algorithm": "overground_running_v1.13", "metric_policy": METRIC_POLICY, "spatial_reference": "toe_to_toe",
                                     "toe_method": "furthest_stable_leading_edge_platform_median",
                                     "readiness_stale_ms": 500, "data_timeout_ms": 1000,
                                     "tracking": {"direction_displacement_m": self.DIRECTION_DISPLACEMENT_M,

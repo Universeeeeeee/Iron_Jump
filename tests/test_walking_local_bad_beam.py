@@ -47,20 +47,25 @@ def test_remote_touch_and_release_are_observed_during_local_bad_boundary(qtbot, 
     assert len(healthy) == 1
     assert healthy[0].end == pytest.approx(.75)
     assert healthy[0].confirmed and not healthy[0].exclusion
-    assert healthy[0].side == 'unknown'
-    assert len(p.contacts) == 3  # the censored foot rolling away is not a new touch
-    assert p.contacts[0].exclusion == 'masked_contact_boundary'
-    assert p.contacts[0].end is None  # no invented release through the unavailable beam
-    assert s['valid_steps'] == (1 if head else 2)
-    assert s['valid_cycles'] == (0 if head else 1)
-    assert s['valid_step_lengths'] == 1
-    assert s['valid_support_cycles'] == 0  # never fill support across the censored foot
+    assert [e['touch_sample'] for e in p.touch_events if e['active']] == [100, 400, 700]
+    if head:
+        assert len(p.contacts) == 3
+        assert p.contacts[0].end == pytest.approx(.6)
+        assert not p.contacts[0].exclusion
+        assert s['valid_steps'] == 2 and s['valid_support_cycles'] == 1
+    else:
+        # Both healthy sides remain separate observations, not a fabricated bridge.
+        assert len(p.contacts) == 4
+        assert p.contacts[1].bad_separator_unknown
+        assert not s['contacts'][0]['lift_s']['valid']
+        assert not s['contacts'][0]['contact_s']['valid']
+        assert s['valid_support_cycles'] == 0
     assert not any(c.exclusion == 'unknown_touch_after_gap' for c in p.contacts)
 
 
-def test_local_bad_contact_keeps_duration_censored_when_it_is_first_activity(qtbot):
+def test_adjacent_healthy_first_activity_keeps_its_observed_duration(qtbot):
     _,s = capture(head=True)
-    assert s['duration_s'] is None
+    assert s['duration_s'] == pytest.approx(.9)
 
 
 def test_already_confirmed_remote_foot_can_lift_during_local_mask(qtbot):
@@ -79,4 +84,4 @@ def test_already_confirmed_remote_foot_can_lift_during_local_mask(qtbot):
     first = session.processor.contacts[0]
     assert first.confirmed and not first.exclusion
     assert first.start == pytest.approx(.1) and first.end == pytest.approx(.4)
-    assert session.processor.summary()['duration_s'] is None
+    assert session.processor.summary()['duration_s'] == pytest.approx(.6)

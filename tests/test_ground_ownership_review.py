@@ -12,8 +12,8 @@ def test_slow_unconfirmed_source_can_grow_after_connection():
         feed(p,n,groups)
     assert [e['touch_sample'] for e in p.touch_events if e['active']]==[100]
     g=next(g for g in p._ownership_groups if g.get('recovery'))
-    assert g['recovery']['valid_sample_intervals']==[[100,189]]
-    assert g['recovery']['unique_samples']==89
+    assert g['recovery']['valid_sample_intervals']==[[100,187]]
+    assert g['recovery']['unique_samples']==87
 
 @pytest.mark.parametrize('grow', [False,True])
 @pytest.mark.parametrize('distance', [3,50])

@@ -1,7 +1,6 @@
 import pytest
 import numpy as np
 
-pytest.importorskip("dayu_widgets")
 
 from ui.embedded_camera_panel import EmbeddedCameraPanel
 

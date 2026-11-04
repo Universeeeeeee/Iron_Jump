@@ -35,12 +35,12 @@ def test_early_growth_recovers_with_or_without_other_foot(mode, anchor):
 
 
 @pytest.mark.parametrize('mode', ['walk', 'run'])
-@pytest.mark.parametrize('kind', ['no_growth', 'two_wide_sources', 'long_separation', 'mature_overlap'])
+@pytest.mark.parametrize('kind', ['too_narrow', 'two_wide_sources', 'long_separation', 'mature_overlap'])
 def test_competing_or_insufficient_evidence_stays_unknown(mode, kind):
     p = make(mode)
     for n in range(500):
-        if kind == 'no_growth':
-            groups = [(40,43),(46,49)] if n == 100 else [(40,49)] if 101 <= n < 400 else []
+        if kind == 'too_narrow':
+            groups = [(40,42),(45,47)] if n == 100 else [(40,47)] if 101 <= n < 400 else []
         elif kind == 'two_wide_sources':
             groups = [(40,49),(52,61)] if n == 100 else [(40,61)] if 101 <= n < 400 else []
         elif kind == 'long_separation':
@@ -57,7 +57,7 @@ def test_competing_or_insufficient_evidence_stays_unknown(mode, kind):
 def test_reliable_count_does_not_wait_for_earlier_unknown_order(mode):
     p = make(mode)
     for n in range(350):
-        groups = [(40,43),(46,49)] if n == 100 else [(40,49)] if 101 <= n < 300 else []
+        groups = [(40,42),(45,47)] if n == 100 else [(40,47)] if 101 <= n < 300 else []
         if 150 <= n < 340: groups += [(200,220)]
         feed(p,n,groups)
         if n == 209:
@@ -160,7 +160,7 @@ def test_session_counter_publishes_reliable_touch_before_sequence(qtbot, mode):
     session = OvergroundSession(p.config,type(p)); session.start_prepared(p.device)
     snapshots=[]; session.snapshot.connect(snapshots.append)
     for n in range(260):
-        groups = [(40,43),(46,49)] if n == 100 else [(40,49)] if 101 <= n else []
+        groups = [(40,42),(45,47)] if n == 100 else [(40,47)] if 101 <= n else []
         if 150 <= n: groups += [(200,220)]
         bits=bytearray(len(p.positions))
         for low,high in groups: bits[low:high+1]=b'\x01'*(high-low+1)

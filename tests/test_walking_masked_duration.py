@@ -36,12 +36,12 @@ def capture(end, *, near_bad=True, later_healthy=False):
 
 
 @pytest.mark.parametrize('end', [750, 1000])
-def test_masked_activity_at_end_does_not_report_an_earlier_duration(qtbot, end):
+def test_healthy_adjacent_activity_contributes_its_observed_tail(qtbot, end):
     p, report, raw = capture(end)
     occupied = [n for n, bits in enumerate(raw) if any(b for i, b in enumerate(bits) if i != 576)]
     assert occupied[0] == 100 and occupied[-1] == min(end, 900) - 1
-    assert any(issue['code'] == 'masked_contact_boundary' for issue in p.issues)
-    assert report.walking_summary['duration_s'] is None
+    assert not p.issues
+    assert report.walking_summary['duration_s'] == pytest.approx((occupied[-1] + 1 - occupied[0]) / 1000)
     # Missing passage duration must not erase an earlier complete contact.
     first = report.walking_summary['contacts'][0]
     assert first['exclusion'] is None
@@ -50,7 +50,7 @@ def test_masked_activity_at_end_does_not_report_an_earlier_duration(qtbot, end):
 
 def test_later_complete_healthy_contact_restores_passage_duration(qtbot):
     p, report, raw = capture(1400, later_healthy=True)
-    assert any(issue['code'] == 'masked_contact_boundary' for issue in p.issues)
+    assert not p.issues
     assert report.walking_summary['duration_s'] == pytest.approx(1.1)
     assert raw[1199][680] and not raw[1200][680]
     assert p.contacts[-1].end == pytest.approx(1.2)
@@ -63,7 +63,7 @@ def test_masked_bad_bit_without_neighbor_activity_keeps_valid_duration(qtbot):
     assert report.walking_summary['duration_s'] == pytest.approx(.2)
 
 
-def test_masked_first_activity_cannot_become_a_later_partial_duration():
+def test_healthy_adjacent_first_activity_sets_the_real_duration_origin():
     layout = DeviceLayout.linear(8)
     p = WalkingProcessor(WalkingConfig(stop_type='Software command'),
                          PreparedDevice(layout, 'head', -1, 0, 3000, bad_indices=(576,)))
@@ -77,7 +77,8 @@ def test_masked_first_activity_cannot_become_a_later_partial_duration():
                             bytes(bits), b'\x01' * layout.bit_count, b'')
         p.process(frame, masked_contact=uncertain_contact(frame, p.device.bad_indices))
     s = p.summary()
-    assert s['duration_s'] is None
+    assert s['duration_s'] == pytest.approx(.7)
+    assert s['contacts'][0]['touch_sample'] == 100
     assert s['contacts'][-1]['end'] - s['contacts'][-1]['start'] == pytest.approx(.3)
 
 

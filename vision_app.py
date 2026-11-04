@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import qt_runtime
+
 import argparse
 import json
 import logging

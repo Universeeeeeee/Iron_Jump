@@ -79,6 +79,9 @@ def test_entry_requires_ready_state_supported_report_and_persisted_session(qtbot
     assert view._analysis_panel.isHidden()
 
     view.set_analysis_availability(True)
+    assert not view._analysis_entry.isHidden()
+    assert view._analysis_panel.isHidden()
+    view._analysis_entry.click()
     assert not view._analysis_panel.isHidden()
     _wait_idle(qtbot, view)
     assert client.latest_calls[0][0] == 12
@@ -114,7 +117,9 @@ def test_user_click_starts_one_analysis_and_displays_only_returned_validated_res
     view.load_report(_report(), 12)
     _wait_idle(qtbot, view)
 
+    view._open_analysis()
     view._analysis_button.click()
+    view._open_analysis()
     view._analysis_button.click()
     _wait_idle(qtbot, view)
 
@@ -137,6 +142,7 @@ def test_failed_analysis_never_displays_partial_draft(qtbot):
     view.load_report(_report(), 12)
     _wait_idle(qtbot, view)
 
+    view._open_analysis()
     view._analysis_button.click()
     _wait_idle(qtbot, view)
 
@@ -161,6 +167,7 @@ def test_timeout_errors_have_specific_messages(qtbot, error_code, expected):
     view.load_report(_report(), 12)
     _wait_idle(qtbot, view)
 
+    view._open_analysis()
     view._analysis_button.click()
     _wait_idle(qtbot, view)
 
@@ -282,3 +289,59 @@ def test_missing_rag_audit_does_not_show_degradation(qtbot):
     )
 
     assert "循证建议暂时不可用" not in view._analysis_result.text()
+
+
+def test_long_analysis_does_not_shrink_report_and_can_be_closed(qtbot):
+    view = ReportView(llm_client=_FakeAnalysisClient())
+    qtbot.addWidget(view)
+    view.resize(1100, 760)
+    view.show()
+    view.set_analysis_availability(True)
+    view.load_report(_report(), 12)
+    _wait_idle(qtbot, view)
+    before = view._tabs.geometry()
+    view._analysis_entry.click()
+    view.show_validated_analysis({"claims": [{"text": "长分析结果。" * 40, "limitations": []} for _ in range(80)]})
+    qtbot.waitUntil(lambda: view._analysis_scroll.verticalScrollBar().maximum() > 0)
+    assert view._tabs.geometry() == before
+    assert view._analysis_close_button.isVisible()
+    view._analysis_close_button.click()
+    assert view._analysis_panel.isHidden()
+    assert view._tabs.geometry() == before
+    view._analysis_entry.click()
+    assert not view._analysis_panel.isHidden()
+    assert "长分析结果" in view._analysis_result.text()
+    view._analysis_panel.reject()
+    assert view._analysis_panel.isHidden()
+
+
+def test_close_during_analysis_is_not_undone_by_late_result(qtbot):
+    view = ReportView(llm_client=_FakeAnalysisClient(delay=.1))
+    qtbot.addWidget(view)
+    view.show()
+    view.set_analysis_availability(True)
+    view.load_report(_report(), 12)
+    _wait_idle(qtbot, view)
+    view._analysis_entry.click()
+    view._analysis_button.click()
+    view._analysis_close_button.click()
+    assert view._analysis_panel.isHidden()
+    _wait_idle(qtbot, view)
+    assert view._analysis_panel.isHidden()
+    assert "后半程触地时间增加" in view._analysis_result.text()
+
+
+def test_leaving_or_switching_report_closes_analysis_window(qtbot):
+    view = ReportView(llm_client=_FakeAnalysisClient())
+    qtbot.addWidget(view)
+    view.show()
+    view.set_analysis_availability(True)
+    view.load_report(_report(), 12)
+    _wait_idle(qtbot, view)
+    view._analysis_entry.click()
+    view.load_report(_report(), 13)
+    assert view._analysis_panel.isHidden()
+    _wait_idle(qtbot, view)
+    view._analysis_entry.click()
+    view.hide()
+    assert view._analysis_panel.isHidden()

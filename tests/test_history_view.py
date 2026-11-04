@@ -131,7 +131,7 @@ class HistoryViewTest(unittest.TestCase):
         treadmill_index = next(
             index
             for index in range(view._test_type_filter.count())
-            if "Treadmill" in view._test_type_filter.itemText(index)
+            if view._test_type_filter.itemData(index) == "Treadmill Gait Test"
         )
         view._test_type_filter.setCurrentIndex(treadmill_index)
 
@@ -342,6 +342,7 @@ class HistoryViewTest(unittest.TestCase):
                 """
             )
 
+        conn.close()
         store = SubjectStore(legacy_path)
         self.assertTrue(store.get_session(7).is_temporary)
         store.link_session_to_subject(7, 1)

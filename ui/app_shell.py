@@ -7,13 +7,7 @@ import os
 from qtpy.QtCore import Signal, Qt
 from qtpy.QtGui import QPixmap
 from qtpy.QtWidgets import (
-    QButtonGroup,
-    QFrame,
-    QHBoxLayout,
-    QLabel,
-    QPushButton,
-    QSizePolicy,
-    QVBoxLayout,
+    QButtonGroup, QFrame, QHBoxLayout, QLabel, QPushButton, QSizePolicy, QVBoxLayout,
     QWidget,
 )
 
@@ -21,6 +15,7 @@ from path_utils import get_base_dir
 
 from ui.styles import SHELL_QSS, APP_DIALOG_QSS
 from ui.theme import SPACE
+from ui.icons import navigation_pixmap
 
 
 MODULE_ATHLETES = "athletes"
@@ -34,14 +29,6 @@ MODULE_LABELS = {
     MODULE_RESULTS: "结果",
     MODULE_SETTINGS: "设置",
 }
-
-MODULE_GLYPHS = {
-    MODULE_ATHLETES: "○",
-    MODULE_TEST: "▷",
-    MODULE_RESULTS: "▥",
-    MODULE_SETTINGS: "⚙",
-}
-
 
 class ApplicationSidebar(QFrame):
     """Fixed expanded navigation. Collapsing is intentionally deferred."""
@@ -103,8 +90,9 @@ class ApplicationSidebar(QFrame):
             button_layout.setContentsMargins(SPACE["lg"], 0, SPACE["control"], 0)
             button_layout.setSpacing(13)
 
-            glyph = QLabel(MODULE_GLYPHS[module])
+            glyph = QLabel()
             glyph.setObjectName("NavGlyph")
+            glyph.setPixmap(navigation_pixmap(module))
             glyph.setAlignment(Qt.AlignCenter)
             glyph.setAttribute(Qt.WA_TransparentForMouseEvents)
             glyph_font = glyph.font()
@@ -143,6 +131,8 @@ class ApplicationSidebar(QFrame):
                     if label is None:
                         continue
                     label.setProperty("active", active)
+                    if object_name == "NavGlyph":
+                        label.setPixmap(navigation_pixmap(key, active))
                     label.style().unpolish(label)
                     label.style().polish(label)
 

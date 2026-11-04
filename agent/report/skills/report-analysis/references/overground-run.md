@@ -26,3 +26,22 @@ associations. Small samples must yield inconclusive evidence or a normal stop.
 Describe only verified within-session patterns, without causal, diagnostic or
 training-effect claims. Ground running has no approved matching literature
 source at present; do not borrow treadmill training evidence.
+
+## Primary displayed measurements
+
+The report overview, PDF and identified-footprint Excel sheet use the shared
+`payload.recognized_measurements` policy. Use `recognized_step_length_m`,
+`recognized_speed_m_s`, `recognized_cadence_per_min` and
+`recognized_contact_time_s` for questions about those displayed values. Their
+scalar facts and sample sets are authoritative; do not replace them with older
+`ground_step` or `ground_cycle` averages, which use different reference points
+or inclusion rules. Name the reference and sample count when comparing them.
+
+`recognized_footprint` keeps every accepted landing, but each metric is valid
+independently. An interval with an unresolved intermediate candidate is retained
+as an interval observation, not a single step. `observed_span_s` is an optical
+occupancy span and must never be described as a measured single-foot contact or
+included in contact-time averages. Stops remain visible and are excluded from
+moving-contact means. New onset references are independent of the confirmation
+threshold; older snapshots may instead retain validated stance/toe references.
+Do not mix different position-reference types within one spatial comparison.

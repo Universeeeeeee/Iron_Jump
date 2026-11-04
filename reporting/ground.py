@@ -10,7 +10,7 @@ from .models import GroundPayload, MetricValue, QualityFlag, RecordSet, RecordSt
 _WALK_METRICS = {
     "contacts": {"contact_time_s": "contact_time_s"},
     "steps": {"step_length_m": "length_m", "step_time_s": "time_s", "speed_m_s": "speed_m_s"},
-    "cycles": {"gait_cycle_s": "duration_s", "single_support_s": "single_support_s", "total_double_support_s": "double_support_s"},
+    "cycles": {"gait_cycle_s": "duration_s", "cycle_single_support_total_s": "single_support_s", "total_double_support_s": "double_support_s"},
 }
 _RUN_METRICS = {
     "contacts": {"contact_time_s": "contact_s"},
@@ -39,8 +39,12 @@ def walking_position_value(contact):
 def build_ground_data(builder, package_id, report):
     walking = isinstance(report, GaitTestReport)
     summary = report.walking_summary if walking else report.running_summary
+    if walking and 'footfalls' in summary:
+        from config.footfall_events import validate_footfalls
+        validate_footfalls(summary)
     source_name = "walking_summary" if walking else "running_summary"
     mappings = _WALK_METRICS if walking else _RUN_METRICS
+    bilateral = summary.get('bilateral', {})
     if walking and any('centre_m' in row for row in summary['contacts']):
         mappings = {**mappings, 'contacts': {**mappings['contacts'], 'centre_m': 'centre_m'}}
     contacts = {row["id"]: row for row in summary["contacts"]}
@@ -88,6 +92,20 @@ def build_ground_data(builder, package_id, report):
                     touch = contacts.get(row.get("from_id"), {}).get("touch_s")
                 timestamp = touch["value"] if touch and touch["valid"] else None
                 values = {code: _running_metric(code, row.get(field)) for code, field in mappings[kind].items()}
+            bilateral_rows = bilateral.get('records', {}).get(kind, [])
+            if bilateral_rows:
+                derived = bilateral_rows[ordinal]
+                values.update({code: _running_metric(code, item) for code, item in derived['metrics'].items()})
+                if any(item['valid'] for item in derived['metrics'].values()):
+                    exclusion = None
+                sources[record_id]['bilateral_source_ref'] = derived['source_ref']
+                sources[record_id]['bilateral_metrics'] = deepcopy(derived['metrics'])
+                sources[record_id]['derivation_contact_ids'] = derived.get('derivation_contact_ids', derived['contact_ids'])
+                if kind == 'contacts':
+                    evidence = next((p for p in summary.get('contact_phases', {}).get('contacts', [])
+                                     if p['contact_id'] == row['id']), None)
+                    if evidence is not None:
+                        sources[record_id]['contact_phase_boundaries'] = deepcopy(evidence['boundaries'])
             has_values = any(value.state == "present" for value in values.values())
             if not has_values and exclusion is None:
                 exclusion = "no_valid_metrics"
@@ -107,8 +125,9 @@ def build_ground_data(builder, package_id, report):
                                     inclusion="excluded" if exclusion else "included", exclusion_reason=exclusion),
                 quality_flag_ids=tuple(flag.quality_flag_id for flag in row_flags), values=values,
             ))
+        extra_codes = tuple(bilateral.get('records', {}).get(kind, [{}])[0].get('metrics', {})) if bilateral.get('records', {}).get(kind) else ()
         record_sets.append(RecordSet(record_set_id=set_id, record_type=record_type,
-                                    metric_codes=tuple(mappings[kind]), records=tuple(records)))
+                                    metric_codes=tuple(dict.fromkeys((*mappings[kind], *extra_codes))), records=tuple(records)))
 
     facts = [builder._fact(package_id, code, "count", getattr(report, code), "count", 1)
              for code in ("touch_count", "lift_count")]
@@ -124,7 +143,7 @@ def build_ground_data(builder, package_id, report):
             ("contact_time_s", "mean_contact_s", summary.get("valid_contact_durations", contact_count)),
             ("speed_m_s", "walking_speed_m_s", summary.get("valid_step_speeds", summary.get("valid_step_lengths", summary["valid_steps"]))),
             ("cadence_steps_per_min", "cadence_per_min", summary["valid_steps"]),
-            ("single_support_s", "single_support_s", summary.get("valid_support_cycles", summary["valid_cycles"])),
+            ("cycle_single_support_total_s", "single_support_s", summary.get("valid_support_cycles", summary["valid_cycles"])),
             ("total_double_support_s", "double_support_s", summary.get("valid_support_cycles", summary["valid_cycles"])),
         ):
             add_fact(code, summary.get(key), count, source_name + ":" + key)
@@ -141,6 +160,14 @@ def build_ground_data(builder, package_id, report):
         speed_count = summary.get('valid_step_speeds', sum(s['speed_m_s']['valid'] for s in summary['steps']))
         add_fact("speed_m_s", summary.get("running_speed_m_s"), speed_count, source_name)
 
+    if bilateral:
+        from engine.ground_bilateral import PHASES
+        phase_codes = {f'{phase}_{unit}' for phase in PHASES for unit in ('s', 'percent')}
+        facts = [fact for fact in facts if fact.metric_code not in phase_codes]
+        for code in sorted(phase_codes):
+            stats = bilateral['statistics'][code]['all']
+            add_fact(code, stats['mean'], stats['count'], source_name + ':bilateral:statistics:' + code)
+
     for kind in ("issues", "stops"):
         for ordinal, item in enumerate(summary[kind]):
             flags.append(QualityFlag(quality_flag_id=_stable_id(package_id, kind, ordinal),
@@ -153,20 +180,68 @@ def build_ground_data(builder, package_id, report):
     flags.append(QualityFlag(quality_flag_id=_stable_id(package_id, "ground_contract"),
                              code="ground_measurement_scope", severity="info", scope="report", source_ref=source_name,
                              details={"spatial_reference": "contact_center" if walking else "stable_toe_proxy",
-                                      "identity_basis": "manual_first_foot_and_alternation" if anchored else "alternation_only",
+                                      "identity_basis": summary.get('side_policy', "manual_first_foot_and_alternation") if anchored else "alternation_only",
                                       "segment_count": summary["segment_count"],
                                       "steps_and_cycles": "producer records only; excluded candidates are not reconstructed",
-                                      "walking_stride": "aggregate only; no invented cycle-to-stride pairing" if walking else None,
+                                      "walking_stride": ("source contact ids bind each stride to its cycle" if bilateral else
+                                                         "aggregate only; no invented cycle-to-stride pairing") if walking else None,
                                       "finish_reason": report.finish_reason,
                                       **({"metric_policy": summary['metric_policy'],
                                           "event_publications": deepcopy(summary.get('event_publications', [])),
                                           "event_audit": deepcopy(summary.get('event_audit', [])),
                                           "ownership_recoveries": deepcopy(summary.get('ownership_recoveries', []))}
                                          if 'metric_policy' in summary else {})}))
+    footfall_set_id = None
+    if walking and 'footfalls' in summary:
+        footfall_set_id = _stable_id(package_id, 'record_set', 'ground_footfall')
+        rows = []
+        # Existing gait metrics remain exclusively in their original record sets.
+        # A footfall adds identity/onset evidence, not duplicate step statistics.
+        codes = {'footfall_time_s': 'touch_s'}
+        for ordinal, row in enumerate(summary['footfalls']):
+            record_id = _stable_id(footfall_set_id, 'record', row['event_id'])
+            sources[record_id] = dict(source_ref=f'{source_name}:footfalls:{ordinal}', row=deepcopy(row))
+            values = {code: _running_metric(code, row[field]) for code, field in codes.items()}
+            values['raw_landing_position_m'] = _metric_value('raw_landing_position_m', row['raw_landing_position_m'])
+            rows.append(SemanticRecord(record_id=record_id, ordinal=ordinal, source_index=row['contact_id'],
+                timestamp_s=row['timestamp_s'], side=row['side'] if anchored else 'unknown',
+                status=RecordStatus(validity='valid', inclusion='included'), values=values))
+        record_sets.append(RecordSet(record_set_id=footfall_set_id, record_type='ground_footfall',
+                           metric_codes=tuple(codes) + ('raw_landing_position_m',), records=tuple(rows)))
+        add_fact('recognized_steps', summary['recognized_steps'], 1, source_name + ':recognized_steps', 'count')
+    from .recognized_gait import recognized_gait
+    recognized = recognized_gait(summary)
+    if recognized['supported']:
+        codes = {'recognized_step_length_m': 'step_length_m', 'recognized_step_time_s': 'step_time_s',
+                 'recognized_speed_m_s': 'speed_m_s', 'recognized_contact_time_s': 'contact_s'}
+        set_id = _stable_id(package_id, 'record_set', 'recognized_footprint')
+        records = []
+        for i, row in enumerate(recognized['rows']):
+            record_id = _stable_id(set_id, 'record', row['event_id'])
+            sources[record_id] = dict(source_ref=f'recognized_measurements:rows:{i}', row=deepcopy(row))
+            values = {code: _metric_value(code, row[key]) for code, key in codes.items()}
+            if not row['contact_included']:
+                values['recognized_contact_time_s'] = MetricValue(metric_code='recognized_contact_time_s',
+                    state='invalid', reason=row['contact_exclusion'])
+            records.append(SemanticRecord(record_id=record_id, ordinal=i, source_index=row['contact_id'],
+                timestamp_s=row['relative_time_s'], side='unknown',
+                status=RecordStatus(validity='valid', inclusion='included'), values=values))
+        record_sets.append(RecordSet(record_set_id=set_id, record_type='recognized_footprint',
+                                    metric_codes=tuple(codes), records=tuple(records)))
+        for code, key, count in (
+            ('recognized_step_length_m', 'mean_step_m', 'spatial_interval_count'),
+            ('recognized_speed_m_s', 'speed_m_s', 'spatial_interval_count'),
+            ('recognized_cadence_per_min', 'cadence_per_min', 'interval_count'),
+            ('recognized_contact_time_s', 'mean_contact_s', 'contact_count')):
+            add_fact(code, recognized[key], recognized[count], 'recognized_measurements:' + key)
+        if not (walking and 'footfalls' in summary):
+            add_fact('recognized_steps', recognized['recognized_steps'], 1, 'recognized_measurements:recognized_steps', 'count')
     payload = GroundPayload(kind="overground_walk" if walking else "overground_run",
                             contact_record_set_id=record_sets[0].record_set_id,
                             step_record_set_id=record_sets[1].record_set_id,
                             gait_cycle_record_set_id=record_sets[2].record_set_id,
                             spatial_reference="contact_center" if walking else "stable_toe_proxy",
-                            record_sources=sources)
+                            record_sources=sources, footfall_record_set_id=footfall_set_id,
+                            recognized_steps=recognized['recognized_steps'] if recognized['supported'] else None,
+                            recognized_measurements=recognized, bilateral=deepcopy(bilateral))
     return record_sets, facts, flags, payload

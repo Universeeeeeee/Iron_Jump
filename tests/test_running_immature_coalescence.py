@@ -27,10 +27,10 @@ def test_immature_coalescence_preserves_sources_and_later_healthy_relations(anch
  p=replay(anchor=anchor,kind=kind);s=p.summary()
  assert not any(x['code']=='ambiguous_contacts' for x in p.issues)
  parent=next(c for c in p.contacts if c.start==300 and c.candidate_outcome!='associated_fragment')
- assert parent.problem=='unresolved_coalescence' and not parent.touch_known
+ assert parent.problem=='unresolved_fragment_join' and parent.touch_known
  row=s['contacts'][parent.id]
- assert row['first_seen_sample']==300 and row['touch_sample'] is None
- assert not row['toe_m']['valid'] and parent.side=='unknown' and not parent.label
+ assert row['first_seen_sample']==300 and row['touch_sample']==300
+ assert row['toe_m']['valid'] and parent.side=='unknown' and parent.label
  assert parent.end==550 and parent.observed_samples==250
  sources=[x for x in s['candidate_decisions'] if x['reason']=='immature_islands_coalesced']
  assert {x['first_sample'] for x in sources}=={300,302}

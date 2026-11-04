@@ -3,6 +3,8 @@
 Keep state selectors here and visual values in ui.theme. Fragments retain the
 existing cascade; views import the completed strings without assembling QSS.
 """
+from pathlib import Path
+
 from .theme import qss
 
 
@@ -130,7 +132,7 @@ QComboBox QAbstractItemView {
     background-color: ${control};
     color: ${text};
     selection-background-color: ${selection_popup};
-    selection-color: ${on_accent};
+    selection-color: ${text};
 }
 QFrame#ShellContent {
     background: ${background};
@@ -431,7 +433,7 @@ QTableWidget {
     border: none;
     gridline-color: ${table_grid};
     selection-background-color: ${selection_table};
-    selection-color: ${on_accent};
+    selection-color: ${text};
 }
 QHeaderView::section {
     background: ${surface_selected};
@@ -488,7 +490,7 @@ QTableWidget {
     border-radius: ${radius_card};
     gridline-color: ${table_grid};
     selection-background-color: ${selection_table};
-    selection-color: ${on_accent};
+    selection-color: ${text};
     font-size: 14px;
 }
 QTableWidget::item {
@@ -576,3 +578,191 @@ QPushButton:hover {
     background: ${control_hover};
 }
 """)
+
+
+# Primitive controls are styled explicitly, leaving video/plot QWidget surfaces alone.
+CONTROL_QSS = qss("""
+QLabel, QCheckBox, QRadioButton {
+    color: ${text};
+    background: transparent;
+}
+QPushButton, QToolButton {
+    color: ${text_button};
+    background: ${control};
+    border: 1px solid ${border_control};
+    border-radius: ${radius_control};
+    min-height: 32px;
+    padding: 0 12px;
+    font-size: 13px;
+}
+QPushButton:hover, QToolButton:hover {
+    background: ${control_hover};
+    border-color: ${text_hint};
+}
+QPushButton:pressed, QToolButton:pressed {
+    background: ${surface_selected};
+    border-color: ${accent};
+}
+QPushButton:focus, QToolButton:focus {
+    border-color: ${accent};
+}
+QPushButton[role="primary"] {
+    background: ${accent};
+    border-color: ${accent};
+    color: ${on_accent};
+    font-weight: 700;
+}
+QPushButton[role="primary"]:hover {
+    background: ${accent_hover};
+    border-color: ${accent_hover};
+}
+QPushButton[role="danger"] {
+    background: ${danger_surface};
+    border-color: ${danger_border};
+    color: ${danger_text};
+}
+QPushButton[role="danger"]:hover {
+    border-color: ${danger};
+}
+QPushButton[role="icon"] {
+    min-height: 0;
+    padding: 0;
+}
+QToolButton#SectionToggle {
+    text-align: left;
+    background: ${surface_selected};
+    color: ${text_secondary};
+    padding: 2px 10px;
+}
+QLineEdit, QComboBox, QSpinBox, QDoubleSpinBox, QTimeEdit {
+    background: ${control};
+    color: ${text};
+    border: 1px solid ${border_control};
+    border-radius: ${radius_control};
+    min-height: 32px;
+    padding: 0 9px;
+    font-size: 13px;
+    selection-background-color: ${selection_popup};
+    selection-color: ${text};
+}
+QLineEdit:hover, QComboBox:hover, QSpinBox:hover, QDoubleSpinBox:hover, QTimeEdit:hover {
+    border-color: ${text_hint};
+}
+QLineEdit:focus, QComboBox:focus, QSpinBox:focus, QDoubleSpinBox:focus, QTimeEdit:focus {
+    border-color: ${accent};
+}
+QLineEdit[invalid="true"], QComboBox[invalid="true"],
+QSpinBox[invalid="true"], QDoubleSpinBox[invalid="true"], QTimeEdit[invalid="true"] {
+    border-color: ${danger};
+}
+QComboBox::drop-down {
+    width: 24px;
+    border: none;
+}
+QComboBox::down-arrow {
+    image: url("${arrow_down}");
+    width: 12px;
+    height: 12px;
+}
+QSpinBox::up-arrow, QDoubleSpinBox::up-arrow, QTimeEdit::up-arrow {
+    image: url("${arrow_up}");
+    width: 10px;
+    height: 10px;
+}
+QSpinBox::down-arrow, QDoubleSpinBox::down-arrow, QTimeEdit::down-arrow {
+    image: url("${arrow_down}");
+    width: 10px;
+    height: 10px;
+}
+QAbstractSpinBox::up-button, QAbstractSpinBox::down-button {
+    width: 22px;
+    border: none;
+    background: ${control_stepper};
+}
+QComboBox QAbstractItemView, QMenu {
+    background: ${control};
+    color: ${text};
+    border: 1px solid ${border_control};
+    selection-background-color: ${selection_popup};
+    selection-color: ${text};
+    padding: 4px;
+}
+QMenu::item { padding: 7px 16px; }
+QMenu::item:selected { background: ${selection_popup}; }
+QMenu::separator { height: 1px; background: ${border_divider}; margin: 4px; }
+QTextEdit, QPlainTextEdit, QTextBrowser, QTableWidget, QTreeWidget, QListWidget {
+    background: ${control};
+    color: ${text};
+    border: 1px solid ${border_card};
+    border-radius: ${radius_control};
+    selection-background-color: ${selection_popup};
+    selection-color: ${text};
+}
+QHeaderView::section {
+    background: ${surface_selected};
+    color: ${text_secondary};
+    border: none;
+    border-bottom: 1px solid ${border_divider};
+    padding: 8px;
+}
+QScrollArea, QScrollArea > QWidget {
+    background: ${background};
+    border: none;
+}
+QCheckBox::indicator, QRadioButton::indicator {
+    width: 16px;
+    height: 16px;
+}
+QCheckBox::indicator:unchecked {
+    background: ${control};
+    border: 1px solid ${text_hint};
+    border-radius: 3px;
+}
+QCheckBox::indicator:checked {
+    background: ${accent};
+    border: 1px solid ${accent};
+    border-radius: 3px;
+    image: url("${checkmark}");
+}
+QToolTip {
+    color: ${text};
+    background: ${surface_selected};
+    border: 1px solid ${border_control};
+    padding: 6px;
+}
+QScrollBar:vertical { background: ${scroll_track}; width: 8px; margin: 0; }
+QScrollBar:horizontal { background: ${scroll_track}; height: 8px; margin: 0; }
+QScrollBar::handle { background: ${scroll_handle}; border-radius: 4px; min-height: 24px; min-width: 24px; }
+QScrollBar::handle:hover { background: ${scroll_handle_hover}; }
+QScrollBar::add-line, QScrollBar::sub-line { width: 0; height: 0; }
+QScrollBar::add-page, QScrollBar::sub-page { background: transparent; }
+""", arrow_down=(Path(__file__).parent / "assets" / "chevron_down.svg").as_posix(),
+    arrow_up=(Path(__file__).parent / "assets" / "chevron_up.svg").as_posix(),
+    checkmark=(Path(__file__).parent / "assets" / "checkmark.svg").as_posix())
+
+CONTROL_STATES_QSS = qss("""
+QPushButton:disabled, QToolButton:disabled,
+QPushButton[role="primary"]:disabled, QPushButton[role="danger"]:disabled {
+    background: ${control_disabled};
+    border-color: ${border_disabled};
+    color: ${text_disabled};
+}
+QLineEdit:disabled, QComboBox:disabled, QSpinBox:disabled, QDoubleSpinBox:disabled, QTimeEdit:disabled {
+    background: ${control_disabled};
+    border-color: ${border_disabled};
+    color: ${text_disabled};
+}
+QCheckBox:disabled, QRadioButton:disabled { color: ${text_disabled}; }
+QCheckBox::indicator:unchecked:disabled { background: ${control_disabled}; border-color: ${border_disabled}; }
+QCheckBox::indicator:checked:disabled { background: ${text_disabled}; border-color: ${border_disabled}; }
+QMenu::item:disabled { color: ${text_disabled}; }
+""")
+
+# Pages keep their existing object selectors; shared states also cover native controls.
+CONTROL_QSS += CONTROL_STATES_QSS
+SHELL_QSS = CONTROL_QSS + SHELL_QSS + CONTROL_STATES_QSS
+APP_DIALOG_QSS = CONTROL_QSS + APP_DIALOG_QSS + CONTROL_STATES_QSS
+SETUP_QSS = CONTROL_QSS + SETUP_QSS + CONTROL_STATES_QSS
+ATHLETES_QSS = CONTROL_QSS + ATHLETES_QSS + CONTROL_STATES_QSS
+HISTORY_QSS = CONTROL_QSS + HISTORY_QSS + CONTROL_STATES_QSS
+SETTINGS_QSS = CONTROL_QSS + SETTINGS_QSS + CONTROL_STATES_QSS

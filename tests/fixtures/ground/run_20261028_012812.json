@@ -1,0 +1,96 @@
+{
+  "source_file": "led_frames_20261028_012812.xlsx",
+  "source_sha256": "4910987792fdb2927698fdad9132b63994533483fb32106009e765af139caec6",
+  "device": {
+    "layout": {
+      "segments": [
+        {
+          "segment_id": "1",
+          "wire_index": 0,
+          "origin_m": 0.0,
+          "pitch_m": 0.0104,
+          "reversed": false
+        },
+        {
+          "segment_id": "2",
+          "wire_index": 1,
+          "origin_m": 1.0,
+          "pitch_m": 0.0104,
+          "reversed": false
+        },
+        {
+          "segment_id": "3",
+          "wire_index": 2,
+          "origin_m": 2.0,
+          "pitch_m": 0.0104,
+          "reversed": false
+        },
+        {
+          "segment_id": "4",
+          "wire_index": 3,
+          "origin_m": 3.0,
+          "pitch_m": 0.0104,
+          "reversed": false
+        },
+        {
+          "segment_id": "5",
+          "wire_index": 4,
+          "origin_m": 4.0,
+          "pitch_m": 0.0104,
+          "reversed": false
+        },
+        {
+          "segment_id": "6",
+          "wire_index": 5,
+          "origin_m": 5.0,
+          "pitch_m": 0.0104,
+          "reversed": false
+        },
+        {
+          "segment_id": "7",
+          "wire_index": 6,
+          "origin_m": 6.0,
+          "pitch_m": 0.0104,
+          "reversed": false
+        },
+        {
+          "segment_id": "8",
+          "wire_index": 7,
+          "origin_m": 7.0,
+          "pitch_m": 0.0104,
+          "reversed": false
+        }
+      ],
+      "invalid_bit_indices": []
+    },
+    "stream_id": "4d3077e56a6f48428de404194a34b3f6",
+    "bad_indices": [
+      576
+    ]
+  },
+  "config": {
+    "min_contact_time": 60,
+    "confirmation_ms": 3,
+    "release_ms": 3,
+    "toe_platform_ms": 5,
+    "exit_clear_ms": 500,
+    "stop_threshold_s": 2.0,
+    "starting_foot": "Not defined",
+    "stop_type": "Status change"
+  },
+  "sample_range": [
+    14000,
+    17500
+  ],
+  "reference_touch_samples": [
+    14287,
+    14712,
+    15100,
+    15462,
+    15873,
+    16263,
+    16669,
+    17033
+  ],
+  "interpretation": "Eight separated local optical occupancy episodes; user reported eight running steps. Absolute samples reconstructed from exported relative timestamps and saved contact origin; no beam values changed."
+}

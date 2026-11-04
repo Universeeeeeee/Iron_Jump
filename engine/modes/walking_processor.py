@@ -7,15 +7,17 @@ from dataclasses import asdict, dataclass, field
 from copy import deepcopy
 from collections import deque
 
-from engine.ground_source_review import (SHORT_ISLAND_MS, ownership_record, assigned_sources,
-    observe_review_frame, review_group_sources)
+from engine.ground_source_review import (WALKING_ROLL_MS, ownership_record, assigned_sources,
+    observe_review_frame, review_group_sources, review_walking_sources)
 from statistics import median
 
 from engine.ground_metric_evidence import group_release_evidence, metric
 from engine.ground_position_evidence import record_centre_sample, walking_centre_position
+from engine.ground_contact_phases import ContactShapeRecorder, build_contact_phases
 from config.test_report import GaitTestReport
 from config.walking_config import WalkingConfig
 from hardware.sensor_frame import blocked_indices
+from hardware.beam_quality import masked_frame, uncertain_contact
 from hardware.walking_preflight import PreparedDevice
 
 METRIC_POLICY = 'independent_boundaries_terminal_source_review_v3'
@@ -48,6 +50,8 @@ class Contact:
     last_reliable_sample: int | None = None
     touch_known: bool = True
     position_known: bool = True
+    bad_separator_unknown: bool = False
+    unavailable_separator: bool = False
     candidate_outcome: str = 'pending'
     isolated_clear: bool = False
     clear_before_candidate: float | None = None
@@ -74,6 +78,7 @@ class WalkingProcessor:
         self.config = config
         self.device = device
         self.positions = device.layout.positions_m
+        self._shape_recorder = ContactShapeRecorder()
         self.contacts = []
         self.active = []
         self.epoch = 0
@@ -108,7 +113,7 @@ class WalkingProcessor:
         self._previous_frame = None
         self._multiple_islands_now = False
         self._ownership_groups = []
-        self._source_review_frames = deque(maxlen=SHORT_ISLAND_MS + 1)
+        self._source_review_frames = deque(maxlen=WALKING_ROLL_MS + 1)
         self._next_ownership_source = 0
         self._touch_events = {}
         self._landing_positions = {}
@@ -116,7 +121,7 @@ class WalkingProcessor:
         self._committed_contacts = set()
         self._publication_closed = False
 
-    OWNERSHIP_RULE_VERSION = 'early_local_growth_v2'
+    OWNERSHIP_RULE_VERSION = 'early_local_continuity_v5'
 
     @property
     def touch_events(self):
@@ -154,6 +159,9 @@ class WalkingProcessor:
                         'replaces_revision': previous})
                 if event['active']:
                     c.touch_known = True
+                continue
+            if c.bad_separator_unknown:
+                c.touch_known = False
                 continue
             problem = getattr(c, 'exclusion', None) or getattr(c, 'problem', None)
             if (not c.confirmed or not c.touch_known or correction
@@ -219,9 +227,14 @@ class WalkingProcessor:
                        or s['joined_sample'] - max(s['first_sample'], joined) > window
                        for s in sources if s['joined_sample'] > joined)):
             return 'prolonged_separate_sources'
+        # Multiple visible islands are identity uncertainty, not missing samples.
+        # The continuous source intervals and joined healthy projection below
+        # must still independently support their attribution.
         allowed = {None, 'simultaneous_contacts', 'unresolved_multiple_islands'}
         if any(e.get('problem') not in allowed or e.get('exclusion') not in allowed
-               or e.get('masked_contact') or e.get('has_unknown') or e.get('merged_interruptions')
+               or e.get('bad_separator_unknown') or e.get('masked_contact')
+               or (e.get('has_unknown') and e.get('exclusion') != 'unresolved_multiple_islands')
+               or e.get('merged_interruptions')
                or e.get('edge_estimates') or e.get('clear_gaps') for e in evidence):
             return 'uncertain_source_history'
         if any(s['valid_sample_intervals'] != [[s['first_sample'], s['last_sample'] + 1]]
@@ -238,12 +251,26 @@ class WalkingProcessor:
         if not runs or any(len(r[2]) != 1 for r in runs):
             return 'separate_projection'
         widths = [self.positions[r[2][0][1]] - self.positions[r[2][0][0]] for r in runs]
-        if any(r[2][0][0] == 0 or r[2][0][1] == len(self.positions)-1 for r in runs):
-            return 'boundary_projection'
+        at_start = any(r[2][0][0] == 0 for r in runs)
+        at_end = any(r[2][0][1] == len(self.positions) - 1 for r in runs)
+        if at_start or at_end:
+            earliest = min(sources, key=lambda s: s['first_sample'])['evidence_at_join']
+            onset = next((p for p in earliest.get('position_samples', []) if p[0] == first), None)
+            interior_onset = (earliest.get('touch_known') and onset is not None
+                              and 0 < onset[1] <= onset[2] < len(self.positions) - 1
+                              and not onset[3])
+            exiting = (self.direction == 1 and at_end and not at_start
+                       or self.direction == -1 and at_start and not at_end)
+            # Clipping a later toe shape at the exit cannot erase a healthy,
+            # observed onset inside the track. Entry-clipped touches stay unknown.
+            if not interior_onset or not exiting:
+                return 'boundary_projection'
         if max(widths) > .45 or any(abs(b-a) > .18 for a,b in zip(widths,widths[1:])):
             return 'incompatible_projection'
-        if max(widths) < .08 or max(widths) - widths[0] < .04:
-            return 'insufficient_growth'
+        # A stable joined sole is landing evidence even without further widening.
+        # Independent wide sources and unreliable histories were rejected above.
+        if max(widths) < .08:
+            return 'insufficient_width'
         if (group['observed_samples'] < window
                 or group['last_sample'] - runs[0][0] + 1 < max(10, self.config.confirmation_ms)):
             return 'awaiting_continuous_growth'
@@ -252,6 +279,7 @@ class WalkingProcessor:
     def _recover_ownership_groups(self):
         for group in self._ownership_groups:
             review_group_sources(self, group)
+            review_walking_sources(self, group)
             recovery = ownership_record(group)
             if recovery is not None:
                 # Later new sources can compete with attribution of occupancy;
@@ -291,6 +319,8 @@ class WalkingProcessor:
                     c.candidate_outcome = 'associated_fragment'
                     if c in self.active:
                         self.active.remove(c)
+            owner.unavailable_separator |= any(s['evidence_at_join'].get('unavailable_separator', False)
+                                               for s in group['sources'])
             owner.ownership_source_id = min(group['sources'], key=lambda s: s['first_sample'])['source_id']
             owner.ownership_unresolved_since = group['unresolved_since_sample']
             joined = min(s['joined_sample'] for s in group['sources'])
@@ -313,7 +343,7 @@ class WalkingProcessor:
                                            and not getattr(c, 'problem', None)
                                            and not getattr(c, 'exclusion', None)
                                            and not getattr(c, 'interrupted', None)],
-                'interpretation': 'conditional_local_growth_not_optical_identity_proof'}
+                'interpretation': 'conditional_local_continuity_not_optical_identity_proof'}
             self._update_recovered_owner(group)
             self.event_audit.append({'action': 'ownership_recovered', 'sample': self.last_sample,
                                     'group_id': group['id'], **deepcopy(group['recovery'])})
@@ -445,6 +475,7 @@ class WalkingProcessor:
         wait_since = candidate.observation_wait_since if isinstance(candidate, Contact) else candidate.get('observation_wait_since')
         inherit_wait = (closed is not None or isinstance(candidate, Contact) and not candidate.confirmed
                         and candidate.peak_width_m < .08 and wait_since is not None)
+        self._shape_recorder.bind_source(source_id, candidate)
         return {**self._candidate_row(candidate, 'group_pending', 'ownership_pending'),
                 'source_id': source_id, 'unresolved_since_sample': since,
                 **({'observation_wait_since': wait_since} if inherit_wait else {}),
@@ -526,7 +557,7 @@ class WalkingProcessor:
                     source['joined_sample'] = n
                     first = source['first_sample']
                     source['review_observations'] = (deepcopy([r for r in self._source_review_frames
-                        if first <= r[0] < n]) if first is not None and n-first <= SHORT_ISLAND_MS else [])
+                        if first <= r[0] < n]) if first is not None and n-first <= WALKING_ROLL_MS else [])
                     group['sources'].append(source)
                     group['valid_sample_intervals'] = self._union_sample_intervals(
                         group['valid_sample_intervals'] + source['valid_sample_intervals'])
@@ -543,7 +574,7 @@ class WalkingProcessor:
                 group['last_sample'] = n
                 group['clear_since_sample'] = None
                 reliable = all(all(frame.valid_bits[low:high + 1])
-                               and not any(low - 1 <= i <= high + 1 for i in self.device.bad_indices)
+                               and not any(low <= i <= high for i in self.device.bad_indices)
                                and (observation is None or observation.reliable(low, high))
                                for low, high in islands)
                 if reliable:
@@ -582,6 +613,39 @@ class WalkingProcessor:
                 for source in group['sources']:
                     source.update(outcome='unresolved', closed_sample=max(source['joined_sample'], group['closed_sample']),
                                   reason=group['close_reason'])
+
+    def _mark_bad_separators(self, frame):
+        # A later island across only missing beams is not an independent foot.
+        # Keep the measured islands separate and retain the earlier onset;
+        # latch uncertainty so moving away cannot manufacture a new landing.
+        if not self.device.bad_indices:
+            return
+        sources = [*self.active, *self._narrow_candidates]
+        def value(source, key):
+            return getattr(source, key) if isinstance(source, Contact) else source[key]
+        for source in sources:
+            if round(value(source, 'start') * 1000) != frame.sample_index:
+                continue
+            low, high = value(source, 'low'), value(source, 'high')
+            for other in sources:
+                if (other is source or value(other, 'start') > value(source, 'start')
+                        or not any(frame.contact_bits[value(other, 'low'):value(other, 'high')+1])):
+                    continue
+                left, right = sorted(((low, high), (value(other, 'low'), value(other, 'high'))))
+                gap = range(left[1] + 1, right[0])
+                if (gap and all(i in self.device.bad_indices for i in gap)
+                        and self.positions[right[1]] - self.positions[left[0]] <= .45):
+                    for item in (source, other):
+                        if isinstance(item, Contact):
+                            item.unavailable_separator = True
+                        else:
+                            item['unavailable_separator'] = True
+                    if isinstance(source, Contact):
+                        source.bad_separator_unknown = True
+                        source.touch_known = False
+                    else:
+                        source['bad_separator_unknown'] = True
+                    break
 
     def _clusters(self, bits):
         if b'\x01' not in bits:
@@ -644,27 +708,13 @@ class WalkingProcessor:
         # a fresh known touch. This fallback carries its existing uncertainty;
         # it cannot absorb a new island while the old envelope is still seen.
         return [c for c in self.active
-                if (c.exclusion in {'masked_contact_boundary', 'boundary_contact'}
+                if (c.exclusion in {'masked_contact_boundary', 'boundary_contact'} or c.bad_separator_unknown
                     or observation is not None and c.candidate_since is not None
                     and observation.edge(low, high, 1) is not None)
                 and not any(left <= c.high and right >= c.low for left, right in groups)
                 and self.positions[low] <= self.positions[c.high] + .035
                 and self.positions[high] >= self.positions[c.low] - .035
                 and abs((self.positions[c.low] + self.positions[c.high]) / 2 - centre) <= .18]
-
-    def _masked_islands(self, groups):
-        # A known unavailable beam is an unknown observation, not a clear
-        # separator. Keep that local occupancy censored; never bridge healthy
-        # clear beams or infer a foot identity from this grouping.
-        result = []
-        bad = set(self.device.bad_indices)
-        for low, high in groups:
-            if (result and low > result[-1][1] + 1
-                    and all(i in bad for i in range(result[-1][1] + 1, low))):
-                result[-1] = (result[-1][0], high)
-            else:
-                result.append((low, high))
-        return result
 
     def _hold_overlapping_contacts(self, groups, frame):
         # A shared optical projection cannot prove either foot's observation
@@ -776,7 +826,7 @@ class WalkingProcessor:
         # Coalescence can justify local tracking, never a one-foot assertion.
         if (len(candidates) != 2 or low == 0 or high == len(self.positions) - 1
                 or self.positions[high] - self.positions[low] > .45
-                or any(low - 3 <= i <= high + 3 for i in self.device.bad_indices)):
+                or any(low <= i <= high for i in self.device.bad_indices)):
             return None
         evidence = []
         for c in candidates:
@@ -854,7 +904,7 @@ class WalkingProcessor:
                 or sum(bool(cs) for cs in owners) != 1
                 or low == 0 or high == len(self.positions) - 1
                 or not .08 <= self.positions[high] - self.positions[low] <= .45
-                or any(low - 3 <= i <= high + 3 for i in self.device.bad_indices)):
+                or any(low <= i <= high for i in self.device.bad_indices)):
             return None
         anchor = self.active[0]
         if (not anchor.confirmed or anchor.exclusion or anchor.has_unknown
@@ -896,6 +946,12 @@ class WalkingProcessor:
                 or any(flag != "frame_gap" for flag in frame.quality_flags)):
             self.break_continuity("invalid_sample", frame.frame_index)
             return
+        if self.device.bad_indices:
+            frame = masked_frame(frame, self.device.bad_indices)
+            # Neighbour activity is measured by healthy beams. A fixed missing
+            # beam supplies neither an occupied vote nor a clear separator.
+            if masked_contact and uncertain_contact(frame, self.device.bad_indices):
+                masked_contact = False
         sample_time = frame.sample_time_s
         self.last_time = sample_time
         affected = [(low, high) for low, high in self._clusters(frame.contact_bits) if any(
@@ -1013,12 +1069,6 @@ class WalkingProcessor:
                 self.active.remove(contact)
         groups = self._clusters(frame.contact_bits)
         source_islands = tuple(groups)
-        # Known bad beams censor their neighbouring footprint, not a remote
-        # foot's observable touch. Keep tracking the affected owner so its
-        # later visible fragment cannot be counted as another landing.
-        if observation is None:
-            if masked_contact:
-                groups = self._masked_islands(groups)
         self._observe_ownership_groups(source_islands, frame, observation)
         groups = self._associate_inner_fragments(groups)
         groups, held = self._hold_overlapping_contacts(groups, frame)
@@ -1094,7 +1144,10 @@ class WalkingProcessor:
                 contact.observation_wait_since = frame.sample_index
                 contact.clear_before_candidate = self.clear_since
                 seed = seeds.get((low, high))
+                self._shape_recorder.inherit(contact, seed)
                 if seed:
+                    contact.bad_separator_unknown = seed.get('bad_separator_unknown', False)
+                    contact.unavailable_separator = seed.get('unavailable_separator', False)
                     contact.start = seed['start']
                     contact.observed_samples = seed['samples'] - 1
                     contact.valid_sample_intervals = [list(x) for x in seed.get('valid_sample_intervals', [])]
@@ -1278,6 +1331,7 @@ class WalkingProcessor:
                 c.touch_known = False
                 self._censor_duration_start(c.start, c.edge_estimates.get('touch'))
             self._identity_known = False
+        self._mark_bad_separators(frame)
         self._recover_ownership_groups()
         self._commit_contacts()
         # Existing footprints immediately after a gap have unknown touch times.
@@ -1295,6 +1349,7 @@ class WalkingProcessor:
             if self.config.has_auto_stop and sample_time - self.clear_since >= self.config.exit_clear_ms / 1000:
                 if self._at_exit():
                     self.finished_reason = "passage_complete"
+        self._shape_recorder.observe(self, frame, observation)
         self._record_visual(frame)
         self._previous_frame = frame
 
@@ -1342,7 +1397,7 @@ class WalkingProcessor:
         for (low, high), cs in zip(groups, owners):
             candidates = [p for p in pending if low <= p['high'] and high >= p['low']]
             if not candidates:
-                candidates = [p for p in pending if p.get('masked_contact')
+                candidates = [p for p in pending if (p.get('masked_contact') or p.get('bad_separator_unknown'))
                               and not any(left <= p['high'] and right >= p['low'] for left, right in groups)
                               and self.positions[low] <= self.positions[p['high']] + .035
                               and self.positions[high] >= self.positions[p['low']] - .035]
@@ -1577,6 +1632,24 @@ class WalkingProcessor:
             return self.entry_position <= low + margin and self.exit_position >= high - margin
         return self.entry_position >= high - margin and self.exit_position <= low + margin
 
+    def visual_feet(self):
+        from engine.footfall_sides import event_sides
+        sides = event_sides(self.touch_events, self.config.starting_foot, self.issues)
+        feet = [{"contact_id": c.id, "label": c.label,
+                 "centroid_cm": (self._landing_positions.get(c.id,c.position)
+                                 if c.exclusion or c.unavailable_separator else c.position) * 100,
+                 "length_cm": None if c.exclusion or c.unavailable_separator else (self.positions[c.high] - self.positions[c.low]) * 100,
+                 "side": sides.get(c.id, 'unknown'), "side_authoritative": c.id in sides,
+                 "shape_valid": not c.exclusion and not c.unavailable_separator and c.position_known,
+                 "status": "confirmed" if self._touch_events.get(c.id, {}).get('active') else "candidate"}
+                for c in self.active if c.observed_samples >= 3 or self._touch_events.get(c.id, {}).get('active')]
+        feet.extend({"contact_id": f"pending:{q['start']}:{q['low']}",
+                     "side": "unknown", "label": "",
+                     "centroid_cm": (self.positions[q['low']] + self.positions[q['high']]) * 50,
+                     "length_cm": None, "shape_valid": False, "status": "candidate"}
+                    for q in self._narrow_candidates if q['samples'] >= 3)
+        return feet
+
     def _record_visual(self, frame, *, force=False):
         if self.origin is None or (not force and frame.sample_time_s - self._last_visual < .04):
             return
@@ -1589,14 +1662,7 @@ class WalkingProcessor:
             "segment_ids": tuple(s.segment_id for s in self.device.layout.segments),
             "valid_bits": list(frame.valid_bits),
             "quality_flags": list(frame.quality_flags),
-            "feet": [{"contact_id": c.id, "label": c.label,
-                      "centroid_cm": (self._landing_positions.get(c.id,c.position)
-                                      if c.exclusion else c.position) * 100,
-                      "length_cm": None if c.exclusion else (self.positions[c.high] - self.positions[c.low]) * 100,
-                      "side": 'unknown' if c.exclusion else c.side,
-                      "shape_valid": not c.exclusion and c.position_known,
-                      "status": "confirmed" if self._touch_events.get(c.id, {}).get('active') else "candidate"}
-                     for c in self.active],
+            "feet": self.visual_feet(),
         })
 
     def _movement_end(self):
@@ -1618,11 +1684,13 @@ class WalkingProcessor:
             if c.end is None and c.last_reliable_sample is not None:
                 observed_end = (c.last_reliable_sample + 1) / 1000
             until = min(until, observed_end) if until is not None else c.start
-            if not c.exclusion and until - c.start >= self.config.stop_threshold_s:
+            if not c.exclusion and not c.unavailable_separator and until - c.start >= self.config.stop_threshold_s:
                 stops[c.start] = max(stops.get(c.start, until), until)
         return sorted(stops.items())
 
     def _centre(self, c):
+        if c.unavailable_separator:
+            return metric(reason='unavailable_separator')
         if not c.confirmed:
             return metric(reason='unconfirmed_contact')
         owned_group = any(g.get('restored_source_ids') and (ownership_record(g) or {}).get('owner_id') == c.id
@@ -1633,13 +1701,17 @@ class WalkingProcessor:
         return {**metric(value, evidence['missing_reason']), 'evidence': evidence}
 
     def summary(self):
+        from engine.footfall_sides import event_sides, SIDE_POLICY
+        sides = event_sides(self.touch_events, self.config.starting_foot, self.issues)
         confirmed = [c for c in self.contacts if c.confirmed]
         centres = {c.id: self._centre(c) for c in self.contacts}
         end = self._movement_end()
         stops = self._stop_intervals()
-        release_evidence = {c.id: c.terminal_release_evidence if c.terminal_release_evidence.get('valid')
+        release_evidence = {c.id: None if c.unavailable_separator else c.terminal_release_evidence if c.terminal_release_evidence.get('valid')
                             else group_release_evidence(self._ownership_groups, c.id) for c in self.contacts}
         def lift_valid(c):
+            if c.unavailable_separator:
+                return False
             evidence = release_evidence[c.id]
             if evidence is not None:
                 return evidence['missing_reason'] is None
@@ -1670,7 +1742,7 @@ class WalkingProcessor:
                 if (touch_valid(prev) and touch_valid(c) and prev.epoch == c.epoch and prev.label != c.label
                         and dt > 0 and moving(prev.start, c.start)):
                     distance = abs(centres[c.id]['value'] - centres[prev.id]['value']) if all(position_valid(x) for x in (prev, c)) else None
-                    steps.append({"from_id": prev.id, "to_id": c.id,
+                    steps.append({"from_id": prev.id, "to_id": c.id, "side": sides.get(c.id, 'unknown'),
                                   "length_m": distance, "time_s": dt,
                                   "speed_m_s": distance / dt if distance is not None else None})
             if i < 2:
@@ -1721,7 +1793,11 @@ class WalkingProcessor:
                         for x in sequence if not x.confirmed]
             if any(a.start < right and c.start > left for left, right in unknown):
                 single = double = None
-            cycles.append({"foot": a.label, "side": a.side if a.side == c.side else 'unknown', "epoch": a.epoch,
+            cycles.append({"from_id": a.id, "to_id": c.id,
+                           "length_m": abs(centres[c.id]['value'] - centres[a.id]['value'])
+                               if all(position_valid(x) for x in (a, c)) else None,
+                           "foot": a.label, "side": sides.get(a.id, 'unknown')
+                               if sides.get(a.id) == sides.get(c.id) else 'unknown', "epoch": a.epoch,
                            "start_s": a.start - self.origin, "end_s": c.start - self.origin,
                            "duration_s": c.start - a.start,
                            "single_support_s": single, "double_support_s": double})
@@ -1739,7 +1815,8 @@ class WalkingProcessor:
                     and not any(c.start < b and c.end > a for a, b in stops)]
         spatial_steps = [s for s in steps if s['length_m'] is not None]
         avg = lambda values: sum(values) / len(values) if values else None
-        return {"segment_count": len(self.device.layout.segments),
+        summary = {"segment_count": len(self.device.layout.segments),
+                "side_policy": SIDE_POLICY,
                 "nominal_length_m": len(self.device.layout.segments),
                 "duration_s": duration, "passage_speed_m_s": speed,
                 "direction": self.direction, "valid_steps": len(steps), "valid_cycles": len(cycles),
@@ -1778,6 +1855,8 @@ class WalkingProcessor:
                                  if k not in {"positions", "merged_interruptions", "has_unknown", "edge_estimates", "absent_samples", "release_start", "candidate_since", "last_reliable_sample", "isolated_clear", "clear_before_candidate", "source_islands", "valid_sample_intervals", "ownership_source_id", "ownership_unresolved_since", "terminal_release_evidence", "position_samples", "observation_wait_since", "observation_closed_sample"}},
                               **({'observation_wait_since': c.observation_wait_since, 'observation_closed_sample': c.observation_closed_sample}
                                  if c.observation_closed_sample is not None else {}),
+                              "side": sides.get(c.id, 'unknown'),
+                              "identity_source": SIDE_POLICY,
                               "touch_sample": round(c.start * 1000) if c.confirmed and c.touch_known
                                   and 'touch' not in c.edge_estimates else None,
                               "lift_sample": round(c.end * 1000) if lift_valid(c) and 'lift' not in c.edge_estimates else None,
@@ -1785,12 +1864,15 @@ class WalkingProcessor:
                               "merged_interruptions": [dict(item) for item in c.merged_interruptions],
                               "touch_s": metric(c.start - (self.origin or 0) if c.confirmed and c.touch_known else None),
                               "lift_s": metric(c.end - (self.origin or 0) if lift_valid(c) else None,
+                                               'unavailable_separator' if c.unavailable_separator else
                                                release_evidence[c.id]['missing_reason'] if release_evidence[c.id] else None),
                               "contact_s": metric(c.end - c.start if valid(c) else None,
+                                  'unavailable_separator' if c.unavailable_separator else
                                   'stop_interval' if any(c.start < b and (c.end or c.last + .001) > a for a,b in stops)
                                   else 'contact_continuity_unknown' if lift_valid(c) and not valid(c)
                                   else release_evidence[c.id]['missing_reason'] if release_evidence[c.id] else None),
                               "metric_evidence": {"lift": release_evidence[c.id] or {"basis": "observed_contact_boundary"}},
+                              "position_known": c.position_known and not c.unavailable_separator,
                               "centre_m": centres[c.id],
                               "position_m": centres[c.id]['value'] if position_valid(c) else c.position,
                               "start": c.start - (self.origin or 0),
@@ -1798,16 +1880,38 @@ class WalkingProcessor:
                               "last": c.last - (self.origin or 0),
                               "confirmed_at": c.confirmed_at - (self.origin or 0) if c.confirmed_at is not None else None,
                               "lift_confirmed_at": c.lift_confirmed_at - (self.origin or 0) if c.lift_confirmed_at is not None else None,
-                              "exclusion": c.exclusion or ("pending_touch_order" if c.confirmed and not c.label
+                              "exclusion": ("unavailable_separator" if c.unavailable_separator else c.exclusion) or ("pending_touch_order" if c.confirmed and not c.label
                                                             else "incomplete_contact" if c.end is None else None)}
                              for c in self.contacts],
                 "excluded_contacts": sum(not valid(c) for c in self.contacts)}
+        from engine.footfall_records import FOOTFALL_SCHEMA, footfall_records
+        summary['footfall_schema_version'] = FOOTFALL_SCHEMA
+        summary['footfalls'] = footfall_records(summary)
+        summary['recognized_steps'] = len(summary['footfalls'])
+        from engine.ground_bilateral import build_bilateral
+        summary['contact_phases'] = build_contact_phases(self, summary, 'walk')
+        summary['bilateral'] = build_bilateral(summary, 'walk', self.config.starting_foot)
+        return summary
 
     def build_report(self, reason, export_frames=(), export_timestamps=()):
         self._close_ownership_groups(reason, self.last_sample)
         self._publication_closed = True
         self._commit_contacts()
         summary = self.summary()
+        from engine.landing_reference import first_contact_reference
+        for row in summary['contacts']:
+            c = self.contacts[row['id']]
+            row['landing_reference'] = first_contact_reference(
+                self.positions, round(c.start * 1000), c.position_samples, self.device.bad_indices)
+            if row['landing_reference']['missing_reason'] == 'onset_position_not_observed':
+                sources = [source for group in self._ownership_groups
+                           if (ownership_record(group) or {}).get('owner_id') == c.id
+                           for source in group['sources'] if source['source_id'] in assigned_sources(group)
+                           and source['first_sample'] == round(c.start * 1000)]
+                if len(sources) == 1:
+                    row['landing_reference'] = first_contact_reference(
+                        self.positions, round(c.start * 1000),
+                        sources[0]['evidence_at_join'].get('position_samples', []), self.device.bad_indices)
         steps_cm = tuple(x * 100 for x in summary["step_lengths_m"])
         velocities = tuple(x["speed_m_s"] * 100 for x in summary["steps"] if x['speed_m_s'] is not None)
         return GaitTestReport(
@@ -1822,8 +1926,10 @@ class WalkingProcessor:
             finish_reason=reason, export_frames=export_frames, export_timestamps=export_timestamps,
             visual_timeline=tuple(self.timeline), walking_summary=summary,
             report_config_snapshot={**self.config.to_dict(), "device": self.device.snapshot(),
-                                    "algorithm": "overground_walking_v1.15",
+                                    "algorithm": "overground_walking_v1.18",
+                                    "rolling_source_review": "walking_continuous_front_cohort_v1",
                                     "metric_policy": METRIC_POLICY,
+                                    "bad_beam_policy": "healthy_sources_without_missing_beam_connections_v1",
                                     "fragment_association": "valid_previous_blocked_overlap_per_island",
                                     "source_uncertainty_recovery": "all_sources_attributed_to_established_owner",
                                     "footprint_publication": "active_touch_independent_of_current_shape",

@@ -17,9 +17,11 @@ def test_unresolved_foot_join_does_not_display_an_individual_lift(qtbot):
     view.load_report(p.build_report('manual'))
     details = next(b.toPlainText() for b in view.findChildren(QTextBrowser)
                    if '接触记录' in b.toPlainText())
-    contact_table = details.split('候选判定证据')[0]
+    contact_table = details.split('接触记录', 1)[1].split('候选判定证据')[0]
     assert '遮挡来源归属未决，单脚边界未知' in contact_table
     assert str(c.end - p.origin) not in contact_table
+    assert '光学遮挡时长' in details
+    assert '补全的结果' in details
 
 
 def test_running_unresolved_source_has_a_chinese_report_reason():

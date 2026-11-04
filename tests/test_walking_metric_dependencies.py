@@ -44,24 +44,19 @@ def later_masked_walk():
 def test_later_mask_keeps_known_touch_times_but_not_unknown_position_or_support():
     p = later_masked_walk()
     s = p.summary()
-    assert len(p.contacts) == 3
-    assert s['valid_steps'] == 2
+    assert len(p.contacts) == 4
+    assert [e['touch_sample'] for e in p.touch_events if e['active']] == [100, 400, 700]
+    assert p.contacts[1].bad_separator_unknown
+    assert not s['contacts'][0]['lift_s']['valid']
+    assert not s['contacts'][0]['centre_m']['valid']
+    assert s['valid_steps'] == s['valid_step_lengths'] == 1
     assert s['steps'][0]['time_s'] == pytest.approx(.3)
-    assert s['steps'][0]['length_m'] is None
-    assert s['steps'][0]['speed_m_s'] is None
-    assert s['valid_step_lengths'] == 1
-    assert s['valid_cycles'] == 1
-    assert s['cycles'][0]['duration_s'] == pytest.approx(.6)
-    assert s['cycles'][0]['single_support_s'] is None
-    assert s['cycles'][0]['double_support_s'] is None
-    assert s['cycles'][0]['side'] == 'unknown'
-    assert s['valid_support_cycles'] == 0
+    assert s['valid_cycles'] == s['valid_support_cycles'] == 0
     assert s['valid_contact_durations'] == 2
-    # Speed uses the distance and time of the same eligible intervals.
-    assert s['walking_speed_m_s'] == pytest.approx(s['steps'][1]['length_m'] / .3)
+    assert s['walking_speed_m_s'] == pytest.approx(s['steps'][0]['length_m'] / .3)
 
 
-def test_unknown_initial_touch_is_not_rescued_by_later_healthy_observations():
+def test_healthy_initial_touch_next_to_bad_beam_stays_known():
     p = processor(8, stop_type='Software command')
     p.device = PreparedDevice(p.device.layout, 'test', -1, 0, 3000, bad_indices=(576,))
     for n in range(900):
@@ -75,8 +70,8 @@ def test_unknown_initial_touch_is_not_rescued_by_later_healthy_observations():
         p.process(replace(frame(p.device.layout, n), contact_bits=bytes(bits)),
                   masked_contact=100 <= n < 600)
     s = p.summary()
-    assert [(x['from_id'], x['to_id']) for x in s['steps']] == [(1, 2)]
-    assert s['valid_cycles'] == 0
+    assert [(x['from_id'], x['to_id']) for x in s['steps']] == [(0, 1), (1, 2)]
+    assert s['valid_cycles'] == 1
 
 
 def test_reliable_clear_debounce_does_not_become_known_support():
@@ -132,10 +127,10 @@ def test_partial_metrics_survive_saved_report_package_and_excel(qtbot):
     first_step = package.record_sets[1].records[0]
     assert first_step.status.validity == 'valid'
     assert first_step.values['step_time_s'].value == pytest.approx(.3)
-    assert first_step.values['step_length_m'].value is None
-    assert first_step.values['speed_m_s'].value is None
+    assert first_step.values['step_length_m'].value is not None
+    assert first_step.values['speed_m_s'].value is not None
     for code, count in [('step_length_m', 1), ('speed_m_s', 1),
-                        ('cadence_steps_per_min', 2), ('single_support_s', 0)]:
+                        ('cadence_steps_per_min', 1), ('single_support_s', 0)]:
         fact = next(f for f in package.scalar_facts if f.metric_code == code)
         assert fact.sample_count == count
     book = build_report_workbook(restored)
@@ -147,8 +142,8 @@ def test_partial_metrics_survive_saved_report_package_and_excel(qtbot):
     steps = list(saved['Walking steps'].values)
     headers = steps[0]
     assert steps[1][headers.index('time_s')] == pytest.approx(.3)
-    assert steps[1][headers.index('length_m')] is None
-    assert steps[1][headers.index('speed_m_s')] is None
+    assert steps[1][headers.index('length_m')] is not None
+    assert steps[1][headers.index('speed_m_s')] is not None
     saved.close()
 
 
@@ -162,12 +157,12 @@ def test_partial_metrics_report_uses_separate_time_and_position_counts(qtbot):
     view.load_report(report)
     detail = next(x for x in view.findChildren(QTextBrowser)
                   if '接触记录' in x.toPlainText())
-    assert '坏束附近边界未知' in detail.toPlainText()
+    assert '坏束两侧归属未确定' in detail.toPlainText()
     assert '数据不足' in detail.toPlainText()
 
 
 @pytest.mark.parametrize('filtered', [False, True])
-def test_bad_beam_quality_survives_narrow_candidate_promotion(filtered):
+def test_disjoint_healthy_projection_does_not_inherit_bad_neighbor_censorship(filtered):
     from hardware.beam_filter import GroundStabilityFilter
     from hardware.beam_quality import uncertain_contact
 
@@ -189,10 +184,10 @@ def test_bad_beam_quality_survives_narrow_candidate_promotion(filtered):
         for measured in optical.flush():
             p.process(measured, masked_contact=uncertain_contact(measured, p.device.bad_indices))
     assert len(p.contacts) == 2
-    uncertain = p.contacts[1]
-    assert uncertain.exclusion == 'masked_contact_boundary'
-    assert not uncertain.touch_known and not uncertain.position_known
-    assert uncertain.end is None
+    healthy = p.contacts[1]
+    assert healthy.exclusion is None and healthy.touch_known and healthy.position_known
+    assert healthy.start == pytest.approx(.312) and healthy.end == pytest.approx(.8)
+    assert not any(e['touch_sample'] == 300 for e in p.touch_events)
     assert p.summary()['valid_steps'] == 0
 
 

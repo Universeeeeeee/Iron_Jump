@@ -1008,6 +1008,7 @@ class SubjectStoreTest(unittest.TestCase):
                 ),
             )
 
+        conn.close()
         migrated = SubjectStore(legacy_path)
 
         self.assertEqual(migrated.get_session(7).subject_id, 1)

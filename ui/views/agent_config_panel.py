@@ -2,23 +2,26 @@
 
 from __future__ import annotations
 
+from config.mode_labels import mode_label
+
 import logging
 import traceback
 from datetime import datetime
 from html import escape
 
 from markdown_it import MarkdownIt
-from qtpy.QtCore import Qt, QSignalBlocker, Signal, QThread, QTimer
-from qtpy.QtGui import QTextBlockFormat, QTextCharFormat, QTextCursor, QTextDocument
+from ui.styles import CONTROL_QSS, CONTROL_STATES_QSS
+
+from ui.theme import qss
+
 from qtpy.QtWidgets import (
-    QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QComboBox, QTextEdit,
-    QFrame, QScrollArea, QSizePolicy,
+    QDoubleSpinBox, QLabel, QLineEdit, QPushButton, QSpinBox, QWidget, QVBoxLayout,
+    QHBoxLayout, QGridLayout, QComboBox, QTextEdit, QFrame, QScrollArea, QSizePolicy,
 )
 
-from dayu_widgets.label import MLabel
-from dayu_widgets.line_edit import MLineEdit
-from dayu_widgets.push_button import MPushButton
-from dayu_widgets.spin_box import MDoubleSpinBox, MSpinBox
+from qtpy.QtCore import Qt, QSignalBlocker, Signal, QThread, QTimer
+from qtpy.QtGui import QTextBlockFormat, QTextCharFormat, QTextCursor, QTextDocument
+
 
 from agent.config.models import AthleteProfile
 from agent.config.modes import MODE_TEST_TYPES
@@ -32,42 +35,42 @@ log = logging.getLogger(__name__)
 _md = MarkdownIt().enable("table")
 
 
-AGENT_PANEL_QSS = """
+AGENT_PANEL_QSS = CONTROL_QSS + qss("""
 QWidget#AgentConfigPanelRoot {
   background: transparent;
 }
 QFrame#AgentCard {
-  background-color: rgba(32, 37, 48, 0.72);
+  background-color: ${surface};
   border: none;
   border-radius: 8px;
 }
 QFrame#SuggestionCard {
-  background-color: #1b222e;
+  background-color: ${surface_selected};
   border: none;
-  border-left: 1px solid #354151;
+  border-left: 1px solid ${border_control};
   border-radius: 8px;
 }
 QLabel#CardTitle {
   font-size: 12pt;
   font-weight: 700;
-  color: #f0f3f8;
+  color: ${text_heading};
   background: transparent;
   border: none;
 }
 QLabel#SectionTitle {
   font-size: 10pt;
   font-weight: 700;
-  color: #ff9b2f;
+  color: ${accent_text};
   background: transparent;
   border: none;
 }
 QLabel#FieldLabel {
-  color: #cfd6e3;
+  color: ${text_summary};
   background: transparent;
   border: none;
 }
 QLabel#ServiceStatus {
-  color: #9da8b8;
+  color: ${table_header_text};
   background: transparent;
   border: none;
   font-size: 10pt;
@@ -75,8 +78,8 @@ QLabel#ServiceStatus {
 QTextEdit {
   border: none;
   border-radius: 8px;
-  background-color: rgba(17, 24, 34, 0.58);
-  color: #e7ebf2;
+  background-color: ${control};
+  color: ${text};
   padding: 12px;
 }
 QScrollArea#SuggestionConfigScroll,
@@ -92,7 +95,7 @@ QScrollArea#SuggestionConfigScroll QScrollBar:vertical {
 QScrollArea#SuggestionConfigScroll QScrollBar::handle:vertical {
   min-height: 28px;
   border-radius: 4px;
-  background: #3a485a;
+  background: ${scroll_handle};
 }
 QScrollArea#SuggestionConfigScroll QScrollBar::add-line:vertical,
 QScrollArea#SuggestionConfigScroll QScrollBar::sub-line:vertical {
@@ -101,44 +104,44 @@ QScrollArea#SuggestionConfigScroll QScrollBar::sub-line:vertical {
 QLineEdit, QComboBox, QSpinBox, QDoubleSpinBox {
   min-height: 32px;
   border-radius: 6px;
-  border: 1px solid rgba(105, 115, 135, 0.35);
-  background-color: rgba(43, 48, 60, 0.96);
-  color: #e7ebf2;
+  border: 1px solid ${border_control};
+  background-color: ${control};
+  color: ${text};
   padding: 0 8px;
 }
 QComboBox QAbstractItemView {
-  background: #1a2230;
-  color: #e7ebf2;
-  border: 1px solid #354151;
-  selection-background-color: #273446;
+  background: ${control};
+  color: ${text};
+  border: 1px solid ${border_control};
+  selection-background-color: ${selection_table};
 }
 QPushButton {
   min-height: 34px;
   border-radius: 6px;
-  border: 1px solid rgba(105, 115, 135, 0.32);
-  background-color: rgba(43, 48, 60, 0.94);
-  color: #d9dee8;
+  border: 1px solid ${border_control};
+  background-color: ${control};
+  color: ${text_button};
   padding: 0 14px;
 }
 QPushButton:hover {
-  background-color: rgba(58, 64, 79, 0.98);
+  background-color: ${control_hover};
 }
 QPushButton#PanelPrimaryButton {
-  background-color: #ff850f;
-  border-color: #ff850f;
-  color: white;
+  background-color: ${accent};
+  border-color: ${accent};
+  color: ${on_accent};
   font-weight: 700;
 }
 QPushButton#PanelPrimaryButton:disabled {
-  background-color: #252d38;
-  border-color: #303a47;
-  color: #768294;
+  background-color: ${control_disabled};
+  border-color: ${border_disabled};
+  color: ${text_disabled};
 }
 QPushButton#PromptChip {
   min-height: 30px;
   border-radius: 15px;
   padding: 0 14px;
-  background-color: rgba(43, 48, 60, 0.70);
+  background-color: ${surface_selected};
 }
 QPushButton#SuggestionToggleButton,
 QPushButton#SuggestionCloseButton {
@@ -152,7 +155,7 @@ QPushButton#SuggestionCloseButton {
   padding: 0;
   font-size: 16px;
 }
-"""
+""") + CONTROL_STATES_QSS
 
 
 _THREE_COLUMN_MIN_WIDTH = 1180
@@ -160,8 +163,8 @@ _SUGGESTION_DRAWER_MIN_WIDTH = 280
 _SUGGESTION_DRAWER_MAX_WIDTH = 320
 _AGENT_MODES = tuple(MODE_TEST_TYPES)
 _CHAT_DOCUMENT_QSS = (
-    "table { border-collapse: collapse; margin: 8px 0; }"
-    "td, th { border: 1px solid #999; padding: 4px 10px; }"
+    qss("""table { border-collapse: collapse; margin: 8px 0; }
+    td, th { border: 1px solid ${border_control}; padding: 4px 10px; }""")
 )
 
 
@@ -305,7 +308,7 @@ class AgentConfigPanel(QWidget):
 
     def current_test_type(self) -> str:
         """Return the test type currently selected in the assistant panel."""
-        return self._test_type_combo.currentText()
+        return MODE_TEST_TYPES[self._test_type_combo.currentData()]
 
     def current_profile_snapshot(self) -> dict:
         """Return the editable, session-scoped athlete values."""
@@ -339,21 +342,21 @@ class AgentConfigPanel(QWidget):
         profile_layout.setSpacing(10)
         profile_layout.addWidget(self._card_title("运动档案"))
 
-        self._profile_note = MLabel("")
+        self._profile_note = QLabel("")
         self._profile_note.setWordWrap(True)
-        self._profile_note.setStyleSheet("color: #9f9f9f;")
+        self._profile_note.setStyleSheet(qss("""color: #9f9f9f;"""))
         profile_layout.addWidget(self._profile_note)
 
         profile_layout.addWidget(self._section_title("基础信息"))
         form = QGridLayout()
         form.setHorizontalSpacing(10)
         form.setVerticalSpacing(10)
-        self._age_spin = MSpinBox()
+        self._age_spin = QSpinBox()
         self._age_spin.setRange(1, 120)
-        self._weight_spin = MDoubleSpinBox()
+        self._weight_spin = QDoubleSpinBox()
         self._weight_spin.setRange(0, 300)
         self._weight_spin.setSuffix(" kg")
-        self._height_spin = MDoubleSpinBox()
+        self._height_spin = QDoubleSpinBox()
         self._height_spin.setRange(0, 250)
         self._height_spin.setSuffix(" cm")
         self._level_combo = QComboBox()
@@ -377,8 +380,8 @@ class AgentConfigPanel(QWidget):
         self._add_form_row(training_form, 1, "侧重训练", self._focus_combo)
         profile_layout.addLayout(training_form)
 
-        self._history_label = MLabel("")
-        self._history_label.setStyleSheet("color: #aaaaaa;")
+        self._history_label = QLabel("")
+        self._history_label.setStyleSheet(qss("""color: #aaaaaa;"""))
         profile_layout.addWidget(self._history_label)
         profile_layout.addStretch()
 
@@ -395,19 +398,19 @@ class AgentConfigPanel(QWidget):
         )
         header.addWidget(self._assistant_title)
         header.addStretch()
-        self._suggestion_toggle_btn = MPushButton("查看建议")
+        self._suggestion_toggle_btn = QPushButton("查看建议")
         self._suggestion_toggle_btn.setObjectName("SuggestionToggleButton")
         self._suggestion_toggle_btn.hide()
         header.addWidget(self._suggestion_toggle_btn)
         self._test_type_combo = QComboBox()
         for mode, test_type in MODE_TEST_TYPES.items():
-            self._test_type_combo.addItem(test_type, mode)
+            self._test_type_combo.addItem(mode_label(test_type), mode)
         self._test_type_combo.setMinimumWidth(150)
         self._test_type_combo.setMaximumWidth(190)
         header.addWidget(self._test_type_combo)
         chat_layout.addLayout(header)
 
-        self._status_label = MLabel("")
+        self._status_label = QLabel("")
         self._status_label.setObjectName("ServiceStatus")
         self._status_label.setWordWrap(True)
         chat_layout.addWidget(self._status_label)
@@ -435,7 +438,7 @@ class AgentConfigPanel(QWidget):
         for index, text in enumerate(
             ("入门 3 次", "常规 5 次", "1 分钟测试", "轻量测试")
         ):
-            chip = MPushButton(text)
+            chip = QPushButton(text)
             chip.setObjectName("PromptChip")
             chip.clicked.connect(lambda _, button=chip: self._chat_input.setText(button.text()))
             self._prompt_chip_buttons.append(chip)
@@ -444,11 +447,12 @@ class AgentConfigPanel(QWidget):
         chat_layout.addWidget(self._prompt_chips)
 
         input_layout = QHBoxLayout()
-        self._chat_input = MLineEdit()
+        self._chat_input = QLineEdit()
         self._chat_input.setPlaceholderText("描述测试需求...")
-        self._send_btn = MPushButton("发送").primary()
+        self._send_btn = QPushButton("发送")
+        self._send_btn.setProperty("role", "primary")
         self._send_btn.setObjectName("PanelPrimaryButton")
-        self._reset_btn = MPushButton("重置对话")
+        self._reset_btn = QPushButton("重置对话")
         input_layout.addWidget(self._chat_input, 1)
         input_layout.addWidget(self._send_btn)
         input_layout.addWidget(self._reset_btn)
@@ -463,17 +467,17 @@ class AgentConfigPanel(QWidget):
         suggestion_header = QHBoxLayout()
         suggestion_header.addWidget(self._card_title("建议配置"))
         suggestion_header.addStretch()
-        self._suggestion_close_btn = MPushButton("×")
+        self._suggestion_close_btn = QPushButton("×")
         self._suggestion_close_btn.setObjectName("SuggestionCloseButton")
         self._suggestion_close_btn.setToolTip("收起建议配置")
         suggestion_header.addWidget(self._suggestion_close_btn)
         suggestion_layout.addLayout(suggestion_header)
 
-        self._suggestion_text = MLabel("尚未生成建议配置。")
+        self._suggestion_text = QLabel("尚未生成建议配置。")
         self._suggestion_text.setWordWrap(True)
         self._suggestion_text.setTextFormat(Qt.RichText)
         self._suggestion_text.setStyleSheet(
-            "font-size: 10.5pt; color: #d0d6e2; background: transparent; border: none;"
+            qss("""font-size: 10.5pt; color: #d0d6e2; background: transparent; border: none;""")
         )
         suggestion_scroll = QScrollArea()
         suggestion_scroll.setObjectName("SuggestionConfigScroll")
@@ -483,7 +487,8 @@ class AgentConfigPanel(QWidget):
         suggestion_scroll.setWidget(self._suggestion_text)
         suggestion_layout.addWidget(suggestion_scroll, 1)
 
-        self._confirm_btn = MPushButton("确认使用此配置").primary()
+        self._confirm_btn = QPushButton("确认使用此配置")
+        self._confirm_btn.setProperty("role", "primary")
         self._confirm_btn.setObjectName("PanelPrimaryButton")
         self._confirm_btn.setMinimumHeight(42)
         self._confirm_btn.setEnabled(False)
@@ -608,20 +613,20 @@ class AgentConfigPanel(QWidget):
         self._sync_suggestion_presentation()
 
     @staticmethod
-    def _card_title(text: str) -> MLabel:
-        label = MLabel(text)
+    def _card_title(text: str) -> QLabel:
+        label = QLabel(text)
         label.setObjectName("CardTitle")
         return label
 
     @staticmethod
-    def _section_title(text: str) -> MLabel:
-        label = MLabel(text)
+    def _section_title(text: str) -> QLabel:
+        label = QLabel(text)
         label.setObjectName("SectionTitle")
         return label
 
     @staticmethod
     def _add_form_row(layout: QGridLayout, row: int, label: str, widget: QWidget) -> None:
-        label_widget = MLabel(label)
+        label_widget = QLabel(label)
         label_widget.setObjectName("FieldLabel")
         layout.addWidget(label_widget, row, 0)
         layout.addWidget(widget, row, 1)
@@ -707,7 +712,7 @@ class AgentConfigPanel(QWidget):
         if self._llm_client is None:
             status = "智能服务不可用，请使用手动配置。"
         elif self._worker_error:
-            status = f"智能服务初始化失败：{self._worker_error}"
+            status = "智能配置暂不可用，请切换手动配置。"
         elif busy:
             status = "正在生成建议配置…"
         elif not self._worker_ready:
@@ -839,6 +844,8 @@ class AgentConfigPanel(QWidget):
 
     def _on_llm_finished(self, config, reply: str) -> None:
         worker = self.sender()
+        if isinstance(worker, QThread) and worker.isRunning():
+            worker.wait()  # Result delivery can precede return from run().
         if getattr(worker, 'request_id', None) != self._active_request_id:
             if worker is self._llm_worker:
                 self._llm_worker = None
@@ -850,7 +857,7 @@ class AgentConfigPanel(QWidget):
         current_selection = (getattr(worker, "mode_revision", self._mode_revision) == self._mode_revision)
         if current_selection:
             if mode != self._current_agent_mode():
-                self._test_type_combo.setCurrentIndex(self._test_type_combo.findText(MODE_TEST_TYPES[mode]))
+                self._test_type_combo.setCurrentIndex(self._test_type_combo.findData(mode))
                 self._append_chat_entry("你", escape(worker._message), mode=mode)
             self._pending_intent = getattr(worker, "pending_intent", None)
         self._append_chat_entry("AI", _md_to_html(reply), mode=mode)
@@ -892,6 +899,8 @@ class AgentConfigPanel(QWidget):
 
     def _on_llm_error(self, message: str) -> None:
         worker = self.sender()
+        if isinstance(worker, QThread) and worker.isRunning():
+            worker.wait()  # Result delivery can precede return from run().
         if getattr(worker, 'request_id', None) != self._active_request_id:
             if worker is self._llm_worker:
                 self._llm_worker = None

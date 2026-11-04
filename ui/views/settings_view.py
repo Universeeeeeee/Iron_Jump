@@ -14,13 +14,14 @@ from qtpy.QtWidgets import (
     QVBoxLayout,
     QWidget,
     QDoubleSpinBox, QSpinBox, QFormLayout,
+    QScrollArea,
 )
 
 from data.subject_store import SubjectStore, default_db_path
 from path_utils import find_dll
 
 from ui.styles import SETTINGS_QSS
-from ui.theme import SPACE
+from ui.theme import SPACE, qss
 
 
 class SettingsView(QWidget):
@@ -57,6 +58,19 @@ class SettingsView(QWidget):
         header.addWidget(self._mode_label)
         layout.addLayout(header)
 
+        content = QWidget()
+        content.setObjectName("SettingsContent")
+        content.setStyleSheet(qss("QWidget#SettingsContent { background: ${background}; }"))
+        content_layout = QVBoxLayout(content)
+        content_layout.setContentsMargins(0, 0, 0, 0)
+        content_layout.setSpacing(SPACE["lg"])
+        scroll = QScrollArea()
+        scroll.setObjectName("SettingsContentScroll")
+        scroll.setFrameShape(QFrame.NoFrame)
+        scroll.setWidgetResizable(True)
+        scroll.setWidget(content)
+        layout.addWidget(scroll, 1)
+
         cards = QHBoxLayout()
         cards.setSpacing(SPACE["lg"])
         cards.addWidget(
@@ -84,7 +98,7 @@ class SettingsView(QWidget):
             ),
             1,
         )
-        layout.addLayout(cards)
+        content_layout.addLayout(cards)
         from ui.quality_settings import load_policy
         policy = load_policy()
         self._quality_card = QFrame()
@@ -115,8 +129,8 @@ class SettingsView(QWidget):
         save = QPushButton("应用自检设置（已有自检失效）")
         save.clicked.connect(self._save_quality_policy)
         form.addRow(save)
-        layout.addWidget(self._quality_card)
-        layout.addStretch(1)
+        content_layout.addWidget(self._quality_card)
+        content_layout.addStretch(1)
 
         refresh_row = QHBoxLayout()
         refresh_row.addStretch(1)

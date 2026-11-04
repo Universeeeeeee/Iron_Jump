@@ -38,14 +38,14 @@ def test_overground_pause_is_rejected_without_waiting(qtbot, monkeypatch):
     from config.walking_config import WalkingConfig
     window, voice = make_bridge(qtbot, monkeypatch)
     window._controller._config = WalkingConfig()
-    window._controller._is_running = True
+    getattr(window._controller, '_local', window._controller)._is_running = True
     try:
         voice.handle_text("暂停")
         assert voice.pending is None
         assert not voice.timer.isActive()
         assert "不支持暂停" in window._voice_panel.reply.text()
     finally:
-        window._controller._is_running = False
+        getattr(window._controller, '_local', window._controller)._is_running = False
 
 
 def test_stop_speaking_invalidates_old_reply_without_stopping_test(qtbot, monkeypatch):
@@ -105,13 +105,13 @@ def test_overground_start_requires_preflight_and_cannot_apply_old_agent_config(q
     assert setup._current_config is config
     assert "手动配置" in window._voice_panel.reply.text()
     window._controller._config = config
-    window._controller._device_state = "connected"
+    getattr(window._controller, '_local', window._controller)._device_state = "connected"
     window._active_config = config
     window._stack.setCurrentWidget(window._exec_view)
     voice.handle_text("开始")
     assert voice.pending is None
     assert "空场自检尚未通过" in window._voice_panel.reply.text()
-    window._controller._walking_ready = True
+    getattr(window._controller, '_local', window._controller)._walking_ready = True
     voice.handle_text("开始")
     assert voice.pending is None
     assert "核对" in window._voice_panel.reply.text()

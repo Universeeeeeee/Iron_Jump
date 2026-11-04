@@ -48,7 +48,7 @@ def replay(*, filtered=False, reverse=False, kind='growth'):
 
 @pytest.mark.parametrize('filtered', [False, True])
 @pytest.mark.parametrize('reverse', [False, True])
-def test_local_growth_retains_remote_release_without_claiming_foot_identity(filtered, reverse):
+def test_local_growth_recovers_landing_and_retains_remote_release(filtered, reverse):
     p = replay(filtered=filtered, reverse=reverse)
     assert not p.issues
     anchor = p.contacts[0]
@@ -57,14 +57,14 @@ def test_local_growth_retains_remote_release_without_claiming_foot_identity(filt
     group = p.contacts[1]
     assert group.start == pytest.approx(.220) and group.end == pytest.approx(.500)
     assert group.observed_samples == 280  # overlapping sources cannot add votes
-    assert group.exclusion == 'unresolved_coalescence'
-    assert not group.touch_known and not group.position_known and group.side == 'unknown'
+    assert group.exclusion == 'unresolved_fragment_join'
+    assert group.touch_known and not group.position_known and group.side == 'unknown'
     row = next(d for d in p.summary()['candidate_decisions']
                if d['reason'] == 'unresolved_islands_coalesced')
     assert row['first_sample'] == 272 and row['observed_samples'] == 4
     assert row['outcome'] == 'unresolved' and row['owner_first_sample'] == 220
-    assert p.summary()['valid_touches'] == 3
-    assert [(s['from_id'], s['to_id']) for s in p.summary()['steps']] == [(2, 3)]
+    assert p.summary()['valid_touches'] == 4
+    assert [(s['from_id'], s['to_id']) for s in p.summary()['steps']] == [(0, 1), (1, 2), (2, 3)]
     assert p.summary()['duration_s'] == pytest.approx(.650)
 
 

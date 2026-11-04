@@ -1,7 +1,7 @@
 """
 agent_test_ui.py — Agent 参数配置独立测试工具
 
-用 dayu_widgets 构建，验证离线（规则引擎）和在线（LLM）两种模式。
+用 Qt Widgets 构建，验证离线（规则引擎）和在线（LLM）两种模式。
 与主 UI 完全解耦，不依赖硬件模块。
 
 使用方式::
@@ -14,20 +14,16 @@ from __future__ import annotations
 import time
 import traceback
 
+from qtpy.QtWidgets import (
+    QDoubleSpinBox, QLabel, QLineEdit, QPushButton, QSpinBox, QWidget, QVBoxLayout,
+    QHBoxLayout, QGridLayout, QComboBox, QSizePolicy, QSplitter, QTextEdit,
+)
+from ui.widgets import SectionHeading
+from ui.application import application
+
 from qtpy.QtCore import Qt, Signal, QThread
 from qtpy.QtGui import QTextCursor
-from qtpy.QtWidgets import (
-    QWidget, QVBoxLayout, QHBoxLayout, QGridLayout,
-    QComboBox, QSizePolicy, QSplitter, QTextEdit,
-)
 
-from dayu_widgets.divider import MDivider
-from dayu_widgets.label import MLabel
-from dayu_widgets.spin_box import MSpinBox, MDoubleSpinBox
-from dayu_widgets.push_button import MPushButton
-from dayu_widgets.line_edit import MLineEdit
-from dayu_widgets.qt import application
-from dayu_widgets import dayu_theme
 
 from agent import GaitAgent, AthleteProfile
 from markdown_it import MarkdownIt
@@ -94,32 +90,32 @@ class AthletePanel(QWidget):
     def _build_ui(self):
         layout = QVBoxLayout(self)
         layout.setContentsMargins(0, 0, 0, 0)
-        layout.addWidget(MDivider("用户信息"))
+        layout.addWidget(SectionHeading("用户信息"))
 
         grid = QGridLayout()
         grid.setSpacing(8)
 
         # 年龄
-        self.age_spin = MSpinBox()
+        self.age_spin = QSpinBox()
         self.age_spin.setRange(1, 120)
         self.age_spin.setValue(30)
-        grid.addWidget(MLabel("年龄"), 0, 0)
+        grid.addWidget(QLabel("年龄"), 0, 0)
         grid.addWidget(self.age_spin, 0, 1)
 
         # 体重
-        self.weight_spin = MDoubleSpinBox()
+        self.weight_spin = QDoubleSpinBox()
         self.weight_spin.setRange(10, 300)
         self.weight_spin.setValue(70.0)
         self.weight_spin.setSuffix(" kg")
-        grid.addWidget(MLabel("体重"), 1, 0)
+        grid.addWidget(QLabel("体重"), 1, 0)
         grid.addWidget(self.weight_spin, 1, 1)
 
         # 身高
-        self.height_spin = MDoubleSpinBox()
+        self.height_spin = QDoubleSpinBox()
         self.height_spin.setRange(50, 250)
         self.height_spin.setValue(170.0)
         self.height_spin.setSuffix(" cm")
-        grid.addWidget(MLabel("身高"), 2, 0)
+        grid.addWidget(QLabel("身高"), 2, 0)
         grid.addWidget(self.height_spin, 2, 1)
 
         # 训练水平
@@ -127,15 +123,14 @@ class AthletePanel(QWidget):
         self.level_combo.addItems([
             "advanced", "intermediate", "beginner",
         ])
-        grid.addWidget(MLabel("训练水平"), 3, 0)
+        grid.addWidget(QLabel("训练水平"), 3, 0)
         grid.addWidget(self.level_combo, 3, 1)
 
         # 侧重训练
         self.side_combo = QComboBox()
         self.side_combo.addItems(["", "left", "right", "both"])
-        grid.addWidget(MLabel("侧重训练"), 4, 0)
+        grid.addWidget(QLabel("侧重训练"), 4, 0)
         grid.addWidget(self.side_combo, 4, 1)
-
 
 
         layout.addLayout(grid)
@@ -194,12 +189,12 @@ class AgentTestWindow(QWidget):
         right_layout.setContentsMargins(0, 0, 0, 0)
 
         # -- 模式选择 --
-        right_layout.addWidget(MDivider("配置模式"))
+        right_layout.addWidget(SectionHeading("配置模式"))
 
         mode_layout = QHBoxLayout()
         self._mode_combo = QComboBox()
         self._mode_combo.addItems(["离线 (规则引擎)", "在线 (LLM)"])
-        mode_layout.addWidget(MLabel("模式:"))
+        mode_layout.addWidget(QLabel("模式:"))
         mode_layout.addWidget(self._mode_combo)
         mode_layout.addStretch()
         right_layout.addLayout(mode_layout)
@@ -212,12 +207,12 @@ class AgentTestWindow(QWidget):
         type_layout = QHBoxLayout()
         self._test_type_combo = QComboBox()
         self._test_type_combo.addItems(["Jump Test"])
-        type_layout.addWidget(MLabel("测试类型:"))
+        type_layout.addWidget(QLabel("测试类型:"))
         type_layout.addWidget(self._test_type_combo)
         offline_layout.addLayout(type_layout)
 
-        self._offline_btn = MPushButton("生成配置")
-        self._offline_btn.set_dayu_type(MPushButton.PrimaryType)
+        self._offline_btn = QPushButton("生成配置")
+        self._offline_btn.setProperty("role", "primary")
         offline_layout.addWidget(self._offline_btn)
         offline_layout.addStretch()
 
@@ -239,13 +234,13 @@ class AgentTestWindow(QWidget):
         online_layout.addWidget(self._chat_display, 1)
 
         input_layout = QHBoxLayout()
-        self._chat_input = MLineEdit()
+        self._chat_input = QLineEdit()
         self._chat_input.setPlaceholderText("描述测试需求，如: 入门用户30次跳跃测试")
         self._chat_input.setStyleSheet("font-size: 18px;")
         
-        self._send_btn = MPushButton("发送")
-        self._send_btn.set_dayu_type(MPushButton.PrimaryType)
-        self._reset_btn = MPushButton("重置对话")
+        self._send_btn = QPushButton("发送")
+        self._send_btn.setProperty("role", "primary")
+        self._reset_btn = QPushButton("重置对话")
         input_layout.addWidget(self._chat_input)
         input_layout.addWidget(self._send_btn)
         input_layout.addWidget(self._reset_btn)
@@ -261,7 +256,7 @@ class AgentTestWindow(QWidget):
         main_layout.addWidget(splitter, 1)
 
         # ===== 下半部分: 结果展示 =====
-        main_layout.addWidget(MDivider("生成结果 (TestConfig)"))
+        main_layout.addWidget(SectionHeading("生成结果 (TestConfig)"))
         self._result_display = QTextEdit()
         self._result_display.setReadOnly(True)
         self._result_display.setMaximumHeight(100)
@@ -435,7 +430,7 @@ class AgentTestWindow(QWidget):
 if __name__ == "__main__":
     with application() as app:
         win = AgentTestWindow()
-        dayu_theme.apply(win)
+
         win.show()
 
         screen = app.primaryScreen().availableGeometry()

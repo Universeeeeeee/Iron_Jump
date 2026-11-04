@@ -1,4 +1,4 @@
-"""Growing unconfirmed optical sources stay local and never become foot truth."""
+"""Continuous local sources may establish one landing while preserving their provenance."""
 from dataclasses import replace
 
 import pytest
@@ -49,7 +49,7 @@ def sample(p, n, groups, reverse=False):
 @pytest.mark.parametrize('reverse', [False, True])
 @pytest.mark.parametrize('filtered', [False, True])
 @pytest.mark.parametrize('minimum', [20, 60])
-def test_pending_growth_retains_unknown_group_and_later_independent_feet(
+def test_pending_growth_recovers_one_landing_and_later_independent_feet(
         qtbot, kind, segments, reverse, filtered, minimum):
     p = processor(segments, min_contact_time=minimum, starting_foot='Left',
                   stop_type='Software command')
@@ -59,9 +59,9 @@ def test_pending_growth_retains_unknown_group_and_later_independent_feet(
     for n in range(850):
         groups = onset(kind, n)
         if 400 <= n < 550:
-            groups += [(5, 18)] if kind == 'private_pair' else [(50, 65)]
+            groups += [(75, 86)] if kind == 'private_pair' else [(50, 65)]
         if 600 <= n < 750:
-            groups += [(25, 40)] if kind == 'private_pair' else [(75, 89)]
+            groups += [(90, 94)] if kind == 'private_pair' else [(75, 89)]
         f = sample(p, n, groups, reverse)
         if session:
             session.on_frame(f)
@@ -72,23 +72,23 @@ def test_pending_growth_retains_unknown_group_and_later_independent_feet(
         p = session.processor
     s = p.summary()
     assert not p.issues
-    parent = next(c for c in p.contacts if c.start == 100 and c.problem == 'unresolved_coalescence')
+    parent = next(c for c in p.contacts if c.start == 100 and c.candidate_outcome != 'associated_fragment')
     assert parent.end == 350 and parent.observed_samples == 250
-    assert parent.confirmed and parent.candidate_outcome == 'unresolved_group'
-    assert not parent.touch_known and parent.side == 'unknown' and not parent.label
+    assert parent.confirmed and parent.candidate_outcome == 'confirmed_contact'
+    assert parent.touch_known and parent.side == 'unknown' and parent.label == 'A'
     row = next(c for c in s['contacts'] if c['id'] == parent.id)
-    assert all(not row[k]['valid'] for k in ('touch_s', 'lift_s', 'toe_m', 'contact_s'))
+    assert all(row[k]['valid'] for k in ('touch_s', 'lift_s', 'toe_m', 'contact_s'))
     sources = [x for x in s['candidate_decisions'] if x['reason'] == 'immature_islands_coalesced']
     assert len(sources) == 2 and {x['owner_id'] for x in sources} == {parent.id}
     assert {x['first_sample'] for x in sources} == ({100, 103} if kind == 'contact_pair' else {100, 102})
-    assert s['record_count'] == len(p.contacts) and s['valid_touches'] == 2
+    assert s['record_count'] == len(p.contacts) and s['valid_touches'] == 3
     assert len([c for c in p.contacts if c.candidate_outcome != 'associated_fragment']) == 3
     assert s['steps'][-1]['time_s']['valid'] and s['steps'][-1]['time_s']['value'] == pytest.approx(.2)
-    assert s['duration_s'] is None and p.origin == .4
+    assert s['duration_s'] is None and p.origin == .1
     assert not p._exit_evidence
     report = p.build_report('manual')
-    assert report.touch_count == 2 and report.lift_count == 2
-    assert report.report_config_snapshot['algorithm'] == 'overground_running_v1.12'
+    assert report.touch_count == 3 and report.lift_count == 3
+    assert report.report_config_snapshot['algorithm'] == 'overground_running_v1.13'
 
 
 @pytest.mark.parametrize('filtered', [False, True])
@@ -139,15 +139,15 @@ def test_pending_growth_across_seam_uses_actual_geometry(qtbot, segments, wire_o
         session.halt()
         p = session.processor
     parent = p.contacts[0]
-    assert not p.issues and parent.problem == 'unresolved_coalescence'
+    assert not p.issues and parent.problem == 'unresolved_fragment_join'
     assert parent.observed_samples == 250 and parent.end == 350
-    assert p.summary()['valid_touches'] == 0 and p.summary()['duration_s'] is None
+    assert p.summary()['valid_touches'] == 1 and p.summary()['duration_s'] is None
 
 
 @pytest.mark.parametrize('kind', ['contact_pair', 'private_pair'])
 @pytest.mark.parametrize('reverse', [False, True])
 @pytest.mark.parametrize('filtered', [False, True])
-def test_only_later_independent_contacts_supply_a_valid_cycle(qtbot, kind, reverse, filtered):
+def test_recovered_landing_and_later_contacts_supply_valid_cycles(qtbot, kind, reverse, filtered):
     p = processor(3, min_contact_time=60, stop_type='Software command')
     session = OvergroundSession(p.config, type(p)) if filtered else None
     if session:
@@ -166,8 +166,8 @@ def test_only_later_independent_contacts_supply_a_valid_cycle(qtbot, kind, rever
         session.halt()
         p = session.processor
     s = p.summary()
-    assert not p.issues and s['valid_cycles'] == 1 and s['valid_steps'] == 2
-    assert not s['cycles'][0]['duration_s']['valid']
+    assert not p.issues and s['valid_cycles'] == 2 and s['valid_steps'] == 3
+    assert s['cycles'][0]['duration_s']['valid']
     assert s['cycles'][-1]['duration_s']['valid']
     assert s['cycles'][-1]['duration_s']['value'] == pytest.approx(.6)
     assert s['duration_s'] is None

@@ -48,7 +48,7 @@ def test_setup_view_accepts_treadmill_gait_config_without_attribute_error():
     view._set_current_config(config, "manual")
 
     summary_text = view._summary_label.text()
-    assert "跑步机步态" in summary_text
+    assert "跑步机走路" in summary_text
     assert "速度：5.5 km/h" in summary_text
     assert "方向：Interface side" in summary_text
     assert view.btn_ready.isEnabled()
@@ -57,7 +57,7 @@ def test_setup_view_accepts_treadmill_gait_config_without_attribute_error():
 def test_manual_config_initializes_from_selected_agent_test_type():
     _app()
     view = SetupView()
-    view._agent_panel._test_type_combo.setCurrentText("Treadmill Gait Test")
+    view._agent_panel._test_type_combo.setCurrentText("跑步机走路")
 
     view._set_config_mode(1)
 

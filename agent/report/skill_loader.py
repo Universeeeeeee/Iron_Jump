@@ -9,7 +9,7 @@ from pathlib import Path
 from reporting.models import TestType
 
 
-REPORT_ANALYSIS_SKILL_VERSION = "report-analysis-skill/0.6"
+REPORT_ANALYSIS_SKILL_VERSION = "report-analysis-skill/0.7"
 _DEFAULT_SKILL_PATH = Path(__file__).resolve().parent / "skills" / "report-analysis"
 _DOMAIN_REFERENCE_BY_TEST_TYPE: dict[TestType, str] = {
     "Jump Test": "references/jump.md",

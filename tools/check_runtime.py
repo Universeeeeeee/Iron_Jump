@@ -10,7 +10,7 @@ def main():
     failed = sys.version_info < (3, 11)
     if failed:
         print("FAIL: Python 3.11 or newer is required")
-    for name in ("qtpy.QtWidgets", "dayu_widgets", "numpy", "cv2", "pyqtgraph", "openpyxl", "pydantic", "dotenv", "requests"):
+    for name in ("qtpy.QtWidgets", "numpy", "cv2", "pyqtgraph", "openpyxl", "pydantic", "dotenv", "requests"):
         try:
             importlib.import_module(name)
             print(f"OK: {name}")

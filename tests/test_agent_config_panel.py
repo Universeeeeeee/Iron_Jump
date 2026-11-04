@@ -289,7 +289,7 @@ class AgentConfigPanelRequestLifecycleTest(unittest.TestCase):
         panel = AgentConfigPanel(llm_client=client)
         panel._worker_ready = True
         panel._sync_mode_state()
-        panel._test_type_combo.setCurrentText("Treadmill Gait Test")
+        panel._test_type_combo.setCurrentText("跑步机走路")
         panel._chat_input.setText("帮我配置跑步机步态测试")
         original_start = _LLMHttpWorker.start
         _LLMHttpWorker.start = lambda self: None
@@ -304,20 +304,20 @@ class AgentConfigPanelRequestLifecycleTest(unittest.TestCase):
     def test_switching_test_type_uses_independent_visible_conversations(self):
         self._send_and_finish("纵跳问题", "纵跳回答")
 
-        self.panel._test_type_combo.setCurrentText("Treadmill Gait Test")
+        self.panel._test_type_combo.setCurrentText("跑步机走路")
 
         self.assertEqual(self.panel._chat_display.toPlainText(), "")
         self.assertFalse(self.panel._prompt_chips.isHidden())
 
         self._send_and_finish("步态问题", "步态回答")
-        self.panel._test_type_combo.setCurrentText("Jump Test")
+        self.panel._test_type_combo.setCurrentText("纵跳测试")
 
         jump_text = self.panel._chat_display.toPlainText()
         self.assertIn("纵跳问题", jump_text)
         self.assertIn("纵跳回答", jump_text)
         self.assertNotIn("步态问题", jump_text)
 
-        self.panel._test_type_combo.setCurrentText("Treadmill Gait Test")
+        self.panel._test_type_combo.setCurrentText("跑步机走路")
 
         gait_text = self.panel._chat_display.toPlainText()
         self.assertIn("步态问题", gait_text)
@@ -334,12 +334,12 @@ class AgentConfigPanelRequestLifecycleTest(unittest.TestCase):
             _LLMHttpWorker.start = original_start
         worker = self.panel._llm_worker
 
-        self.panel._test_type_combo.setCurrentText("Treadmill Gait Test")
+        self.panel._test_type_combo.setCurrentText("跑步机走路")
         worker.finished.emit(None, "迟到的纵跳回答")
 
         self.assertEqual(self.panel._chat_display.toPlainText(), "")
 
-        self.panel._test_type_combo.setCurrentText("Jump Test")
+        self.panel._test_type_combo.setCurrentText("纵跳测试")
 
         self.assertIn("迟到的纵跳回答", self.panel._chat_display.toPlainText())
 
@@ -348,7 +348,7 @@ class AgentConfigPanelRequestLifecycleTest(unittest.TestCase):
         self.panel._chat_input.setEnabled(False)
         self.panel.show()
 
-        self.panel._test_type_combo.setCurrentText("Treadmill Gait Test")
+        self.panel._test_type_combo.setCurrentText("跑步机走路")
         QApplication.processEvents()
 
         self.assertTrue(self.panel._chat_input.isEnabled())
@@ -364,7 +364,7 @@ class AgentConfigPanelRequestLifecycleTest(unittest.TestCase):
         panel = AgentConfigPanel(llm_client=client)
         panel._worker_ready = True
 
-        panel._test_type_combo.setCurrentText("Treadmill Gait Test")
+        panel._test_type_combo.setCurrentText("跑步机走路")
 
         self.assertEqual(client.start_calls, 1)
         self.assertTrue(panel._chat_input.isEnabled())
@@ -372,7 +372,7 @@ class AgentConfigPanelRequestLifecycleTest(unittest.TestCase):
 
     def test_reset_clears_all_mode_documents_to_match_worker_reset(self):
         self._send_and_finish("纵跳问题", "纵跳回答")
-        self.panel._test_type_combo.setCurrentText("Treadmill Gait Test")
+        self.panel._test_type_combo.setCurrentText("跑步机走路")
         self._send_and_finish("步态问题", "步态回答")
 
         self.panel._on_reset_chat()
@@ -418,7 +418,8 @@ class AgentConfigPanelRequestLifecycleTest(unittest.TestCase):
         popup_palette = self.panel._test_type_combo.view().palette()
 
         self.assertEqual(popup_palette.color(QPalette.Text).name(), "#e7ebf2")
-        self.assertEqual(popup_palette.color(QPalette.Base).name(), "#1a2230")
+        from ui.theme import PALETTE
+        self.assertEqual(popup_palette.color(QPalette.Base).name(), PALETTE["control"])
 
     def test_fullscreen_layout_prioritizes_assistant_and_flattens_cards(self):
         self.panel.resize(1220, 700)
@@ -435,10 +436,10 @@ class AgentConfigPanelRequestLifecycleTest(unittest.TestCase):
         self.assertTrue(self.panel._suggestion_card.isVisible())
         self.assertLessEqual(self.panel._suggestion_card.width(), 270)
         self.assertGreaterEqual(self.panel._chat_card.width(), 650)
-        self.assertIn(
-            "QFrame#AgentCard {\n  background-color: rgba(32, 37, 48, 0.72);\n"
-            "  border: none;",
-            self.panel.styleSheet(),
+        from ui.theme import PALETTE
+        self.assertEqual(
+            self.panel._profile_card.grab().toImage().pixelColor(5, 30).name(),
+            PALETTE["surface"],
         )
         self.assertIn("QTextEdit {\n  border: none;", self.panel.styleSheet())
 
@@ -573,7 +574,7 @@ def test_late_routed_reply_cannot_override_manual_selection(qtbot, monkeypatch):
     panel._chat_input.setText("地面走路")
     panel._on_send_message()
     worker = panel._llm_worker
-    panel._test_type_combo.setCurrentText("Treadmill Running Test")
+    panel._test_type_combo.setCurrentText("跑步机跑步")
     worker.resolved_mode = "walking"
     worker.finished.emit(WalkingConfig(), "迟到结果")
     assert panel.current_test_type() == "Treadmill Running Test"

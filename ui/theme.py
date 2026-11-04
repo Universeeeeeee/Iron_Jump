@@ -1,8 +1,4 @@
-"""Dark-theme tokens for the application shell and migrated pages.
-
-Values preserve the existing UI. Domain/chart colors and legacy Dayu widgets
-remain local until their own migration. This module has no Qt dependency.
-"""
+"""Shared dark workstation tokens. This module has no Qt dependency."""
 
 from string import Template
 
@@ -13,7 +9,7 @@ PALETTE = {
     "surface": "#121923",
     "surface_hover": "#151d28",
     "surface_selected": "#171f2b",
-    "control": "#1a2230",
+    "control": "#111a26",
     "control_hover": "#232d3c",
     "control_stepper": "#242e3c",
     "control_disabled": "#242c37",
@@ -47,7 +43,11 @@ PALETTE = {
     "accent": "#ff7a00",
     "accent_hover": "#ff8a1f",
     "accent_text": "#ff9a3d",
-    "on_accent": "white",
+    "on_accent": "#111820",
+    "danger_surface": "#362027",
+    "danger_border": "#75404b",
+    "danger_text": "#ffb6bc",
+    "chart_blue": "#5da9eb",
     "success": "#67c98b",
     "warning": "#f0a24a",
     "danger": "#f06a6a",

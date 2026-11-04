@@ -1,6 +1,5 @@
 import pytest
 
-pytest.importorskip("dayu_widgets")
 
 from qtpy.QtCore import Qt
 from qtpy.QtWidgets import QApplication, QBoxLayout, QGridLayout
@@ -141,7 +140,8 @@ def test_gait_running_controls_stack_in_right_column(qtbot):
     assert not view._paused  # UI waits for the engine acknowledgement.
     view.set_paused(True)
     assert "暂停分析（计时已暂停）" in view._mode_label.text()
-    assert view.btn_pause.text() == "▶ 继续分析"
+    assert view.btn_pause.text() == "继续分析"
+    assert not view.btn_pause.icon().isNull()
     assert view._countdown_timer is None
     view._on_countdown_tick()
     assert view._countdown_remaining == remaining_before_pause
@@ -149,7 +149,8 @@ def test_gait_running_controls_stack_in_right_column(qtbot):
     view._on_pause()
     assert view._paused
     view.set_paused(False)
-    assert view.btn_pause.text() == "⏸ 暂停"
+    assert view.btn_pause.text() == "暂停"
+    assert not view.btn_pause.icon().isNull()
     assert view._countdown_timer is not None
     assert view._countdown_timer.isActive()
 
@@ -302,11 +303,23 @@ def test_visible_cycle_summary_preserves_max_camera_at_height_threshold(qtbot):
 
     preview = view._camera_panel._preview
     container = view._camera_panel._preview_container
-    assert not view._cycle_panel.isVisible()
-
-    view.resize(1280, 812)
+    # Font metrics vary between Qt platforms. Find the delivered transition
+    # instead of assuming that all hosts share the 810/812 px boundary.
+    hidden_height = None
+    visible_height = None
+    for height in range(700, 1002, 2):
+        view.resize(1280, height)
+        QApplication.processEvents()
+        if view._cycle_panel.isVisible():
+            visible_height = height
+            break
+        hidden_height = height
+    assert hidden_height is not None and visible_height is not None
+    view.resize(1280, hidden_height)
     QApplication.processEvents()
-
+    assert not view._cycle_panel.isVisible()
+    view.resize(1280, visible_height)
+    QApplication.processEvents()
     assert view._cycle_panel.isVisible()
     assert preview.width() == (container.width() // 16) * 16
     assert preview.width() * 9 == preview.height() * 16

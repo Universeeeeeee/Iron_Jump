@@ -101,6 +101,11 @@ class SessionRecord:
     team_id: int | None = None
     team_snapshot_json: str | None = None
     is_temporary: bool = False
+    report_available: bool = False
+
+    @property
+    def has_report(self) -> bool:
+        return self.report_available or bool(self.report_detail_json and self.report_detail_json != "{}")
 
     @property
     def config(self) -> AnyTestConfig:
@@ -137,6 +142,16 @@ class SessionRecord:
 
 def default_db_path() -> Path:
     return Path(get_base_dir()) / "data" / "iron_jump.sqlite3"
+
+
+# History navigation must not read large timelines and evidence JSON blobs.
+_SESSION_LIST_COLUMNS = """
+    id, subject_id, started_at, finished_at, test_type, config_json,
+    height_cm, weight_kg, total_jumps, finish_reason, report_summary_json,
+    subject_snapshot_json, config_source, export_path, team_id,
+    team_snapshot_json, is_temporary,
+    (report_detail_json IS NOT NULL) AS report_available
+"""
 
 
 class SubjectStore:
@@ -549,11 +564,11 @@ class SubjectStore:
             ).fetchone()
         return _session_from_row(row) if row else None
 
-    def get_sessions(self, subject_id: int, *, limit: int = 50) -> list[SessionRecord]:
+    def get_sessions(self, subject_id: int, *, limit: int = 50, include_detail: bool = True) -> list[SessionRecord]:
         with self._connect() as conn:
             rows = conn.execute(
-                """
-                SELECT * FROM test_sessions
+                f"""
+                SELECT {"*" if include_detail else _SESSION_LIST_COLUMNS} FROM test_sessions
                 WHERE subject_id = ?
                 ORDER BY started_at DESC, id DESC
                 LIMIT ?
@@ -562,11 +577,11 @@ class SubjectStore:
             ).fetchall()
         return [_session_from_row(row) for row in rows]
 
-    def get_all_sessions(self, *, limit: int = 200) -> list[SessionRecord]:
+    def get_all_sessions(self, *, limit: int = 200, include_detail: bool = True) -> list[SessionRecord]:
         with self._connect() as conn:
             rows = conn.execute(
-                """
-                SELECT *
+                f"""
+                SELECT {"*" if include_detail else _SESSION_LIST_COLUMNS}
                 FROM test_sessions
                 ORDER BY started_at DESC, id DESC
                 LIMIT ?
@@ -575,11 +590,11 @@ class SubjectStore:
             ).fetchall()
         return [_session_from_row(row) for row in rows]
 
-    def get_team_sessions(self, team_id: int, *, limit: int = 200) -> list[SessionRecord]:
+    def get_team_sessions(self, team_id: int, *, limit: int = 200, include_detail: bool = True) -> list[SessionRecord]:
         with self._connect() as conn:
             rows = conn.execute(
-                """
-                SELECT * FROM test_sessions
+                f"""
+                SELECT {"*" if include_detail else _SESSION_LIST_COLUMNS} FROM test_sessions
                 WHERE team_id = ?
                 ORDER BY started_at DESC, id DESC
                 LIMIT ?
@@ -970,6 +985,10 @@ class SubjectStore:
                 ON test_sessions(team_id, started_at DESC)
                 """
             )
+            conn.execute(
+                "CREATE INDEX IF NOT EXISTS idx_sessions_started "
+                "ON test_sessions(started_at DESC, id DESC)"
+            )
             conn.execute("PRAGMA user_version = 1")
 
     @contextmanager
@@ -1191,6 +1210,7 @@ def _session_from_row(row: sqlite3.Row) -> SessionRecord:
         team_id=_optional_row_value(row, "team_id"),
         team_snapshot_json=_optional_row_value(row, "team_snapshot_json"),
         is_temporary=bool(_optional_row_value(row, "is_temporary")),
+        report_available=bool(_optional_row_value(row, "report_available")),
     )
 
 
@@ -1243,7 +1263,7 @@ def _report_detail(report: TestReport) -> dict[str, Any]:
         detail.pop("export_timestamps", None)
         return {
             "report_type": "gait",
-            "report_schema_version": 1,
+            "report_schema_version": 2 if 'footfalls' in report.walking_summary else 1,
             **detail,
         }
 
@@ -1513,6 +1533,7 @@ def _report_summary(report: TestReport) -> dict[str, Any]:
         base.update(
             {
                 "report_type": "gait",
+                **({"recognized_steps": report.recognized_steps} if 'footfalls' in report.walking_summary else {}),
                 "avg_stride": report.avg_stride,
                 "max_stride": report.max_stride,
                 "avg_velocity": report.avg_velocity,
@@ -1563,6 +1584,14 @@ def _report_summary(report: TestReport) -> dict[str, Any]:
                 ),
             }
         )
+    summary = getattr(report, 'walking_summary', None) or getattr(report, 'running_summary', None)
+    if summary:
+        from reporting.recognized_gait import recognized_gait
+        recognized = recognized_gait(summary)
+        if recognized['supported']:
+            base['recognized_summary'] = {key: recognized[key] for key in (
+                'policy', 'recognized_steps', 'interval_count', 'spatial_interval_count',
+                'contact_count', 'mean_step_m', 'speed_m_s', 'mean_contact_s', 'cadence_per_min')}
     return base
 
 

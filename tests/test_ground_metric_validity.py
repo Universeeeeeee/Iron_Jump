@@ -64,19 +64,19 @@ def test_field_time_and_support_use_separate_dependencies(field_replay):
     assert p.touch_events == ledger
     if mode == 'walk':
         assert [(r['from_id'],r['to_id']) for r in s['steps']] == [
-            (0,3),(3,4),(4,5),(5,6),(8,9),(9,10),(10,11),(11,12),(12,13)]
+            (0,3),(3,4),(4,5),(5,6),(8,9),(9,10),(10,11),(13,14)]
         # The 45564 source still blocks the 44935 -> 45637 relationship.
         assert (6,8) not in [(r['from_id'],r['to_id']) for r in s['steps']]
-        assert s['valid_cycles'] == 7 and s['valid_support_cycles'] == 4
+        assert s['valid_cycles'] == 5 and s['valid_support_cycles'] == 4
         origin = min(c['touch_sample'] for c in s['contacts'] if c['touch_sample'] is not None)
         cycles = {(round(origin+r['start_s']*1000),round(origin+r['end_s']*1000)):r for r in s['cycles']}
         first = cycles[43562,44935]
         assert first['single_support_s'] == pytest.approx(.976)
         assert first['double_support_s'] == pytest.approx(.397)
-        assert cycles[47722,49151]['single_support_s'] is None
-        assert cycles[47000,48424]['single_support_s'] is None
+        assert (47722,49151) not in cycles
+        assert (47000,48424) not in cycles
         spatial_pairs = {(r['from_id'], r['to_id']) for r in s['steps'] if r['length_m'] is not None}
-        assert spatial_pairs == {(0,3), (3,4), (4,5), (8,9), (9,10), (12,13)}
+        assert spatial_pairs == {(0,3), (3,4), (4,5), (8,9), (9,10), (13,14)}
         assert s['valid_step_lengths'] == len(spatial_pairs)
         distances = [r for r in s['steps'] if r['length_m'] is not None]
         assert s['walking_speed_m_s'] == pytest.approx(sum(r['length_m'] for r in distances)/sum(r['time_s'] for r in distances))

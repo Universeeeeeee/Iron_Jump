@@ -55,6 +55,8 @@ def test_tint_cache_matches_the_uncached_raster_and_survives_state_changes(qtbot
     spec=importlib.util.spec_from_file_location('uncached_footprint',path)
     original=importlib.util.module_from_spec(spec);spec.loader.exec_module(original)
     cached=FootprintChannelWidget();uncached=original.FootprintChannelWidget()
+    # Compare rendering/cache behavior under the same current workstation theme.
+    uncached.setStyleSheet(cached.styleSheet())
     for widget in (cached,uncached):
         qtbot.addWidget(widget);widget.resize(300,700);widget.show()
     for side,known,length in [('left',True,20),('right',True,32),('unknown',False,None),('left',True,28)]:
@@ -76,6 +78,7 @@ def test_beam_layer_invalidation_and_dynamic_feet_match_uncached_pixels(qtbot):
     spec=importlib.util.spec_from_file_location('uncached_beams',path)
     original=importlib.util.module_from_spec(spec);spec.loader.exec_module(original)
     cached=FootprintChannelWidget();uncached=original.FootprintChannelWidget()
+    uncached.setStyleSheet(cached.styleSheet())
     for widget in (cached,uncached):
         qtbot.addWidget(widget);widget.resize(300,700);widget.setProperty('integrated',True);widget.show()
     state={'positions_m':list(DeviceLayout.linear(8).positions_m),'contact_bits':[0]*768,'valid_bits':[1]*768,'feet':[]}

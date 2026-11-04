@@ -464,7 +464,7 @@ def test_real_usb_worker_monitor_and_stop_run_on_worker_thread(qtbot, monkeypatc
 
 
 @pytest.mark.parametrize('segments', [3, 8, 12])
-def test_short_contact_blocks_adjacency_and_releases_manual_identity(segments):
+def test_short_contact_blocks_adjacency_without_erasing_published_event_sides(segments):
     p = processor(segments, stop_type='Software command', starting_foot='Left')
     walk(p, [(100, 400, .3), (500, 520, .8), (700, 1000, 1.3),
              (1200, 1500, 1.9), (1700, 2000, 2.5)], 2100)
@@ -474,7 +474,8 @@ def test_short_contact_blocks_adjacency_and_releases_manual_identity(segments):
     assert len(s['contacts']) == 5
     assert s['contacts'][1]['exclusion'] == 'short_contact'
     assert s['contacts'][0]['side'] == 'left'
-    assert all(c['side'] == 'unknown' for c in s['contacts'][2:])
+    assert [c['side'] for c in s['contacts'][2:]] == ['right', 'left', 'right']
+    assert all(c.side == 'unknown' for c in p.contacts[2:])  # Detector state is independent.
 
 
 def test_only_short_candidates_remain_reportable_before_origin():

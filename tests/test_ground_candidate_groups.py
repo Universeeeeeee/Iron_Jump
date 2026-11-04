@@ -107,11 +107,11 @@ def test_group_budget_union_split_and_clear(mode):
     for n in range(2400):
         groups = []
         if n == 100:
-            groups = [(40, 43), (46, 49)]
+            groups = [(40, 43), (46, 47)]
         elif 101 <= n < 2300:
-            groups = [(40, 49)]
+            groups = [(40, 47)]
             if 400 <= n < 450:
-                groups = [(40, 43), (46, 49)]
+                groups = [(40, 43), (46, 47)]
             if 1800 <= n < 1810:
                 groups += [(52, 54)]
             if n >= 1810:

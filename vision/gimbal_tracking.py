@@ -72,6 +72,13 @@ def framing_velocity(framing, settings=TrackingSpeeds()):
     pitch, pan = tracking_velocity(framing.target, settings)
     edge_pitch, edge_pan = tracking_velocity(framing.target, replace(settings, deadzone=0))
     left, top, right, bottom = framing.bounds
+    # In the preparation preview, leave more floor below the feet. Only a
+    # reliable full body with headroom may lower the view; never move blindly.
+    if (framing.head_landmark_visible and framing.foot_tips_visible
+            and framing.fits_with_margin and top >= .10 and bottom > .88):
+        floor_target = (.5, .5 + min(bottom - .86, top - .06))
+        floor_pitch, _ = tracking_velocity(floor_target, replace(settings, deadzone=.02))
+        pitch = max(pitch, floor_pitch) if settings.pitch_sign > 0 else min(pitch, floor_pitch)
     if left < .06 or right > .94:
         pan = edge_pan
     if top < .06 or bottom > .94:

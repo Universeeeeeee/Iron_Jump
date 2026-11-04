@@ -1,0 +1,984 @@
+{
+  "schema_version": "config-instruction-matrix/1.0",
+  "frozen_on": "2026-10-05",
+  "profile": {
+    "age": 30,
+    "weight": 70,
+    "height": 170,
+    "level": "intermediate"
+  },
+  "scope": "非流式业务链：意图分类 → 确定性模式路由 → Config Agent 三采样 → 规则归一化 → 运行时校验。硬件段数未知，不执行 UI 确认或采集。每条独立会话；query 从冻结配置种子开始。",
+  "scoring_notes": [
+    "配置评分使用冻结关键字段的精确匹配与生产运行时校验。",
+    "自然语言只执行冻结关键词组检查；完整追问有效性和拒绝语义必须人工复核，不把关键词通过率称为语义准确率。",
+    "query 是本地查询，不要求三次模型采样；配置路径保留全部候选，结构化修正消息一并保存。"
+  ],
+  "cases": [
+    {
+      "case_id": "jump_count",
+      "mode": "jump",
+      "category": "explicit",
+      "message": "请配置纵跳测试，双脚从踏板内开始并在踏板内结束，跳5次自动停止。",
+      "expected": {
+        "outcome": "config",
+        "mode": "jump",
+        "fields": {
+          "stop_type": "Status change",
+          "number_of_jumps": 5,
+          "starting_foot": "Not defined",
+          "start_position": "Inside area",
+          "finish_position": "Inside area"
+        },
+        "reply_groups": []
+      }
+    },
+    {
+      "case_id": "jump_missing_stop",
+      "mode": "jump",
+      "category": "missing_stop",
+      "message": "请配置纵跳测试。",
+      "expected": {
+        "outcome": "clarify",
+        "mode": "jump",
+        "fields": {},
+        "reply_groups": [
+          [
+            "次数",
+            "几次",
+            "多少次",
+            "时长",
+            "多久",
+            "时间"
+          ]
+        ]
+      }
+    },
+    {
+      "case_id": "jump_missing_time",
+      "mode": "jump",
+      "category": "missing_time",
+      "message": "请配置纵跳测试，按时间自动停止，但我还没决定测多久。",
+      "expected": {
+        "outcome": "clarify",
+        "mode": "jump",
+        "fields": {},
+        "reply_groups": [
+          [
+            "时长",
+            "多久",
+            "时间",
+            "分钟",
+            "秒"
+          ]
+        ]
+      }
+    },
+    {
+      "case_id": "jump_vague",
+      "mode": "jump",
+      "category": "ambiguous",
+      "message": "请配置纵跳测试，跳几下就好，具体次数我还没想好。",
+      "expected": {
+        "outcome": "clarify",
+        "mode": "jump",
+        "fields": {},
+        "reply_groups": [
+          [
+            "次数",
+            "几次",
+            "多少次"
+          ]
+        ]
+      }
+    },
+    {
+      "case_id": "jump_conflict",
+      "mode": "jump",
+      "category": "conflict",
+      "message": "请配置纵跳测试，必须恰好跳5次结束，又必须恰好跳10次结束，这两个条件都不能改。",
+      "expected": {
+        "outcome": "clarify",
+        "mode": "jump",
+        "fields": {},
+        "reply_groups": [
+          [
+            "5",
+            "五"
+          ],
+          [
+            "10",
+            "十"
+          ]
+        ]
+      }
+    },
+    {
+      "case_id": "jump_range",
+      "mode": "jump",
+      "category": "invalid_range",
+      "message": "请配置纵跳测试，跳1000次自动结束，不要修改这个次数。",
+      "expected": {
+        "outcome": "reject",
+        "mode": "jump",
+        "fields": {},
+        "reply_groups": [
+          [
+            "99",
+            "范围",
+            "上限",
+            "不支持",
+            "无法",
+            "不能"
+          ]
+        ]
+      }
+    },
+    {
+      "case_id": "jump_time",
+      "mode": "jump",
+      "category": "time_format",
+      "message": "请配置纵跳测试，双脚跳90秒后按时间自动停止。",
+      "expected": {
+        "outcome": "config",
+        "mode": "jump",
+        "fields": {
+          "stop_type": "End of Time",
+          "test_length": "01:30",
+          "starting_foot": "Not defined"
+        },
+        "reply_groups": []
+      }
+    },
+    {
+      "case_id": "jump_removed",
+      "mode": "jump",
+      "category": "unsupported",
+      "message": "请配置纵跳测试，用 External impulse 外部脉冲停止，不接受其他停止方式。",
+      "expected": {
+        "outcome": "reject",
+        "mode": "jump",
+        "fields": {},
+        "reply_groups": [
+          [
+            "外部",
+            "External",
+            "脉冲"
+          ],
+          [
+            "不支持",
+            "不能",
+            "无法",
+            "仅支持",
+            "只支持",
+            "已移除"
+          ]
+        ]
+      }
+    },
+    {
+      "case_id": "jump_switch",
+      "mode": "jump",
+      "category": "mode_switch",
+      "message": "不要跑步机走路了，改成双脚纵跳5次自动结束。",
+      "expected": {
+        "outcome": "config",
+        "mode": "jump",
+        "fields": {
+          "stop_type": "Status change",
+          "number_of_jumps": 5,
+          "starting_foot": "Not defined"
+        },
+        "reply_groups": []
+      },
+      "initial_mode": "treadmill_gait"
+    },
+    {
+      "case_id": "jump_query",
+      "mode": "jump",
+      "category": "current_query",
+      "message": "查看当前配置。",
+      "expected": {
+        "outcome": "query",
+        "mode": "jump",
+        "fields": {},
+        "reply_groups": [
+          [
+            "Jump Test"
+          ],
+          [
+            "7"
+          ]
+        ]
+      },
+      "seed": {
+        "number_of_jumps": 7
+      }
+    },
+    {
+      "case_id": "treadmill_gait_explicit",
+      "mode": "treadmill_gait",
+      "category": "explicit",
+      "message": "请配置跑步机走路测试，速度3.0公里每小时，朝对侧，测2分钟后自动停止。",
+      "expected": {
+        "outcome": "config",
+        "mode": "treadmill_gait",
+        "fields": {
+          "treadmill_speed": 3.0,
+          "direction": "Opposite side",
+          "stop_type": "End of Time",
+          "test_length": "02:00"
+        },
+        "reply_groups": []
+      }
+    },
+    {
+      "case_id": "treadmill_gait_defaults",
+      "mode": "treadmill_gait",
+      "category": "missing_defaults",
+      "message": "请配置跑步机走路测试，速度、方向和停止方式都用默认值。",
+      "expected": {
+        "outcome": "config",
+        "mode": "treadmill_gait",
+        "fields": {
+          "treadmill_speed": 3.0,
+          "direction": "Opposite side",
+          "stop_type": "Software command"
+        },
+        "reply_groups": []
+      }
+    },
+    {
+      "case_id": "treadmill_gait_missing_time",
+      "mode": "treadmill_gait",
+      "category": "missing_time",
+      "message": "请配置跑步机走路测试，按时间自动停止，时长我还没决定。",
+      "expected": {
+        "outcome": "clarify",
+        "mode": "treadmill_gait",
+        "fields": {},
+        "reply_groups": [
+          [
+            "时长",
+            "多久",
+            "时间",
+            "分钟",
+            "秒"
+          ]
+        ]
+      }
+    },
+    {
+      "case_id": "treadmill_gait_surface",
+      "mode": "treadmill_gait",
+      "category": "ambiguous",
+      "message": "我想走路测试，还没决定在跑步机还是地面。",
+      "expected": {
+        "outcome": "clarify",
+        "mode": "treadmill_gait",
+        "fields": {},
+        "reply_groups": [
+          [
+            "跑步机"
+          ],
+          [
+            "地面"
+          ]
+        ]
+      }
+    },
+    {
+      "case_id": "treadmill_gait_conflict",
+      "mode": "treadmill_gait",
+      "category": "conflict",
+      "message": "请配置跑步机走路测试，速度必须是3公里每小时，同时必须是8公里每小时，不要替我选。",
+      "expected": {
+        "outcome": "clarify",
+        "mode": "treadmill_gait",
+        "fields": {},
+        "reply_groups": [
+          [
+            "3",
+            "三"
+          ],
+          [
+            "8",
+            "八"
+          ]
+        ]
+      }
+    },
+    {
+      "case_id": "treadmill_gait_range",
+      "mode": "treadmill_gait",
+      "category": "invalid_range",
+      "message": "请配置跑步机走路测试，速度50公里每小时，必须按这个速度，手动停止。",
+      "expected": {
+        "outcome": "reject",
+        "mode": "treadmill_gait",
+        "fields": {},
+        "reply_groups": [
+          [
+            "20",
+            "范围",
+            "上限",
+            "不支持",
+            "无法",
+            "不能"
+          ]
+        ]
+      }
+    },
+    {
+      "case_id": "treadmill_gait_time",
+      "mode": "treadmill_gait",
+      "category": "time_format",
+      "message": "请配置跑步机走路测试，速度3.0公里每小时，朝界面侧，90s后按时间自动结束。",
+      "expected": {
+        "outcome": "config",
+        "mode": "treadmill_gait",
+        "fields": {
+          "treadmill_speed": 3.0,
+          "direction": "Interface side",
+          "stop_type": "End of Time",
+          "test_length": "01:30"
+        },
+        "reply_groups": []
+      }
+    },
+    {
+      "case_id": "treadmill_gait_removed",
+      "mode": "treadmill_gait",
+      "category": "unsupported",
+      "message": "请配置跑步机走路测试，只能用 External impulse 外部脉冲停止，不接受手动或按时间停止。",
+      "expected": {
+        "outcome": "reject",
+        "mode": "treadmill_gait",
+        "fields": {},
+        "reply_groups": [
+          [
+            "不支持",
+            "不能",
+            "无法",
+            "仅支持",
+            "只支持",
+            "已移除"
+          ]
+        ]
+      }
+    },
+    {
+      "case_id": "treadmill_gait_switch",
+      "mode": "treadmill_gait",
+      "category": "mode_switch",
+      "message": "不是跑步机跑步，我要跑步机走路测试，速度3.0公里每小时，朝对侧，手动结束。",
+      "expected": {
+        "outcome": "config",
+        "mode": "treadmill_gait",
+        "fields": {
+          "treadmill_speed": 3.0,
+          "direction": "Opposite side",
+          "stop_type": "Software command"
+        },
+        "reply_groups": []
+      },
+      "initial_mode": "treadmill_running"
+    },
+    {
+      "case_id": "treadmill_gait_query",
+      "mode": "treadmill_gait",
+      "category": "current_query",
+      "message": "查看当前配置。",
+      "expected": {
+        "outcome": "query",
+        "mode": "treadmill_gait",
+        "fields": {},
+        "reply_groups": [
+          [
+            "Treadmill Gait Test"
+          ],
+          [
+            "04:00"
+          ]
+        ]
+      },
+      "seed": {
+        "treadmill_speed": 3.0,
+        "direction": "Opposite side",
+        "stop_type": "End of Time",
+        "test_length": "04:00"
+      }
+    },
+    {
+      "case_id": "treadmill_running_explicit",
+      "mode": "treadmill_running",
+      "category": "explicit",
+      "message": "请配置跑步机跑步测试，速度6.0公里每小时，朝对侧，测2分钟后自动停止。",
+      "expected": {
+        "outcome": "config",
+        "mode": "treadmill_running",
+        "fields": {
+          "treadmill_speed": 6.0,
+          "direction": "Opposite side",
+          "stop_type": "End of Time",
+          "test_length": "02:00"
+        },
+        "reply_groups": []
+      }
+    },
+    {
+      "case_id": "treadmill_running_defaults",
+      "mode": "treadmill_running",
+      "category": "missing_defaults",
+      "message": "请配置跑步机跑步测试，速度、方向和停止方式都用默认值。",
+      "expected": {
+        "outcome": "config",
+        "mode": "treadmill_running",
+        "fields": {
+          "treadmill_speed": 6.0,
+          "direction": "Opposite side",
+          "stop_type": "Software command"
+        },
+        "reply_groups": []
+      }
+    },
+    {
+      "case_id": "treadmill_running_missing_time",
+      "mode": "treadmill_running",
+      "category": "missing_time",
+      "message": "请配置跑步机跑步测试，按时间自动停止，时长我还没决定。",
+      "expected": {
+        "outcome": "clarify",
+        "mode": "treadmill_running",
+        "fields": {},
+        "reply_groups": [
+          [
+            "时长",
+            "多久",
+            "时间",
+            "分钟",
+            "秒"
+          ]
+        ]
+      }
+    },
+    {
+      "case_id": "treadmill_running_surface",
+      "mode": "treadmill_running",
+      "category": "ambiguous",
+      "message": "我想跑步测试，还没决定在跑步机还是地面。",
+      "expected": {
+        "outcome": "clarify",
+        "mode": "treadmill_running",
+        "fields": {},
+        "reply_groups": [
+          [
+            "跑步机"
+          ],
+          [
+            "地面"
+          ]
+        ]
+      }
+    },
+    {
+      "case_id": "treadmill_running_conflict",
+      "mode": "treadmill_running",
+      "category": "conflict",
+      "message": "请配置跑步机跑步测试，速度必须是3公里每小时，同时必须是8公里每小时，不要替我选。",
+      "expected": {
+        "outcome": "clarify",
+        "mode": "treadmill_running",
+        "fields": {},
+        "reply_groups": [
+          [
+            "3",
+            "三"
+          ],
+          [
+            "8",
+            "八"
+          ]
+        ]
+      }
+    },
+    {
+      "case_id": "treadmill_running_range",
+      "mode": "treadmill_running",
+      "category": "invalid_range",
+      "message": "请配置跑步机跑步测试，速度50公里每小时，必须按这个速度，手动停止。",
+      "expected": {
+        "outcome": "reject",
+        "mode": "treadmill_running",
+        "fields": {},
+        "reply_groups": [
+          [
+            "20",
+            "范围",
+            "上限",
+            "不支持",
+            "无法",
+            "不能"
+          ]
+        ]
+      }
+    },
+    {
+      "case_id": "treadmill_running_time",
+      "mode": "treadmill_running",
+      "category": "time_format",
+      "message": "请配置跑步机跑步测试，速度6.0公里每小时，朝界面侧，90s后按时间自动结束。",
+      "expected": {
+        "outcome": "config",
+        "mode": "treadmill_running",
+        "fields": {
+          "treadmill_speed": 6.0,
+          "direction": "Interface side",
+          "stop_type": "End of Time",
+          "test_length": "01:30"
+        },
+        "reply_groups": []
+      }
+    },
+    {
+      "case_id": "treadmill_running_removed",
+      "mode": "treadmill_running",
+      "category": "unsupported",
+      "message": "请配置跑步机跑步测试，只能用 External impulse 外部脉冲停止，不接受手动或按时间停止。",
+      "expected": {
+        "outcome": "reject",
+        "mode": "treadmill_running",
+        "fields": {},
+        "reply_groups": [
+          [
+            "不支持",
+            "不能",
+            "无法",
+            "仅支持",
+            "只支持",
+            "已移除"
+          ]
+        ]
+      }
+    },
+    {
+      "case_id": "treadmill_running_switch",
+      "mode": "treadmill_running",
+      "category": "mode_switch",
+      "message": "不是跑步机走路，我要跑步机跑步测试，速度6.0公里每小时，朝对侧，手动结束。",
+      "expected": {
+        "outcome": "config",
+        "mode": "treadmill_running",
+        "fields": {
+          "treadmill_speed": 6.0,
+          "direction": "Opposite side",
+          "stop_type": "Software command"
+        },
+        "reply_groups": []
+      },
+      "initial_mode": "treadmill_gait"
+    },
+    {
+      "case_id": "treadmill_running_query",
+      "mode": "treadmill_running",
+      "category": "current_query",
+      "message": "查看当前配置。",
+      "expected": {
+        "outcome": "query",
+        "mode": "treadmill_running",
+        "fields": {},
+        "reply_groups": [
+          [
+            "Treadmill Running Test"
+          ],
+          [
+            "04:00"
+          ]
+        ]
+      },
+      "seed": {
+        "treadmill_speed": 6.0,
+        "direction": "Opposite side",
+        "stop_type": "End of Time",
+        "test_length": "04:00"
+      }
+    },
+    {
+      "case_id": "walking_explicit",
+      "mode": "walking",
+      "category": "explicit",
+      "message": "请配置地面走路单次通过测试，左脚先进入，离开设备后自动结束。",
+      "expected": {
+        "outcome": "config",
+        "mode": "walking",
+        "fields": {
+          "stop_type": "Status change",
+          "starting_foot": "Left"
+        },
+        "reply_groups": []
+      }
+    },
+    {
+      "case_id": "walking_defaults",
+      "mode": "walking",
+      "category": "missing_defaults",
+      "message": "请配置地面走路单次通过测试，停止方式和起始脚用默认值。",
+      "expected": {
+        "outcome": "config",
+        "mode": "walking",
+        "fields": {
+          "stop_type": "Status change",
+          "starting_foot": "Not defined"
+        },
+        "reply_groups": []
+      }
+    },
+    {
+      "case_id": "walking_manual",
+      "mode": "walking",
+      "category": "explicit",
+      "message": "请配置地面走路单次通过测试，右脚先进入，我手动结束。",
+      "expected": {
+        "outcome": "config",
+        "mode": "walking",
+        "fields": {
+          "stop_type": "Software command",
+          "starting_foot": "Right"
+        },
+        "reply_groups": []
+      }
+    },
+    {
+      "case_id": "walking_surface",
+      "mode": "walking",
+      "category": "ambiguous",
+      "message": "我想走路测试，还没决定在跑步机还是地面。",
+      "expected": {
+        "outcome": "clarify",
+        "mode": "walking",
+        "fields": {},
+        "reply_groups": [
+          [
+            "跑步机"
+          ],
+          [
+            "地面"
+          ]
+        ]
+      }
+    },
+    {
+      "case_id": "walking_conflict",
+      "mode": "walking",
+      "category": "conflict",
+      "message": "请配置地面走路测试，起始脚必须是左脚，同时必须是右脚，不要替我选。",
+      "expected": {
+        "outcome": "clarify",
+        "mode": "walking",
+        "fields": {},
+        "reply_groups": [
+          [
+            "左"
+          ],
+          [
+            "右"
+          ]
+        ]
+      }
+    },
+    {
+      "case_id": "walking_range",
+      "mode": "walking",
+      "category": "invalid_range",
+      "message": "请配置地面走路测试，跑步机速度设为50公里每小时，不能改动。",
+      "expected": {
+        "outcome": "reject",
+        "mode": "walking",
+        "fields": {},
+        "reply_groups": [
+          [
+            "不支持",
+            "不能",
+            "无法",
+            "仅支持",
+            "只支持",
+            "不适用",
+            "地面",
+            "跑步机"
+          ]
+        ]
+      }
+    },
+    {
+      "case_id": "walking_time",
+      "mode": "walking",
+      "category": "time_format",
+      "message": "请配置地面走路测试，必须在90s时自动结束，不接受其他结束方式。",
+      "expected": {
+        "outcome": "reject",
+        "mode": "walking",
+        "fields": {},
+        "reply_groups": [
+          [
+            "不支持",
+            "不能",
+            "无法",
+            "单次通过",
+            "手动"
+          ]
+        ]
+      }
+    },
+    {
+      "case_id": "walking_removed",
+      "mode": "walking",
+      "category": "unsupported",
+      "message": "请配置地面走路测试，必须支持暂停再继续，不接受取消暂停功能。",
+      "expected": {
+        "outcome": "reject",
+        "mode": "walking",
+        "fields": {},
+        "reply_groups": [
+          [
+            "不支持",
+            "不能",
+            "无法"
+          ],
+          [
+            "暂停"
+          ]
+        ]
+      }
+    },
+    {
+      "case_id": "walking_switch",
+      "mode": "walking",
+      "category": "mode_switch",
+      "message": "不要跑步机走路，改为地面走路单次通过，起始脚未知，离场自动结束。",
+      "expected": {
+        "outcome": "config",
+        "mode": "walking",
+        "fields": {
+          "stop_type": "Status change",
+          "starting_foot": "Not defined"
+        },
+        "reply_groups": []
+      },
+      "initial_mode": "treadmill_gait"
+    },
+    {
+      "case_id": "walking_query",
+      "mode": "walking",
+      "category": "current_query",
+      "message": "查看当前配置。",
+      "expected": {
+        "outcome": "query",
+        "mode": "walking",
+        "fields": {},
+        "reply_groups": [
+          [
+            "Sprint and Gait Test"
+          ],
+          [
+            "Right"
+          ],
+          [
+            "Software command"
+          ]
+        ]
+      },
+      "seed": {
+        "stop_type": "Software command",
+        "starting_foot": "Right"
+      }
+    },
+    {
+      "case_id": "overground_running_explicit",
+      "mode": "overground_running",
+      "category": "explicit",
+      "message": "请配置地面跑步单次通过测试，左脚先进入，离开设备后自动结束。",
+      "expected": {
+        "outcome": "config",
+        "mode": "overground_running",
+        "fields": {
+          "stop_type": "Status change",
+          "starting_foot": "Left"
+        },
+        "reply_groups": []
+      }
+    },
+    {
+      "case_id": "overground_running_defaults",
+      "mode": "overground_running",
+      "category": "missing_defaults",
+      "message": "请配置地面跑步单次通过测试，停止方式和起始脚用默认值。",
+      "expected": {
+        "outcome": "config",
+        "mode": "overground_running",
+        "fields": {
+          "stop_type": "Status change",
+          "starting_foot": "Not defined"
+        },
+        "reply_groups": []
+      }
+    },
+    {
+      "case_id": "overground_running_manual",
+      "mode": "overground_running",
+      "category": "explicit",
+      "message": "请配置地面跑步单次通过测试，右脚先进入，我手动结束。",
+      "expected": {
+        "outcome": "config",
+        "mode": "overground_running",
+        "fields": {
+          "stop_type": "Software command",
+          "starting_foot": "Right"
+        },
+        "reply_groups": []
+      }
+    },
+    {
+      "case_id": "overground_running_surface",
+      "mode": "overground_running",
+      "category": "ambiguous",
+      "message": "我想跑步测试，还没决定在跑步机还是地面。",
+      "expected": {
+        "outcome": "clarify",
+        "mode": "overground_running",
+        "fields": {},
+        "reply_groups": [
+          [
+            "跑步机"
+          ],
+          [
+            "地面"
+          ]
+        ]
+      }
+    },
+    {
+      "case_id": "overground_running_conflict",
+      "mode": "overground_running",
+      "category": "conflict",
+      "message": "请配置地面跑步测试，起始脚必须是左脚，同时必须是右脚，不要替我选。",
+      "expected": {
+        "outcome": "clarify",
+        "mode": "overground_running",
+        "fields": {},
+        "reply_groups": [
+          [
+            "左"
+          ],
+          [
+            "右"
+          ]
+        ]
+      }
+    },
+    {
+      "case_id": "overground_running_range",
+      "mode": "overground_running",
+      "category": "invalid_range",
+      "message": "请配置地面跑步测试，跑步机速度设为50公里每小时，不能改动。",
+      "expected": {
+        "outcome": "reject",
+        "mode": "overground_running",
+        "fields": {},
+        "reply_groups": [
+          [
+            "不支持",
+            "不能",
+            "无法",
+            "仅支持",
+            "只支持",
+            "不适用",
+            "地面",
+            "跑步机"
+          ]
+        ]
+      }
+    },
+    {
+      "case_id": "overground_running_time",
+      "mode": "overground_running",
+      "category": "time_format",
+      "message": "请配置地面跑步测试，必须在90s时自动结束，不接受其他结束方式。",
+      "expected": {
+        "outcome": "reject",
+        "mode": "overground_running",
+        "fields": {},
+        "reply_groups": [
+          [
+            "不支持",
+            "不能",
+            "无法",
+            "单次通过",
+            "手动"
+          ]
+        ]
+      }
+    },
+    {
+      "case_id": "overground_running_removed",
+      "mode": "overground_running",
+      "category": "unsupported",
+      "message": "请配置地面跑步测试，必须支持暂停再继续，不接受取消暂停功能。",
+      "expected": {
+        "outcome": "reject",
+        "mode": "overground_running",
+        "fields": {},
+        "reply_groups": [
+          [
+            "不支持",
+            "不能",
+            "无法"
+          ],
+          [
+            "暂停"
+          ]
+        ]
+      }
+    },
+    {
+      "case_id": "overground_running_switch",
+      "mode": "overground_running",
+      "category": "mode_switch",
+      "message": "不要跑步机跑步，改为地面跑步单次通过，起始脚未知，离场自动结束。",
+      "expected": {
+        "outcome": "config",
+        "mode": "overground_running",
+        "fields": {
+          "stop_type": "Status change",
+          "starting_foot": "Not defined"
+        },
+        "reply_groups": []
+      },
+      "initial_mode": "treadmill_running"
+    },
+    {
+      "case_id": "overground_running_query",
+      "mode": "overground_running",
+      "category": "current_query",
+      "message": "查看当前配置。",
+      "expected": {
+        "outcome": "query",
+        "mode": "overground_running",
+        "fields": {},
+        "reply_groups": [
+          [
+            "Overground Running Test"
+          ],
+          [
+            "Right"
+          ],
+          [
+            "Software command"
+          ]
+        ]
+      },
+      "seed": {
+        "stop_type": "Software command",
+        "starting_foot": "Right"
+      }
+    }
+  ]
+}

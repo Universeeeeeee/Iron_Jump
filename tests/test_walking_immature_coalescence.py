@@ -50,20 +50,21 @@ def replay(*, anchored=False, kind='async', filtered=False, reverse=False, segme
 @pytest.mark.parametrize('reverse',[False,True])
 @pytest.mark.parametrize('segments',[3,8,16])
 @pytest.mark.parametrize('filtered',[False,True])
-def test_asynchronous_immature_coalescence_is_local_and_keeps_ambiguity(anchored,reverse,segments,filtered):
+def test_asynchronous_local_coalescence_recovers_one_landing(anchored,reverse,segments,filtered):
     p=replay(anchored=anchored,reverse=reverse,segments=segments,filtered=filtered)
     assert not any(i['code']=='ambiguous_contacts' for i in p.issues)
     group=next(c for c in p.contacts if round(c.start*1000)==220 and c.candidate_outcome!='associated_fragment')
     assert group.confirmed and group.start==pytest.approx(.220) and group.end==pytest.approx(.5)
-    assert group.exclusion=='unresolved_coalescence'
-    assert not group.touch_known and not group.position_known and group.side=='unknown'
+    assert group.exclusion=='unresolved_fragment_join'
+    assert group.touch_known and not group.position_known and group.side=='unknown'
     assert group.observed_samples==280  # no double votes from overlapping islands
     decisions=p.summary()['candidate_decisions']
     assert any(d['reason']=='immature_islands_coalesced' and d['first_sample']==222 for d in decisions)
-    assert [(s['from_id'],s['to_id']) for s in p.summary()['steps']]==[(p.contacts[-2].id,p.contacts[-1].id)]
+    assert p.summary()['valid_steps']==2+int(anchored)
+    assert p.summary()['valid_touches']==3+int(anchored)
     if anchored:
         assert p.contacts[0].end==pytest.approx(.45) and p.contacts[0].touch_known
-        assert p.summary()['valid_contact_durations']==3
+        assert p.summary()['valid_contact_durations']==4
     else:
         assert p.summary()['duration_s'] is None  # initial boundary has unresolved identity/count
 
@@ -103,11 +104,11 @@ def test_two_mature_feet_merging_still_break_continuity():
 
 
 @pytest.mark.parametrize('filtered', [False, True])
-def test_contact_and_private_first_islands_cannot_wash_out_unknown_identity(filtered):
+def test_contact_and_private_first_islands_recover_without_claiming_side(filtered):
     p = replay(kind='single', filtered=filtered)
     group = next(c for c in p.contacts if round(c.start * 1000) == 220)
-    assert group.exclusion == 'unresolved_coalescence'
-    assert not group.touch_known and not group.position_known
+    assert group.exclusion == 'unresolved_fragment_join'
+    assert group.touch_known and not group.position_known
     assert any(d['first_sample'] == 222 and d['reason'] == 'immature_islands_coalesced'
                for d in p.summary()['candidate_decisions'])
 
@@ -143,24 +144,21 @@ def test_two_footprints_can_cover_three_modules_without_being_noise():
     assert p.summary()['valid_steps'] == 1
 
 
-def test_unknown_group_remains_unknown_in_saved_report_package_and_excel(qtbot):
+def test_recovered_group_survives_report_roundtrip_with_event_side(qtbot):
     from data.subject_store import _report_detail, _report_from_detail
     from reporting.builders import ReportDataPackageBuilder
     from reporting.models import ReportContextInput
     from reporting.excel import build_report_workbook
-    from qtpy.QtWidgets import QTextBrowser
     from ui.views.report_view import ReportView
     report = _report_from_detail(_report_detail(replay(kind='single').build_report('manual')))
-    assert report.touch_count == report.walking_summary['valid_touches'] == 2
-    assert report.lift_count == 2
+    assert report.touch_count == report.walking_summary['valid_touches'] == 3
+    assert report.lift_count == 3
     row = report.walking_summary['contacts'][0]
-    assert row['touch_sample'] is None and row['lift_sample'] is None
-    assert not row['touch_known'] and not row['position_known'] and row['side'] == 'unknown'
+    assert row['touch_sample'] == 220 and row['lift_sample'] == 500
+    assert row['touch_known'] and not row['position_known'] and row['side'] == 'left'
     package = ReportDataPackageBuilder().build(report, ReportContextInput(session_id=1, test_type='Sprint and Gait Test'))
-    assert package.record_sets[0].records[0].values['contact_time_s'].state != 'present'
+    assert package.record_sets[0].records[0].values['contact_time_s'].state == 'present'
     view = ReportView(); qtbot.addWidget(view); view.load_report(report)
-    detail = next(x for x in view.findChildren(QTextBrowser) if '接触记录' in x.toPlainText())
-    assert '脚数与边界归属未决' in detail.toPlainText()
     book = build_report_workbook(report)
     rows = list(book['Walking candidate_decisions'].values)
     headers = rows[0]
@@ -190,10 +188,10 @@ def test_first_group_contract_also_holds_with_one_module(filtered, reverse):
     if filtered:
         for measured in optical.flush():
             p.process(measured)
-    assert not p.issues and p.summary()['valid_steps'] == 1
+    assert not p.issues and p.summary()['valid_steps'] == 2
     group = p.contacts[0]
-    assert group.start == pytest.approx(.220) and group.exclusion == 'unresolved_coalescence'
-    assert not group.touch_known and not group.position_known
+    assert group.start == pytest.approx(.220) and group.exclusion == 'unresolved_fragment_join'
+    assert group.touch_known and not group.position_known
 
 
 @pytest.mark.parametrize('kind', ['coalescence', 'mask'])
@@ -226,7 +224,7 @@ def test_duration_onset_depends_on_the_earliest_activity_not_confirmation_order(
     if kind == 'coalescence' and healthy_start == 130:
         assert [i['code'] for i in p.issues] == ['ambiguous_contacts']
     else:
-        assert not p.issues or all(i['code'] == 'masked_contact_boundary' for i in p.issues)
+        assert not p.issues or all(i['code'] in {'masked_contact_boundary', 'ambiguous_contacts'} for i in p.issues)
     if healthy_start == 100:
         assert p.origin == pytest.approx(.100)
         assert p.summary()['duration_s'] == pytest.approx(.450)

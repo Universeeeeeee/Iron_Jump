@@ -1,8 +1,8 @@
 """
 execution_view.py — 实时测试核心页
 
-用 MetricCard 仪表盘替代 MTextEdit 纯文本滚动，
-支持远距离可读（48pt 大字号）。
+用 MetricCard 仪表盘替代 QTextEdit 纯文本滚动，
+保持关键指标清晰可读。
 
 设计约束:
   - 不管理 QThread / UsbWorker / GaitEngine
@@ -12,23 +12,27 @@ execution_view.py — 实时测试核心页
 
 from __future__ import annotations
 
+from config.mode_labels import mode_label
+
 import importlib
 from typing import Optional
 
-from qtpy.QtCore import Signal, Qt, QTimer
 from qtpy.QtWidgets import (
-    QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QBoxLayout,
-    QLabel, QFrame, QSizePolicy, QProgressBar,
+    QScrollArea, QLabel, QPushButton, QWidget, QVBoxLayout, QHBoxLayout, QGridLayout,
+    QBoxLayout, QFrame, QSizePolicy, QProgressBar,
 )
+from ui.styles import CONTROL_QSS, CONTROL_STATES_QSS
 
-from dayu_widgets.label import MLabel
-from dayu_widgets.push_button import MPushButton
-from dayu_widgets import dayu_theme
+from ui.theme import PALETTE, qss
+
+from qtpy.QtCore import Signal, Qt, QTimer
+
 
 from config.test_config import TestConfig
 from ui.embedded_camera_panel import EmbeddedCameraPanel
 from ui.footprint_channel import FootprintChannelWidget
 from ui.ground_track import GroundTrackPanel
+from ui.icons import icon
 
 # pyqtgraph 可选导入
 try:
@@ -57,12 +61,7 @@ class MetricCard(QFrame):
         super().__init__(parent)
         self.setFrameShape(QFrame.StyledPanel)
         self.setStyleSheet(
-            "MetricCard {"
-            "  background-color: rgba(40, 40, 45, 0.85);"
-            "  border: 1px solid rgba(80, 80, 85, 0.6);"
-            "  border-radius: 10px;"
-            "  padding: 0;"
-            "}"
+            qss("""MetricCard {  background-color: ${surface_selected};  border: 1px solid ${border_card};  border-radius: 10px;  padding: 0;}""")
         )
 
         layout = QVBoxLayout(self)
@@ -71,29 +70,29 @@ class MetricCard(QFrame):
         layout.setAlignment(Qt.AlignCenter)
 
         # 标题
-        self._title = MLabel(title)
+        self._title = QLabel(title)
         self._title.setAlignment(Qt.AlignCenter)
-        self._title.setStyleSheet("font-size: 11pt; color: #888888; border: none; background: transparent;")
+        self._title.setWordWrap(True)
+        self._title.setStyleSheet(qss("""font-size: 13px; color: ${text_muted}; border: none; background: transparent;"""))
         layout.addWidget(self._title)
 
         # 数值
-        self._value = MLabel("--")
+        self._value = QLabel("--")
         self._value.setAlignment(Qt.AlignCenter)
         self._value.setStyleSheet(
-            "font-size: 42pt; font-weight: bold; "
-            "color: #f0f0f0; border: none; background: transparent;"
+            qss("""font-size: 34px; font-weight: bold; color: ${text}; border: none; background: transparent;""")
         )
         layout.addWidget(self._value)
 
         # 单位
         if unit:
-            self._unit = MLabel(unit)
+            self._unit = QLabel(unit)
             self._unit.setAlignment(Qt.AlignCenter)
-            self._unit.setStyleSheet("font-size: 11pt; color: #666666; border: none; background: transparent;")
+            self._unit.setStyleSheet(qss("""font-size: 13px; color: ${text_hint}; border: none; background: transparent;"""))
             layout.addWidget(self._unit)
 
         self.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
-        self.setMinimumHeight(max(120, self.minimumSizeHint().height() + 4))
+        self.setMinimumHeight(max(104, self.minimumSizeHint().height() + 4))
 
     def set_value(self, text: str):
         self._value.setText(text)
@@ -101,7 +100,7 @@ class MetricCard(QFrame):
     def set_color(self, color: str):
         """设置数值颜色"""
         self._value.setStyleSheet(
-            f"font-size: 42pt; font-weight: bold; "
+            f"font-size: 34px; font-weight: bold; "
             f"color: {color}; border: none; background: transparent;"
         )
 
@@ -158,6 +157,7 @@ class ExecutionView(QWidget):
         self._detected_segments = None
         self._latest_footprint_frame = None
 
+        self._compact_controls = False
         self._build_ui()
         self._apply_style()
 
@@ -166,6 +166,19 @@ class ExecutionView(QWidget):
     # ------------------------------------------------------------------
 
     def _build_ui(self):
+        self.setObjectName("ExecutionViewRoot")
+        self.setStyleSheet(
+            CONTROL_QSS
+            + qss("""
+                QWidget#ExecutionViewRoot { background: ${background}; color: ${text}; }
+                QPushButton[sessionControl="true"] {
+                    min-height: 48px;
+                    padding: 0 16px;
+                    font-size: 15px;
+                }
+            """)
+            + CONTROL_STATES_QSS
+        )
         self._page_layout = QHBoxLayout(self)
         self._page_layout.setContentsMargins(0, 0, 0, 0)
         self._page_layout.setSpacing(0)
@@ -173,51 +186,66 @@ class ExecutionView(QWidget):
         self._page_layout.addWidget(self._body, 1)
         main_layout = QVBoxLayout(self._body)
         self._main_layout = main_layout
-        main_layout.setContentsMargins(15, 10, 15, 10)
+        main_layout.setContentsMargins(24, 18, 24, 18)
         main_layout.setSpacing(10)
 
         # ===== 顶部状态栏 =====
-        top_bar = QHBoxLayout()
-        self._mode_label = MLabel("纵跳测试 · 实时")
-        self._mode_label.setStyleSheet("font-size: 16pt; font-weight: bold; color: #e0e0e0;")
-        top_bar.addWidget(self._mode_label)
-        top_bar.addStretch()
+        top_bar = QBoxLayout(QBoxLayout.LeftToRight)
+        self._header_layout = top_bar
+        title_area = QWidget()
+        title_row = QHBoxLayout(title_area)
+        title_row.setContentsMargins(0, 0, 0, 0)
+        top_bar.addWidget(title_area, 1)
+        camera_area = QWidget()
+        camera_row = QHBoxLayout(camera_area)
+        camera_row.setContentsMargins(0, 0, 0, 0)
+        top_bar.addWidget(camera_area)
+        self._mode_label = QLabel("纵跳测试 · 实时")
+        self._mode_label.setWordWrap(True)
+        self._mode_label.setStyleSheet(qss("""font-size: 22px; font-weight: bold; color: ${text};"""))
+        title_row.addWidget(self._mode_label)
+        title_row.addStretch()
 
         # 设备状态
-        self._device_label = MLabel("等待连接...")
-        self._device_label.setStyleSheet("font-size: 10pt; color: #888888;")
-        top_bar.addWidget(self._device_label)
+        self._device_label = QLabel("等待连接...")
+        self._device_label.setStyleSheet(qss("""font-size: 10pt; color: ${text_muted};"""))
+        self._device_label.setWordWrap(True)
+        self._device_label.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Preferred)
+        title_row.addWidget(self._device_label, 1)
 
         # 相机按钮组 (三个独立按钮, 各对应固定相机实现)
-        self.btn_logi_camera = MPushButton("📷 MX Brio")
-        self.btn_logi_camera.setFixedHeight(36)
-        self.btn_logi_camera.setStyleSheet(
-            "font-size: 11pt; padding: 4px 12px; "
-            "background-color: #424242; border: 1px solid #555; border-radius: 6px;"
-        )
+        self.btn_logi_camera = QPushButton("MX Brio")
+        self.btn_logi_camera.setIcon(icon("camera"))
+        self.btn_logi_camera.setFixedHeight(34)
         self.btn_logi_camera.clicked.connect(lambda: self._select_camera("logi"))
-        top_bar.addWidget(self.btn_logi_camera)
+        camera_row.addWidget(self.btn_logi_camera)
 
-        self.btn_tinyse_camera = MPushButton("🤖 Tiny SE")
-        self.btn_tinyse_camera.setFixedHeight(36)
-        self.btn_tinyse_camera.setStyleSheet(
-            "font-size: 11pt; padding: 4px 12px; "
-            "background-color: #424242; border: 1px solid #555; border-radius: 6px;"
-        )
+        self.btn_tinyse_camera = QPushButton("Tiny SE")
+        self.btn_tinyse_camera.setIcon(icon("camera"))
+        self.btn_tinyse_camera.setFixedHeight(34)
         self.btn_tinyse_camera.clicked.connect(lambda: self._select_camera("tinyse"))
         self.btn_tinyse_camera.setToolTip("OBSBOT Tiny SE (100fps)")
-        top_bar.addWidget(self.btn_tinyse_camera)
+        camera_row.addWidget(self.btn_tinyse_camera)
 
-        self.btn_basic_camera = MPushButton("👁 预览")
-        self.btn_basic_camera.setFixedHeight(36)
-        self.btn_basic_camera.setStyleSheet(
-            "font-size: 11pt; padding: 4px 12px; "
-            "background-color: #424242; border: 1px solid #555; border-radius: 6px;"
-        )
+        self.btn_basic_camera = QPushButton("预览")
+        self.btn_basic_camera.setIcon(icon("camera"))
+        self.btn_basic_camera.setFixedHeight(34)
         self.btn_basic_camera.clicked.connect(lambda: self._select_camera("basic"))
-        top_bar.addWidget(self.btn_basic_camera)
+        camera_row.addWidget(self.btn_basic_camera)
 
         main_layout.addLayout(top_bar)
+
+        workspace = QWidget()
+        workspace.setObjectName("ExecutionWorkspace")
+        workspace.setStyleSheet(qss("QWidget#ExecutionWorkspace { background: ${background}; }"))
+        workspace_layout = QVBoxLayout(workspace)
+        workspace_layout.setContentsMargins(0, 0, 0, 0)
+        workspace_layout.setSpacing(10)
+        workspace_scroll = QScrollArea()
+        workspace_scroll.setFrameShape(QFrame.NoFrame)
+        workspace_scroll.setWidgetResizable(True)
+        workspace_scroll.setWidget(workspace)
+        main_layout.addWidget(workspace_scroll, 1)
 
         # ===== 仪表盘卡片区 =====
         self._cards_layout = QHBoxLayout()
@@ -244,12 +272,12 @@ class ExecutionView(QWidget):
             self._cards_layout.addWidget(card)
             card.hide()
 
-        main_layout.addLayout(self._cards_layout)
+        workspace_layout.addLayout(self._cards_layout)
         self._ground_status = QLabel("等待完整数据帧，识别设备段数")
         self._ground_status.setWordWrap(True)
-        self._ground_status.setStyleSheet("color: #aeb7c5; font-size: 11pt; border: none;")
+        self._ground_status.setStyleSheet(qss("""color: ${text_secondary}; font-size: 13px; border: none;"""))
         self._ground_status.hide()
-        main_layout.addWidget(self._ground_status)
+        workspace_layout.addWidget(self._ground_status)
 
         # ===== 图表区 =====
         charts_layout = QHBoxLayout()
@@ -257,18 +285,18 @@ class ExecutionView(QWidget):
 
         if _PG_AVAILABLE:
             self._plot_h = pg.PlotWidget()
-            self._plot_h.setBackground(dayu_theme.background_in_color)
+            self._plot_h.setBackground(PALETTE["surface"])
             self._plot_h.showGrid(x=True, y=True, alpha=0.1)
             self._plot_h.setLabel('left', '跳高 h (m)')
             self._plot_h.setLabel('bottom', '跳跃次数')
             self._plot_h.enableAutoRange(axis='y')
             self._plot_h.setXRange(0, 10, padding=0)
-            self._h_bar = pg.BarGraphItem(x=[], height=[], width=0.65, brush=dayu_theme.primary_color)
+            self._h_bar = pg.BarGraphItem(x=[], height=[], width=0.65, brush=PALETTE["accent"])
             self._plot_h.addItem(self._h_bar)
             charts_layout.addWidget(self._plot_h, 1)
 
             self._plot_cadence = pg.PlotWidget()
-            self._plot_cadence.setBackground(dayu_theme.background_in_color)
+            self._plot_cadence.setBackground(PALETTE["surface"])
             self._plot_cadence.showGrid(x=True, y=True, alpha=0.1)
             self._plot_cadence.setLabel('left', '步频 (步/分钟)')
             self._plot_cadence.setLabel('bottom', '跳跃次数')
@@ -281,10 +309,11 @@ class ExecutionView(QWidget):
         else:
             placeholder = QLabel("未安装 pyqtgraph — 图表不可用")
             placeholder.setAlignment(Qt.AlignCenter)
-            placeholder.setStyleSheet("font-size: 14pt; color: #666;")
+            placeholder.setStyleSheet(qss("""font-size: 16px; color: ${text_hint};"""))
             charts_layout.addWidget(placeholder)
 
         self._chart_container = QWidget()
+        self._chart_container.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Ignored)
         self._chart_container.setLayout(charts_layout)
 
         self._lower_split = QWidget()
@@ -300,11 +329,7 @@ class ExecutionView(QWidget):
         self._cycle_panel.setObjectName("CurrentCyclePanel")
         self._cycle_panel.setFixedHeight(72)
         self._cycle_panel.setStyleSheet(
-            "QFrame#CurrentCyclePanel {"
-            "  background-color: rgba(18, 18, 22, 0.92);"
-            "  border: 1px solid rgba(90, 90, 95, 0.7);"
-            "  border-radius: 8px;"
-            "}"
+            qss("""QFrame#CurrentCyclePanel {  background-color: ${surface};  border: 1px solid ${border_card};  border-radius: 8px;}""")
         )
         cycle_layout = QHBoxLayout(self._cycle_panel)
         cycle_layout.setContentsMargins(14, 4, 14, 4)
@@ -313,30 +338,29 @@ class ExecutionView(QWidget):
         state_layout = QVBoxLayout()
         state_layout.setContentsMargins(0, 0, 0, 0)
         state_layout.setSpacing(0)
-        self._current_cycle_title = MLabel("当前周期")
+        self._current_cycle_title = QLabel("当前周期")
         self._current_cycle_title.setStyleSheet(
-            "font-size: 9pt; color: #ff9b3d; border: none; background: transparent;"
+            qss("""font-size: 9pt; color: ${accent_text}; border: none; background: transparent;""")
         )
-        self._current_cycle_state = MLabel("等待触地事件")
+        self._current_cycle_state = QLabel("等待触地事件")
         self._current_cycle_state.setStyleSheet(
-            "font-size: 18pt; font-weight: bold; color: #f0f3f8; "
-            "border: none; background: transparent;"
+            qss("""font-size: 22px; font-weight: bold; color: ${text_heading}; border: none; background: transparent;""")
         )
         state_layout.addWidget(self._current_cycle_title)
         state_layout.addWidget(self._current_cycle_state)
         cycle_layout.addLayout(state_layout, 1)
 
-        self._left_cycle_value = MLabel("左脚  --")
+        self._left_cycle_value = QLabel("左脚  --")
         self._left_cycle_value.setAlignment(Qt.AlignCenter)
         self._left_cycle_value.setStyleSheet(
-            "font-size: 14pt; color: #d9dee8; border: none; background: transparent;"
+            qss("""font-size: 16px; color: ${text_button}; border: none; background: transparent;""")
         )
         cycle_layout.addWidget(self._left_cycle_value, 1)
 
-        self._right_cycle_value = MLabel("右脚  --")
+        self._right_cycle_value = QLabel("右脚  --")
         self._right_cycle_value.setAlignment(Qt.AlignCenter)
         self._right_cycle_value.setStyleSheet(
-            "font-size: 14pt; color: #d9dee8; border: none; background: transparent;"
+            qss("""font-size: 16px; color: ${text_button}; border: none; background: transparent;""")
         )
         cycle_layout.addWidget(self._right_cycle_value, 1)
         self._cycle_panel.hide()
@@ -359,7 +383,7 @@ class ExecutionView(QWidget):
         lower_layout.addWidget(self._chart_container, 0, 2)
         self._chart_container.hide()
         self._lower_split.hide()
-        main_layout.addWidget(self._lower_split, 1)
+        workspace_layout.addWidget(self._lower_split, 1)
 
         # ===== 进度条 =====
         self._progress_container = QFrame()
@@ -373,40 +397,27 @@ class ExecutionView(QWidget):
         self._progress_bar.setValue(0)
         self._progress_bar.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         self._progress_bar.setStyleSheet(
-            "QProgressBar {"
-            "  background-color: rgba(40, 40, 45, 0.8);"
-            "  border: 1px solid #444;"
-            "  border-radius: 6px;"
-            "  text-align: center;"
-            "  color: #e0e0e0;"
-            "  font-size: 11pt;"
-            "}"
-            "QProgressBar::chunk {"
-            "  background-color: qlineargradient(x1:0, y1:0, x2:1, y2:0, "
-            "    stop:0 #1890ff, stop:1 #36cfc9);"
-            "  border-radius: 5px;"
-            "}"
+            qss("""QProgressBar {  background-color: ${surface_selected};  border: 1px solid ${border_control};  border-radius: 6px;  text-align: center;  color: ${text};  font-size: 13px;}QProgressBar::chunk {  background-color: qlineargradient(x1:0, y1:0, x2:1, y2:0,     stop:0 #1890ff, stop:1 #36cfc9);  border-radius: 5px;}""")
         )
         progress_layout.addWidget(self._progress_bar, 0, 0)
 
         self._progress_overlay = QWidget()
         self._progress_overlay.setAttribute(Qt.WA_TransparentForMouseEvents)
-        self._progress_overlay.setStyleSheet("background: transparent;")
+        self._progress_overlay.setStyleSheet(qss("""background: transparent;"""))
         self._progress_overlay.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
         overlay_layout = QVBoxLayout(self._progress_overlay)
         overlay_layout.setContentsMargins(4, 8, 4, 8)
         overlay_layout.addStretch()
-        self._progress_title = MLabel("剩余")
+        self._progress_title = QLabel("剩余")
         self._progress_title.setAlignment(Qt.AlignCenter)
         self._progress_title.setStyleSheet(
-            "font-size: 10pt; color: #e0e0e0; background: transparent; border: none;"
+            qss("""font-size: 10pt; color: ${text}; background: transparent; border: none;""")
         )
         overlay_layout.addWidget(self._progress_title)
-        self._progress_value = MLabel("--:--")
+        self._progress_value = QLabel("--:--")
         self._progress_value.setAlignment(Qt.AlignCenter)
         self._progress_value.setStyleSheet(
-            "font-size: 11pt; font-weight: bold; color: #ffffff; "
-            "background: transparent; border: none;"
+            qss("""font-size: 13px; font-weight: bold; color: ${text_heading}; background: transparent; border: none;""")
         )
         overlay_layout.addWidget(self._progress_value)
         overlay_layout.addStretch()
@@ -424,56 +435,34 @@ class ExecutionView(QWidget):
         self._controls_layout.setContentsMargins(0, 0, 0, 0)
         self._controls_layout.setSpacing(12)
 
-        self.btn_return_config = MPushButton("返回配置")
-        self.btn_return_config.setMinimumHeight(50)
+        self.btn_return_config = QPushButton("返回配置")
+        self.btn_return_config.setMinimumHeight(48)
         self.btn_return_config.setMinimumWidth(120)
-        self.btn_return_config.setStyleSheet(
-            "background: #1a2230; border: 1px solid #354151;"
-            "border-radius: 8px; color: #d9dee8; font-size: 13pt;"
-        )
         self.btn_return_config.clicked.connect(self.return_config_requested)
         self._controls_layout.addWidget(self.btn_return_config)
 
-        self.btn_start = MPushButton("▶ 开始采集").primary()
-        self.btn_start.setMinimumHeight(50)
-        self.btn_start.setStyleSheet(
-            "QPushButton {"
-            "  background: #ff7a00;"
-            "  border: 1px solid #ff7a00;"
-            "  border-radius: 8px;"
-            "  color: white;"
-            "  font-size: 16pt;"
-            "  font-weight: bold;"
-            "}"
-            "QPushButton:hover { background: #ff8a1f; }"
-            "QPushButton:disabled {"
-            "  background: #252d38;"
-            "  border-color: #303a47;"
-            "  color: #768294;"
-            "}"
-        )
+        self.btn_start = QPushButton("开始采集")
+        self.btn_start.setProperty("role", "primary")
+        self.btn_start.setMinimumHeight(48)
         self.btn_start.clicked.connect(self._on_start)
         self._controls_layout.addWidget(self.btn_start, 1)
 
-        self.btn_pause = MPushButton("⏸ 暂停")
-        self.btn_pause.setMinimumHeight(50)
-        self.btn_pause.setStyleSheet(
-            "background: #1a2230; border: 1px solid #354151;"
-            "border-radius: 8px; color: #e7ebf2; font-size: 14pt;"
-        )
+        self.btn_pause = QPushButton("暂停")
+        self.btn_pause.setMinimumHeight(48)
+        self.btn_pause.setIcon(icon("pause"))
         self.btn_pause.clicked.connect(self._on_pause)
         self.btn_pause.hide()
         self._controls_layout.addWidget(self.btn_pause)
 
-        self.btn_stop = MPushButton("结束")
-        self.btn_stop.setMinimumHeight(50)
-        self.btn_stop.setStyleSheet(
-            "background: #402226; border: 1px solid #704047;"
-            "border-radius: 8px; color: #ffb2b2; font-size: 14pt;"
-        )
+        self.btn_stop = QPushButton("结束")
+        self.btn_stop.setProperty("role", "danger")
+        self.btn_stop.setMinimumHeight(48)
         self.btn_stop.clicked.connect(self._on_stop)
         self.btn_stop.hide()
         self._controls_layout.addWidget(self.btn_stop)
+
+        for button in (self.btn_return_config, self.btn_start, self.btn_pause, self.btn_stop):
+            button.setProperty("sessionControl", True)
 
         main_layout.addWidget(self._controls_container)
         self._ground_track = GroundTrackPanel()
@@ -487,7 +476,8 @@ class ExecutionView(QWidget):
 
     def _apply_style(self):
         self.setStyleSheet(
-            "QWidget { font-family: 'Microsoft YaHei UI', sans-serif; }"
+            self.styleSheet()
+            + qss("""QWidget { font-family: 'Microsoft YaHei UI', sans-serif; }""")
         )
 
     # ------------------------------------------------------------------
@@ -498,10 +488,11 @@ class ExecutionView(QWidget):
         """切入本视图前调用，初始化仪表盘标签和图表轴。"""
         self._config = config
         self._camera_panel.set_vision_enabled(config.test_type == "Sprint and Gait Test")
+        self._camera_panel.enable_sdk_tracking()
         self._mode = "纵跳" if config.test_type == "Jump Test" else "步态分析"
 
         # 切换模式标签
-        mode_text = "纵跳测试" if self._mode == "纵跳" else "步态分析"
+        mode_text = mode_label(config.test_type)
         self._mode_label.setText(f"{mode_text} · 就绪")
 
         # 切换卡片可见性
@@ -528,7 +519,7 @@ class ExecutionView(QWidget):
             "有效周期" if self.is_ground else "步态周期不对称率" if is_treadmill else "不平衡指数"
         )
         self._card_imbalance._unit.setText("个" if self.is_ground else "%")
-        self._card_steps._title.setText("有效步数" if self.is_ground else "步数")
+        self._card_steps._title.setText("识别步数" if config.test_type == 'Sprint and Gait Test' else "有效步数" if self.is_ground else "步数")
         self._footprint_channel.set_direction(getattr(config, "direction", None))
         self._camera_start_timer.start(0)
         if is_treadmill:
@@ -559,6 +550,7 @@ class ExecutionView(QWidget):
         self.btn_stop.hide()
         self._device_state = "connecting"
         self._device_label.setText("● 正在连接设备...")
+        self._device_label.setStyleSheet(qss("font-size: 13px; color: ${warning};"))
         self._ground_status.setText("等待完整数据帧，识别设备段数")
         if self.is_ground:
             self._mode_label.setText(("地面跑步" if config.test_type == "Overground Running Test" else "地面走路") + " · 准备测试")
@@ -610,6 +602,9 @@ class ExecutionView(QWidget):
 
     def resizeEvent(self, event):
         super().resizeEvent(event)
+        self._header_layout.setDirection(
+            QBoxLayout.TopToBottom if self.width() < 850 else QBoxLayout.LeftToRight
+        )
         if self._mode != "纵跳":
             QTimer.singleShot(0, self._update_cycle_panel_visibility)
 
@@ -617,13 +612,13 @@ class ExecutionView(QWidget):
         """Update acquisition controls from the structured device state."""
         self._device_state = state
         labels = {
-            "disconnected": ("● 设备未连接", "#8f9bad"),
-            "connecting": ("● 正在连接设备...", "#f0a24a"),
-            "connected": ("● 设备已连接", "#7ecf68"),
-            "streaming": ("● 正在采集", "#7ecf68"),
-            "error": ("● 设备连接或采集失败，请检查后重试", "#f06a6a"),
+            "disconnected": ("● 设备未连接", PALETTE["text_muted"]),
+            "connecting": ("● 正在连接设备...", PALETTE["warning"]),
+            "connected": ("● 设备已连接", PALETTE["success"]),
+            "streaming": ("● 正在采集", PALETTE["success"]),
+            "error": ("● 设备连接或采集失败，请检查后重试", PALETTE["danger"]),
         }
-        text, color = labels.get(state, ("● 设备状态未知", "#8f9bad"))
+        text, color = labels.get(state, ("● 设备状态未知", PALETTE["text_muted"]))
         self._device_label.setText(text)
         self._device_label.setToolTip(text)
         self._device_label.setStyleSheet(f"font-size: 10pt; color: {color};")
@@ -697,16 +692,12 @@ class ExecutionView(QWidget):
     def on_beam_quality_notice(self, notice):
         self._quality_warning = "设备质量提示：" + notice["impact"]
         self._device_label.setText(self._quality_warning)
-        self._device_label.setStyleSheet("color: #ffb347;")
+        self._device_label.setStyleSheet(qss("""color: ${warning};"""))
         self._device_label.setToolTip(str(notice))
 
     def on_session_started(self):
         """Enter the running UI only after the device confirms streaming."""
-        label = "纵跳测试" if self._mode == "纵跳" else "步态分析"
-        if getattr(self._config, "test_type", "") == "Overground Running Test":
-            label = "地面跑步"
-        elif self.is_ground:
-            label = "地面走路"
+        label = mode_label(getattr(self._config, "test_type", "Jump Test"))
         self._mode_label.setText(f"{label} · 运行中")
         self.btn_start.hide()
         self.btn_return_config.hide()
@@ -736,7 +727,7 @@ class ExecutionView(QWidget):
         # 仪表盘
         for card in self._jump_cards + self._gait_cards:
             card.set_value("--")
-            card.set_color("#f0f0f0")
+            card.set_color(PALETTE["text"])
 
         # 图表数据
         self._h_x, self._h_y = [], []
@@ -796,7 +787,7 @@ class ExecutionView(QWidget):
             self._card_count.set_value(f"{self._touch_count}{target_str}")
             self._card_current.set_value(f"{h:.3f}")
             self._card_max.set_value(f"{self._max_h:.3f}")
-            self._card_max.set_color(dayu_theme.primary_color)
+            self._card_max.set_color(PALETTE["accent"])
             self._card_cadence.set_value(f"{cadence:.0f}")
 
             # 更新图表
@@ -827,12 +818,14 @@ class ExecutionView(QWidget):
         if "walking" in snapshot or "running" in snapshot:
             self._mode_label.setText(("地面跑步" if "running" in snapshot else "地面走路") + " · " + snapshot["status"])
             data = snapshot.get("running", snapshot.get("walking"))
-            self._device_label.setText(f"{data['segment_count']} 段 / 标称 {data['nominal_length_m']} 米 · 有效步数 {data['valid_steps']} · 异常 {len(data['issues'])}")
+            count = data.get('recognized_steps', snapshot['touch_count']) if 'walking' in snapshot else data['valid_steps']
+            count_label = '识别步数' if 'walking' in snapshot else '有效步数'
+            self._device_label.setText(f"{data['segment_count']} 段 / 标称 {data['nominal_length_m']} 米 · {count_label} {count} · 异常 {len(data['issues'])}")
             self._ground_status.setText("测试进行中")
             if data["issues"]:
                 self._ground_status.setText("测试进行中 · 部分数据异常，请在结束后查看报告")
             self._ground_track.set_summary(data)
-            self._card_steps.set_value(str(data["valid_steps"]))
+            self._card_steps.set_value(str(count))
             self._card_imbalance.set_value(str(data["valid_cycles"]))
             self._card_stride.set_value(f"{snapshot['latest_stride']:.1f}" if snapshot.get("stride_count") else "--")
             self._card_velocity.set_value(f"{snapshot['velocity_sum'] / snapshot['velocity_count']:.1f}" if snapshot.get("velocity_count") else "--")
@@ -922,7 +915,7 @@ class ExecutionView(QWidget):
         dc_x = self._cadence_x[-sw:] if len(self._cadence_x) > sw else self._cadence_x
         dc_y = self._cadence_y[-sw:] if len(self._cadence_y) > sw else self._cadence_y
 
-        self._h_bar.setOpts(x=dh_x, height=dh_y, width=0.65, brush=dayu_theme.primary_color)
+        self._h_bar.setOpts(x=dh_x, height=dh_y, width=0.65, brush=PALETTE["accent"])
         self._cadence_bar.setOpts(x=dc_x, height=dc_y, width=0.65, brush='#52c41a')
 
         # X 轴范围
@@ -940,8 +933,23 @@ class ExecutionView(QWidget):
     #  进度显示
     # ------------------------------------------------------------------
 
+    def set_compact_controls(self, compact: bool):
+        if compact == self._compact_controls:
+            return
+        self._compact_controls = compact
+        self._arrange_execution_area(self._mode == "纵跳")
+
     def _arrange_execution_area(self, is_jump: bool):
-        if self.is_ground:
+        if not self.is_ground:
+            self._main_layout.removeWidget(self._progress_container)
+            self._lower_layout.addWidget(self._progress_container, 0, 1, 2, 1)
+            self._progress_container.setFixedWidth(72)
+            self._progress_container.setMinimumHeight(0)
+            self._progress_container.setMaximumHeight(16777215)
+            self._progress_bar.setOrientation(Qt.Vertical)
+            self._progress_bar.setTextVisible(False)
+            self._progress_overlay.show()
+        if self.is_ground or self._compact_controls:
             self._lower_layout.removeWidget(self._controls_container)
             self._main_layout.addWidget(self._controls_container)
             self._controls_layout.setDirection(QBoxLayout.LeftToRight)
@@ -957,16 +965,8 @@ class ExecutionView(QWidget):
         self.btn_stop.setMaximumWidth(16777215)
         self.btn_start.setMaximumWidth(16777215)
         self._controls_container.setMaximumWidth(16777215)
-        self._main_layout.removeWidget(self._progress_container)
         self._main_layout.removeWidget(self._controls_container)
-        self._lower_layout.addWidget(self._progress_container, 0, 1, 2, 1)
         self._lower_layout.addWidget(self._controls_container, 1, 2)
-        self._progress_container.setFixedWidth(72)
-        self._progress_container.setMinimumHeight(0)
-        self._progress_container.setMaximumHeight(16777215)
-        self._progress_bar.setOrientation(Qt.Vertical)
-        self._progress_bar.setTextVisible(False)
-        self._progress_overlay.show()
         self._controls_layout.setDirection(QBoxLayout.TopToBottom)
         self._controls_layout.setSpacing(8)
 
@@ -1053,7 +1053,7 @@ class ExecutionView(QWidget):
             self.btn_start.setText("正在重连…")
         else:
             self._mode_label.setText(
-                f"{'纵跳测试' if self._mode == '纵跳' else '步态分析'} · 正在启动"
+                f"{mode_label(getattr(self._config, 'test_type', 'Jump Test'))} · 正在启动"
             )
             self.btn_start.setText("正在启动…")
         self.btn_start.setEnabled(False)
@@ -1069,17 +1069,19 @@ class ExecutionView(QWidget):
         if paused:
             self._paused = True
             self._stop_countdown()
-            self.btn_pause.setText("▶ 继续分析")
+            self.btn_pause.setText("继续分析")
+            self.btn_pause.setIcon(icon("test"))
             self._mode_label.setText(
-                f"{'纵跳测试' if self._mode == '纵跳' else '步态分析'}"
+                f"{mode_label(getattr(self._config, 'test_type', 'Jump Test'))}"
                 " · 暂停分析（计时已暂停）"
             )
         else:
             self._paused = False
             self._start_countdown()
-            self.btn_pause.setText("⏸ 暂停")
+            self.btn_pause.setText("暂停")
+            self.btn_pause.setIcon(icon("pause"))
             self._mode_label.setText(
-                f"{'纵跳测试' if self._mode == '纵跳' else '步态分析'} · 运行中"
+                f"{mode_label(getattr(self._config, 'test_type', 'Jump Test'))} · 运行中"
             )
 
     def _on_stop(self):

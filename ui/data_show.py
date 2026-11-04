@@ -8,6 +8,8 @@
 """
 from __future__ import annotations
 
+from config.mode_labels import mode_label
+
 import importlib
 import os
 import time
@@ -16,13 +18,16 @@ import time
 from openpyxl import Workbook
 
 from qtpy import QtWidgets
+from qtpy.QtWidgets import (
+    QLabel, QPushButton, QTextEdit,
+)
+from ui.widgets import SectionHeading
+from ui.application import application
+from ui.theme import PALETTE
+
 from qtpy.QtCore import QThread, Qt
 from qtpy.QtGui import QTextCursor, QTextBlockFormat
-from dayu_widgets.divider import MDivider
-from dayu_widgets.push_button import MPushButton
-from dayu_widgets.text_edit import MTextEdit
-from dayu_widgets import dayu_theme
-from dayu_widgets.qt import application
+
 
 # 导入 UsbWorker 和算法引擎
 from hardware.usb_worker import UsbWorker
@@ -141,16 +146,16 @@ class RealTimeGaitWidget(QtWidgets.QWidget):
         left_layout.addWidget(param_scroll, 1)
 
         # 运行时进度标签 (跳跃计数 / 倒计时)
-        from dayu_widgets.label import MLabel
-        self._progress_label = MLabel("")
+
+        self._progress_label = QLabel("")
         self._progress_label.setAlignment(Qt.AlignCenter)
         self._progress_label.setStyleSheet("font-size: 16pt; font-weight: bold; padding: 4px;")
         self._progress_label.hide()
         left_layout.addWidget(self._progress_label)
 
         # 分析详情
-        left_layout.addWidget(MDivider("分析详情"))
-        self.text_edit_top = MTextEdit(self)
+        left_layout.addWidget(SectionHeading("分析详情"))
+        self.text_edit_top = QTextEdit(self)
         self.text_edit_top.setReadOnly(True)
         self.text_edit_top.setMinimumSize(200, 200)
         self.text_edit_top.setObjectName("data_display_edit")
@@ -162,7 +167,7 @@ class RealTimeGaitWidget(QtWidgets.QWidget):
         left_layout.addWidget(self.text_edit_top, 1)
 
         # 按钮区 - 重新布局：相机按钮 + 开始分析按钮
-        left_layout.addWidget(MDivider("操作"))
+        left_layout.addWidget(SectionHeading("操作"))
         self.btn_container = QtWidgets.QWidget()
         self.btn_container.setMinimumHeight(120)  # 增加高度容纳两个按钮
         self.btn_layout = QtWidgets.QVBoxLayout(self.btn_container)  # 改为垂直布局
@@ -170,14 +175,15 @@ class RealTimeGaitWidget(QtWidgets.QWidget):
         self.btn_layout.setSpacing(10)
         
         # 相机按钮 (次级样式)
-        self.btn_camera = MPushButton("📷 打开相机")
+        self.btn_camera = QPushButton("📷 打开相机")
         self.btn_camera.setObjectName("btnCamera")
         self.btn_camera.setMinimumHeight(45)
         self.btn_camera.clicked.connect(self.on_camera_clicked)
         self.btn_layout.addWidget(self.btn_camera)
         
         # 开始分析按钮 (主要样式)
-        self.btn_start = MPushButton("开始分析").primary()
+        self.btn_start = QPushButton("开始分析")
+        self.btn_start.setProperty("role", "primary")
         self.btn_start.setObjectName("btnStart")
         self.btn_start.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         self.btn_start.setMinimumHeight(60)
@@ -190,24 +196,24 @@ class RealTimeGaitWidget(QtWidgets.QWidget):
         right_container.setMinimumWidth(500)
         right_layout = QtWidgets.QVBoxLayout(right_container)
         right_layout.setContentsMargins(0, 10, 15, 10)
-        right_layout.addWidget(MDivider("数据可视化"))
+        right_layout.addWidget(SectionHeading("数据可视化"))
 
         if _PG_AVAILABLE:
             # 图表1: 跳高
             self.plot_widget = pg.PlotWidget()
-            self.plot_widget.setBackground(dayu_theme.background_in_color)
+            self.plot_widget.setBackground(PALETTE["surface"])
             self.plot_widget.showGrid(x=True, y=True, alpha=0.1)  # 降低网格透明度
             self.plot_widget.setLabel('left', '跳高 h (m)')
             self.plot_widget.setLabel('bottom', '跳跃次数')
             self.plot_widget.enableAutoRange(axis='y')
             self.plot_widget.setXRange(0, 10, padding=0)
-            self.h_bar = pg.BarGraphItem(x=[], height=[], width=0.65, brush=dayu_theme.primary_color)
+            self.h_bar = pg.BarGraphItem(x=[], height=[], width=0.65, brush=PALETTE["accent"])
             self.plot_widget.addItem(self.h_bar)
             right_layout.addWidget(self.plot_widget, 1)
 
             # 图表2: 步频
             self.plot_widget_cadence = pg.PlotWidget()
-            self.plot_widget_cadence.setBackground(dayu_theme.background_in_color)
+            self.plot_widget_cadence.setBackground(PALETTE["surface"])
             self.plot_widget_cadence.showGrid(x=True, y=True, alpha=0.1)  # 降低网格透明度
             self.plot_widget_cadence.setLabel('left', '步频 (步/分钟)')
             self.plot_widget_cadence.setLabel('bottom', '跳跃次数')
@@ -330,7 +336,7 @@ class RealTimeGaitWidget(QtWidgets.QWidget):
         # 生成摘要文本
         lines = [
             "=== 待机配置摘要 ===",
-            f"• 测试模式: {config.test_type}",
+            f"• 测试模式: {mode_label(config.test_type)}",
             f"• 启动条件: {config.start_type}",
             f"• 停止条件: {config.stop_type}",
         ]
@@ -372,9 +378,9 @@ class RealTimeGaitWidget(QtWidgets.QWidget):
         self.param_panel.set_enabled(False)
 
         # 创建暂停/结束按钮
-        self.btn_pause = MPushButton("暂停")
+        self.btn_pause = QPushButton("暂停")
         self.btn_pause.setMinimumHeight(60)
-        self.btn_stop = MPushButton("结束")
+        self.btn_stop = QPushButton("结束")
         self.btn_stop.setMinimumHeight(60)
         self.btn_pause.clicked.connect(self.on_pause_clicked)
         self.btn_stop.clicked.connect(self.on_stop_clicked)
@@ -636,7 +642,7 @@ class RealTimeGaitWidget(QtWidgets.QWidget):
             display_cadence_x = self.cadence_x
             display_cadence_y = self.cadence_y
         
-        self.h_bar.setOpts(x=display_h_x, height=display_h_y, width=0.65, brush=dayu_theme.primary_color)
+        self.h_bar.setOpts(x=display_h_x, height=display_h_y, width=0.65, brush=PALETTE["accent"])
         self.cadence_bar.setOpts(x=display_cadence_x, height=display_cadence_y, width=0.65, brush='#52c41a')
         
         # X轴范围 (与 1data_show.py 完全一致)
@@ -906,6 +912,6 @@ class RealTimeGaitWidget(QtWidgets.QWidget):
 if __name__ == "__main__":
     with application() as app:
         widget = RealTimeGaitWidget()
-        dayu_theme.apply(widget)
+
         widget.show()
 

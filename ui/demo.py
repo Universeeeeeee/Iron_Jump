@@ -4,8 +4,12 @@ from dataclasses import replace
 from pathlib import Path
 import sys
 
-from qtpy.QtWidgets import QLabel, QMessageBox
-from dayu_widgets.qt import application
+from ui.application import application
+
+from qtpy.QtWidgets import (
+    QLabel, QMessageBox,
+)
+
 
 from config.treadmill_config import TreadmillGaitConfig
 from data.subject_store import SubjectStore

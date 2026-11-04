@@ -4,12 +4,15 @@ import sys
 
 
 from qtpy import QtWidgets
+from qtpy.QtWidgets import (
+    QPushButton, QTextEdit,
+)
+from ui.widgets import SectionHeading
+from ui.application import application
+
 from qtpy.QtCore import QThread, QObject, Signal, Qt, QTimer
-from dayu_widgets.divider import MDivider
-from dayu_widgets.push_button import MPushButton
-from dayu_widgets.text_edit import MTextEdit
-from dayu_widgets.qt import application
-from dayu_widgets import dayu_theme
+
+
 import threading
 import time
 from collections import deque
@@ -23,7 +26,7 @@ from path_utils import find_dll as _find_dll, get_base_dir as _get_base_dir
 
 
 class SerialDataWidget(QtWidgets.QWidget):
-    """基于 Dayu 风格的界面，用于展示 start_test 产生的数据帧（左侧文本），右侧为图表占位（不绘图）。"""
+    """原生 Qt 界面，用于展示 start_test 产生的数据帧（左侧文本），右侧为图表占位（不绘图）。"""
     def __init__(self, parent=None):
         super().__init__(parent)
         # USB 设备配置（可通过环境变量覆盖）
@@ -75,8 +78,8 @@ class SerialDataWidget(QtWidgets.QWidget):
 
         # 左侧：数据帧展示
         left_layout = QtWidgets.QVBoxLayout()
-        left_layout.addWidget(MDivider("数据展示"))
-        self.text_edit = MTextEdit(self)
+        left_layout.addWidget(SectionHeading("数据展示"))
+        self.text_edit = QTextEdit(self)
         self.text_edit.setReadOnly(True)
         self.text_edit.setObjectName("data_display_edit")
         self.text_edit.setStyleSheet("QTextEdit#data_display_edit { font-size: 14pt; }")
@@ -88,7 +91,8 @@ class SerialDataWidget(QtWidgets.QWidget):
         self.btn_layout = QtWidgets.QHBoxLayout(self.btn_container)
         self.btn_layout.setContentsMargins(0, 0, 0, 0)
 
-        self.btn_start = MPushButton("开始测试").primary()
+        self.btn_start = QPushButton("开始测试")
+        self.btn_start.setProperty("role", "primary")
         self.btn_start.setMinimumHeight(60)
         self.btn_start.clicked.connect(self.on_start_clicked)
         self.btn_layout.addWidget(self.btn_start)
@@ -97,7 +101,7 @@ class SerialDataWidget(QtWidgets.QWidget):
 
         # 右侧：LED 面板
         right_layout = QtWidgets.QVBoxLayout()
-        right_layout.addWidget(MDivider("LED 面板 (96)"))
+        right_layout.addWidget(SectionHeading("LED 面板 (96)"))
         self.led_panel = LEDPanel(rows=8, cols=12, parent=self)
         right_layout.addWidget(self.led_panel, 1)
 
@@ -115,9 +119,9 @@ class SerialDataWidget(QtWidgets.QWidget):
         self._export_start_time = time.perf_counter()
 
         # 创建 暂停 / 结束 按钮
-        self.btn_pause = MPushButton("暂停")
+        self.btn_pause = QPushButton("暂停")
         self.btn_pause.setMinimumHeight(60)
-        self.btn_stop = MPushButton("结束")
+        self.btn_stop = QPushButton("结束")
         self.btn_stop.setMinimumHeight(60)
         self.btn_pause.clicked.connect(self.on_pause_clicked)
         self.btn_stop.clicked.connect(self.on_stop_clicked)
@@ -277,6 +281,6 @@ class SerialDataWidget(QtWidgets.QWidget):
 if __name__ == '__main__':
     with application() as app:
         widget = SerialDataWidget()
-        dayu_theme.apply(widget)
+
         widget.show()
         sys.exit(app.exec_())

@@ -1,5 +1,7 @@
 """Independent visual foot-reference package."""
 
+import qt_runtime  # Select PySide6 before any Qt-dependent submodule.
+
 from .foot_reference import (
     FootLabel,
     VisionConfig,
@@ -39,3 +41,4 @@ __all__ = [
     "VisionInferenceError",
     "VisionUnavailableError",
 ]
+

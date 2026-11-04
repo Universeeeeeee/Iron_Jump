@@ -7,7 +7,7 @@ report_view.py — 测试报告页
 功能:
   - MetricCard 网格展示核心统计指标
   - pyqtgraph 图表展示全量历史数据（非滑动窗口）
-  - Excel 导出按钮
+  - PDF 精简/详细报告与 Excel 数据导出
   - 返回首页按钮
 """
 
@@ -30,18 +30,21 @@ from reporting.excel import (
     _jump_metric_rows, _treadmill_metric_rows, _gait_cycle_rows,
 )
 from reporting.ground import walking_position_value
+from reporting.contact_quality import contact_quality_html, contact_reason, merged_interval_duration_ms
+from reporting.recognized_gait import recognized_gait, recognized_html
+
+from qtpy.QtWidgets import (
+    QScrollArea, QLabel, QPushButton, QWidget, QVBoxLayout, QHBoxLayout, QGridLayout,
+    QFrame, QSizePolicy, QMessageBox, QFileDialog, QComboBox, QTabWidget, QTableWidget,
+    QToolButton, QTextBrowser, QLineEdit, QBoxLayout, QMenu,
+)
+from ui.styles import CONTROL_QSS, CONTROL_STATES_QSS
+
+from ui.theme import PALETTE, qss
 
 from qtpy.QtCore import QThread, Signal, Qt
-from qtpy.QtGui import QColor, QPainter
-from qtpy.QtWidgets import (
-    QWidget, QVBoxLayout, QHBoxLayout, QGridLayout,
-    QLabel, QFrame, QSizePolicy, QMessageBox, QFileDialog,
-    QComboBox, QTabWidget, QTableWidget, QToolButton, QTextBrowser, QLineEdit,
-)
+from qtpy.QtGui import QColor, QFont, QFontMetrics, QPainter
 
-from dayu_widgets.label import MLabel
-from dayu_widgets.push_button import MPushButton
-from dayu_widgets import dayu_theme
 
 from config.test_report import TestReport, JumpTestReport, GaitTestReport
 from config.overground_running_report import OvergroundRunningReport
@@ -53,6 +56,8 @@ from config.treadmill_report import (
 )
 from path_utils import get_base_dir as _get_base_dir
 from ui.footprint_channel import FootprintReplayPanel
+from ui.ground_report import GroundStepAnalysis, GroundCycleAnalysis
+from ui.icons import icon
 
 # pyqtgraph 可选
 try:
@@ -69,51 +74,51 @@ except Exception:
 
 G = 9.81
 
-REPORT_QSS = """
+REPORT_QSS = CONTROL_QSS + qss("""
 QWidget#ReportViewRoot {
-    background-color: #0c1119;
-    color: #e7ebf2;
+    background-color: ${background};
+    color: ${text};
 }
-QFrame#ReportAnalysisPanel {
-    background-color: #151d28;
-    border: 1px solid #354151;
+QWidget#ReportAnalysisPanel {
+    background-color: ${surface_hover};
+    border: 1px solid ${border_control};
     border-radius: 8px;
 }
 QTabWidget#ReportTabs,
 QWidget#ReportOverviewPage {
-    background-color: #0c1119;
+    background-color: ${background};
 }
 QTabWidget#ReportTabs::pane {
-    border: 1px solid #354151;
+    border: 1px solid ${border_control};
     border-radius: 6px;
-    background-color: #0c1119;
+    background-color: ${background};
 }
 QTabBar#ReportTabBar {
-    background-color: #0c1119;
+    background-color: ${background};
 }
 QTabBar#ReportTabBar::tab {
     min-width: 96px;
     min-height: 30px;
     padding: 4px 16px;
-    border: 1px solid #354151;
+    border: 1px solid ${border_control};
     border-bottom: none;
-    background-color: #171f2b;
-    color: #aeb7c5;
+    background-color: ${surface_selected};
+    color: ${text_secondary};
 }
 QTabBar#ReportTabBar::tab:selected {
-    background-color: #222d3c;
-    color: #ff8a1f;
+    background-color: ${surface_selected};
+    color: ${accent_hover};
     font-weight: 650;
 }
 QTabBar#ReportTabBar::tab:hover {
-    background-color: #1d2735;
-    color: #f4f6f9;
+    background-color: ${surface_hover};
+    color: ${text_heading_hover};
 }
 QLabel#ReportSectionTitle {
-    color: #8795a8;
+    color: ${text_muted};
     background: transparent;
     border: none;
-    border-bottom: 1px solid #354151;
+    border-bottom: 1px solid ${border_control};
     padding: 0 0 8px 0;
     font-size: 10pt;
 }
@@ -124,72 +129,72 @@ QWidget#StatsContent {
 QWidget#ReportDetailsPage,
 QWidget#ReportDetailPage,
 QTabWidget#ReportDetailTabs {
-    background-color: #0f1620;
+    background-color: ${sidebar};
     border: none;
 }
 QTabWidget#ReportDetailTabs::pane {
-    border: 1px solid #2b394a;
+    border: 1px solid ${border_card};
     border-radius: 7px;
-    background-color: #0f1620;
+    background-color: ${sidebar};
 }
 QTabBar#ReportDetailTabBar {
-    background-color: #0f1620;
+    background-color: ${sidebar};
 }
 QTabWidget#ReportDetailTabs QTabBar::tab {
     min-width: 110px;
     min-height: 30px;
     padding: 4px 14px;
-    border: 1px solid #354151;
-    background-color: #171f2b;
-    color: #aeb7c5;
+    border: 1px solid ${border_control};
+    background-color: ${surface_selected};
+    color: ${text_secondary};
 }
 QTabWidget#ReportDetailTabs QTabBar::tab:selected {
-    background-color: #222d3c;
-    color: #ff8a1f;
+    background-color: ${surface_selected};
+    color: ${accent_hover};
     font-weight: 650;
 }
 QComboBox#ReportFilterCombo,
 QToolButton#ReportMoreStatsButton {
     min-height: 30px;
     padding: 2px 10px;
-    border: 1px solid #354151;
+    border: 1px solid ${border_control};
     border-radius: 6px;
-    background-color: #171f2b;
-    color: #dce5f0;
+    background-color: ${surface_selected};
+    color: ${text_field};
 }
 QComboBox#ReportFilterCombo:hover,
 QToolButton#ReportMoreStatsButton:hover,
 QToolButton#ReportMoreStatsButton:checked {
-    border-color: #ff7a00;
-    color: #ff9a3d;
+    border-color: ${accent};
+    color: ${accent_text};
 }
 QComboBox#ReportFilterCombo QAbstractItemView {
-    border: 1px solid #354151;
-    background-color: #171f2b;
-    color: #dce5f0;
-    selection-background-color: #263d55;
+    border: 1px solid ${border_control};
+    background-color: ${surface_selected};
+    color: ${text_field};
+    selection-background-color: ${selection_popup};
 }
 QLabel#ReportFilterLabel {
-    color: #aeb7c5;
+    color: ${text_secondary};
     font-size: 10pt;
 }
 QTableWidget#ReportDetailTable {
     background-color: #111a25;
     alternate-background-color: #162130;
-    color: #dce5f0;
-    border: 1px solid #2b394a;
+    color: ${text_field};
+    border: 1px solid ${border_card};
     border-radius: 7px;
     gridline-color: #2a3747;
-    selection-background-color: #263d55;
-    selection-color: #ffffff;
+    selection-background-color: ${selection_popup};
+    selection-color: ${text_heading};
     font-size: 10pt;
 }
 QTableWidget#ReportDetailTable::item {
     padding: 6px 8px;
 }
 QTableWidget#ReportDetailTable::item:selected {
-    background-color: #263d55;
-    color: #ffffff;
+    background-color: ${selection_popup};
+    color: ${text_heading};
 }
 QTableWidget#ReportDetailTable QHeaderView {
     background-color: #1b2735;
@@ -213,22 +218,22 @@ QTableWidget#ReportDetailTable QScrollBar:vertical {
     width: 10px;
     margin: 0;
     border: none;
-    background-color: #0c131d;
+    background-color: ${scroll_track};
 }
 QTableWidget#ReportDetailTable QScrollBar:horizontal {
     height: 10px;
     margin: 0;
     border: none;
-    background-color: #0c131d;
+    background-color: ${scroll_track};
 }
 QTableWidget#ReportDetailTable QScrollBar::handle {
     min-width: 36px;
     min-height: 36px;
     border-radius: 5px;
-    background-color: #3a485a;
+    background-color: ${scroll_handle};
 }
 QTableWidget#ReportDetailTable QScrollBar::handle:hover {
-    background-color: #4b5b6f;
+    background-color: ${scroll_handle_hover};
 }
 QTableWidget#ReportDetailTable QScrollBar::add-line,
 QTableWidget#ReportDetailTable QScrollBar::sub-line {
@@ -245,26 +250,26 @@ QPushButton#ReportPrimaryButton {
     min-height: 45px;
     min-width: 160px;
     border-radius: 8px;
-    font-size: 14pt;
+    font-size: 15px;
 }
 QPushButton#ReportSecondaryButton {
-    background-color: #1a2230;
-    border: 1px solid #354151;
-    color: #d9dee8;
+    background-color: ${control};
+    border: 1px solid ${border_control};
+    color: ${text_button};
 }
 QPushButton#ReportSecondaryButton:hover {
-    background-color: #232d3c;
+    background-color: ${control_hover};
 }
 QPushButton#ReportPrimaryButton {
-    background-color: #ff7a00;
-    border: 1px solid #ff7a00;
-    color: white;
+    background-color: ${accent};
+    border: 1px solid ${accent};
+    color: ${on_accent};
     font-weight: 700;
 }
 QPushButton#ReportPrimaryButton:hover {
-    background-color: #ff8a1f;
+    background-color: ${accent_hover};
 }
-"""
+""") + CONTROL_STATES_QSS
 
 
 def _summary_mean(mapping, key):
@@ -456,31 +461,29 @@ class StatCard(QFrame):
         super().__init__(parent)
         self.setFrameShape(QFrame.StyledPanel)
         self.setStyleSheet(
-            "StatCard {"
-            "  background-color: rgba(40, 40, 45, 0.85);"
-            "  border: 1px solid rgba(80, 80, 85, 0.5);"
-            "  border-radius: 8px;"
-            "  padding: 6px;"
-            "}"
+            qss("""StatCard {  background-color: ${surface_selected};  border: 1px solid ${border_card};  border-radius: 8px;  padding: 6px;}""")
         )
 
         layout = QVBoxLayout(self)
         layout.setContentsMargins(10, 6, 10, 6)
         layout.setSpacing(2)
-        layout.setAlignment(Qt.AlignCenter)
+        layout.setAlignment(Qt.AlignVCenter)
 
-        self._label = MLabel(label)
+        self._label = QLabel(label)
         self._label.setAlignment(Qt.AlignCenter)
+        self._label.setWordWrap(True)
+        self._label.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Preferred)
         self._label.setStyleSheet(
-            "font-size: 10pt; color: #888888; border: none; background: transparent;"
+            qss("""font-size: 10pt; color: ${text_muted}; border: none; background: transparent;""")
         )
         layout.addWidget(self._label)
 
-        self._value = MLabel(value)
+        self._value = QLabel(value)
+        self._value_color = PALETTE["text"]
         self._value.setAlignment(Qt.AlignCenter)
+        self._value.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Preferred)
         self._value.setStyleSheet(
-            "font-size: 26pt; font-weight: bold; "
-            "color: #f0f0f0; border: none; background: transparent;"
+            qss("""font-size: 28px; font-weight: bold; color: ${text}; border: none; background: transparent;""")
         )
         layout.addWidget(self._value)
 
@@ -489,18 +492,38 @@ class StatCard(QFrame):
 
     def set_value(self, text: str):
         self._value.setText(text)
-        self._apply_value_style("#f0f0f0")
+        self._apply_value_style(PALETTE["text"])
 
     def set_color(self, color: str):
         self._apply_value_style(color)
 
     def _apply_value_style(self, color: str):
+        self._value_color = color
         text = self._value.text()
-        font_size = 18 if len(text) >= 11 else 26
-        self._value.setStyleSheet(
-            f"font-size: {font_size}pt; font-weight: bold; "
+        font_size = 20 if len(text) >= 11 else 28
+        available = max(1, self.width() - 36)
+        font = QFont(self._value.font())
+        font.setWeight(QFont.Bold)
+        while font_size > 12:
+            font.setPixelSize(font_size)
+            if QFontMetrics(font).horizontalAdvance(text) <= available:
+                break
+            font_size -= 1
+        font.setPixelSize(font_size)
+        self._value.setWordWrap(QFontMetrics(font).horizontalAdvance(text) > available)
+        style = (
+            f"font-size: {font_size}px; font-weight: bold; "
             f"color: {color}; border: none; background: transparent;"
         )
+        if self._value.styleSheet() != style:
+            self._value.setStyleSheet(style)
+        self._label.setMinimumHeight(max(0, self._label.heightForWidth(available)))
+        self._value.setMinimumHeight(max(0, self._value.heightForWidth(available)))
+        self.setMinimumHeight(max(85, self.minimumSizeHint().height()))
+
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        self._apply_value_style(self._value_color)
 
 
 class CyclePhaseBar(QWidget):
@@ -518,7 +541,7 @@ class CyclePhaseBar(QWidget):
         super().__init__(parent)
         self._cycle = cycle
         self.setMinimumHeight(24)
-        self.setStyleSheet("background: transparent;")
+        self.setStyleSheet(qss("""background: transparent;"""))
         if self._detailed_stance_is_complete():
             tooltip = "负荷反应期、单支撑、摆动前期和摆动相按实际时长绘制"
         else:
@@ -638,27 +661,32 @@ class ReportView(QWidget):
         self._finished_analysis_workers: list[_ReportAnalysisWorker] = []
         self._dynamic_widgets: list[QWidget] = []
         self._build_ui()
+        self._replay_panel.ground_track.channel.contact_selected.connect(self._select_ground_contact)
+        self._replay_panel.frame_changed.connect(self._ground_replay_changed)
 
     def _build_ui(self):
+        from PySide6.QtWidgets import QDialog, QScrollArea, QPushButton, QLabel
+
         self.setObjectName("ReportViewRoot")
         self.setStyleSheet(REPORT_QSS)
         main_layout = QVBoxLayout(self)
-        main_layout.setContentsMargins(20, 15, 20, 15)
+        main_layout.setContentsMargins(24, 18, 24, 18)
         main_layout.setSpacing(12)
 
         # ===== 标题 =====
-        self._title = MLabel("📊 测试报告")
-        self._title.setAlignment(Qt.AlignCenter)
+        self._title = QLabel("测试报告")
+        self._title.setWordWrap(True)
+        self._title.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
         self._title.setStyleSheet(
-            "font-size: 22pt; font-weight: bold; color: #e0e0e0; padding: 6px 0;"
+            qss("""font-size: 24px; font-weight: bold; color: ${text}; padding: 6px 0;""")
         )
         main_layout.addWidget(self._title)
 
         # ===== 结束原因 =====
-        self._reason_label = MLabel("")
-        self._reason_label.setAlignment(Qt.AlignCenter)
+        self._reason_label = QLabel("")
+        self._reason_label.setAlignment(Qt.AlignLeft | Qt.AlignVCenter)
         self._reason_label.setStyleSheet(
-            "font-size: 12pt; color: #52c41a; padding: 2px 0;"
+            qss("""font-size: 13px; color: ${success}; padding: 2px 0;""")
         )
         main_layout.addWidget(self._reason_label)
 
@@ -666,18 +694,30 @@ class ReportView(QWidget):
         self._tabs = QTabWidget()
         self._tabs.setObjectName("ReportTabs")
         self._tabs.setDocumentMode(True)
+        self._tabs.tabBar().setDrawBase(False)
         self._tabs.tabBar().setObjectName("ReportTabBar")
 
         self._overview_page = QWidget()
         self._overview_page.setObjectName("ReportOverviewPage")
-        content_layout = QHBoxLayout(self._overview_page)
+        overview_layout = QVBoxLayout(self._overview_page)
+        overview_layout.setContentsMargins(0, 0, 0, 0)
+        overview_scroll = QScrollArea()
+        overview_scroll.setFrameShape(QFrame.NoFrame)
+        overview_scroll.setWidgetResizable(True)
+        overview_content = QWidget()
+        overview_content.setObjectName("ReportOverviewContent")
+        overview_content.setStyleSheet(qss("QWidget#ReportOverviewContent { background: ${background}; }"))
+        overview_scroll.setWidget(overview_content)
+        overview_layout.addWidget(overview_scroll)
+        content_layout = QBoxLayout(QBoxLayout.LeftToRight, overview_content)
+        self._overview_content_layout = content_layout
         content_layout.setContentsMargins(4, 8, 4, 4)
         content_layout.setSpacing(16)
 
         # --- 左侧: 统计卡片网格 ---
         left_container = QWidget()
         left_container.setObjectName("StatsContent")
-        left_container.setMinimumWidth(480)
+        left_container.setMinimumWidth(420)
         left_container.setSizePolicy(
             QSizePolicy.Expanding, QSizePolicy.Expanding
         )
@@ -699,7 +739,8 @@ class ReportView(QWidget):
 
         # --- 右侧: 图表回顾 ---
         right_container = QWidget()
-        right_container.setMinimumWidth(460)
+        self._review_content = right_container
+        right_container.setMinimumWidth(360)
         right_container.setMaximumWidth(780)
         right_container.setSizePolicy(QSizePolicy.Preferred, QSizePolicy.Expanding)
         right_layout = QVBoxLayout(right_container)
@@ -707,38 +748,45 @@ class ReportView(QWidget):
         right_layout.setSpacing(8)
         self._right_layout = right_layout
 
+        self._capture_stats = QLabel()
+        self._capture_stats.setWordWrap(True)
+        self._capture_stats.setObjectName("JumpCaptureStats")
+        self._capture_stats.hide()
+        right_layout.addWidget(self._capture_stats)
+
         self._review_title = QLabel("数据回顾")
         self._review_title.setObjectName("ReportSectionTitle")
         right_layout.addWidget(self._review_title)
 
         self._replay_panel = FootprintReplayPanel()
         self._replay_panel.hide()
-        self._replay_panel.setMinimumHeight(520)
+        self._replay_panel.setMinimumHeight(320)
         right_layout.addWidget(self._replay_panel, 1)
         self._replay_panel.ground_track.detail_status.hide()
         right_layout.addWidget(self._replay_panel.ground_track.detail, 1)
 
         self._plot_container = QWidget()
+        self._plot_container.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Ignored)
         self._plot_container_layout = QVBoxLayout(self._plot_container)
         self._plot_container_layout.setContentsMargins(0, 0, 0, 0)
         self._plot_container_layout.setSpacing(8)
 
         if _PG_AVAILABLE:
             self._plot_1 = pg.PlotWidget()
-            self._plot_1.setBackground(dayu_theme.background_in_color)
+            self._plot_1.setBackground(PALETTE["surface"])
             self._plot_1.showGrid(x=True, y=True, alpha=0.1)
             self._plot_1.enableAutoRange()
             self._plot_container_layout.addWidget(self._plot_1, 1)
 
             self._plot_2 = pg.PlotWidget()
-            self._plot_2.setBackground(dayu_theme.background_in_color)
+            self._plot_2.setBackground(PALETTE["surface"])
             self._plot_2.showGrid(x=True, y=True, alpha=0.1)
             self._plot_2.enableAutoRange()
             self._plot_container_layout.addWidget(self._plot_2, 1)
         else:
             placeholder = QLabel("未安装 pyqtgraph — 图表不可用")
             placeholder.setAlignment(Qt.AlignCenter)
-            placeholder.setStyleSheet("font-size: 14pt; color: #666;")
+            placeholder.setStyleSheet(qss("""font-size: 15px; color: ${text_hint};"""))
             self._plot_container_layout.addWidget(placeholder)
 
         right_layout.addWidget(self._plot_container, 1)
@@ -755,6 +803,7 @@ class ReportView(QWidget):
         self._detail_tabs = QTabWidget()
         self._detail_tabs.setObjectName("ReportDetailTabs")
         self._detail_tabs.setDocumentMode(True)
+        self._detail_tabs.tabBar().setDrawBase(False)
         self._detail_tabs.tabBar().setObjectName("ReportDetailTabBar")
         details_layout.addWidget(self._detail_tabs)
 
@@ -808,10 +857,7 @@ class ReportView(QWidget):
 
         self._gait_question_page = QWidget()
         self._gait_question_page.setStyleSheet(
-            "QLineEdit, QTextBrowser { background: #151e2a; color: #e7edf5;"
-            "border: 1px solid #354151; border-radius: 5px; padding: 10px; font-size: 14px; }"
-            "QPushButton { background: #242e3c; color: #e7edf5; padding: 8px;"
-            "border: 1px solid #354151; border-radius: 5px; }"
+            qss("""QLineEdit, QTextBrowser { background: ${surface}; color: ${text};border: 1px solid ${border_control}; border-radius: 5px; padding: 10px; font-size: 14px; }QPushButton { background: ${control_stepper}; color: ${text}; padding: 8px;border: 1px solid ${border_control}; border-radius: 5px; }""")
         )
         question_layout = QVBoxLayout(self._gait_question_page)
         self._gait_question = QLineEdit()
@@ -822,7 +868,7 @@ class ReportView(QWidget):
         question_layout.addWidget(self._gait_question)
         suggestions = QHBoxLayout()
         for question in ("左右脚差异怎么样", "步频稳定吗", "前后半程有什么变化", "哪些数据没算进去"):
-            button = MPushButton(question)
+            button = QPushButton(question)
             button.clicked.connect(lambda checked=False, text=question: self.answer_gait_question(text))
             suggestions.addWidget(button)
         question_layout.addLayout(suggestions)
@@ -836,8 +882,12 @@ class ReportView(QWidget):
 
         main_layout.addWidget(self._tabs, 1)
 
-        self._analysis_panel = QFrame()
+        self._analysis_panel = QDialog(self)
+        self._analysis_panel.setWindowTitle("智能分析")
         self._analysis_panel.setObjectName("ReportAnalysisPanel")
+        self._analysis_panel.setStyleSheet(REPORT_QSS)
+        self._analysis_panel.resize(720, 560)
+        self._analysis_panel.setMinimumSize(440, 320)
         analysis_layout = QVBoxLayout(self._analysis_panel)
         analysis_layout.setContentsMargins(14, 10, 14, 10)
         analysis_layout.setSpacing(8)
@@ -846,7 +896,8 @@ class ReportView(QWidget):
         self._analysis_title.setObjectName("ReportSectionTitle")
         analysis_header.addWidget(self._analysis_title)
         analysis_header.addStretch()
-        self._analysis_button = MPushButton("开始智能分析").primary()
+        self._analysis_button = QPushButton("开始智能分析")
+        self._analysis_button.setProperty("role", "primary")
         self._analysis_button.setObjectName("ReportAnalysisButton")
         self._analysis_button.clicked.connect(self._on_analysis_clicked)
         analysis_header.addWidget(self._analysis_button)
@@ -857,27 +908,48 @@ class ReportView(QWidget):
         analysis_layout.addWidget(self._analysis_status)
         self._analysis_result = QLabel("")
         self._analysis_result.setWordWrap(True)
+        self._analysis_result.setAlignment(Qt.AlignTop | Qt.AlignLeft)
+        self._analysis_result.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Preferred)
         self._analysis_result.setTextFormat(Qt.RichText)
         self._analysis_result.setTextInteractionFlags(Qt.TextBrowserInteraction)
         self._analysis_result.setOpenExternalLinks(True)
         self._analysis_result.hide()
-        analysis_layout.addWidget(self._analysis_result)
+        self._analysis_scroll = QScrollArea()
+        self._analysis_scroll.setFrameShape(QFrame.NoFrame)
+        self._analysis_scroll.setWidgetResizable(True)
+        self._analysis_scroll.setWidget(self._analysis_result)
+        analysis_layout.addWidget(self._analysis_scroll, 1)
+        self._analysis_close_button = QPushButton("关闭分析")
+        self._analysis_close_button.clicked.connect(self._analysis_panel.close)
+        analysis_layout.addWidget(self._analysis_close_button, 0, Qt.AlignRight)
         self._analysis_panel.hide()
-        main_layout.addWidget(self._analysis_panel)
 
         # ===== 底部按钮 =====
         btn_layout = QHBoxLayout()
         btn_layout.setSpacing(15)
+        self._analysis_entry = QPushButton("智能分析")
+        self._analysis_entry.setObjectName("ReportSecondaryButton")
+        self._analysis_entry.setMinimumHeight(45)
+        self._analysis_entry.clicked.connect(self._open_analysis)
+        self._analysis_entry.hide()
+        btn_layout.addWidget(self._analysis_entry)
         btn_layout.addStretch()
 
-        self.btn_export = MPushButton("📥 导出 Excel")
+        self.btn_export = QPushButton("导出报告")
+        self.btn_export.setIcon(icon("export"))
         self.btn_export.setObjectName("ReportSecondaryButton")
         self.btn_export.setMinimumHeight(45)
         self.btn_export.setMinimumWidth(160)
-        self.btn_export.clicked.connect(self._on_export)
+        export_menu = QMenu(self.btn_export)
+        export_menu.addAction("PDF · 精简版", lambda: self._on_export_pdf(False))
+        export_menu.addAction("PDF · 详细版", lambda: self._on_export_pdf(True))
+        export_menu.addSeparator()
+        export_menu.addAction("Excel · 完整数据", self._on_export)
+        self.btn_export.setMenu(export_menu)
         btn_layout.addWidget(self.btn_export)
 
-        self.btn_home = MPushButton("返回测试").primary()
+        self.btn_home = QPushButton("返回测试")
+        self.btn_home.setProperty("role", "primary")
         self.btn_home.setObjectName("ReportPrimaryButton")
         self.btn_home.setMinimumHeight(45)
         self.btn_home.setMinimumWidth(160)
@@ -893,7 +965,31 @@ class ReportView(QWidget):
 
     def load_report(self, report: TestReport, session_id: int | None = None):
         """填充统计卡片和图表。"""
+        self._analysis_panel.hide()
         self._report = report
+        self._export_subject = {}
+        self._export_started_at = None
+        is_jump = isinstance(report, JumpTestReport)
+        self._overview_content_layout.setDirection(
+            QBoxLayout.TopToBottom if is_jump else QBoxLayout.LeftToRight
+        )
+        self._overview_content_layout.setSpacing(10 if is_jump else 16)
+        self._overview_content_layout.setStretch(0, 0 if is_jump else 3)
+        self._overview_content_layout.setStretch(1, 1 if is_jump else 2)
+        self._stats_content.setMaximumHeight(248 if is_jump else 16777215)
+        self._stats_content.setSizePolicy(
+            QSizePolicy.Expanding, QSizePolicy.Preferred if is_jump else QSizePolicy.Expanding
+        )
+        self._review_content.setMaximumWidth(16777215 if is_jump else 780)
+        self._plot_container_layout.setDirection(
+            QBoxLayout.LeftToRight if is_jump else QBoxLayout.TopToBottom
+        )
+        # Keep jump axes readable; the overview scrolls when height is limited.
+        self._plot_container.setMinimumHeight(200 if is_jump else 0)
+        if _PG_AVAILABLE:
+            for plot in (self._plot_1, self._plot_2):
+                plot.setMinimumHeight(200 if is_jump else 0)
+        self._capture_stats.setVisible(is_jump)
         self._gait_topic = ""
         self._gait_question.clear()
         self._gait_answer.clear()
@@ -922,8 +1018,17 @@ class ReportView(QWidget):
         self._tabs.setTabVisible(1, is_walking or isinstance(
             report, (TreadmillGaitReport, TreadmillRunningReport)
         ))
-        for i in range(1, self._detail_tabs.count()):
-            self._detail_tabs.setTabVisible(i, not is_walking)
+        labels = ('逐步分析', '周期分析', '原始记录') if is_walking else ('统计汇总', '周期明细', '逐步数据')
+        for i, label in enumerate(labels):
+            self._detail_tabs.setTabText(i, label)
+            self._detail_tabs.setTabVisible(i, True)
+        self._more_stats_button.setVisible(not is_walking)
+        for layout in (self._cycle_layout, self._step_layout):
+            controls = layout.itemAt(0).layout()
+            for i in range(controls.count()):
+                widget = controls.itemAt(i).widget()
+                if widget is not None:
+                    widget.setVisible(not is_walking)
         self._detail_tabs.setCurrentIndex(0)
         self._more_stats_button.setChecked(False)
         for detail_filter in (self._cycle_filter, self._step_filter):
@@ -1135,9 +1240,22 @@ class ReportView(QWidget):
             and self._session_id is not None
             and supported
         )
-        self._analysis_panel.setVisible(visible)
+        self._analysis_entry.setVisible(visible)
         if not visible:
+            self._analysis_panel.hide()
             self.clear_analysis()
+
+    def _open_analysis(self) -> None:
+        if self._analysis_entry.isHidden():
+            return
+        self._analysis_panel.show()
+        self._analysis_panel.raise_()
+        self._analysis_panel.activateWindow()
+        self._request_latest_if_available()
+
+    def hideEvent(self, event):
+        self._analysis_panel.hide()
+        super().hideEvent(event)
 
     def _on_analysis_clicked(self) -> None:
         if self._analysis_panel.isHidden() or self._session_id is None:
@@ -1147,8 +1265,9 @@ class ReportView(QWidget):
         self._start_analysis_request("analyze")
 
     def request_voice_analysis(self) -> bool:
-        if self._analysis_panel.isHidden() or self._session_id is None:
+        if self._analysis_entry.isHidden() or self._session_id is None:
             return False
+        self._open_analysis()
         if any(worker.isRunning() for worker in self._analysis_workers):
             return False
         self._start_analysis_request("analyze")
@@ -1176,7 +1295,7 @@ class ReportView(QWidget):
     def _request_latest_if_available(self) -> None:
         if (
             self._session_id is None
-            or self._analysis_panel.isHidden()
+            or self._analysis_entry.isHidden()
             or self._latest_requested_for == self._session_id
         ):
             return
@@ -1233,96 +1352,48 @@ class ReportView(QWidget):
     # ------------------------------------------------------------------
 
     def _load_jump_report(self, r: JumpTestReport):
-        self._title.setText("📊 测试报告 — 纵跳测试")
+        self._title.setText("测试报告 — 纵跳测试")
 
-        stats: list[tuple[str, str, str]] = [
-            (
-                "有效跳跃次数",
-                str(len(r.jump_heights)),
-                "形成完整有效结果的跳跃次数。",
-            ),
+        stats = [
+            ("平均跳高", f"{r.avg_jump_height:.3f} m" if r.jump_heights else "--",
+             "全部有效跳跃高度的平均值。"),
+            ("最大跳高", f"{r.max_jump_height:.3f} m" if r.jump_heights else "--",
+             "本次测试记录到的最大跳跃高度。"),
+            ("有效跳跃次数", str(len(r.jump_heights)), "形成完整有效结果的跳跃次数。"),
+            ("平均腾空时间", f"{r.avg_air_time:.3f} s" if r.air_times else "--",
+             "全部有效跳跃腾空时间的平均值。"),
+            ("平均触地时间", f"{r.avg_contact_time:.3f} s" if r.contact_times else "--",
+             "全部有效触地阶段持续时间的平均值。"),
+            ("平均跳跃节奏", f"{r.avg_cadence:.1f} jumps/min" if r.avg_cadence is not None else "--",
+             "按完整跳跃周期计算的平均每分钟跳跃次数。"),
         ]
-        if r.jump_heights:
-            stats.extend(
-                [
-                    (
-                        "平均跳高",
-                        f"{r.avg_jump_height:.3f} m",
-                        "全部有效跳跃高度的平均值。",
-                    ),
-                    (
-                        "最大跳高",
-                        f"{r.max_jump_height:.3f} m",
-                        "本次测试记录到的最大跳跃高度。",
-                    ),
-                ]
-            )
-        if r.air_times:
-            stats.append(
-                (
-                    "平均腾空时间",
-                    f"{r.avg_air_time:.3f} s",
-                    "全部有效跳跃腾空时间的平均值。",
-                )
-            )
-        if r.contact_times:
-            stats.append(
-                (
-                    "平均触地时间",
-                    f"{r.avg_contact_time:.3f} s",
-                    "全部有效触地阶段持续时间的平均值。",
-                )
-            )
-        if r.avg_cadence is not None:
-            stats.append(
-                (
-                    "平均跳跃节奏",
-                    f"{r.avg_cadence:.1f} jumps/min",
-                    "按完整跳跃周期计算的平均每分钟跳跃次数。",
-                )
-            )
-        excluded_count = sum(
-            not row.is_included_in_statistics for row in r.jump_results
-        )
-        flagged_count = sum(bool(row.quality_flags) for row in r.jump_results)
-        if excluded_count or flagged_count or r.quality_notices:
-            stats.append(
-                (
-                    "质量提示",
-                    f"{excluded_count} 条排除 / {flagged_count + len(r.quality_notices)} 条标记",
-                    "异常配对、超长腾空、帧间隔或超限遮挡的复核摘要。",
-                )
-            )
-        reason = {
-            "jump_count_reached": "达到设定跳跃次数",
-            "time_up": "测试时间到",
-            "manual": "手动结束",
-        }.get(r.finish_reason, r.finish_reason)
-        stats.extend(
-            [
-                ("触地次数", str(r.touch_count), "检测到的触地事件总数。"),
-                ("离地次数", str(r.lift_count), "检测到的离地事件总数。"),
-                ("测试结束原因", reason, "本次测试停止的触发条件。"),
-            ]
-        )
         self._fill_stat_cards(stats)
+        if r.jump_heights:
+            self._stat_cards[1].set_color(PALETTE["accent"])
 
-        # 高亮最大跳高
-        if r.jump_heights and len(self._stat_cards) > 2:
-            self._stat_cards[2].set_color(dayu_theme.primary_color)
+        excluded_count = sum(not row.is_included_in_statistics for row in r.jump_results)
+        flagged_count = sum(bool(row.quality_flags) for row in r.jump_results)
+        capture_text = f"采集统计    触地次数：{r.touch_count}    离地次数：{r.lift_count}"
+        if excluded_count or flagged_count or r.quality_notices:
+            capture_text += (
+                f"    质量提示：{excluded_count} 条排除 / "
+                f"{flagged_count + len(r.quality_notices)} 条标记"
+            )
+        self._capture_stats.setText(capture_text)
 
         # 图表: 全量数据
+        if _PG_AVAILABLE:
+            self._plot_1.clear()
+            self._plot_2.clear()
         if _PG_AVAILABLE and r.jump_heights:
             heights = list(r.jump_heights)
             x = list(range(1, len(heights) + 1))
 
-            self._plot_1.clear()
             self._plot_1.setLabel('left', '跳高 (m)')
             self._plot_1.setLabel('bottom', '跳跃次数')
-            bar1 = pg.BarGraphItem(x=x, height=heights, width=0.65, brush=dayu_theme.primary_color)
+            bar1 = pg.BarGraphItem(x=x, height=heights, width=0.65, brush=PALETTE["accent"])
             self._plot_1.addItem(bar1)
 
-            self._plot_2.clear()
             self._plot_2.setLabel('left', '腾空时间 (s)')
             self._plot_2.setLabel('bottom', '跳跃次数')
             bar2 = pg.BarGraphItem(x=x, height=list(r.air_times), width=0.65, brush='#52c41a')
@@ -1333,7 +1404,7 @@ class ReportView(QWidget):
     # ------------------------------------------------------------------
 
     def _load_gait_report(self, r: GaitTestReport):
-        self._title.setText("📊 测试报告 — 步态分析")
+        self._title.setText("测试报告 — 地面走路")
         self._plot_container.hide()
         self._replay_panel.show()
         self._replay_panel.set_direction("Interface side")
@@ -1377,7 +1448,7 @@ class ReportView(QWidget):
             self._plot_1.clear()
             self._plot_1.setLabel('left', '步长 (cm)')
             self._plot_1.setLabel('bottom', '步数')
-            bar1 = pg.BarGraphItem(x=x, height=list(r.stride_lengths), width=0.65, brush=dayu_theme.primary_color)
+            bar1 = pg.BarGraphItem(x=x, height=list(r.stride_lengths), width=0.65, brush=PALETTE["accent"])
             self._plot_1.addItem(bar1)
 
         if _PG_AVAILABLE and r.velocities:
@@ -1413,37 +1484,71 @@ class ReportView(QWidget):
             ("平均接触", value(group['contact_s']['mean'], "s"), "有效同脚周期接触时间"),
             ("平均摆动", value(group['swing_s']['mean'], "s"), "同脚离地至再次触地"),
             ("平均腾空", value(group['flight_s']['mean'], "s"), "完整同脚周期内腾空总和"),
-            ("单 / 双支撑", value(group['single_support_s']['mean'], "s") + " / " + value(group['double_support_s']['mean'], "s"), "各指标独立有效"),
+            ("周期单 / 双支撑合计", value(group['single_support_s']['mean'], "s") + " / " + value(group['double_support_s']['mean'], "s"), "单支撑为周期内两侧合计；本侧单支撑见左右参数表"),
             ("测量时长", value(s['duration_s'], "s"), "包含停步，不含等待进入和结束确认"),
             ("有腾空 / 无腾空 / 不确定", f"{s['flight_cycle_count']} / {s['zero_flight_cycle_count']} / {s['unknown_flight_cycle_count']}", "不据此判定走路"),
             ("停步 / 异常", f"{len(s['stops'])} / {len(s['issues'])}", "原因与分组、左右比较见明细；实测待验证"),
         ]
+        self._apply_recognized_stats(stats, s)
         self._fill_stat_cards(stats)
         details = QTextBrowser()
-        details.setHtml(detail_html(r))
-        self._add_detail_widget(details, self._summary_layout)
+        details.setHtml(recognized_html(s) + detail_html(r))
+        self._build_ground_details(s, details)
+
+    @staticmethod
+    def _apply_recognized_stats(stats, summary):
+        recognized = recognized_gait(summary)
+        if not recognized['supported']:
+            return
+        def value(key, unit):
+            number = recognized[key]
+            return f"{number:.3f} {unit}" if number is not None else "无可计算的相邻落脚"
+        replacements = {
+            "识别步数": ("识别步数", str(recognized['recognized_steps']), "按当前快照中仍有效的可靠触地记录计数。"),
+            "有效步数 / 周期": ("识别步数 / 步间", f"{recognized['recognized_steps']} / {recognized['interval_count']}", "已确认落脚及同一连续采集段内的相邻间隔，不以支撑相完整性再次排除。"),
+            "有效步间 / 周期": ("识别步间 / 有效周期", f"{recognized['interval_count']} / {summary['valid_cycles']}", "周期按同侧触地关系计数；离地和支撑阶段分别核验。"),
+            "平均步长": ("落脚点平均步长", value('mean_step_m', 'm'), "按同一位置参考计算；新记录使用首次有效接触参考，旧记录保留有效历史口径；" + str(recognized['spatial_interval_count']) + " 个间隔。"),
+            "平均速度": ("落脚点平均速度", value('speed_m_s', 'm/s'), "识别落脚点距离总和 / 对应步间时间总和。"),
+            "步频": ("识别步频", value('cadence_per_min', '步/min'), "已确认相邻落脚的频率，不跨采集缺口或停步区间。"),
+            "行走阶段速度": ("落脚点平均速度", value('speed_m_s', 'm/s'), "识别落脚点距离总和 / 对应步间时间总和。"),
+        }
+        contact_label = "平均接触时间"
+        contact_value = (f"{recognized['mean_contact_s']:.3f} s" if recognized['mean_contact_s'] is not None
+                         else "未完整观测离地")
+        for label in ("平均接触", "平均接触时间"):
+            replacements[label] = (contact_label, contact_value,
+                f"已识别脚印中 {recognized['contact_count']} 条完整接触纳入均值；停步和单脚边界不明的遮挡跨度单列，不混入接触统计。")
+            if recognized.get('estimated_contact_count', 0):
+                replacements[label] = (contact_label + "（补全）", contact_value,
+                    f"包含 {recognized['estimated_contact_count']} 条按遮挡跨度或本次时序补全的接触；可靠观测见左右参数表。")
+        stats[:] = [replacements.get(row[0], row) for row in stats]
 
     def _load_walking_stats(self, r):
         s = r.walking_summary
         self._title.setText("测试报告 — 地面走路")
         def metric(label, key, unit, note):
             value = s.get(key)
+            if key in s.get('metric_completion', {}).get('original_aggregates', {}):
+                label += "（补全）"
+                note = "按已识别落脚和本次时序补全；有效观测见明细。"
             return (label, f"{value:.3f} {unit}" if value is not None else "数据不足", note)
         stats = [
             ("设备长度", f"{s['segment_count']} 段 / {s['nominal_length_m']} 米", "本次通过自检的标称长度；距离计算使用光束坐标。"),
             ("可靠触地 / 离地", f"{r.touch_count} / {r.lift_count}", "分别按触地与离地边界证据计数。"),
+            ("识别步数", str(r.recognized_steps), "当前仍有效的可靠落脚事件去重计数；独立于步间与周期指标。"),
             ("有效步间 / 周期", f"{s['valid_steps']} / {s['valid_cycles']}", "触地时间与身份关系可靠的间隔数；位置、离地和支撑分别判断。"),
             metric("平均步长", "mean_step_m", "m", f"相邻可靠落脚位置的距离，共 {s.get('valid_step_lengths', s['valid_steps'])} 个有效间隔。"),
             metric("平均跨步长", "mean_stride_m", "m", "同脚连续两次有效落脚点距离。"),
             metric("步频", "cadence_per_min", "步/min", "有效行走片段的步频，排除停步候选区间。"),
             metric("平均接触时间", "mean_contact_s", "s", "已知触地至离地的光学接触跨度，短中断另列；排除停步候选区间。"),
-            metric("单支撑时间", "single_support_s", "s", f"支撑状态可观测的周期内单支撑总时长，共 {s.get('valid_support_cycles', s['valid_cycles'])} 个有效周期。"),
+            metric("周期内两侧单支撑合计", "single_support_s", "s", f"两侧单独支撑的总时长，共 {s.get('valid_support_cycles', s['valid_cycles'])} 个有效周期；本侧单支撑见左右参数表。"),
             metric("双支撑时间", "double_support_s", "s", f"支撑状态可观测的周期内双支撑总时长，共 {s.get('valid_support_cycles', s['valid_cycles'])} 个有效周期。"),
             metric("测量时长", "duration_s", "s", "首次有效触地至最后遮挡结束，包含停步。"),
             metric("整趟前进速度", "passage_speed_m_s", "m/s", "首末落脚点位移除以测量时长，包含停步；非人体质心速度，有采集缺口时留空。"),
             metric("行走阶段速度", "walking_speed_m_s", "m/s", "有效步长总和除以对应步间时间总和。"),
             ("停步 / 排除接触 / 异常", f"{len(s['stops'])} / {s['excluded_contacts']} / {len(s['issues'])}", "保留停步，不跨异常拼接周期；详细原因见测量明细。"),
         ]
+        self._apply_recognized_stats(stats, s)
         self._fill_stat_cards(stats)
         reasons = {"passage_complete": "测试完成 · 已通过测量区域", "manual": "手动结束",
                    "disconnected": "测试中断 · 设备断连", "data_timeout": "测试中断 · 数据超时",
@@ -1464,18 +1569,27 @@ class ReportView(QWidget):
                       "unresolved_fragment_join": "遮挡来源归属未决，单脚边界未知",
                       "unresolved_multiple_islands": "多处遮挡来源未决，脚印身份未知",
                       "local_unknown_timeout": "相关区域数据不足", "masked_contact_boundary": "坏束附近边界未知"}
-        content = table("接触记录", ["序号", "脚 / 身份段", "触地(s)", "离地(s)", "位置(m)", "短中断合并", "排除原因"],
+        from reporting.ground_bilateral import bilateral_html
+        content = recognized_html(s) + bilateral_html(s) + contact_quality_html(r)
+        if 'footfalls' in s:
+            content += table("逐次落脚记录", ["序号", "contact_id", "事件", "采样序号", "触地(s)", "原始落脚位置(m)", "左右脚", "证据来源", "指标缺失原因"],
+                [[i + 1, row['contact_id'], row['event_id'], row['touch_sample'], row['timestamp_s'],
+                  row['raw_landing_position_m'], row['side'] if row['side'] != 'unknown' else '未知', row['source_ref'],
+                  '; '.join(f"{key}: {row[key]['missing_reason']}" for key in
+                            ('lift_s', 'contact_s', 'centre_m', 'step_time_s', 'step_length_m') if not row[key]['valid'])]
+                 for i, row in enumerate(s['footfalls'])])
+        content += table("接触记录", ["序号", "脚 / 身份段", "触地(s)", "离地(s)", "位置(m)", "合并记录 / 区间覆盖", "排除原因"],
                         [[c["id"], c["side"] if c["side"] != "unknown" else f"{c['label']} / {c['epoch']}",
                           c["start"] if c['confirmed'] and c.get('touch_known', True) else None,
                           (c['lift_s']['value'] if c['lift_s']['valid'] else None) if 'lift_s' in c else
                           c["end"] if c['confirmed'] and c['exclusion'] in {None, 'pending_touch_order'} else None,
                           round(walking_position_value(c), 4) if walking_position_value(c) is not None else None,
-                          f"{len(c.get('merged_interruptions', []))} 次 / "
-                          f"{sum(x['end_sample'] - x['start_sample'] for x in c.get('merged_interruptions', []))} ms",
+                          f"{len(c.get('merged_interruptions', []))} 条 / "
+                          f"{merged_interval_duration_ms(c.get('merged_interruptions', []))} ms",
                           ("位置有独立证据；离地时间有条件性证据" if 'centre_m' in c and c['centre_m']['valid']
                            else "位置未知；离地时间有条件性证据")
                           if c.get('metric_evidence', {}).get('lift', {}).get('basis') == 'conditional_group_clear'
-                              and c.get('lift_s', {}).get('valid') else reasons_cn.get(c["exclusion"], c["exclusion"]) or ""]
+                              and c.get('lift_s', {}).get('valid') else contact_reason(c, r.report_config_snapshot)]
                          for c in s["contacts"]])
         if s.get('candidate_decisions'):
             outcomes = {'excluded_nonstep': '已排除非步候选', 'unresolved': '证据不足，保留未决',
@@ -1493,10 +1607,70 @@ class ReportView(QWidget):
         if r.report_config_snapshot.get("raw_buffer", {}).get("truncated"):
             content = "<p>原始帧缓存已达到容量上限，导出仅包含末尾保留帧；统计结果仍基于完整处理过程。</p>" + content
         details.setHtml(content)
-        self._add_detail_widget(details, self._summary_layout)
+        self._build_ground_details(s, details)
+
+    def _build_ground_details(self, summary, raw_browser):
+        self._ground_steps = GroundStepAnalysis(summary, pg)
+        self._ground_cycles = GroundCycleAnalysis(summary)
+        self._replay_panel.ground_track.channel.record_selection_enabled = True
+        scroll = QScrollArea()
+        scroll.setFrameShape(QFrame.NoFrame)
+        scroll.setWidgetResizable(True)
+        scroll.setWidget(self._ground_steps)
+        self._add_detail_widget(scroll, self._summary_layout)
+        self._add_detail_widget(self._ground_cycles, self._cycle_layout)
+        self._add_detail_widget(raw_browser, self._step_layout)
+        self._ground_steps.contact_selected.connect(self._highlight_ground_contact)
+        self._ground_steps.locate_requested.connect(self._locate_ground_contact)
+        self._ground_steps.raw_requested.connect(lambda: self._detail_tabs.setCurrentIndex(2))
+        self._ground_cycles.contact_selected.connect(self._select_ground_contact)
+        # Report entry shows the complete path; playback still uses saved frames.
+        if self._replay_panel._timeline:
+            self._replay_panel._slider.setValue(len(self._replay_panel._timeline) - 1)
+        else:
+            track = self._replay_panel.ground_track
+            if track._frame.get('positions_m'):
+                track.render_state(dict(track._frame, timestamp_s=summary.get('duration_s') or 0))
+        if self._ground_steps.rows:
+            self._ground_steps.select_contact(self._ground_steps.rows[-1]['contact_id'])
+
+    def _select_ground_contact(self, contact_id):
+        if getattr(self, '_ground_steps', None) is not None:
+            self._ground_steps.select_contact(contact_id)
+
+    def _highlight_ground_contact(self, row):
+        channel = self._replay_panel.ground_track.channel
+        channel.selected_contact_id = row['contact_id']
+        channel.selected_marker = ({'contact_id': row['contact_id'], 'side': row['side'],
+                                    'centroid_cm': row['position_m'] * 100, 'status': 'confirmed',
+                                    'shape_valid': False} if row['position_m'] is not None else None)
+        channel.update()
+        available = bool(self._replay_panel._timeline) and row.get('relative_time_s') is not None
+        self._ground_steps.locate_button.setEnabled(available)
+        self._ground_steps.locate_button.setToolTip('定位到此次落脚' if available else '此记录没有可用回放')
+
+    def _locate_ground_contact(self, row):
+        self._replay_panel.seek_time(row['relative_time_s'])
+        # The nearest saved frame can contain another landing; retain the requested record.
+        self._select_ground_contact(row['contact_id'])
+
+    def _ground_replay_changed(self, frame):
+        steps = getattr(self, '_ground_steps', None)
+        if steps is None:
+            return
+        rows = [row for row in steps.rows if row.get('relative_time_s') is not None
+                and row['relative_time_s'] <= frame.get('timestamp_s', 0)]
+        if rows:
+            steps.select_contact(rows[-1]['contact_id'])
+        else:
+            steps.clear_selection()
+            channel = self._replay_panel.ground_track.channel
+            channel.selected_contact_id = None
+            channel.selected_marker = None
+            channel.update()
 
     def _load_treadmill_report(self, r: TreadmillGaitReport | TreadmillRunningReport):
-        test_type_label = "跑步机步态" if isinstance(r, TreadmillGaitReport) else "跑步机跑步"
+        test_type_label = "跑步机走路" if isinstance(r, TreadmillGaitReport) else "跑步机跑步"
         self._title.setText(f"测试报告 — {test_type_label}")
         self._plot_container.hide()
         self._replay_panel.show()
@@ -1853,6 +2027,8 @@ class ReportView(QWidget):
             "_cycle_detail_table",
             "_cycle_timeline_table",
             "_treadmill_step_table",
+            "_ground_steps",
+            "_ground_cycles",
         ):
             setattr(self, name, None)
 
@@ -1867,12 +2043,13 @@ class ReportView(QWidget):
 
     def _fill_stat_cards(self, stats: list[tuple[str, str, str]]):
         """填充至多 12 张统计卡片。"""
+        self._export_stats = list(stats)
         for i, card in enumerate(self._stat_cards):
             if i < min(len(stats), 12):
                 label, value, tooltip = stats[i]
                 card._label.setText(label)
                 card.set_value(value)
-                card.set_color("#f0f0f0")
+                card.set_color(PALETTE["text"])
                 card.setToolTip(tooltip)
                 card._label.setToolTip(tooltip)
                 card._value.setToolTip(tooltip)
@@ -1884,6 +2061,31 @@ class ReportView(QWidget):
                 card.hide()
         self._stats_layout.invalidate()
         self._stats_content.updateGeometry()
+
+    def set_export_context(self, subject, started_at):
+        self._export_subject = dict(subject)
+        self._export_started_at = started_at
+
+    def _on_export_pdf(self, detailed=False):
+        if self._report is None:
+            return
+        version = "详细版" if detailed else "精简版"
+        path, _ = QFileDialog.getSaveFileName(
+            self, "导出测试报告", os.path.join(_get_base_dir(), "data",
+                time.strftime(f"测试报告_{version}_%Y%m%d_%H%M%S.pdf")), "PDF 文件 (*.pdf)")
+        if not path:
+            return
+        if not path.lower().endswith(".pdf"):
+            path += ".pdf"
+        try:
+            from ui.report_pdf import write_report_pdf
+            write_report_pdf(path, self._report, title=self._title.text(),
+                             stats=self._export_stats, reason=self._reason_label.text(),
+                             detailed=detailed, subject=self._export_subject,
+                             started_at=self._export_started_at)
+            QMessageBox.information(self, "导出成功", f"报告已保存至：\n{path}")
+        except Exception as exc:
+            QMessageBox.warning(self, "导出失败", f"保存报告失败：{exc}")
 
     def _on_export(self):
         """导出原始帧数据为 Excel。"""
@@ -1910,7 +2112,7 @@ class ReportView(QWidget):
         path = os.path.join(save_dir, filename)
 
         try:
-            wb = build_report_workbook(self._report)
+            wb = build_report_workbook(self._report, include_recognized=True)
             wb.save(path)
             QMessageBox.information(self, "导出成功", f"数据已保存至：\n{path}")
         except Exception as e:

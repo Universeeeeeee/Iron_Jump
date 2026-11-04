@@ -23,9 +23,9 @@ def test_margin_risk_can_require_pitch_when_center_is_inside_deadzone():
     assert not framing.fits_with_margin
 
 
-def test_centered_body_keeps_deadzone_and_never_requests_zoom():
+def test_full_body_with_headroom_lowers_view_to_leave_floor_margin():
     framing = body_framing(body())
-    assert framing_velocity(framing) == (0, 0)
+    assert framing_velocity(framing) == pytest.approx((1.6, 0))
     assert framing.points_with_margin and framing.fits_with_margin
 
 
@@ -45,3 +45,11 @@ def test_body_too_large_is_reported_without_lowering_quality_or_zooming():
     framing = body_framing(body(.01, .99))
     assert not framing.fits_with_margin
     assert framing_velocity(framing) == (0, 0)
+
+
+def test_floor_margin_stops_lowering_when_feet_have_room():
+    assert framing_velocity(body_framing(body(.08, .88))) == (0, 0)
+
+def test_floor_margin_never_lowers_without_headroom_or_pose():
+    assert framing_velocity(None) == (0, 0)
+    assert framing_velocity(body_framing(body(.05, .90)))[0] <= 0

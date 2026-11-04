@@ -131,42 +131,13 @@ def _install_camera_dependency_stubs() -> None:
         qtwidgets.QMessageBox = _MessageBox
         qtwidgets.QVBoxLayout = _Widget
         qtwidgets.QWidget = _Widget
+        for name in ("QApplication", "QCheckBox", "QComboBox", "QFrame", "QPushButton", "QToolButton"):
+            setattr(qtwidgets, name, _Widget)
         sys.modules["qtpy"] = qtpy
         sys.modules["qtpy.QtCore"] = qtcore
         sys.modules["qtpy.QtGui"] = qtgui
         sys.modules["qtpy.QtWidgets"] = qtwidgets
 
-    try:
-        import dayu_widgets  # noqa: F401
-    except ModuleNotFoundError:
-        dayu_widgets = types.ModuleType("dayu_widgets")
-        dayu_widgets.dayu_theme = SimpleNamespace(apply=lambda _widget: None)
-        sys.modules["dayu_widgets"] = dayu_widgets
-
-        class _DayuWidget:
-            def __init__(self, *args, **kwargs):
-                pass
-
-            def __getattr__(self, _name):
-                return lambda *args, **kwargs: None
-
-            def primary(self):
-                return self
-
-        for module_name, attr_name in (
-            ("dayu_widgets.check_box", "MCheckBox"),
-            ("dayu_widgets.collapse", "MSectionItem"),
-            ("dayu_widgets.combo_box", "MComboBox"),
-            ("dayu_widgets.divider", "MDivider"),
-            ("dayu_widgets.label", "MLabel"),
-            ("dayu_widgets.push_button", "MPushButton"),
-        ):
-            module = types.ModuleType(module_name)
-            setattr(module, attr_name, _DayuWidget)
-            sys.modules[module_name] = module
-        qt_module = types.ModuleType("dayu_widgets.qt")
-        qt_module.application = lambda: None
-        sys.modules["dayu_widgets.qt"] = qt_module
 
 
 _install_camera_dependency_stubs()

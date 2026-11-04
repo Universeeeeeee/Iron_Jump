@@ -28,9 +28,32 @@ from .models import (
 )
 
 
-OBSERVATION_BUILDER_VERSION = "agent-observation/1.0"
+OBSERVATION_BUILDER_VERSION = "agent-observation/1.2-derived"
 OBSERVATION_TOKEN_BUDGET = 12_000
 DEFAULT_MAX_SERIES_ROWS = 80
+
+
+def _ground_bilateral(package):
+    snapshot = getattr(package.payload, 'bilateral', {})
+    if not snapshot:
+        return {}
+    return {'side_policy': snapshot.get('side_policy', 'legacy_contact_identity'),
+            **{key: snapshot[key] for key in ('version', 'starting_foot', 'spatial_reference',
+                'measurement_basis', 'phase_percent_denominator', 'step_percent_denominator',
+                'sd_formula', 'si_formula', 'difference_formula')},
+            'source_refs': [r.record_set_id for r in package.record_sets[:3]],
+            'diff_formula': snapshot.get('diff_formula'),
+            'derived_formulas': snapshot.get('derived_formulas', {}),
+            'contact_phase_status': snapshot.get('contact_phase_status'),
+            'contact_phase_definition': snapshot.get('contact_phase_definition'),
+            'contact_percent_denominator': snapshot.get('contact_percent_denominator'),
+            'statistics': {code: {
+                'unit': METRIC_CATALOG[code].unit,
+                **{side: {key: item[side][key] for key in ('count', 'mean', 'std', 'cv_percent')}
+                   for side in ('left', 'right', 'unknown')},
+                'difference': item['difference'], 'si_percent': item['si_percent'],
+                'diff_percent': item.get('diff_percent')}
+                for code, item in snapshot['statistics'].items()}}
 
 
 class ObservationBuilder:
@@ -98,6 +121,7 @@ class ObservationBuilder:
             available_analysis_capabilities=tuple(capabilities),
             source_refs=tuple(source_refs),
             builder_version=OBSERVATION_BUILDER_VERSION,
+            ground_bilateral=_ground_bilateral(package),
         )
         while (
             estimate_observation_tokens(serialize_observation(observation))

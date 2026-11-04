@@ -106,7 +106,12 @@ def test_field_spatial_rebuild_is_pure_and_temporal_ledger_unchanged(field_repla
     before=deepcopy((p.contacts,p._ownership_groups,p.event_audit))
     s=p.summary()
     assert s==p.summary() and (p.contacts,p._ownership_groups,p.event_audit)==before
-    baseline=json.loads((Path(__file__).parents[1]/'exports/ground_source_review_B_20261011/after/run/filtered_summary.json').read_text())
+    baseline_text=(Path(__file__).parents[1]/'exports/ground_source_review_B_20261011/after/run/filtered_summary.json').read_text()
+    # This capture retains the same events under the broader continuity rule;
+    # its provenance names change with the policy, not its measured values.
+    baseline=json.loads(baseline_text.replace('early_local_growth_v1', p.OWNERSHIP_RULE_VERSION)
+                       .replace('conditional_local_growth_not_optical_identity_proof',
+                                'conditional_local_continuity_not_optical_identity_proof'))
     for key,excluded in [('contacts',{'toe_m'}),('steps',{'length_m','speed_m_s'}),('cycles',{'length_m'})]:
         assert len(s[key])==len(baseline[key])
         for a,b in zip(s[key],baseline[key]):

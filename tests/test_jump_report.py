@@ -174,7 +174,7 @@ def test_build_report_filters_non_positive_values_for_derived_jump_metrics():
 
 
 def test_jump_metric_rows_expand_to_longest_sequence_without_zip_truncation():
-    pytest.importorskip("dayu_widgets", reason="UI dependency not installed")
+
     from ui.views.report_view import _jump_metric_rows
 
     report = JumpTestReport(

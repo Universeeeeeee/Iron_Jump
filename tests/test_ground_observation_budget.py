@@ -22,7 +22,7 @@ def replay(mode, filtered, kind, reverse=False, late_growth=False, reappear=Fals
             snapshots[frame.sample_index] = deepcopy(p)
     for n in range(3700):
         if kind == 'group':
-            groups = [(40,43),(46,49)] if n == 100 else [(40,49)] if 101 <= n < 3100 else []
+            groups = [(40,42),(45,47)] if n == 100 else [(40,47)] if 101 <= n < 3100 else []
         else:
             groups = growing(n)
             if int(kind) <= n < 3100:

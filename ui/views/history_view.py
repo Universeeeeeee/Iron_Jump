@@ -6,19 +6,20 @@ history_view.py — 受试者历史记录页
 
 from __future__ import annotations
 
+from config.mode_labels import mode_label
+
 import logging
 from html import escape
 from typing import Any
 
-from qtpy.QtCore import QSignalBlocker, Signal, Qt
 from qtpy.QtWidgets import (
-    QAbstractItemView, QComboBox, QFrame, QHeaderView, QHBoxLayout, QLabel,
-    QInputDialog, QMessageBox, QSizePolicy, QTableWidget, QTableWidgetItem,
-    QVBoxLayout, QWidget,
+    QLabel, QPushButton, QAbstractItemView, QComboBox, QFrame, QHeaderView, QHBoxLayout,
+    QInputDialog, QMessageBox, QSizePolicy, QTableWidget, QTableWidgetItem, QVBoxLayout,
+    QWidget,
 )
 
-from dayu_widgets.label import MLabel
-from dayu_widgets.push_button import MPushButton
+from qtpy.QtCore import QSignalBlocker, Signal, Qt
+
 
 from data.subject_store import (
     SessionRecord,
@@ -59,12 +60,12 @@ class HistoryView(QWidget):
         header_layout = QHBoxLayout()
         header_layout.setSpacing(SPACE["md"])
 
-        title = MLabel("历史记录")
+        title = QLabel("历史记录")
         title.setObjectName("HistoryTitle")
-        self._subject_label = MLabel("未选择受试者")
+        self._subject_label = QLabel("未选择受试者")
         self._subject_label.setObjectName("HistoryContext")
 
-        self._btn_return = MPushButton("返回测试")
+        self._btn_return = QPushButton("返回测试")
         self._btn_return.clicked.connect(self.return_setup)
 
         title_layout = QVBoxLayout()
@@ -141,18 +142,20 @@ class HistoryView(QWidget):
 
         footer_layout = QHBoxLayout()
         footer_layout.addStretch()
-        self._btn_link_subject = MPushButton("关联运动员")
+        self._btn_link_subject = QPushButton("关联运动员")
         self._btn_link_subject.setMinimumHeight(42)
         self._btn_link_subject.clicked.connect(self._on_link_subject_clicked)
         footer_layout.addWidget(self._btn_link_subject)
 
-        self._btn_load_config = MPushButton("加载该次参数").primary()
+        self._btn_load_config = QPushButton("加载该次参数")
+        self._btn_load_config.setProperty("role", "primary")
         self._btn_load_config.setMinimumHeight(42)
         self._btn_load_config.setMinimumWidth(160)
         self._btn_load_config.clicked.connect(self._on_load_config_clicked)
         footer_layout.addWidget(self._btn_load_config)
 
-        self._btn_open_report = MPushButton("打开报告").primary()
+        self._btn_open_report = QPushButton("打开报告")
+        self._btn_open_report.setProperty("role", "primary")
         self._btn_open_report.setObjectName("PrimaryHistoryAction")
         self._btn_open_report.setMinimumHeight(42)
         self._btn_open_report.setMinimumWidth(140)
@@ -170,7 +173,7 @@ class HistoryView(QWidget):
             self._set_empty_state("历史数据存储不可用。")
             return
         try:
-            self._sessions = self._subject_store.get_all_sessions()
+            self._sessions = self._subject_store.get_all_sessions(include_detail=False)
         except Exception as exc:
             log.exception("Failed to load all sessions")
             self._set_empty_state("读取结果失败。")
@@ -193,7 +196,7 @@ class HistoryView(QWidget):
 
         self._subject_label.setText(f"受试者: {result.subject.display_name}")
         try:
-            self._sessions = self._subject_store.get_sessions(result.subject.id)
+            self._sessions = self._subject_store.get_sessions(result.subject.id, include_detail=False)
         except Exception as exc:
             log.exception("Failed to load subject sessions")
             self._set_empty_state("读取历史记录失败。")
@@ -211,7 +214,7 @@ class HistoryView(QWidget):
             self._set_empty_state("历史数据存储不可用。")
             return
         try:
-            self._sessions = self._subject_store.get_team_sessions(team.id)
+            self._sessions = self._subject_store.get_team_sessions(team.id, include_detail=False)
         except Exception as exc:
             log.exception("Failed to load team sessions")
             self._set_empty_state("读取团队历史失败。")
@@ -230,7 +233,7 @@ class HistoryView(QWidget):
                 self._session_subject_name(session),
                 self._session_identity_name(session),
                 session.started_at[:16],
-                session.test_type,
+                mode_label(session.test_type),
                 _finish_reason_label(session.finish_reason),
             ]
             for column, value in enumerate(values):
@@ -243,7 +246,7 @@ class HistoryView(QWidget):
             self._session_table.selectRow(0)
             self._show_session_detail(sessions[0])
             self._btn_load_config.setEnabled(True)
-            self._btn_open_report.setEnabled(bool(sessions[0].report_detail))
+            self._btn_open_report.setEnabled(sessions[0].has_report)
             self._btn_link_subject.setEnabled(sessions[0].subject_id is None)
         elif self._sessions:
             self._detail_label.setText("没有符合筛选条件的测试记录。")
@@ -277,7 +280,7 @@ class HistoryView(QWidget):
             self._test_type_filter.clear()
             self._test_type_filter.addItem("全部测试类型", None)
             for test_type in sorted({item.test_type for item in self._sessions}):
-                self._test_type_filter.addItem(test_type, test_type)
+                self._test_type_filter.addItem(mode_label(test_type), test_type)
 
     def _filtered_sessions(self) -> list[SessionRecord]:
         athlete = self._athlete_filter.currentData()
@@ -308,7 +311,7 @@ class HistoryView(QWidget):
             return
         self._show_session_detail(session)
         self._btn_load_config.setEnabled(True)
-        self._btn_open_report.setEnabled(bool(session.report_detail))
+        self._btn_open_report.setEnabled(session.has_report)
         self._btn_link_subject.setEnabled(session.subject_id is None)
 
     def _selected_session(self) -> SessionRecord | None:
@@ -328,7 +331,7 @@ class HistoryView(QWidget):
             f"运动员: {self._session_subject_name(session)}",
             f"测试身份: {self._session_identity_name(session)}",
             f"测试时间: {session.started_at[:16]}",
-            f"测试类型: {session.test_type}",
+            f"测试类型: {mode_label(session.test_type)}",
             f"结束原因: {_finish_reason_label(session.finish_reason)}",
         ]
         config_lines = _config_detail_lines(config)
@@ -372,8 +375,11 @@ class HistoryView(QWidget):
             QMessageBox.information(self, "打开报告", "请先选择一条历史记录。")
             return
         try:
-            session.report
-        except (TypeError, ValueError) as exc:
+            if self._subject_store is not None:
+                session = self._subject_store.get_session(session.id)
+            if session is None or not session.has_report:
+                raise ValueError("该报告不存在或未保存完整明细")
+        except Exception as exc:
             QMessageBox.warning(self, "打开报告", f"该记录无法重建报告：{exc}")
             return
         self.open_report_requested.emit(session)
@@ -513,6 +519,12 @@ def _config_detail_lines(config: Any) -> list[str]:
 def _session_summary(session: SessionRecord) -> str:
     summary: dict[str, Any] = session.report_summary
     report_type = summary.get("report_type")
+    recognized = summary.get("recognized_summary")
+    if recognized:
+        length, speed = recognized['mean_step_m'], recognized['speed_m_s']
+        length_text = f"{length:.3f} m" if length is not None else "无可比位置参考"
+        speed_text = f"{speed:.3f} m/s" if speed is not None else "无有效单步速度"
+        return f"识别 {recognized['recognized_steps']} 步 / 参考步长 {length_text} / 参考速度 {speed_text}"
     if report_type == "jump":
         max_height = summary.get("max_jump_height")
         avg_height = summary.get("avg_jump_height")
@@ -527,7 +539,7 @@ def _session_summary(session: SessionRecord) -> str:
         avg_stride = summary.get("avg_stride")
         avg_velocity = summary.get("avg_velocity")
         if avg_stride is not None and avg_velocity is not None:
-            return f"平均步长 {avg_stride:.3f}m / 平均步速 {avg_velocity:.3f}m/s"
+            return f"平均步长 {avg_stride / 100:.3f}m / 平均步速 {avg_velocity / 100:.3f}m/s"
     if session.total_jumps is not None:
         return f"跳跃 {session.total_jumps} 次"
     return "-"

@@ -1,7 +1,7 @@
 """
 Tests for ParamPanel treadmill dynamic form rebuild.
 
-Skips the entire module if dayu_widgets / Qt are unavailable.
+Requires the Qt test dependencies.
 Import guards are placed before any Qt imports to prevent import-time crashes.
 """
 
@@ -15,13 +15,12 @@ sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 # Do Qt/dayu import-skip FIRST, before any other Qt imports
 import pytest  # noqa: E402
 
-pytest.importorskip("dayu_widgets", reason="dayu_widgets / Qt not available")
 
 # Now it is safe to import Qt classes
 from qtpy.QtCore import QTime  # noqa: E402
 from qtpy.QtWidgets import QApplication, QComboBox, QDoubleSpinBox  # noqa: E402
 
-from dayu_widgets.spin_box import MSpinBox, MTimeEdit  # noqa: E402
+from qtpy.QtWidgets import QSpinBox, QTimeEdit  # noqa: E402
 
 from config.treadmill_config import (  # noqa: E402
     TreadmillGaitConfig,
@@ -55,7 +54,7 @@ class TestParamPanelTreadmill:
         """Select a test type from the combo box. Replicates UI change flow."""
         combo = self._panel._widgets["test_type"]
         assert isinstance(combo, QComboBox)
-        idx = combo.findText(text)
+        idx = combo.findData(text)
         assert idx >= 0, f"Test type '{text}' not found in combo"
         combo.setCurrentIndex(idx)
 
@@ -105,8 +104,8 @@ class TestParamPanelTreadmill:
 
         # Type checks
         assert isinstance(self._panel._widgets["min_step_length"], QDoubleSpinBox)
-        assert isinstance(self._panel._widgets["filter_gaitr_in"], MSpinBox)
-        assert isinstance(self._panel._widgets["filter_gaitr_out"], MSpinBox)
+        assert isinstance(self._panel._widgets["filter_gaitr_in"], QSpinBox)
+        assert isinstance(self._panel._widgets["filter_gaitr_out"], QSpinBox)
 
     def test_treadmill_running_filter_widgets(self) -> None:
         """Treadmill Running Test has gaitr filters but NOT automatic_data_filter."""
@@ -134,11 +133,11 @@ class TestParamPanelTreadmill:
         assert [
             test_types.itemText(index) for index in range(test_types.count())
         ] == [
-            "Jump Test",
-            "Sprint and Gait Test",
+            "纵跳测试",
+            "地面走路",
             "地面跑步",
-            "Treadmill Gait Test",
-            "Treadmill Running Test",
+            "跑步机走路",
+            "跑步机跑步",
         ]
         assert "External impulse" not in [
             self._panel._widgets["start_type"].itemText(index)

@@ -78,7 +78,8 @@ def test_field_short_sources_are_individual_and_masked_contact_remains_unknown(f
     assert {43009,47085,47117,42373,45740,49264} <= starts
     assert 45564 not in starts
     row=next(r for r in p.summary()['contacts'] if r['touch_sample']==47722)
-    assert row['lift_sample']==48621 and not row['contact_s']['valid']
+    assert row['lift_sample'] is None and not row['contact_s']['valid']
+    assert row['unavailable_separator']
     assert any(a==45564 for a,b,e in p._ownership_barriers())
 
 
@@ -106,10 +107,11 @@ def test_two_independently_published_feet_never_enter_single_owner_review(mode):
 
 
 @pytest.mark.parametrize('mode',['walk','run'])
+@pytest.mark.parametrize('rolling',[False,True])
 @pytest.mark.parametrize('damage',['mature','published_later','competing_owner','interrupted',
     'missing_prejoin','unreliable_prejoin','third_projection','opposite_direction',
     'unreliable_postjoin','split_postjoin','missing_postjoin','joint_does_not_cover_source'])
-def test_each_required_evidence_blocks_review_when_missing(mode,damage):
+def test_each_required_evidence_blocks_review_when_missing(mode,rolling,damage):
     from engine.ground_source_review import review_source,ownership_record
     p,_,_=sequence(mode,True)
     g=deepcopy(p._ownership_groups[0]);s=next(s for s in g['sources'] if s['first_sample']==300)
@@ -129,7 +131,7 @@ def test_each_required_evidence_blocks_review_when_missing(mode,damage):
         elif damage=='split_postjoin':run[2]=[[40,61],[63,63]]
         elif damage=='missing_postjoin':run[0]=306
         elif damage=='joint_does_not_cover_source':run[2]=[[40,62]]
-    reason,_=review_source(p,g,s,record)
+    reason,_=review_source(p,g,s,record,cohort=[s] if rolling else ())
     assert reason is not None
 
 
@@ -184,12 +186,13 @@ def test_merging_two_attributed_owners_retains_decisions_and_competition(mode):
 
 
 @pytest.mark.parametrize('mode',['walk','run'])
-@pytest.mark.parametrize('duration',[30,31])
+@pytest.mark.parametrize('duration',[30,31,80,81])
 def test_short_window_boundary_is_independent_of_contact_confirmation(mode,duration):
     p,_,events=sequence(mode,True,joined=300+duration)
-    assert bool(source_decisions(p)) == (duration==30)
+    accepted = duration <= (80 if mode == 'walk' else 30)
+    assert bool(source_decisions(p)) == accepted
     assert p.touch_events==events
-    assert p.summary()['valid_contact_durations']==(1 if duration==30 else 0)
+    assert p.summary()['valid_contact_durations']==int(accepted)
 
 
 @pytest.mark.parametrize('mode',['walk','run'])

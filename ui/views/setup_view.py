@@ -7,19 +7,20 @@ setup_view.py — 测试配置页
 
 from __future__ import annotations
 
+from config.mode_labels import mode_label
+
 import logging
 from dataclasses import MISSING, dataclass
 from datetime import datetime
 
-from qtpy.QtCore import Signal, Qt
 from qtpy.QtWidgets import (
-    QWidget, QVBoxLayout, QHBoxLayout, QFormLayout, QScrollArea, QFrame,
-    QSizePolicy, QLineEdit, QComboBox, QDialog, QDialogButtonBox,
-    QLabel, QMessageBox, QPushButton, QSpinBox, QStackedWidget, QMenu,
+    QLabel, QPushButton, QWidget, QVBoxLayout, QHBoxLayout, QFormLayout, QScrollArea,
+    QFrame, QSizePolicy, QLineEdit, QComboBox, QDialog, QDialogButtonBox, QMessageBox,
+    QSpinBox, QStackedWidget, QMenu, QGridLayout, QBoxLayout,
 )
 
-from dayu_widgets.label import MLabel
-from dayu_widgets.push_button import MPushButton
+from qtpy.QtCore import Signal, Qt
+
 
 from config.config_validation import validate_runtime_config
 from config.test_config import AnyTestConfig
@@ -106,7 +107,12 @@ class SetupView(QWidget):
         header.addStretch(1)
         layout.addLayout(header)
 
-        workspace = QHBoxLayout()
+        workspace_content = QWidget()
+        workspace_content.setObjectName("SetupWorkspace")
+        workspace_content.setStyleSheet(qss("QWidget#SetupWorkspace { background: ${background}; }"))
+        workspace = QHBoxLayout(workspace_content)
+        self._workspace_layout = workspace
+        workspace.setContentsMargins(0, 0, 0, 0)
         workspace.setSpacing(SPACE["lg"])
 
         # ===== 左侧配置工作区 =====
@@ -233,7 +239,12 @@ class SetupView(QWidget):
         device_layout.addWidget(self._device_meta_label)
         status_layout.addWidget(device_card)
         workspace.addWidget(self._status_bar, 0, Qt.AlignTop)
-        layout.addLayout(workspace, 1)
+        workspace_scroll = QScrollArea()
+        workspace_scroll.setObjectName("SetupWorkspaceScroll")
+        workspace_scroll.setFrameShape(QFrame.NoFrame)
+        workspace_scroll.setWidgetResizable(True)
+        workspace_scroll.setWidget(workspace_content)
+        layout.addWidget(workspace_scroll, 1)
 
         # ===== 准备就绪按钮 =====
         self.btn_ready = QPushButton("进入测试准备")
@@ -259,7 +270,7 @@ class SetupView(QWidget):
         frame = QFrame()
         frame.setObjectName("TopSubjectBar")
 
-        layout = QHBoxLayout(frame)
+        layout = QGridLayout(frame)
         layout.setContentsMargins(SPACE["lg"], SPACE["sm"], SPACE["lg"], SPACE["sm"])
         layout.setSpacing(SPACE["control"])
 
@@ -286,25 +297,24 @@ class SetupView(QWidget):
         self._update_subject_profile_btn = QPushButton("更新运动员档案")
         self._update_subject_profile_btn.hide()
 
-        btn_new = MPushButton("新建")
+        btn_new = QPushButton("新建")
         btn_new.setObjectName("SubjectPrimaryButton")
         btn_new.setMinimumWidth(80)
 
-        btn_more = MPushButton("更多")
+        btn_more = QPushButton("更多")
         btn_more.setMinimumWidth(80)
         menu = QMenu(btn_more)
         self._action_load_last_config = menu.addAction("加载上次参数")
         self._action_history = menu.addAction("历史记录")
         btn_more.setMenu(menu)
 
-        layout.addWidget(label)
-        layout.addWidget(self._subject_search)
-        layout.addWidget(self._subject_combo, 1)
-        layout.addWidget(identity_label)
-        layout.addWidget(self._team_identity_combo)
-        layout.addWidget(self._update_subject_profile_btn)
-        layout.addWidget(btn_new)
-        layout.addWidget(btn_more)
+        self._subject_bar_layout = layout
+        self._subject_bar_widgets = (
+            label, self._subject_search, self._subject_combo, identity_label,
+            self._team_identity_combo, self._update_subject_profile_btn, btn_new, btn_more,
+        )
+        self._subject_bar_wrapped = None
+        self._arrange_subject_bar()
 
         self._subject_search.textChanged.connect(self._refresh_subject_results)
         self._subject_combo.currentIndexChanged.connect(self._sync_subject_to_agent)
@@ -318,6 +328,54 @@ class SetupView(QWidget):
         self._refresh_subject_results()
 
         return frame
+
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        if hasattr(self, "_workspace_layout"):
+            narrow = self.width() - 2 * SPACE["xl"] < 1100
+            self._workspace_layout.setDirection(QBoxLayout.TopToBottom if narrow else QBoxLayout.LeftToRight)
+            self._workspace_layout.setStretch(0, 0 if narrow else 1)
+        if hasattr(self, "_subject_bar_layout"):
+            self._arrange_subject_bar()
+
+    def _arrange_subject_bar(self):
+        available = self.width() - 2 * SPACE["xl"]
+        narrow = available < 1100
+        if not narrow:
+            available -= 320 + SPACE["lg"]
+        widgets = self._subject_bar_widgets
+        active = [w for w in widgets if w is not self._update_subject_profile_btn or not w.isHidden()]
+        margins = self._subject_bar_layout.contentsMargins()
+        required = sum(max(w.minimumWidth(), w.minimumSizeHint().width()) for w in active)
+        required += self._subject_bar_layout.spacing() * (len(active) - 1)
+        required += margins.left() + margins.right()
+        wrapped = 2 if narrow else int(available < required)
+        if wrapped == self._subject_bar_wrapped:
+            return
+        self._subject_bar_wrapped = wrapped
+        layout = self._subject_bar_layout
+        for column in range(8):
+            layout.setColumnStretch(column, 0)
+        for widget in widgets:
+            layout.removeWidget(widget)
+        if wrapped == 2:
+            for column, index in enumerate((0, 1, 2)):
+                layout.addWidget(widgets[index], 0, column)
+            layout.addWidget(widgets[3], 1, 0)
+            layout.addWidget(widgets[4], 1, 1, 1, 2)
+            layout.addWidget(widgets[5], 2, 0)
+            layout.addWidget(widgets[6], 2, 1)
+            layout.addWidget(widgets[7], 2, 2)
+        elif wrapped:
+            for column, index in enumerate((0, 1, 2, 6, 7)):
+                layout.addWidget(widgets[index], 0, column)
+            layout.addWidget(widgets[3], 1, 0)
+            layout.addWidget(widgets[4], 1, 1, 1, 2)
+            layout.addWidget(widgets[5], 1, 3, 1, 2)
+        else:
+            for column, widget in enumerate(widgets):
+                layout.addWidget(widget, 0, column)
+        layout.setColumnStretch(2, 1)
 
     def _refresh_subject_results(self, query: str = "") -> None:
         if self._subject_store is None or self._subject_combo is None:
@@ -590,6 +648,8 @@ class SetupView(QWidget):
             for name in values
         )
         self._update_subject_profile_btn.setHidden(not changed)
+        if hasattr(self, "_subject_bar_layout"):
+            self._arrange_subject_bar()
 
     def _on_update_subject_profile_clicked(self) -> None:
         baseline = self._profile_update_baseline
@@ -687,7 +747,7 @@ class SetupView(QWidget):
         self._config_stack.setCurrentIndex(index)
         if index == 0 and self._current_config is not None:
             combo = self._agent_panel._test_type_combo
-            target = combo.findText(self._current_config.test_type)
+            target = combo.findText(mode_label(self._current_config.test_type))
             if target >= 0:
                 self._agent_panel._clear_pending_config()
                 combo.setCurrentIndex(target)
@@ -928,6 +988,16 @@ class SetupView(QWidget):
             text = "● 设备已连接 · LED异常"
             disconnected = self._led_health_result.get("disconnected_leds", [])
             flickering = self._led_health_result.get("flickering_leds", [])
+            from hardware.known_beams import load_known_beams, known_bad_indices
+            known = {i + 1 for i in known_bad_indices(self._device_layout, load_known_beams())}
+            registered = sorted(known & (set(disconnected) | set(flickering)))
+            disconnected = [i for i in disconnected if i not in known]
+            flickering = [i for i in flickering if i not in known]
+            if registered:
+                health_lines.append("已登记坏束（不参与测量，保留坐标）：" + self._format_device_led_indices(registered))
+            if not disconnected and not flickering:
+                color = PALETTE["warning"]
+                text = "● 设备已连接 · 已登记坏束"
             if disconnected:
                 health_lines.append(
                     "未联通/持续遮挡 LED："

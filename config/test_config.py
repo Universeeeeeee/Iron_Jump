@@ -108,11 +108,11 @@ class TestConfig:
     def mode_label(self) -> str:
         """获取模式的中文显示标签。"""
         labels = {
-            "Jump Test": "纵跳",
-            "Sprint and Gait Test": "步态分析",
+            "Jump Test": "纵跳测试",
+            "Sprint and Gait Test": "地面走路",
             "Treadmill Running Test": "跑步机跑步",
-            "Treadmill Gait Test": "跑步机步态",
-            "Tapping Test": "Tapping",
+            "Treadmill Gait Test": "跑步机走路",
+            "Tapping Test": "踏步测试",
             "Reaction Times": "反应时",
             "Static Test (Sway)": "静态测试",
         }
