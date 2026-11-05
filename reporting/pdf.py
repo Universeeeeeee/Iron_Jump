@@ -50,7 +50,6 @@ def report_html(report, *, title, stats, reason, detailed=False, subject=None, s
                   '落脚点平均速度', '识别步频', '平均接触时间', '平均接触（含估算）', '测量时长'}
         core = [row for row in stats if row[0] in labels]
     content += '<h2>测试摘要</h2>' + _table(['指标', '结果'], [(label, value) for label, value, _ in core])
-    content += '<p>“未测得”或“数据不足”表示缺少有效测量证据，不等于零。各指标可能使用不同的有效样本。</p>'
     if snapshot.get('raw_buffer', {}).get('truncated'):
         content += '<p>原始帧缓存已截断；统计基于完整处理过程，原始数据导出仅含保留帧。</p>'
     quality = snapshot.get('beam_quality')
