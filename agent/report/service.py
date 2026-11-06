@@ -16,8 +16,12 @@ from reporting.models import (
     AnalysisRunMetrics,
     DataAccessScope,
     DataScopeAvailability,
+    DraftAnalysisClaim,
+    PredicateBinding,
     SequentialLoopCheckpoint,
     SequentialLoopResult,
+    HypothesisTarget,
+    NextAnalysisAction,
 )
 from reporting.observation import (
     OBSERVATION_BUILDER_VERSION,
@@ -38,6 +42,13 @@ from reporting.validators import (
 )
 from knowledge.integration import build_report_rag_context
 from knowledge.pipeline import degraded_rag_result
+from reporting.questions import (
+    chart_source_action,
+    parent_question_context,
+    resolve_question_selection,
+    question_context,
+    question_digest,
+)
 
 from .agent import ReportAgent, ReportAgentCallTimeout
 from .analysis_loop import AnalysisLoop, AnalysisLoopError
@@ -121,7 +132,87 @@ class ReportAnalysisService:
         session_id: int,
         access_scope: DataAccessScope,
     ) -> AnalysisPackage:
-        deadline = ReportAnalysisDeadline(
+        return self._analyze(session_id, access_scope)
+
+    def _build_observation(self, package, access_scope, *, scoped=False):
+        manifest = ReportManifestBuilder().build(package)
+        availability = DataScopeAvailability(reasons=("external_scope_not_requested",))
+        capabilities = self._tool_registry.list_capabilities(
+            package, access_scope, self._method_registry
+        )
+        if scoped:
+            capabilities = [tool.model_copy(update={
+                "available_methods": tuple(
+                    method for method in tool.available_methods
+                    if method.analysis_method not in {"verify_exclusion_robustness", "quality_scope_check"}
+                ),
+            }) for tool in capabilities]
+        return self._observation_builder.build(
+            package, manifest, availability, access_scope, capabilities
+        )
+
+    def ask(self, request) -> AnalysisPackage:
+        if not callable(getattr(self._agent, "decide", None)) or not callable(
+            getattr(self._agent, "plan_question", None)
+        ):
+            raise ReportAnalysisError("question_agent_unavailable", "当前分析服务尚未启用报告追问。")
+        if request.data_access_scope.longitudinal or request.data_access_scope.cohort:
+            raise ReportAnalysisError("external_scope_not_implemented", "当前追问使用本次报告数据。")
+        if not request.data_access_scope.current_session:
+            raise ReportAnalysisError("scope_not_authorized", "本次报告数据尚未获准使用。")
+        deadline = ReportAnalysisDeadline(self._deadline_policy, clock=self._clock)
+        package = self._repository.get_package(request.session_id)
+        parent = None
+        if request.parent_analysis_run_id:
+            saved = self._repository.get_validated_analysis(
+                request.parent_analysis_run_id, request.session_id,
+                request.data_access_scope, package.metadata.package_digest,
+            )
+            if saved is None:
+                raise ReportAnalysisError("invalid_parent_analysis", "上一条分析与当前报告版本不匹配，请重新打开报告。")
+            parent = AnalysisPackage.model_validate(saved)
+        context_input = parent_question_context(parent, request.selected_claim_id)
+        observation = self._build_observation(package, request.data_access_scope, scoped=True)
+        try:
+            plan = call_with_optional_timeout(
+                self._agent.plan_question, observation, request.question, context_input,
+                timeout_s=deadline.model_timeout_seconds("decision"),
+            )
+            deadline.require_total_time("question_planning")
+        except (ReportAgentCallTimeout, AnalysisDeadlineExceeded) as exc:
+            raise ReportAnalysisError("analysis_timeout", str(exc), timeout_stage="question_planning") from exc
+        selection = resolve_question_selection(package, plan, context_input)
+        context = question_context(request, selection, plan, context_input)
+        return self._analyze(
+            request.session_id, request.data_access_scope,
+            question=context, package=package, deadline=deadline,
+            initial_action=chart_source_action(parent, context),
+        )
+
+    def _analyze(
+        self, session_id, access_scope, *, question=None, package=None,
+        deadline=None, initial_action=None,
+    ):
+        request_digest = question_digest(question) if question else ""
+        selection = question.selection if question else None
+        if selection and initial_action is None:
+            initial_action = NextAnalysisAction(
+                action_id="question_summary",
+                tool_name="analyze_current_session",
+                analysis_method="summarize_records",
+                inputs={
+                    "record_set_id": selection.record_set_id,
+                    "metric_codes": list(selection.metric_codes),
+                },
+                purpose="汇总用户所选范围",
+                hypothesis=HypothesisTarget(
+                    hypothesis_id="question_scope", statement=question.question,
+                    dimensions=("descriptive",), metric_codes=selection.metric_codes,
+                    target_predicate="comparison_supported", reason="用户指定的报告范围",
+                    success_condition="取得该范围的有效记录和统计结果",
+                ),
+            )
+        deadline = deadline or ReportAnalysisDeadline(
             self._deadline_policy,
             clock=self._clock,
         )
@@ -131,21 +222,14 @@ class ReportAnalysisService:
                 "external_scope_not_implemented",
                 "Longitudinal and cohort analysis are not implemented in this MVP",
             )
-        package = self._repository.get_package(session_id)
-        manifest = ReportManifestBuilder().build(package)
-        availability = DataScopeAvailability(
-            reasons=("external_scope_not_requested",)
+        package = package or self._repository.get_package(session_id)
+        observation = self._build_observation(
+            package, access_scope, scoped=question is not None
         )
-        capabilities = self._tool_registry.list_capabilities(
-            package, access_scope, self._method_registry
-        )
-        observation = self._observation_builder.build(
-            package,
-            manifest,
-            availability,
-            access_scope,
-            capabilities,
-        )
+        if question:
+            observation = observation.model_copy(update={
+                "question_context": question, "authoritative_facts": (),
+            })
         model_name = getattr(self._agent, "model_name", "unknown")
         use_sequential_loop = callable(getattr(self._agent, "decide", None))
         prompt_version = getattr(
@@ -183,6 +267,7 @@ class ReportAnalysisService:
                 analysis_tool_registry_version=ANALYSIS_TOOL_REGISTRY_VERSION,
                 analysis_method_registry_version=ANALYSIS_METHOD_REGISTRY_VERSION,
                 kernel_version=KERNEL_VERSION,
+                request_digest=request_digest,
             )
             if resumable is not None and self._checkpoint_skill_matches(
                 resumable.checkpoint, package.context.test_type
@@ -196,6 +281,7 @@ class ReportAnalysisService:
                 package.metadata.package_digest,
                 model_name=model_name,
                 prompt_version=prompt_version,
+                request_digest=request_digest,
             )
         result = None
         checkpoint_sink = None
@@ -209,10 +295,10 @@ class ReportAnalysisService:
             )
             if use_sequential_loop:
                 checkpoint_sink = RepositoryCheckpointSink(
-                    self._repository, run_id
+                    self._repository, run_id, request_digest=request_digest
                 )
                 action_validator = ActionValidator(
-                    self._tool_registry, self._method_registry
+                    self._tool_registry, self._method_registry, selection=selection
                 )
                 loop = SequentialAnalysisLoop(
                     self._agent,
@@ -224,6 +310,8 @@ class ReportAnalysisService:
                     ),
                     checkpoint_sink=checkpoint_sink,
                     prompt_content_digest=prompt_content_digest,
+                    request_digest=request_digest,
+                    initial_action=initial_action,
                 )
                 if resume_from is not None and resume_from.phase in {
                     "draft_generated",
@@ -268,6 +356,40 @@ class ReportAnalysisService:
                     access_scope,
                     deadline=deadline,
                 )
+            if question and not result.draft.claims:
+                summary = next((
+                    (item, predicate)
+                    for bundle in result.evidence
+                    for item in bundle.items
+                    if item.analysis_method == initial_action.analysis_method
+                    and item.analysis_status == "conclusive"
+                    for predicate in item.predicates
+                    if predicate.predicate == initial_action.hypothesis.target_predicate
+                    and predicate.supported
+                ), None)
+                if summary is None:
+                    raise ClaimValidationError(
+                        "question_summary_unavailable", "所选范围缺少有效统计证据，无法生成回答。"
+                    )
+                item, predicate = summary
+                claim = DraftAnalysisClaim(
+                    claim_id="question_summary", claim_type="derived",
+                    text_template="所选范围的证据分析。",
+                    evidence_refs=(item.evidence_id,), tool_run_ids=(item.tool_run_id,),
+                    predicate_bindings=(PredicateBinding(
+                        predicate=predicate.predicate,
+                        predicate_evidence_ref=predicate.predicate_evidence_id,
+                    ),),
+                )
+                result = result.model_copy(update={
+                    "draft": result.draft.model_copy(update={"claims": (claim,)}),
+                })
+                self._save_claim_checkpoint(
+                    checkpoint_sink, "draft_generated", package, access_scope, result,
+                    claim_repair_count=claim_repair_count,
+                    prompt_content_digest=prompt_content_digest,
+                )
+            validation_options = {"allowed_fact_refs": frozenset()} if question else {}
             try:
                 deadline.require_total_time("claim_validation")
                 validated = self._claim_validator.validate(
@@ -275,6 +397,7 @@ class ReportAnalysisService:
                     package,
                     result.evidence,
                     access_scope,
+                    **validation_options,
                 )
             except ClaimValidationError as first_error:
                 repair = getattr(self._agent, "repair_synthesis", None)
@@ -343,6 +466,7 @@ class ReportAnalysisService:
                     package,
                     result.evidence,
                     access_scope,
+                    **validation_options,
                 )
             deadline.require_total_time("claim_validation")
             runtime_limitations = tuple(
@@ -405,6 +529,8 @@ class ReportAnalysisService:
                 prompt_content_digest=prompt_content_digest,
                 rag_result=rag_result,
                 evidence=result.evidence,
+                request_digest=request_digest,
+                question_context=question,
             )
             self._record_metrics(
                 run_id,

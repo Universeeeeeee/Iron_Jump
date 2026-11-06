@@ -419,6 +419,55 @@ class ScreeningCue(FrozenModel):
     source_refs: tuple[str, ...]
 
 
+class ReportSelection(FrozenModel):
+    record_set_id: str
+    metric_codes: tuple[str, ...]
+    record_refs: tuple[str, ...]
+    label: str
+
+
+class ReportQuestionPlan(FrozenModel):
+    intent: Literal["analyze", "inspect", "explain", "chart", "clarify"] = Field(
+        default="analyze",
+        description="chart only changes the existing chart style. Use analyze with chart_type when changing scope or metrics.",
+    )
+    clarification: str = ""
+    record_set_id: str = ""
+    metric_codes: tuple[str, ...] = Field(default=(), max_length=2)
+    scope_basis: Literal["report", "previous"] = "previous"
+    segment: Literal["all", "first_half", "second_half"] = "all"
+    side: Literal["all", "left", "right"] = "all"
+    start_record: int | None = Field(default=None, ge=1)
+    end_record: int | None = Field(default=None, ge=1)
+    start_time_s: float | None = Field(default=None, ge=0, allow_inf_nan=False)
+    end_time_s: float | None = Field(default=None, ge=0, allow_inf_nan=False)
+    chart_type: Literal["time_series", "side_distribution", "segment_comparison"] | None = None
+
+    @model_validator(mode="after")
+    def validate_ranges(self):
+        if self.intent != "clarify" and (not self.record_set_id or not self.metric_codes):
+            raise ValueError("A question plan requires a record set and metrics")
+        if len(set(self.metric_codes)) != len(self.metric_codes):
+            raise ValueError("Metric codes must be unique")
+        if self.start_record is not None and self.end_record is not None and self.start_record > self.end_record:
+            raise ValueError("Record range must be increasing")
+        if self.start_time_s is not None and self.end_time_s is not None and self.start_time_s > self.end_time_s:
+            raise ValueError("Time range must be increasing")
+        return self
+
+
+class ReportQuestionContext(FrozenModel):
+    question: str
+    intent: Literal["analyze", "inspect", "explain", "chart", "clarify"] = "analyze"
+    parent_analysis_run_id: str | None = None
+    selected_claim_id: str | None = None
+    selected_claim_text: str = ""
+    selection: ReportSelection
+    selection_label: str
+    chart_type: Literal["time_series", "side_distribution", "segment_comparison"] | None = None
+    prior_turns: tuple[dict[str, str], ...] = ()
+
+
 class AgentObservation(FrozenModel):
     report_context: ReportContextInput
     report_manifest: ReportManifest
@@ -433,6 +482,7 @@ class AgentObservation(FrozenModel):
     available_analysis_capabilities: tuple[AnalysisToolCapability, ...]
     source_refs: tuple[str, ...]
     builder_version: str
+    question_context: ReportQuestionContext | None = None
 
 
 class AnalysisQuestion(FrozenModel):
@@ -875,6 +925,8 @@ class AnalysisPackage(FrozenModel):
     claims: tuple[AnalysisClaim, ...]
     evidence: tuple[EvidenceBundle, ...] = ()
     presentation: ReportPresentation | None = None
+    request_digest: str = ""
+    question_context: ReportQuestionContext | None = None
     scope_expansion_suggestions: tuple[ScopeExpansionSuggestion, ...]
     overall_limitations: tuple[str, ...]
     literature_evidence: tuple[LiteratureEvidence, ...] = ()
@@ -933,6 +985,7 @@ class SequentialLoopCheckpoint(FrozenModel):
     ]
     session_id: int = Field(gt=0)
     package_digest: str = Field(min_length=64, max_length=64)
+    request_digest: str = ""
     data_access_scope: DataAccessScope
     state: SequentialAnalysisState
     evidence: tuple[EvidenceBundle, ...] = ()

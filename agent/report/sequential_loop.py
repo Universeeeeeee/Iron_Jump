@@ -80,6 +80,8 @@ class SequentialAnalysisLoop:
         state_reducer: AnalysisStateReducer | None = None,
         checkpoint_sink=None,
         prompt_content_digest: str | None = None,
+        request_digest: str = "",
+        initial_action: NextAnalysisAction | None = None,
     ):
         self._agent = agent
         self._skill_loader = skill_loader or ReportAnalysisSkillLoader()
@@ -90,6 +92,8 @@ class SequentialAnalysisLoop:
         self._state_reducer = state_reducer or AnalysisStateReducer()
         self._checkpoint_sink = checkpoint_sink
         self._prompt_content_digest = prompt_content_digest
+        self._request_digest = request_digest
+        self._initial_action = initial_action
 
     def run(
         self,
@@ -149,7 +153,9 @@ class SequentialAnalysisLoop:
                 )
                 break
             try:
-                if deadline is None:
+                if self._initial_action is not None and state.decision_count == 0:
+                    decision = self._initial_action
+                elif deadline is None:
                     decision = self._agent.decide(
                         observation,
                         state,
@@ -571,6 +577,7 @@ class SequentialAnalysisLoop:
     ):
         expected = {
             "session_id": package.metadata.session_id,
+            "request_digest": self._request_digest,
             "package_digest": package.metadata.package_digest,
             "data_access_scope": access_scope,
             "observation_builder_version": OBSERVATION_BUILDER_VERSION,
@@ -631,6 +638,7 @@ class SequentialAnalysisLoop:
                 phase=phase,
                 session_id=package.metadata.session_id,
                 package_digest=package.metadata.package_digest,
+                request_digest=self._request_digest,
                 data_access_scope=access_scope,
                 state=state,
                 evidence=tuple(evidence_bundles),

@@ -28,8 +28,14 @@ class AnalysisRenderer:
         prompt_content_digest: str | None = None,
         rag_result=None,
         evidence=None,
+        request_digest="",
+        question_context=None,
     ) -> AnalysisPackage:
         claims = []
+        evidence_limitations = {
+            item.evidence_id: item.limitations
+            for bundle in evidence or () for item in bundle.items
+        }
         for claim in validated.claims:
             text = (
                 evidence_claim_text(claim, package, evidence)
@@ -44,7 +50,10 @@ class AnalysisRenderer:
                     evidence_refs=claim.evidence_refs,
                     tool_run_ids=claim.tool_run_ids,
                     predicate_bindings=claim.predicate_bindings,
-                    limitations=claim.limitations,
+                    limitations=tuple(dict.fromkeys(
+                        limitation for ref in claim.evidence_refs
+                        for limitation in evidence_limitations.get(ref, ())
+                    )) if question_context else claim.limitations,
                     citation_refs=(),
                 )
             )
@@ -53,6 +62,12 @@ class AnalysisRenderer:
             build_presentation(claims, package, evidence, recommendations)
             if evidence is not None else None
         )
+        if presentation and question_context:
+            charts = tuple(chart.model_copy(update={
+                "chart_type": question_context.chart_type or chart.chart_type,
+                "grouping": question_context.selection_label + " · " + chart.grouping,
+            }) for chart in presentation.charts)
+            presentation = presentation.model_copy(update={"charts": charts})
         summary = "；".join(card.title for card in presentation.insight_cards) + "。" if presentation and presentation.insight_cards else ""
         return AnalysisPackage(
             analysis_schema_version="analysis-schema/5.0" if presentation else "analysis-schema/4.0",
@@ -65,8 +80,10 @@ class AnalysisRenderer:
             claims=tuple(claims),
             evidence=tuple(evidence or ()),
             presentation=presentation,
+            request_digest=request_digest,
+            question_context=question_context,
             scope_expansion_suggestions=validated.scope_expansion_suggestions,
-            overall_limitations=validated.overall_limitations,
+            overall_limitations=state.limitations if question_context else validated.overall_limitations,
             literature_evidence=rag_result.evidence if rag_result else (),
             recommendations=recommendations,
             references=rag_result.package.citations if rag_result else (),

@@ -17,13 +17,19 @@ from reporting.models import (
     EvidenceReviewDecision,
     InvestigationDecision,
     SequentialAnalysisState,
+    ReportQuestionPlan,
 )
 from reporting.observation import serialize_observation
+from reporting.metric_catalog import METRIC_CATALOG
 
 from .prompts import (
     DECISION_STAGE_TEMPLATE,
     PLAN_STAGE_TEMPLATE,
     PROMPT_VERSION,
+    QUESTION_DECISION_TEMPLATE,
+    QUESTION_PLAN_INSTRUCTIONS,
+    QUESTION_PLAN_TEMPLATE,
+    QUESTION_SYNTHESIS_TEMPLATE,
     REPAIR_STAGE_TEMPLATE,
     REVIEW_STAGE_TEMPLATE,
     SEQUENTIAL_PROMPT_VERSION,
@@ -64,6 +70,10 @@ class ReportAgent:
             DECISION_STAGE_TEMPLATE,
             SEQUENTIAL_SYNTHESIS_STAGE_TEMPLATE,
             REPAIR_STAGE_TEMPLATE,
+            QUESTION_PLAN_INSTRUCTIONS,
+            QUESTION_PLAN_TEMPLATE,
+            QUESTION_DECISION_TEMPLATE,
+            QUESTION_SYNTHESIS_TEMPLATE,
         )
         self.prompt_version = readable_prompt_version(
             PROMPT_VERSION, self.prompt_content_digest
@@ -89,12 +99,38 @@ class ReportAgent:
             f"State:\n{self._json(state)}\n"
             f"Evidence:\n{self._json(evidence)}"
         )
+        if getattr(observation, "question_context", None):
+            prompt += f"\n{QUESTION_DECISION_TEMPLATE}"
         return self._run(
             AnalysisDecision,
             prompt,
             instructions=self._sequential_system_prompt,
             timeout_s=timeout_s,
             stage="decision",
+        )
+
+    def plan_question(self, observation, question, parent_context, *, timeout_s=None):
+        manifest = observation.model_dump(mode="json")["report_manifest"]
+        record_sets = manifest["record_sets"]
+        catalog = {
+            "test_type": manifest.get("test_type"),
+            "record_sets": record_sets,
+            "metrics": {
+                code: {"label": METRIC_CATALOG[code].label, "unit": METRIC_CATALOG[code].unit}
+                for record_set in record_sets for code in record_set.get("metric_codes", ())
+            },
+        }
+        prompt = QUESTION_PLAN_TEMPLATE.format(
+            question=question,
+            parent_context=json.dumps(parent_context, ensure_ascii=False),
+            observation=json.dumps(catalog, ensure_ascii=False),
+        )
+        return self._run(
+            ReportQuestionPlan,
+            prompt,
+            instructions=QUESTION_PLAN_INSTRUCTIONS,
+            timeout_s=timeout_s,
+            stage="question_planning",
         )
 
     def propose_plan(
@@ -174,6 +210,8 @@ class ReportAgent:
             f"State:\n{self._json(state)}\n"
             f"Evidence:\n{self._json(evidence)}"
         )
+        if getattr(observation, "question_context", None):
+            prompt += f"\n{QUESTION_SYNTHESIS_TEMPLATE}"
         return self._run(
             DraftAnalysisPackage,
             prompt,

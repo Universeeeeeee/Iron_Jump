@@ -114,6 +114,7 @@ class ReportRepository:
         *,
         model_name: str,
         prompt_version: str,
+        request_digest: str = "",
     ) -> str:
         self._get_session(session_id)
         run_id = f"run_{uuid.uuid4().hex}"
@@ -123,8 +124,8 @@ class ReportRepository:
                 INSERT INTO report_analyses (
                     analysis_run_id, session_id, status,
                     data_access_scope_json, package_digest,
-                    model_name, prompt_version, created_at
-                ) VALUES (?, ?, 'running', ?, ?, ?, ?, ?)
+                    model_name, prompt_version, request_digest, created_at
+                ) VALUES (?, ?, 'running', ?, ?, ?, ?, ?, ?)
                 """,
                 (
                     run_id,
@@ -133,6 +134,7 @@ class ReportRepository:
                     package_digest,
                     model_name,
                     prompt_version,
+                    request_digest,
                     datetime.now().isoformat(timespec="seconds"),
                 ),
             )
@@ -179,6 +181,8 @@ class ReportRepository:
         session_id: int,
         scope: DataAccessScope,
         package_digest: str,
+        *,
+        request_digest: str = "",
     ) -> dict[str, Any] | None:
         with self._connect() as conn:
             row = conn.execute(
@@ -187,10 +191,33 @@ class ReportRepository:
                 FROM report_analyses
                 WHERE session_id = ? AND status = 'validated'
                   AND data_access_scope_json = ? AND package_digest = ?
+                  AND request_digest = ?
                 ORDER BY id DESC
                 LIMIT 1
                 """,
-                (session_id, self._scope_json(scope), package_digest),
+                (session_id, self._scope_json(scope), package_digest, request_digest),
+            ).fetchone()
+        if row is None or not row["analysis_package_json"]:
+            return None
+        return json.loads(row["analysis_package_json"])
+
+    def get_validated_analysis(
+        self,
+        run_id: str,
+        session_id: int,
+        scope: DataAccessScope,
+        package_digest: str,
+    ) -> dict[str, Any] | None:
+        with self._connect() as conn:
+            row = conn.execute(
+                """
+                SELECT analysis_package_json
+                FROM report_analyses
+                WHERE analysis_run_id = ? AND session_id = ?
+                  AND status = 'validated' AND data_access_scope_json = ?
+                  AND package_digest = ?
+                """,
+                (run_id, session_id, self._scope_json(scope), package_digest),
             ).fetchone()
         if row is None or not row["analysis_package_json"]:
             return None
@@ -229,7 +256,7 @@ class ReportRepository:
             run = conn.execute(
                 """
                 SELECT session_id, status, data_access_scope_json,
-                       package_digest
+                       package_digest, request_digest
                 FROM report_analyses
                 WHERE analysis_run_id = ?
                 """,
@@ -242,6 +269,7 @@ class ReportRepository:
             if (
                 run["session_id"] != checkpoint.session_id
                 or run["package_digest"] != checkpoint.package_digest
+                or run["request_digest"] != checkpoint.request_digest
                 or run["data_access_scope_json"]
                 != self._scope_json(checkpoint.data_access_scope)
             ):
@@ -277,6 +305,7 @@ class ReportRepository:
         analysis_method_registry_version: str,
         kernel_version: str,
         prompt_content_digest: str | None = None,
+        request_digest: str = "",
     ) -> ResumableSequentialAnalysis | None:
         with self._connect() as conn:
             rows = conn.execute(
@@ -288,6 +317,7 @@ class ReportRepository:
                 WHERE r.session_id = ? AND r.status = 'running'
                   AND r.data_access_scope_json = ?
                   AND r.package_digest = ?
+                  AND r.request_digest = ?
                   AND r.model_name = ? AND r.prompt_version = ?
                 ORDER BY c.id DESC
                 """,
@@ -295,11 +325,16 @@ class ReportRepository:
                     session_id,
                     self._scope_json(scope),
                     package_digest,
+                    request_digest,
                     model_name,
                     prompt_version,
                 ),
             ).fetchall()
         expected_versions = {
+            "session_id": session_id,
+            "data_access_scope": scope,
+            "package_digest": package_digest,
+            "request_digest": request_digest,
             "skill_version": skill_version,
             "observation_builder_version": observation_builder_version,
             "analysis_tool_registry_version": analysis_tool_registry_version,
@@ -357,6 +392,7 @@ class ReportRepository:
                         ('running', 'validated', 'rejected', 'failed')),
                     data_access_scope_json TEXT NOT NULL,
                     package_digest TEXT NOT NULL,
+                    request_digest TEXT NOT NULL DEFAULT '',
                     model_name TEXT NOT NULL,
                     prompt_version TEXT NOT NULL,
                     analysis_package_json TEXT,
@@ -384,4 +420,9 @@ class ReportRepository:
             if "run_metrics_json" not in columns:
                 conn.execute(
                     "ALTER TABLE report_analyses ADD COLUMN run_metrics_json TEXT"
+                )
+            if "request_digest" not in columns:
+                conn.execute(
+                    "ALTER TABLE report_analyses "
+                    "ADD COLUMN request_digest TEXT NOT NULL DEFAULT ''"
                 )

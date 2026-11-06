@@ -29,6 +29,14 @@ from .text import format_numeric_value
 from .tools import AnalysisToolRegistry
 
 
+def _evidence_numeric_value(item, value_key):
+    if value_key in item.numeric_values and value_key in item.numeric_units:
+        return item.numeric_values[value_key], item.numeric_units[value_key]
+    if value_key in item.sample_counts:
+        return item.sample_counts[value_key], "count"
+    return None
+
+
 MAX_ANALYSIS_QUESTIONS_PER_CYCLE = 3
 MAX_AGENT_LEVEL_NODES_PER_CYCLE = 3
 MAX_PLAN_COST = 9
@@ -84,6 +92,7 @@ class PlanValidator:
         node_id_set = set(node_ids)
         record_sets = {item.record_set_id: item for item in package.record_sets}
         request_hashes: list[str] = []
+        validated_nodes = []
         total_cost = 0
         for node in plan.nodes:
             if node.question_id not in question_id_set:
@@ -112,7 +121,8 @@ class PlanValidator:
                     "method_tool_mismatch",
                     f"analysis method {node.analysis_method} does not belong to {node.tool_name}",
                 )
-            self._validate_inputs(node, method, record_sets)
+            node = self._validate_inputs(node, method, record_sets)
+            validated_nodes.append(node)
             request_hash = self._request_hash(node)
             if request_hash in request_hashes:
                 self._fail("duplicate_request", "duplicate semantic requests are not allowed")
@@ -122,7 +132,7 @@ class PlanValidator:
             self._fail("cost_budget_exceeded", "plan cost exceeds the cycle budget")
         execution_order = self._topological_order(plan)
         return ValidatedAnalysisPlan(
-            plan=plan,
+            plan=plan.model_copy(update={"nodes": tuple(validated_nodes)}),
             execution_order=execution_order,
             request_hashes=tuple(request_hashes),
             total_cost=total_cost,
@@ -130,10 +140,11 @@ class PlanValidator:
 
     def _validate_inputs(self, node, spec, record_sets):
         allowed_keys = {
-            "verify_temporal_change": {"record_set_id", "metric_codes", "side"},
-            "verify_side_segment_difference": {"record_set_id", "metric_codes", "target_side"},
-            "verify_cross_metric_cochange": {"record_set_id", "metric_codes", "side"},
-            "verify_exclusion_robustness": {"record_set_id", "metric_codes", "side"},
+            "summarize_records": {"record_set_id", "metric_codes", "side", "record_refs"},
+            "verify_temporal_change": {"record_set_id", "metric_codes", "side", "record_refs"},
+            "verify_side_segment_difference": {"record_set_id", "metric_codes", "target_side", "record_refs"},
+            "verify_cross_metric_cochange": {"record_set_id", "metric_codes", "side", "record_refs"},
+            "verify_exclusion_robustness": {"record_set_id", "metric_codes", "side", "record_refs"},
             "quality_scope_check": set(),
         }[node.analysis_method]
         unknown_keys = set(node.inputs) - allowed_keys
@@ -145,7 +156,7 @@ class PlanValidator:
         if not spec.requires_record_set:
             if node.inputs:
                 self._fail("unexpected_inputs", "quality_scope_check accepts no inputs")
-            return
+            return node
         record_set_id = node.inputs.get("record_set_id")
         if record_set_id not in record_sets:
             self._fail("unknown_record_set", f"unknown RecordSet: {record_set_id}")
@@ -157,6 +168,20 @@ class PlanValidator:
         if len(metric_codes) != len(set(metric_codes)):
             self._fail("duplicate_metric", "metric_codes must be unique")
         record_set = record_sets[record_set_id]
+        selected_records = record_set.records
+        if "record_refs" in node.inputs:
+            record_refs = node.inputs["record_refs"]
+            if not isinstance(record_refs, list) or any(not isinstance(ref, str) for ref in record_refs):
+                self._fail("invalid_record_refs", "record_refs must be a list of record IDs")
+            if len(record_refs) != len(set(record_refs)):
+                self._fail("duplicate_record_ref", "record_refs must be unique")
+            available_refs = {record.record_id for record in record_set.records}
+            if not set(record_refs).issubset(available_refs):
+                self._fail("record_not_in_record_set", "record_refs must belong to the requested RecordSet")
+            selected_refs = set(record_refs)
+            selected_records = tuple(record for record in record_set.records if record.record_id in selected_refs)
+            inputs = dict(node.inputs, record_refs=[record.record_id for record in selected_records])
+            node = node.model_copy(update={"inputs": inputs})
         for metric_code in metric_codes:
             if metric_code not in record_set.metric_codes:
                 self._fail(
@@ -170,9 +195,10 @@ class PlanValidator:
         if target_side is not None and target_side not in {"left", "right"}:
             self._fail("invalid_side", "target_side must be left or right")
         if spec.requires_side:
-            available_sides = {record.side for record in record_set.records}
+            available_sides = {record.side for record in selected_records}
             if not {"left", "right"}.issubset(available_sides):
                 self._fail("side_dimension_unavailable", "both sides are required")
+        return node
 
     def _topological_order(self, plan: SmallAnalysisPlan) -> tuple[str, ...]:
         dependencies = {
@@ -229,6 +255,7 @@ class ActionValidator:
         available_skill_references: tuple[str, ...] = (
             "references/evidence-guidelines.md",
         ),
+        selection=None,
     ):
         self.tool_registry = tool_registry or AnalysisToolRegistry()
         self.method_registry = method_registry or AnalysisMethodRegistry()
@@ -237,6 +264,7 @@ class ActionValidator:
             self.method_registry,
         )
         self.available_skill_references = frozenset(available_skill_references)
+        self.selection = selection
 
     def validate_decision(
         self,
@@ -282,6 +310,8 @@ class ActionValidator:
     ) -> ValidatedAnalysisAction:
         if remaining_tool_calls <= 0:
             self._fail("tool_budget_exhausted", "no analysis Tool calls remain")
+        if self.selection is not None:
+            action = self._constrain_selection(action)
         input_metric_codes = tuple(action.inputs.get("metric_codes", ()))
         if input_metric_codes != action.hypothesis.metric_codes:
             self._fail(
@@ -323,6 +353,8 @@ class ActionValidator:
             )
         except PlanValidationError as exc:
             raise ActionValidationError(exc.code, str(exc)) from exc
+        node = validated.plan.nodes[0]
+        action = action.model_copy(update={"inputs": node.inputs})
         request_hash = validated.request_hashes[0]
         if request_hash in seen_request_hashes:
             self._fail(
@@ -338,6 +370,27 @@ class ActionValidator:
             request_hash=request_hash,
             cost=validated.total_cost,
         )
+
+    def _constrain_selection(self, action):
+        selection = self.selection
+        if action.analysis_method in {"quality_scope_check", "verify_exclusion_robustness"}:
+            self._fail("selection_method_mismatch", "selected included records cannot evaluate full-report quality or exclusion robustness")
+        if action.inputs.get("record_set_id") != selection.record_set_id:
+            self._fail("selection_record_set_mismatch", "analysis must use the selected RecordSet")
+        metrics = action.inputs.get("metric_codes")
+        if not isinstance(metrics, (list, tuple)) or any(metric not in selection.metric_codes for metric in metrics):
+            self._fail("selection_metric_mismatch", "analysis metrics must belong to the question selection")
+        refs = action.inputs.get("record_refs")
+        if "record_refs" in action.inputs:
+            if not isinstance(refs, list) or any(not isinstance(ref, str) for ref in refs):
+                self._fail("invalid_record_refs", "record_refs must be a list of record IDs")
+            if len(refs) != len(set(refs)):
+                self._fail("duplicate_record_ref", "record_refs must be unique")
+            if set(refs) != set(selection.record_refs):
+                self._fail("selection_record_refs_mismatch", "analysis must use the exact selected records")
+        return action.model_copy(update={
+            "inputs": dict(action.inputs, record_refs=list(selection.record_refs)),
+        })
 
     def validate_skill_resource(
         self,
@@ -646,17 +699,12 @@ class ClaimRepairValidator:
                 self._fail("numeric repair uses an unresolved Fact value")
             return fact.value, fact.unit
         item = evidence_map.get(binding.source_ref)
-        if (
-            item is None
-            or binding.value_key is None
-            or binding.value_key not in item.numeric_values
-            or binding.value_key not in item.numeric_units
-        ):
+        if item is None or binding.value_key is None:
             self._fail("numeric repair uses an unresolved Evidence value")
-        return (
-            item.numeric_values[binding.value_key],
-            item.numeric_units[binding.value_key],
-        )
+        resolved = _evidence_numeric_value(item, binding.value_key)
+        if resolved is None:
+            self._fail("numeric repair uses an unresolved Evidence value")
+        return resolved
 
     def _source_maps(self, package, evidence):
         fact_map = {fact.fact_id: fact for fact in package.scalar_facts}
@@ -729,6 +777,8 @@ class ClaimValidator:
         package: ReportDataPackage,
         evidence: tuple[EvidenceBundle, ...],
         access_scope: DataAccessScope,
+        *,
+        allowed_fact_refs: frozenset[str] | None = None,
     ) -> ValidatedAnalysisPackage:
         fact_map = {fact.fact_id: fact for fact in package.scalar_facts}
         evidence_map = {}
@@ -781,6 +831,8 @@ class ClaimValidator:
             if claim.claim_id in claim_ids:
                 self._fail("duplicate_claim_id", f"duplicate claim ID: {claim.claim_id}")
             claim_ids.add(claim.claim_id)
+            if allowed_fact_refs is not None and not set(claim.fact_refs).issubset(allowed_fact_refs):
+                self._fail("fact_outside_question_scope", "Scoped questions require scoped Tool evidence")
             self._validate_language(claim.text_template)
             self._require_unique_refs(claim.fact_refs, "duplicate_fact_ref")
             self._require_unique_refs(
@@ -965,10 +1017,10 @@ class ClaimValidator:
                 item = evidence_map.get(binding.source_ref)
                 if item is None or binding.value_key is None:
                     self._fail("invalid_numeric_evidence", f"invalid numeric Evidence: {binding.source_ref}")
-                if binding.value_key not in item.numeric_values or binding.value_key not in item.numeric_units:
+                resolved = _evidence_numeric_value(item, binding.value_key)
+                if resolved is None:
                     self._fail("unknown_numeric_value", f"unknown evidence numeric value: {binding.value_key}")
-                value = item.numeric_values[binding.value_key]
-                unit = item.numeric_units[binding.value_key]
+                value, unit = resolved
             validated.append(
                 ValidatedNumericBinding(
                     binding_id=binding.binding_id,

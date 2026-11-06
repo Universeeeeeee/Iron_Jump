@@ -35,8 +35,8 @@ from reporting.models import (
 )
 from reporting.repository import ReportRepository
 from reporting.kernel import ANALYSIS_METHOD_REGISTRY_VERSION, KERNEL_VERSION
-from reporting.observation import OBSERVATION_BUILDER_VERSION
 from reporting.tools import ANALYSIS_TOOL_REGISTRY_VERSION
+from reporting.observation import OBSERVATION_BUILDER_VERSION
 from reporting.validators import ActionValidator
 from tests.reporting_fixtures import make_jump_report
 
@@ -357,8 +357,8 @@ def test_service_returns_only_validated_rendered_analysis(tmp_path):
     assert _statuses(store) == ["validated"]
     assert _metrics_rows(store)[0] is not None
     metrics = json.loads(_metrics_rows(store)[0])
-    assert metrics["analysis_tool_registry_version"] == "analysis-tool-registry/1.0"
-    assert metrics["analysis_method_registry_version"] == "analysis-method-registry/1.0"
+    assert metrics["analysis_tool_registry_version"] == ANALYSIS_TOOL_REGISTRY_VERSION
+    assert metrics["analysis_method_registry_version"] == ANALYSIS_METHOD_REGISTRY_VERSION
     assert metrics["kernel_version"] == KERNEL_VERSION
     assert "operator_registry_version" not in metrics
     assert repository.get_latest_validated_analysis(

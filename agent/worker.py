@@ -151,6 +151,7 @@ def _route_name(path: str) -> str | None:
         "/reset": "config_reset",
         "/config/reset": "config_reset",
         "/report/analyze": "report_analyze",
+        "/report/ask": "report_ask",
         "/report/latest": "report_latest",
     }.get(path)
 
@@ -207,6 +208,8 @@ class _Handler(BaseHTTPRequestHandler):
             self._handle_reset()
         elif route == "report_analyze":
             self._handle_report_analyze(data)
+        elif route == "report_ask":
+            self._handle_report_analyze(data, followup=True)
         elif route == "report_latest":
             self._handle_report_latest(data)
         else:
@@ -284,7 +287,7 @@ class _Handler(BaseHTTPRequestHandler):
             service.reset()
         self._send_json({"status": "ok"})
 
-    def _handle_report_analyze(self, data: dict):
+    def _handle_report_analyze(self, data: dict, *, followup=False):
         _touch_active()
         status, error = _get_status()
         if status != "ready":
@@ -294,7 +297,7 @@ class _Handler(BaseHTTPRequestHandler):
             )
             return
         try:
-            request = _parse_report_request(data)
+            request = _parse_report_request(data, followup=followup)
         except ValueError as exc:
             self._send_json(
                 {"error_code": "invalid_request", "message": str(exc)},
@@ -303,10 +306,8 @@ class _Handler(BaseHTTPRequestHandler):
             return
         try:
             with _report_lock:
-                analysis = _get_report_service().analyze(
-                    request.session_id,
-                    request.data_access_scope,
-                )
+                service = _get_report_service()
+                analysis = service.ask(request) if followup else service.analyze(request.session_id, request.data_access_scope)
             self._send_json(
                 {
                     "analysis": analysis.model_dump(mode="json"),
@@ -362,13 +363,14 @@ class _ThreadingServer(ThreadingMixIn, HTTPServer):
     allow_reuse_address = True
 
 
-def _parse_report_request(data: dict):
+def _parse_report_request(data: dict, *, followup=False):
     from pydantic import ValidationError
 
-    from agent.report.models import ReportAnalysisRequest
+    from agent.report.models import ReportAnalysisRequest, ReportFollowupRequest
 
     try:
-        return ReportAnalysisRequest.model_validate(data)
+        schema = ReportFollowupRequest if followup else ReportAnalysisRequest
+        return schema.model_validate(data)
     except ValidationError as exc:
         raise ValueError("report analysis request does not match schema") from exc
 

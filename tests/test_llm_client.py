@@ -172,6 +172,31 @@ class LLMWorkerClientTest(unittest.TestCase):
 
         self.assertIsNone(result)
 
+    def test_ask_report_posts_question_and_parent_identity(self):
+        self.port_file.write_text(json.dumps({"pid": 111, "port": 9876}))
+        scope = {"current_session": True, "longitudinal": False, "cohort": False}
+        with patch("ui.llm_client.requests.get", return_value=_FakeResponse({"status": "ready"})):
+            with patch("ui.llm_client.requests.post", return_value=_FakeResponse({"analysis": {"claims": []}, "analysis_run_id": "followup-1"})) as post:
+                result = self.client.ask_report(
+                    12, scope, "只看后半程", parent_analysis_run_id="base-1",
+                    selected_claim_id="c1", timeout=45,
+                )
+        self.assertTrue(post.call_args.args[0].endswith("/report/ask"))
+        self.assertEqual(post.call_args.kwargs["json"], {
+            "session_id": 12, "data_access_scope": scope, "question": "只看后半程",
+            "parent_analysis_run_id": "base-1", "selected_claim_id": "c1",
+        })
+        self.assertEqual(post.call_args.kwargs["timeout"], 45)
+        self.assertEqual(result["analysis_run_id"], "followup-1")
+
+    def test_ask_report_preserves_timeout_and_transport_errors(self):
+        self.port_file.write_text(json.dumps({"pid": 111, "port": 9876}))
+        with patch("ui.llm_client.requests.get", return_value=_FakeResponse({"status": "ready"})):
+            for error, code in ((requests.Timeout(), "analysis_client_timeout"),
+                                (requests.ConnectionError(), "worker_unreachable")):
+                with self.subTest(code=code), patch("ui.llm_client.requests.post", side_effect=error):
+                    self.assertEqual(self.client.ask_report(12, {"current_session": True}, "查看左侧"), {"error_code": code})
+
 
 if __name__ == "__main__":
     unittest.main()

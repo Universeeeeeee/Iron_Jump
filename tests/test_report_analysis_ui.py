@@ -345,3 +345,169 @@ def test_leaving_or_switching_report_closes_analysis_window(qtbot):
     view._analysis_entry.click()
     view.hide()
     assert view._analysis_panel.isHidden()
+
+
+def _saved_analysis(run_id="base-1", text="完整报告发现", *, question=None):
+    return {
+        "analysis_run_id": run_id,
+        "summary": text,
+        "claims": [{"claim_id": "c1", "text": text, "evidence_refs": ["e1"], "limitations": []}],
+        "evidence": [{
+            "package_id": "package-1",
+            "package_digest": "digest-1",
+            "items": [{
+                "evidence_id": "e1", "node_id": "node-1", "question_id": "question-1",
+                "tool_name": "analyze_current_session", "analysis_method": "descriptive_summary",
+                "record_set_id": "jumps", "record_refs": ["jump-0"], "predicates": [],
+                "tool_run_id": "tool-1", "provenance_id": "provenance-1",
+            }],
+            "tool_runs": [], "provenance": [],
+        }],
+        "presentation": {"insight_cards": [{"claim_id": "c1", "title": text}], "charts": []},
+        "question_context": {"question": question, "selection_label": "后半有效记录"} if question else None,
+    }
+
+
+class _FollowupClient(_FakeAnalysisClient):
+    def __init__(self, *, delay=0, latest_delay=0, error=None, message=""):
+        super().__init__(latest=_saved_analysis())
+        self.ask_calls = []
+        self.ask_delay = delay
+        self.latest_delay = latest_delay
+        self.error = error
+        self.message = message
+
+    def get_latest_analysis(self, session_id, scope, timeout=5):
+        payload = super().get_latest_analysis(session_id, scope, timeout)
+        if self.latest_delay:
+            time.sleep(self.latest_delay)
+        return payload
+
+    def ask_report(self, session_id, scope, question, **context):
+        self.ask_calls.append({"session_id": session_id, "scope": scope, "question": question, **context})
+        run_id = f"ask-{len(self.ask_calls)}"
+        if self.ask_delay:
+            time.sleep(self.ask_delay)
+        if self.error:
+            return {"error_code": self.error, "message": self.message}
+        return {"analysis": _saved_analysis(run_id, f"回答{len(self.ask_calls)}", question=question), "analysis_run_id": run_id}
+
+
+def _followup_view(qtbot, client):
+    view = ReportView(llm_client=client)
+    qtbot.addWidget(view)
+    view.show()
+    view.set_analysis_availability(True)
+    view.load_report(_report(), 12)
+    return view
+
+
+def test_followup_uses_selected_claim_then_current_answer_as_parent(qtbot):
+    client = _FollowupClient(delay=.05)
+    view = _followup_view(qtbot, client)
+    _wait_idle(qtbot, view)
+    original_headline = view._analysis_headline.text()
+    view._analysis_entry.click()
+    view._followup_target.setCurrentIndex(1)
+    view._followup_question.setText("只看后半程")
+    view._followup_send.click()
+    view._followup_send.click()
+    view._analysis_close_button.click()
+    _wait_idle(qtbot, view)
+    assert len(client.ask_calls) == 1
+    assert client.ask_calls[0]["parent_analysis_run_id"] == "base-1"
+    assert client.ask_calls[0]["selected_claim_id"] == "c1"
+    assert view._analysis_headline.text() == original_headline
+    assert view._analysis_panel.isHidden()
+    assert view._analysis_data["analysis_run_id"] == "ask-1"
+    assert view._followup_target.currentText() == "继续当前分析"
+    assert "只看后半程" in view._analysis_result.text()
+    assert "后半有效记录" in view._analysis_result.text()
+    view._analysis_entry.click()
+    view._followup_question.setText("再看左侧")
+    view._followup_send.click()
+    _wait_idle(qtbot, view)
+    assert client.ask_calls[1]["parent_analysis_run_id"] == "ask-1"
+    view._analysis_default_button.click()
+    assert view._analysis_data["analysis_run_id"] == "base-1"
+    assert view._followup_target.currentText() == "整体报告"
+    assert "完整报告发现" in view._analysis_result.text()
+    assert "本次提问" not in view._analysis_result.text()
+
+
+@pytest.mark.parametrize("references,records", [
+    ([], ["jump-0"]),
+    (["missing"], ["jump-0"]),
+    (["e1", "missing"], ["jump-0"]),
+    (["e1"], []),
+])
+def test_followup_claim_choices_require_resolvable_record_evidence(qtbot, references, records):
+    client = _FollowupClient()
+    client.latest["claims"][0]["evidence_refs"] = references
+    client.latest["evidence"][0]["items"][0]["record_refs"] = records
+    view = _followup_view(qtbot, client)
+    _wait_idle(qtbot, view)
+    assert view._followup_target.count() == 1
+    assert view._followup_target.currentData() is None
+    view._followup_question.setText("查看触地时间")
+    assert view._followup_send.isEnabled()
+
+
+@pytest.mark.parametrize("next_session", [12, 13])
+def test_late_followup_cannot_replace_reloaded_report(qtbot, next_session):
+    client = _FollowupClient(delay=.15)
+    view = _followup_view(qtbot, client)
+    _wait_idle(qtbot, view)
+    view._followup_question.setText("只看后半程")
+    view._followup_send.click()
+    qtbot.waitUntil(lambda: len(client.ask_calls) == 1)
+    client.latest = _saved_analysis("replacement", "重新加载的报告")
+    view.load_report(_report(), next_session)
+    _wait_idle(qtbot, view)
+    assert view._analysis_data["analysis_run_id"] == "replacement"
+    assert "回答1" not in view._analysis_result.text()
+    assert "本次提问" not in view._analysis_result.text()
+    assert not view._analysis_busy
+
+
+def test_late_latest_does_not_overwrite_answer_to_first_question(qtbot):
+    client = _FollowupClient(latest_delay=.15)
+    view = _followup_view(qtbot, client)
+    view._followup_question.setText("查看触地时间")
+    view._followup_send.click()
+    _wait_idle(qtbot, view)
+    assert view._analysis_data["analysis_run_id"] == "ask-1"
+    assert client.ask_calls[0]["parent_analysis_run_id"] is None
+
+
+def test_failed_followup_preserves_answer_and_can_be_retried(qtbot):
+    client = _FollowupClient(error="analysis_client_timeout")
+    view = _followup_view(qtbot, client)
+    _wait_idle(qtbot, view)
+    view._followup_question.setText("   ")
+    view._followup_send.click()
+    assert client.ask_calls == []
+    view._followup_question.setText("只看后半程")
+    view._followup_send.click()
+    _wait_idle(qtbot, view)
+    assert view._analysis_data["analysis_run_id"] == "base-1"
+    assert view._followup_question.text() == "只看后半程"
+    assert view._followup_send.isEnabled()
+    assert "预期时间内响应" in view._analysis_status.text()
+
+
+def test_followup_clarification_displays_specific_question_as_plain_text(qtbot):
+    from PySide6.QtCore import Qt
+
+    clarification = "请选择触地时间或腾空时间，并指定 <范围>。"
+    client = _FollowupClient(error="question_needs_clarification", message=clarification)
+    view = _followup_view(qtbot, client)
+    _wait_idle(qtbot, view)
+    view._followup_question.setText("分析时间")
+    view._followup_send.click()
+    _wait_idle(qtbot, view)
+    assert view._analysis_status.text() == clarification
+    assert view._analysis_status.textFormat() == Qt.PlainText
+    assert view._followup_question.text() == "分析时间"
+    assert view._followup_question.isEnabled()
+    assert view._analysis_data["analysis_run_id"] == "base-1"

@@ -600,13 +600,14 @@ class CyclePhaseBar(QWidget):
 
 class _ReportAnalysisWorker(QThread):
     completed = Signal(int, str, object)
-    failed = Signal(int, str, str)
+    failed = Signal(int, str, str, str)
 
-    def __init__(self, client, session_id: int, action: str, parent=None):
+    def __init__(self, client, session_id: int, action: str, parent=None, *, question=None):
         super().__init__(parent)
         self._client = client
         self._session_id = session_id
         self._action = action
+        self._question = question
 
     def run(self):
         scope = {
@@ -620,6 +621,21 @@ class _ReportAnalysisWorker(QThread):
                     self._session_id,
                     scope,
                 )
+            elif self._action == "ask":
+                response = self._client.ask_report(
+                    self._session_id,
+                    scope,
+                    **self._question,
+                )
+                if response.get("error_code"):
+                    self.failed.emit(
+                        self._session_id,
+                        self._action,
+                        response["error_code"],
+                        str(response.get("message") or ""),
+                    )
+                    return
+                payload = response.get("analysis")
             else:
                 response = self._client.analyze_report(
                     self._session_id,
@@ -630,15 +646,21 @@ class _ReportAnalysisWorker(QThread):
                         self._session_id,
                         self._action,
                         response["error_code"],
+                        str(response.get("message") or ""),
                     )
                     return
                 payload = response.get("analysis")
+            if self._action != "latest" and isinstance(payload, dict):
+                payload = dict(payload)
+                if response.get("analysis_run_id"):
+                    payload.setdefault("analysis_run_id", response["analysis_run_id"])
             self.completed.emit(self._session_id, self._action, payload)
         except Exception:
             self.failed.emit(
                 self._session_id,
                 self._action,
                 "analysis_unavailable",
+                "",
             )
 
 
@@ -660,6 +682,10 @@ class ReportView(QWidget):
         self._llm_client = llm_client
         self._analysis_available = False
         self._analysis_data = None
+        self._default_analysis_data = None
+        self._analysis_generation = 0
+        self._analysis_request_serial = 0
+        self._analysis_busy = False
         self._evidence_charts = []
         self._latest_requested_for: int | None = None
         self._analysis_workers: set[_ReportAnalysisWorker] = set()
@@ -909,6 +935,10 @@ class ReportView(QWidget):
         self._analysis_title.setObjectName("ReportSectionTitle")
         analysis_header.addWidget(self._analysis_title)
         analysis_header.addStretch()
+        self._analysis_default_button = QPushButton("完整分析")
+        self._analysis_default_button.clicked.connect(self._show_default_analysis)
+        self._analysis_default_button.hide()
+        analysis_header.addWidget(self._analysis_default_button)
         self._analysis_button = QPushButton("开始智能分析")
         self._analysis_button.setProperty("role", "primary")
         self._analysis_button.setObjectName("ReportAnalysisButton")
@@ -917,6 +947,7 @@ class ReportView(QWidget):
         analysis_layout.addLayout(analysis_header)
         self._analysis_status = QLabel("")
         self._analysis_status.setWordWrap(True)
+        self._analysis_status.setTextFormat(Qt.PlainText)
         self._analysis_status.hide()
         analysis_layout.addWidget(self._analysis_status)
         self._analysis_result = QLabel("")
@@ -938,10 +969,26 @@ class ReportView(QWidget):
         self._analysis_content_layout.addWidget(self._analysis_result)
         self._analysis_scroll.setWidget(self._analysis_content)
         analysis_layout.addWidget(self._analysis_scroll, 1)
+        self._followup_target = QComboBox()
+        self._followup_target.setToolTip("选择要继续分析的发现")
+        self._followup_target.addItem("整体报告", None)
+        analysis_layout.addWidget(self._followup_target)
+        followup_row = QHBoxLayout()
+        self._followup_question = QLineEdit()
+        self._followup_question.setPlaceholderText("继续提问，例如只看后半程")
+        self._followup_question.setMaxLength(2000)
+        self._followup_question.returnPressed.connect(self._ask_report_question)
+        self._followup_question.textChanged.connect(self._refresh_followup_controls)
+        followup_row.addWidget(self._followup_question, 1)
+        self._followup_send = QPushButton("提问")
+        self._followup_send.clicked.connect(self._ask_report_question)
+        followup_row.addWidget(self._followup_send)
+        analysis_layout.addLayout(followup_row)
         self._analysis_close_button = QPushButton("关闭分析")
         self._analysis_close_button.clicked.connect(self._analysis_panel.close)
         analysis_layout.addWidget(self._analysis_close_button, 0, Qt.AlignRight)
         self._analysis_panel.hide()
+        self._refresh_followup_controls()
 
         # ===== 底部按钮 =====
         btn_layout = QHBoxLayout()
@@ -1128,20 +1175,43 @@ class ReportView(QWidget):
         self._request_latest_if_available()
 
     def set_analysis_loading(self, loading: bool) -> None:
+        self._analysis_busy = loading
         self._analysis_button.setEnabled(not loading)
+        self._analysis_default_button.setEnabled(not loading)
         self._analysis_status.setText("正在分析本次测试记录…" if loading else "")
         self._analysis_status.setVisible(loading)
+        self._refresh_followup_controls()
 
     def show_validated_analysis(self, analysis: dict) -> None:
         self._clear_evidence_charts()
         self._analysis_data = analysis
         self._analysis_result.setText(analysis_html(analysis))
         cards = (analysis.get("presentation") or {}).get("insight_cards", [])
-        self._analysis_headline.setText(
-            '<b>本次重点</b>　' + html.escape(analysis.get("summary", ""))
-            + '　<a style="color:#67dce9" href="analysis">查看依据</a>'
-        )
-        self._analysis_headline.setVisible(bool(cards))
+        question_context = analysis.get("question_context")
+        if not question_context:
+            self._default_analysis_data = analysis
+            self._analysis_headline.setText(
+                '<b>本次重点</b>　' + html.escape(analysis.get("summary", ""))
+                + '　<a style="color:#67dce9" href="analysis">查看依据</a>'
+            )
+            self._analysis_headline.setVisible(bool(cards))
+        self._analysis_default_button.setVisible(bool(question_context and self._default_analysis_data))
+        self._followup_target.clear()
+        self._followup_target.addItem("继续当前分析" if question_context else "整体报告", None)
+        if analysis.get("analysis_run_id"):
+            titles = {card["claim_id"]: card.get("title", "") for card in cards}
+            evidence = {
+                item["evidence_id"]: item
+                for bundle in analysis.get("evidence", [])
+                for item in bundle.get("items", [])
+            }
+            for claim in analysis.get("claims", []):
+                claim_id = claim.get("claim_id")
+                references = claim.get("evidence_refs", [])
+                if claim_id and references and all(evidence.get(ref, {}).get("record_refs") for ref in references):
+                    title = titles.get(claim_id) or claim.get("text", "")
+                    self._followup_target.addItem(str(title)[:50] or "分析发现", claim_id)
+                    self._followup_target.setItemData(self._followup_target.count() - 1, str(title), Qt.ToolTipRole)
         for payload in (analysis.get("presentation") or {}).get("charts", []):
             chart = EvidenceChart.model_validate(payload)
             widget = EvidenceChartWidget(chart, pg, self._analysis_content)
@@ -1149,6 +1219,33 @@ class ReportView(QWidget):
             self._evidence_charts.append(widget)
         self._analysis_result.show()
         self._analysis_button.setText("重新分析")
+        self._refresh_followup_controls()
+
+    def _show_default_analysis(self):
+        if not self._analysis_busy and self._default_analysis_data is not None:
+            self.show_validated_analysis(self._default_analysis_data)
+
+    def _refresh_followup_controls(self):
+        available = (
+            self._analysis_available
+            and self._session_id is not None
+            and callable(getattr(self._llm_client, "ask_report", None))
+            and not self._analysis_busy
+        )
+        self._followup_question.setEnabled(available)
+        self._followup_target.setEnabled(available)
+        self._followup_send.setEnabled(available and bool(self._followup_question.text().strip()))
+
+    def _ask_report_question(self):
+        question = self._followup_question.text().strip()
+        if not question or not self._followup_send.isEnabled():
+            return
+        analysis = self._analysis_data or {}
+        self._start_analysis_request("ask", question={
+            "question": question,
+            "parent_analysis_run_id": analysis.get("analysis_run_id"),
+            "selected_claim_id": self._followup_target.currentData(),
+        })
 
     def _clear_evidence_charts(self):
         for widget in self._evidence_charts:
@@ -1167,7 +1264,13 @@ class ReportView(QWidget):
             QDesktopServices.openUrl(url)
 
     def clear_analysis(self) -> None:
+        self._analysis_generation += 1
         self._analysis_data = None
+        self._default_analysis_data = None
+        self._analysis_default_button.hide()
+        self._followup_question.clear()
+        self._followup_target.clear()
+        self._followup_target.addItem("整体报告", None)
         self._analysis_headline.clear()
         self._analysis_headline.hide()
         self._clear_evidence_charts()
@@ -1190,6 +1293,7 @@ class ReportView(QWidget):
             and supported
         )
         self._analysis_entry.setVisible(visible)
+        self._refresh_followup_controls()
         if not visible:
             self._analysis_panel.hide()
             self.clear_analysis()
@@ -1209,7 +1313,7 @@ class ReportView(QWidget):
     def _on_analysis_clicked(self) -> None:
         if self._analysis_panel.isHidden() or self._session_id is None:
             return
-        if any(worker.isRunning() for worker in self._analysis_workers):
+        if self._analysis_busy:
             return
         self._start_analysis_request("analyze")
 
@@ -1217,29 +1321,52 @@ class ReportView(QWidget):
         if self._analysis_entry.isHidden() or self._session_id is None:
             return False
         self._open_analysis()
-        if any(worker.isRunning() for worker in self._analysis_workers):
+        if self._analysis_busy:
             return False
         self._start_analysis_request("analyze")
         return True
 
-    def _start_analysis_request(self, action: str) -> None:
+    def _start_analysis_request(self, action: str, *, question=None) -> None:
         if self._llm_client is None or self._session_id is None:
             return
+        if self._analysis_busy:
+            return
+        self._analysis_request_serial += 1
+        request_identity = (self._analysis_generation, self._analysis_request_serial)
         worker = _ReportAnalysisWorker(
             self._llm_client,
             self._session_id,
             action,
             self,
+            question=question,
         )
         self._analysis_workers.add(worker)
-        worker.completed.connect(self._on_analysis_completed)
-        worker.failed.connect(self._on_analysis_failed)
+        worker.completed.connect(
+            lambda session_id, action, payload: self._deliver_analysis_result(
+                request_identity, session_id, action, payload
+            )
+        )
+        worker.failed.connect(
+            lambda session_id, action, code, message: self._deliver_analysis_error(
+                request_identity, session_id, action, code, message
+            )
+        )
         worker.finished.connect(
             lambda worker=worker: self._release_analysis_worker(worker)
         )
-        if action == "analyze":
+        if action in {"analyze", "ask"}:
             self.set_analysis_loading(True)
+            if action == "ask":
+                self._analysis_status.setText("正在分析你的问题…")
         worker.start()
+
+    def _deliver_analysis_result(self, identity, session_id, action, payload):
+        if identity == (self._analysis_generation, self._analysis_request_serial):
+            self._on_analysis_completed(session_id, action, payload)
+
+    def _deliver_analysis_error(self, identity, session_id, action, code, message):
+        if identity == (self._analysis_generation, self._analysis_request_serial):
+            self._on_analysis_failed(session_id, action, code, message)
 
     def _request_latest_if_available(self) -> None:
         if (
@@ -1269,6 +1396,8 @@ class ReportView(QWidget):
         self.set_analysis_loading(False)
         if isinstance(analysis, dict):
             self.show_validated_analysis(analysis)
+            if action == "ask":
+                self._followup_question.clear()
             if action == "analyze":
                 from voice.responses import analysis_speech
                 self.voice_reply.emit(analysis_speech(analysis))
@@ -1278,22 +1407,38 @@ class ReportView(QWidget):
         session_id: int,
         action: str,
         error_code: str,
+        message: str = "",
     ) -> None:
         if session_id != self._session_id or not self._analysis_available:
             return
         self.set_analysis_loading(False)
-        if action == "analyze":
-            self.voice_reply.emit("报告分析暂时不可用，请查看界面提示后重试。")
+        if action in {"analyze", "ask"}:
+            if action == "analyze":
+                self.voice_reply.emit("报告分析暂时不可用，请查看界面提示后重试。")
             messages = {
                 "worker_not_ready": "智能分析服务尚未就绪。",
                 "external_scope_not_implemented": "当前版本仅支持本次记录分析。",
                 "analysis_unavailable": "暂时无法读取智能分析结果。",
                 "analysis_timeout": "智能分析超过服务端时间限制，请重试。",
                 "analysis_client_timeout": "智能分析服务未在预期时间内响应，请重试。",
+                "worker_unreachable": "智能分析服务连接失败，请重试。",
+                "invalid_request": "请检查问题内容后重试。",
+                "invalid_parent_analysis": "关联分析已失效，请打开完整分析后重新提问。",
+                "unknown_claim": "所选发现已失效，请重新选择。",
+                "legacy_evidence_unavailable": "这份旧分析缺少记录来源，请重新生成完整分析后提问。",
+                "empty_selection": "指定范围内没有可用记录，请调整范围。",
+                "ambiguous_selection": "所选发现涉及多个数据范围，请选择整体报告并指定指标。",
+                "invalid_question_selection": "请指定本次报告内的指标和记录范围。",
+                "question_needs_clarification": "请补充要分析的指标和范围。",
+                "fact_outside_question_scope": "分析结果超出所选范围，请重新提问。",
             }
-            self._analysis_status.setText(
-                messages.get(error_code, "智能分析未能生成通过验证的结果。")
-            )
+            status = messages.get(error_code, "智能分析未能生成通过验证的结果。")
+            if message and error_code in {
+                "unknown_claim", "legacy_evidence_unavailable", "empty_selection",
+                "ambiguous_selection", "invalid_question_selection", "question_needs_clarification",
+            }:
+                status = message
+            self._analysis_status.setText(status)
             self._analysis_status.show()
 
     # ------------------------------------------------------------------

@@ -41,6 +41,16 @@ def _evidence_sentence(item, run, predicates):
     label = side + METRIC_CATALOG[metric].label
     unit = METRIC_CATALOG[metric].unit
     fmt = lambda value: format_numeric_value(value, unit)
+    if item.analysis_method == "summarize_records":
+        parts = []
+        for code in metrics:
+            definition = METRIC_CATALOG[code]
+            mean = format_numeric_value(values[f"{code}_mean"], definition.unit)
+            minimum = format_numeric_value(values[f"{code}_min"], definition.unit)
+            maximum = format_numeric_value(values[f"{code}_max"], definition.unit)
+            deviation = format_numeric_value(values[f"{code}_std"], definition.unit)
+            parts.append(f"{side}{definition.label}均值 {mean}，范围 {minimum} 至 {maximum}，总体标准差 {deviation}。")
+        return f"所选有效样本 {item.sample_counts['selected']} 条。" + "".join(parts)
     if item.analysis_method == "verify_temporal_change":
         text = (f"按有效记录数量分半，{label}{_change(values['difference'], metric)}，"
                 f"前半均值 {fmt(values['first_mean'])}，后半均值 {fmt(values['second_mean'])}，"
@@ -104,7 +114,9 @@ def build_presentation(claims, package, evidence, recommendations):
             side = _SIDES.get(run.parameters.get("side"), "")
             for metric in run.parameters.get("metric_codes", ()):
                 label = side + METRIC_CATALOG[metric].label
-                if item.analysis_method == "verify_side_segment_difference":
+                if item.analysis_method == "summarize_records":
+                    titles.append(label + "的所选记录统计")
+                elif item.analysis_method == "verify_side_segment_difference":
                     titles.append(label + "的左右变化比较")
                 elif item.analysis_method == "verify_exclusion_robustness":
                     titles.append(label + "的排除稳健性")
@@ -145,7 +157,9 @@ def build_presentation(claims, package, evidence, recommendations):
             recommendation_ids = tuple(r.recommendation_id for r in recommendations if set(r.claim_refs).intersection((card.claim_id, *related)))
             selected[duplicate] = card.model_copy(update={"related_claim_ids": related, "recommendation_ids": recommendation_ids})
             continue
-        if len(selected) == 3 or (claim.predicate_bindings and all(b.predicate == "comparison_supported" for b in claim.predicate_bindings)):
+        only_comparison = claim.predicate_bindings and all(b.predicate == "comparison_supported" for b in claim.predicate_bindings)
+        has_summary = any(items[ref].analysis_method == "summarize_records" for ref in claim.evidence_refs)
+        if len(selected) == 3 or (only_comparison and not has_summary):
             continue
         chart_ids = []
         for ref in claim.evidence_refs:

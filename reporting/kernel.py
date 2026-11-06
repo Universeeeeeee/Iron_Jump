@@ -23,8 +23,8 @@ from .models import (
 )
 
 
-ANALYSIS_METHOD_REGISTRY_VERSION = "analysis-method-registry/1.0"
-KERNEL_VERSION = "analysis-kernel/1.1"
+ANALYSIS_METHOD_REGISTRY_VERSION = "analysis-method-registry/1.1"
+KERNEL_VERSION = "analysis-kernel/1.2"
 MIN_COMPARISON_GROUP_SIZE = 3
 _NAMESPACE = uuid.UUID("9ba0dc8f-5b90-4899-905c-5fc67083e4a7")
 
@@ -46,6 +46,7 @@ class AnalysisMethodSpec:
 class AnalysisMethodRegistry:
     def __init__(self):
         specs = (
+            AnalysisMethodSpec("summarize_records", "summarize-records-method/1.0", "analyze_current_session", 1, ("descriptive",), 1, 2, predicate_names=("comparison_supported",)),
             AnalysisMethodSpec("verify_temporal_change", "temporal-change-method/1.0", "analyze_current_session", 2, ("temporal",), 1, 1, predicate_names=("comparison_supported", "increase", "decrease", "persistent", "transient")),
             AnalysisMethodSpec("verify_side_segment_difference", "side-segment-difference-method/1.0", "analyze_current_session", 3, ("temporal", "side"), 1, 1, requires_side=True, predicate_names=("comparison_supported", "concentrated_on_side")),
             AnalysisMethodSpec("verify_cross_metric_cochange", "cross-metric-cochange-method/1.0", "analyze_current_session", 3, ("temporal", "cross_metric"), 2, 2, predicate_names=("comparison_supported", "co_change")),
@@ -79,6 +80,7 @@ class AnalysisKernel:
     ):
         spec = self.method_registry.get(node.analysis_method)
         dispatch = {
+            "summarize_records": self._summarize_records,
             "verify_temporal_change": self._temporal_change,
             "verify_side_segment_difference": self._side_segment_difference,
             "verify_cross_metric_cochange": self._cross_metric_cochange,
@@ -183,7 +185,7 @@ class AnalysisKernel:
     def _temporal_change(self, package, node):
         record_set = self._record_set(package, node.inputs["record_set_id"])
         metric = node.inputs["metric_codes"][0]
-        records = self._selected(record_set, metric, node.inputs.get("side"), included_only=True)
+        records = self._selected(record_set, metric, node.inputs.get("side"), included_only=True, record_refs=node.inputs.get("record_refs"))
         first, second = self._halves(records)
         supported, limitations = self._comparison_supported(package, metric, first, second)
         first_mean = self._mean(first, metric) if first else None
@@ -229,7 +231,7 @@ class AnalysisKernel:
         groups = {}
         supported = True
         for side in ("left", "right"):
-            records = self._selected(record_set, metric, side, included_only=True)
+            records = self._selected(record_set, metric, side, included_only=True, record_refs=node.inputs.get("record_refs"))
             selected_records.extend(records)
             first, second = self._halves(records)
             group_supported, group_limitations = self._comparison_supported(package, metric, first, second)
@@ -264,14 +266,7 @@ class AnalysisKernel:
         record_set = self._record_set(package, node.inputs["record_set_id"])
         metric_a, metric_b = node.inputs["metric_codes"]
         side = node.inputs.get("side")
-        records = [
-            record
-            for record in record_set.records
-            if record.status.validity == "valid"
-            and record.status.inclusion == "included"
-            and (side is None or record.side == side)
-            and all(record.values[metric].state == "present" for metric in (metric_a, metric_b))
-        ]
+        records = self._selected(record_set, (metric_a, metric_b), side, included_only=True, record_refs=node.inputs.get("record_refs"))
         first, second = self._halves(records)
         supported_a, limitations_a = self._comparison_supported(package, metric_a, first, second)
         supported_b, limitations_b = self._comparison_supported(package, metric_b, first, second)
@@ -296,8 +291,8 @@ class AnalysisKernel:
         record_set = self._record_set(package, node.inputs["record_set_id"])
         metric = node.inputs["metric_codes"][0]
         side = node.inputs.get("side")
-        all_records = self._selected(record_set, metric, side, included_only=False)
-        included = self._selected(record_set, metric, side, included_only=True)
+        all_records = self._selected(record_set, metric, side, included_only=False, record_refs=node.inputs.get("record_refs"))
+        included = self._selected(record_set, metric, side, included_only=True, record_refs=node.inputs.get("record_refs"))
         all_first, all_second = self._halves(all_records)
         included_first, included_second = self._halves(included)
         all_supported, all_limits = self._comparison_supported(package, metric, all_first, all_second)
@@ -328,21 +323,53 @@ class AnalysisKernel:
         limitations = ("report_quality_invalidates_analysis",) if invalidates else ()
         return predicates, {}, {"quality_flag_count": len(package.quality_flags)}, [package.metadata.package_id], [flag.quality_flag_id for flag in package.quality_flags], limitations, None, {}
 
+    def _summarize_records(self, package, node):
+        record_set = self._record_set(package, node.inputs["record_set_id"])
+        metrics = tuple(node.inputs["metric_codes"])
+        records = self._selected(
+            record_set, metrics, node.inputs.get("side"), included_only=True,
+            record_refs=node.inputs.get("record_refs"),
+        )
+        limitations = []
+        if not records:
+            limitations.append("insufficient_sample_size")
+        if any(flag.invalidates_report or set(metrics).intersection(flag.invalidates_metric_codes) for flag in package.quality_flags):
+            limitations.append("quality_invalidation")
+        values = {}
+        if records:
+            for metric in metrics:
+                samples = [record.values[metric].value for record in records]
+                mean = sum(samples) / len(samples)
+                values.update({
+                    f"{metric}_mean": mean,
+                    f"{metric}_min": min(samples),
+                    f"{metric}_max": max(samples),
+                    f"{metric}_std": math.sqrt(sum((value - mean) ** 2 for value in samples) / len(samples)),
+                })
+        refs = self._refs(records)
+        predicates = [PredicateEvidence(
+            predicate="comparison_supported", supported=not limitations,
+            metric_codes=metrics,
+        )]
+        return predicates, values, {"selected": len(records)}, refs, self._quality_refs(package, records), tuple(limitations), record_set.record_set_id, {"selected": tuple(refs)}
+
     def _record_set(self, package: ReportDataPackage, record_set_id: str) -> RecordSet:
         for record_set in package.record_sets:
             if record_set.record_set_id == record_set_id:
                 return record_set
         raise KeyError(f"Unknown RecordSet: {record_set_id}")
 
-    def _selected(self, record_set, metric, side, *, included_only):
+    def _selected(self, record_set, metric, side, *, included_only, record_refs=None):
+        metrics = (metric,) if isinstance(metric, str) else metric
+        allowed_refs = None if record_refs is None else set(record_refs)
         return [
             record
             for record in record_set.records
             if record.status.validity == "valid"
             and (not included_only or record.status.inclusion == "included")
             and (side is None or record.side == side)
-            and metric in record.values
-            and record.values[metric].state == "present"
+            and (allowed_refs is None or record.record_id in allowed_refs)
+            and all(code in record.values and record.values[code].state == "present" for code in metrics)
         ]
 
     def _comparison_supported(self, package, metric, first, second):

@@ -212,6 +212,35 @@ class AgentWorkerClient:
         scope: dict,
         timeout: float | None = None,
     ) -> dict:
+        return self._request_report_analysis(
+            "/report/analyze",
+            {"session_id": session_id, "data_access_scope": scope},
+            timeout,
+        )
+
+    def ask_report(
+        self,
+        session_id: int,
+        scope: dict,
+        question: str,
+        *,
+        parent_analysis_run_id: str | None = None,
+        selected_claim_id: str | None = None,
+        timeout: float | None = None,
+    ) -> dict:
+        return self._request_report_analysis(
+            "/report/ask",
+            {
+                "session_id": session_id,
+                "data_access_scope": scope,
+                "question": question,
+                "parent_analysis_run_id": parent_analysis_run_id,
+                "selected_claim_id": selected_claim_id,
+            },
+            timeout,
+        )
+
+    def _request_report_analysis(self, route, payload, timeout) -> dict:
         url = self._base_url()
         if url is None:
             return {"error_code": "worker_not_started"}
@@ -219,11 +248,8 @@ class AgentWorkerClient:
             return {"error_code": "worker_not_ready"}
         try:
             response = requests.post(
-                f"{url}/report/analyze",
-                json={
-                    "session_id": session_id,
-                    "data_access_scope": scope,
-                },
+                f"{url}{route}",
+                json=payload,
                 timeout=(
                     _default_report_analysis_client_timeout()
                     if timeout is None

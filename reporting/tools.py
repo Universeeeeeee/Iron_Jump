@@ -15,7 +15,7 @@ from .models import (
 )
 
 
-ANALYSIS_TOOL_REGISTRY_VERSION = "analysis-tool-registry/1.0"
+ANALYSIS_TOOL_REGISTRY_VERSION = "analysis-tool-registry/1.1"
 
 
 @dataclass(frozen=True)
@@ -33,10 +33,11 @@ class AnalysisToolRegistry:
         specs = (
             AnalysisToolSpec(
                 "analyze_current_session",
-                "analyze-current-session-tool/1.0",
+                "analyze-current-session-tool/1.1",
                 "current_session",
                 True,
                 (
+                    "summarize_records",
                     "verify_temporal_change",
                     "verify_side_segment_difference",
                     "verify_cross_metric_cochange",

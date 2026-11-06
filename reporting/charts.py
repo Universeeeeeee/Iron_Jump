@@ -9,6 +9,7 @@ from .models import ChartGroup, ChartPoint, EvidenceChart
 
 
 GROUP_LABELS = {
+    "selected": "所选有效记录",
     "first_half": "前半有效记录", "second_half": "后半有效记录",
     "left_first": "左侧前半", "left_second": "左侧后半",
     "right_first": "右侧前半", "right_second": "右侧后半",
@@ -42,9 +43,9 @@ def build_evidence_charts(package, item, run):
                     timestamp_s=record.timestamp_s, side=record.side, value=value.value,
                 ))
             mean = sum(p.value for p in points) / len(points)
-            value_key = {"first_half": "first_mean", "second_half": "second_mean"}.get(name)
+            value_key = {"first_half": "first_mean", "second_half": "second_mean", "selected": "mean"}.get(name)
             if value_key:
-                key = f"{metric}_{value_key}" if len(run.parameters["metric_codes"]) > 1 else value_key
+                key = f"{metric}_{value_key}" if name == "selected" or len(run.parameters["metric_codes"]) > 1 else value_key
                 expected = item.numeric_values[key]
                 if not math.isclose(mean, expected, rel_tol=1e-12, abs_tol=1e-12):
                     raise ValueError("Chart mean does not match analysis")
@@ -64,6 +65,7 @@ def build_evidence_charts(package, item, run):
             record_type=record_set.record_type, metric_code=metric, title=definition.label,
             unit=definition.unit,
             chart_type="side_distribution" if item.analysis_method == "verify_side_segment_difference" else "time_series",
-            grouping="按各组有效记录数量分半", groups=tuple(groups),
+            grouping="所选有效记录" if item.analysis_method == "summarize_records" else "按各组有效记录数量分半",
+            groups=tuple(groups),
         ))
     return tuple(charts)

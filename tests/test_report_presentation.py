@@ -127,6 +127,45 @@ def test_recommendation_is_displayed_under_its_referenced_finding():
     assert "analysis-chart:0" in text
 
 
+@pytest.mark.parametrize("chart_sources", [None, {}])
+def test_followup_html_displays_escaped_question_and_selected_scope(chart_sources):
+    from reporting.analysis_html import analysis_html
+
+    analysis = {
+        "question_context": {"question": "只看 <左侧> & 后半程", "selection_label": "后半有效记录 · 左侧"},
+        "claims": [{"text": "触地时间均值 0.3 s。"}],
+    }
+    text = analysis_html(analysis, chart_sources=chart_sources)
+    assert "本次提问" in text
+    assert "只看 &lt;左侧&gt; &amp; 后半程" in text
+    assert text.count("后半有效记录 · 左侧") == 1
+    assert text.index("分析范围") < text.index("触地时间均值")
+
+
+@pytest.mark.parametrize("detailed", [False, True])
+def test_followup_pdf_content_keeps_question_and_scope(detailed):
+    from reporting.pdf import report_html
+    from tests.reporting_fixtures import make_jump_report
+
+    text = report_html(
+        make_jump_report([.2, .3]), title="纵跳测试", stats=[], reason="手动结束", detailed=detailed,
+        analysis={"question_context": {"question": "只看后半程", "selection_label": "后半有效记录"},
+                  "claims": [{"text": "触地时间均值 0.3 s。"}]},
+    )
+    assert "只看后半程" in text
+    assert "后半有效记录" in text
+    assert "触地时间均值 0.3 s。" in text
+
+
+def test_default_analysis_html_omits_followup_labels():
+    from reporting.analysis_html import analysis_html
+
+    text = analysis_html({"question_context": None, "claims": [{"text": "完整报告发现。"}]})
+    assert "本次提问" not in text
+    assert "分析范围" not in text
+    assert "完整报告发现。" in text
+
+
 def test_chart_point_locates_exact_record_and_report_switch_clears_charts(qtbot):
     from ui.views.report_view import ReportView
     from tests.reporting_fixtures import make_jump_report

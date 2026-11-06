@@ -84,11 +84,12 @@ class EvidenceChartWidget(QWidget):
         chart = self.chart
         kind = self.kind.currentData()
         use_time = all(p.timestamp_s is not None for g in chart.groups for p in g.points)
-        axis = self.plot.getAxis('left')
         self.plot.setLabel('left', chart.title, units=chart.unit)
-        if hasattr(axis, 'setSIPrefixEnableRanges'):
-            axis.setSIPrefixEnableRanges(())
-        axis.enableAutoSIPrefix(False)
+        for name in ('left', 'bottom'):
+            axis = self.plot.getAxis(name)
+            if hasattr(axis, 'setSIPrefixEnableRanges'):
+                axis.setSIPrefixEnableRanges(())
+            axis.enableAutoSIPrefix(False)
         self.plot.showGrid(x=True, y=True, alpha=.18)
         self.plot.getAxis('bottom').setTicks(None)
         self.plot.setLabel('bottom', '时间 (s)' if use_time else '记录序号')

@@ -55,6 +55,7 @@ def test_capability_catalog_nests_methods_and_respects_side_availability():
 def test_method_registry_exposes_semantic_methods_not_kernel_primitives():
     names = {spec.name for spec in AnalysisMethodRegistry().all()}
     assert names == {
+        "summarize_records",
         "verify_temporal_change",
         "verify_side_segment_difference",
         "verify_cross_metric_cochange",
@@ -68,6 +69,6 @@ def test_tool_method_and_kernel_versions_are_independent():
     tool = AnalysisToolRegistry().get("analyze_current_session")
     methods = AnalysisMethodRegistry()
 
-    assert tool.version == "analyze-current-session-tool/1.0"
+    assert tool.version == "analyze-current-session-tool/1.1"
     assert methods.get("verify_temporal_change").version == "temporal-change-method/1.0"
     assert methods.get("verify_side_segment_difference").version == "side-segment-difference-method/1.0"

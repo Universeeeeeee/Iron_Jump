@@ -31,6 +31,10 @@ def analysis_html(analysis: dict, chart_sources=None) -> str:
     charts = presentation.get('charts', [])
     chart_by_id = {c['chart_id']: i for i, c in enumerate(charts)}
     sections = []
+    question_context = analysis.get('question_context') or {}
+    for key, label in (('question', '本次提问'), ('selection_label', '分析范围')):
+        if question_context.get(key):
+            sections.append('<p><b>' + label + '</b>　' + html.escape(str(question_context[key])) + '</p>')
     shown_claims = set()
     shown_texts = set()
     shown_recommendations = set()

@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import sqlite3
+import json
 
 import pytest
 
@@ -305,3 +306,131 @@ def test_checkpoint_cannot_be_attached_to_a_different_or_finalized_run(store):
     repository.finalize_analysis_run(run_id, "failed", None, "stopped")
     with pytest.raises(ValueError, match="finalized"):
         repository.save_analysis_checkpoint(run_id, checkpoint)
+
+
+def test_followup_results_do_not_replace_default_latest(store):
+    session_id = store.record_session(None, default_jump_config(), _report())
+    repository = ReportRepository(store)
+    digest = repository.get_package(session_id).metadata.package_digest
+    scope = DataAccessScope()
+    payloads = {}
+    for request_digest in ("", "a" * 64, "b" * 64):
+        run_id = repository.create_analysis_run(
+            session_id, scope, digest, model_name="fake", prompt_version="v1",
+            request_digest=request_digest,
+        )
+        payloads[request_digest] = {"analysis_run_id": run_id, "claims": []}
+        repository.finalize_analysis_run(run_id, "validated", payloads[request_digest])
+
+    assert repository.get_latest_validated_analysis(session_id, scope, digest) == payloads[""]
+    assert repository.get_latest_validated_analysis(
+        session_id, scope, digest, request_digest="a" * 64,
+    ) == payloads["a" * 64]
+    assert repository.get_latest_validated_analysis(
+        session_id, scope, digest, request_digest="c" * 64,
+    ) is None
+
+
+def test_parent_result_requires_exact_run_session_scope_snapshot_and_status(store):
+    session_id = store.record_session(None, default_jump_config(), _report())
+    other_session = store.record_session(None, default_jump_config(), _report())
+    repository = ReportRepository(store)
+    digest = repository.get_package(session_id).metadata.package_digest
+    scope = DataAccessScope()
+    run_id = repository.create_analysis_run(
+        session_id, scope, digest, model_name="fake", prompt_version="v1",
+        request_digest="a" * 64,
+    )
+    assert repository.get_validated_analysis(run_id, session_id, scope, digest) is None
+    payload = {"analysis_run_id": run_id, "claims": []}
+    repository.finalize_analysis_run(run_id, "validated", payload)
+    assert repository.get_validated_analysis(run_id, session_id, scope, digest) == payload
+    for candidate in (
+        ("missing", session_id, scope, digest),
+        (run_id, other_session, scope, digest),
+        (run_id, session_id, DataAccessScope(longitudinal=True), digest),
+        (run_id, session_id, scope, "different-digest"),
+    ):
+        assert repository.get_validated_analysis(*candidate) is None
+    failed_run = repository.create_analysis_run(
+        session_id, scope, digest, model_name="fake", prompt_version="v1",
+    )
+    repository.finalize_analysis_run(failed_run, "failed", payload)
+    assert repository.get_validated_analysis(failed_run, session_id, scope, digest) is None
+
+
+def test_followup_checkpoints_are_isolated_by_request_digest(store):
+    session_id = store.record_session(None, default_jump_config(), _report())
+    repository = ReportRepository(store)
+    digest = repository.get_package(session_id).metadata.package_digest
+    scope = DataAccessScope()
+    checkpoints = {}
+    run_ids = {}
+    for request_digest in ("", "a" * 64, "b" * 64):
+        run_id = repository.create_analysis_run(
+            session_id, scope, digest, model_name="fake", prompt_version="v2",
+            request_digest=request_digest,
+        )
+        checkpoint = _checkpoint(session_id, digest).model_copy(
+            update={"request_digest": request_digest}
+        )
+        repository.save_analysis_checkpoint(run_id, checkpoint)
+        checkpoints[request_digest] = checkpoint
+        run_ids[request_digest] = run_id
+    expected = dict(
+        model_name="fake", prompt_version="v2",
+        skill_version=checkpoint.skill_version,
+        observation_builder_version=checkpoint.observation_builder_version,
+        analysis_tool_registry_version=checkpoint.analysis_tool_registry_version,
+        analysis_method_registry_version=checkpoint.analysis_method_registry_version,
+        kernel_version=checkpoint.kernel_version,
+    )
+    for request_digest in run_ids:
+        resumed = repository.get_resumable_analysis_checkpoint(
+            session_id, scope, digest, request_digest=request_digest, **expected,
+        )
+        assert resumed.analysis_run_id == run_ids[request_digest]
+    with pytest.raises(ValueError, match="identity"):
+        repository.save_analysis_checkpoint(run_ids["a" * 64], checkpoints["b" * 64])
+
+    # Verify checkpoint JSON independently of the matching run-row identity.
+    for field, value in (
+        ("request_digest", "b" * 64),
+        ("session_id", session_id + 1),
+        ("package_digest", "c" * 64),
+        ("data_access_scope", DataAccessScope(longitudinal=True).model_dump(mode="json")),
+    ):
+        mismatched_json = checkpoints["a" * 64].model_dump(mode="json")
+        mismatched_json[field] = value
+        with sqlite3.connect(store.db_path) as conn:
+            conn.execute(
+                "UPDATE report_analysis_checkpoints SET checkpoint_json = ? "
+                "WHERE analysis_run_id = ?",
+                (json.dumps(mismatched_json), run_ids["a" * 64]),
+            )
+        assert repository.get_resumable_analysis_checkpoint(
+            session_id, scope, digest, request_digest="a" * 64, **expected,
+        ) is None
+
+
+def test_existing_analysis_rows_migrate_to_default_request_identity(store):
+    session_id = store.record_session(None, default_jump_config(), _report())
+    repository = ReportRepository(store)
+    digest = repository.get_package(session_id).metadata.package_digest
+    scope = DataAccessScope()
+    run_id = repository.create_analysis_run(
+        session_id, scope, digest, model_name="fake", prompt_version="v1",
+    )
+    payload = {"analysis_run_id": run_id, "claims": []}
+    repository.finalize_analysis_run(run_id, "validated", payload)
+    with sqlite3.connect(store.db_path) as conn:
+        conn.execute("ALTER TABLE report_analyses DROP COLUMN request_digest")
+
+    migrated = ReportRepository(store)
+    assert migrated.get_latest_validated_analysis(session_id, scope, digest) == payload
+    with sqlite3.connect(store.db_path) as conn:
+        stored_digest = conn.execute(
+            "SELECT request_digest FROM report_analyses WHERE analysis_run_id = ?",
+            (run_id,),
+        ).fetchone()[0]
+    assert stored_digest == ""
