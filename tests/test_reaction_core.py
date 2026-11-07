@@ -364,3 +364,77 @@ def test_report_captures_timing_contract_without_claiming_synchronization():
     assert snapshot["timing_quality"] == "uncalibrated"
     assert snapshot["actual_stimulus_onset_available"] is False
     assert snapshot["device_host_synchronization"] == "unavailable"
+
+
+def cascade_frame(sample, host_ms, occupied, segment_count=5):
+    layout = DeviceLayout.linear(segment_count)
+    # The last beam proves the complete configured area participates in the edge.
+    bits = b"\x00" * (layout.bit_count - 1) + bytes([int(occupied)])
+    return frame(sample, host_ms, layout=layout, contact_bits=bits,
+                 valid_bits=b"\x01" * layout.bit_count,
+                 wire_payload=b"\xff" * layout.payload_bytes)
+
+
+@pytest.mark.parametrize("segment_count", [1, 5, 10])
+@pytest.mark.parametrize("start_position,action", [("Inside area", "takeoff"), ("Outside area", "entry")])
+def test_complete_cascade_uses_last_segment_with_same_host_timing(segment_count, start_position, action):
+    session = ReactionSession(config(start_position=start_position, number_of_repetitions=1))
+    session.begin(0)
+    baseline = start_position == "Inside area"
+    for sample in range(3):
+        session.on_frame(cascade_frame(sample, sample, baseline, segment_count))
+    assert session.state == "waiting"
+    stimulated(session)
+    for sample in range(3, 6):
+        session.on_frame(cascade_frame(sample, 55, not baseline, segment_count))
+    trial = session.build_report().trials[0]
+    assert trial.status == "valid"
+    assert trial.action == action
+    assert trial.reaction_time_ms == 33
+    assert trial.response_sample_index == 3
+    assert trial.confirmation_sample_index == 5
+    assert trial.response_received_host_ns == 55 * MS
+    assert trial.timing_quality == "uncalibrated"
+    assert trial.actual_stimulus_onset_ns is None
+
+
+@pytest.mark.parametrize("name,length", [("contact_bits", 96), ("contact_bits", 479),
+                                           ("contact_bits", 481), ("valid_bits", 96),
+                                           ("valid_bits", 479), ("valid_bits", 481)])
+def test_cascade_requires_full_exact_bit_lengths(name, length):
+    session = ReactionSession(config())
+    session.begin(0)
+    sample = cascade_frame(0, 0, True)
+    session.on_frame(replace(sample, **{name: b"\x01" * length}))
+    assert session.is_finished
+    assert session.trials[0].status == "gap"
+    assert session.trials[0].quality_flags == ("unsupported_layout",)
+
+
+def test_cascade_invalid_beam_in_last_segment_is_fatal():
+    session = ReactionSession(config())
+    session.begin(0)
+    sample = cascade_frame(0, 0, True)
+    session.on_frame(replace(sample, valid_bits=b"\x01" * 479 + b"\x00"))
+    assert session.trials[0].quality_flags == ("invalid_beams",)
+    assert session.is_finished
+
+
+def test_cascade_layout_change_is_fatal_with_complete_new_frames():
+    session = ReactionSession(config())
+    session.begin(0)
+    session.on_frame(cascade_frame(0, 0, True, 5))
+    session.on_frame(cascade_frame(1, 1, True, 4))
+    assert session.is_finished
+    assert session.trials[0].status == "gap"
+    assert session.trials[0].quality_flags == ("stream_changed",)
+
+
+def test_cascade_declared_mask_is_fatal_even_with_all_valid_bytes():
+    session = ReactionSession(config())
+    session.begin(0)
+    sample = cascade_frame(0, 0, True)
+    layout = replace(sample.layout, invalid_bit_indices=(479,))
+    session.on_frame(replace(sample, layout=layout))
+    assert session.is_finished
+    assert session.trials[0].quality_flags == ("invalid_beams",)

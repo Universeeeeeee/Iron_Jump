@@ -89,6 +89,89 @@ def test_timed_jump_to_reaction_clears_previous_countdown(qtbot):
     assert view._countdown_timer is None
 
 
+def test_reaction_readiness_keeps_specific_blocking_reason(qtbot):
+    view = ExecutionView()
+    qtbot.addWidget(view)
+    view.configure(ReactionConfig())
+    for count, bad, pending, reason in [
+        (5, [], [], "设备布局信息尚未完整，请等待识别"),
+        (1, [7], [], "请清空测量区域并排除异常光束后开始反应时测试"),
+        (1, [], [7], "第 1 段第 8 束尚未稳定，请检查遮挡"),
+    ]:
+        result = dict(ready=False, segment_count=count, bad_indices=bad,
+                      pending_indices=pending, message=reason)
+        view.on_walking_readiness(result)
+        assert reason in view._device_label.text()
+        assert not view.btn_start.isEnabled()
+
+
+def test_reaction_five_segment_layout_waits_for_preflight_without_single_segment_block(qtbot):
+    from hardware.sensor_frame import DeviceLayout
+    view = ExecutionView()
+    qtbot.addWidget(view)
+    view.configure(ReactionConfig())
+    view.set_quality_preflight_required(True)
+    view.on_device_layout(DeviceLayout.linear(5))
+    view.on_device_state("connected", "设备已连接")
+    assert view._detected_segments == 5
+    assert "仅支持单段" not in view._device_label.text()
+    assert not view.btn_start.isEnabled()
+    view.on_walking_readiness(dict(ready=True, segment_count=5, message="设备就绪"))
+    assert view.btn_start.isEnabled()
+    view.on_device_message("5 段设备正在接收数据")
+    assert view.btn_start.isEnabled()
+    assert "仅支持单段" not in view._device_label.text()
+    assert view._camera_panel.isHidden() or view._lower_split.isHidden()
+    assert view._ground_track.isHidden()
+
+
+def test_five_segment_layout_still_blocks_original_single_segment_modes(qtbot):
+    from config.treadmill_config import TreadmillGaitConfig, TreadmillRunningConfig
+    from hardware.sensor_frame import DeviceLayout
+    for config in (JumpConfig(),
+                   TreadmillGaitConfig(stop_type="Software command", test_length=None),
+                   TreadmillRunningConfig(stop_type="Software command", test_length=None)):
+        view = ExecutionView()
+        qtbot.addWidget(view)
+        view.configure(config)
+        view.on_device_layout(DeviceLayout.linear(5))
+        view.on_device_state("connected", "设备已连接")
+        view.on_device_message("5 段设备正在接收数据")
+        assert "仅支持单段" in view._device_label.text()
+        assert not view.btn_start.isEnabled()
+
+
+def test_other_mode_readiness_keeps_existing_message(qtbot):
+    from config.walking_config import WalkingConfig
+    view = ExecutionView()
+    qtbot.addWidget(view)
+    view.configure(WalkingConfig())
+    view.on_walking_readiness(dict(ready=False, segment_count=8,
+                                   message="backend specific message"))
+    assert "正在检查设备，请保持测量区域无人" in view._device_label.text()
+
+
+def test_reaction_instructions_distinguish_clear_field_from_trial_posture(qtbot):
+    for position, instruction in (("Inside area", "站在测量区内"),
+                                  ("Outside area", "站在测量区外")):
+        view = ExecutionView()
+        qtbot.addWidget(view)
+        view.configure(ReactionConfig(start_position=position))
+        assert "请先离开测量区" in view._reaction_panel.instruction.text()
+        assert "自检通过后点击开始" in view._reaction_panel.instruction.text()
+        view.on_session_started()
+        assert instruction in view._reaction_panel.instruction.text()
+        assert "请先离开测量区" not in view._reaction_panel.instruction.text()
+
+
+def test_preparing_snapshot_can_advance_instruction_before_start_signal(qtbot):
+    panel = ReactionPanel()
+    qtbot.addWidget(panel)
+    panel.configure(ReactionConfig())
+    panel.update_snapshot(dict(state="preparing", trial_index=1, total_trials=5))
+    assert "站在测量区内" in panel.instruction.text()
+
+
 def test_visual_presentation_echoes_request_clock_and_clears_on_stop(qtbot, monkeypatch):
     panel = ReactionPanel()
     qtbot.addWidget(panel)

@@ -11,6 +11,8 @@ from ui.reaction_controller import ReactionController
 
 
 class Worker(QObject):
+    segment_count = 1
+    occupied_offset = 0
     sensor_frame_received = Signal(object)
     acquisition_issue = Signal(object)
     data_received = Signal(str)
@@ -21,7 +23,7 @@ class Worker(QObject):
         super().__init__()
         assert kwargs['legacy_frame_signals'] is False
         self.sample = 0
-        self.layout = DeviceLayout.linear(1)
+        self.layout = DeviceLayout.linear(self.segment_count)
         self.stopped = False
 
     @Slot()
@@ -39,10 +41,12 @@ class Worker(QObject):
 
     def frames(self, count, occupied=False):
         for _ in range(count):
-            bits = bytes([int(occupied)] * 12 + [0] * 84)
+            bits = bytearray(self.layout.bit_count)
+            if occupied:
+                bits[self.occupied_offset:self.occupied_offset + 12] = b'\x01' * 12
             self.sensor_frame_received.emit(SensorFrame(
                 'test-stream', self.layout, self.sample, self.sample, time.perf_counter_ns(),
-                bits, b'\x01' * 96, b'\xff' * 12))
+                bytes(bits), b'\x01' * self.layout.bit_count, b'\xff' * self.layout.payload_bytes))
             self.sample += 1
 
 
@@ -156,5 +160,32 @@ def test_new_session_ignores_previous_generation_callbacks(qtbot):
         assert controller.engine.session.state == 'stimulus_pending'
         controller.stop('manual')
         assert len(reports) == 2
+    finally:
+        controller.discard()
+
+
+def test_five_segment_preflight_and_last_segment_response(qtbot):
+    class FiveSegmentWorker(Worker):
+        segment_count = 5
+        occupied_offset = 4 * 96 + 20
+
+    controller = ReactionController(worker_factory=FiveSegmentWorker)
+    reports, requests = [], []
+    controller.session_finished.connect(reports.append)
+    controller.reaction_stimulus_requested.connect(requests.append)
+    try:
+        worker = prepared(qtbot, controller)
+        assert controller.quality_status['segment_count'] == 5
+        assert controller.is_running
+        worker.frames(4, occupied=True)
+        qtbot.waitUntil(lambda: bool(requests))
+        controller.reaction_stimulus_presented({**requests[0], 'success': True,
+                                              'requested_monotonic_ns': time.perf_counter_ns()})
+        qtbot.waitUntil(lambda: controller.engine.session.state == 'responding')
+        worker.frames(11)
+        qtbot.waitUntil(lambda: bool(reports))
+        assert reports[0].trials[0].status == 'valid'
+        assert reports[0].report_config_snapshot['device']['segment_count'] == 5
+        assert reports[0].report_config_snapshot['measurement_region'] == 'all_reported_segments'
     finally:
         controller.discard()

@@ -81,10 +81,16 @@ class ReactionPanel(QFrame):
         self.trial_label.setText(f"第 1 / {config.number_of_repetitions} 次")
         position, action = ("站在测量区内", "跳起") if config.start_position == "Inside area" else ("站在测量区外", "进入测量区")
         cue = {"Visual stimulus": "屏幕变绿后", "Acoustic stimulus": "听到提示音后", "Visual/Acoustic stimulus": "屏幕变绿或听到提示音后"}[config.stimulus_type]
-        self.instruction.setText(f"{position} · {cue}{action}")
+        self._trial_instruction = f"{position} · {cue}{action}"
+        self.instruction.setText("请先离开测量区，保持无遮挡。自检通过后点击开始")
+        self._set_stimulus("等待设备自检", False)
         self.result_label.setText("本次结果  —")
         if config.stimulus_type != "Visual stimulus":
             self._preload_audio()
+
+    def begin_trials(self):
+        self.instruction.setText(self._trial_instruction)
+        self._set_stimulus("保持起始姿势", False)
 
     def _preload_audio(self):
         if self._sound is not None:
@@ -140,6 +146,8 @@ class ReactionPanel(QFrame):
 
     def update_snapshot(self, snapshot):
         state = snapshot.get("state", "idle")
+        if state == "preparing":
+            self.begin_trials()
         self.trial_label.setText(f"第 {snapshot.get('trial_index', 1)} / {snapshot.get('total_trials', 1)} 次")
         self.next_button.setVisible(state == "manual_wait")
         self.next_button.setEnabled(bool(snapshot.get("next_allowed")))

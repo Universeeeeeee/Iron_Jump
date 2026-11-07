@@ -1,6 +1,7 @@
 """Single-thread reaction trials over complete USB samples, without camera input."""
 import time
 import uuid
+from dataclasses import replace
 
 from qtpy.QtCore import QObject, QThread, QTimer, Qt, Signal, Slot
 
@@ -45,8 +46,6 @@ class ReactionBridge(QObject):
     def _readiness(self):
         result = self.preflight.status(time.perf_counter_ns())
         result['_reaction_session_id'] = self.session_id
-        if result['segment_count'] not in (None, 1):
-            result.update(ready=False, message='反应时测试需要单段设备')
         if result['bad_indices']:
             result.update(ready=False, requires_acknowledgement=False,
                           message='请清空测量区域并排除异常光束后开始反应时测试')
@@ -169,7 +168,13 @@ class ReactionBridge(QObject):
         self.stimulus_cancelled.emit(self.session_id)
 
     def build_report(self, reason='manual'):
-        return self.session.build_report(reason)
+        report = self.session.build_report(reason)
+        if self._armed_context is not None:
+            report = replace(report, report_config_snapshot={
+                **report.report_config_snapshot, 'device': self._armed_context.snapshot(),
+                'measurement_region': 'all_reported_segments',
+            })
+        return report
 
 
 class ReactionController(SessionController):
@@ -233,6 +238,13 @@ class ReactionController(SessionController):
     def _on_walking_readiness(self, value):
         if self._engine is not None and value['_reaction_session_id'] == self._reaction_session_id:
             super()._on_walking_readiness(value)
+
+    @Slot(object)
+    def _on_device_layout(self, layout):
+        # Reaction timing uses the whole region; do not apply the legacy
+        # jump/treadmill controller's single-module restriction here.
+        self._device_layout = layout
+        self.device_layout_changed.emit(layout)
 
     @Slot(str, str)
     def _on_reaction_finished(self, reason, session_id):

@@ -151,9 +151,10 @@ class ReactionSession:
         return tuple(self._events)
 
     def _frame_error(self, frame):
-        if len(frame.layout.segments) != 1 or len(frame.contact_bits) != 96 or len(frame.valid_bits) != 96:
+        bit_count = frame.layout.bit_count
+        if len(frame.contact_bits) != bit_count or len(frame.valid_bits) != bit_count:
             return "unsupported_layout"
-        if frame.valid_bits != b"\x01" * 96 or frame.layout.invalid_bit_indices:
+        if frame.valid_bits != b"\x01" * bit_count or frame.layout.invalid_bit_indices:
             return "invalid_beams"
         if any(bit not in (0, 1) for bit in frame.contact_bits):
             return "invalid_contact_bits"

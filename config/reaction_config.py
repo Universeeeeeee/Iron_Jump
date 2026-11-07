@@ -1,4 +1,4 @@
-"""Configuration for host-estimated, single-module reaction trials."""
+"""Configuration for host-estimated reaction trials."""
 from dataclasses import asdict, dataclass, field
 import re
 

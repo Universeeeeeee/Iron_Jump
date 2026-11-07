@@ -684,12 +684,12 @@ class ExecutionView(QWidget):
         elif state in {"disconnected", "connecting"}:
             self.btn_start.setText("开始采集")
             self.btn_start.setEnabled(False)
-        if not self.is_ground and self._detected_segments and self._detected_segments > 1:
+        if not self.is_ground and not self.is_reaction and self._detected_segments and self._detected_segments > 1:
             self._show_unsupported_layout()
 
     def on_device_layout(self, layout):
         self._detected_segments = len(layout.segments) if layout is not None else None
-        if not self.is_ground and self._detected_segments and self._detected_segments > 1:
+        if not self.is_ground and not self.is_reaction and self._detected_segments and self._detected_segments > 1:
             self._show_unsupported_layout()
         elif not self.is_ground and self._device_state == "connected":
             required = getattr(self, "_quality_preflight_required", False)
@@ -710,7 +710,9 @@ class ExecutionView(QWidget):
     def on_walking_readiness(self, result):
         count = result.get("segment_count")
         prefix = f"{count} 段 / 标称 {count} 米 · " if count else ""
-        if result.get("requires_acknowledgement"):
+        if self.is_reaction and not result["ready"] and result.get("message"):
+            message = result["message"]
+        elif result.get("requires_acknowledgement"):
             message = "部分感应点异常，请检查场地后确认"
         elif result["ready"]:
             message = "设备就绪，可以开始"
@@ -742,6 +744,8 @@ class ExecutionView(QWidget):
 
     def on_session_started(self):
         """Enter the running UI only after the device confirms streaming."""
+        if self.is_reaction:
+            self._reaction_panel.begin_trials()
         label = mode_label(getattr(self._config, "test_type", "Jump Test"))
         self._mode_label.setText(f"{label} · 运行中")
         self.btn_start.hide()
@@ -936,7 +940,7 @@ class ExecutionView(QWidget):
         if getattr(self, "_quality_warning", None):
             self._device_label.setText(self._quality_warning)
             return
-        if not self.is_ground and self._detected_segments and self._detected_segments > 1:
+        if not self.is_ground and not self.is_reaction and self._detected_segments and self._detected_segments > 1:
             self._show_unsupported_layout()
             return
         if getattr(self._config, "test_type", "") not in {"Sprint and Gait Test", "Overground Running Test"}:
