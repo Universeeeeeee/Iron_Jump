@@ -138,6 +138,7 @@ class TestParamPanelTreadmill:
             "地面跑步",
             "跑步机走路",
             "跑步机跑步",
+            "反应时测试",
         ]
         assert "External impulse" not in [
             self._panel._widgets["start_type"].itemText(index)

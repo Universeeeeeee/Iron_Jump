@@ -457,6 +457,7 @@ def _finish_reason_label(reason: str | None) -> str:
     labels = {
         "jump_count_reached": "跳跃次数已达标",
         "time_up": "测试时间到",
+        "repetitions_completed": "重复次数已完成",
         "manual": "手动结束",
         "error": "异常结束",
     }
@@ -478,6 +479,16 @@ def _detail_section_html(title: str, lines: list[str]) -> str:
 
 
 def _config_detail_lines(config: Any) -> list[str]:
+    if config.test_type == "Reaction Times":
+        return [
+            f"刺激类型 · {config.stimulus_type}",
+            f"起始位置 · {'区内，光学离地' if config.start_position == 'Inside area' else '区外，进入测量区'}",
+            f"重复次数 · {config.number_of_repetitions} · {'自动' if config.sequence_type == 'Automatic' else '手动'}",
+            f"最小间隔 · {config.minimum_pause}",
+            f"随机等待 · {config.stimulus_delay_min_ms}–{config.stimulus_delay_max_ms} ms",
+            f"反应超时 · {config.response_timeout_ms} ms",
+            "软件估计 · 未校准",
+        ]
     lines: list[str] = []
     if hasattr(config, "start_type"):
         lines.append(f"启动: {config.start_type} / {config.start_position}")
@@ -519,6 +530,11 @@ def _config_detail_lines(config: Any) -> list[str]:
 def _session_summary(session: SessionRecord) -> str:
     summary: dict[str, Any] = session.report_summary
     report_type = summary.get("report_type")
+    if report_type == "reaction":
+        count = f"有效 {summary.get('valid_count', 0)} / {summary.get('attempt_count', 0)} 次"
+        mean = summary.get("mean_reaction_time_ms")
+        value = f"平均 {mean:.0f} ms" if mean is not None else "暂无有效反应时"
+        return f"{count} · {value} · 软件估计（未校准）"
     recognized = summary.get("recognized_summary")
     if recognized:
         length, speed = recognized['mean_step_m'], recognized['speed_m_s']

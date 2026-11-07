@@ -29,6 +29,9 @@ class MeasurementController(QObject):
     pause_state_changed = Signal(bool)
     session_started = Signal()
     session_finished = Signal(object)
+    reaction_snapshot = Signal(dict)
+    reaction_stimulus_requested = Signal(dict)
+    reaction_stimulus_cancelled = Signal()
 
     def __init__(self, parent=None, *, worker_factory=None, evidence_root=None):
         super().__init__(parent)
@@ -87,6 +90,18 @@ class MeasurementController(QObject):
     def prepare(self, config):
         if self._child:
             self._child.close_and_wait()
+        from ui.reaction_controller import ReactionController
+        needs_reaction = config.test_type == 'Reaction Times'
+        if needs_reaction != isinstance(self._local, ReactionController):
+            self._local.discard()
+            self._local.deleteLater()
+            cls = ReactionController if needs_reaction else SessionController
+            self._local = cls(self, worker_factory=self._worker_factory)
+            self._bind(self._local)
+            if needs_reaction:
+                self._local.reaction_snapshot.connect(self.reaction_snapshot)
+                self._local.reaction_stimulus_requested.connect(self.reaction_stimulus_requested)
+                self._local.reaction_stimulus_cancelled.connect(self.reaction_stimulus_cancelled)
         self._config = config
         if config.test_type in {'Sprint and Gait Test', 'Overground Running Test'}:
             self._local.discard()
@@ -155,3 +170,11 @@ class MeasurementController(QObject):
     def resume(self):
         if self._child is None:
             self._local.resume()
+
+    def reaction_stimulus_presented(self, value):
+        if self._config is not None and self._config.test_type == 'Reaction Times':
+            self._local.reaction_stimulus_presented(value)
+
+    def reaction_next(self):
+        if self._config is not None and self._config.test_type == 'Reaction Times':
+            self._local.reaction_next()

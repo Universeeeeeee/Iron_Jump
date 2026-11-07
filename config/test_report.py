@@ -12,6 +12,7 @@ import math
 from typing import Optional, Union
 
 from config.treadmill_report import TreadmillGaitReport, TreadmillRunningReport
+from config.reaction_report import ReactionTestReport
 
 G = 9.81  # 重力加速度
 
@@ -147,6 +148,7 @@ class GaitTestReport:
 from config.overground_running_report import OvergroundRunningReport
 
 TestReport = Union[
+    ReactionTestReport,
     OvergroundRunningReport,
     JumpTestReport,
     GaitTestReport,

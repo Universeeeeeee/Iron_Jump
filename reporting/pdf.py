@@ -5,6 +5,7 @@ from html import escape
 
 
 from config.test_report import JumpTestReport
+from config.reaction_report import ReactionTestReport
 from config.treadmill_report import TreadmillGaitReport, TreadmillRunningReport
 from reporting.overground_running import REASONS, VALUES, issue_description
 
@@ -43,6 +44,8 @@ def report_html(report, *, title, stats, reason, detailed=False, subject=None, s
     snapshot = report.report_config_snapshot
     if snapshot.get('data_source') == 'simulation':
         content += '<p><b>模拟数据，非受试者实测。</b></p>'
+    if isinstance(report, ReactionTestReport):
+        return content + _reaction_html(report, detailed=detailed)
     ground = getattr(report, 'walking_summary', None) or getattr(report, 'running_summary', None)
     core = stats[:8]
     if ground and any(row[0] in {'识别步数', '识别步数 / 步间'} for row in stats):
@@ -117,4 +120,34 @@ def report_html(report, *, title, stats, reason, detailed=False, subject=None, s
         if ground.get('issues'):
             content += '<h2>采集与识别提示</h2>' + _table(['时间(s)', '原因'], [
                 [r.get('time_s'), issue_description(r)] for r in ground['issues']])
+    return content
+
+
+def _reaction_html(report, *, detailed):
+    from reporting.excel import REACTION_LABELS, REACTION_TIMING_NOTE
+
+    def label(value):
+        return REACTION_LABELS.get(value, value)
+
+    content = '<p><b>' + escape(REACTION_TIMING_NOTE) + '</b></p>'
+    content += '<h2>测试摘要</h2>' + _table(['尝试次数', '有效次数'], [[len(report.trials), report.valid_count]])
+    content += '<p>仅有效正式尝试纳入统计，按刺激类型和动作分组。无有效数据时显示“未测得”。</p>'
+    rows = []
+    for modality, statistics in report.grouped_statistics.items():
+        actions = dict.fromkeys(trial.action for trial in report.trials if trial.modality == modality)
+        rows.append([label(modality), label(next(iter(actions), None)),
+                     *(statistics[key] for key in ('count', 'mean_ms', 'median_ms', 'min_ms', 'max_ms', 'std_ms'))])
+    content += '<h2>分组软件估计反应时</h2>' + _table(
+        ['刺激', '动作', '有效次数', '均值(ms)', '中位数(ms)', '最小(ms)', '最大(ms)', '标准差(ms)'], rows)
+    content += '<h2>全部尝试</h2>' + _table(
+        ['序号', '刺激', '动作', '状态', '软件估计(ms)', '纳入统计', '质量标记'],
+        [[trial.index, label(trial.modality), label(trial.action), label(trial.status),
+          trial.reaction_time_ms, trial.status == 'valid', '、'.join(trial.quality_flags)]
+         for trial in report.trials])
+    if detailed:
+        content += '<h2 style="page-break-before:always">原始计时证据</h2><p>主机时间单位为 ns，采样序号来自设备数据流。完整计时字段可导出 Excel。</p>'
+        content += _table(['序号', '刺激请求主机时间', '响应帧接收主机时间', '设备采样序号', '原始帧序号'],
+                          [[trial.index, trial.stimulus_request_host_ns, trial.response_received_host_ns,
+                            trial.response_sample_index, trial.response_frame_index]
+                           for trial in report.trials])
     return content

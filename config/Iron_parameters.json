@@ -265,7 +265,8 @@
               "Reaction Times"
             ],
             "source": "4.2.2.3",
-            "priority": "core"
+            "priority": "core",
+            "default": "Visual stimulus"
           },
           {
             "name": "minimum_pause",
@@ -277,7 +278,8 @@
               "Reaction Times"
             ],
             "source": "4.2.2.3",
-            "priority": "core"
+            "priority": "core",
+            "default": "00:02"
           },
           {
             "name": "number_of_repetitions",
@@ -289,7 +291,8 @@
               "Reaction Times"
             ],
             "source": "4.2.2.3",
-            "priority": "core"
+            "priority": "core",
+            "default": 5
           },
           {
             "name": "sequence_type",
@@ -304,6 +307,46 @@
               "Reaction Times"
             ],
             "source": "4.2.2.3",
+            "priority": "core",
+            "default": "Automatic"
+          },
+          {
+            "name": "stimulus_delay_min_ms",
+            "display_name": "随机等待下限",
+            "description": "随机等待下限",
+            "type": "integer",
+            "range": "1-60000",
+            "default": 2000,
+            "unit": "ms",
+            "applicable_tests": [
+              "Reaction Times"
+            ],
+            "priority": "core"
+          },
+          {
+            "name": "stimulus_delay_max_ms",
+            "display_name": "随机等待上限",
+            "description": "随机等待上限",
+            "type": "integer",
+            "range": "1-60000",
+            "default": 5000,
+            "unit": "ms",
+            "applicable_tests": [
+              "Reaction Times"
+            ],
+            "priority": "core"
+          },
+          {
+            "name": "response_timeout_ms",
+            "display_name": "反应超时",
+            "description": "反应超时",
+            "type": "integer",
+            "range": "1-60000",
+            "default": 3000,
+            "unit": "ms",
+            "applicable_tests": [
+              "Reaction Times"
+            ],
             "priority": "core"
           }
         ]

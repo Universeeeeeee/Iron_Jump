@@ -131,6 +131,11 @@ class ParamPanel(QWidget):
             "stop_type", "test_length", "treadmill_speed", "direction",
             "starting_foot_override",
         ],
+        "Reaction Times": [
+            "stimulus_type", "start_position", "number_of_repetitions",
+            "sequence_type", "minimum_pause", "stimulus_delay_min_ms",
+            "stimulus_delay_max_ms", "response_timeout_ms",
+        ],
     }
 
     # 受 stop_type 联动影响的字段
@@ -238,7 +243,7 @@ class ParamPanel(QWidget):
                 continue
 
             if isinstance(widget, QComboBox):
-                idx = (widget.findData(val) if name == "starting_foot_override"
+                idx = (widget.findData(val) if name == "starting_foot_override" or self._test_type == "Reaction Times"
                        else widget.findText(str(val)))
                 if idx >= 0:
                     widget.setCurrentIndex(idx)
@@ -393,6 +398,10 @@ class ParamPanel(QWidget):
                 if param_def.display_name
                 else param_name
             )
+            if test_type == "Reaction Times" and param_def.unit:
+                display += f" ({param_def.unit})"
+            elif test_type == "Reaction Times" and param_name == "minimum_pause":
+                display += " (分:秒)"
             card = self._create_form_row(display, widget)
             self._rows[param_name] = card
             r, c = divmod(self._basic_grid_pos, 2)
@@ -401,6 +410,7 @@ class ParamPanel(QWidget):
 
         # ---- 重建 Layer3 ----
         filter_order = self._LAYER3_ORDER.get(test_type, [])
+        self._filter_section.setVisible(bool(filter_order))
         pos = 0
         for param_name in filter_order:
             if param_name not in applicable_names:
@@ -511,8 +521,8 @@ class ParamPanel(QWidget):
             widget = self._create_int_widget(param_name, param_def)
         elif param_def.param_type == "float":
             widget = self._create_float_widget(param_name, param_def)
-        elif param_def.param_type == "string" and param_name == "test_length":
-            widget = self._create_time_widget()
+        elif param_def.param_type == "string" and param_name in ("test_length", "minimum_pause"):
+            widget = self._create_time_widget(param_name)
         else:
             return None  # 不支持的类型
 
@@ -536,6 +546,11 @@ class ParamPanel(QWidget):
             labels = {"Not defined": "未确认", "left": "左脚", "right": "右脚"}
             for value in values:
                 combo.addItem(labels[value], None if value == "Not defined" else value)
+        elif self._test_type == "Reaction Times":
+            labels = {"Visual stimulus": "视觉 · 红变绿", "Acoustic stimulus": "听觉 · 提示音", "Visual/Acoustic stimulus": "随机视觉 / 听觉",
+                      "Inside area": "区内 · 光学离地", "Outside area": "区外 · 进入测量区", "Automatic": "自动", "Manual": "手动 · 每次确认"}
+            for value in values:
+                combo.addItem(labels.get(value, value), value)
         else:
             combo.addItems(values)
 
@@ -545,7 +560,7 @@ class ParamPanel(QWidget):
             combo.setToolTip(param_def.description)
         default = self._default_for_param(param_name, param_def)
         if default is not None:
-            idx = combo.findText(str(default))
+            idx = combo.findData(default) if self._test_type == "Reaction Times" else combo.findText(str(default))
             if idx >= 0:
                 combo.setCurrentIndex(idx)
 
@@ -670,14 +685,15 @@ class ParamPanel(QWidget):
             pass
         return None
 
-    def _create_time_widget(self) -> QTimeEdit:
+    def _create_time_widget(self, param_name="test_length") -> QTimeEdit:
         """为 test_length 创建 QTimeEdit，格式 mm:ss。"""
         time_edit = QTimeEdit()
         time_edit.setDisplayFormat("mm:ss")
-        time_edit.setTime(QTime(0, 1, 0))  # 默认 01:00
+        default = self._default_for_param(param_name, self._schema.get_param_def(param_name))
+        time_edit.setTime(QTime.fromString(default or "01:00", "mm:ss"))
 
         time_edit.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Fixed)
-        self._widgets["test_length"] = time_edit
+        self._widgets[param_name] = time_edit
         return time_edit
 
     def _create_switch_widget(self) -> QCheckBox:
@@ -762,7 +778,7 @@ class ParamPanel(QWidget):
         result = {}
         for name, widget in self._widgets.items():
             if isinstance(widget, QComboBox):
-                result[name] = (widget.currentData() if name in ("test_type", "starting_foot_override")
+                result[name] = (widget.currentData() if name in ("test_type", "starting_foot_override") or self._test_type == "Reaction Times"
                                 else widget.currentText())
             elif isinstance(widget, QSpinBox):
                 result[name] = widget.value()

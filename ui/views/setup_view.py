@@ -824,10 +824,18 @@ class SetupView(QWidget):
         ]
         if hasattr(config, "start_type"):
             parts.append(f"启动：{config.start_type}")
-        stop_text = config.stop_type
+        stop_text = getattr(config, "stop_type", "完成重复次数")
         if getattr(config, "test_length", None):
             stop_text += f" · {config.test_length}"
         parts.append(f"停止方式：{stop_text}")
+        if config.test_type == "Reaction Times":
+            stimuli = {"Visual stimulus": "视觉", "Acoustic stimulus": "听觉", "Visual/Acoustic stimulus": "随机视觉 / 听觉"}
+            parts.extend([
+                f"刺激：{stimuli.get(config.stimulus_type, config.stimulus_type)}",
+                f"目标：{config.number_of_repetitions} 次 · {'自动' if config.sequence_type == 'Automatic' else '手动'}",
+                f"随机等待：{config.stimulus_delay_min_ms / 1000:g}–{config.stimulus_delay_max_ms / 1000:g} s",
+                "软件估计 · 未校准",
+            ])
         if getattr(config, "number_of_jumps", None):
             parts.append(f"目标：{config.number_of_jumps} 次")
         if hasattr(config, "treadmill_speed"):
@@ -862,6 +870,11 @@ class SetupView(QWidget):
         )
 
     def _update_filter_summary(self, config: AnyTestConfig) -> None:
+        if config.test_type == "Reaction Times":
+            self._filter_state_label.setText("反应确认与姿势稳定检测")
+            self._filter_details_label.clear()
+            self._filter_details_label.hide()
+            return
         changed = self._changed_filter_values(config)
         if not changed:
             self._filter_state_label.setText("默认配置")

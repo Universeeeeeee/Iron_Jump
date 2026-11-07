@@ -33,6 +33,7 @@ from ui.embedded_camera_panel import EmbeddedCameraPanel
 from ui.footprint_channel import FootprintChannelWidget
 from ui.ground_track import GroundTrackPanel
 from ui.icons import icon
+from ui.reaction_panel import ReactionPanel
 
 # pyqtgraph 可选导入
 try:
@@ -118,6 +119,8 @@ class ExecutionView(QWidget):
     stop_requested = Signal()
     camera_requested = Signal(str)
     ground_layout_changed = Signal()
+    reaction_stimulus_presented = Signal(object)
+    reaction_next_requested = Signal()
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -278,6 +281,11 @@ class ExecutionView(QWidget):
         self._ground_status.setStyleSheet(qss("""color: ${text_secondary}; font-size: 13px; border: none;"""))
         self._ground_status.hide()
         workspace_layout.addWidget(self._ground_status)
+        self._reaction_panel = ReactionPanel()
+        self._reaction_panel.stimulus_presented.connect(self.reaction_stimulus_presented)
+        self._reaction_panel.next_requested.connect(self.reaction_next_requested)
+        self._reaction_panel.hide()
+        workspace_layout.addWidget(self._reaction_panel, 1)
 
         # ===== 图表区 =====
         charts_layout = QHBoxLayout()
@@ -474,6 +482,10 @@ class ExecutionView(QWidget):
     def is_ground(self):
         return getattr(self._config, "test_type", "") in {"Sprint and Gait Test", "Overground Running Test"}
 
+    @property
+    def is_reaction(self):
+        return getattr(self._config, "test_type", "") == "Reaction Times"
+
     def _apply_style(self):
         self.setStyleSheet(
             self.styleSheet()
@@ -487,6 +499,39 @@ class ExecutionView(QWidget):
     def configure(self, config: TestConfig):
         """切入本视图前调用，初始化仪表盘标签和图表轴。"""
         self._config = config
+        self._reaction_panel.setVisible(self.is_reaction)
+        for button in (self.btn_logi_camera, self.btn_tinyse_camera, self.btn_basic_camera):
+            button.setVisible(not self.is_reaction)
+        if self.is_reaction:
+            self._stop_countdown()
+            self._countdown_remaining = 0
+            self._jump_target = None
+            self._camera_start_timer.stop()
+            self._camera_panel.shutdown()
+            self._reaction_panel.configure(config)
+            self._mode = "反应时"
+            self._mode_label.setText("反应时测试 · 就绪")
+            for card in self._jump_cards + self._gait_cards:
+                card.hide()
+            self._lower_split.hide()
+            self._ground_track.hide()
+            self._ground_track.detail.hide()
+            self._ground_status.hide()
+            self._device_label.show()
+            self._device_label.setText("正在连接设备…")
+            self._device_state = "connecting"
+            self._controls_layout.setDirection(QBoxLayout.LeftToRight)
+            self._main_layout.addWidget(self._controls_container)
+            self._controls_container.show()
+            self._set_progress_visible(False)
+            self.btn_start.setText("开始采集")
+            self.btn_start.setEnabled(False)
+            self.btn_start.show()
+            self.btn_return_config.show()
+            self.btn_pause.hide()
+            self.btn_stop.hide()
+            self.ground_layout_changed.emit()
+            return
         self._camera_panel.set_vision_enabled(config.test_type == "Sprint and Gait Test")
         self._camera_panel.enable_sdk_tracking()
         self._mode = "纵跳" if config.test_type == "Jump Test" else "步态分析"
@@ -597,7 +642,7 @@ class ExecutionView(QWidget):
         )
 
     def _start_camera_preview_if_visible(self):
-        if self.isVisible() and self._lower_split.isVisible():
+        if not self.is_reaction and self.isVisible() and self._lower_split.isVisible():
             self._camera_panel.start_preview()
 
     def resizeEvent(self, event):
@@ -701,7 +746,7 @@ class ExecutionView(QWidget):
         self._mode_label.setText(f"{label} · 运行中")
         self.btn_start.hide()
         self.btn_return_config.hide()
-        self.btn_pause.setVisible(getattr(self._config, "test_type", "") not in {"Sprint and Gait Test", "Overground Running Test"})
+        self.btn_pause.setVisible(getattr(self._config, "test_type", "") not in {"Sprint and Gait Test", "Overground Running Test", "Reaction Times"})
         self.btn_stop.show()
         self._start_countdown()
 
@@ -713,6 +758,8 @@ class ExecutionView(QWidget):
             self.btn_tinyse_camera.setToolTip("OBSBOT Tiny SE (未检测到，点击可重试)")
 
     def _select_camera(self, camera_type: str):
+        if self.is_reaction:
+            return
         if camera_type == "basic":
             if self._lower_split.isVisible():
                 self._camera_panel.start_preview()
@@ -724,6 +771,7 @@ class ExecutionView(QWidget):
     def reset(self):
         """重置所有仪表盘和图表到初始状态。"""
         self._quality_warning = None
+        self._reaction_panel.clear()
         # 仪表盘
         for card in self._jump_cards + self._gait_cards:
             card.set_value("--")
@@ -940,7 +988,7 @@ class ExecutionView(QWidget):
         self._arrange_execution_area(self._mode == "纵跳")
 
     def _arrange_execution_area(self, is_jump: bool):
-        if not self.is_ground:
+        if not self.is_ground and not self.is_reaction:
             self._main_layout.removeWidget(self._progress_container)
             self._lower_layout.addWidget(self._progress_container, 0, 1, 2, 1)
             self._progress_container.setFixedWidth(72)
@@ -949,7 +997,7 @@ class ExecutionView(QWidget):
             self._progress_bar.setOrientation(Qt.Vertical)
             self._progress_bar.setTextVisible(False)
             self._progress_overlay.show()
-        if self.is_ground or self._compact_controls:
+        if self.is_ground or self.is_reaction or self._compact_controls:
             self._lower_layout.removeWidget(self._controls_container)
             self._main_layout.addWidget(self._controls_container)
             self._controls_layout.setDirection(QBoxLayout.LeftToRight)
@@ -1086,4 +1134,21 @@ class ExecutionView(QWidget):
 
     def _on_stop(self):
         self._stop_countdown()
+        self._reaction_panel.clear()
         self.stop_requested.emit()
+
+    def present_reaction_stimulus(self, request):
+        if self.is_reaction and self.isVisible():
+            self._reaction_panel.present(request)
+
+    def clear_reaction_stimulus(self):
+        self._reaction_panel.cancel_stimulus()
+
+    def on_reaction_snapshot(self, snapshot):
+        if self.is_reaction:
+            self._reaction_panel.update_snapshot(snapshot)
+
+    def hideEvent(self, event):
+        if self.is_reaction:
+            self._reaction_panel.clear()
+        super().hideEvent(event)

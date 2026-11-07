@@ -356,6 +356,12 @@ class MainWindow(QMainWindow):
         self._exec_view.pause_requested.connect(self._on_pause)
         self._exec_view.stop_requested.connect(self._on_manual_stop)
         self._exec_view.camera_requested.connect(self._on_camera)
+        if hasattr(self._controller, "reaction_snapshot"):
+            self._controller.reaction_snapshot.connect(self._exec_view.on_reaction_snapshot)
+            self._controller.reaction_stimulus_requested.connect(self._exec_view.present_reaction_stimulus)
+            self._controller.reaction_stimulus_cancelled.connect(self._exec_view.clear_reaction_stimulus)
+            self._exec_view.reaction_stimulus_presented.connect(self._controller.reaction_stimulus_presented)
+            self._exec_view.reaction_next_requested.connect(self._controller.reaction_next)
 
         # Controller 实时数据 → ExecutionView (直连)
         self._controller.hop_event.connect(self._exec_view.on_hop_event)
@@ -536,6 +542,12 @@ class MainWindow(QMainWindow):
     def _on_ready(self, setup: SessionSetup):
         """SetupView '准备就绪' → 初始化资源 + 切到 ExecutionView"""
         config = setup.config
+        if config.test_type == "Reaction Times":
+            for camera in (self._logi_camera, self._tinyse_camera):
+                if camera is not None:
+                    camera.close()
+            if self._basic_camera is not None and self._basic_camera.is_running:
+                self._basic_camera.close_camera()
         self._active_config = config
         self._subject_id = setup.subject_id
         self._subject = setup.subject
@@ -768,6 +780,8 @@ class MainWindow(QMainWindow):
         支持三种类型: "logi" / "tinyse" / "basic"
         惰性创建, 已打开则置顶, 已销毁则重建。
         """
+        if getattr(self._active_config, "test_type", "") == "Reaction Times":
+            return
         if camera_type == "logi":
             if LogiCameraWidget is None:
                 QMessageBox.warning(self, "相机", "LogiCameraWidget 模块不可用")

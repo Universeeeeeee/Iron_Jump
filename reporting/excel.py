@@ -5,10 +5,24 @@ from openpyxl import Workbook
 
 from config.test_report import TestReport, JumpTestReport, GaitTestReport
 from config.overground_running_report import OvergroundRunningReport
+from config.reaction_report import ReactionTestReport
 from config.treadmill_report import TreadmillGaitReport, TreadmillRunningReport
 
 
+REACTION_TIMING_NOTE = (
+    "主机软件估计反应时（未校准）。时间差取刺激请求与响应帧接收的主机时间，"
+    "包含刺激输出和数据传输延迟。实际刺激发生时刻未测量。"
+)
+REACTION_LABELS = {
+    "visual": "视觉", "acoustic": "听觉", "takeoff": "光学离地", "entry": "进入区域",
+    "valid": "有效", "early": "抢先反应", "timeout": "超时", "gap": "数据缺口",
+    "cancelled": "已取消", "stimulus_failed": "刺激输出失败",
+}
+
+
 def has_export_data(report: TestReport) -> bool:
+    if isinstance(report, ReactionTestReport):
+        return bool(report.trials or report.export_frames)
     frames = report.export_frames
     has_jump_metrics = isinstance(report, JumpTestReport) and any(
         (
@@ -35,6 +49,8 @@ def has_export_data(report: TestReport) -> bool:
 
 def build_report_workbook(report: TestReport, *, include_recognized: bool = False) -> Workbook:
     """Preserve the existing worksheet order, values, and missing-value conventions."""
+    if isinstance(report, ReactionTestReport):
+        return _reaction_workbook(report)
     frames = report.export_frames
     timestamps = report.export_timestamps
     has_walking = isinstance(report, GaitTestReport) and bool(report.walking_summary)
@@ -334,6 +350,51 @@ def _jump_metric_rows(report: JumpTestReport) -> list[list[object]]:
             ]
         )
     return rows
+
+
+def _reaction_workbook(report: ReactionTestReport) -> Workbook:
+    from dataclasses import fields
+    import json
+    from config.reaction_report import ReactionTrialRecord
+
+    book = Workbook()
+    summary = book.active
+    summary.title = "Reaction Summary"
+    summary.append(["metric", "value"])
+    summary.append(["timing_note", REACTION_TIMING_NOTE])
+    summary.append(["timing_quality", report.timing_quality])
+    summary.append(["finish_reason", report.finish_reason])
+    summary.append(["attempt_count", len(report.trials)])
+    summary.append(["valid_count", report.valid_count])
+    summary.append(["statistics_policy", "仅有效正式尝试，按刺激类型和动作分组；空白表示无有效数据。"])
+
+    groups = book.create_sheet("Reaction Groups")
+    groups.append(["modality", "action", "count", "mean_ms", "median_ms", "min_ms", "max_ms", "std_ms"])
+    for modality, statistics in report.grouped_statistics.items():
+        actions = dict.fromkeys(trial.action for trial in report.trials if trial.modality == modality)
+        action = next(iter(actions), None)
+        groups.append([modality, action, *(statistics[key] for key in ("count", "mean_ms", "median_ms", "min_ms", "max_ms", "std_ms"))])
+
+    trials = book.create_sheet("Reaction Trials")
+    columns = [field.name for field in fields(ReactionTrialRecord)]
+    trials.append([*columns, "is_included_in_statistics"])
+    for trial in report.trials:
+        row = []
+        for column in columns:
+            value = getattr(trial, column)
+            if column.endswith("_ns") and value is not None:
+                # Excel numbers keep only 15 significant digits; retain raw clocks exactly.
+                value = str(value)
+            elif isinstance(value, tuple):
+                value = json.dumps(value, ensure_ascii=False)
+            row.append(value)
+        trials.append([*row, trial.status == "valid"])
+
+    config = book.create_sheet("Reaction Config")
+    config.append(["key", "value"])
+    for key, value in report.report_config_snapshot.items():
+        config.append([key, json.dumps(value, ensure_ascii=False) if isinstance(value, (dict, list, tuple)) else value])
+    return book
 
 def _value_at(values: tuple, index: int):
     return values[index] if 0 <= index < len(values) else ""

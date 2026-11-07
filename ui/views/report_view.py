@@ -48,6 +48,8 @@ from qtpy.QtGui import QColor, QFont, QFontMetrics, QPainter
 
 from config.test_report import TestReport, JumpTestReport, GaitTestReport
 from config.overground_running_report import OvergroundRunningReport
+from config.reaction_report import ReactionTestReport
+from ui.reaction_panel import STIMULUS_LABELS, TRIAL_STATUS_LABELS
 from config.treadmill_report import (
     TreadmillGaitReport,
     TreadmillRunningReport,
@@ -965,8 +967,15 @@ class ReportView(QWidget):
 
     def load_report(self, report: TestReport, session_id: int | None = None):
         """填充统计卡片和图表。"""
+        if isinstance(report, ReactionTestReport):
+            self._load_reaction_report(report, session_id)
+            return
+        for index, card in enumerate(self._stat_cards):
+            row, column = divmod(index, 3)
+            self._stats_layout.addWidget(card, row, column)
         self._analysis_panel.hide()
         self._report = report
+        self._review_title.setText("数据回顾")
         self._export_subject = {}
         self._export_started_at = None
         is_jump = isinstance(report, JumpTestReport)
@@ -1067,6 +1076,82 @@ class ReportView(QWidget):
         self._reason_label.setToolTip("未记录设备质量信息" if quality is None else "")
 
         self._request_latest_if_available()
+
+    def _load_reaction_report(self, report, session_id):
+        from qtpy.QtWidgets import QAbstractItemView, QHeaderView, QTableWidgetItem
+        from reporting.excel import REACTION_TIMING_NOTE
+
+        self._analysis_panel.hide()
+        self._report = report
+        self._session_id = session_id
+        self._export_subject = {}
+        self._export_started_at = None
+        self._latest_requested_for = None
+        self.clear_analysis()
+        self._refresh_analysis_visibility()
+        self._clear_dynamic_widgets()
+        self._title.setText("反应时测试报告")
+        reasons = {"completed": "已完成", "repetitions_completed": "已完成", "manual": "手动结束", "unsupported_layout": "设备段数不支持", "device_error": "设备中断", "error": "采集中断", "cancelled": "已取消"}
+        self._reason_label.setText(f"{reasons.get(report.finish_reason, report.finish_reason)} · 软件估计 · 未校准")
+        self._reason_label.setWordWrap(True)
+        self._reason_label.setToolTip(REACTION_TIMING_NOTE)
+        self._tabs.setCurrentIndex(0)
+        self._tabs.setTabVisible(1, False)
+        self._tabs.setTabVisible(self._gait_question_index, False)
+        self._overview_content_layout.setDirection(QBoxLayout.TopToBottom)
+        self._overview_content_layout.setStretch(0, 0)
+        self._overview_content_layout.setStretch(1, 1)
+        self._stats_content.setMaximumHeight(110)
+        self._stats_content.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Preferred)
+        self._review_content.setMaximumWidth(16777215)
+        self._review_content.setMinimumWidth(360)
+        self._review_title.setText("逐次结果")
+        self._replay_panel.set_ground_context({}, None)
+        self._replay_panel.hide()
+        self._replay_panel.ground_track.detail.hide()
+        self._plot_container.hide()
+        groups = []
+        for modality, summary in report.grouped_statistics.items():
+            if summary["count"]:
+                groups.append(f"{STIMULUS_LABELS.get(modality, modality)} {summary['count']} 次有效 · 均值 {summary['mean_ms']:.0f} ms")
+        self._capture_stats.setText("  |  ".join(groups) + "\n" + REACTION_TIMING_NOTE)
+        self._capture_stats.show()
+
+        def value(number):
+            return f"{number:.0f} ms" if number is not None else "—"
+
+        mixed = report.report_config_snapshot.get("stimulus_type") == "Visual/Acoustic stimulus" or len({trial.modality for trial in report.trials}) > 1
+        self._fill_stat_cards([
+            ("有效次数 / 总次数", f"{report.valid_count} / {len(report.trials)}", "仅有效次数纳入统计"),
+            ("总体平均（混合刺激）" if mixed else "平均反应时", value(report.mean_reaction_time_ms), REACTION_TIMING_NOTE),
+            ("最快反应时", value(report.min_reaction_time_ms), REACTION_TIMING_NOTE),
+            ("最慢反应时", value(report.max_reaction_time_ms), REACTION_TIMING_NOTE),
+            ("标准差", value(report.std_reaction_time_ms), "有效反应时的总体标准差"),
+        ])
+        for column, card in enumerate(self._stat_cards[:5]):
+            self._stats_layout.addWidget(card, 0, column)
+        table = QTableWidget(len(report.trials), 5)
+        table.setObjectName("ReportDetailTable")
+        table.setHorizontalHeaderLabels(["次数", "刺激", "动作", "状态", "反应时 (ms)"])
+        table.setEditTriggers(QAbstractItemView.NoEditTriggers)
+        table.setSelectionBehavior(QAbstractItemView.SelectRows)
+        table.verticalHeader().hide()
+        table.verticalHeader().setDefaultSectionSize(36)
+        table.setMinimumHeight(min(340, max(160, (len(report.trials) + 1) * 36 + 4)))
+        table.horizontalHeader().setSectionResizeMode(QHeaderView.Stretch)
+        for row, trial in enumerate(report.trials):
+            items = [str(trial.index), STIMULUS_LABELS.get(trial.modality, trial.modality),
+                     {"takeoff": "光学离地", "entry": "进入测量区", "leave": "光学离地", "enter": "进入测量区"}.get(trial.action, trial.action),
+                     TRIAL_STATUS_LABELS.get(trial.status, trial.status),
+                     f"{trial.reaction_time_ms:.0f}" if trial.status == "valid" and trial.reaction_time_ms is not None else "—"]
+            for column, text in enumerate(items):
+                item = QTableWidgetItem(text)
+                item.setTextAlignment(Qt.AlignCenter)
+                item.setToolTip("、".join(trial.quality_flags))
+                table.setItem(row, column, item)
+        self._right_layout.addWidget(table, 1)
+        self._dynamic_widgets.append(table)
+        self._reaction_table = table
 
     def answer_gait_question(self, question: str) -> str:
         from reporting.gait_insights import answer_gait_question

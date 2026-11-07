@@ -8,6 +8,7 @@ from config.test_config import AnyTestConfig
 
 SUPPORTED_TEST_TYPES = {
     "Jump Test",
+    "Reaction Times",
     "Sprint and Gait Test",
     "Overground Running Test",
     "Treadmill Gait Test",
@@ -20,6 +21,10 @@ def validate_runtime_config(config: AnyTestConfig) -> list[str]:
     test_type = config.test_type
     if test_type not in SUPPORTED_TEST_TYPES:
         return [f"测试类型尚未接入正式流程: {test_type}"]
+
+    if test_type == "Reaction Times":
+        from config.reaction_config import validate_reaction_config
+        return validate_reaction_config(config)
 
     if test_type in {"Sprint and Gait Test", "Overground Running Test"}:
         import math

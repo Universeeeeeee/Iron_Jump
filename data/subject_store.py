@@ -13,6 +13,7 @@ from pathlib import Path
 from typing import Any, Iterator
 
 from config.test_config import AnyTestConfig, TestConfig, config_from_dict
+from config.reaction_report import ReactionTestReport, ReactionTrialRecord
 from config.test_report import (
     GaitTestReport,
     JumpQualityNoticeRecord,
@@ -681,7 +682,7 @@ class SubjectStore:
     ) -> int:
         summary = _report_summary(report)
         finish_reason = _normalize_finish_reason(report.finish_reason)
-        if isinstance(report, OvergroundRunningReport) and report.finish_reason not in FINISH_REASONS:
+        if isinstance(report, (OvergroundRunningReport, ReactionTestReport)) and report.finish_reason not in FINISH_REASONS:
             # Legacy SQL CHECK has a small vocabulary; preserve the precise reason
             # in the report JSON without misclassifying automatic completion as error.
             finish_reason = None
@@ -1187,7 +1188,7 @@ def _subject_from_row(row: sqlite3.Row) -> SubjectProfile:
 def _session_from_row(row: sqlite3.Row) -> SessionRecord:
     subject_id = row["subject_id"]
     finish_reason = row["finish_reason"]
-    if row["test_type"] == "Overground Running Test":
+    if row["test_type"] in {"Overground Running Test", "Reaction Times"}:
         finish_reason = json.loads(row["report_summary_json"] or "{}").get("finish_reason", finish_reason)
     return SessionRecord(
         id=int(row["id"]),
@@ -1233,7 +1234,7 @@ def _history_from_session(session: SessionRecord) -> dict[str, Any]:
         "date": session.started_at[:10],
         "test_type": session.test_type,
         "number_of_jumps": getattr(config, "number_of_jumps", None),
-        "min_contact_time": config.min_contact_time,
+        "min_contact_time": getattr(config, "min_contact_time", None),
         "finish_reason": session.finish_reason,
         "total_jumps": session.total_jumps,
         "summary": summary,
@@ -1243,6 +1244,11 @@ def _history_from_session(session: SessionRecord) -> dict[str, Any]:
 def _report_detail(report: TestReport) -> dict[str, Any]:
     from dataclasses import asdict as _asdict
 
+    if isinstance(report, ReactionTestReport):
+        detail = _asdict(report)
+        detail.pop("export_frames", None)
+        detail.pop("export_timestamps", None)
+        return {"report_type": "reaction", "report_schema_version": 1, **detail}
     if isinstance(report, JumpTestReport):
         detail = _asdict(report)
         detail.pop("export_frames", None)
@@ -1316,6 +1322,13 @@ def _report_from_detail(detail: dict[str, Any]) -> TestReport:
         for key, value in detail.items()
         if key not in {"report_type", "report_schema_version"}
     }
+
+    if report_type == "reaction":
+        values["trials"] = tuple(
+            ReactionTrialRecord(**{**item, "quality_flags": tuple(item.get("quality_flags", ()))})
+            for item in values.get("trials", ())
+        )
+        return ReactionTestReport(**values)
 
     if report_type == "jump":
         for key in (
@@ -1500,6 +1513,20 @@ def _optional_row_value(row: sqlite3.Row, key: str):
 
 
 def _report_summary(report: TestReport) -> dict[str, Any]:
+    if isinstance(report, ReactionTestReport):
+        return {
+            "report_type": "reaction",
+            "finish_reason": report.finish_reason,
+            "attempt_count": len(report.trials),
+            "valid_count": report.valid_count,
+            "mean_reaction_time_ms": report.mean_reaction_time_ms,
+            "median_reaction_time_ms": report.median_reaction_time_ms,
+            "min_reaction_time_ms": report.min_reaction_time_ms,
+            "max_reaction_time_ms": report.max_reaction_time_ms,
+            "std_reaction_time_ms": report.std_reaction_time_ms,
+            "grouped_statistics": report.grouped_statistics,
+            "timing_quality": report.timing_quality,
+        }
     base: dict[str, Any] = {
         "finish_reason": report.finish_reason,
         "touch_count": report.touch_count,
