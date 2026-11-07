@@ -26,6 +26,7 @@ class OvergroundSession(QObject):
         self.done = False
         self.last_received_ns = None
         self._last_update_ns = 0
+        self._visual_state_key = None
         self._last_ready = None
         self._last_frame = None
         self._visual_issue = None
@@ -104,11 +105,10 @@ class OvergroundSession(QObject):
         self._quality_uncertain = uncertain
         if self.processor.finished_reason:
             self.finish(self.processor.finished_reason)
-        if frame.received_monotonic_ns - self._last_update_ns >= 100_000_000:
+        self.publish_visual(force=False)
+        if self._publication_changed or frame.received_monotonic_ns - self._last_update_ns >= 100_000_000:
             self._last_update_ns = frame.received_monotonic_ns
             self.publish_snapshot()
-        elif self._publication_changed:
-            self.publish_visual()
 
     def archive_raw_frame(self, frame, *, raw_only=False):
         """Retain accepted evidence even after the measurement has stopped."""
@@ -188,6 +188,8 @@ class OvergroundSession(QObject):
         p = self.processor
         if p is None:
             return
+        # Make the tracked position available before statistics can occupy the worker.
+        self.publish_visual(force=False)
         if self._summary is None:
             self._summary = p.summary()
         s = self._summary
@@ -209,16 +211,43 @@ class OvergroundSession(QObject):
                             "latest_stride": lengths[-1] * 100 if lengths else None,
                             "velocity_count": int(speed is not None),
                             "velocity_sum": (speed or 0) * 100})
-        self.publish_visual()
-
-    def publish_visual(self):
+    def publish_visual(self, *, force=True):
         p = self.processor
         if p is not None and self._last_frame is not None:
             frame = self._last_frame
             invalid = (self._visual_issue or frame.layout != p.device.layout
                        or len(frame.contact_bits) != len(p.positions) or len(frame.valid_bits) != len(p.positions)
                        or any(x != "frame_gap" for x in frame.quality_flags))
-            visual = dict(p.timeline[-1]) if p.timeline else {"feet": []}
+            # Live candidates must not wait for measurement origin or a replay tick.
+            feet = [] if invalid else p.visual_feet()
+            if not invalid:
+                # Joining tiny onset islands can freeze their individual counters.
+                # The continuous group may already support a preview, without
+                # publishing a landing or changing any ownership decision.
+                for group in p._ownership_groups:
+                    intervals = group['valid_sample_intervals']
+                    if (group['tracking_ended_sample'] is not None or group['observed_samples'] < 3
+                            or not intervals or intervals[-1][1] != frame.sample_index + 1):
+                        continue
+                    low, high = group['islands'][0][0], group['islands'][-1][1]
+                    left, right = p.positions[low], p.positions[high]
+                    if right - left > .45 or any(left - .035 <= f['centroid_cm'] / 100 <= right + .035 for f in feet):
+                        continue
+                    owner = group.get('recovery') or group.get('established_owner')
+                    feet.append({'contact_id': f"group:{group['id']}",
+                                 'label': p.contacts[owner['owner_id']].label if owner else '',
+                                 'side': 'unknown', 'centroid_cm': (left + right) * 50,
+                                 'length_cm': None, 'shape_valid': False, 'status': 'candidate'})
+            key = (frame.stream_id, frame.contact_bits, frame.valid_bits, invalid, feet)
+            if not force and key == self._visual_state_key:
+                return
+            self._visual_state_key = key
+            visual = {"feet": feet, "sample_index": frame.sample_index,
+                      "starting_foot": self.config.starting_foot,
+                      "next_foot_label": 'A' if p._last_label == 'B' else 'B',
+                      "received_monotonic_ns": frame.received_monotonic_ns,
+                      "published_monotonic_ns": time.perf_counter_ns(),
+                      "quality_flags": list(frame.quality_flags)}
             origin = p.origin if p.origin is not None else frame.sample_time_s
             visual.update({"timestamp_s": max(0, frame.sample_time_s - origin),
                            "segment_ids": tuple(s.segment_id for s in p.device.layout.segments),

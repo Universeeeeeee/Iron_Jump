@@ -279,7 +279,7 @@ class LiveWalkingVision:
 def walking_check_text(check):
     if check is None:
         return ''
-    prefix = f"第 {check['contact_id'] + 1} 次触地："
+    prefix = f"接触记录 {check['contact_id'] + 1}："
     side = {'left': '左脚', 'right': '右脚'}.get(check['label'])
     if side is None:
         if check['reason'] == 'pending':

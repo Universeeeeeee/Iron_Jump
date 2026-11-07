@@ -1,9 +1,14 @@
 """Continuous overground overview and selectable, physically indexed detail."""
 from bisect import bisect_right
 
+
+from ui.theme import qss
+
 from qtpy.QtCore import QRectF, Qt, Signal
 from qtpy.QtGui import QColor, QPainter
-from qtpy.QtWidgets import QLabel, QVBoxLayout, QWidget
+from qtpy.QtWidgets import (
+    QLabel, QVBoxLayout, QWidget,
+)
 
 from ui.footprint_channel import FootprintChannelWidget
 from reporting.ground import walking_position_value
@@ -11,13 +16,18 @@ from reporting.ground import walking_position_value
 
 class GroundChannelWidget(FootprintChannelWidget):
     segment_selected = Signal(int)
+    contact_selected = Signal(object)
+    FIXED_FOOT_SIZE = (25, 40)
 
     def __init__(self, parent=None, *, overview=True):
         super().__init__(parent)
         self.setProperty("integrated", True)
-        self.setStyleSheet("FootprintChannelWidget { background: transparent; border: none; }")
+        self.setStyleSheet(qss("""FootprintChannelWidget { background: transparent; border: none; }"""))
         self.overview = overview
         self.selected_segment = 0
+        self.selected_contact_id = None
+        self.selected_marker = None
+        self.record_selection_enabled = False
         self.setMinimumSize(220 if overview else 170, 260)
         self.setFocusPolicy(Qt.StrongFocus if overview else Qt.NoFocus)
         self.setAccessibleName("全程跑道；上下方向键选择设备段" if overview else "所选段光束详情")
@@ -25,6 +35,9 @@ class GroundChannelWidget(FootprintChannelWidget):
 
     def clear(self):
         super().clear()
+        self.selected_contact_id = None
+        self.selected_marker = None
+        self.record_selection_enabled = False
         self._contact_bits = []
         self.valid_bits = []
         self.segment_ids = ()
@@ -47,6 +60,18 @@ class GroundChannelWidget(FootprintChannelWidget):
     def mousePressEvent(self, event):
         if self.overview and self._positions_m:
             rect = self.lane_rect()
+            markers = self.history + self._feet + ([self.selected_marker] if self.selected_marker else [])
+            for foot in reversed(markers if self.record_selection_enabled else []):
+                if foot.get('contact_id') is None or foot.get('centroid_cm') is None:
+                    continue
+                ratio = (foot['centroid_cm'] / 100 - self._positions_m[0]) / (self._positions_m[-1] - self._positions_m[0])
+                y = rect.top() + ratio * rect.height()
+                side = foot.get('side')
+                x = rect.left() + rect.width() * (.36 if side == 'left' else .64 if side == 'right' else .5)
+                if QRectF(x - 17, y - 24, 34, 48).contains(event.position()):
+                    self.contact_selected.emit(foot['contact_id'])
+                    event.accept()
+                    return
             ratio = min(1, max(0, (event.pos().y() - rect.top()) / rect.height()))
             position = self._positions_m[0] + ratio * (self._positions_m[-1] - self._positions_m[0])
             self.select_segment(bisect_right(self._positions_m[::96], position) - 1)
@@ -70,6 +95,15 @@ class GroundChannelWidget(FootprintChannelWidget):
             return
         painter = QPainter(self)
         rect = self.lane_rect()
+        if self.selected_marker is not None:
+            marker = next((foot for foot in self._feet + self.history
+                           if foot.get('contact_id') == self.selected_contact_id), self.selected_marker)
+            painter.save()
+            painter.setClipRect(rect)
+            painter.setRenderHint(QPainter.SmoothPixmapTransform)
+            self._paint_foot(painter, marker, int(rect.left()), int(rect.right()),
+                             int(rect.top()), int(rect.height()))
+            painter.restore()
         font = painter.font()
         font.setPixelSize(11)
         painter.setFont(font)
@@ -92,13 +126,7 @@ class GroundChannelWidget(FootprintChannelWidget):
         painter.end()
 
     def _foot_size_for_lane(self, lane_width, lane_height, length_cm):
-        width, height = super()._foot_size_for_lane(lane_width, lane_height, length_cm)
-        # Keep the existing foot icons legible in the full-track overview.
-        # The minimum is a display size, not a measured foot length.
-        if self.overview:
-            height = max(40, height)
-            width = max(width, int(height / 1.62))
-        return width, height
+        return self.FIXED_FOOT_SIZE
 
 
 class GroundTrackPanel(QWidget):
@@ -113,13 +141,13 @@ class GroundTrackPanel(QWidget):
         layout.setContentsMargins(8, 10, 8, 10)
         layout.setSpacing(7)
         self.title = QLabel("全程跑道")
-        self.title.setStyleSheet("font-size: 13pt; color: #c6ced9; font-weight: bold;")
+        self.title.setStyleSheet(qss("""font-size: 13pt; color: ${text_summary}; font-weight: bold;"""))
         self.device_label = QLabel("等待识别设备段数")
         self.direction_label = QLabel("上方为接口侧 · 等待进入")
         self.channel = GroundChannelWidget()
-        self.legend = QLabel("淡色：历史脚印 · 灰色居中：左右未知\n绿：左脚 · 蓝：右脚 · 黄色光束：数据未知\n图标大小非实测")
+        self.legend = QLabel("半透明：待确认 · 淡色：历史脚印\n灰色居中：左右未知 · 绿：左脚 · 蓝：右脚\n已设起始脚时，左右按落脚顺序示意\n黄色光束：数据未知 · 图标大小非实测")
         self.legend.setWordWrap(True)
-        self.legend.setStyleSheet("font-size: 10pt; color: #768394;")
+        self.legend.setStyleSheet(qss("""font-size: 10pt; color: ${text_hint};"""))
         for item in (self.title, self.device_label, self.direction_label):
             layout.addWidget(item)
         layout.addWidget(self.channel, 1)
@@ -127,13 +155,13 @@ class GroundTrackPanel(QWidget):
         self.legend.hide()
         self.setMinimumWidth(240)
         self.setMaximumWidth(340)
-        self.setStyleSheet("GroundTrackPanel { background: transparent; border: none; } QLabel { color: #aeb7c5; background: transparent; border: none; }")
+        self.setStyleSheet(qss("""GroundTrackPanel { background: transparent; border: none; } QLabel { color: ${text_secondary}; background: transparent; border: none; }"""))
 
         self.detail = QWidget(self)
         detail_layout = QVBoxLayout(self.detail)
         detail_layout.setContentsMargins(4, 4, 4, 4)
         self.detail_title = QLabel("选择设备段查看光束")
-        self.detail_title.setStyleSheet("font-size: 12pt; color: #c6ced9; font-weight: bold;")
+        self.detail_title.setStyleSheet(qss("""font-size: 12pt; color: ${text_summary}; font-weight: bold;"""))
         self.detail_range = QLabel("")
         self.detail_channel = GroundChannelWidget(overview=False)
         self.detail_status = QLabel("等待数据")
@@ -145,7 +173,7 @@ class GroundTrackPanel(QWidget):
         self.detail_status.hide()
         self.detail.setMinimumWidth(190)
         self.detail.setMaximumWidth(280)
-        self.detail.setStyleSheet("QWidget { background: transparent; border: none; color: #aeb7c5; }")
+        self.detail.setStyleSheet(qss("""QWidget { background: transparent; border: none; color: ${text_secondary}; }"""))
         self.detail.hide()
         self.channel.segment_selected.connect(self._render_detail)
 
@@ -178,12 +206,30 @@ class GroundTrackPanel(QWidget):
                 self.clear()
                 self.device_label.setText("无可用段")
             return
-        self._frame = frame
+        self._frame = dict(frame)
+        self._frame['feet'] = [dict(foot, side=foot.get('side', 'unknown') if foot.get('side_authoritative') else self._display_side(
+            foot.get('side', 'unknown'), foot.get('label'), foot.get('status')))
+            for foot in frame.get('feet', [])]
+        frame = self._frame
         self.channel.render_state(frame)
         count = len(self.channel._contact_bits) // 96
         self.device_label.setText(f"{count} 段 / 标称 {count} 米")
         self._render_detail()
         self._render_history()
+
+    def _display_side(self, side, label, status=None):
+        if side in {'left', 'right'}:
+            return side
+        first = {'Left': 'left', 'Right': 'right'}.get(self._frame.get('starting_foot'))
+        if first is None:
+            return 'unknown'
+        if not label and status == 'candidate':
+            label = self._frame.get('next_foot_label')
+        if label == 'A':
+            return first
+        if label == 'B':
+            return 'right' if first == 'left' else 'left'
+        return 'unknown'
 
     def _render_history(self):
         now = self._frame.get("timestamp_s", 0)
@@ -205,7 +251,8 @@ class GroundTrackPanel(QWidget):
                 known = position is not None
                 position = position if known else landings[str(contact['id'])]
                 history.append({'centroid_cm':position*100,
-                    'side':contact.get('side','unknown') if known else 'unknown', 'status':'confirmed',
+                    'side':contact.get('side','unknown') if self._summary.get('side_policy') else self._display_side(contact.get('side','unknown') if known else 'unknown',
+                                              contact.get('label')), 'status':'confirmed',
                     'shape_valid':known, 'contact_id':contact['id']})
                 continue
             if "toe_m" in contact:
@@ -219,8 +266,9 @@ class GroundTrackPanel(QWidget):
                 lift = contact.get('lift_s')
                 end = (lift['value'] if lift['valid'] else None) if lift is not None else contact.get('end')
             if position is not None and end is not None and end <= now:
-                history.append({"centroid_cm": position * 100, "side": contact.get("side", "unknown"),
-                                "status": "confirmed"})
+                history.append({"centroid_cm": position * 100, "side": contact.get('side','unknown') if self._summary.get('side_policy') else self._display_side(
+                                    contact.get("side", "unknown"), contact.get('label')),
+                                "status": "confirmed", "contact_id": contact.get('id')})
         self.channel.history = history
         self.channel.update()
 

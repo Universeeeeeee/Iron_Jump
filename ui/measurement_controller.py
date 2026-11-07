@@ -1,4 +1,4 @@
-"""Use the verified child for walking; retain existing controllers for other modes."""
+"""Isolate ground measurement from the GUI; retain local controllers for other modes."""
 from datetime import datetime
 from pathlib import Path
 import uuid
@@ -88,7 +88,7 @@ class MeasurementController(QObject):
         if self._child:
             self._child.close_and_wait()
         self._config = config
-        if config.test_type == 'Sprint and Gait Test':
+        if config.test_type in {'Sprint and Gait Test', 'Overground Running Test'}:
             self._local.discard()
             folder = self.evidence_root / (datetime.now().strftime('%Y%m%d_%H%M%S_') + uuid.uuid4().hex[:8])
             child = ProcessSession(folder, self, worker_factory=self._worker_factory)

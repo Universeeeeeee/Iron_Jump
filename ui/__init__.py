@@ -3,3 +3,6 @@ ui — L3 前端 UI 层
 
 包含主分析界面、LED 调试界面、LED 面板控件、摄像头模块。
 """
+
+import qt_runtime  # Select PySide6 before any Qt-dependent submodule.
+

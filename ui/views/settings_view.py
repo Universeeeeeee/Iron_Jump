@@ -14,72 +14,14 @@ from qtpy.QtWidgets import (
     QVBoxLayout,
     QWidget,
     QDoubleSpinBox, QSpinBox, QFormLayout,
+    QScrollArea,
 )
 
 from data.subject_store import SubjectStore, default_db_path
 from path_utils import find_dll
 
-
-SETTINGS_QSS = """
-QWidget#SettingsViewRoot {
-    background: #0c1119;
-    color: #e7ebf2;
-}
-QLabel#PageTitle {
-    color: #f5f7fb;
-    font-size: 20px;
-    font-weight: 700;
-}
-QLabel#PageSubtitle {
-    color: #8f9bad;
-    font-size: 13px;
-}
-QLabel#ModeLabel {
-    color: #8ecf78;
-    background: #132219;
-    border: 1px solid #294b32;
-    border-radius: 7px;
-    padding: 7px 11px;
-    font-size: 13px;
-}
-QFrame#SettingsCard {
-    background: #121923;
-    border: 1px solid #293442;
-    border-radius: 8px;
-}
-QLabel#CardTitle {
-    color: #f0f3f7;
-    font-size: 14px;
-    font-weight: 700;
-}
-QLabel#FieldLabel {
-    color: #8f9bad;
-    font-size: 13px;
-}
-QLabel#FieldValue {
-    color: #dce2eb;
-    font-size: 13px;
-}
-QDoubleSpinBox, QSpinBox {
-    color: #e7ebf2;
-    background: #1a2230;
-    border: 1px solid #354151;
-    border-radius: 5px;
-    min-height: 30px;
-    padding: 0 8px;
-}
-QPushButton {
-    min-height: 32px;
-    border: 1px solid #354151;
-    border-radius: 6px;
-    background: #1a2230;
-    color: #d9dee8;
-    padding: 0 14px;
-}
-QPushButton:hover {
-    background: #232d3c;
-}
-"""
+from ui.styles import SETTINGS_QSS
+from ui.theme import SPACE, qss
 
 
 class SettingsView(QWidget):
@@ -97,8 +39,8 @@ class SettingsView(QWidget):
         self.setObjectName("SettingsViewRoot")
         self.setStyleSheet(SETTINGS_QSS)
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(24, 18, 24, 22)
-        layout.setSpacing(16)
+        layout.setContentsMargins(SPACE["xl"], SPACE["card"], SPACE["xl"], SPACE["page_bottom"])
+        layout.setSpacing(SPACE["lg"])
 
         header = QHBoxLayout()
         title_column = QVBoxLayout()
@@ -111,13 +53,26 @@ class SettingsView(QWidget):
         title_column.addWidget(subtitle)
         header.addLayout(title_column)
         header.addStretch(1)
-        self._mode_label = QLabel("● 本地存储 · 无需登录")
+        self._mode_label = QLabel("数据保存在本机")
         self._mode_label.setObjectName("ModeLabel")
         header.addWidget(self._mode_label)
         layout.addLayout(header)
 
+        content = QWidget()
+        content.setObjectName("SettingsContent")
+        content.setStyleSheet(qss("QWidget#SettingsContent { background: ${background}; }"))
+        content_layout = QVBoxLayout(content)
+        content_layout.setContentsMargins(0, 0, 0, 0)
+        content_layout.setSpacing(SPACE["lg"])
+        scroll = QScrollArea()
+        scroll.setObjectName("SettingsContentScroll")
+        scroll.setFrameShape(QFrame.NoFrame)
+        scroll.setWidgetResizable(True)
+        scroll.setWidget(content)
+        layout.addWidget(scroll, 1)
+
         cards = QHBoxLayout()
-        cards.setSpacing(16)
+        cards.setSpacing(SPACE["lg"])
         cards.addWidget(
             self._card(
                 "设备连接参数",
@@ -143,14 +98,14 @@ class SettingsView(QWidget):
             ),
             1,
         )
-        layout.addLayout(cards)
+        content_layout.addLayout(cards)
         from ui.quality_settings import load_policy
         policy = load_policy()
         self._quality_card = QFrame()
         self._quality_card.setObjectName("SettingsCard")
         form = QFormLayout(self._quality_card)
-        form.setContentsMargins(18, 18, 18, 18)
-        form.setSpacing(10)
+        form.setContentsMargins(SPACE["card"], SPACE["card"], SPACE["card"], SPACE["card"])
+        form.setSpacing(SPACE["control"])
         quality_title = QLabel("设备自检 · 所有测试模式（运行中不可修改）")
         quality_title.setObjectName("CardTitle")
         form.addRow(quality_title)
@@ -174,8 +129,8 @@ class SettingsView(QWidget):
         save = QPushButton("应用自检设置（已有自检失效）")
         save.clicked.connect(self._save_quality_policy)
         form.addRow(save)
-        layout.addWidget(self._quality_card)
-        layout.addStretch(1)
+        content_layout.addWidget(self._quality_card)
+        content_layout.addStretch(1)
 
         refresh_row = QHBoxLayout()
         refresh_row.addStretch(1)
@@ -198,8 +153,8 @@ class SettingsView(QWidget):
         card = QFrame()
         card.setObjectName("SettingsCard")
         card_layout = QVBoxLayout(card)
-        card_layout.setContentsMargins(18, 18, 18, 18)
-        card_layout.setSpacing(14)
+        card_layout.setContentsMargins(SPACE["card"], SPACE["card"], SPACE["card"], SPACE["card"])
+        card_layout.setSpacing(SPACE["button"])
         title_label = QLabel(title)
         title_label.setObjectName("CardTitle")
         card_layout.addWidget(title_label)

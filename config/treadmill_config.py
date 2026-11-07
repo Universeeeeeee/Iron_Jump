@@ -109,7 +109,7 @@ class TreadmillGaitConfig(TreadmillBaseConfig):
 
     @property
     def mode_label(self) -> str:
-        return "跑步机步态"
+        return "跑步机走路"
 
     def __post_init__(self) -> None:
         super().__post_init__()

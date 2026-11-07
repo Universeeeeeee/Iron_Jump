@@ -258,8 +258,11 @@ class LLMConfigAgent:
             "",
             "| 参数 | 值 |",
             "| --- | --- |",
+            f"| 测试类型 | {config.test_type} |",
         ]
         for field_name in config.__dataclass_fields__:
+            if field_name == "test_type":
+                continue
             value = getattr(config, field_name)
             if value is None:
                 text = "未设置"
@@ -284,9 +287,18 @@ class LLMConfigAgent:
         """
         groups: dict[tuple, list] = {}
         for c in configs:
-            key = tuple(getattr(c, f) for f in self._CONSENSUS_FIELDS)
+            key = tuple(self._consensus_value(c, f) for f in self._CONSENSUS_FIELDS)
             groups.setdefault(key, []).append(c)
         return list(groups.values())
+
+    @staticmethod
+    def _consensus_value(config, field):
+        # Inactive stop parameters do not change the user's requested test.
+        if field == "number_of_jumps" and config.stop_type != "Status change":
+            return None
+        if field == "test_length" and config.stop_type != "End of Time":
+            return None
+        return getattr(config, field)
 
     def _find_disagreements(
         self, configs: list,
@@ -298,7 +310,7 @@ class LLMConfigAgent:
         """
         disagreements = {}
         for field_name in self._CONSENSUS_FIELDS:
-            values = {getattr(c, field_name) for c in configs}
+            values = {self._consensus_value(c, field_name) for c in configs}
             if len(values) > 1:
                 disagreements[field_name] = values
         return disagreements

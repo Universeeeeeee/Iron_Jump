@@ -158,6 +158,13 @@ class SessionController(QObject):
         super().__init__(parent)
         self._worker_factory = worker_factory or UsbWorker
         self._ground_batch_size = ground_batch_size
+        self._visual_lock = threading.Lock()
+        self._pending_visual = None
+        self._visual_accepting = False
+        self._visual_timer = QTimer(self)
+        self._visual_timer.setTimerType(Qt.PreciseTimer)
+        self._visual_timer.setInterval(16)
+        self._visual_timer.timeout.connect(self._flush_ground_visual)
 
         # 后台资源 (懒初始化)
         self._thread: Optional[QThread] = None
@@ -331,7 +338,11 @@ class SessionController(QObject):
         self._engine.jump_quality_notice.connect(self._on_jump_quality_notice)
         self._engine.gait_step_event.connect(self._on_gait_step_event)
         self._engine.gait_status_snapshot.connect(self._on_gait_snapshot)
-        self._engine.footprint_visual_frame.connect(self._on_footprint_visual_frame)
+        if self._engine.overground is not None:
+            self._start_ground_visuals()
+            self._engine.footprint_visual_frame.connect(self._queue_ground_visual, Qt.DirectConnection)
+        else:
+            self._engine.footprint_visual_frame.connect(self._on_footprint_visual_frame)
         self._engine.test_finished.connect(self._on_engine_finished)
         self._engine.pause_state_changed.connect(self._on_pause_state_changed)
 
@@ -538,6 +549,32 @@ class SessionController(QObject):
     def _on_footprint_visual_frame(self, frame):
         self.footprint_visual_frame.emit(frame)
 
+    def _start_ground_visuals(self):
+        with self._visual_lock:
+            self._pending_visual = None
+            self._visual_accepting = True
+        self._visual_timer.start()
+
+    @Slot(dict)
+    def _queue_ground_visual(self, frame):
+        # Runs on the producer thread: replace stale display state, never touch Qt UI.
+        with self._visual_lock:
+            if self._visual_accepting:
+                self._pending_visual = frame
+
+    @Slot()
+    def _flush_ground_visual(self):
+        with self._visual_lock:
+            frame, self._pending_visual = self._pending_visual, None
+        if frame is not None:
+            self.footprint_visual_frame.emit(frame)
+
+    def _stop_ground_visuals(self):
+        self._visual_timer.stop()
+        with self._visual_lock:
+            self._visual_accepting = False
+            self._pending_visual = None
+
     @Slot(str)
     def _on_device_message(self, msg):
         log.debug("USB: %s", msg)
@@ -651,6 +688,9 @@ class SessionController(QObject):
             except Exception:
                 log.exception("Error stopping engine thread")
 
+        self._flush_ground_visual()
+        self._stop_ground_visuals()
+
         # 4. 构造不可变报告 (在释放引用之前)
         if engine is not None:
             try:
@@ -679,6 +719,7 @@ class SessionController(QObject):
 
     def _cleanup(self):
         """清理可能残留的上一次会话资源。"""
+        self._stop_ground_visuals()
         if self._is_running:
             self._is_running = False
             self._do_stop("cleanup")

@@ -6,11 +6,17 @@ import os
 import math
 from bisect import bisect_left
 
-from qtpy.QtCore import QLineF, QPointF, QRectF, Qt, QTimer
-from qtpy.QtGui import QColor, QImage, QPainter, QPixmap
-from qtpy.QtWidgets import QFrame, QHBoxLayout, QLabel, QSlider, QVBoxLayout, QWidget
+from ui.styles import CONTROL_QSS, CONTROL_STATES_QSS
 
-from dayu_widgets.push_button import MPushButton
+from ui.theme import qss
+
+from qtpy.QtWidgets import (
+    QPushButton, QFrame, QHBoxLayout, QLabel, QSlider, QVBoxLayout, QWidget,
+)
+
+from qtpy.QtCore import QLineF, QPointF, QRectF, Qt, QTimer, Signal
+from qtpy.QtGui import QColor, QImage, QPainter, QPixmap
+
 
 from path_utils import get_base_dir
 
@@ -24,58 +30,60 @@ _SOURCE_IN = getattr(QPainter, "CompositionMode_SourceIn", None)
 if _SOURCE_IN is None:
     _SOURCE_IN = QPainter.CompositionMode.CompositionMode_SourceIn
 
-REPLAY_QSS = """
+REPLAY_QSS = CONTROL_QSS + qss("""
 QWidget#FootprintReplayPanel {
     background: transparent;
-    color: #dce5f0;
+    color: ${text_field};
 }
 QPushButton#ReplayButton {
-    min-width: 78px;
+    min-width: 48px;
     min-height: 30px;
-    border: 1px solid #354151;
+    border: 1px solid ${border_control};
     border-radius: 6px;
-    background-color: #1a2230;
-    color: #dce5f0;
-    padding: 0 14px;
+    background-color: ${control};
+    color: ${text_field};
+    padding: 0 10px;
 }
 QPushButton#ReplayButton:hover {
-    background-color: #243043;
-    border-color: #46566a;
+    background-color: ${control_hover};
+    border-color: ${border_control};
 }
 QPushButton#ReplayButton:pressed {
-    background-color: #111923;
+    background-color: ${control};
 }
 QSlider#ReplaySlider::groove:horizontal {
     height: 6px;
     border-radius: 3px;
-    background-color: #273445;
+    background-color: ${border_divider};
 }
 QSlider#ReplaySlider::sub-page:horizontal {
     border-radius: 3px;
-    background-color: #ff7a00;
+    background-color: ${accent};
 }
 QSlider#ReplaySlider::add-page:horizontal {
     border-radius: 3px;
-    background-color: #273445;
+    background-color: ${border_divider};
 }
 QSlider#ReplaySlider::handle:horizontal {
     width: 16px;
     height: 16px;
     margin: -5px 0;
-    border: 2px solid #ff9b3d;
+    border: 2px solid ${accent_text};
     border-radius: 8px;
-    background-color: #f5f7fb;
+    background-color: ${text_heading};
 }
 QLabel#ReplayTimeLabel {
     min-width: 64px;
-    color: #9ca8b8;
+    color: ${text_secondary};
     background: transparent;
 }
-"""
+""") + CONTROL_STATES_QSS
 
 
 class FootprintChannelWidget(QFrame):
     """Render canonical footprint frames between two LED rails."""
+
+    FIXED_FOOT_SIZE = None
 
     def __init__(self, parent=None):
         super().__init__(parent)
@@ -90,13 +98,9 @@ class FootprintChannelWidget(QFrame):
         self._direction = "Interface side"
         self._left_foot = self._load_pixmap("left_foot.png")
         self._right_foot = self._load_pixmap("right_foot.png")
-        self.setMinimumSize(260, 420)
+        self.setMinimumSize(220, 260)
         self.setStyleSheet(
-            "FootprintChannelWidget {"
-            "  background-color: rgba(20, 20, 24, 0.9);"
-            "  border: 1px solid rgba(90, 90, 95, 0.7);"
-            "  border-radius: 8px;"
-            "}"
+            qss("""FootprintChannelWidget {  background-color: ${surface};  border: 1px solid ${border_card};  border-radius: 8px;}""")
         )
 
     def _load_pixmap(self, name: str) -> QPixmap:
@@ -129,7 +133,8 @@ class FootprintChannelWidget(QFrame):
         self._feet = []
         for foot in frame.get("feet", []):
             foot_state = dict(foot)
-            if foot_state.get("status") != "confirmed":
+            if foot_state.get("status") != "confirmed" and not (
+                    self._positions_m and foot_state.get("status") == "candidate"):
                 continue
             self._feet.append(
                 {
@@ -312,6 +317,8 @@ class FootprintChannelWidget(QFrame):
             if side == "left"
             else QColor(174, 183, 197, alpha)
         )
+        if foot.get('contact_id') is not None and foot.get('contact_id') == getattr(self, 'selected_contact_id', None):
+            color = QColor('#ff9000')
         pixmap = self._right_foot if side == "right" else self._left_foot
         foot_w, foot_h = self._foot_size_for_lane(
             lane_width=lane_right - lane_left,
@@ -344,6 +351,24 @@ class FootprintChannelWidget(QFrame):
                 self._tinted_feet.clear()
             self._tinted_feet[key] = tinted
         dpr = self.devicePixelRatioF()
+        if self.FIXED_FOOT_SIZE is not None:
+            # A ground marker is a reusable icon, not a measured sole silhouette.
+            key = (tinted.cacheKey(), foot_w, foot_h, dpr)
+            sprite = self._foot_sprites.get(key)
+            if sprite is None:
+                sprite = QImage(math.ceil(foot_w * dpr), math.ceil(foot_h * dpr),
+                                QImage.Format_RGBA64_Premultiplied)
+                sprite.setDevicePixelRatio(dpr)
+                sprite.fill(Qt.transparent)
+                sprite_painter = QPainter(sprite)
+                sprite_painter.setRenderHint(QPainter.SmoothPixmapTransform)
+                sprite_painter.drawPixmap(QRectF(0, 0, foot_w, foot_h), tinted, QRectF(tinted.rect()))
+                sprite_painter.end()
+                if len(self._foot_sprites) >= 32:
+                    self._foot_sprites.clear()
+                self._foot_sprites[key] = sprite
+            painter.drawImage(QPointF(target_x, target_y), sprite)
+            return
         device_point = painter.deviceTransform().map(QPointF(target_x, target_y))
         phase_x = device_point.x() % 1
         phase_y = device_point.y() % 1
@@ -373,6 +398,8 @@ class FootprintChannelWidget(QFrame):
 class FootprintReplayPanel(QWidget):
     """Replay a canonical footprint timeline through the shared channel."""
 
+    frame_changed = Signal(object)
+
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setObjectName("FootprintReplayPanel")
@@ -395,7 +422,7 @@ class FootprintReplayPanel(QWidget):
         self.is_ground = False
 
         controls = QHBoxLayout()
-        self._btn_play = MPushButton("Play")
+        self._btn_play = QPushButton("Play")
         self._btn_play.setObjectName("ReplayButton")
         self._btn_play.setStyleSheet(REPLAY_QSS)
         self._btn_play.clicked.connect(self._toggle_playback)
@@ -448,8 +475,18 @@ class FootprintReplayPanel(QWidget):
             self._timer.stop()
             self._btn_play.setText("Play")
         else:
+            if self.is_ground and self._index == len(self._timeline) - 1:
+                self._slider.setValue(0)
             self._timer.start(self._next_interval())
             self._btn_play.setText("Pause")
+
+    def seek_time(self, timestamp_s):
+        if not self._timeline:
+            return
+        self._timer.stop()
+        self._btn_play.setText("Play")
+        index = bisect_left([frame.get('timestamp_s', 0) for frame in self._timeline], timestamp_s)
+        self._slider.setValue(min(index, len(self._timeline) - 1))
 
     def _next_interval(self):
         if self.is_ground and self._index + 1 < len(self._timeline):
@@ -483,3 +520,4 @@ class FootprintReplayPanel(QWidget):
         if self.is_ground:
             self.ground_track.render_state(frame)
         self._time_label.setText(f"{frame.get('timestamp_s', 0.0):.3f} s")
+        self.frame_changed.emit(frame)

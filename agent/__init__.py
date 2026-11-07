@@ -1,5 +1,7 @@
 """Agent package exports."""
 
+import qt_runtime  # Select PySide6 before any Qt-dependent submodule.
+
 import os
 
 
@@ -38,3 +40,4 @@ def __getattr__(name: str):
 
         return ConfigService
     raise AttributeError(name)
+

@@ -78,8 +78,8 @@ def run_actor(connection, output_root, worker_factory=None):
                     kind = command['kind']
                     if kind == 'prepare' and not prepared:
                         config = config_from_dict(command['config'])
-                        if config.test_type != 'Sprint and Gait Test':
-                            raise ValueError('Process backend is limited to ground walking')
+                        if config.test_type not in {'Sprint and Gait Test', 'Overground Running Test'}:
+                            raise ValueError('Process backend is limited to ground walking and running')
                         controller.quality_policy = BeamQualityPolicy(**command['quality_policy'])
                         controller.prepare(config)
                         refs['thread'] = controller._thread

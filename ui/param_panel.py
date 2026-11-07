@@ -4,49 +4,54 @@ param_panel.py — Jump Test 参数配置面板
 动态生成表单控件，处理 stop_type 联动显隐，
 对外提供 get_config() -> TestConfig 接口。
 
-使用局部深色 QSS，避免依赖主窗口的全局 Dayu 主题:
+使用共享深色样式和原生 Qt 控件:
   - QLabel:       标签和分组标题
-  - MSpinBox:     整数输入
-  - MTimeEdit:    时间输入 (mm:ss)
-  - MSwitch:      布尔开关
-  - MSectionItem: 折叠面板
-  - QComboBox:    枚举选择 (标准控件, 避免 MComboBox 点击问题)
+  - QSpinBox:     整数输入
+  - QTimeEdit:    时间输入 (mm:ss)
+  - QCheckBox:      布尔开关
+  - CollapsibleSection: 折叠面板
+  - QComboBox:    枚举选择 (标准控件, 避免 QComboBox 点击问题)
 """
 
 from __future__ import annotations
 
-from qtpy.QtCore import QSignalBlocker, Signal, Qt, QTime
-from qtpy.QtWidgets import (
-    QWidget, QVBoxLayout, QHBoxLayout, QGridLayout, QComboBox,
-    QDoubleSpinBox, QLabel, QSizePolicy,
-)
+from config.mode_labels import mode_label
 
-from dayu_widgets.spin_box import MSpinBox, MTimeEdit
-from dayu_widgets.switch import MSwitch
-from dayu_widgets.collapse import MSectionItem
+from ui.styles import CONTROL_QSS, CONTROL_STATES_QSS
+
+from ui.theme import qss
+
+from qtpy.QtWidgets import (
+    QCheckBox, QSpinBox, QTimeEdit, QWidget, QVBoxLayout, QHBoxLayout, QGridLayout,
+    QComboBox, QDoubleSpinBox, QLabel, QSizePolicy,
+)
+from ui.widgets import CollapsibleSection
+
+from qtpy.QtCore import QSignalBlocker, Signal, Qt, QTime
+
 
 from config.param_schema import ParamSchema, ParamDef, get_schema
 from config.test_config import AnyTestConfig, TestConfig, config_from_dict
 
 
-PARAM_PANEL_QSS = """
+PARAM_PANEL_QSS = CONTROL_QSS + qss("""
 QWidget#ParamPanelRoot {
-    background: #121923;
-    color: #e7ebf2;
+    background: ${surface};
+    color: ${text};
 }
 QLabel#ParamSectionTitle {
-    color: #f2f5fa;
+    color: ${text_detail_heading};
     font-size: 14px;
     font-weight: 700;
     padding: 2px 0 6px 2px;
 }
 QWidget#ParamFormRow {
-    background: #171f2b;
-    border: 1px solid #293442;
+    background: ${surface_selected};
+    border: 1px solid ${border_card};
     border-radius: 8px;
 }
 QLabel#ParamFieldLabel {
-    color: #9da8b8;
+    color: ${table_header_text};
     background: transparent;
     border: none;
     font-size: 13px;
@@ -56,57 +61,46 @@ QSpinBox,
 QDoubleSpinBox,
 QTimeEdit {
     min-height: 34px;
-    border: 1px solid #354151;
+    border: 1px solid ${border_control};
     border-radius: 6px;
-    background: #1a2230;
-    color: #e7ebf2;
+    background: ${control};
+    color: ${text};
     padding: 0 9px;
     font-size: 13px;
-    selection-background-color: #ff7a00;
+    selection-background-color: ${accent};
 }
 QComboBox:hover,
 QSpinBox:hover,
 QDoubleSpinBox:hover,
 QTimeEdit:hover {
-    border-color: #59677a;
+    border-color: ${text_hint};
 }
 QComboBox:focus,
 QSpinBox:focus,
 QDoubleSpinBox:focus,
 QTimeEdit:focus {
-    border-color: #ff7a00;
+    border-color: ${accent};
 }
 QComboBox QAbstractItemView {
-    background: #1a2230;
-    color: #e7ebf2;
-    border: 1px solid #354151;
-    selection-background-color: #273446;
+    background: ${control};
+    color: ${text};
+    border: 1px solid ${border_control};
+    selection-background-color: ${selection_table};
 }
 QAbstractSpinBox::up-button,
 QAbstractSpinBox::down-button {
     width: 22px;
-    background: #202a38;
-    border-left: 1px solid #354151;
+    background: ${control_stepper};
+    border-left: 1px solid ${border_control};
 }
 QWidget#ParamFilterSection {
     background: transparent;
-    color: #d9dee8;
-}
-QWidget#ParamFilterSection QWidget#title {
-    min-height: 34px;
-    background: #151d28;
-    border: 1px solid #293442;
-    border-radius: 6px;
-}
-QWidget#ParamFilterSection QWidget#title QLabel {
-    color: #cfd6e3;
-    background: transparent;
-    border: none;
+    color: ${text_button};
 }
 QWidget#ParamFilterContent {
     background: transparent;
 }
-"""
+""") + CONTROL_STATES_QSS
 
 
 class ParamPanel(QWidget):
@@ -171,13 +165,13 @@ class ParamPanel(QWidget):
         self._schema: ParamSchema = get_schema()
         self._test_type: str = "Jump Test"
 
-        # 参数名 → 输入控件 (QComboBox / MSpinBox / MTimeEdit / MSwitch)
+        # 参数名 → 输入控件 (QComboBox / QSpinBox / QTimeEdit / QCheckBox)
         self._widgets: dict[str, QWidget] = {}
         # 参数名 → 整行容器 QWidget (用于 show/hide)
         self._rows: dict[str, QWidget] = {}
 
-        self._filter_section: MSectionItem | None = None
-        self._optional_section: MSectionItem | None = None
+        self._filter_section: CollapsibleSection | None = None
+        self._optional_section: CollapsibleSection | None = None
 
         self._build_ui()
         self._connect_signals()
@@ -248,16 +242,16 @@ class ParamPanel(QWidget):
                        else widget.findText(str(val)))
                 if idx >= 0:
                     widget.setCurrentIndex(idx)
-            elif isinstance(widget, MSpinBox):
+            elif isinstance(widget, QSpinBox):
                 widget.setValue(int(val))
             elif isinstance(widget, QDoubleSpinBox):
                 widget.setValue(float(val))
-            elif isinstance(widget, MTimeEdit):
+            elif isinstance(widget, QTimeEdit):
                 # val 格式 "mm:ss"
                 parts = str(val).split(":")
                 if len(parts) == 2:
                     widget.setTime(QTime(0, int(parts[0]), int(parts[1])))
-            elif isinstance(widget, MSwitch):
+            elif isinstance(widget, QCheckBox):
                 widget.setChecked(bool(val))
 
         self._refresh_visibility()
@@ -322,7 +316,7 @@ class ParamPanel(QWidget):
         self._filter_grid.setContentsMargins(4, 4, 4, 4)
         self._filter_grid.setSpacing(10)
 
-        self._filter_section = MSectionItem(
+        self._filter_section = CollapsibleSection(
             title="滤波参数", widget=self._filter_container, expand=False
         )
         self._filter_section.setObjectName("ParamFilterSection")
@@ -347,7 +341,7 @@ class ParamPanel(QWidget):
         row_bpm = self._create_form_row("节拍 BPM", bpm_spinbox)
         optional_grid.addWidget(row_bpm, 0, 1)
 
-        self._optional_section = MSectionItem(
+        self._optional_section = CollapsibleSection(
             title="可选参数", widget=optional_container, expand=False
         )
         main_layout.addWidget(self._optional_section)
@@ -447,6 +441,7 @@ class ParamPanel(QWidget):
         while grid.count():
             item = grid.takeAt(0)
             if item and item.widget():
+                item.widget().hide()
                 item.widget().deleteLater()
 
     def _connect_stop_type_signal(self):
@@ -467,7 +462,7 @@ class ParamPanel(QWidget):
                 widget.currentTextChanged.connect(
                     lambda _: self.config_changed.emit()
                 )
-            elif isinstance(widget, MSpinBox):
+            elif isinstance(widget, QSpinBox):
                 widget.valueChanged.connect(
                     lambda _: self.config_changed.emit()
                 )
@@ -475,11 +470,11 @@ class ParamPanel(QWidget):
                 widget.valueChanged.connect(
                     lambda _: self.config_changed.emit()
                 )
-            elif isinstance(widget, MTimeEdit):
+            elif isinstance(widget, QTimeEdit):
                 widget.timeChanged.connect(
                     lambda _: self.config_changed.emit()
                 )
-            elif isinstance(widget, MSwitch):
+            elif isinstance(widget, QCheckBox):
                 widget.toggled.connect(
                     lambda _: self.config_changed.emit()
                 )
@@ -536,7 +531,7 @@ class ParamPanel(QWidget):
             ]
         if param_name == "test_type":
             for value in values:
-                combo.addItem("地面跑步" if value == "Overground Running Test" else value, value)
+                combo.addItem(mode_label(value), value)
         elif param_name == "starting_foot_override":
             labels = {"Not defined": "未确认", "left": "左脚", "right": "右脚"}
             for value in values:
@@ -559,9 +554,9 @@ class ParamPanel(QWidget):
         self._widgets[param_name] = combo
         return combo
 
-    def _create_int_widget(self, param_name: str, param_def: ParamDef | None) -> MSpinBox:
-        """为整数参数创建 MSpinBox，范围和默认值从 ParamDef 读取。"""
-        spinbox = MSpinBox()
+    def _create_int_widget(self, param_name: str, param_def: ParamDef | None) -> QSpinBox:
+        """为整数参数创建 QSpinBox，范围和默认值从 ParamDef 读取。"""
+        spinbox = QSpinBox()
         spinbox.setKeyboardTracking(False)  # 避免键盘输入中间态触发 valueChanged
 
         # 解析范围
@@ -675,9 +670,9 @@ class ParamPanel(QWidget):
             pass
         return None
 
-    def _create_time_widget(self) -> MTimeEdit:
-        """为 test_length 创建 MTimeEdit，格式 mm:ss。"""
-        time_edit = MTimeEdit()
+    def _create_time_widget(self) -> QTimeEdit:
+        """为 test_length 创建 QTimeEdit，格式 mm:ss。"""
+        time_edit = QTimeEdit()
         time_edit.setDisplayFormat("mm:ss")
         time_edit.setTime(QTime(0, 1, 0))  # 默认 01:00
 
@@ -685,9 +680,9 @@ class ParamPanel(QWidget):
         self._widgets["test_length"] = time_edit
         return time_edit
 
-    def _create_switch_widget(self) -> MSwitch:
-        """为布尔参数创建 MSwitch。"""
-        switch = MSwitch()
+    def _create_switch_widget(self) -> QCheckBox:
+        """为布尔参数创建 QCheckBox。"""
+        switch = QCheckBox()
         switch.setChecked(False)
         return switch
 
@@ -736,7 +731,7 @@ class ParamPanel(QWidget):
         metro_on = False
         if "metronome_enabled" in self._widgets:
             w = self._widgets["metronome_enabled"]
-            if isinstance(w, MSwitch):
+            if isinstance(w, QCheckBox):
                 metro_on = w.isChecked()
         self._on_metronome_changed(metro_on)
 
@@ -755,7 +750,7 @@ class ParamPanel(QWidget):
         # 2. metronome 联动
         if "metronome_enabled" in self._widgets:
             w = self._widgets["metronome_enabled"]
-            if isinstance(w, MSwitch):
+            if isinstance(w, QCheckBox):
                 w.toggled.connect(self._on_metronome_changed)
 
     # ==================================================================
@@ -769,13 +764,13 @@ class ParamPanel(QWidget):
             if isinstance(widget, QComboBox):
                 result[name] = (widget.currentData() if name in ("test_type", "starting_foot_override")
                                 else widget.currentText())
-            elif isinstance(widget, MSpinBox):
+            elif isinstance(widget, QSpinBox):
                 result[name] = widget.value()
             elif isinstance(widget, QDoubleSpinBox):
                 result[name] = widget.value()
-            elif isinstance(widget, MTimeEdit):
+            elif isinstance(widget, QTimeEdit):
                 t = widget.time()
                 result[name] = t.toString("mm:ss") if t.isValid() else "00:00"
-            elif isinstance(widget, MSwitch):
+            elif isinstance(widget, QCheckBox):
                 result[name] = widget.isChecked()
         return result

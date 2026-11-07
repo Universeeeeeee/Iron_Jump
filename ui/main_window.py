@@ -6,7 +6,7 @@ main_window.py — 多视图主窗口
 
 使用方式::
 
-    python ui/main_window.py
+    python -m ui.main_window
 """
 
 from __future__ import annotations
@@ -16,18 +16,24 @@ import os
 import sys
 from datetime import datetime
 
-# Ensure project root is importable when running `python ui/main_window.py`.
 _project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-if _project_root not in sys.path:
-    sys.path.insert(0, _project_root)
+
+if __name__ == "__main__" and not __package__:
+    # Direct script launches use the same package entry as the desktop shortcut.
+    os.chdir(_project_root)
+    os.execv(sys.executable, [sys.executable, "-m", "ui.main_window", *sys.argv[1:]])
+
+import qt_runtime
+
+from ui.application import application
 
 from qtpy.QtCore import Qt
 from qtpy.QtGui import QIcon
 from qtpy.QtWidgets import (
-    QApplication, QMainWindow, QStackedWidget, QMessageBox, QWidget, QVBoxLayout, QGridLayout,
+    QApplication, QMainWindow, QStackedWidget, QMessageBox, QWidget, QVBoxLayout,
+    QGridLayout,
 )
-from dayu_widgets import dayu_theme
-from dayu_widgets.qt import application
+
 
 from config.test_config import TestConfig
 from config.test_report import TestReport
@@ -41,7 +47,7 @@ from ui.app_shell import (
     MODULE_TEST,
     ApplicationShell,
 )
-from ui.session_controller import SessionController
+from ui.measurement_controller import MeasurementController as SessionController
 from ui.views.athletes_view import AthletesView
 from ui.views.setup_view import SessionSetup, SetupView
 from ui.views.execution_view import ExecutionView
@@ -199,7 +205,7 @@ class MainWindow(QMainWindow):
             qt_app.setWindowIcon(app_icon)
         self.setWindowTitle("")
         _apply_windows_dark_title_bar(self)
-        self.setMinimumSize(1180, 720)
+        self.setMinimumSize(910, 512)
         self.resize(1400, 820)
         self._enable_background_checks = enable_background_checks
         self._active_module = MODULE_TEST
@@ -266,6 +272,7 @@ class MainWindow(QMainWindow):
         self._voice_panel.interrupt_button.clicked.connect(self._interrupt_voice)
         content = QWidget()
         content_layout = QGridLayout(content)
+        self._content_layout = content_layout
         content_layout.setContentsMargins(0, 0, 0, 0)
         content_layout.setSpacing(0)
         content_layout.addWidget(self._stack, 0, 0)
@@ -404,6 +411,12 @@ class MainWindow(QMainWindow):
     #  视图切换
     # ------------------------------------------------------------------
 
+    def resizeEvent(self, event):
+        super().resizeEvent(event)
+        if hasattr(self, "_exec_view"):
+            self._exec_view.set_compact_controls(self.width() < 1180 or self.height() < 800)
+            self._ground_rail.setMinimumWidth(240 if self.width() < 1180 else 250)
+
     def _sync_ground_rail(self, *_):
         page = self._stack.currentWidget()
         execution = page is self._exec_view and self._exec_view.is_ground
@@ -417,6 +430,7 @@ class MainWindow(QMainWindow):
             replay.setVisible(self._report_view._plot_container.isHidden())
         self._exec_view._ground_track.setVisible(execution)
         self._ground_rail.setVisible(execution or report)
+        self._content_layout.setColumnStretch(1, 1 if execution or report else 0)
         if not report:
             replay._timer.stop()
 
@@ -592,7 +606,13 @@ class MainWindow(QMainWindow):
         self._go_to_setup()
 
     def _on_history_open_report(self, session: SessionRecord) -> None:
-        self._report_view.load_report(session.report, session.id)
+        try:
+            report = session.report
+            self._report_view.load_report(report, session.id)
+        except (TypeError, ValueError, KeyError) as exc:
+            QMessageBox.warning(self, "打开报告", f"该记录无法重建报告：{exc}")
+            return
+        self._report_view.set_export_context(session.subject_snapshot, session.started_at)
         self._go_to_report()
 
     def _on_start(self):
@@ -605,13 +625,11 @@ class MainWindow(QMainWindow):
             ids = quality.get("segment_ids", tuple(str(i + 1) for i in range(len(quality["segment_ratios"]))))
             locations = "、".join(f"第 {ids[i // 96]} 段第 {i % 96 + 1} 束（{kind}）"
                                  for i, kind in zip(quality["bad_indices"], quality["bad_types"]))
-            ratios = "，".join(f"第 {ids[i]} 段 {r:.2%}" for i, r in enumerate(quality["segment_ratios"]))
-            text = (f"疑似异常共 {len(quality['bad_indices'])} 束：{locations}\n{ratios}\n"
-                    f"最大连续 {quality['max_consecutive']} 束。\n"
-                    "这些光束将冻结为不可用；邻近坏点的事件可能无法测量，精度不作保证。\n"
-                    "请现场确认测量区域确实空场，并确认接受降级测试。")
+            text = (f"检测到 {len(quality['bad_indices'])} 个异常感应点：{locations}\n\n"
+                    "请先确认测量区域无人且无遮挡。继续测试将排除这些感应点，"
+                    "附近的动作可能无法完整测量。\n\n是否继续？")
             key = quality["device_key"]
-            if QMessageBox.question(self, "确认空场并接受降级测试", text,
+            if QMessageBox.question(self, "确认设备状态", text,
                                     QMessageBox.Yes | QMessageBox.No, QMessageBox.No) == QMessageBox.Yes:
                 self._controller.start(acknowledge_quality=True, quality_key=key)
         else:
@@ -700,6 +718,7 @@ class MainWindow(QMainWindow):
                 log.exception("Failed to record subject session")
 
         self._report_view.load_report(report, self._last_session_id)
+        self._report_view.set_export_context(self._subject_snapshot or {}, self._session_started_at)
         self._go_to_report()
 
     @staticmethod
@@ -756,7 +775,7 @@ class MainWindow(QMainWindow):
             widget = self._logi_camera
             if widget is None:
                 self._logi_camera = LogiCameraWidget()
-                dayu_theme.apply(self._logi_camera)
+
                 self._logi_camera.show()
             elif widget.isVisible():
                 widget.raise_()
@@ -766,7 +785,7 @@ class MainWindow(QMainWindow):
             else:
                 # 已销毁则重建
                 self._logi_camera = LogiCameraWidget()
-                dayu_theme.apply(self._logi_camera)
+
                 self._logi_camera.show()
 
         elif camera_type == "tinyse":
@@ -776,7 +795,7 @@ class MainWindow(QMainWindow):
             widget = self._tinyse_camera
             if widget is None:
                 self._tinyse_camera = TinySeCameraWidget()
-                dayu_theme.apply(self._tinyse_camera)
+
                 self._tinyse_camera.show()
             elif widget.isVisible():
                 widget.raise_()
@@ -785,7 +804,7 @@ class MainWindow(QMainWindow):
                     widget.showNormal()
             else:
                 self._tinyse_camera = TinySeCameraWidget()
-                dayu_theme.apply(self._tinyse_camera)
+
                 self._tinyse_camera.show()
 
         elif camera_type == "basic":
@@ -863,7 +882,8 @@ class MainWindow(QMainWindow):
         self._close_cleanup_complete = True
         closing = self._exec_view._camera_panel._closing_control
         if closing is not None:
-            # Keep Qt processing the SDK zero/EOF response before app teardown.
+            # Close the visible UI while Qt finishes SDK cleanup in the background.
+            self.hide()
             closing.closed.connect(self._finish_camera_close)
             event.ignore()
             return
@@ -871,10 +891,10 @@ class MainWindow(QMainWindow):
 
     def _finish_camera_close(self):
         if self._exec_view._camera_panel._control_stop_failed:
-            QMessageBox.warning(self, '相机停止未确认',
-                                'SDK 未确认停止。请检查相机，再关闭窗口。')
-            return
-        self.close()
+            log.warning('Camera SDK stop unconfirmed during background shutdown')
+        if self.close():
+            # Closing an already hidden window does not trigger lastWindowClosed.
+            QApplication.instance().quit()
 
 
 # ======================================================================
@@ -886,7 +906,7 @@ if __name__ == "__main__":
         win = MainWindow()
         win.show()
 
-        # 居中到屏幕 (防止 dayu_theme 导致窗口偏移到屏幕外)
+        # 居中到当前屏幕工作区。
         screen = app.primaryScreen().availableGeometry()
         win.move(
             (screen.width() - win.width()) // 2,

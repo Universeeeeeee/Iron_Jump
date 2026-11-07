@@ -7,17 +7,15 @@ import os
 from qtpy.QtCore import Signal, Qt
 from qtpy.QtGui import QPixmap
 from qtpy.QtWidgets import (
-    QButtonGroup,
-    QFrame,
-    QHBoxLayout,
-    QLabel,
-    QPushButton,
-    QSizePolicy,
-    QVBoxLayout,
+    QButtonGroup, QFrame, QHBoxLayout, QLabel, QPushButton, QSizePolicy, QVBoxLayout,
     QWidget,
 )
 
 from path_utils import get_base_dir
+
+from ui.styles import SHELL_QSS, APP_DIALOG_QSS
+from ui.theme import SPACE
+from ui.icons import navigation_pixmap
 
 
 MODULE_ATHLETES = "athletes"
@@ -31,143 +29,6 @@ MODULE_LABELS = {
     MODULE_RESULTS: "结果",
     MODULE_SETTINGS: "设置",
 }
-
-MODULE_GLYPHS = {
-    MODULE_ATHLETES: "○",
-    MODULE_TEST: "▷",
-    MODULE_RESULTS: "▥",
-    MODULE_SETTINGS: "⚙",
-}
-
-
-SHELL_QSS = """
-QWidget#ApplicationShell {
-    background: #0c1119;
-    color: #e7ebf2;
-    font-size: 13px;
-}
-QFrame#ApplicationSidebar {
-    background: #0e141d;
-    border-right: 1px solid #26303d;
-}
-QLabel#BrandLogo {
-    background: transparent;
-    border: none;
-}
-QPushButton#ModuleButton {
-    min-height: 54px;
-    padding: 0;
-    border: none;
-    border-left: 3px solid transparent;
-    border-radius: 6px;
-    background: transparent;
-    color: #aeb7c5;
-}
-QPushButton#ModuleButton:hover {
-    background: #151d28;
-    color: #f4f6f9;
-}
-QPushButton#ModuleButton:checked {
-    background: #171f2b;
-    color: #ff8a1f;
-    border-left-color: #ff7a00;
-    font-weight: 650;
-}
-QLabel#NavGlyph {
-    min-width: 25px;
-    max-width: 25px;
-    color: #aeb7c5;
-    font-size: 20px;
-    background: transparent;
-}
-QLabel#NavLabel {
-    color: #aeb7c5;
-    font-size: 15px;
-    background: transparent;
-}
-QLabel#NavGlyph[active="true"],
-QLabel#NavLabel[active="true"] {
-    color: #ff8a1f;
-    font-weight: 650;
-}
-QLabel#LocalModeNote {
-    color: #697587;
-    font-size: 12px;
-}
-QComboBox QAbstractItemView {
-    background-color: #1a2230;
-    color: #e7ebf2;
-    selection-background-color: #34445a;
-    selection-color: white;
-}
-QFrame#ShellContent {
-    background: #0c1119;
-    border: none;
-}
-"""
-
-APP_DIALOG_QSS = """
-QDialog,
-QMessageBox,
-QInputDialog {
-    background-color: #121923;
-    color: #e8edf5;
-}
-QDialog QLabel,
-QMessageBox QLabel,
-QInputDialog QLabel {
-    color: #dfe5ee;
-    background: transparent;
-}
-QDialog QLineEdit,
-QDialog QComboBox,
-QDialog QSpinBox,
-QDialog QDoubleSpinBox {
-    min-height: 34px;
-    border: 1px solid #354151;
-    border-radius: 6px;
-    background-color: #1a2230;
-    color: #e7ebf2;
-    padding: 0 9px;
-    selection-background-color: #ff7a00;
-}
-QDialog QComboBox::drop-down,
-QDialog QSpinBox::up-button,
-QDialog QSpinBox::down-button,
-QDialog QDoubleSpinBox::up-button,
-QDialog QDoubleSpinBox::down-button {
-    width: 24px;
-    border: none;
-    background-color: #242e3c;
-}
-QDialog QAbstractItemView {
-    background-color: #1a2230;
-    color: #e7ebf2;
-    border: 1px solid #354151;
-    selection-background-color: #34445a;
-}
-QDialog QPushButton,
-QMessageBox QPushButton {
-    min-width: 80px;
-    min-height: 34px;
-    border: 1px solid #354151;
-    border-radius: 6px;
-    background-color: #1a2230;
-    color: #e7ebf2;
-    padding: 0 14px;
-}
-QDialog QPushButton:hover,
-QMessageBox QPushButton:hover {
-    background-color: #232d3c;
-}
-QDialog QPushButton:default,
-QMessageBox QPushButton:default {
-    background-color: #ff7a00;
-    border-color: #ff7a00;
-    color: white;
-}
-"""
-
 
 class ApplicationSidebar(QFrame):
     """Fixed expanded navigation. Collapsing is intentionally deferred."""
@@ -186,11 +47,11 @@ class ApplicationSidebar(QFrame):
 
     def _build_ui(self) -> None:
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(10, 18, 10, 16)
-        layout.setSpacing(10)
+        layout.setContentsMargins(SPACE["control"], SPACE["card"], SPACE["control"], SPACE["lg"])
+        layout.setSpacing(SPACE["control"])
 
         brand_row = QHBoxLayout()
-        brand_row.setContentsMargins(8, 0, 4, 20)
+        brand_row.setContentsMargins(SPACE["sm"], 0, SPACE["xs"], SPACE["dialog"])
 
         self.brand_logo = QLabel()
         self.brand_logo.setObjectName("BrandLogo")
@@ -226,11 +87,12 @@ class ApplicationSidebar(QFrame):
             button.setAccessibleName(MODULE_LABELS[module])
 
             button_layout = QHBoxLayout(button)
-            button_layout.setContentsMargins(16, 0, 10, 0)
+            button_layout.setContentsMargins(SPACE["lg"], 0, SPACE["control"], 0)
             button_layout.setSpacing(13)
 
-            glyph = QLabel(MODULE_GLYPHS[module])
+            glyph = QLabel()
             glyph.setObjectName("NavGlyph")
+            glyph.setPixmap(navigation_pixmap(module))
             glyph.setAlignment(Qt.AlignCenter)
             glyph.setAttribute(Qt.WA_TransparentForMouseEvents)
             glyph_font = glyph.font()
@@ -255,10 +117,6 @@ class ApplicationSidebar(QFrame):
             layout.addWidget(button)
 
         layout.addStretch(1)
-        local_note = QLabel("本地模式 · 无需登录")
-        local_note.setObjectName("LocalModeNote")
-        local_note.setAlignment(Qt.AlignCenter)
-        layout.addWidget(local_note)
         self.set_active_module(MODULE_TEST)
 
     def set_active_module(self, module: str) -> None:
@@ -273,6 +131,8 @@ class ApplicationSidebar(QFrame):
                     if label is None:
                         continue
                     label.setProperty("active", active)
+                    if object_name == "NavGlyph":
+                        label.setPixmap(navigation_pixmap(key, active))
                     label.style().unpolish(label)
                     label.style().polish(label)
 

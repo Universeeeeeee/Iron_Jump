@@ -46,8 +46,16 @@ def export_reports():
     walking_snapshot.pop('immature_coalescence_policy', None)
     walking_snapshot.pop('source_uncertainty_recovery', None)
     walking_snapshot.pop('footprint_publication', None)
+    walking_snapshot.pop('bad_beam_policy', None)
     walking_summary = dict(walking.walking_summary)
-    for key in ('footfall_schema_version', 'footfalls', 'recognized_steps', 'landing_positions_m'):
+    walking_summary.pop('bilateral', None)
+    walking_summary.pop('contact_phases', None)
+    walking_summary.pop('side_policy', None)
+    walking_summary['steps'] = [{k: v for k, v in row.items() if k != 'side'} for row in walking_summary['steps']]
+    walking_summary['cycles'] = [{k: v for k, v in row.items() if k not in {'from_id', 'to_id', 'length_m'}}
+                                 for row in walking_summary['cycles']]
+    for key in ('footfall_schema_version', 'footfalls', 'recognized_steps', 'landing_positions_m',
+                'metric_completion', 'recognized_measurements'):
         walking_summary.pop(key, None)
     for key in ('event_publications', 'event_audit', 'ownership_recoveries', 'record_count', 'confirmed_contacts', 'valid_touches', 'valid_step_times',
                 'valid_step_lengths', 'valid_cycle_times', 'valid_stride_lengths',
@@ -55,10 +63,13 @@ def export_reports():
         walking_summary.pop(key, None)
     walking_summary['contacts'] = [
         {key: value for key, value in c.items() if key not in {
-            'touch_s', 'lift_s', 'contact_s', 'centre_m', 'metric_evidence', 'touch_known', 'position_known', 'candidate_outcome', 'touch_sample', 'lift_sample', 'confirmed_sample'}}
+            'identity_source', 'touch_s', 'lift_s', 'contact_s', 'centre_m', 'landing_reference', 'metric_evidence', 'touch_known', 'position_known', 'candidate_outcome', 'touch_sample', 'lift_sample', 'confirmed_sample',
+            'unavailable_separator', 'bad_separator_unknown'}}
         for c in walking_summary['contacts']]
     walking = replace(walking, walking_summary=walking_summary,
                       report_config_snapshot={**walking_snapshot, **snapshot})
+    # This fixture tests the original writer, not current report rehydration.
+    object.__setattr__(walking, 'walking_summary', walking_summary)
     rp = running_processor(8, starting_foot="Left")
     run(rp, TRAJECTORY)
     ground_running = rp.build_report("manual", raw, (.125,))
@@ -72,16 +83,25 @@ def export_reports():
     # Freeze the saved v1.3 running schema; current candidate diagnostics are
     # separately covered by the current-report roundtrip tests.
     running_summary = dict(ground_running.running_summary)
+    running_summary.pop('bilateral', None)
+    running_summary.pop('contact_phases', None)
+    running_summary.pop('side_policy', None)
     running_summary.pop('landing_positions_m', None)
+    running_summary.pop('metric_completion', None)
+    running_summary.pop('recognized_measurements', None)
     for key in ('event_publications', 'event_audit', 'ownership_recoveries', 'candidate_decisions', 'record_count', 'confirmed_contacts', 'valid_touches',
                 'valid_contact_durations', 'valid_step_lengths', 'valid_step_speeds',
                 'valid_stride_lengths', 'valid_support_cycles', 'metric_policy'):
         running_summary.pop(key, None)
     running_summary['contacts'] = [{k: v for k, v in row.items() if k not in {
-        'metric_evidence', 'candidate_outcome', 'first_seen_sample', 'touch_sample', 'lift_sample', 'confirmed_sample'}}
+        'metric_evidence', 'candidate_outcome', 'first_seen_sample', 'touch_sample', 'lift_sample', 'confirmed_sample',
+        'observed_start_s', 'observed_end_s', 'landing_reference'}}
         for row in running_summary['contacts']]
+    for row in running_summary['contacts']:
+        row['identity_source'] = 'manual_first_foot_and_alternation' if row['side'] != 'unknown' else 'alternation_only'
     ground_running = replace(ground_running, running_summary=running_summary,
                              report_config_snapshot={**running_snapshot, **snapshot})
+    ground_running.running_summary = running_summary
     legacy_jump = replace(jump, jump_results=(), export_frames=(), export_timestamps=(), report_config_snapshot={})
     return {"jump": jump, "treadmill_gait": gait, "treadmill_running": running,
             "walking": walking, "overground_running": ground_running, "legacy_jump": legacy_jump}

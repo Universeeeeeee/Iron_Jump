@@ -75,6 +75,22 @@ def test_connected_device_runs_one_automatic_led_health_sample(qtbot, monkeypatc
     controller.discard()
 
 
+def test_setup_only_capture_stops_on_worker_thread(qtbot):
+    from qtpy.QtCore import QThread
+    stopped_in_owner = []
+    class Worker(_FakeUsbWorker):
+        @Slot()
+        def stop(self):
+            stopped_in_owner.append(QThread.currentThread() == self.thread())
+            super().stop()
+    controller = session_controller.SessionController(worker_factory=Worker)
+    controller.ensure_device_connected()
+    qtbot.waitUntil(lambda: controller.device_state == 'connected')
+    assert controller.engine is None
+    controller.discard()
+    assert stopped_in_owner == [True]
+
+
 def test_prepare_reuses_device_connected_from_setup(qtbot, monkeypatch):
     monkeypatch.setattr(session_controller, "UsbWorker", _FakeUsbWorker)
     controller = session_controller.SessionController()

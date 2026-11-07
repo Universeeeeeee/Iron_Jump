@@ -1,4 +1,5 @@
 """Release Qt deferred widgets and Python reference cycles between tests."""
+import qt_runtime
 import gc
 import pytest
 from qtpy.QtCore import QCoreApplication, QEvent

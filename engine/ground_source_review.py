@@ -4,6 +4,7 @@ from copy import deepcopy
 RULE_VERSION = 'late_narrow_front_growth_v1'
 SHORT_ISLAND_MS = 30
 POST_JOIN_MS = 10
+WALKING_ROLL_MS = 80
 
 
 def ownership_record(group):
@@ -38,11 +39,12 @@ def observe_review_frame(p, groups, frame, observation):
     p._source_review_frames.append([frame.sample_index,islands])
 
 
-def review_source(p, group, source, record):
+def review_source(p, group, source, record, *, cohort=()):
     first, joined = source['first_sample'], source['joined_sample']
     e = source['evidence_at_join']
     evidence = {}
-    if first is None or not 0 < joined-first <= SHORT_ISLAND_MS:
+    window = WALKING_ROLL_MS if cohort else SHORT_ISLAND_MS
+    if first is None or not 0 < joined-first <= window:
         return 'outside_short_island_window', evidence
     if (e.get('confirmed') or p._touch_events.get(source.get('contact_id'), {}).get('active')
             or e.get('peak_width_m',0) >= .08
@@ -60,11 +62,21 @@ def review_source(p, group, source, record):
     for n,islands in history:
         fragments = [x for x in islands if x[0]<=source['high'] and x[1]>=source['low'] and owner not in x[3]]
         parents = [x for x in islands if x[3]==[owner]]
-        if len(fragments)!=1 or len(parents)!=1:
+        if cohort and not parents and n == p._touch_events.get(owner, {}).get('published_sample'):
+            # Geometry is recorded before publication in the same sample. The
+            # certified group's shape supplies that sample's historical anchor.
+            shape = [span for a,b,spans,reliable in group['observation_runs']
+                     if a<=n<b and reliable for span in spans]
+            parents = [x for x in islands if not x[3] and x[:2] in shape and x not in fragments]
+        if len(fragments)!=1 or not parents or (not cohort and len(parents)!=1):
             return 'competing_projection', evidence
-        f,body = fragments[0],parents[0]
-        if not f[2] or not body[2] or f[3]:
+        f = fragments[0]
+        if not f[2] or not all(body[2] for body in parents) or f[3]:
             return 'unreliable_or_owned_source', evidence
+        parents = sorted(parents)
+        if any(positions[b[0]]-positions[a[1]]>.035+1e-9 for a,b in zip(parents,parents[1:])):
+            return 'disconnected_owner_projection', evidence
+        body = [parents[0][0], parents[-1][1]]
         direction = 1 if f[0]>body[1] else -1 if f[1]<body[0] else 0
         if not direction or side is not None and direction!=side:
             return 'incompatible_front_growth', evidence
@@ -73,11 +85,16 @@ def review_source(p, group, source, record):
             return 'opposite_progression', evidence
         gap = positions[f[0]]-positions[body[1]] if side==1 else positions[body[0]]-positions[f[1]]
         width = positions[f[1]]-positions[f[0]]
-        if gap>.035+1e-9 or width>.025+1e-9 or positions[body[1]]-positions[body[0]]<.08:
+        max_gap = .08 if cohort else .035
+        if (gap>max_gap+1e-9 or width>.025+1e-9 or positions[body[1]]-positions[body[0]]<.08
+                or positions[max(f[1],body[1])]-positions[min(f[0],body[0])]>.45):
             return 'incompatible_calibrated_geometry', evidence
-        # A third local projection is positive competition, even if unconfirmed.
-        if any(x is not f and x is not body and positions[x[0]]<=positions[max(f[1],body[1])]+.035
-               and positions[x[1]]>=positions[min(f[0],body[0])]-.035 for x in islands):
+        # Additional islands need their own continuous history in this cohort.
+        if any(x is not f and x not in parents and positions[x[0]]<=positions[max(f[1],body[1])]+.035
+               and positions[x[1]]>=positions[min(f[0],body[0])]-.035
+               and not any(s['first_sample']<=n<s['joined_sample']
+                           and s['low']<=x[1] and s['high']>=x[0] for s in cohort)
+               for x in islands):
             return 'competing_local_source', evidence
         geometry.append([n,body[:2],f[:2],gap])
     for a,b in zip(geometry,geometry[1:]):
@@ -86,8 +103,10 @@ def review_source(p, group, source, record):
             return 'discontinuous_front_growth', evidence
     # Earlier unassigned contributors cannot silently serve as this island's owner.
     if any(s['source_id'] not in assigned_sources(group) and s['source_id']!=source['source_id']
+           and s not in cohort
            and s['joined_sample']<joined for s in group['sources']):
         return 'prior_source_unresolved', evidence
+    joined = max(s['joined_sample'] for s in cohort) if cohort else joined
     runs = [r for r in group['observation_runs'] if r[1]>joined and r[0]<joined+POST_JOIN_MS]
     if group['last_sample']+1 < joined+POST_JOIN_MS:
         return 'awaiting_post_join_growth', evidence
@@ -110,10 +129,41 @@ def review_source(p, group, source, record):
     if growth < min(s.pitch_m for s in p.device.layout.segments)-1e-9:
         return 'insufficient_front_growth', evidence
     evidence.update({'prejoin_geometry':geometry, 'post_join_interval':[joined,joined+POST_JOIN_MS],
-                     'front_growth_m':growth, 'short_window_ms':SHORT_ISLAND_MS,
+                     'front_growth_m':growth, 'short_window_ms':window,
                      'source_valid_intervals':deepcopy(source['valid_sample_intervals']),
                      'interpretation':'conditional_front_growth_not_optical_identity_proof'})
     return None,evidence
+
+
+def review_walking_sources(p, group):
+    """Review a rolling cohort after every contributor has merged and settled."""
+    record = ownership_record(group)
+    if record is None or group['state'] != 'observing':
+        return
+    assigned = assigned_sources(group)
+    cohort = [s for s in group['sources'] if s['source_id'] not in assigned]
+    if (not cohort or any(s['first_sample'] is None for s in cohort)
+            or p.last_sample != max(s['joined_sample'] for s in cohort) + POST_JOIN_MS - 1):
+        return
+    reviews = [review_source(p, group, source, record, cohort=cohort) for source in cohort]
+    if any(reason is not None for reason, evidence in reviews):
+        return
+    for source, (_, evidence) in zip(cohort, reviews):
+        decision = {'source_id': source['source_id'], 'owner_id': record['owner_id'],
+                    'outcome': 'associated', 'evidence_start_sample': source['first_sample'],
+                    'joined_sample': source['joined_sample'], 'decided_sample': p.last_sample,
+                    'source_valid_sample_intervals': deepcopy(source['valid_sample_intervals']),
+                    'reviewed_group_intervals': [evidence['post_join_interval']],
+                    'rule_version': 'walking_continuous_front_cohort_v1',
+                    'reason': 'continuous_local_rolling', 'evidence': evidence}
+        group.setdefault('source_decisions', []).append(decision)
+        p.event_audit.append({'action': 'source_attribution_review', 'sample': p.last_sample,
+                              'group_id': group['id'], **deepcopy(decision)})
+        if source.get('contact_id') is not None and source['contact_id'] != record['owner_id']:
+            contact = p.contacts[source['contact_id']]
+            contact.candidate_outcome = 'associated_fragment'
+            if contact in p.active:
+                p.active.remove(contact)
 
 
 def review_group_sources(p, group):

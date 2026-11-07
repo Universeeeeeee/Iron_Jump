@@ -14,8 +14,10 @@ from config.test_config import TestConfig as _TestConfig
 from config.test_report import JumpTestReport
 from config.treadmill_config import TreadmillGaitConfig
 from config.treadmill_report import TreadmillGaitReport
+from config.walking_config import WalkingConfig
+from config.overground_running_config import OvergroundRunningConfig
 from data.subject_store import SubjectStore
-from ui.views.history_view import HistoryView
+from ui.views.history_view import HistoryView, _config_detail_lines
 
 
 _APP = None
@@ -83,6 +85,13 @@ class HistoryViewTest(unittest.TestCase):
     def tearDown(self):
         self.tmpdir.cleanup()
 
+    def test_ground_history_parameters_do_not_require_flight_threshold(self):
+        for config in (WalkingConfig(), OvergroundRunningConfig(min_contact_time=60)):
+            with self.subTest(test_type=config.test_type):
+                lines = _config_detail_lines(config)
+                self.assertIn("接触阈值: >60ms", lines)
+                self.assertFalse(any("腾空" in line for line in lines))
+
     def test_history_view_uses_readable_visual_hierarchy(self):
         view = HistoryView(self.store)
         view.show()
@@ -122,7 +131,7 @@ class HistoryViewTest(unittest.TestCase):
         treadmill_index = next(
             index
             for index in range(view._test_type_filter.count())
-            if "Treadmill" in view._test_type_filter.itemText(index)
+            if view._test_type_filter.itemData(index) == "Treadmill Gait Test"
         )
         view._test_type_filter.setCurrentIndex(treadmill_index)
 

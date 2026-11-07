@@ -1,6 +1,5 @@
 import pytest
 
-pytest.importorskip("dayu_widgets")
 
 from qtpy.QtCore import Qt
 from qtpy.QtWidgets import QApplication, QBoxLayout, QGridLayout
@@ -141,7 +140,8 @@ def test_gait_running_controls_stack_in_right_column(qtbot):
     assert not view._paused  # UI waits for the engine acknowledgement.
     view.set_paused(True)
     assert "暂停分析（计时已暂停）" in view._mode_label.text()
-    assert view.btn_pause.text() == "▶ 继续分析"
+    assert view.btn_pause.text() == "继续分析"
+    assert not view.btn_pause.icon().isNull()
     assert view._countdown_timer is None
     view._on_countdown_tick()
     assert view._countdown_remaining == remaining_before_pause
@@ -149,7 +149,8 @@ def test_gait_running_controls_stack_in_right_column(qtbot):
     view._on_pause()
     assert view._paused
     view.set_paused(False)
-    assert view.btn_pause.text() == "⏸ 暂停"
+    assert view.btn_pause.text() == "暂停"
+    assert not view.btn_pause.icon().isNull()
     assert view._countdown_timer is not None
     assert view._countdown_timer.isActive()
 

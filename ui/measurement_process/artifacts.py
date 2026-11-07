@@ -1,4 +1,4 @@
-"""Typed walking reports and raw exports, verified before GUI delivery."""
+"""Typed ground reports and raw exports, verified before GUI delivery."""
 from dataclasses import replace
 import hashlib
 import json

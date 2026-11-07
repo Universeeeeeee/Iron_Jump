@@ -33,7 +33,7 @@ def has_export_data(report: TestReport) -> bool:
     return bool(frames or has_jump_metrics or has_treadmill_steps or has_walking or has_running)
 
 
-def build_report_workbook(report: TestReport) -> Workbook:
+def build_report_workbook(report: TestReport, *, include_recognized: bool = False) -> Workbook:
     """Preserve the existing worksheet order, values, and missing-value conventions."""
     frames = report.export_frames
     timestamps = report.export_timestamps
@@ -110,6 +110,10 @@ def build_report_workbook(report: TestReport) -> Workbook:
                 for record in records:
                     ws.append([json.dumps(value, ensure_ascii=False) if isinstance(value, (list, dict)) else value
                                for value in (record.get(column) for column in columns)])
+
+    if has_walking or has_running:
+        from reporting.ground_bilateral import export_bilateral
+        export_bilateral(wb, report.walking_summary if has_walking else report.running_summary)
 
     if isinstance(report, JumpTestReport):
         ws = wb.create_sheet("Jump Metrics")
@@ -203,6 +207,25 @@ def build_report_workbook(report: TestReport) -> Workbook:
                     _fmt(sm.std), _fmt(sm.cv_percent),
                 ])
 
+    if include_recognized:
+        summary = getattr(report, 'walking_summary', None) or getattr(report, 'running_summary', None)
+        if summary:
+            from reporting.recognized_gait import recognized_gait
+            sheet = wb.create_sheet("已识别脚印测量")
+            sheet.append(["接触编号", "触地采样时刻(s)", "落脚中心(m)", "步间(s)", "落脚点步长(m)",
+                          "速度(m/s)", "接触(s)", "接触口径", "步间说明", "遮挡跨度(s)", "区间距离(m)", "接触纳入均值", "位置参考", "参考采样"])
+            measurements = recognized_gait(summary)
+            for row in measurements['rows']:
+                sheet.append([row[key] for key in ('contact_id', 'timestamp_s', 'position_m', 'step_time_s',
+                              'step_length_m', 'speed_m_s', 'contact_s', 'contact_basis', 'relation_note',
+                              'observed_span_s', 'interval_distance_m', 'contact_included', 'position_basis', 'position_sample')])
+            stats = wb.create_sheet("识别测量汇总")
+            stats.append(["统计口径", measurements['policy']])
+            for key in ('recognized_steps','interval_count','spatial_interval_count','contact_count',
+                        'mean_step_m','speed_m_s','cadence_per_min','mean_contact_s'):
+                stats.append([key, measurements[key]])
+            import json
+            stats.append(["样本集合", json.dumps(measurements['sample_sets'], ensure_ascii=False)])
     return wb
 
 

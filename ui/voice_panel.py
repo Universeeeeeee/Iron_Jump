@@ -1,4 +1,7 @@
 """Compact voice controls embedded in the application's content area."""
+
+from ui.theme import qss
+
 from qtpy.QtCore import Qt
 from qtpy.QtWidgets import (
     QFrame, QHBoxLayout, QLabel, QPlainTextEdit, QPushButton, QSizePolicy, QVBoxLayout,
@@ -9,18 +12,19 @@ class VoicePanel(QFrame):
     def __init__(self, parent=None):
         super().__init__(parent)
         self.setObjectName("VoicePanel")
-        self.setStyleSheet("""
-            QFrame#VoicePanel { background: #141d29; border-top: 1px solid #354151; }
-            QLabel { color: #cbd5e1; background: transparent; border: none; font-size: 12px; }
-            QLabel#VoiceState { color: #ff9b2f; font-weight: 600; }
-            QLabel#VoiceContext { color: #95a5b8; }
-            QPushButton { color: #e7ebf2; background: #242e3c; border: 1px solid #354151;
+        self.setStyleSheet(qss("""
+            QFrame#VoicePanel { background: ${surface}; border-top: 1px solid ${border_control}; }
+            QLabel { color: ${text_summary}; background: transparent; border: none; font-size: 12px; }
+            QLabel#VoiceState { color: ${accent_text}; font-weight: 600; }
+            QLabel#VoiceContext { color: ${text_muted}; }
+            QPushButton { color: ${text}; background: ${control_stepper}; border: 1px solid ${border_control};
                           border-radius: 6px; padding: 5px 12px; min-height: 24px; }
-            QPushButton:hover { border-color: #ff8a1f; }
-            QPushButton:disabled { color: #697587; background: #18212d; }
-            QPushButton#VoiceToggle { background: #9b4a08; border-color: #cc6a16; color: white; }
-            QPlainTextEdit { background: #0c1119; color: #aeb7c5; border: none; padding: 6px; }
-        """)
+            QPushButton:hover { border-color: ${accent_hover}; }
+            QPushButton:disabled { color: ${text_disabled}; background: ${control_disabled}; }
+            QPushButton#VoiceToggle:disabled { color: ${text_disabled}; background: ${control_disabled}; }
+            QPushButton#VoiceToggle { background: ${control}; border-color: ${border_control}; color: ${text}; }
+            QPlainTextEdit { background: ${background}; color: ${text_secondary}; border: none; padding: 6px; }
+        """))
         layout = QVBoxLayout(self)
         layout.setContentsMargins(16, 8, 16, 8)
         layout.setSpacing(5)

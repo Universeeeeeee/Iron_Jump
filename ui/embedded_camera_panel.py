@@ -9,24 +9,19 @@ from pathlib import Path
 from typing import Optional
 
 import numpy as np
-from qtpy.QtCore import QEvent, QThread, QTimer, Qt, Signal
-from qtpy.QtGui import QImage, QPixmap
+
+from ui.theme import qss
+
 from qtpy.QtWidgets import (
-    QFrame,
-    QFileDialog,
-    QHBoxLayout,
-    QLabel,
-    QMenu,
-    QSlider,
-    QVBoxLayout,
-    QWidget,
-    QWidgetAction,
+    QCheckBox, QComboBox, QLabel, QPushButton, QFrame, QFileDialog, QHBoxLayout, QMenu,
+    QSlider, QVBoxLayout, QWidget, QWidgetAction,
 )
 
-from dayu_widgets.check_box import MCheckBox
-from dayu_widgets.combo_box import MComboBox
-from dayu_widgets.label import MLabel
-from dayu_widgets.push_button import MPushButton
+from qtpy.QtCore import QEvent, QThread, QTimer, Qt, Signal
+from qtpy.QtGui import QImage, QPixmap
+
+
+from ui.icons import icon
 from ui.video_playback import VideoPlayback
 from ui.annotation_canvas import AnnotationCanvas
 from ui.video_annotation_panel import VideoAnnotationPanel
@@ -125,14 +120,7 @@ class EmbeddedCameraPanel(QFrame):
 
     def _build_ui(self):
         self.setStyleSheet(
-            "EmbeddedCameraPanel {"
-            "  background-color: rgba(18, 18, 22, 0.92);"
-            "  border: 1px solid rgba(90, 90, 95, 0.7);"
-            "  border-radius: 8px;"
-            "}"
-            'EmbeddedCameraPanel[integrated="true"] {'
-            "  background: transparent; border: none;"
-            "}"
+            qss("""EmbeddedCameraPanel {  background-color: ${surface};  border: 1px solid ${border_card};  border-radius: 8px;}EmbeddedCameraPanel[integrated="true"] {  background: transparent; border: none;}""")
         )
         layout = QVBoxLayout(self)
         layout.setContentsMargins(4, 4, 4, 4)
@@ -144,25 +132,26 @@ class EmbeddedCameraPanel(QFrame):
         self._preview.setFocusPolicy(Qt.StrongFocus)
         self._preview.installEventFilter(self)
         self._preview.setStyleSheet(
-            "QLabel { background-color: #111; color: #888; border: none; }"
-            'QLabel[integrated="true"] { background-color: #0e141d; color: #768394; }'
+            qss("""QLabel { background-color: ${sidebar}; color: ${text_muted}; border: none; }QLabel[integrated="true"] { background-color: ${sidebar}; color: ${text_hint}; }""")
         )
         self._preview_container = _AspectRatioContainer(self._preview)
         self._preview_container.setMinimumSize(320, 180)
         layout.addWidget(self._preview_container, 1)
         self._vision_label = QLabel()
         self._vision_label.setWordWrap(True)
-        self._vision_label.setStyleSheet("color: #aeb7c5; padding: 4px; font-size: 10pt;")
+        self._vision_label.setStyleSheet(qss("""color: ${text_secondary}; padding: 4px; font-size: 10pt;"""))
         self._vision_label.hide()
         layout.addWidget(self._vision_label)
         self._build_playback_controls(layout)
 
-        self._btn_settings = MPushButton("⚙")
+        self._btn_settings = QPushButton()
+        self._btn_settings.setIcon(icon("settings"))
+        self._btn_settings.setProperty("role", "icon")
+        self._btn_settings.setAccessibleName("摄像头设置")
         self._btn_settings.setFixedSize(30, 28)
         self._btn_settings.setToolTip("摄像头设置")
         self._btn_settings.setStyleSheet(
-            "font-size: 13pt; padding: 0; "
-            "background-color: #3b3b3b; border: 1px solid #555; border-radius: 5px;"
+            qss("""font-size: 13pt; padding: 0; background-color: ${control}; border: 1px solid ${border_control}; border-radius: 5px;""")
         )
         self._menu = QMenu(self)
         self._menu.setMinimumWidth(340)
@@ -192,13 +181,13 @@ class EmbeddedCameraPanel(QFrame):
         controls.setSpacing(4)
         row = QHBoxLayout()
         row.setSpacing(2)
-        self._play_button = MPushButton("播放")
+        self._play_button = QPushButton("播放")
         self._play_button.clicked.connect(self._toggle_playback)
-        self._previous_button = MPushButton("上一帧")
+        self._previous_button = QPushButton("上一帧")
         self._previous_button.clicked.connect(lambda: self._playback.step(-1))
-        self._next_button = MPushButton("下一帧")
+        self._next_button = QPushButton("下一帧")
         self._next_button.clicked.connect(lambda: self._playback.step(1))
-        self._speed = MComboBox()
+        self._speed = QComboBox()
         for speed in (0.25, 0.5, 1.0):
             self._speed.addItem(f"{speed:g}×", speed)
         self._speed.setCurrentIndex(2)
@@ -214,7 +203,7 @@ class EmbeddedCameraPanel(QFrame):
         self._playback_time = QLabel()
         self._playback_time.setWordWrap(True)
         row.addWidget(self._playback_time, 1)
-        back = MPushButton("返回实时")
+        back = QPushButton("返回实时")
         back.clicked.connect(self._leave_playback)
         row.addWidget(back)
         controls.addLayout(row)
@@ -364,63 +353,64 @@ class EmbeddedCameraPanel(QFrame):
         layout.setSpacing(6)
 
         row = QHBoxLayout()
-        self._chk_mirror = MCheckBox("镜像")
+        self._chk_mirror = QCheckBox("镜像")
+        self._chk_mirror.setChecked(True)
         self._chk_mirror.stateChanged.connect(self._on_mirror)
         row.addWidget(self._chk_mirror)
-        self._cmb_fov = MComboBox()
+        self._cmb_fov = QComboBox()
         for value, label in FOV_OPTIONS.items():
             self._cmb_fov.addItem(label, value)
         self._cmb_fov.currentIndexChanged.connect(self._on_fov_changed)
-        row.addWidget(MLabel("视野:"))
+        row.addWidget(QLabel("视野:"))
         row.addWidget(self._cmb_fov)
         layout.addLayout(row)
 
         row = QHBoxLayout()
-        self._cmb_ai = MComboBox()
+        self._cmb_ai = QComboBox()
         for value, label in sorted(AI_SUB_MODE.items()):
             self._cmb_ai.addItem(label, value)
         self._cmb_ai.setCurrentIndex(4)
-        row.addWidget(MLabel("AI 追踪:"))
+        row.addWidget(QLabel("AI 追踪:"))
         row.addWidget(self._cmb_ai)
-        self._btn_ai_go = MPushButton("激活")
+        self._btn_ai_go = QPushButton("激活")
         self._btn_ai_go.clicked.connect(self._on_ai_go)
         row.addWidget(self._btn_ai_go)
-        self._btn_ai_off = MPushButton("关闭")
+        self._btn_ai_off = QPushButton("关闭")
         self._btn_ai_off.clicked.connect(self._on_ai_off)
         row.addWidget(self._btn_ai_off)
         layout.addLayout(row)
 
-        self._chk_sdk_tracking = MCheckBox("SDK 全身跟随")
+        self._chk_sdk_tracking = QCheckBox("SDK 全身追踪")
         self._chk_sdk_tracking.setToolTip("使用当前人体识别控制相机，固定最大视野；停止后内置 AI 保持关闭")
         self._chk_sdk_tracking.toggled.connect(self._on_sdk_tracking)
         layout.addWidget(self._chk_sdk_tracking)
 
         row = QHBoxLayout()
-        self._chk_af = MCheckBox("自动对焦")
+        self._chk_af = QCheckBox("自动对焦")
         self._chk_af.setChecked(True)
         self._chk_af.stateChanged.connect(self._on_af_changed)
         row.addWidget(self._chk_af)
-        self._cmb_exp = MComboBox()
+        self._cmb_exp = QComboBox()
         for value, label in sorted(EXPOSURE_OPTIONS.items()):
             self._cmb_exp.addItem(label, value)
         self._cmb_exp.setCurrentIndex(self._cmb_exp.findData(0))
         self._cmb_exp.currentIndexChanged.connect(self._on_exp_changed)
-        row.addWidget(MLabel("曝光:"))
+        row.addWidget(QLabel("曝光:"))
         row.addWidget(self._cmb_exp)
         layout.addLayout(row)
 
         row = QHBoxLayout()
-        self._cmb_flicker = MComboBox()
+        self._cmb_flicker = QComboBox()
         self._cmb_flicker.addItem("60Hz", 0)
         self._cmb_flicker.addItem("50Hz", 1)
         self._cmb_flicker.currentIndexChanged.connect(self._on_flicker_changed)
-        row.addWidget(MLabel("抗频闪:"))
+        row.addWidget(QLabel("抗频闪:"))
         row.addWidget(self._cmb_flicker)
-        self._cmb_wdr = MComboBox()
+        self._cmb_wdr = QComboBox()
         for value, label in WDR_OPTIONS.items():
             self._cmb_wdr.addItem(label, value)
         self._cmb_wdr.currentIndexChanged.connect(self._on_wdr_changed)
-        row.addWidget(MLabel("HDR:"))
+        row.addWidget(QLabel("HDR:"))
         row.addWidget(self._cmb_wdr)
         layout.addLayout(row)
 
@@ -449,6 +439,8 @@ class EmbeddedCameraPanel(QFrame):
         self._vision.start()
 
     def _stop_vision(self):
+        self._preview.set_live_pose(None)
+        self._overlay_visible = False
         self._disconnect_sdk_tracking()
         vision, self._vision = self._vision, None
         if vision is not None:
@@ -471,6 +463,11 @@ class EmbeddedCameraPanel(QFrame):
         self._pose_subscription = None
         if self._control is not None:
             self._control.end_tracking()
+
+    def enable_sdk_tracking(self):
+        """Enable full-body tracking when preparing a new Tiny SE test."""
+        if self._camera_type == "tinyse" and not self._replay_mode:
+            self._chk_sdk_tracking.setChecked(True)
 
     def _on_sdk_tracking(self, checked):
         self._sdk_tracking = checked
@@ -668,7 +665,8 @@ class EmbeddedCameraPanel(QFrame):
             if self._sdk_tracking and self._tracking_notice:
                 self._vision_label.setText(self._vision_label.text() + '\n' + self._tracking_notice)
             if pose is None and self._overlay_visible and self._display_frame is not None:
-                self._render_frame(self._display_frame)
+                self._preview.set_live_pose(None)
+                self._overlay_visible = False
         with self._frame_lock:
             frame = self._pending_frame
             self._pending_frame = None
@@ -686,20 +684,19 @@ class EmbeddedCameraPanel(QFrame):
         import cv2
 
         self._overlay_visible = False
+        pose = None
         if self._vision is not None and not self._replay_mode and self._show_pose_action.isChecked():
-            from vision.pose_overlay import draw_pose_overlay
             pose, _, _ = self._vision.display_state()
-            if pose is not None:
-                frame = draw_pose_overlay(frame.copy(), pose, mirrored=self._chk_mirror.isChecked())
-                self._overlay_visible = True
-        rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-        h, w = rgb.shape[:2]
+        h, w = frame.shape[:2]
+        self._preview.set_live_pose(pose, (w, h), mirrored=self._chk_mirror.isChecked())
+        self._overlay_visible = pose is not None
         target = self._preview.size()
         scale = min(target.width() / w, target.height() / h)
         disp_w = max(1, int(w * scale))
         disp_h = max(1, int(h * scale))
         if disp_w != w or disp_h != h:
-            rgb = cv2.resize(rgb, (disp_w, disp_h), interpolation=cv2.INTER_AREA)
+            frame = cv2.resize(frame, (disp_w, disp_h), interpolation=cv2.INTER_AREA)
+        rgb = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
         bytes_per_line = rgb.strides[0]
         image = QImage(
             rgb.data,
@@ -740,7 +737,8 @@ class EmbeddedCameraPanel(QFrame):
         self._preview.setText(notice)
 
     def _apply_control_settings(self, control):
-        control.request('set_fov', int(self._cmb_fov.currentData() or 0))
+        if not self._sdk_tracking:
+            control.request('set_fov', int(self._cmb_fov.currentData() or 0))
         control.request('set_auto_focus', self._chk_af.isChecked())
         control.request('set_exposure_compensation', int(self._cmb_exp.currentData() or 0))
         control.request('set_anti_flicker', int(self._cmb_flicker.currentData() or 0))

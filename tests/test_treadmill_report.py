@@ -105,7 +105,7 @@ def test_treadmill_report_accepts_visual_timeline_frames():
 
 
 def test_treadmill_metric_rows_include_validity_columns():
-    pytest.importorskip("dayu_widgets", reason="UI dependency not installed")
+
     from ui.views.report_view import _treadmill_metric_rows
 
     report = TreadmillGaitReport(
@@ -139,7 +139,7 @@ def test_treadmill_metric_rows_include_validity_columns():
 
 
 def test_treadmill_metric_rows_match_export_header_order():
-    pytest.importorskip("dayu_widgets", reason="UI dependency not installed")
+
     from ui.views.report_view import TREADMILL_EXPORT_COLUMNS, _treadmill_metric_rows
 
     report = TreadmillGaitReport(
@@ -187,7 +187,7 @@ def test_treadmill_metric_rows_match_export_header_order():
 
 
 def test_gait_cycle_export_includes_exclusion_reason_and_quality_flags():
-    pytest.importorskip("dayu_widgets", reason="UI dependency not installed")
+
     from ui.views.report_view import (
         GAIT_CYCLE_EXPORT_HEADERS,
         _gait_cycle_rows,

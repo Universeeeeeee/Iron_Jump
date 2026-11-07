@@ -1,12 +1,12 @@
 """
 logi_camera.py — Logitech MX Brio 摄像头独立预览窗口
 
-基于 dayu_widgets + qtpy + OpenCV MSMF 后端。
+基于 Qt Widgets + qtpy + OpenCV MSMF 后端。
 可用于步态分析系统提供实时视觉参考。
 
 使用方式::
 
-    python camera/logi_camera.py
+    python -m camera.logi_camera
 
 设计目标:
 - 独立运行，不与 ui/ 目录现有模块耦合
@@ -15,36 +15,23 @@ logi_camera.py — Logitech MX Brio 摄像头独立预览窗口
 
 from __future__ import annotations
 
-import os
 import sys
 import time
 from pathlib import Path
 
 import threading
 
-_module_dir = Path(__file__).resolve().parent
-if str(_module_dir) not in sys.path:
-    sys.path.insert(0, str(_module_dir))
-_project_root = _module_dir.parent
-if str(_project_root) not in sys.path:
-    sys.path.insert(0, str(_project_root))
-
 import cv2
 import numpy as np
+from qtpy.QtWidgets import (
+    QLabel, QPushButton, QHBoxLayout, QMessageBox, QVBoxLayout, QWidget,
+)
+from ui.widgets import SectionHeading
+from ui.application import application
+
 from qtpy.QtCore import QObject, QThread, Signal, Qt
 from qtpy.QtGui import QImage, QPixmap
-from qtpy.QtWidgets import (
-    QHBoxLayout,
-    QLabel,
-    QMessageBox,
-    QVBoxLayout,
-    QWidget,
-)
-from dayu_widgets.divider import MDivider
-from dayu_widgets.label import MLabel
-from dayu_widgets.push_button import MPushButton
-from dayu_widgets.qt import application
-from dayu_widgets import dayu_theme
+
 
 # ──────────────────────────────────────────────────────────────────────
 # 常量
@@ -255,7 +242,7 @@ class LogiCameraWidget(QWidget):
         main.setSpacing(10)
 
         # 标题
-        main.addWidget(MDivider("Logitech MX Brio"))
+        main.addWidget(SectionHeading("Logitech MX Brio"))
 
         # 预览区
         self._preview = QLabel(self)
@@ -269,16 +256,17 @@ class LogiCameraWidget(QWidget):
 
         # 控制按钮
         btn_row = QHBoxLayout()
-        self._btn_start = MPushButton("▶ 开始预览").primary()
+        self._btn_start = QPushButton("▶ 开始预览")
+        self._btn_start.setProperty("role", "primary")
         self._btn_start.setMinimumHeight(48)
         self._btn_start.clicked.connect(self._on_start)
 
-        self._btn_record = MPushButton("⏺ 录制")
+        self._btn_record = QPushButton("⏺ 录制")
         self._btn_record.setMinimumHeight(48)
         self._btn_record.setEnabled(False)
         self._btn_record.clicked.connect(self._on_record)
 
-        self._btn_stop = MPushButton("⏹ 停止")
+        self._btn_stop = QPushButton("⏹ 停止")
         self._btn_stop.setMinimumHeight(48)
         self._btn_stop.setEnabled(False)
         self._btn_stop.clicked.connect(self._on_stop)
@@ -289,7 +277,7 @@ class LogiCameraWidget(QWidget):
         main.addLayout(btn_row)
 
         # 状态栏
-        self._lbl_status = MLabel()
+        self._lbl_status = QLabel()
         self._lbl_status.setText("状态: 就绪")
         main.addWidget(self._lbl_status)
 
@@ -402,13 +390,8 @@ class LogiCameraWidget(QWidget):
 
 
 if __name__ == "__main__":
-    # 确保项目根目录在 sys.path 中
-    _root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-    if _root not in sys.path:
-        sys.path.insert(0, _root)
-
     with application() as app:
         w = LogiCameraWidget()
-        dayu_theme.apply(w)
+
         w.show()
         sys.exit(app.exec_())

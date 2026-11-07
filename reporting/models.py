@@ -131,7 +131,7 @@ class SemanticRecord(FrozenModel):
 
 class RecordSet(FrozenModel):
     record_set_id: str
-    record_type: Literal["jump", "step", "gait_cycle", "ground_contact", "ground_step", "ground_cycle", "ground_footfall"]
+    record_type: Literal["jump", "step", "gait_cycle", "ground_contact", "ground_step", "ground_cycle", "ground_footfall", "recognized_footprint"]
     metric_codes: tuple[str, ...]
     records: tuple[SemanticRecord, ...]
 
@@ -259,6 +259,8 @@ class GroundPayload(FrozenModel):
     record_sources: dict[str, dict[str, Any]]
     footfall_record_set_id: str | None = None
     recognized_steps: int | None = Field(default=None, ge=0)
+    recognized_measurements: dict[str, Any] = Field(default_factory=dict)
+    bilateral: dict[str, Any] = Field(default_factory=dict)
 
 
 ReportPayload = JumpPayload | TreadmillGaitPayload | TreadmillRunningPayload | GroundPayload
@@ -421,6 +423,7 @@ class AgentObservation(FrozenModel):
     report_context: ReportContextInput
     report_manifest: ReportManifest
     authoritative_facts: tuple[ScalarFact, ...]
+    ground_bilateral: dict[str, Any] = Field(default_factory=dict)
     analysis_sketch: AnalysisSketch
     compact_session_series: tuple[CompactSessionSeries, ...]
     quality_summary: QualitySummary
