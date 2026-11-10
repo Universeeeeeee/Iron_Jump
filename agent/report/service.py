@@ -745,6 +745,21 @@ class ReportAnalysisService:
             package.metadata.package_digest,
         )
 
+    def get_history(self, session_id, access_scope):
+        package = self._repository.get_package(session_id)
+        return self._repository.list_validated_analyses(
+            session_id, access_scope, package.metadata.package_digest,
+        )
+
+    def get_saved(self, session_id, access_scope, analysis_run_id):
+        package = self._repository.get_package(session_id)
+        analysis = self._repository.get_validated_analysis(
+            analysis_run_id, session_id, access_scope, package.metadata.package_digest,
+        )
+        if analysis is None:
+            raise ReportAnalysisError("invalid_parent_analysis", "该回答与当前报告版本不匹配。")
+        return analysis
+
     def _record_metrics(
         self,
         run_id,

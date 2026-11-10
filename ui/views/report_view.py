@@ -621,6 +621,16 @@ class _ReportAnalysisWorker(QThread):
                     self._session_id,
                     scope,
                 )
+                if callable(getattr(self._client, "get_analysis_history", None)):
+                    history = self._client.get_analysis_history(self._session_id, scope)
+                    payload = {"default_analysis": payload, "history": history.get("history", []),
+                               "history_error": history.get("error_code")}
+            elif self._action == "saved":
+                response = self._client.get_saved_analysis(self._session_id, scope, **self._question)
+                if response.get("error_code"):
+                    self.failed.emit(self._session_id, self._action, response["error_code"], "")
+                    return
+                payload = response.get("analysis")
             elif self._action == "ask":
                 response = self._client.ask_report(
                     self._session_id,
@@ -683,6 +693,7 @@ class ReportView(QWidget):
         self._analysis_available = False
         self._analysis_data = None
         self._default_analysis_data = None
+        self._saved_analyses = {}
         self._analysis_generation = 0
         self._analysis_request_serial = 0
         self._analysis_busy = False
@@ -945,6 +956,13 @@ class ReportView(QWidget):
         self._analysis_button.clicked.connect(self._on_analysis_clicked)
         analysis_header.addWidget(self._analysis_button)
         analysis_layout.addLayout(analysis_header)
+        self._analysis_history = QComboBox()
+        self._analysis_history.setSizeAdjustPolicy(QComboBox.AdjustToMinimumContentsLengthWithIcon)
+        self._analysis_history.setMinimumContentsLength(24)
+        self._analysis_history.setToolTip("查看已保存的分析与追问")
+        self._analysis_history.currentIndexChanged.connect(self._select_saved_analysis)
+        self._analysis_history.hide()
+        analysis_layout.addWidget(self._analysis_history)
         self._analysis_status = QLabel("")
         self._analysis_status.setWordWrap(True)
         self._analysis_status.setTextFormat(Qt.PlainText)
@@ -1182,20 +1200,36 @@ class ReportView(QWidget):
         self._analysis_status.setVisible(loading)
         self._refresh_followup_controls()
 
-    def show_validated_analysis(self, analysis: dict) -> None:
+    def show_validated_analysis(self, analysis: dict, *, as_default=True) -> None:
         self._clear_evidence_charts()
         self._analysis_data = analysis
+        run_id = analysis.get("analysis_run_id")
+        if run_id:
+            self._saved_analyses[run_id] = analysis
+            self._analysis_history.blockSignals(True)
+            index = self._analysis_history.findData(run_id)
+            if index < 0:
+                label = (analysis.get("question_context") or {}).get("question") or "完整分析"
+                self._analysis_history.insertItem(0, label[:80], run_id)
+                self._analysis_history.setItemData(0, label, Qt.ToolTipRole)
+                index = 0
+            self._analysis_history.setCurrentIndex(index)
+            self._analysis_history.blockSignals(False)
+            self._analysis_history.setVisible(self._analysis_history.count() > 1)
         self._analysis_result.setText(analysis_html(analysis))
         cards = (analysis.get("presentation") or {}).get("insight_cards", [])
         question_context = analysis.get("question_context")
-        if not question_context:
+        if not question_context and as_default:
             self._default_analysis_data = analysis
             self._analysis_headline.setText(
                 '<b>本次重点</b>　' + html.escape(analysis.get("summary", ""))
                 + '　<a style="color:#67dce9" href="analysis">查看依据</a>'
             )
             self._analysis_headline.setVisible(bool(cards))
-        self._analysis_default_button.setVisible(bool(question_context and self._default_analysis_data))
+        self._analysis_default_button.setVisible(bool(
+            self._default_analysis_data
+            and analysis.get("analysis_run_id") != self._default_analysis_data.get("analysis_run_id")
+        ))
         self._followup_target.clear()
         self._followup_target.addItem("继续当前分析" if question_context else "整体报告", None)
         if analysis.get("analysis_run_id"):
@@ -1221,6 +1255,16 @@ class ReportView(QWidget):
         self._analysis_button.setText("重新分析")
         self._refresh_followup_controls()
 
+    def _select_saved_analysis(self, index):
+        if self._analysis_busy or index < 0:
+            return
+        run_id = self._analysis_history.itemData(index)
+        if run_id in self._saved_analyses:
+            self._analysis_request_serial += 1
+            self.show_validated_analysis(self._saved_analyses[run_id], as_default=False)
+        elif callable(getattr(self._llm_client, "get_saved_analysis", None)):
+            self._start_analysis_request("saved", question={"analysis_run_id": run_id})
+
     def _show_default_analysis(self):
         if not self._analysis_busy and self._default_analysis_data is not None:
             self.show_validated_analysis(self._default_analysis_data)
@@ -1235,6 +1279,7 @@ class ReportView(QWidget):
         self._followup_question.setEnabled(available)
         self._followup_target.setEnabled(available)
         self._followup_send.setEnabled(available and bool(self._followup_question.text().strip()))
+        self._analysis_history.setEnabled(not self._analysis_busy)
 
     def _ask_report_question(self):
         question = self._followup_question.text().strip()
@@ -1267,6 +1312,11 @@ class ReportView(QWidget):
         self._analysis_generation += 1
         self._analysis_data = None
         self._default_analysis_data = None
+        self._saved_analyses.clear()
+        self._analysis_history.blockSignals(True)
+        self._analysis_history.clear()
+        self._analysis_history.blockSignals(False)
+        self._analysis_history.hide()
         self._analysis_default_button.hide()
         self._followup_question.clear()
         self._followup_target.clear()
@@ -1354,10 +1404,12 @@ class ReportView(QWidget):
         worker.finished.connect(
             lambda worker=worker: self._release_analysis_worker(worker)
         )
-        if action in {"analyze", "ask"}:
+        if action in {"analyze", "ask", "saved"}:
             self.set_analysis_loading(True)
             if action == "ask":
                 self._analysis_status.setText("正在分析你的问题…")
+            elif action == "saved":
+                self._analysis_status.setText("正在读取历史回答…")
         worker.start()
 
     def _deliver_analysis_result(self, identity, session_id, action, payload):
@@ -1394,8 +1446,31 @@ class ReportView(QWidget):
         if session_id != self._session_id or not self._analysis_available:
             return
         self.set_analysis_loading(False)
+        if action == "latest" and isinstance(analysis, dict) and "default_analysis" in analysis:
+            history = analysis["history"]
+            self._analysis_history.blockSignals(True)
+            self._analysis_history.clear()
+            for entry in history:
+                label = entry.get("question") or "完整分析"
+                self._analysis_history.addItem(
+                    f'{entry["created_at"]}　{label[:80]}', entry["analysis_run_id"],
+                )
+                self._analysis_history.setItemData(self._analysis_history.count() - 1, label, Qt.ToolTipRole)
+            self._analysis_history.blockSignals(False)
+            if analysis["default_analysis"]:
+                self.show_validated_analysis(analysis["default_analysis"])
+            self._analysis_history.setVisible(self._analysis_history.count() > 1)
+            if history:
+                self._analysis_history.setCurrentIndex(0)
+                if self._analysis_data is None:
+                    self._select_saved_analysis(0)
+            if analysis.get("history_error"):
+                self._analysis_status.setText("历史回答读取失败，请重新打开报告重试。")
+                self._analysis_status.show()
+                self._latest_requested_for = None
+            return
         if isinstance(analysis, dict):
-            self.show_validated_analysis(analysis)
+            self.show_validated_analysis(analysis, as_default=action != "saved")
             if action == "ask":
                 self._followup_question.clear()
             if action == "analyze":
@@ -1412,7 +1487,13 @@ class ReportView(QWidget):
         if session_id != self._session_id or not self._analysis_available:
             return
         self.set_analysis_loading(False)
-        if action in {"analyze", "ask"}:
+        if action == "saved" and self._analysis_data:
+            self._analysis_history.blockSignals(True)
+            self._analysis_history.setCurrentIndex(
+                self._analysis_history.findData(self._analysis_data.get("analysis_run_id"))
+            )
+            self._analysis_history.blockSignals(False)
+        if action in {"analyze", "ask", "saved"}:
             if action == "analyze":
                 self.voice_reply.emit("报告分析暂时不可用，请查看界面提示后重试。")
             messages = {

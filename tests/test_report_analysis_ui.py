@@ -435,6 +435,84 @@ def test_followup_uses_selected_claim_then_current_answer_as_parent(qtbot):
     assert "本次提问" not in view._analysis_result.text()
 
 
+class _HistoryClient(_FollowupClient):
+    def __init__(self):
+        super().__init__()
+        self.saved = {
+            "earlier": _saved_analysis("earlier", "历史后半程回答", question="只看后半程"),
+            "recent": _saved_analysis("recent", "历史左侧回答", question="其中左侧呢"),
+        }
+        self.saved_calls = []
+        self.fail_saved = False
+        self.saved_delay = 0
+
+    def get_analysis_history(self, session_id, scope):
+        if session_id != 12:
+            return {"history": []}
+        return {"history": [
+            {"analysis_run_id": run_id, "created_at": "2026-11-10 12:00", "question": question}
+            for run_id, question in (("recent", "其中左侧呢"), ("earlier", "只看后半程"), ("base-1", ""))
+        ]}
+
+    def get_saved_analysis(self, session_id, scope, analysis_run_id):
+        self.saved_calls.append(analysis_run_id)
+        if self.saved_delay:
+            time.sleep(self.saved_delay)
+        if self.fail_saved:
+            return {"error_code": "invalid_parent_analysis"}
+        return {"analysis": self.saved[analysis_run_id]}
+
+
+def test_reopening_report_restores_history_and_selected_answer_becomes_parent(qtbot):
+    client = _HistoryClient()
+    view = _followup_view(qtbot, client)
+    _wait_idle(qtbot, view)
+    assert view._analysis_data["analysis_run_id"] == "recent"
+    assert view._default_analysis_data["analysis_run_id"] == "base-1"
+    view._analysis_history.setCurrentIndex(view._analysis_history.findData("earlier"))
+    _wait_idle(qtbot, view)
+    assert "历史后半程回答" in view._analysis_result.text()
+    view._followup_question.setText("其中右侧呢")
+    view._followup_send.click()
+    _wait_idle(qtbot, view)
+    assert client.ask_calls[-1]["parent_analysis_run_id"] == "earlier"
+    view._show_default_analysis()
+    assert view._analysis_data["analysis_run_id"] == "base-1"
+    view._analysis_history.setCurrentIndex(view._analysis_history.findData("earlier"))
+    assert client.saved_calls == ["recent", "earlier"]
+    assert view._analysis_data["analysis_run_id"] == "earlier"
+    view.clear_analysis()
+    assert view._analysis_history.count() == 0
+    assert view._saved_analyses == {}
+
+
+def test_failed_history_selection_keeps_display_and_selector_consistent(qtbot):
+    client = _HistoryClient()
+    view = _followup_view(qtbot, client)
+    _wait_idle(qtbot, view)
+    client.fail_saved = True
+    view._analysis_history.setCurrentIndex(view._analysis_history.findData("earlier"))
+    _wait_idle(qtbot, view)
+    assert view._analysis_data["analysis_run_id"] == "recent"
+    assert view._analysis_history.currentData() == "recent"
+    assert not view._analysis_busy
+
+
+def test_late_saved_answer_cannot_replace_another_report(qtbot):
+    client = _HistoryClient()
+    view = _followup_view(qtbot, client)
+    _wait_idle(qtbot, view)
+    client.saved_delay = .15
+    view._analysis_history.setCurrentIndex(view._analysis_history.findData("earlier"))
+    qtbot.waitUntil(lambda: "earlier" in client.saved_calls)
+    client.latest = _saved_analysis("other-report", "另一份报告")
+    view.load_report(_report(), 13)
+    _wait_idle(qtbot, view)
+    assert view._analysis_data["analysis_run_id"] == "other-report"
+    assert "earlier" not in view._saved_analyses
+    assert view._analysis_history.findData("earlier") == -1
+
+
 @pytest.mark.parametrize("references,records", [
     ([], ["jump-0"]),
     (["missing"], ["jump-0"]),

@@ -285,6 +285,18 @@ class AgentWorkerClient:
         except requests.RequestException:
             return None
 
+    def get_analysis_history(self, session_id, scope, timeout=5):
+        return self._request_report_analysis(
+            "/report/history", {"session_id": session_id, "data_access_scope": scope}, timeout,
+        )
+
+    def get_saved_analysis(self, session_id, scope, analysis_run_id, timeout=5):
+        return self._request_report_analysis(
+            "/report/saved",
+            {"session_id": session_id, "data_access_scope": scope, "analysis_run_id": analysis_run_id},
+            timeout,
+        )
+
 
 # Compatibility name retained while callers migrate to the business-neutral name.
 LLMWorkerClient = AgentWorkerClient

@@ -31,6 +31,10 @@ class ReportAnalysisRequest(BaseModel):
     data_access_scope: DataAccessScope
 
 
+class ReportSavedAnalysisRequest(ReportAnalysisRequest):
+    analysis_run_id: str = Field(min_length=1)
+
+
 class ReportFollowupRequest(ReportAnalysisRequest):
     question: str = Field(min_length=1, max_length=2000)
     parent_analysis_run_id: str | None = Field(default=None, min_length=1)
@@ -67,6 +71,7 @@ __all__ = [
     "NextAnalysisAction",
     "ReportAnalysisRequest",
     "ReportFollowupRequest",
+    "ReportSavedAnalysisRequest",
     "SmallAnalysisPlan",
     "SequentialAnalysisState",
     "StopAnalysis",

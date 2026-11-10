@@ -23,8 +23,35 @@ def test_report_routes_are_namespaced_without_sharing_config_state():
     assert worker._route_name("/report/analyze") == "report_analyze"
     assert worker._route_name("/report/ask") == "report_ask"
     assert worker._route_name("/report/latest") == "report_latest"
+    assert worker._route_name("/report/history") == "report_history"
+    assert worker._route_name("/report/saved") == "report_saved"
     assert worker._report_lock is not worker._config_lock
     assert not hasattr(worker, "_agent_lock")
+
+
+@pytest.mark.parametrize("saved", [False, True])
+def test_saved_report_reads_validate_identity_and_return_service_payload(monkeypatch, saved):
+    service = Mock()
+    service.get_history.return_value = [{"analysis_run_id": "answer-1"}]
+    service.get_saved.return_value = {"analysis_run_id": "answer-1", "claims": []}
+    monkeypatch.setattr(worker, "_get_report_service", lambda: service)
+    handler = object.__new__(worker._Handler)
+    responses = []
+    handler._send_json = lambda payload, status=200: responses.append((status, payload))
+    data = {"session_id": 12, "data_access_scope": {"current_session": True}}
+    if saved:
+        handler._handle_report_history(data, saved=True)
+        assert responses.pop()[0] == 400
+        service.get_saved.assert_not_called()
+        data["analysis_run_id"] = "answer-1"
+    handler._handle_report_history(data, saved=saved)
+    assert responses[-1][0] == 200
+    if saved:
+        assert responses[-1][1]["analysis"]["analysis_run_id"] == "answer-1"
+        assert service.get_saved.call_args.args[0] == 12
+        assert service.get_saved.call_args.args[2] == "answer-1"
+    else:
+        assert responses[-1][1]["history"] == [{"analysis_run_id": "answer-1"}]
 
 
 def test_report_rag_construction_failure_is_isolated(monkeypatch):

@@ -223,6 +223,28 @@ class ReportRepository:
             return None
         return json.loads(row["analysis_package_json"])
 
+    def list_validated_analyses(self, session_id, scope, package_digest):
+        with self._connect() as conn:
+            rows = conn.execute(
+                """SELECT analysis_run_id, created_at, analysis_package_json
+                   FROM report_analyses
+                   WHERE session_id = ? AND status = 'validated'
+                     AND data_access_scope_json = ? AND package_digest = ?
+                   ORDER BY id DESC""",
+                (session_id, self._scope_json(scope), package_digest),
+            )
+            history = []
+            for row in rows:
+                analysis = json.loads(row["analysis_package_json"])
+                context = analysis.get("question_context") or {}
+                history.append({
+                    "analysis_run_id": row["analysis_run_id"],
+                    "created_at": row["created_at"],
+                    "question": context.get("question", ""),
+                    "parent_analysis_run_id": context.get("parent_analysis_run_id"),
+                })
+        return history
+
     def update_analysis_run_metrics(
         self,
         run_id: str,

@@ -153,6 +153,8 @@ def _route_name(path: str) -> str | None:
         "/report/analyze": "report_analyze",
         "/report/ask": "report_ask",
         "/report/latest": "report_latest",
+        "/report/history": "report_history",
+        "/report/saved": "report_saved",
     }.get(path)
 
 
@@ -212,6 +214,8 @@ class _Handler(BaseHTTPRequestHandler):
             self._handle_report_analyze(data, followup=True)
         elif route == "report_latest":
             self._handle_report_latest(data)
+        elif route in {"report_history", "report_saved"}:
+            self._handle_report_history(data, saved=route == "report_saved")
         else:
             self._send_json({"error": "not found"}, 404)
 
@@ -354,6 +358,29 @@ class _Handler(BaseHTTPRequestHandler):
                 },
                 422,
             )
+
+    def _handle_report_history(self, data, *, saved=False):
+        from agent.report.models import ReportAnalysisRequest, ReportSavedAnalysisRequest
+        from pydantic import ValidationError
+
+        try:
+            schema = ReportSavedAnalysisRequest if saved else ReportAnalysisRequest
+            request = schema.model_validate(data)
+        except ValidationError:
+            self._send_json({"error_code": "invalid_request"}, 400)
+            return
+        try:
+            with _report_lock:
+                service = _get_report_service()
+                if saved:
+                    payload = {"analysis": service.get_saved(
+                        request.session_id, request.data_access_scope, request.analysis_run_id,
+                    )}
+                else:
+                    payload = {"history": service.get_history(request.session_id, request.data_access_scope)}
+            self._send_json(payload)
+        except Exception as exc:
+            self._send_json({"error_code": getattr(exc, "code", "analysis_unavailable")}, 422)
 
     def log_message(self, format, *args):
         pass  # silence HTTP log
