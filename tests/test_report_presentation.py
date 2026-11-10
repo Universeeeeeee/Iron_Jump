@@ -96,6 +96,62 @@ def test_no_claims_produces_no_fabricated_highlights():
     assert "表现很好" not in result.summary
 
 
+def test_full_report_removes_model_disclaimers_and_keeps_runtime_status():
+    package = make_jump_package([.2] * 6 + [.3] * 6)
+    bundle = _run(package, "summarize_records", ["contact_time_s"])
+    item = bundle.items[0]
+    draft = DraftAnalysisPackage(
+        summary="仅供参考。",
+        claims=(DraftAnalysisClaim(
+            claim_id="c1", claim_type="derived", text_template="触地时间统计。",
+            evidence_refs=(item.evidence_id,), tool_run_ids=(item.tool_run_id,),
+            predicate_bindings=(PredicateBinding(
+                predicate="comparison_supported",
+                predicate_evidence_ref=item.predicates[0].predicate_evidence_id,
+            ),),
+            limitations=("不代表整体表现。", "没有历史记录。"),
+        ),),
+        overall_limitations=("谨慎解读。", "需要专业人员判断。"),
+    )
+    validated = ClaimValidator().validate(draft, package, (bundle,), DataAccessScope())
+    answer = AnalysisRenderer().render(
+        validated, analysis_run_id="clean-report", package=package,
+        access_scope=DataAccessScope(),
+        state=AnalysisState(limitations=("decision_request_timeout",)),
+        model_name="test", prompt_version="test", evidence=(bundle,),
+    )
+    assert answer.claims[0].limitations == ()
+    assert answer.overall_limitations == ("decision_request_timeout",)
+    assert "所选有效样本 12 条" in answer.claims[0].text
+
+
+def test_empty_analysis_keeps_actual_sample_limitation():
+    package = make_jump_package([.2, .3])
+    bundle = _run(package, "verify_temporal_change", ["contact_time_s"])
+    validated = ClaimValidator().validate(
+        DraftAnalysisPackage(summary="谨慎解读。", claims=()),
+        package, (bundle,), DataAccessScope(),
+    )
+    assert validated.summary == "本次分析未形成结论。"
+    assert validated.overall_limitations == ("insufficient_sample_size",)
+
+
+def test_shared_report_html_deduplicates_actual_conditions_and_omits_causality_footer():
+    from reporting.analysis_html import analysis_html
+
+    saved = {
+        "claims": [{"claim_id": "c1", "text": "触地时间与步长同步变化。",
+                    "limitations": ["co_change_is_not_causation"]}],
+        "overall_limitations": ["co_change_is_not_causation", "insufficient_sample_size"],
+    }
+    for chart_sources in (None, {}):
+        content = analysis_html(saved, chart_sources=chart_sources)
+        assert "触地时间与步长同步变化。" in content
+        assert "co_change_is_not_causation" not in content
+        assert "证据限制" not in content
+        assert content.count("有效样本不足") == 1
+
+
 def test_uneven_timestamps_keep_count_based_analysis_groups():
     from dataclasses import replace
     from reporting.builders import ReportDataPackageBuilder

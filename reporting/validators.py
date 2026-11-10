@@ -901,16 +901,18 @@ class ClaimValidator:
                     numeric_bindings=tuple(numeric_bindings),
                     limitations=tuple(
                         dict.fromkeys(
-                            (*claim.limitations, *(limitation for item in referenced_evidence for limitation in item.limitations))
+                            limitation for item in referenced_evidence for limitation in item.limitations
                         )
                     ),
                 )
             )
         return ValidatedAnalysisPackage(
-            summary="基于本次测试记录的受限证据分析。",
+            summary="本次测试分析。" if validated_claims else "本次分析未形成结论。",
             claims=tuple(validated_claims),
             scope_expansion_suggestions=draft.scope_expansion_suggestions,
-            overall_limitations=draft.overall_limitations,
+            overall_limitations=tuple(dict.fromkeys(
+                limitation for item in evidence_map.values() for limitation in item.limitations
+            )),
         )
 
     def _validate_language(self, text: str):

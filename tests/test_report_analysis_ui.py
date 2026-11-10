@@ -125,7 +125,7 @@ def test_user_click_starts_one_analysis_and_displays_only_returned_validated_res
 
     assert len(client.analyze_calls) == 1
     assert "后半程触地时间增加" in view._analysis_result.text()
-    assert "证据限制" in view._analysis_result.text()
+    assert "证据限制" not in view._analysis_result.text()
 
 
 def test_failed_analysis_never_displays_partial_draft(qtbot):
@@ -241,19 +241,19 @@ def test_schema_v4_recommendations_render_only_validated_http_references(qtbot):
     (
         (
             {"status": "degraded", "error_code": "retrieval_failed"},
-            "循证建议暂时不可用",
+            "文献建议生成暂时不可用",
         ),
         (
             {"status": "no_evidence"},
-            "未检索到满足条件的文献证据",
+            "本次未检索到匹配的建议文献",
         ),
         (
             {"status": "no_evidence", "error_code": "no_supported_query"},
-            "当前测试场景或已验证指标尚无适用的循证建议",
+            "当前指标暂无匹配的建议文献",
         ),
         (
             {"status": "degraded", "error_code": "planning_failed"},
-            "循证建议暂时不可用",
+            "文献建议生成暂时不可用",
         ),
     ),
 )

@@ -54,10 +54,12 @@ REVIEW_STAGE_TEMPLATE = (
 SYNTHESIS_STAGE_TEMPLATE = (
     "阶段：Structured Synthesis。只生成绑定Fact/Evidence的Claim。"
     "Claim文本中的数值必须使用NumericBinding占位符。"
+    "直接陈述已验证结果；limitations只引用当前Evidence实际记录的限制，没有则为空。"
 )
 SEQUENTIAL_SYNTHESIS_STAGE_TEMPLATE = (
     "阶段：Sequential Structured Synthesis。只生成绑定Fact/Evidence的Claim。"
     "Claim文本中的数值必须使用NumericBinding占位符。"
+    "直接陈述已验证结果；limitations只引用当前Evidence实际记录的限制，没有则为空。"
 )
 REPAIR_STAGE_TEMPLATE = (
     "阶段：Structured Output Repair。确定性Validator拒绝了Draft。"

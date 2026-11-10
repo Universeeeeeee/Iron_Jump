@@ -32,10 +32,6 @@ class AnalysisRenderer:
         question_context=None,
     ) -> AnalysisPackage:
         claims = []
-        evidence_limitations = {
-            item.evidence_id: item.limitations
-            for bundle in evidence or () for item in bundle.items
-        }
         for claim in validated.claims:
             text = (
                 evidence_claim_text(claim, package, evidence)
@@ -50,10 +46,7 @@ class AnalysisRenderer:
                     evidence_refs=claim.evidence_refs,
                     tool_run_ids=claim.tool_run_ids,
                     predicate_bindings=claim.predicate_bindings,
-                    limitations=tuple(dict.fromkeys(
-                        limitation for ref in claim.evidence_refs
-                        for limitation in evidence_limitations.get(ref, ())
-                    )) if question_context else claim.limitations,
+                    limitations=claim.limitations,
                     citation_refs=(),
                 )
             )
@@ -83,7 +76,9 @@ class AnalysisRenderer:
             request_digest=request_digest,
             question_context=question_context,
             scope_expansion_suggestions=validated.scope_expansion_suggestions,
-            overall_limitations=state.limitations if question_context else validated.overall_limitations,
+            overall_limitations=tuple(dict.fromkeys((
+                *validated.overall_limitations, *state.limitations,
+            ))),
             literature_evidence=rag_result.evidence if rag_result else (),
             recommendations=recommendations,
             references=rag_result.package.citations if rag_result else (),

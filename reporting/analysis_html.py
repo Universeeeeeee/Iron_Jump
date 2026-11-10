@@ -5,7 +5,6 @@ from urllib.parse import urlparse
 
 
 _LIMITATIONS = {
-    'co_change_is_not_causation': '共同变化只描述本次记录中的关联。',
     'insufficient_sample_size': '有效样本不足。',
     'quality_invalidation': '相关数据的质量条件不足。',
     'investigation_deadline_reached': '分析已达到本次时间限制。',
@@ -14,6 +13,7 @@ _LIMITATIONS = {
 
 
 def _limitations(values, label):
+    values = tuple(dict.fromkeys(v for v in values if v != 'co_change_is_not_causation'))
     if not values:
         return ''
     text = '；'.join(html.escape(_LIMITATIONS.get(str(v), str(v))) for v in values)
@@ -102,8 +102,12 @@ def analysis_html(analysis: dict, chart_sources=None) -> str:
         sections.append('<h3>参考资料</h3>' + ''.join(reference_lines))
     audit = analysis.get('rag_audit') or {}
     if audit.get('status') == 'degraded':
-        sections.append('<p>循证建议暂时不可用，确定性分析不受影响。</p>')
+        sections.append('<p>文献建议生成暂时不可用。</p>')
     elif audit.get('status') == 'no_evidence':
-        sections.append('<p>当前测试场景或已验证指标尚无适用的循证建议，因此未生成建议。</p>' if audit.get('error_code') == 'no_supported_query' else '<p>未检索到满足条件的文献证据，因此未生成建议。</p>')
-    sections.append(_limitations(analysis.get('overall_limitations', []), '限制'))
+        sections.append('<p>当前指标暂无匹配的建议文献。</p>' if audit.get('error_code') == 'no_supported_query' else '<p>本次未检索到匹配的建议文献。</p>')
+    claim_limitations = {value for claim in claims for value in claim.get('limitations', [])}
+    sections.append(_limitations(
+        [value for value in analysis.get('overall_limitations', []) if value not in claim_limitations],
+        '分析状态',
+    ))
     return ''.join(sections) or '未形成可验证的分析结论。'
