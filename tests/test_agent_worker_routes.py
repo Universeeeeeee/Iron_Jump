@@ -25,6 +25,7 @@ def test_report_routes_are_namespaced_without_sharing_config_state():
     assert worker._route_name("/report/latest") == "report_latest"
     assert worker._route_name("/report/history") == "report_history"
     assert worker._route_name("/report/saved") == "report_saved"
+    assert worker._route_name("/report/comparison") == "report_comparison"
     assert worker._report_lock is not worker._config_lock
     assert not hasattr(worker, "_agent_lock")
 

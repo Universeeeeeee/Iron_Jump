@@ -155,6 +155,7 @@ def _route_name(path: str) -> str | None:
         "/report/latest": "report_latest",
         "/report/history": "report_history",
         "/report/saved": "report_saved",
+        "/report/comparison": "report_comparison",
     }.get(path)
 
 
@@ -216,6 +217,8 @@ class _Handler(BaseHTTPRequestHandler):
             self._handle_report_latest(data)
         elif route in {"report_history", "report_saved"}:
             self._handle_report_history(data, saved=route == "report_saved")
+        elif route == "report_comparison":
+            self._handle_report_history(data, comparison=True)
         else:
             self._send_json({"error": "not found"}, 404)
 
@@ -359,7 +362,8 @@ class _Handler(BaseHTTPRequestHandler):
                 422,
             )
 
-    def _handle_report_history(self, data, *, saved=False):
+    def _handle_report_history(self, data, *, saved=False, comparison=False):
+        _touch_active()
         from agent.report.models import ReportAnalysisRequest, ReportSavedAnalysisRequest
         from pydantic import ValidationError
 
@@ -372,7 +376,9 @@ class _Handler(BaseHTTPRequestHandler):
         try:
             with _report_lock:
                 service = _get_report_service()
-                if saved:
+                if comparison:
+                    payload = {"comparison": service.compare_previous(request.session_id, request.data_access_scope)}
+                elif saved:
                     payload = {"analysis": service.get_saved(
                         request.session_id, request.data_access_scope, request.analysis_run_id,
                     )}

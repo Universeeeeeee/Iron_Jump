@@ -290,6 +290,13 @@ class AgentWorkerClient:
             "/report/history", {"session_id": session_id, "data_access_scope": scope}, timeout,
         )
 
+    def get_report_comparison(self, session_id, timeout=5):
+        return self._request_report_analysis(
+            "/report/comparison",
+            {"session_id": session_id, "data_access_scope": {"current_session": True, "longitudinal": True}},
+            timeout,
+        )
+
     def get_saved_analysis(self, session_id, scope, analysis_run_id, timeout=5):
         return self._request_report_analysis(
             "/report/saved",

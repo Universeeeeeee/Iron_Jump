@@ -513,6 +513,30 @@ def test_late_saved_answer_cannot_replace_another_report(qtbot):
     assert view._analysis_history.findData("earlier") == -1
 
 
+@pytest.mark.parametrize("is_temporary,expected_calls", [(True, 0), (False, 1), (None, 0)])
+def test_comparison_is_requested_only_for_identified_users(qtbot, is_temporary, expected_calls):
+    class Client(_HistoryClient):
+        comparison_calls = 0
+
+        def get_report_comparison(self, session_id):
+            self.comparison_calls += 1
+            return {"comparison": {"status": "no_previous", "current_session_id": session_id}}
+
+    client = Client()
+    view = ReportView(llm_client=client)
+    qtbot.addWidget(view)
+    view.show()
+    view.set_analysis_availability(True)
+    view.load_report(_report(), 12, is_temporary=is_temporary)
+    _wait_idle(qtbot, view)
+    assert client.comparison_calls == expected_calls
+    assert bool(view._comparison_result.text()) == bool(expected_calls)
+    view.load_report(_report(), 13, is_temporary=True)
+    _wait_idle(qtbot, view)
+    assert view._report_comparison is None
+    assert view._comparison_result.text() == ""
+
+
 @pytest.mark.parametrize("references,records", [
     ([], ["jump-0"]),
     (["missing"], ["jump-0"]),

@@ -106,6 +106,32 @@ class ReportRepository:
             reasons=tuple(reasons),
         )
 
+    def compare_previous_session(self, session_id):
+        from .comparison import compare_packages, protocol_description, protocol_digest
+
+        current = self._get_session(session_id)
+        if current.is_temporary or current.subject_id is None:
+            return {"status": "guest"}
+        protocol = protocol_description(current)
+        with self._connect() as conn:
+            candidates = conn.execute(
+                """SELECT id FROM test_sessions
+                   WHERE subject_id = ? AND test_type = ? AND team_id IS ?
+                     AND is_temporary = 0 AND report_detail_json IS NOT NULL
+                     AND report_detail_json NOT IN ('', '{}')
+                     AND (started_at < ? OR (started_at = ? AND id < ?))
+                   ORDER BY started_at DESC, id DESC""",
+                (current.subject_id, current.test_type, current.team_id,
+                 current.started_at, current.started_at, current.id),
+            ).fetchall()
+        for row in candidates:
+            previous = self._get_session(row["id"])
+            if protocol_description(previous) == protocol:
+                return compare_packages(
+                    self.get_package(session_id), self.get_package(previous.id), protocol_digest(protocol),
+                )
+        return {"status": "no_previous", "current_session_id": session_id}
+
     def create_analysis_run(
         self,
         session_id: int,

@@ -751,6 +751,11 @@ class ReportAnalysisService:
             session_id, access_scope, package.metadata.package_digest,
         )
 
+    def compare_previous(self, session_id, access_scope):
+        if not access_scope.longitudinal:
+            raise ReportAnalysisError("scope_not_authorized", "历史对比需要使用该用户的历史测试记录。")
+        return self._repository.compare_previous_session(session_id)
+
     def get_saved(self, session_id, access_scope, analysis_run_id):
         package = self._repository.get_package(session_id)
         analysis = self._repository.get_validated_analysis(

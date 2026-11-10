@@ -625,6 +625,12 @@ class _ReportAnalysisWorker(QThread):
                     history = self._client.get_analysis_history(self._session_id, scope)
                     payload = {"default_analysis": payload, "history": history.get("history", []),
                                "history_error": history.get("error_code")}
+                    if (self._question or {}).get("load_comparison") and callable(
+                        getattr(self._client, "get_report_comparison", None)
+                    ):
+                        comparison = self._client.get_report_comparison(self._session_id)
+                        payload["comparison"] = comparison.get("comparison")
+                        payload["comparison_error"] = comparison.get("error_code")
             elif self._action == "saved":
                 response = self._client.get_saved_analysis(self._session_id, scope, **self._question)
                 if response.get("error_code"):
@@ -694,6 +700,8 @@ class ReportView(QWidget):
         self._analysis_data = None
         self._default_analysis_data = None
         self._saved_analyses = {}
+        self._report_comparison = None
+        self._is_temporary = None
         self._analysis_generation = 0
         self._analysis_request_serial = 0
         self._analysis_busy = False
@@ -984,6 +992,12 @@ class ReportView(QWidget):
         self._analysis_content.setObjectName("ReportAnalysisContent")
         self._analysis_content.setStyleSheet(f"QWidget#ReportAnalysisContent {{ background: {PALETTE['background']}; }}")
         self._analysis_content_layout = QVBoxLayout(self._analysis_content)
+        self._comparison_result = QLabel("")
+        self._comparison_result.setWordWrap(True)
+        self._comparison_result.setTextFormat(Qt.RichText)
+        self._comparison_result.setSizePolicy(QSizePolicy.Ignored, QSizePolicy.Preferred)
+        self._comparison_result.hide()
+        self._analysis_content_layout.addWidget(self._comparison_result)
         self._analysis_content_layout.addWidget(self._analysis_result)
         self._analysis_scroll.setWidget(self._analysis_content)
         analysis_layout.addWidget(self._analysis_scroll, 1)
@@ -1047,10 +1061,11 @@ class ReportView(QWidget):
     #  公共接口
     # ------------------------------------------------------------------
 
-    def load_report(self, report: TestReport, session_id: int | None = None):
+    def load_report(self, report: TestReport, session_id: int | None = None, *, is_temporary=None):
         """填充统计卡片和图表。"""
         self._analysis_panel.hide()
         self._report = report
+        self._is_temporary = is_temporary
         self._export_subject = {}
         self._export_started_at = None
         is_jump = isinstance(report, JumpTestReport)
@@ -1313,6 +1328,9 @@ class ReportView(QWidget):
         self._analysis_data = None
         self._default_analysis_data = None
         self._saved_analyses.clear()
+        self._report_comparison = None
+        self._comparison_result.clear()
+        self._comparison_result.hide()
         self._analysis_history.blockSignals(True)
         self._analysis_history.clear()
         self._analysis_history.blockSignals(False)
@@ -1413,6 +1431,16 @@ class ReportView(QWidget):
         worker.start()
 
     def _deliver_analysis_result(self, identity, session_id, action, payload):
+        if (identity[0] == self._analysis_generation and session_id == self._session_id
+                and action == "latest" and isinstance(payload, dict) and "comparison" in payload):
+            from reporting.comparison import comparison_html
+            self._report_comparison = payload["comparison"]
+            content = comparison_html(self._report_comparison)
+            if payload.get("comparison_error"):
+                content = "历史对比读取失败，请重新打开报告重试。"
+                self._latest_requested_for = None
+            self._comparison_result.setText(content)
+            self._comparison_result.setVisible(bool(content))
         if identity == (self._analysis_generation, self._analysis_request_serial):
             self._on_analysis_completed(session_id, action, payload)
 
@@ -1428,7 +1456,7 @@ class ReportView(QWidget):
         ):
             return
         self._latest_requested_for = self._session_id
-        self._start_analysis_request("latest")
+        self._start_analysis_request("latest", question={"load_comparison": self._is_temporary is False})
 
     def _release_analysis_worker(self, worker: _ReportAnalysisWorker) -> None:
         self._analysis_workers.discard(worker)
@@ -1452,8 +1480,9 @@ class ReportView(QWidget):
             self._analysis_history.clear()
             for entry in history:
                 label = entry.get("question") or "完整分析"
+                created_at = entry["created_at"].replace("T", " ", 1)
                 self._analysis_history.addItem(
-                    f'{entry["created_at"]}　{label[:80]}', entry["analysis_run_id"],
+                    f'{created_at}　{label[:80]}', entry["analysis_run_id"],
                 )
                 self._analysis_history.setItemData(self._analysis_history.count() - 1, label, Qt.ToolTipRole)
             self._analysis_history.blockSignals(False)
@@ -2265,7 +2294,8 @@ class ReportView(QWidget):
             write_report_pdf(path, self._report, title=self._title.text(),
                              stats=self._export_stats, reason=self._reason_label.text(),
                              detailed=detailed, subject=self._export_subject,
-                             started_at=self._export_started_at, analysis=analysis)
+                             started_at=self._export_started_at, analysis=analysis,
+                             comparison=self._report_comparison)
             QMessageBox.information(self, "导出成功", f"报告已保存至：\n{path}")
         except Exception as exc:
             QMessageBox.warning(self, "导出失败", f"保存报告失败：{exc}")

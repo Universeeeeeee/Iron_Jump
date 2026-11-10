@@ -608,7 +608,9 @@ class MainWindow(QMainWindow):
     def _on_history_open_report(self, session: SessionRecord) -> None:
         try:
             report = session.report
-            self._report_view.load_report(report, session.id)
+            self._report_view.load_report(
+                report, session.id, is_temporary=session.is_temporary or session.subject_id is None,
+            )
         except (TypeError, ValueError, KeyError) as exc:
             QMessageBox.warning(self, "打开报告", f"该记录无法重建报告：{exc}")
             return
@@ -717,7 +719,7 @@ class MainWindow(QMainWindow):
             except Exception:
                 log.exception("Failed to record subject session")
 
-        self._report_view.load_report(report, self._last_session_id)
+        self._report_view.load_report(report, self._last_session_id, is_temporary=self._subject_id is None)
         self._report_view.set_export_context(self._subject_snapshot or {}, self._session_started_at)
         self._go_to_report()
 
