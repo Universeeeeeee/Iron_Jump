@@ -31,6 +31,7 @@ from reporting.observation import (
 )
 from reporting.renderer import AnalysisRenderer
 from reporting.repository import ReportRepository
+from reporting.longitudinal import LongitudinalAnalysisTool, build_longitudinal_context, comparison_action
 from reporting.tools import ANALYSIS_TOOL_REGISTRY_VERSION, AnalysisToolRegistry
 from reporting.validators import (
     ActionValidator,
@@ -134,9 +135,12 @@ class ReportAnalysisService:
     ) -> AnalysisPackage:
         return self._analyze(session_id, access_scope)
 
-    def _build_observation(self, package, access_scope, *, scoped=False):
+    def _build_observation(self, package, access_scope, *, scoped=False, longitudinal=False):
         manifest = ReportManifestBuilder().build(package)
-        availability = DataScopeAvailability(reasons=("external_scope_not_requested",))
+        availability = (
+            DataScopeAvailability(longitudinal_candidates=1, longitudinal_available=True)
+            if longitudinal else DataScopeAvailability(reasons=("external_scope_not_requested",))
+        )
         capabilities = self._tool_registry.list_capabilities(
             package, access_scope, self._method_registry
         )
@@ -147,6 +151,10 @@ class ReportAnalysisService:
                     if method.analysis_method not in {"verify_exclusion_robustness", "quality_scope_check"}
                 ),
             }) for tool in capabilities]
+        if not longitudinal:
+            capabilities = [tool.model_copy(update={"enabled": False, "available_methods": (),
+                "unavailable_reason": "historical_question_required"})
+                if tool.tool_name == "compare_longitudinal" else tool for tool in capabilities]
         return self._observation_builder.build(
             package, manifest, availability, access_scope, capabilities
         )
@@ -156,8 +164,8 @@ class ReportAnalysisService:
             getattr(self._agent, "plan_question", None)
         ):
             raise ReportAnalysisError("question_agent_unavailable", "当前分析服务尚未启用报告追问。")
-        if request.data_access_scope.longitudinal or request.data_access_scope.cohort:
-            raise ReportAnalysisError("external_scope_not_implemented", "当前追问使用本次报告数据。")
+        if request.data_access_scope.cohort:
+            raise ReportAnalysisError("external_scope_not_implemented", "当前追问支持本次报告及最近一次同协议个人测试。")
         if not request.data_access_scope.current_session:
             raise ReportAnalysisError("scope_not_authorized", "本次报告数据尚未获准使用。")
         deadline = ReportAnalysisDeadline(self._deadline_policy, clock=self._clock)
@@ -167,11 +175,26 @@ class ReportAnalysisService:
             saved = self._repository.get_validated_analysis(
                 request.parent_analysis_run_id, request.session_id,
                 request.data_access_scope, package.metadata.package_digest,
+                include_current_scope=request.data_access_scope.longitudinal,
             )
             if saved is None:
                 raise ReportAnalysisError("invalid_parent_analysis", "上一条分析与当前报告版本不匹配，请重新打开报告。")
             parent = AnalysisPackage.model_validate(saved)
         context_input = parent_question_context(parent, request.selected_claim_id)
+        previous_match = None
+        if request.data_access_scope.longitudinal and not package.context.is_temporary and package.context.subject_id:
+            previous_match = self._repository.get_previous_package(request.session_id)
+        context_input["history_availability"] = (
+            "available" if previous_match else "guest" if package.context.is_temporary or not package.context.subject_id
+            else "no_previous" if request.data_access_scope.longitudinal else "not_authorized"
+        )
+        if previous_match:
+            previous, _ = previous_match
+            context_input["previous_test"] = {
+                "started_at": previous.context.started_at,
+                "record_sets": [{"record_type": r.record_type, "metric_codes": r.metric_codes}
+                                for r in previous.record_sets],
+            }
         observation = self._build_observation(package, request.data_access_scope, scoped=True)
         try:
             plan = call_with_optional_timeout(
@@ -183,15 +206,26 @@ class ReportAnalysisService:
             raise ReportAnalysisError("analysis_timeout", str(exc), timeout_stage="question_planning") from exc
         selection = resolve_question_selection(package, plan, context_input)
         context = question_context(request, selection, plan, context_input)
+        previous = None
+        if plan.comparison == "previous":
+            if previous_match is None:
+                raise ReportAnalysisError("history_unavailable", "当前报告没有可用于比较的此前同协议测试。")
+            previous, protocol = previous_match
+            longitudinal = build_longitudinal_context(package, previous, plan, selection, protocol, parent)
+            context = context.model_copy(update={
+                "longitudinal": longitudinal,
+                "selection_label": f"两次同协议测试 · {selection.label}",
+            })
         return self._analyze(
             request.session_id, request.data_access_scope,
             question=context, package=package, deadline=deadline,
-            initial_action=chart_source_action(parent, context),
+            initial_action=comparison_action(context) if previous else chart_source_action(parent, context),
+            previous=previous,
         )
 
     def _analyze(
         self, session_id, access_scope, *, question=None, package=None,
-        deadline=None, initial_action=None,
+        deadline=None, initial_action=None, previous=None,
     ):
         request_digest = question_digest(question) if question else ""
         selection = question.selection if question else None
@@ -217,14 +251,14 @@ class ReportAnalysisService:
             clock=self._clock,
         )
         started = self._clock()
-        if access_scope.longitudinal or access_scope.cohort:
+        if access_scope.cohort or (access_scope.longitudinal and question is None):
             raise ReportAnalysisError(
                 "external_scope_not_implemented",
-                "Longitudinal and cohort analysis are not implemented in this MVP",
+                "Use report questions for previous-session comparisons; cohort analysis is unavailable",
             )
         package = package or self._repository.get_package(session_id)
         observation = self._build_observation(
-            package, access_scope, scoped=question is not None
+            package, access_scope, scoped=question is not None, longitudinal=previous is not None,
         )
         if question:
             observation = observation.model_copy(update={
@@ -292,13 +326,15 @@ class ReportAnalysisService:
             gateway = AnalysisToolGateway(
                 tool_registry=self._tool_registry,
                 method_registry=self._method_registry,
+                longitudinal_tool=LongitudinalAnalysisTool(previous, question.longitudinal) if previous else None,
             )
             if use_sequential_loop:
                 checkpoint_sink = RepositoryCheckpointSink(
                     self._repository, run_id, request_digest=request_digest
                 )
                 action_validator = ActionValidator(
-                    self._tool_registry, self._method_registry, selection=selection
+                    self._tool_registry, self._method_registry, selection=selection,
+                    longitudinal_context=question.longitudinal if question else None,
                 )
                 loop = SequentialAnalysisLoop(
                     self._agent,
@@ -356,7 +392,13 @@ class ReportAnalysisService:
                     access_scope,
                     deadline=deadline,
                 )
-            if question and not result.draft.claims:
+            historical_refs = {
+                item.evidence_id for bundle in result.evidence for item in bundle.items if item.longitudinal
+            }
+            needs_comparison = previous is not None and not any(
+                historical_refs.intersection(claim.evidence_refs) for claim in result.draft.claims
+            )
+            if question and (not result.draft.claims or needs_comparison):
                 summary = next((
                     (item, predicate)
                     for bundle in result.evidence
@@ -382,7 +424,10 @@ class ReportAnalysisService:
                     ),),
                 )
                 result = result.model_copy(update={
-                    "draft": result.draft.model_copy(update={"claims": (claim,)}),
+                    "draft": result.draft.model_copy(update={"claims": (
+                        *result.draft.claims,
+                        claim.model_copy(update={"claim_id": "question_summary_" + item.evidence_id}),
+                    )}),
                 })
                 self._save_claim_checkpoint(
                     checkpoint_sink, "draft_generated", package, access_scope, result,
@@ -390,6 +435,8 @@ class ReportAnalysisService:
                     prompt_content_digest=prompt_content_digest,
                 )
             validation_options = {"allowed_fact_refs": frozenset()} if question else {}
+            if previous:
+                validation_options["longitudinal_source"] = (previous, question.longitudinal)
             try:
                 deadline.require_total_time("claim_validation")
                 validated = self._claim_validator.validate(
@@ -531,7 +578,10 @@ class ReportAnalysisService:
                 evidence=result.evidence,
                 request_digest=request_digest,
                 question_context=question,
+                source_packages={previous.metadata.session_id: previous} if previous else None,
             )
+            if previous and not self._repository.longitudinal_is_current(rendered.model_dump(mode="json")):
+                raise ClaimValidationError("stale_history", "比较期间测试记录发生更新，请重新提问。")
             self._record_metrics(
                 run_id,
                 package.metadata.package_digest,
@@ -749,6 +799,7 @@ class ReportAnalysisService:
         package = self._repository.get_package(session_id)
         return self._repository.list_validated_analyses(
             session_id, access_scope, package.metadata.package_digest,
+            include_current_scope=access_scope.longitudinal,
         )
 
     def compare_previous(self, session_id, access_scope):
@@ -760,6 +811,7 @@ class ReportAnalysisService:
         package = self._repository.get_package(session_id)
         analysis = self._repository.get_validated_analysis(
             analysis_run_id, session_id, access_scope, package.metadata.package_digest,
+            include_current_scope=access_scope.longitudinal,
         )
         if analysis is None:
             raise ReportAnalysisError("invalid_parent_analysis", "该回答与当前报告版本不匹配。")

@@ -498,6 +498,22 @@ def test_failed_history_selection_keeps_display_and_selector_consistent(qtbot):
     assert not view._analysis_busy
 
 
+def test_historical_answer_cache_is_revalidated_and_removed_when_stale(qtbot):
+    client = _HistoryClient()
+    client.saved["recent"]["question_context"]["longitudinal"] = {"previous": {"session_id": 1}}
+    view = _followup_view(qtbot, client)
+    _wait_idle(qtbot, view)
+    assert view._analysis_data["analysis_run_id"] == "recent"
+    view._show_default_analysis()
+    client.fail_saved = True
+    view._analysis_history.setCurrentIndex(view._analysis_history.findData("recent"))
+    _wait_idle(qtbot, view)
+    assert client.saved_calls == ["recent", "recent"]
+    assert "recent" not in view._saved_analyses
+    assert view._analysis_history.findData("recent") == -1
+    assert view._analysis_data["analysis_run_id"] == "base-1"
+
+
 def test_late_saved_answer_cannot_replace_another_report(qtbot):
     client = _HistoryClient()
     view = _followup_view(qtbot, client)

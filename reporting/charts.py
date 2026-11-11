@@ -18,10 +18,12 @@ GROUP_LABELS = {
 }
 
 
-def build_evidence_charts(package, item, run):
+def build_evidence_charts(package, item, run, *, source_packages=None):
     """Build immutable, serializable plot data without asking the model for values."""
     if item.analysis_status != "conclusive" or not item.record_groups:
         return ()
+    if item.longitudinal:
+        return _longitudinal_charts(package, item, run, source_packages or {})
     record_set = next(r for r in package.record_sets if r.record_set_id == item.record_set_id)
     records = {r.record_id: r for r in record_set.records}
     if set(item.record_refs) != {ref for refs in item.record_groups.values() for ref in refs}:
@@ -66,6 +68,42 @@ def build_evidence_charts(package, item, run):
             unit=definition.unit,
             chart_type="side_distribution" if item.analysis_method == "verify_side_segment_difference" else "time_series",
             grouping="所选有效记录" if item.analysis_method == "summarize_records" else "按各组有效记录数量分半",
+            groups=tuple(groups),
+        ))
+    return tuple(charts)
+
+
+def _longitudinal_charts(package, item, run, source_packages):
+    sources = {**source_packages, package.metadata.session_id: package}
+    charts = []
+    for metric in run.parameters["metric_codes"]:
+        groups = []
+        for name, title, source in (("previous", "上次", item.longitudinal.previous),
+                                    ("current", "本次", item.longitudinal.current)):
+            snapshot = sources[source.session_id]
+            if snapshot.metadata.package_digest != source.package_digest:
+                raise ValueError("Historical chart snapshot mismatch")
+            record_set = next(r for r in snapshot.record_sets if r.record_set_id == source.selection.record_set_id)
+            records = {r.record_id: r for r in record_set.records}
+            points = tuple(ChartPoint(
+                record_ref=ref, ordinal=records[ref].ordinal, source_index=records[ref].source_index,
+                timestamp_s=records[ref].timestamp_s, side=records[ref].side,
+                value=records[ref].values[metric].value,
+                session_id=source.session_id, package_digest=source.package_digest,
+            ) for ref in source.selection.record_refs)
+            mean = sum(p.value for p in points) / len(points)
+            if (item.record_groups[name] != source.selection.record_refs
+                    or len(points) != item.sample_counts[name]
+                    or not math.isclose(mean, item.numeric_values[f"{metric}_{name}_mean"], rel_tol=1e-12, abs_tol=1e-12)):
+                raise ValueError("Historical chart values differ from evidence")
+            groups.append(ChartGroup(group_id=name, label=f"{title} {source.started_at}", points=points, mean=mean))
+        definition = METRIC_CATALOG[metric]
+        charts.append(EvidenceChart(
+            chart_id=f"{item.evidence_id}/{metric}", evidence_ref=item.evidence_id,
+            package_digest=package.metadata.package_digest,
+            record_set_id=item.record_set_id, record_type=record_set.record_type,
+            metric_code=metric, title=definition.label, unit=definition.unit,
+            chart_type="segment_comparison", grouping="两次测试对应范围的有效记录均值",
             groups=tuple(groups),
         ))
     return tuple(charts)

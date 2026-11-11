@@ -140,6 +140,7 @@ class PlanValidator:
 
     def _validate_inputs(self, node, spec, record_sets):
         allowed_keys = {
+            "compare_session_records": {"record_set_id", "metric_codes", "record_refs"},
             "summarize_records": {"record_set_id", "metric_codes", "side", "record_refs"},
             "verify_temporal_change": {"record_set_id", "metric_codes", "side", "record_refs"},
             "verify_side_segment_difference": {"record_set_id", "metric_codes", "target_side", "record_refs"},
@@ -256,6 +257,7 @@ class ActionValidator:
             "references/evidence-guidelines.md",
         ),
         selection=None,
+        longitudinal_context=None,
     ):
         self.tool_registry = tool_registry or AnalysisToolRegistry()
         self.method_registry = method_registry or AnalysisMethodRegistry()
@@ -265,6 +267,7 @@ class ActionValidator:
         )
         self.available_skill_references = frozenset(available_skill_references)
         self.selection = selection
+        self.longitudinal_context = longitudinal_context
 
     def validate_decision(
         self,
@@ -373,6 +376,8 @@ class ActionValidator:
 
     def _constrain_selection(self, action):
         selection = self.selection
+        if action.tool_name == "compare_longitudinal" and self.longitudinal_context is None:
+            self._fail("history_unavailable", "Historical action requires two bound session snapshots")
         if action.analysis_method in {"quality_scope_check", "verify_exclusion_robustness"}:
             self._fail("selection_method_mismatch", "selected included records cannot evaluate full-report quality or exclusion robustness")
         if action.inputs.get("record_set_id") != selection.record_set_id:
@@ -779,6 +784,7 @@ class ClaimValidator:
         access_scope: DataAccessScope,
         *,
         allowed_fact_refs: frozenset[str] | None = None,
+        longitudinal_source=None,
     ) -> ValidatedAnalysisPackage:
         fact_map = {fact.fact_id: fact for fact in package.scalar_facts}
         evidence_map = {}
@@ -788,6 +794,30 @@ class ClaimValidator:
         for bundle in evidence:
             if bundle.package_id != package.metadata.package_id or bundle.package_digest != package.metadata.package_digest:
                 self._fail("snapshot_mismatch", "evidence belongs to another report snapshot")
+            for item in bundle.items:
+                if item.tool_name == "compare_longitudinal" or item.longitudinal is not None:
+                    if not access_scope.longitudinal or longitudinal_source is None:
+                        self._fail("scope_not_authorized", "Historical evidence requires an authorized snapshot")
+                    previous, context = longitudinal_source
+                    if item.longitudinal != context:
+                        self._fail("snapshot_mismatch", "Historical evidence has different snapshot bindings")
+                    run = next((run for run in bundle.tool_runs if run.tool_run_id == item.tool_run_id), None)
+                    if run is None:
+                        self._fail("evidence_tool_run_unbound", "Historical tool run is missing")
+                    from .longitudinal import execute_comparison
+                    try:
+                        node = AnalysisNode(
+                            node_id=item.node_id, question_id=item.question_id,
+                            tool_name=item.tool_name, analysis_method=item.analysis_method,
+                            inputs=run.parameters, purpose="验证历史比较证据",
+                        )
+                        expected_item, expected_run, expected_provenance = execute_comparison(
+                            package, previous, context, node, run.tool_version,
+                        )
+                    except (ValueError, KeyError) as exc:
+                        self._fail("snapshot_mismatch", str(exc))
+                    if item != expected_item or run != expected_run or expected_provenance not in bundle.provenance:
+                        self._fail("historical_evidence_mismatch", "Historical evidence does not match its source snapshots")
             for item in bundle.items:
                 if item.evidence_id in evidence_map:
                     self._fail(

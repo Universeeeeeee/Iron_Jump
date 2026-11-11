@@ -602,12 +602,13 @@ class _ReportAnalysisWorker(QThread):
     completed = Signal(int, str, object)
     failed = Signal(int, str, str, str)
 
-    def __init__(self, client, session_id: int, action: str, parent=None, *, question=None):
+    def __init__(self, client, session_id: int, action: str, parent=None, *, question=None, allow_history=False):
         super().__init__(parent)
         self._client = client
         self._session_id = session_id
         self._action = action
         self._question = question
+        self._allow_history = allow_history
 
     def run(self):
         scope = {
@@ -615,6 +616,7 @@ class _ReportAnalysisWorker(QThread):
             "longitudinal": False,
             "cohort": False,
         }
+        history_scope = dict(scope, longitudinal=self._allow_history)
         try:
             if self._action == "latest":
                 payload = self._client.get_latest_analysis(
@@ -622,7 +624,7 @@ class _ReportAnalysisWorker(QThread):
                     scope,
                 )
                 if callable(getattr(self._client, "get_analysis_history", None)):
-                    history = self._client.get_analysis_history(self._session_id, scope)
+                    history = self._client.get_analysis_history(self._session_id, history_scope)
                     payload = {"default_analysis": payload, "history": history.get("history", []),
                                "history_error": history.get("error_code")}
                     if (self._question or {}).get("load_comparison") and callable(
@@ -632,7 +634,7 @@ class _ReportAnalysisWorker(QThread):
                         payload["comparison"] = comparison.get("comparison")
                         payload["comparison_error"] = comparison.get("error_code")
             elif self._action == "saved":
-                response = self._client.get_saved_analysis(self._session_id, scope, **self._question)
+                response = self._client.get_saved_analysis(self._session_id, history_scope, **self._question)
                 if response.get("error_code"):
                     self.failed.emit(self._session_id, self._action, response["error_code"], "")
                     return
@@ -640,7 +642,7 @@ class _ReportAnalysisWorker(QThread):
             elif self._action == "ask":
                 response = self._client.ask_report(
                     self._session_id,
-                    scope,
+                    history_scope,
                     **self._question,
                 )
                 if response.get("error_code"):
@@ -1274,7 +1276,9 @@ class ReportView(QWidget):
         if self._analysis_busy or index < 0:
             return
         run_id = self._analysis_history.itemData(index)
-        if run_id in self._saved_analyses:
+        cached = self._saved_analyses.get(run_id)
+        historical = cached and (cached.get("question_context") or {}).get("longitudinal")
+        if cached and not historical:
             self._analysis_request_serial += 1
             self.show_validated_analysis(self._saved_analyses[run_id], as_default=False)
         elif callable(getattr(self._llm_client, "get_saved_analysis", None)):
@@ -1407,6 +1411,7 @@ class ReportView(QWidget):
             action,
             self,
             question=question,
+            allow_history=self._is_temporary is False,
         )
         self._analysis_workers.add(worker)
         worker.completed.connect(
@@ -1516,6 +1521,20 @@ class ReportView(QWidget):
         if session_id != self._session_id or not self._analysis_available:
             return
         self.set_analysis_loading(False)
+        if action == "saved" and error_code in {"invalid_parent_analysis", "stale_history"}:
+            index = self._analysis_history.currentIndex()
+            run_id = self._analysis_history.currentData()
+            self._saved_analyses.pop(run_id, None)
+            self._analysis_history.blockSignals(True)
+            self._analysis_history.removeItem(index)
+            self._analysis_history.blockSignals(False)
+            if self._analysis_data and self._analysis_data.get("analysis_run_id") == run_id:
+                if self._default_analysis_data:
+                    self.show_validated_analysis(self._default_analysis_data)
+                else:
+                    self._analysis_data = None
+                    self._analysis_result.clear()
+                    self._clear_evidence_charts()
         if action == "saved" and self._analysis_data:
             self._analysis_history.blockSignals(True)
             self._analysis_history.setCurrentIndex(
@@ -1541,6 +1560,8 @@ class ReportView(QWidget):
                 "invalid_question_selection": "请指定本次报告内的指标和记录范围。",
                 "question_needs_clarification": "请补充要分析的指标和范围。",
                 "fact_outside_question_scope": "分析结果超出所选范围，请重新提问。",
+                "history_unavailable": "当前报告没有可比较的此前同协议测试。",
+                "stale_history": "历史测试记录已更新，请重新打开报告后提问。",
             }
             status = messages.get(error_code, "智能分析未能生成通过验证的结果。")
             if message and error_code in {

@@ -67,6 +67,7 @@ class AnalysisToolGateway:
         method_registry: AnalysisMethodRegistry | None = None,
         kernel: AnalysisKernel | None = None,
         tool_implementations: dict[str, AnalysisTool] | None = None,
+        longitudinal_tool=None,
     ):
         self._tool_registry = tool_registry or AnalysisToolRegistry()
         self._method_registry = method_registry or AnalysisMethodRegistry()
@@ -76,6 +77,8 @@ class AnalysisToolGateway:
             "compare_longitudinal": DisabledAnalysisTool(),
             "compare_cohort": DisabledAnalysisTool(),
         }
+        if longitudinal_tool is not None:
+            self._tool_implementations["compare_longitudinal"] = longitudinal_tool
 
     def execute_plan(
         self,

@@ -219,7 +219,7 @@ def test_invalid_action_can_be_corrected_without_consuming_tool_budget():
     package = make_jump_package([0.2] * 6 + [0.3] * 6)
     agent = _FakeSequentialAgent(
         [
-            _action(package, tool_name="compare_longitudinal"),
+            _action(package, tool_name="compare_cohort"),
             _action(package, action_id="a2", hypothesis_id="h2"),
             _stop(),
         ]
@@ -325,7 +325,7 @@ def test_five_tool_call_budget_allows_stop_but_no_extra_analysis():
 
 def test_action_correction_limit_stops_without_tool_or_partial_draft():
     package = make_jump_package([0.2] * 12)
-    invalid = _action(package, tool_name="compare_longitudinal")
+    invalid = _action(package, tool_name="compare_cohort")
     agent = _FakeSequentialAgent([invalid, invalid, invalid])
 
     with pytest.raises(SequentialAnalysisLoopError) as exc_info:

@@ -74,12 +74,12 @@ def test_invalid_action_is_rejected_before_tool_execution():
     boundary = SequentialActionBoundary(tool_gateway=gateway)
 
     first = boundary.validate(
-        _action(package, tool_name="compare_longitudinal"),
+        _action(package, tool_name="compare_cohort"),
         package,
         DataAccessScope(),
     )
     exhausted = boundary.validate(
-        _action(package, tool_name="compare_longitudinal"),
+        _action(package, tool_name="compare_cohort"),
         package,
         DataAccessScope(),
         action_correction_count=2,
@@ -216,7 +216,7 @@ def test_tool_failure_is_recorded_without_negating_active_hypothesis():
 
 def test_action_rejection_consumes_decision_not_tool_budget_and_stops_after_limit():
     package = make_jump_package([0.2] * 12)
-    action = _action(package, tool_name="compare_longitudinal")
+    action = _action(package, tool_name="compare_cohort")
     boundary = SequentialActionBoundary()
     reducer = AnalysisStateReducer()
     state = SequentialAnalysisState()

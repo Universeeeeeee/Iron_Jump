@@ -5,7 +5,7 @@ from pathlib import Path
 
 
 PROMPT_VERSION = "report-agent-system/2.0"
-SEQUENTIAL_PROMPT_VERSION = "report-agent-sequential-system/3.1"
+SEQUENTIAL_PROMPT_VERSION = "report-agent-sequential-system/3.2"
 
 QUESTION_PLAN_INSTRUCTIONS = (
     "将用户对当前运动报告的追问解析为 ReportQuestionPlan。只选择目录中的 record_set_id 和 metric_codes。"
@@ -21,7 +21,13 @@ QUESTION_PLAN_INSTRUCTIONS = (
     "追问原因或依据时选择 explain 并针对所选发现的指标。"
     "当前追问选择有效纳入记录。若问题要求比较纳入与排除记录的稳健性，"
     "intent=clarify，clarification说明可在完整报告分析中查看排除稳健性。"
-    "当用户请求历史数据或问题无法匹配可用数据时，intent=clarify，clarification写具体需补充的信息。"
+    "comparison=current 表示本次记录，comparison=previous 表示与最近一次同协议测试的对应有效记录比较。"
+    "上文 history_availability=available 才可选择 previous；guest/no_previous/not_authorized 时说明具体原因。"
+    "第一次比较历史默认 scope_basis=report；前后半程、左右侧或时间区间在两次测试中分别筛选。"
+    "上文 longitudinal 非空时，继续追问或换图默认保留 comparison=previous，除非用户明确只看本次。"
+    "若此前只选了本次的一段范围，进行历史比较时明确重建 scope_basis=report 的相同筛选。"
+    "仅支持最近一次同协议测试，两次有效记录均值和差值。指定其他日期、多次趋势或初始基线时 intent=clarify。"
+    "问题无法匹配可用数据时，intent=clarify，clarification写具体需补充的信息。"
     "返回结构化计划。"
 )
 QUESTION_PLAN_TEMPLATE = "问题：{question}\n上文：{parent_context}\n当前报告：{observation}"
@@ -31,6 +37,8 @@ QUESTION_DECISION_TEMPLATE = (
     "record_refs 由系统注入。问答可直接用范围统计回答，即使指标平稳也应回答用户所问。"
     "前后变化是选定范围内再次按有效记录数量分半，须明确该口径。"
     "intent=chart 时系统优先按父证据的方法复现分组，已有证据图所需结果后直接停止。"
+    "question_context.longitudinal 存在时，系统已运行 compare_longitudinal/compare_session_records，"
+    "该证据比较两次测试各自所选有效记录的均值，优先回答该比较。不得用本次前后变化替代跨测试比较。"
 )
 QUESTION_SYNTHESIS_TEMPLATE = (
     "仅回答 question_context.question，优先使用所选范围的 summarize_records 证据。"
@@ -40,6 +48,9 @@ QUESTION_SYNTHESIS_TEMPLATE = (
     "limitations 仅引用当前工具证据的实际限制，范围由界面显示。"
     "省略未查询历史、未做其他比较或无关指标缺失等通用免责声明。"
     "intent=chart 时优先引用已复现父图分组的证据与支持的谓词，保留原始分组口径。"
+    "存在 longitudinal 时至少引用一条 compare_session_records 的 comparison_supported 证据。"
+    "value_key 使用 {metric}_previous_mean、{metric}_current_mean、{metric}_difference，"
+    "sample_counts 使用 previous/current；差值为本次减上次，数值口径为对应有效记录均值。"
 )
 
 DECISION_STAGE_TEMPLATE = (

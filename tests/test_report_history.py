@@ -30,7 +30,7 @@ def test_history_restores_exact_answer_and_branches_from_selected_parent(tmp_pat
     assert right.evidence[0].items[0].numeric_values["contact_time_s_mean"] == pytest.approx(.5)
     assert repository.list_validated_analyses(half.session_id, DataAccessScope(), "old-snapshot") == []
     assert repository.list_validated_analyses(half.session_id + 1, DataAccessScope(), half.package_digest) == []
-    assert service.get_history(half.session_id, DataAccessScope(longitudinal=True)) == []
+    assert len(service.get_history(half.session_id, DataAccessScope(longitudinal=True))) == 4
 
 
 def test_history_omits_unfinished_and_failed_runs_and_rejects_scope_mismatch(tmp_path):
@@ -45,5 +45,4 @@ def test_history_omits_unfinished_and_failed_runs_and_rejects_scope_mismatch(tmp
         with pytest.raises(ReportAnalysisError, match="不匹配"):
             service.get_saved(original.session_id, DataAccessScope(), run_id)
     assert len(service.get_history(original.session_id, DataAccessScope())) == 1
-    with pytest.raises(ReportAnalysisError):
-        service.get_saved(original.session_id, DataAccessScope(longitudinal=True), original.analysis_run_id)
+    assert service.get_saved(original.session_id, DataAccessScope(longitudinal=True), original.analysis_run_id)

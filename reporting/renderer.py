@@ -30,6 +30,7 @@ class AnalysisRenderer:
         evidence=None,
         request_digest="",
         question_context=None,
+        source_packages=None,
     ) -> AnalysisPackage:
         claims = []
         for claim in validated.claims:
@@ -52,7 +53,7 @@ class AnalysisRenderer:
             )
         recommendations = rag_result.package.recommendations if rag_result else ()
         presentation = (
-            build_presentation(claims, package, evidence, recommendations)
+            build_presentation(claims, package, evidence, recommendations, source_packages=source_packages)
             if evidence is not None else None
         )
         if presentation and question_context:

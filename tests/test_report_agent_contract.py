@@ -97,7 +97,7 @@ def test_sequential_prompt_requires_one_typed_decision_and_no_permission_fields(
         "Tool失败也不构成否定Evidence",
     ):
         assert expected in prompt
-    assert SEQUENTIAL_PROMPT_VERSION == "report-agent-sequential-system/3.1"
+    assert SEQUENTIAL_PROMPT_VERSION == "report-agent-sequential-system/3.2"
 
 
 def test_decide_includes_progressive_skill_and_uses_sequential_instructions(

@@ -426,7 +426,22 @@ class ReportSelection(FrozenModel):
     label: str
 
 
+class SessionEvidenceSource(FrozenModel):
+    session_id: int
+    package_id: str
+    package_digest: str
+    started_at: str
+    selection: ReportSelection
+
+
+class LongitudinalContext(FrozenModel):
+    current: SessionEvidenceSource
+    previous: SessionEvidenceSource
+    protocol_digest: str
+
+
 class ReportQuestionPlan(FrozenModel):
+    comparison: Literal["current", "previous"] = "current"
     intent: Literal["analyze", "inspect", "explain", "chart", "clarify"] = Field(
         default="analyze",
         description="chart only changes the existing chart style. Use analyze with chart_type when changing scope or metrics.",
@@ -466,6 +481,7 @@ class ReportQuestionContext(FrozenModel):
     selection_label: str
     chart_type: Literal["time_series", "side_distribution", "segment_comparison"] | None = None
     prior_turns: tuple[dict[str, str], ...] = ()
+    longitudinal: LongitudinalContext | None = None
 
 
 class AgentObservation(FrozenModel):
@@ -641,6 +657,7 @@ class EvidenceItem(FrozenModel):
     limitations: tuple[str, ...] = ()
     tool_run_id: str
     provenance_id: str
+    longitudinal: LongitudinalContext | None = None
 
     @model_validator(mode="before")
     @classmethod
@@ -876,6 +893,8 @@ class ChartPoint(FrozenModel):
     timestamp_s: float | None = None
     side: Literal["left", "right", "unknown"] | None = None
     value: float = Field(allow_inf_nan=False)
+    session_id: int | None = None
+    package_digest: str | None = None
 
 
 class ChartGroup(FrozenModel):

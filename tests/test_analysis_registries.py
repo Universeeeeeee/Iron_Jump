@@ -16,7 +16,7 @@ def test_tool_registry_contains_exactly_three_tools_with_mvp_states():
         "compare_cohort",
     }
     assert registry.get("analyze_current_session").enabled is True
-    assert registry.get("compare_longitudinal").enabled is False
+    assert registry.get("compare_longitudinal").enabled is True
     assert registry.get("compare_cohort").enabled is False
 
 
@@ -49,12 +49,13 @@ def test_capability_catalog_nests_methods_and_respects_side_availability():
     assert jump_methods["verify_side_segment_difference"].enabled is False
     assert treadmill_methods["verify_side_segment_difference"].enabled is True
     assert jump["compare_longitudinal"].enabled is False
-    assert jump["compare_longitudinal"].unavailable_reason == "tool_not_implemented_in_mvp"
+    assert jump["compare_longitudinal"].unavailable_reason == "data_scope_not_authorized"
 
 
 def test_method_registry_exposes_semantic_methods_not_kernel_primitives():
     names = {spec.name for spec in AnalysisMethodRegistry().all()}
     assert names == {
+        "compare_session_records",
         "summarize_records",
         "verify_temporal_change",
         "verify_side_segment_difference",

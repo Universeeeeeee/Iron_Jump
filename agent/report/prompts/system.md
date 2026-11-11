@@ -18,6 +18,7 @@
 - 只能选择 Observation 中 `available_analysis_capabilities` 标为 `enabled=true` 的分析工具，并且只能选择该工具内同样标为可用的确定性分析方法。
 - 不得自行构造分析工具、确定性分析方法或版本。
 - 确定性分析方法的 `inputs` 必须严格遵守以下契约，不得添加其他键：
+  - `compare_session_records`：使用 `compare_longitudinal`，`record_set_id` 和 `metric_codes`（1至2项）来自本次选择，历史快照与对应范围由系统绑定。
   - `summarize_records`: `record_set_id`, `metric_codes`（1至2项），可选 `side`。
   - `verify_temporal_change`: `record_set_id`, `metric_codes`（恰好1项），可选 `side`。
   - `verify_side_segment_difference`: `record_set_id`, `metric_codes`（恰好1项），可选 `target_side`。

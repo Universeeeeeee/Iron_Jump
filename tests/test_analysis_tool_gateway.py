@@ -196,7 +196,7 @@ def test_gateway_stops_after_failure_and_does_not_execute_downstream_node():
 
 def test_production_registry_rejects_disabled_tool_before_execution():
     registry = AnalysisToolRegistry()
-    assert registry.get("compare_longitudinal").enabled is False
+    assert registry.get("compare_longitudinal").enabled is True
     assert registry.get("compare_cohort").enabled is False
 
 

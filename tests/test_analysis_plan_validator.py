@@ -125,7 +125,7 @@ def test_invalid_plans_are_rejected_before_kernel(mutator, expected_code):
             _node(record_set_id, node_id="n2", dependencies=("n1",), inputs={"record_set_id": record_set_id, "metric_codes": ["air_time_s"]}),
         ]
     elif mutator == "disabled_tool":
-        nodes[0] = _node(record_set_id, tool_name="compare_longitudinal")
+        nodes[0] = _node(record_set_id, tool_name="compare_cohort")
     if mutator == "four_nodes":
         plan = SmallAnalysisPlan.model_construct(
             questions=(_question(),),
@@ -147,7 +147,7 @@ def test_method_must_belong_to_selected_tool():
 
     class _MismatchedMethodRegistry:
         def get(self, name):
-            return replace(registry.get(name), tool_name="compare_longitudinal")
+            return replace(registry.get(name), tool_name="compare_cohort")
 
     plan = SmallAnalysisPlan(
         questions=(_question(),),

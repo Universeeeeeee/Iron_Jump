@@ -135,7 +135,7 @@ def test_action_rejects_disabled_tool_before_execution():
     package = make_jump_package([0.2] * 12)
     action = _action(
         package.record_sets[0].record_set_id,
-        tool_name="compare_longitudinal",
+        tool_name="compare_cohort",
     )
 
     with pytest.raises(ActionValidationError) as exc_info:

@@ -41,6 +41,15 @@ def _evidence_sentence(item, run, predicates):
     label = side + METRIC_CATALOG[metric].label
     unit = METRIC_CATALOG[metric].unit
     fmt = lambda value: format_numeric_value(value, unit)
+    if item.analysis_method == "compare_session_records":
+        parts = []
+        for code in metrics:
+            definition = METRIC_CATALOG[code]
+            before = format_numeric_value(values[f"{code}_previous_mean"], definition.unit)
+            after = format_numeric_value(values[f"{code}_current_mean"], definition.unit)
+            delta = _difference(values[f"{code}_difference"], definition.unit)
+            parts.append(f"{definition.label}有效记录均值，上次 {before}，本次 {after}，本次减上次 {delta}。")
+        return f"上次纳入 {item.sample_counts['previous']} 条，本次纳入 {item.sample_counts['current']} 条。" + "".join(parts)
     if item.analysis_method == "summarize_records":
         parts = []
         for code in metrics:
@@ -99,7 +108,7 @@ def evidence_claim_text(claim, package, evidence):
     return "".join(dict.fromkeys(parts))
 
 
-def build_presentation(claims, package, evidence, recommendations):
+def build_presentation(claims, package, evidence, recommendations, source_packages=None):
     if any(b.package_digest != package.metadata.package_digest or b.package_id != package.metadata.package_id for b in evidence):
         raise ValueError("Presentation evidence belongs to another snapshot")
     items = {i.evidence_id: i for b in evidence for i in b.items}
@@ -114,7 +123,9 @@ def build_presentation(claims, package, evidence, recommendations):
             side = _SIDES.get(run.parameters.get("side"), "")
             for metric in run.parameters.get("metric_codes", ()):
                 label = side + METRIC_CATALOG[metric].label
-                if item.analysis_method == "summarize_records":
+                if item.analysis_method == "compare_session_records":
+                    titles.append(label + "与上次同协议测试的比较")
+                elif item.analysis_method == "summarize_records":
                     titles.append(label + "的所选记录统计")
                 elif item.analysis_method == "verify_side_segment_difference":
                     titles.append(label + "的左右变化比较")
@@ -158,13 +169,13 @@ def build_presentation(claims, package, evidence, recommendations):
             selected[duplicate] = card.model_copy(update={"related_claim_ids": related, "recommendation_ids": recommendation_ids})
             continue
         only_comparison = claim.predicate_bindings and all(b.predicate == "comparison_supported" for b in claim.predicate_bindings)
-        has_summary = any(items[ref].analysis_method == "summarize_records" for ref in claim.evidence_refs)
+        has_summary = any(items[ref].analysis_method in {"summarize_records", "compare_session_records"} for ref in claim.evidence_refs)
         if len(selected) == 3 or (only_comparison and not has_summary):
             continue
         chart_ids = []
         for ref in claim.evidence_refs:
             item = items[ref]
-            for chart in build_evidence_charts(package, item, runs[item.tool_run_id]):
+            for chart in build_evidence_charts(package, item, runs[item.tool_run_id], source_packages=source_packages):
                 charts[chart.chart_id] = chart
                 chart_ids.append(chart.chart_id)
         selected.append(InsightCard(

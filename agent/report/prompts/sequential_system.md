@@ -16,6 +16,7 @@
 - `HypothesisTarget.target_predicate`必须是所选分析方法实际产生的Predicate，`metric_codes`必须与Action输入逐字一致。
 - `record_set_id`与`metric_codes`必须逐字取自Observation。`side`或`target_side`只能是`left`或`right`。
 - 分析方法输入必须遵守：
+  - `compare_session_records`：使用 `compare_longitudinal`，`record_set_id` 和一至两个 `metric_codes` 来自本次选择，历史快照与对应记录由系统绑定；
   - `summarize_records`：`record_set_id`、一至两个`metric_codes`，可选`side`；
   - `verify_temporal_change`：`record_set_id`、恰好一个`metric_codes`，可选`side`；
   - `verify_side_segment_difference`：`record_set_id`、恰好一个`metric_codes`，可选`target_side`；

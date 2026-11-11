@@ -62,7 +62,10 @@ class EvidenceChartWidget(QWidget):
                           _SIDES[point.side], f'{point.value:.6g}', group.label)
                 for column, value in enumerate(values):
                     cell = QTableWidgetItem(str(value))
-                    cell.setToolTip(point.record_ref)
+                    source = point.record_ref
+                    if point.session_id is not None:
+                        source = f"测试 {point.session_id}\n记录 {point.record_ref}\n快照 {point.package_digest}"
+                    cell.setToolTip(source)
                     cell.setData(Qt.UserRole, point.record_ref)
                     self.table.setItem(row, column, cell)
                 self.rows.append((group.group_id, point.record_ref))

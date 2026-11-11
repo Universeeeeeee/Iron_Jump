@@ -107,11 +107,23 @@ class ReportRepository:
         )
 
     def compare_previous_session(self, session_id):
-        from .comparison import compare_packages, protocol_description, protocol_digest
+        from .comparison import compare_packages
 
         current = self._get_session(session_id)
         if current.is_temporary or current.subject_id is None:
             return {"status": "guest"}
+        match = self.get_previous_package(session_id)
+        if match:
+            previous, protocol = match
+            return compare_packages(self.get_package(session_id), previous, protocol)
+        return {"status": "no_previous", "current_session_id": session_id}
+
+    def get_previous_package(self, session_id):
+        from .comparison import protocol_description, protocol_digest
+
+        current = self._get_session(session_id)
+        if current.is_temporary or current.subject_id is None:
+            return None
         protocol = protocol_description(current)
         with self._connect() as conn:
             candidates = conn.execute(
@@ -127,10 +139,28 @@ class ReportRepository:
         for row in candidates:
             previous = self._get_session(row["id"])
             if protocol_description(previous) == protocol:
-                return compare_packages(
-                    self.get_package(session_id), self.get_package(previous.id), protocol_digest(protocol),
-                )
-        return {"status": "no_previous", "current_session_id": session_id}
+                return self.get_package(previous.id), protocol_digest(protocol)
+        return None
+
+    def longitudinal_is_current(self, analysis):
+        context = (analysis.get("question_context") or {}).get("longitudinal")
+        if not context:
+            return True
+        try:
+            current = self.get_package(analysis["session_id"])
+            match = self.get_previous_package(analysis["session_id"])
+            if match is None:
+                return False
+            previous, protocol = match
+            return (
+                current.metadata.package_digest == context["current"]["package_digest"]
+                and current.metadata.session_id == context["current"]["session_id"]
+                and previous.metadata.package_digest == context["previous"]["package_digest"]
+                and previous.metadata.session_id == context["previous"]["session_id"]
+                and protocol == context["protocol_digest"]
+            )
+        except (KeyError, ValueError, TypeError):
+            return False
 
     def create_analysis_run(
         self,
@@ -233,6 +263,8 @@ class ReportRepository:
         session_id: int,
         scope: DataAccessScope,
         package_digest: str,
+        *,
+        include_current_scope: bool = False,
     ) -> dict[str, Any] | None:
         with self._connect() as conn:
             row = conn.execute(
@@ -240,28 +272,35 @@ class ReportRepository:
                 SELECT analysis_package_json
                 FROM report_analyses
                 WHERE analysis_run_id = ? AND session_id = ?
-                  AND status = 'validated' AND data_access_scope_json = ?
+                  AND status = 'validated' AND data_access_scope_json IN (?, ?)
                   AND package_digest = ?
                 """,
-                (run_id, session_id, self._scope_json(scope), package_digest),
+                (run_id, session_id, self._scope_json(scope),
+                 self._scope_json(DataAccessScope()) if include_current_scope else self._scope_json(scope),
+                 package_digest),
             ).fetchone()
         if row is None or not row["analysis_package_json"]:
             return None
-        return json.loads(row["analysis_package_json"])
+        analysis = json.loads(row["analysis_package_json"])
+        return analysis if self.longitudinal_is_current(analysis) else None
 
-    def list_validated_analyses(self, session_id, scope, package_digest):
+    def list_validated_analyses(self, session_id, scope, package_digest, *, include_current_scope=False):
         with self._connect() as conn:
             rows = conn.execute(
                 """SELECT analysis_run_id, created_at, analysis_package_json
                    FROM report_analyses
                    WHERE session_id = ? AND status = 'validated'
-                     AND data_access_scope_json = ? AND package_digest = ?
+                     AND data_access_scope_json IN (?, ?) AND package_digest = ?
                    ORDER BY id DESC""",
-                (session_id, self._scope_json(scope), package_digest),
-            )
+                (session_id, self._scope_json(scope),
+                 self._scope_json(DataAccessScope()) if include_current_scope else self._scope_json(scope),
+                 package_digest),
+            ).fetchall()
             history = []
             for row in rows:
                 analysis = json.loads(row["analysis_package_json"])
+                if not self.longitudinal_is_current(analysis):
+                    continue
                 context = analysis.get("question_context") or {}
                 history.append({
                     "analysis_run_id": row["analysis_run_id"],

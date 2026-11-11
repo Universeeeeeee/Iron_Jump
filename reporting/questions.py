@@ -30,6 +30,8 @@ def parent_question_context(parent, claim_id):
             *prior.prior_turns,
             {"question": prior.question, "answer": parent.summary},
         ][-4:]
+        if prior.longitudinal:
+            context["longitudinal"] = prior.longitudinal.model_dump(mode="json")
     if claim_id is None:
         return context
     claim = next((c for c in parent.claims if c.claim_id == claim_id), None)
@@ -40,6 +42,11 @@ def parent_question_context(parent, claim_id):
     if not claim.evidence_refs or any(ref not in evidence for ref in claim.evidence_refs):
         raise ReportQuestionError("legacy_evidence_unavailable", "这条已保存发现缺少逐条证据，请选择整体报告提问或重新分析。")
     items = [evidence[ref] for ref in claim.evidence_refs]
+    if any(item.longitudinal for item in items):
+        if prior is None or prior.longitudinal is None:
+            raise ReportQuestionError("legacy_evidence_unavailable", "该历史发现缺少比较范围，请重新提问。")
+        context["selection"] = prior.selection.model_dump(mode="json")
+        return context
     record_sets = {item.record_set_id for item in items}
     if len(record_sets) != 1 or None in record_sets:
         raise ReportQuestionError("ambiguous_selection", "这项发现涉及多个数据范围，请选择整体报告并指定指标。")

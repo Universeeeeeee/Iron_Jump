@@ -15,7 +15,7 @@ from .models import (
 )
 
 
-ANALYSIS_TOOL_REGISTRY_VERSION = "analysis-tool-registry/1.1"
+ANALYSIS_TOOL_REGISTRY_VERSION = "analysis-tool-registry/1.2"
 
 
 @dataclass(frozen=True)
@@ -47,11 +47,10 @@ class AnalysisToolRegistry:
             ),
             AnalysisToolSpec(
                 "compare_longitudinal",
-                "compare-longitudinal-tool/0.1-disabled",
+                "compare-longitudinal-tool/1.0",
                 "longitudinal",
-                False,
-                (),
-                "tool_not_implemented_in_mvp",
+                True,
+                ("compare_session_records",),
             ),
             AnalysisToolSpec(
                 "compare_cohort",

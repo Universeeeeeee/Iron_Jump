@@ -23,7 +23,7 @@ from .models import (
 )
 
 
-ANALYSIS_METHOD_REGISTRY_VERSION = "analysis-method-registry/1.1"
+ANALYSIS_METHOD_REGISTRY_VERSION = "analysis-method-registry/1.2"
 KERNEL_VERSION = "analysis-kernel/1.2"
 MIN_COMPARISON_GROUP_SIZE = 3
 _NAMESPACE = uuid.UUID("9ba0dc8f-5b90-4899-905c-5fc67083e4a7")
@@ -46,6 +46,7 @@ class AnalysisMethodSpec:
 class AnalysisMethodRegistry:
     def __init__(self):
         specs = (
+            AnalysisMethodSpec("compare_session_records", "session-record-comparison/1.0", "compare_longitudinal", 1, ("longitudinal",), 1, 2, predicate_names=("comparison_supported",)),
             AnalysisMethodSpec("summarize_records", "summarize-records-method/1.0", "analyze_current_session", 1, ("descriptive",), 1, 2, predicate_names=("comparison_supported",)),
             AnalysisMethodSpec("verify_temporal_change", "temporal-change-method/1.0", "analyze_current_session", 2, ("temporal",), 1, 1, predicate_names=("comparison_supported", "increase", "decrease", "persistent", "transient")),
             AnalysisMethodSpec("verify_side_segment_difference", "side-segment-difference-method/1.0", "analyze_current_session", 3, ("temporal", "side"), 1, 1, requires_side=True, predicate_names=("comparison_supported", "concentrated_on_side")),
