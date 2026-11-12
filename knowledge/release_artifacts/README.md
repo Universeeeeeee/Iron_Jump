@@ -28,3 +28,14 @@ The 30 original text-only cases are scenario exercises. Their data traceability
 and citation results remain unevaluated. Production acceptance additionally uses
 numeric reports through the normal service, database, tools, validators, and
 renderer. All generated review artifacts remain pending until human review.
+
+Measurement-limitation actions use snapshot-bound failed comparison assessments
+and their sample counts or referenced invalidating quality flags. They do not
+require a supported change predicate. Absolute left/right level differences and
+changes in variability are explicitly unsupported until matching deterministic
+operators are connected.
+
+The final renderer arbitrates all actions together by `(claim_id, metric_code)`
+and displays at most three. It prioritizes a concrete verified limitation, then
+an action with reviewed direct literature support, then a data follow-up. Ties
+retain source order. Only citations referenced by selected actions are displayed.

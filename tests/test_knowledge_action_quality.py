@@ -59,13 +59,13 @@ class StructuredReportAgent:
         return self.draft
 
 
-def computed_report(tmp_path, mode, rag_pipeline=None):
-    store = SubjectStore(tmp_path / f"{mode}.sqlite3")
+def structured_report_case(mode):
     if mode == "jump":
         report = make_jump_report([.2]*12)
         report = replace(report, jump_results=tuple(replace(r, jump_height_m=.2 if i<6 else .3)
             for i,r in enumerate(report.jump_results)), avg_jump_height=.25, max_jump_height=.3)
-        config, metric, method = default_jump_config(), "jump_height_m", "verify_temporal_change"
+        config = replace(default_jump_config(), number_of_jumps=len(report.jump_results))
+        metric, method = "jump_height_m", "verify_temporal_change"
     elif mode == "walk":
         report = make_treadmill_report([.2]*12,[.2]*12,[70]*6+[80]*6,[70]*6+[72]*6)
         config = TreadmillGaitConfig(stop_type="End of Time", test_length="01:00")
@@ -77,6 +77,12 @@ def computed_report(tmp_path, mode, rag_pipeline=None):
             for i,r in enumerate(report.per_step_results)))
         config = TreadmillRunningConfig(stop_type="End of Time", test_length="01:00")
         metric, method = "cadence_steps_per_s", "verify_temporal_change"
+    return report, config, metric, method
+
+
+def computed_report(tmp_path, mode, rag_pipeline=None):
+    store = SubjectStore(tmp_path / f"{mode}.sqlite3")
+    report, config, metric, method = structured_report_case(mode)
     session = store.record_session(None, config, report)
     repository = ReportRepository(store)
     agent = StructuredReportAgent(metric, method)
@@ -87,6 +93,8 @@ def computed_report(tmp_path, mode, rag_pipeline=None):
     validated = ClaimValidator().validate(agent.draft, package, answer.evidence, DataAccessScope())
     context = build_report_rag_context(package, validated, answer.evidence)
     assert repository.get_package(session).model_dump() == before
+    if mode == "jump":
+        assert package.context.config_snapshot["number_of_jumps"] == len(report.jump_results) == 12
     return context, answer, repository, report
 
 

@@ -6,7 +6,7 @@ import math
 from reporting.metric_catalog import METRIC_CATALOG
 
 
-MATCHING_VERSION = "finding-action-evidence/2.0"
+MATCHING_VERSION = "finding-action-evidence/2.1"
 PROTOCOLS = {
     "Jump Test": ("vertical_jump",),
     "Treadmill Gait Test": ("treadmill_walk",),
@@ -52,10 +52,7 @@ ACTION_SPECS = {
     "track_side_changes": {"types": ("side_temporal_change",), "category": "retest", "priority": 0,
         "basis": "data", "focus": "追踪左右两侧各自的前后变化及变化幅度差别", "support": (),
         "text": "后续同协议测试中分别追踪左右侧{metric}各自的前后段变化，观察两侧变化幅度的差别是否重复出现。"},
-    "compare_sides": {"types": ("side_difference",), "category": "coach_review", "priority": 0,
-        "basis": "data", "focus": "同一口径下的左右水平差异", "support": (),
-        "text": "后续同协议测试中继续追踪左右侧{metric}的水平差异，并结合动作执行记录观察其重复性。"},
-    "check_repeatability": {"types": ("variability", "temporal_change", "verified_change", "side_temporal_change"), "category": "retest", "priority": 0,
+    "check_repeatability": {"types": ("temporal_change", "verified_change", "side_temporal_change"), "category": "retest", "priority": 0,
         "basis": "literature", "focus": "文献直接支持的重复测试方法", "support": ("repeatability",),
         "text": "依照所引研究直接支持的复测方法，保留各次{metric}记录，并沿用相同统计口径观察重复测试一致性。"},
     "explain_limitation": {"types": ("measurement_limitation",), "category": "measurement_review", "priority": 0,
@@ -65,6 +62,10 @@ ACTION_SPECS = {
         "basis": "literature", "focus": "文献直接支持的测试条件记录方法", "support": ("method",),
         "text": "按所引文献直接支持的方法记录{metric}对应的测试条件，供后续同协议比较使用。"},
 }
+UNSUPPORTED_FINDINGS = {
+    "side_difference": "当前行动链路尚未接入左右水平差异的确定性验证算子。",
+    "variability": "当前行动链路尚未接入离散程度变化的确定性验证算子。",
+}
 _LIMIT_LABELS = {"insufficient_sample_size": "有效样本不足", "quality_invalidation": "该指标存在质量失效记录",
                  "report_quality_invalidates_analysis": "报告质量标记使分析失效"}
 _LIMIT_IMPACTS = {"insufficient_sample_size": "当前样本量不足以支持对应分组比较。",
@@ -73,11 +74,13 @@ _LIMIT_IMPACTS = {"insufficient_sample_size": "当前样本量不足以支持对
 
 
 def concrete_limitations(claim):
-    return tuple(value for value in claim.limitations if value and value != "co_change_is_not_causation")
+    return tuple(value for value in claim.limitations if value in _LIMIT_LABELS or
+                 (value.partition(":")[0] in {"left", "right"} and value.partition(":")[2] in _LIMIT_LABELS))
 
 
 def action_candidates(context, claim):
-    if context.test_type not in PROTOCOLS or not set(claim.metric_codes).intersection(context.metric_codes):
+    if (claim.finding_type in UNSUPPORTED_FINDINGS or context.test_type not in PROTOCOLS
+            or not set(claim.metric_codes).intersection(context.metric_codes)):
         return ()
     return tuple(action_id for action_id, spec in ACTION_SPECS.items()
                  if claim.finding_type in spec["types"]
@@ -121,6 +124,48 @@ def sentence_protocol_matches(sentence, test_type):
     return True
 
 
+def _verified_limitation(context, claim, metric, item):
+    """Validate a tool's failed comparison or quality assessment independently of change evidence."""
+    limitations = tuple(value for value in concrete_limitations(claim) if value in item.limitations)
+    expected_status = "conclusive" if item.analysis_method == "quality_scope_check" else "inconclusive"
+    if (item.analysis_status != expected_status or not limitations
+            or item.analysis_method not in {"verify_temporal_change", "verify_cross_metric_cochange",
+                "verify_side_segment_difference", "verify_exclusion_robustness", "summarize_records", "quality_scope_check"}):
+        return False
+    if not any(p.get("predicate") == "comparison_supported" and p.get("supported") is False
+               and p.get("predicate_evidence_id")
+               and (metric in p.get("metric_codes", ()) or item.analysis_method == "quality_scope_check")
+               for p in item.limitation_assessments):
+        return False
+    sample_limits = [value for value in limitations if value.endswith("insufficient_sample_size")]
+    for limitation in sample_limits:
+        from reporting.kernel import MIN_COMPARISON_GROUP_SIZE
+        side = limitation.partition(":")[0] if ":" in limitation else None
+        required = {
+            "verify_temporal_change": ("first_half", "second_half"),
+            "verify_cross_metric_cochange": ("first_half", "second_half"),
+            "summarize_records": ("selected",),
+            "verify_exclusion_robustness": ("all_first", "all_second", "included_first", "included_second"),
+            "verify_side_segment_difference": (f"{side}_first", f"{side}_second"),
+        }.get(item.analysis_method)
+        if required is None:
+            return False
+        minimum = 1 if item.analysis_method == "summarize_records" else MIN_COMPARISON_GROUP_SIZE
+        if not all(group in item.record_groups and len(item.record_groups[group]) == item.sample_counts.get(group)
+                   and len(set(item.record_groups[group])) == len(item.record_groups[group]) for group in required):
+            return False
+        if not any(item.sample_counts[group] < minimum for group in required):
+            return False
+    flags = [flag for flag in context.quality_evidence if flag.get("quality_flag_id") in item.quality_flag_refs]
+    if any(value.endswith("quality_invalidation") for value in limitations) and not any(
+        flag.get("invalidates_report") or metric in flag.get("invalidates_metric_codes", ()) for flag in flags
+    ):
+        return False
+    if "report_quality_invalidates_analysis" in limitations and not any(flag.get("invalidates_report") for flag in flags):
+        return False
+    return True
+
+
 def verified_finding_evidence(context, claim, metric):
     """Require structured, snapshot-bound evidence; prose and origin labels are insufficient."""
     if (claim.data_origin != "validated_report" or metric not in claim.metric_codes
@@ -128,8 +173,14 @@ def verified_finding_evidence(context, claim, metric):
         return ()
     accepted = []
     for item in claim.evidence:
-        if (item.analysis_status != "conclusive" or item.package_digest != context.package_digest
-                or not item.evidence_id or not item.tool_run_id or metric not in item.metric_codes):
+        if (item.package_digest != context.package_digest or not item.evidence_id or not item.tool_run_id
+                or (metric not in item.metric_codes and item.analysis_method != "quality_scope_check")):
+            continue
+        if claim.finding_type == "measurement_limitation":
+            if _verified_limitation(context, claim, metric, item):
+                accepted.append(item)
+            continue
+        if item.analysis_status != "conclusive":
             continue
         predicates = {p.get("predicate") for p in item.predicates
                       if p.get("supported") is True and p.get("predicate_evidence_id")
@@ -218,7 +269,7 @@ def evidence_action_match(context, claim, metric, action_id, evidence):
 
 def finding_summary(context, claim, metric):
     """Use only validated numeric fields, with their original units and grouping."""
-    if claim.data_origin != "validated_report":
+    if claim.data_origin != "validated_report" or claim.finding_type == "measurement_limitation":
         return ""
     parts = []
     for item in verified_finding_evidence(context, claim, metric):
@@ -242,8 +293,13 @@ def finding_summary(context, claim, metric):
 
 def render_action(context, claim, metric, action_id):
     label = METRIC_CATALOG[metric].label
-    limitation = "、".join(_LIMIT_LABELS.get(value, value) for value in concrete_limitations(claim))
-    impact = "".join(dict.fromkeys(_LIMIT_IMPACTS.get(value, "") for value in concrete_limitations(claim)))
+    limitations = tuple(dict.fromkeys(value for item in verified_finding_evidence(context, claim, metric)
+                                      for value in concrete_limitations(claim) if value in item.limitations))
+    parts = [(value.partition(":")[0], value.partition(":")[2]) if ":" in value else ("", value)
+             for value in limitations]
+    limitation = "、".join({"left":"左侧", "right":"右侧", "":""}[side] + _LIMIT_LABELS[code]
+                           for side, code in parts)
+    impact = "".join(dict.fromkeys(_LIMIT_IMPACTS[code] for _, code in parts))
     text = ACTION_SPECS[action_id]["text"].format(metric=label, limitation=limitation, impact=impact)
     conditions = ""
     if action_id in {"track_change", "track_side_changes", "check_repeatability", "check_conditions"}:

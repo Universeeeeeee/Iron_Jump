@@ -26,7 +26,15 @@ def build_report_rag_context(package, validated, evidence_bundles) -> ReportRAGC
                 metric_codes.add(metric_code)
                 facts.append(fact.model_dump(mode="json"))
         linked_evidence = []
-        for evidence_ref in claim.evidence_refs:
+        evidence_refs = list(claim.evidence_refs)
+        if not evidence_refs:
+            # A descriptive fact can still have a failed comparison for the same
+            # metric. Carry that assessment as a limitation, never as a trend.
+            evidence_refs.extend(item.evidence_id for item in evidence_items.values()
+                if item.limitations and (item.analysis_status == "inconclusive" or item.analysis_method == "quality_scope_check")
+                and (any(metric_codes.intersection(predicate.metric_codes) for predicate in item.predicates)
+                     or item.analysis_method == "quality_scope_check"))
+        for evidence_ref in evidence_refs:
             item = evidence_items.get(evidence_ref)
             if item is None:
                 continue
@@ -44,7 +52,12 @@ def build_report_rag_context(package, validated, evidence_bundles) -> ReportRAGC
                 limitations=item.limitations,
                 analysis_status=item.analysis_status, package_digest=package.metadata.package_digest,
                 tool_run_id=item.tool_run_id,
+                limitation_assessments=tuple(p.model_dump(mode="json") for p in item.predicates
+                                             if p.predicate == "comparison_supported" and not p.supported),
+                quality_flag_refs=item.quality_flag_refs,
             ))
+        limitations = tuple(dict.fromkeys((*claim.limitations,
+            *(limitation for item in linked_evidence for limitation in item.limitations))))
         methods = {item.analysis_method for item in linked_evidence}
         supported = {p["predicate"] for item in linked_evidence for p in item.predicates}
         if "concentrated_on_side" in supported:
@@ -57,7 +70,7 @@ def build_report_rag_context(package, validated, evidence_bundles) -> ReportRAGC
             for item in linked_evidence for metric in item.metric_codes
         ):
             finding_type = "verified_change"
-        elif claim.limitations and any(code != "co_change_is_not_causation" for code in claim.limitations):
+        elif limitations and any(code != "co_change_is_not_causation" for code in limitations):
             finding_type = "measurement_limitation"
         else:
             finding_type = "descriptive"
@@ -67,7 +80,7 @@ def build_report_rag_context(package, validated, evidence_bundles) -> ReportRAGC
                 claim_id=claim.claim_id,
                 text=evidence_claim_text(claim, package, evidence_bundles),
                 metric_codes=tuple(sorted(metric_codes)),
-                limitations=claim.limitations,
+                limitations=limitations,
                 finding_type=finding_type, evidence=tuple(linked_evidence), fact_values=tuple(facts),
                 data_origin="validated_report",
             )
@@ -87,4 +100,5 @@ def build_report_rag_context(package, validated, evidence_bundles) -> ReportRAGC
         quality_codes=quality_codes,
         population="general",
         test_conditions=package.context.config_snapshot,
+        quality_evidence=tuple(flag.model_dump(mode="json") for flag in package.quality_flags),
     )

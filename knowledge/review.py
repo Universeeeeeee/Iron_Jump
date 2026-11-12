@@ -7,15 +7,15 @@ from html import escape
 from .models import LiteratureEvidence, ReportRAGContext
 from .recommendations import eligible_actions
 from .action_matching import (ACTION_SPECS, action_candidates, evidence_action_match, render_action,
-                              verified_finding_evidence)
+                              verified_finding_evidence, UNSUPPORTED_FINDINGS)
 
 
 # These expectations describe the original scenario meanings, independently of model output.
 EXPECTED_ACTIONS = {
     "temporal_change": {"track_change"},
-    "side_difference": {"compare_sides"},
+    "side_difference": set(),
     "side_temporal_change": {"track_side_changes"},
-    "variability": {"check_repeatability"},
+    "variability": set(),
     "measurement_limitation": {"explain_limitation"},
     "verified_change": {"track_change"},
     "conditions_review": {"check_conditions"},
@@ -48,6 +48,8 @@ def evaluate_review(payload):
              "status": "hypothetical_not_production_eligible"}
             for claim in context.claims for action_id in action_candidates(context, claim)
         ] if text_only else []
+        row["unsupported_findings"] = [UNSUPPORTED_FINDINGS[claim.finding_type] for claim in context.claims
+                                       if claim.finding_type in UNSUPPORTED_FINDINGS]
         execution = row["audit"]["status"] != "degraded"
         reasons = []
         action_ok, citations_ok, numbers_ok = True, True, True
@@ -152,6 +154,8 @@ def write_review_html(payload, output_path, *, before_path=None):
         parts.append("<section><h2>" + escape(row["case_id"]) + "</h2><p>" + escape(row["claim"]["text"]) + "</p>")
         parts.append("<h3>结构化发现</h3>" + code({"test_type": row["test_type"],
                      "test_conditions": row["context"].get("test_conditions", {}), **row["claim"]}))
+        for reason in row.get("unsupported_findings", []):
+            parts.append("<p><b>尚未支持</b>　" + escape(reason) + "</p>")
         if row["claim"].get("data_origin") == "synthetic_text_only":
             parts.append("<p><b>原合成场景仅含发现语义，无实际测试数值、比较方向幅度或样本数。</b></p>")
         if row["case_id"] in before:

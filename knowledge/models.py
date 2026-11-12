@@ -127,6 +127,8 @@ class FindingEvidence(FrozenModel):
     analysis_status: Literal["conclusive", "inconclusive", "unverified"] = "unverified"
     package_digest: str = ""
     tool_run_id: str = ""
+    limitation_assessments: tuple[dict[str, Any], ...] = ()
+    quality_flag_refs: tuple[str, ...] = ()
 
 
 class RecommendationClaim(FrozenModel):
@@ -148,6 +150,7 @@ class ReportRAGContext(FrozenModel):
     quality_codes: tuple[str, ...] = ()
     population: str = "general"
     test_conditions: dict[str, Any] = Field(default_factory=dict)
+    quality_evidence: tuple[dict[str, Any], ...] = ()
 
 
 class KnowledgeQuerySpec(FrozenModel):
