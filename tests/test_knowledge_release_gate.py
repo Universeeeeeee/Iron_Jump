@@ -4,6 +4,7 @@ import pytest
 
 from knowledge.planner import PLANNER_VERSION
 from knowledge.retrieval import RETRIEVER_VERSION
+from knowledge.recommendations import RECOMMENDATION_PROMPT_VERSION
 
 from knowledge.live_benchmark import (
     LIVE_BENCHMARK_VERSION,
@@ -37,7 +38,7 @@ def _review(
         "chunker_version": "chunker/2.2",
         "embedding_version": "paraphrase-multilingual-MiniLM-L12-v2/fastembed-onnx",
         "retriever_version": RETRIEVER_VERSION,
-        "prompt_version": "sports-recommendation/1.0",
+        "prompt_version": RECOMMENDATION_PROMPT_VERSION,
         "model_name": "deepseek-v4-flash",
     }
     rows = [

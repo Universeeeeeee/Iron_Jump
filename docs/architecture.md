@@ -253,7 +253,9 @@ ReportView(session_id)
   → ReportView 展示只读结果
 ```
 
-正式报告先于智能分析生成；模型不可用、超时或 Claim 被拒绝都不会改变已有报告。当前只分析本次 session，支持纵跳、跑步机步态/跑步；地面报告、个人历史纵向和团队横向分析尚未开放。跑步机步态页面另提供 `reporting/gait_insights.py` 本地专项问答，直接引用报告明细，不调用 LLM。
+正式报告先于智能分析生成。当前报告分析支持纵跳、跑步机步态/跑步和带有结构化摘要的地面走跑报告。`/report/ask` 支持本次记录范围追问，以及正式用户最近一次同协议测试的对应记录比较；游客跳过历史比较。`/report/history` 与 `/report/saved` 恢复已验证回答。历史 Evidence 绑定两份测试快照与记录范围，由 Validator 重算核对，源记录变化后旧回答失效。团队横向分析尚未开放。
+
+报告通过 `ReportPresentation` 显示重点、证据图与关联建议。`/report/annotations`、`/report/annotation/save` 保存用户备注和完整测试均值的复测目标，采用追加版本与预期版本校验；后续测试按原始基线协议计算变化及目标状态。备注与传感器事实分别保存。跑步机步态页面另提供 `reporting/gait_insights.py` 本地专项问答，直接引用报告明细。
 
 ### 5.5 语音与 RFID
 
@@ -401,13 +403,13 @@ LLM 输出 JSON → Pydantic 校验 → LLMTestConfig (BaseModel)
 
 ### 8.6 RAG 发布与降级
 
-`knowledge` 在 Claim 校验后执行确定性 QueryPlanner、元数据硬过滤、FTS5 + Dense 检索与 RRF 合并，再生成文献建议。引用由代码依据 Evidence 构造，文献不能代替本次测试数值的证据。Schema v4 增加建议、文献引用与审计，同时兼容旧报告读取。
+`knowledge` 在 Claim 校验后执行确定性 QueryPlanner、元数据硬过滤、FTS5 + Dense 检索与 RRF 合并，再选择有文献依据的后续行动。2026-11-12 的建议生成契约限定为同协议复测、复核对应记录、补充测试条件记录三类行动；正文由行动类型和已验证指标生成，经过原 RecommendationValidator 后绑定引用。正文模板与选择 Schema 一并参与发布内容摘要。旧报告中已有的其他建议类别仍可读取。
 
 Planner/Retriever 1.1 增加地面场景限制：QuerySpec 的 `protocols` 同时约束 Dense 候选和 FTS5 候选；地面走路仅接受 `overground_walk`，地面跑步仅考虑地面/跑台对比或地面跑步协议，仍须满足推荐许可等所有原有过滤条件。目前地面跑步无获准来源，返回 `no_supported_query`；有查询但无命中时返回 `no_matching_evidence`。规划异常返回 `planning_failed` 降级审计。
 
 旧 `v1_release_gate.json` 的启用标志仍为 true，但旧冻结审查工件只覆盖 1.0；2026-09-26 升级后的 `v1_release_status()` 为 `invalid`。需重新完成真实生成与人工审查并 promotion，不能改写旧工件冒充通过。生产建议暂不启用，确定性分析继续保留。验证记录见 [RAG 验证记录](rag_validation.md)。
 
-地面检索规划已具备协议隔离，但 `reporting.models.TestType`、`ReportDataPackageBuilder` 和报告 UI 智能分析入口仍仅支持纵跳与两种跑台模式。地面报告进入完整 RAG 前必须补齐确定性报告适配及其验证，不能将地面模式重命名为跑台模式绕过限制。
+地面报告的 TestType、确定性适配器和 UI 智能分析入口已接通。文献建议仍按实际地面协议进行检索和独立发布审查。
 
 ### 8.7 用户、团队与分析数据范围
 

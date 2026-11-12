@@ -9,6 +9,28 @@ from knowledge.models import (
 from knowledge.recommendations import RecommendationValidator
 
 
+def test_actions_render_verified_metric_and_pass_normal_evidence_validation():
+    from knowledge.recommendations import RecommendationAction, RecommendationActions, render_recommendation_actions
+    action = RecommendationAction(category='retest', claim_refs=('claim-1',), evidence_refs=('evidence-1',))
+    draft = render_recommendation_actions(RecommendationActions(recommendations=(action,action)), _context())
+    assert len(draft.recommendations) == 1
+    assert '跳跃高度' in draft.recommendations[0].text
+    assert '相同设备与测试协议复测' in draft.recommendations[0].text
+    result, audit = RecommendationValidator((_source(),)).validate(draft, _context(), (_evidence(),))
+    assert len(result.recommendations) == 1
+    assert result.recommendations[0].citation_refs
+    missing = render_recommendation_actions(RecommendationActions(recommendations=(
+        action.model_copy(update={'claim_refs':('missing',)}),)), _context())
+    assert missing.recommendations == ()
+
+
+def test_recommendation_templates_participate_in_release_identity(monkeypatch):
+    import knowledge.recommendations as module
+    original = module.recommendation_content_digest(module.RECOMMENDATION_SYSTEM_PROMPT)
+    monkeypatch.setitem(module._ACTION_TEXT, 'retest', 'changed')
+    assert module.recommendation_content_digest(module.RECOMMENDATION_SYSTEM_PROMPT) != original
+
+
 def _source():
     return KnowledgeSource(
         source_id="s1",
@@ -101,6 +123,19 @@ def test_no_evidence_or_forbidden_dosage_is_deleted_without_retry():
     assert missing_audit[0].reason == "invalid_evidence_reference"
     assert dosage.recommendations == ()
     assert dosage_audit[0].reason == "forbidden_recommendation_content"
+
+
+def test_external_threshold_and_unobserved_measurement_limitations_are_not_advice():
+    validator = RecommendationValidator((_source(),))
+    cases = (
+        ("左右步长差异需超过 MDC95 7.21 cm 才视为变化。", "unsupported_numeric_recommendation"),
+        ("本次结果存在系统性偏差，应先复核精度。", "unobserved_measurement_limitation"),
+        ("针对 claim-1 进行复测。", "unsupported_numeric_recommendation"),
+    )
+    for text, reason in cases:
+        result, audit = validator.validate(_draft(text=text), _context(), (_evidence(),))
+        assert result.recommendations == ()
+        assert audit[0].reason == reason
 
 
 def test_url_doi_markdown_and_citation_tokens_are_deleted():

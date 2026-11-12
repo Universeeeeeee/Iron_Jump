@@ -1,11 +1,29 @@
 # Iron_Jump 智能分析与报告 Agent 架构方案
 
-> 版本：v3.0（2026-08-12 单步序贯循环实现回写）
-> 状态：MVP 已实现；一次性 Plan/DAG 仅保留兼容入口，生产默认使用单步序贯循环
+> 版本：v3.1（2026-11-12 报告交互扩展回写）
+> 状态：单步序贯循环、证据图表、报告追问、最近一次同协议比较与用户复测目标已实现
 > 适用范围：Iron_Jump 的 AI 智能参数配置与智能报告分析模块
 > 核心原则：**确定性算法负责数值，Agent 负责分析路径选择、Tool 编排、证据综合与自然语言表达。**
 
 ---
+
+## 2026-11 报告交互扩展
+
+本节记录当前分支已实现的范围。后文初版设计中的多次历史、团队比较及其他长期设计，按本节所列实现边界理解。
+
+| 能力 | 当前行为 | 主要实现 |
+| --- | --- | --- |
+| 重点与证据图 | 最多三项重点，合并重复发现，总结与图表使用已验证证据；图点可定位原始记录 | `reporting/presentation.py`、`reporting/charts.py`、`ui/report_analysis.py` |
+| 当前报告追问 | `/report/ask` 接收问题、父分析和所选发现；指标、侧别、记录序号与时间范围解析后固定记录引用 | `reporting/questions.py`、`ReportAnalysisService.ask` |
+| 回答历史 | `/report/history` 与 `/report/saved` 恢复已验证回答，并支持从较早回答继续提问 | `ReportRepository`、`ReportView` |
+| 个人历史 | 正式用户可比较最近一次同协议测试，游客跳过；按相同条件分别选取两次有效记录，计算各自均值和本次减上次 | `reporting/longitudinal.py`、`compare_longitudinal/compare_session_records` |
+| 备注与目标 | 用户为具体发现填写备注及完整测试均值目标；每次修改追加版本，后续同协议测试追踪原始基线；支持完成、归档和冲突检测 | `reporting/annotations.py`、`ui/report_annotations.py` |
+
+跨测试 Evidence 绑定两份 session、数据包摘要、协议和各自记录范围。ClaimValidator 重算比较结果并核对证据与审计；历史记录修改、删除或最近匹配基线变化后，旧回答失效。相同快照的中断运行可通过 checkpoint 恢复。
+
+纯换图继承原记录范围与分组。前后半程默认按各自有效记录数划分；历史追问的均值为所选记录均值，完整报告对比表直接读取正式摘要均值。备注为用户记录，复测数值目标由用户设置。建议按已有 `claim_refs` 关联发现，文献建议的运行发布检查和人工审查沿用 `knowledge/release_artifacts/README.md`。
+
+数值绑定、样本与质量条件继续由代码校验。显示的限制来自实际证据及运行状态，通用免责声明和重复的限制段落已清理。Excel、PDF 和旧版报告读取通过对应回归验证，工程回放使用合成或明确标注为模拟的记录。
 
 ## 1. 文档目的
 
@@ -549,12 +567,13 @@ Report Agent 只面对三个语义级分析 Tool。Tool 是权限、数据访问
 
 | Tool | 数据范围 | 版本 | 当前状态 |
 |---|---|---|---|
-| `analyze_current_session` | `current_session` | `analyze-current-session-tool/1.0` | 启用 |
-| `compare_longitudinal` | `longitudinal` | `compare-longitudinal-tool/0.1-disabled` | 注册但禁用 |
+| `analyze_current_session` | `current_session` | `analyze-current-session-tool/1.1` | 启用 |
+| `compare_longitudinal` | `longitudinal` | `compare-longitudinal-tool/1.0` | 历史追问绑定两份快照后启用 |
 | `compare_cohort` | `cohort` | `compare-cohort-tool/0.1-disabled` | 注册但禁用 |
 
-`analyze_current_session` 当前提供五种确定性分析方法：
+`analyze_current_session` 当前提供六种确定性分析方法，另由 `compare_longitudinal` 提供 `compare_session_records`：
 
+- `summarize_records`
 - `verify_temporal_change`
 - `verify_side_segment_difference`
 - `verify_cross_metric_cochange`

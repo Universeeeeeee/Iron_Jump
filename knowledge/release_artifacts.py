@@ -16,6 +16,7 @@ from .recommendations import (
     RECOMMENDATION_MODEL_NAME,
     RECOMMENDATION_PROMPT_VERSION,
     RECOMMENDATION_SYSTEM_PROMPT,
+    recommendation_content_digest,
 )
 from .retrieval import RETRIEVER_VERSION
 
@@ -69,9 +70,7 @@ def build_runtime_content_digests(
     return {
         "catalog_digest": canonical_json_digest(catalog),
         "manifest_digest": canonical_json_digest(manifest),
-        "recommendation_prompt_digest": hashlib.sha256(
-            RECOMMENDATION_SYSTEM_PROMPT.strip().encode("utf-8")
-        ).hexdigest(),
+        "recommendation_prompt_digest": recommendation_content_digest(RECOMMENDATION_SYSTEM_PROMPT),
         "benchmark_cases_digest": canonical_json_digest(benchmark_cases),
     }
 
