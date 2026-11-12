@@ -6,15 +6,15 @@ import asyncio
 import hashlib
 import json
 import re
-from typing import Literal
 
 from pydantic import Field
 from pydantic_ai import Agent
-from reporting.metric_catalog import METRIC_CATALOG
 
 from agent.common.model_provider import build_chat_model, build_http_client, default_model_settings
 
 from .catalog import load_catalog
+from .action_matching import (ACTION_SPECS, MATCHING_VERSION, PROTOCOLS, METRIC_TERMS,
+                              action_candidates, evidence_action_match, render_action, literature_metrics)
 from .citations import build_citations, render_references_markdown
 from .models import (
     AuditValidation,
@@ -28,29 +28,23 @@ from .models import (
 )
 
 
-RECOMMENDATION_PROMPT_VERSION = "sports-recommendation/1.1"
+RECOMMENDATION_PROMPT_VERSION = "sports-recommendation/1.2"
 RECOMMENDATION_MODEL_NAME = "deepseek-v4-flash"
 RECOMMENDATION_SYSTEM_PROMPT = (
-    "根据 Iron_Jump 已验证的 Claim 和文献 Evidence，选择最多三项直接相关的后续行动。"
-    "每项填写 category、已有 claim_refs 和 evidence_refs。"
-    "retest 表示同设备同协议复测，要求所引文献的方法或重复测量依据适用；"
-    "coach_review 表示复核该发现对应的记录和分组，要求所引文献支持相关指标的记录或解释；"
-    "measurement_review 表示补充记录本次测试条件，要求所引文献提供相关测试方法。"
-    "仅有研究目的或训练效果概述的片段不足以支持这些行动。没有适用依据时返回空列表。"
-    "当前指标来自权威光电测量结果。论文中的设备品牌、帧率和实验分组属于论文情境。"
-    "相同发现与行动只选择一次。系统将按已验证指标和行动类型生成正文及引用。"
+    "从 eligible_actions 中选择对当前发现最有价值的行动。每个发现每个指标最多一项，总计最多三项。"
+    "填写 action_id、claim_id、metric_code 和真实候选 evidence_refs。只可选择提供的行动和匹配证据。"
+    "优先 priority 较小的行动；如果不能增加信息或依据不足则不选择，返回空列表。"
+    "test_type、finding_type、分组和数值由上游验证提供。synthetic_text_only 场景没有实测数值。"
+    "文献仅支持测量、记录、比较或复测方法；本次个体发现是否成立由测试证据支持。"
+    "不得将其他设备误差、群体差异、论文阈值作为本次被试的结论或校正系数。"
+    "系统将从已验证数据生成正文、匹配理由和引用。"
 )
-
-_ACTION_TEXT = {
-    "retest": "围绕{metrics}，按本次相同设备与测试协议复测，并使用相同分组口径比较两次记录。",
-    "coach_review": "复核{metrics}对应的逐条记录和分组，结合本次测试背景记录后续关注点。",
-    "measurement_review": "将本次{metrics}的测试条件与结果一并记录，供后续同协议比较使用。",
-}
 
 
 class RecommendationAction(FrozenModel):
-    category: Literal["retest", "coach_review", "measurement_review"]
-    claim_refs: tuple[str, ...] = Field(min_length=1)
+    action_id: str
+    claim_id: str
+    metric_code: str
     evidence_refs: tuple[str, ...] = Field(min_length=1)
 
 
@@ -59,29 +53,55 @@ class RecommendationActions(FrozenModel):
 
 
 def recommendation_content_digest(prompt):
-    content = {"prompt": prompt.strip(), "templates": _ACTION_TEXT,
+    content = {"prompt": prompt.strip(), "actions": ACTION_SPECS, "matching_version": MATCHING_VERSION,
+               "protocols": PROTOCOLS, "metric_terms": METRIC_TERMS,
                "schema": RecommendationActions.model_json_schema()}
     return hashlib.sha256(json.dumps(content, ensure_ascii=False, sort_keys=True).encode()).hexdigest()
 
 
-def render_recommendation_actions(actions, context):
+def eligible_actions(context, evidence):
+    candidates = []
+    for claim in context.claims:
+        for metric in claim.metric_codes:
+            for action_id in action_candidates(context, claim):
+                matches = [match for item in evidence
+                           if (match := evidence_action_match(context, claim, metric, action_id, item))]
+                if matches:
+                    candidates.append({"action_id": action_id, "claim_id": claim.claim_id,
+                        "metric_code": metric, "priority": ACTION_SPECS[action_id]["priority"],
+                        "focus": ACTION_SPECS[action_id]["focus"], "matches": matches})
+    return candidates
+
+
+def render_recommendation_actions(actions, context, evidence=()):
     claims = {claim.claim_id: claim for claim in context.claims}
+    candidates = {(item["action_id"], item["claim_id"], item["metric_code"]): item
+                  for item in eligible_actions(context, evidence)}
     recommendations = []
     seen = set()
-    for action in actions.recommendations:
-        if any(ref not in claims for ref in action.claim_refs):
+    ordered = sorted(actions.recommendations, key=lambda action: ACTION_SPECS.get(action.action_id, {}).get("priority", 99))
+    for action in ordered:
+        candidate = candidates.get((action.action_id, action.claim_id, action.metric_code))
+        if candidate is None or (action.claim_id, action.metric_code) in seen:
             continue
-        metrics = tuple(dict.fromkeys(code for ref in action.claim_refs for code in claims[ref].metric_codes))
-        if not metrics or any(code not in METRIC_CATALOG for code in metrics):
+        matches = {match["evidence_id"]: match for match in candidate["matches"]}
+        if not action.evidence_refs or any(ref not in matches for ref in action.evidence_refs):
             continue
-        identity = (action.category, tuple(sorted(action.claim_refs)))
-        if identity in seen:
-            continue
-        seen.add(identity)
+        seen.add((action.claim_id, action.metric_code))
+        claim = claims[action.claim_id]
+        unique_matches = {}
+        for ref in action.evidence_refs:
+            match = matches[ref]
+            unique_matches.setdefault((match["excerpt"], match["protocol"]), match)
+        selected_matches = tuple(unique_matches.values())
         recommendations.append(DraftRecommendation(
-            recommendation_id=f"rec-{len(recommendations) + 1}", category=action.category,
-            text=_ACTION_TEXT[action.category].format(metrics="、".join(METRIC_CATALOG[code].label for code in metrics)),
-            claim_refs=action.claim_refs, evidence_refs=action.evidence_refs,
+            recommendation_id=f"rec-{len(recommendations) + 1}", category=ACTION_SPECS[action.action_id]["category"],
+            text=render_action(context, claim, action.metric_code, action.action_id),
+            claim_refs=(action.claim_id,), evidence_refs=tuple(match["evidence_id"] for match in selected_matches),
+            action_id=action.action_id, metric_code=action.metric_code,
+            matching_basis=(f"test_type={context.test_type}", f"finding_type={claim.finding_type}",
+                            f"priority={candidate['priority']}", candidate["focus"]),
+            evidence_matches=selected_matches,
         ))
     return DraftRecommendationPackage(recommendations=tuple(recommendations))
 
@@ -89,6 +109,8 @@ _DOMAIN_BY_TEST_TYPE = {
     "Jump Test": "jump",
     "Treadmill Gait Test": "walk",
     "Treadmill Running Test": "run",
+    "Sprint and Gait Test": "walk",
+    "Overground Running Test": "run",
 }
 _SUPPORT_BY_CATEGORY = {
     "measurement_review": {"method", "interpretation", "limitation"},
@@ -128,7 +150,7 @@ class DeepSeekRecommendationGenerator:
         context: ReportRAGContext,
         evidence: tuple[LiteratureEvidence, ...],
     ) -> DraftRecommendationPackage:
-        if not evidence:
+        if not eligible_actions(context, evidence):
             return DraftRecommendationPackage()
         prompt = self._prompt(context, evidence)
 
@@ -143,7 +165,7 @@ class DeepSeekRecommendationGenerator:
                     model_settings=default_model_settings(),
                 )
                 result = await runtime_agent.run(prompt)
-                return render_recommendation_actions(result.output, context)
+                return render_recommendation_actions(result.output, context, evidence)
             finally:
                 await client.aclose()
 
@@ -153,7 +175,10 @@ class DeepSeekRecommendationGenerator:
     def _prompt(context, evidence) -> str:
         payload = {
             "test_type": context.test_type,
-            "claims": [claim.model_dump(mode="json") for claim in context.claims],
+            "test_conditions": context.test_conditions,
+            "eligible_actions": eligible_actions(context, evidence),
+            "claims": [claim.model_dump(mode="json", exclude={"evidence": {"__all__": {"record_groups"}}})
+                       for claim in context.claims],
             "evidence": [
                 {
                     "evidence_id": item.evidence_id,
@@ -161,6 +186,7 @@ class DeepSeekRecommendationGenerator:
                     "metric_codes": item.metric_codes,
                     "support_types": item.support_types,
                     "locator": item.locator,
+                    "protocol": item.metadata.get("protocol"),
                     "excerpt": item.excerpt,
                 }
                 for item in evidence
@@ -194,9 +220,20 @@ class RecommendationValidator:
                 expected_domain,
                 context.population,
             )
-            if re.search(r"\d", item.text):
+            if not item.action_id and any(claims[ref].finding_type != "unknown" for ref in item.claim_refs if ref in claims):
+                reason = reason or "structured_action_required"
+            if item.action_id and reason is None:
+                expected = render_recommendation_actions(RecommendationActions(recommendations=(
+                    RecommendationAction(action_id=item.action_id, claim_id=item.claim_refs[0] if item.claim_refs else "",
+                                         metric_code=item.metric_code or "", evidence_refs=item.evidence_refs),
+                )), context, evidence)
+                if (len(expected.recommendations) != 1 or len(item.claim_refs) != 1
+                        or expected.recommendations[0].model_dump(exclude={"recommendation_id"})
+                        != item.model_dump(exclude={"recommendation_id"})):
+                    reason = reason or "action_evidence_mismatch"
+            if not item.action_id and re.search(r"\d", item.text):
                 reason = reason or "unsupported_numeric_recommendation"
-            if not context.quality_codes and _QUALITY_INFERENCE.search(item.text):
+            if not item.action_id and not context.quality_codes and _QUALITY_INFERENCE.search(item.text):
                 reason = reason or "unobserved_measurement_limitation"
             if any(ref in item.text for ref in (*item.claim_refs, *item.evidence_refs)):
                 reason = reason or "internal_reference_in_recommendation"
@@ -220,6 +257,8 @@ class RecommendationValidator:
                     claim_refs=item.claim_refs,
                     evidence_refs=item.evidence_refs,
                     limitations=item.limitations,
+                    action_id=item.action_id, metric_code=item.metric_code,
+                    matching_basis=item.matching_basis, evidence_matches=item.evidence_matches,
                 )
             )
 
@@ -263,7 +302,7 @@ class RecommendationValidator:
             ref not in evidence_by_id for ref in item.evidence_refs
         ):
             return "invalid_evidence_reference"
-        if _FORBIDDEN.search(item.text) or _DOSAGE_NUMBER.search(item.text):
+        if not item.action_id and (_FORBIDDEN.search(item.text) or _DOSAGE_NUMBER.search(item.text)):
             return "forbidden_recommendation_content"
         if _CITATION_SURFACE.search(item.text):
             return "forbidden_citation_surface"
@@ -273,6 +312,8 @@ class RecommendationValidator:
             for ref in item.claim_refs
             for metric in claims[ref].metric_codes
         }
+        if item.action_id:
+            claim_metrics = {code for metric in claim_metrics for code in literature_metrics(metric)}
         for ref in item.evidence_refs:
             evidence = evidence_by_id[ref]
             if not evidence.recommendation_allowed:

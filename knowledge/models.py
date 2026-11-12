@@ -110,11 +110,31 @@ class KnowledgeChunk(FrozenModel):
     metadata: dict[str, Any] = Field(default_factory=dict)
 
 
+FindingType = Literal["temporal_change", "side_difference", "variability", "measurement_limitation",
+                      "verified_change", "conditions_review", "descriptive", "unknown"]
+
+
+class FindingEvidence(FrozenModel):
+    evidence_id: str
+    analysis_method: str
+    metric_codes: tuple[str, ...]
+    numeric_values: dict[str, float] = Field(default_factory=dict)
+    numeric_units: dict[str, str] = Field(default_factory=dict)
+    sample_counts: dict[str, int] = Field(default_factory=dict)
+    record_groups: dict[str, tuple[str, ...]] = Field(default_factory=dict)
+    predicates: tuple[dict[str, Any], ...] = ()
+    limitations: tuple[str, ...] = ()
+
+
 class RecommendationClaim(FrozenModel):
     claim_id: str = Field(min_length=1)
     text: str = Field(min_length=1)
     metric_codes: tuple[str, ...] = ()
     limitations: tuple[str, ...] = ()
+    finding_type: FindingType = "unknown"
+    evidence: tuple[FindingEvidence, ...] = ()
+    fact_values: tuple[dict[str, Any], ...] = ()
+    data_origin: Literal["validated_report", "synthetic_text_only", "unspecified"] = "unspecified"
 
 
 class ReportRAGContext(FrozenModel):
@@ -124,6 +144,7 @@ class ReportRAGContext(FrozenModel):
     claims: tuple[RecommendationClaim, ...]
     quality_codes: tuple[str, ...] = ()
     population: str = "general"
+    test_conditions: dict[str, Any] = Field(default_factory=dict)
 
 
 class KnowledgeQuerySpec(FrozenModel):
@@ -242,6 +263,10 @@ class Recommendation(FrozenModel):
     evidence_refs: tuple[str, ...]
     citation_refs: tuple[str, ...] = ()
     limitations: tuple[str, ...] = ()
+    action_id: str | None = None
+    metric_code: str | None = None
+    matching_basis: tuple[str, ...] = ()
+    evidence_matches: tuple[dict[str, Any], ...] = ()
 
 
 class DraftRecommendation(FrozenModel):
@@ -251,6 +276,10 @@ class DraftRecommendation(FrozenModel):
     claim_refs: tuple[str, ...]
     evidence_refs: tuple[str, ...]
     limitations: tuple[str, ...] = ()
+    action_id: str | None = None
+    metric_code: str | None = None
+    matching_basis: tuple[str, ...] = ()
+    evidence_matches: tuple[dict[str, Any], ...] = ()
 
 
 class DraftRecommendationPackage(FrozenModel):

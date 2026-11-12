@@ -7,6 +7,7 @@ import hashlib
 from reporting.metric_catalog import METRIC_CATALOG
 
 from .catalog import load_catalog
+from .action_matching import ACTION_SPECS, PROTOCOLS, action_candidates, literature_metrics
 from .models import (
     Domain,
     KnowledgeQuerySpec,
@@ -16,7 +17,7 @@ from .models import (
 )
 
 
-PLANNER_VERSION = "deterministic-query-planner/1.1"
+PLANNER_VERSION = "deterministic-query-planner/1.2"
 
 _DOMAIN_BY_TEST_TYPE: dict[str, Domain] = {
     "Jump Test": "jump",
@@ -83,6 +84,8 @@ class QueryPlanner:
         self._support_matrix = support_matrix or SupportMatrix()
 
     def plan(self, context: ReportRAGContext) -> tuple[KnowledgeQuerySpec, ...]:
+        if any(claim.finding_type != "unknown" for claim in context.claims):
+            return self._finding_queries(context)
         if not context.claims:
             return ()
         domain = _DOMAIN_BY_TEST_TYPE.get(context.test_type)
@@ -140,4 +143,41 @@ class QueryPlanner:
             )
             if len(specs) == 3:
                 break
+        return tuple(specs)
+
+    def _finding_queries(self, context):
+        domain = _DOMAIN_BY_TEST_TYPE.get(context.test_type)
+        if domain is None:
+            return ()
+        specs = []
+        seen = set()
+        for claim in context.claims:
+            for action_id in action_candidates(context, claim):
+                action = ACTION_SPECS[action_id]
+                for metric in claim.metric_codes:
+                    if metric not in context.metric_codes or metric not in METRIC_CATALOG:
+                        continue
+                    protocols = PROTOCOLS[context.test_type]
+                    if context.test_type == "Treadmill Gait Test" and action_id == "compare_sides":
+                        protocols = (*protocols, "overground_walk")
+                    intent = action["category"]
+                    key = (metric, intent, protocols, action["support"])
+                    if key in seen or not self._support_matrix.supports(domain, literature_metrics(metric), context.population, intent, protocols):
+                        continue
+                    seen.add(key)
+                    query = " ".join((domain, METRIC_CATALOG[metric].label, metric,
+                                      _TERMS_BY_INTENT[intent], "agreement repeatability", *protocols))
+                    identity = f"{PLANNER_VERSION}|{context.test_type}|{key}"
+                    specs.append(KnowledgeQuerySpec(
+                        query_id=hashlib.sha256(identity.encode()).hexdigest()[:24], query=query,
+                        domain=domain, metric_codes=literature_metrics(metric), population=context.population,
+                        support_types=_SUPPORT_BY_INTENT[intent], recommendation_allowed=True,
+                        recommendation_intent=intent, planner_version=PLANNER_VERSION,
+                        protocols=protocols, metadata={"direct_metric_support": True,
+                            "test_type": context.test_type,
+                            "action_support": action["support"],
+                            "require_side_method": context.test_type == "Treadmill Gait Test" and action_id == "compare_sides"},
+                    ))
+                    if len(specs) == 3:
+                        return tuple(specs)
         return tuple(specs)

@@ -11,23 +11,25 @@ from knowledge.recommendations import RecommendationValidator
 
 def test_actions_render_verified_metric_and_pass_normal_evidence_validation():
     from knowledge.recommendations import RecommendationAction, RecommendationActions, render_recommendation_actions
-    action = RecommendationAction(category='retest', claim_refs=('claim-1',), evidence_refs=('evidence-1',))
-    draft = render_recommendation_actions(RecommendationActions(recommendations=(action,action)), _context())
+    action = RecommendationAction(action_id='track_change', claim_id='claim-1', metric_code='jump_height_m', evidence_refs=('evidence-1',))
+    context = _context().model_copy(update={'claims': (_context().claims[0].model_copy(update={'finding_type':'verified_change'}),)})
+    evidence = _evidence().model_copy(update={'excerpt':'Jump height was measured in repeated trials.', 'metadata':{'protocol':'vertical_jump'}})
+    draft = render_recommendation_actions(RecommendationActions(recommendations=(action,action)), context, (evidence,))
     assert len(draft.recommendations) == 1
     assert '跳跃高度' in draft.recommendations[0].text
-    assert '相同设备与测试协议复测' in draft.recommendations[0].text
-    result, audit = RecommendationValidator((_source(),)).validate(draft, _context(), (_evidence(),))
+    assert '变化方向与幅度' in draft.recommendations[0].text
+    result, audit = RecommendationValidator((_source(),)).validate(draft, context, (evidence,))
     assert len(result.recommendations) == 1
     assert result.recommendations[0].citation_refs
     missing = render_recommendation_actions(RecommendationActions(recommendations=(
-        action.model_copy(update={'claim_refs':('missing',)}),)), _context())
+        action.model_copy(update={'claim_id':'missing'}),)), context, (evidence,))
     assert missing.recommendations == ()
 
 
 def test_recommendation_templates_participate_in_release_identity(monkeypatch):
     import knowledge.recommendations as module
     original = module.recommendation_content_digest(module.RECOMMENDATION_SYSTEM_PROMPT)
-    monkeypatch.setitem(module._ACTION_TEXT, 'retest', 'changed')
+    monkeypatch.setitem(module.ACTION_SPECS, 'track_change', {'text':'changed'})
     assert module.recommendation_content_digest(module.RECOMMENDATION_SYSTEM_PROMPT) != original
 
 

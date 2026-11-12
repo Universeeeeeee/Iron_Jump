@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import json
+from pathlib import Path
 
 from .catalog import load_catalog
 from .benchmark import benchmark_chunk_grid
@@ -38,7 +39,13 @@ def main(argv: list[str] | None = None) -> int:
     inspect_parser.add_argument("--support-type")
     inspect_parser.add_argument("--format", choices=("json", "markdown"), default="json")
     subparsers.add_parser("benchmark-chunks")
-    subparsers.add_parser("benchmark-generator-live")
+    live_parser = subparsers.add_parser("benchmark-generator-live")
+    live_parser.add_argument("--output", type=Path)
+    live_parser.add_argument("--before", type=Path)
+    replay_parser = subparsers.add_parser("review-generator-replay")
+    replay_parser.add_argument("--source", type=Path, required=True)
+    replay_parser.add_argument("--output", type=Path, required=True)
+    replay_parser.add_argument("--before", type=Path)
     for name in ("search", "answer"):
         command = subparsers.add_parser(name)
         command.add_argument("query")
@@ -87,11 +94,20 @@ def main(argv: list[str] | None = None) -> int:
         print(json.dumps(benchmark_chunk_grid(), ensure_ascii=False, indent=2))
         return 0
     if args.command == "benchmark-generator-live":
-        payload = run_live_generator_benchmark()
+        options = {"before_path": args.before}
+        if args.output:
+            options["output_path"] = args.output
+        payload = run_live_generator_benchmark(**options)
         print(
             f"cases={payload['case_count']} review_status={payload['review_status']}"
         )
         return 0
+    if args.command == "review-generator-replay":
+        from .review import replay_review
+        payload = replay_review(args.source, args.output, before_path=args.before)
+        print(json.dumps(payload["quality_summary"], ensure_ascii=False))
+        return 0 if payload["quality_summary"]["complete_30_case_coverage"] and all(row["quality_checks"]["status"] in {"automated_checks_passed", "supported_abstention"}
+                        for row in payload["rows"]) else 1
     if args.command == "evaluate":
         metrics = evaluate(_retriever())
         metrics["baseline"] = validate_against_baseline(metrics)

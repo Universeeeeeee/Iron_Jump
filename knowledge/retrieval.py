@@ -15,6 +15,7 @@ from .models import (
     SearchResult,
 )
 from .store import KnowledgeStore
+from .action_matching import paragraph_support, sentence_protocol_matches
 
 
 _ALIASES = {
@@ -24,7 +25,7 @@ _ALIASES = {
     "步态周期": "gait cycle stride time",
     "步长": "step length",
     "步幅": "stride length",
-    "步频": "cadence step frequency",
+    "步频": "cadence step rate step frequency",
     "双支撑": "double support",
     "单支撑": "single support",
     "支撑相": "stance phase stance time",
@@ -36,7 +37,7 @@ _ALIASES = {
     "一致性": "agreement validity reliability Bland Altman",
 }
 
-RETRIEVER_VERSION = "hybrid-fts5-dense-rrf/1.1"
+RETRIEVER_VERSION = "hybrid-fts5-dense-rrf/1.2"
 
 
 def expand_query(query: str) -> str:
@@ -68,6 +69,15 @@ class HybridRetriever:
         return tuple(self._as_evidence(spec, hit) for hit in hits)
 
     def _rank(self, query, query_vector, all_rows, max_results, *, domain=None, spec=None):
+        direct_support = bool(spec and spec.metadata.get("direct_metric_support"))
+        def eligible_matches(chunk):
+            matches = [match for metric in spec.metric_codes for match in paragraph_support(chunk.text, metric)]
+            required = {"side_method"} if spec.metadata.get("require_side_method") else set(spec.metadata.get("action_support", ()))
+            return [match for match in matches if (not required or required.intersection(match["support"]))
+                    and sentence_protocol_matches(match["excerpt"], spec.metadata.get("test_type"))]
+
+        if direct_support:
+            all_rows = [row for row in all_rows if eligible_matches(row[0])]
         dense_scored = []
         query_norm = float(np.linalg.norm(query_vector)) or 1.0
         for chunk, source, vector in all_rows:
@@ -76,6 +86,9 @@ class HybridRetriever:
         dense_scored.sort(key=lambda item: (-item[0], item[1].chunk_id))
         dense_top = dense_scored[:20]
         lexical_top = self._store.lexical_search(query, 20, domain, spec=spec)
+        if direct_support:
+            eligible = {row[0].chunk_id for row in all_rows}
+            lexical_top = [row for row in lexical_top if row[0].chunk_id in eligible]
 
         fused: dict[str, dict] = {}
         for rank, (score, chunk, source) in enumerate(dense_top, start=1):
@@ -99,7 +112,13 @@ class HybridRetriever:
             )
             item["score"] += 1.0 / (60 + rank)
             item["lexical_rank"] = rank
-        ranked = sorted(fused.values(), key=lambda item: (-item["score"], item["chunk"].chunk_id))
+        def ranking_key(item):
+            matches = eligible_matches(item["chunk"]) if direct_support else []
+            priority = min((match["priority"] for match in matches), default=0)
+            section_priority = 0 if direct_support and item["chunk"].section.casefold().startswith("result") else 1
+            return priority, section_priority, -item["score"], item["chunk"].chunk_id
+
+        ranked = sorted(fused.values(), key=ranking_key)
         hits = []
         source_counts: dict[str, int] = {}
         for item in ranked:

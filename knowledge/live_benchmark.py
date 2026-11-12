@@ -15,7 +15,7 @@ from .store import KnowledgeStore
 
 
 DEFAULT_REVIEW_PATH = DEFAULT_DATA_DIR / "groundedness_review.json"
-LIVE_BENCHMARK_VERSION = "live-generator-groundedness/1.1"
+LIVE_BENCHMARK_VERSION = "live-generator-groundedness/1.2"
 
 _CASES = (
     (
@@ -98,6 +98,13 @@ def benchmark_contexts() -> tuple[tuple[str, ReportRAGContext], ...]:
     for domain, test_type, metric_code, claims in _CASES:
         for index, claim_text in enumerate(claims, start=1):
             case_id = f"{domain}-{metric_code}-{index:02d}"
+            types = ("verified_change", "conditions_review", "measurement_limitation", "verified_change", "temporal_change")
+            if metric_code == "jump_height_m":
+                types = ("temporal_change", "variability", "measurement_limitation", "verified_change", "temporal_change")
+            elif metric_code == "air_time_s":
+                types = ("temporal_change", "conditions_review", "measurement_limitation", "verified_change", "temporal_change")
+            elif domain == "walk" and metric_code == "step_length_cm":
+                types = (*types[:4], "side_difference")
             rows.append(
                 (
                     case_id,
@@ -110,6 +117,8 @@ def benchmark_contexts() -> tuple[tuple[str, ReportRAGContext], ...]:
                                 claim_id=f"claim-{case_id}",
                                 text=claim_text,
                                 metric_codes=(metric_code,),
+                                finding_type=types[index - 1],
+                                data_origin="synthetic_text_only",
                             ),
                         ),
                         population="general",
@@ -121,6 +130,8 @@ def benchmark_contexts() -> tuple[tuple[str, ReportRAGContext], ...]:
 
 def run_live_generator_benchmark(
     output_path: Path = DEFAULT_REVIEW_PATH,
+    *,
+    before_path: Path | None = None,
 ) -> dict:
     embedder = LocalEmbeddingModel()
     pipeline = DeterministicRAGPipeline(
@@ -135,6 +146,7 @@ def run_live_generator_benchmark(
                 "case_id": case_id,
                 "test_type": context.test_type,
                 "claim": context.claims[0].model_dump(mode="json"),
+                "context": context.model_dump(mode="json"),
                 "evidence": [item.model_dump(mode="json") for item in result.evidence],
                 "recommendations": [
                     item.model_dump(mode="json")
@@ -156,11 +168,14 @@ def run_live_generator_benchmark(
         "unsupported_recommendation_count": None,
         "rows": rows,
     }
+    from .review import evaluate_review, write_review_html
+    evaluate_review(payload)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     output_path.write_text(
         json.dumps(payload, ensure_ascii=False, indent=2) + "\n",
         encoding="utf-8",
     )
+    write_review_html(payload, output_path.with_suffix(".html"), before_path=before_path)
     return payload
 
 
