@@ -45,7 +45,8 @@ def analysis_html(analysis: dict, chart_sources=None) -> str:
 
     def recommendation_content(recommendation):
         citations = ' '.join(f'[{reference_by_id[ref]}]' for ref in recommendation.get('citation_refs', []) if ref in reference_by_id)
-        return '<p>' + html.escape(str(recommendation.get('text', '')).strip()) + ' ' + citations + '</p>' + _limitations(recommendation.get('limitations', []), '建议限制')
+        label = '后续观察' if recommendation.get('basis') == 'data' else '文献建议'
+        return '<p><b>' + label + '</b>　' + html.escape(str(recommendation.get('text', '')).strip()) + ' ' + citations + '</p>' + _limitations(recommendation.get('limitations', []), '建议限制')
 
     cards = presentation.get('insight_cards', [])
     if cards:
@@ -88,7 +89,8 @@ def analysis_html(analysis: dict, chart_sources=None) -> str:
         sections.append(('<h3>其他分析结论</h3>' if cards else '<h3>分析结论</h3>') + ''.join(other_claims))
     remaining = [recommendation_content(r) for r in recommendations if r.get('recommendation_id') not in shown_recommendations]
     if remaining:
-        sections.append('<h3>循证行动建议</h3>' + ''.join(remaining))
+        title = '后续行动' if any(r.get('basis') == 'data' for r in recommendations) else '循证行动建议'
+        sections.append('<h3>' + title + '</h3>' + ''.join(remaining))
     reference_lines = []
     for index, reference in enumerate(references, 1):
         url = str(reference.get('url', ''))

@@ -1,14 +1,12 @@
 from knowledge.models import (
-    DraftRecommendation,
-    DraftRecommendationPackage,
     KnowledgeQuerySpec,
     KnowledgeSource,
     LiteratureEvidence,
-    RecommendationClaim,
-    ReportRAGContext,
 )
 from knowledge.pipeline import DeterministicRAGPipeline
 from knowledge.recommendations import RecommendationValidator
+from tests.knowledge_fixtures import verified_context, reviewed_support, action_draft
+
 
 
 class _Planner:
@@ -50,17 +48,7 @@ class _Generator:
         self.calls += 1
         if self.fail:
             raise ValueError("invalid structured output")
-        return DraftRecommendationPackage(
-            recommendations=(
-                DraftRecommendation(
-                    recommendation_id="rec-1",
-                    category="measurement_review",
-                    text="建议复核起跳和落地动作的一致性。",
-                    claim_refs=("claim-1",),
-                    evidence_refs=("evidence-1",),
-                ),
-            )
-        )
+        return action_draft(context, evidence[0])
 
 
 def _source():
@@ -97,22 +85,12 @@ def _evidence():
         excerpt="Take-off and landing posture affect flight-time estimates.",
         content_digest="b" * 64,
         score=0.03,
+        metadata=reviewed_support("jump_height_m", "Take-off and landing posture affect flight-time estimates.", "vertical_jump"),
     )
 
 
 def _context():
-    return ReportRAGContext(
-        package_digest="a" * 64,
-        test_type="Jump Test",
-        metric_codes=("jump_height_m",),
-        claims=(
-            RecommendationClaim(
-                claim_id="claim-1",
-                text="跳跃高度后段较低。",
-                metric_codes=("jump_height_m",),
-            ),
-        ),
-    )
+    return verified_context()
 
 
 def test_fixture_context_to_validated_package_and_citation():

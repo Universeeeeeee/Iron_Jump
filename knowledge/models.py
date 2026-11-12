@@ -110,7 +110,7 @@ class KnowledgeChunk(FrozenModel):
     metadata: dict[str, Any] = Field(default_factory=dict)
 
 
-FindingType = Literal["temporal_change", "side_difference", "variability", "measurement_limitation",
+FindingType = Literal["temporal_change", "side_difference", "side_temporal_change", "variability", "measurement_limitation",
                       "verified_change", "conditions_review", "descriptive", "unknown"]
 
 
@@ -124,6 +124,9 @@ class FindingEvidence(FrozenModel):
     record_groups: dict[str, tuple[str, ...]] = Field(default_factory=dict)
     predicates: tuple[dict[str, Any], ...] = ()
     limitations: tuple[str, ...] = ()
+    analysis_status: Literal["conclusive", "inconclusive", "unverified"] = "unverified"
+    package_digest: str = ""
+    tool_run_id: str = ""
 
 
 class RecommendationClaim(FrozenModel):
@@ -267,6 +270,8 @@ class Recommendation(FrozenModel):
     metric_code: str | None = None
     matching_basis: tuple[str, ...] = ()
     evidence_matches: tuple[dict[str, Any], ...] = ()
+    basis: Literal["data", "literature"] = "literature"
+    data_evidence_refs: tuple[str, ...] = ()
 
 
 class DraftRecommendation(FrozenModel):
@@ -280,6 +285,8 @@ class DraftRecommendation(FrozenModel):
     metric_code: str | None = None
     matching_basis: tuple[str, ...] = ()
     evidence_matches: tuple[dict[str, Any], ...] = ()
+    basis: Literal["data", "literature"] = "literature"
+    data_evidence_refs: tuple[str, ...] = ()
 
 
 class DraftRecommendationPackage(FrozenModel):

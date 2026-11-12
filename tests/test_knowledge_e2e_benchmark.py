@@ -3,17 +3,14 @@
 import pytest
 
 from knowledge.models import (
-    DraftRecommendation,
-    DraftRecommendationPackage,
     KnowledgeQuerySpec,
     KnowledgeSource,
     LiteratureEvidence,
-    RecommendationClaim,
-    ReportRAGContext,
 )
 from knowledge.pipeline import DeterministicRAGPipeline
 from knowledge.live_benchmark import benchmark_contexts
 from knowledge.recommendations import RecommendationValidator
+from tests.knowledge_fixtures import verified_context, reviewed_support, action_draft
 
 
 DOMAINS = (
@@ -44,6 +41,7 @@ def test_live_review_fixture_set_is_fixed_at_thirty_cases():
     contexts = benchmark_contexts()
     assert len(contexts) == 30
     assert len({case_id for case_id, _ in contexts}) == 30
+
 
 
 class _Planner:
@@ -82,17 +80,12 @@ class _Generator:
             if self.mode == "forbidden-dosage"
             else "建议复核测试动作与测量条件的一致性。"
         )
-        return DraftRecommendationPackage(
-            recommendations=(
-                DraftRecommendation(
-                    recommendation_id="rec-1",
-                    category="measurement_review",
-                    text=text,
-                    claim_refs=("claim-1",),
-                    evidence_refs=evidence_refs,
-                ),
-            )
-        )
+        valid_evidence = evidence[0].model_copy(update={"populations": ("general",)})
+        draft = action_draft(context, valid_evidence)
+        update = {"evidence_refs": evidence_refs}
+        if self.mode == "forbidden-dosage":
+            update["text"] = text
+        return draft.model_copy(update={"recommendations": (draft.recommendations[0].model_copy(update=update),)})
 
 
 def _fixture(domain, test_type, metric, mode):
@@ -122,18 +115,7 @@ def _fixture(domain, test_type, metric, mode):
         recommendation_intent="measurement_review",
         planner_version="benchmark",
     )
-    context = ReportRAGContext(
-        package_digest=(domain[0] * 64),
-        test_type=test_type,
-        metric_codes=(metric,),
-        claims=(
-            RecommendationClaim(
-                claim_id="claim-1",
-                text="存在已验证变化。",
-                metric_codes=(metric,),
-            ),
-        ),
-    )
+    context = verified_context(metric, test_type)
     evidence = LiteratureEvidence(
         evidence_id="evidence-1",
         query_id=spec.query_id,
@@ -149,6 +131,8 @@ def _fixture(domain, test_type, metric, mode):
         excerpt="The standardized test method has documented reliability limitations.",
         content_digest="b" * 64,
         score=0.03,
+        metadata=reviewed_support(metric, "The standardized test method has documented reliability limitations.",
+                                  {"jump":"vertical_jump", "walk":"treadmill_walk", "run":"treadmill_run"}[domain]),
     )
     evidence_items = () if mode == "no-evidence" else (evidence,)
     generator = _Generator(mode)

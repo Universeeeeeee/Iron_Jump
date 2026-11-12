@@ -154,12 +154,12 @@ class QueryPlanner:
         for claim in context.claims:
             for action_id in action_candidates(context, claim):
                 action = ACTION_SPECS[action_id]
+                if action["basis"] == "data":
+                    continue
                 for metric in claim.metric_codes:
                     if metric not in context.metric_codes or metric not in METRIC_CATALOG:
                         continue
                     protocols = PROTOCOLS[context.test_type]
-                    if context.test_type == "Treadmill Gait Test" and action_id == "compare_sides":
-                        protocols = (*protocols, "overground_walk")
                     intent = action["category"]
                     key = (metric, intent, protocols, action["support"])
                     if key in seen or not self._support_matrix.supports(domain, literature_metrics(metric), context.population, intent, protocols):

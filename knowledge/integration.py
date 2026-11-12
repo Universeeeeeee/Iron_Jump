@@ -42,11 +42,13 @@ def build_report_rag_context(package, validated, evidence_bundles) -> ReportRAGC
                 predicates=tuple(p.model_dump(mode="json") for p in item.predicates
                                  if p.supported and p.predicate_evidence_id in bound),
                 limitations=item.limitations,
+                analysis_status=item.analysis_status, package_digest=package.metadata.package_digest,
+                tool_run_id=item.tool_run_id,
             ))
         methods = {item.analysis_method for item in linked_evidence}
         supported = {p["predicate"] for item in linked_evidence for p in item.predicates}
         if "concentrated_on_side" in supported:
-            finding_type = "side_difference"
+            finding_type = "side_temporal_change"
         elif (methods.intersection({"verify_temporal_change", "verify_cross_metric_cochange", "verify_exclusion_robustness"})
               and supported.intersection({"increase", "decrease", "persistent", "transient", "co_change", "remains_after_exclusion"})):
             finding_type = "temporal_change"

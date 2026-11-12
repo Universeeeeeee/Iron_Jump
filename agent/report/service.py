@@ -538,6 +538,9 @@ class ReportAnalysisService:
                         )
                     }
                 )
+            from knowledge.recommendations import build_data_followups
+            rag_context = build_report_rag_context(package, validated, result.evidence)
+            data_followups = build_data_followups(rag_context)
             rag_result = None
             if self._rag_pipeline is not None:
                 if deadline.remaining_total_seconds() <= 0:
@@ -547,9 +550,6 @@ class ReportAnalysisService:
                     )
                 else:
                     try:
-                        rag_context = build_report_rag_context(
-                            package, validated, result.evidence
-                        )
                         rag_result = self._rag_pipeline.run(rag_context)
                         if deadline.remaining_total_seconds() <= 0:
                             rag_result = degraded_rag_result(
@@ -580,6 +580,7 @@ class ReportAnalysisService:
                 request_digest=request_digest,
                 question_context=question,
                 source_packages={previous.metadata.session_id: previous} if previous else None,
+                data_followups=data_followups,
             )
             if previous and not self._repository.longitudinal_is_current(rendered.model_dump(mode="json")):
                 raise ClaimValidationError("stale_history", "比较期间测试记录发生更新，请重新提问。")

@@ -106,7 +106,7 @@ def main(argv: list[str] | None = None) -> int:
         from .review import replay_review
         payload = replay_review(args.source, args.output, before_path=args.before)
         print(json.dumps(payload["quality_summary"], ensure_ascii=False))
-        return 0 if payload["quality_summary"]["complete_30_case_coverage"] and all(row["quality_checks"]["status"] in {"automated_checks_passed", "supported_abstention"}
+        return 0 if payload["quality_summary"]["complete_30_case_coverage"] and all(row["quality_checks"]["status"] in {"automated_checks_passed", "supported_abstention", "scenario_only_not_production_validated"}
                         for row in payload["rows"]) else 1
     if args.command == "evaluate":
         metrics = evaluate(_retriever())

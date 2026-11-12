@@ -15,7 +15,7 @@ from .store import KnowledgeStore
 
 
 DEFAULT_REVIEW_PATH = DEFAULT_DATA_DIR / "groundedness_review.json"
-LIVE_BENCHMARK_VERSION = "live-generator-groundedness/1.2"
+LIVE_BENCHMARK_VERSION = "live-generator-groundedness/2.0"
 
 _CASES = (
     (
@@ -167,6 +167,7 @@ def run_live_generator_benchmark(
         "review_status": "pending",
         "unsupported_recommendation_count": None,
         "rows": rows,
+        "evaluation_mode": "text_only_scenarios; production fact validation required; no fabricated measurements",
     }
     from .review import evaluate_review, write_review_html
     evaluate_review(payload)

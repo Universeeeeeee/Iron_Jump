@@ -1,23 +1,20 @@
 from knowledge.models import (
-    DraftRecommendation,
-    DraftRecommendationPackage,
     KnowledgeSource,
     LiteratureEvidence,
-    RecommendationClaim,
-    ReportRAGContext,
 )
 from knowledge.recommendations import RecommendationValidator
+from tests.knowledge_fixtures import verified_context, reviewed_support, action_draft
 
 
 def test_actions_render_verified_metric_and_pass_normal_evidence_validation():
     from knowledge.recommendations import RecommendationAction, RecommendationActions, render_recommendation_actions
-    action = RecommendationAction(action_id='track_change', claim_id='claim-1', metric_code='jump_height_m', evidence_refs=('evidence-1',))
-    context = _context().model_copy(update={'claims': (_context().claims[0].model_copy(update={'finding_type':'verified_change'}),)})
-    evidence = _evidence().model_copy(update={'excerpt':'Jump height was measured in repeated trials.', 'metadata':{'protocol':'vertical_jump'}})
+    action = RecommendationAction(action_id='check_conditions', claim_id='claim-1', metric_code='jump_height_m', evidence_refs=('evidence-1',))
+    context = _context()
+    evidence = _evidence()
     draft = render_recommendation_actions(RecommendationActions(recommendations=(action,action)), context, (evidence,))
     assert len(draft.recommendations) == 1
     assert '跳跃高度' in draft.recommendations[0].text
-    assert '变化方向与幅度' in draft.recommendations[0].text
+    assert '测试条件' in draft.recommendations[0].text
     result, audit = RecommendationValidator((_source(),)).validate(draft, context, (evidence,))
     assert len(result.recommendations) == 1
     assert result.recommendations[0].citation_refs
@@ -53,18 +50,7 @@ def _source():
 
 
 def _context():
-    return ReportRAGContext(
-        package_digest="a" * 64,
-        test_type="Jump Test",
-        metric_codes=("jump_height_m",),
-        claims=(
-            RecommendationClaim(
-                claim_id="claim-1",
-                text="跳跃高度后段较低。",
-                metric_codes=("jump_height_m",),
-            ),
-        ),
-    )
+    return verified_context()
 
 
 def _evidence(*, allowed=True):
@@ -83,21 +69,16 @@ def _evidence(*, allowed=True):
         excerpt="Standardize take-off and landing technique when reviewing flight-time results.",
         content_digest="b" * 64,
         score=0.03,
+        metadata=reviewed_support("jump_height_m", "Standardize take-off and landing technique when reviewing flight-time results.", "vertical_jump"),
     )
 
 
-def _draft(text="建议复核起跳和落地动作的一致性。", evidence_refs=("evidence-1",)):
-    return DraftRecommendationPackage(
-        recommendations=(
-            DraftRecommendation(
-                recommendation_id="rec-1",
-                category="measurement_review",
-                text=text,
-                claim_refs=("claim-1",),
-                evidence_refs=evidence_refs,
-            ),
-        )
-    )
+def _draft(text=None, evidence_refs=("evidence-1",)):
+    draft = action_draft(_context(), _evidence())
+    update = {"evidence_refs": evidence_refs}
+    if text is not None:
+        update["text"] = text
+    return draft.model_copy(update={"recommendations": (draft.recommendations[0].model_copy(update=update),)})
 
 
 def test_validator_builds_citation_from_catalog_not_model_text():
@@ -124,7 +105,7 @@ def test_no_evidence_or_forbidden_dosage_is_deleted_without_retry():
     assert missing.recommendations == ()
     assert missing_audit[0].reason == "invalid_evidence_reference"
     assert dosage.recommendations == ()
-    assert dosage_audit[0].reason == "forbidden_recommendation_content"
+    assert dosage_audit[0].reason == "action_evidence_mismatch"
 
 
 def test_external_threshold_and_unobserved_measurement_limitations_are_not_advice():
@@ -137,7 +118,7 @@ def test_external_threshold_and_unobserved_measurement_limitations_are_not_advic
     for text, reason in cases:
         result, audit = validator.validate(_draft(text=text), _context(), (_evidence(),))
         assert result.recommendations == ()
-        assert audit[0].reason == reason
+        assert audit[0].reason == "action_evidence_mismatch"
 
 
 def test_url_doi_markdown_and_citation_tokens_are_deleted():

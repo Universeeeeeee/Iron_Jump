@@ -31,6 +31,7 @@ class AnalysisRenderer:
         request_digest="",
         question_context=None,
         source_packages=None,
+        data_followups=(),
     ) -> AnalysisPackage:
         claims = []
         for claim in validated.claims:
@@ -51,7 +52,7 @@ class AnalysisRenderer:
                     citation_refs=(),
                 )
             )
-        recommendations = rag_result.package.recommendations if rag_result else ()
+        recommendations = (*data_followups, *(rag_result.package.recommendations if rag_result else ()))
         presentation = (
             build_presentation(claims, package, evidence, recommendations, source_packages=source_packages)
             if evidence is not None else None
