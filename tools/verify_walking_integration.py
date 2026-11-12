@@ -2,8 +2,12 @@
 import argparse
 from dataclasses import asdict
 import hashlib,json,sys,time
+import os
 from pathlib import Path
-ROOT=Path(__file__).resolve().parents[1];sys.path.insert(0,str(ROOT))
+ROOT=Path(__file__).resolve().parents[1]
+if __name__ == "__main__" and not __package__:
+    os.chdir(ROOT)
+    os.execv(sys.executable, [sys.executable, "-m", "tools.verify_walking_integration", *sys.argv[1:]])
 import numpy as np
 from qtpy.QtCore import QCoreApplication
 from config.test_config import config_from_dict

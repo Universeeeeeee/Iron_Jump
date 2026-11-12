@@ -19,6 +19,7 @@ QUESTION_PLAN_INSTRUCTIONS = (
     "segment/side 使用 all，序号和时间界限使用 null，选择 chart_type。"
     "若用户同时改变范围或指标并要求画图，使用 intent=analyze 配合 chart_type。"
     "追问原因或依据时选择 explain 并针对所选发现的指标。"
+    "只查询均值、范围、标准差或样本数时选择 inspect，由确定性范围统计直接回答。"
     "当前追问选择有效纳入记录。若问题要求比较纳入与排除记录的稳健性，"
     "intent=clarify，clarification说明可在完整报告分析中查看排除稳健性。"
     "comparison=current 表示本次记录，comparison=previous 表示与最近一次同协议测试的对应有效记录比较。"

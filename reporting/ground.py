@@ -161,7 +161,7 @@ def build_ground_data(builder, package_id, report):
         add_fact("speed_m_s", summary.get("running_speed_m_s"), speed_count, source_name)
 
     if bilateral:
-        from engine.ground_bilateral import PHASES
+        from config.ground_phases import PHASES
         phase_codes = {f'{phase}_{unit}' for phase in PHASES for unit in ('s', 'percent')}
         facts = [fact for fact in facts if fact.metric_code not in phase_codes]
         for code in sorted(phase_codes):

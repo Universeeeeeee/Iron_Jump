@@ -14,6 +14,7 @@ from statistics import median
 from engine.ground_metric_evidence import group_release_evidence, metric
 from engine.ground_position_evidence import record_centre_sample, walking_centre_position
 from engine.ground_contact_phases import ContactShapeRecorder, build_contact_phases
+from engine.ground_metric_completion import complete_ground_metrics
 from config.test_report import GaitTestReport
 from config.walking_config import WalkingConfig
 from hardware.sensor_frame import blocked_indices
@@ -1924,7 +1925,7 @@ class WalkingProcessor:
             max_velocity=max(velocities) if velocities else None,
             avg_single_support=summary["single_support_s"], avg_double_support=summary["double_support_s"],
             finish_reason=reason, export_frames=export_frames, export_timestamps=export_timestamps,
-            visual_timeline=tuple(self.timeline), walking_summary=summary,
+            visual_timeline=tuple(self.timeline), walking_summary=complete_ground_metrics(summary, 'walk'),
             report_config_snapshot={**self.config.to_dict(), "device": self.device.snapshot(),
                                     "algorithm": "overground_walking_v1.18",
                                     "rolling_source_review": "walking_continuous_front_cohort_v1",

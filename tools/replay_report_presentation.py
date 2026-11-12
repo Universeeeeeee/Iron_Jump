@@ -3,11 +3,14 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from pathlib import Path
 import sys
 import tempfile
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
+if __name__ == "__main__" and not __package__:
+    os.chdir(Path(__file__).resolve().parents[1])
+    os.execv(sys.executable, [sys.executable, "-m", "tools.replay_report_presentation", *sys.argv[1:]])
 import qt_runtime  # noqa: F401,E402
 from pydantic import TypeAdapter
 from agent.report.service import ReportAnalysisService

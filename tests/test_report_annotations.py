@@ -72,6 +72,10 @@ def test_target_protocol_and_snapshot_changes_do_not_report_achievement(tmp_path
         payload = json.loads(conn.execute('SELECT report_detail_json FROM test_sessions WHERE id=?',(read.session_id,)).fetchone()[0])
         payload['report_config_snapshot'] = {'changed': True}
         conn.execute('UPDATE test_sessions SET report_detail_json=? WHERE id=?',(json.dumps(payload),read.session_id))
+    source = service.get_annotations(read)
+    assert source['annotations'][0]['stale'] is True
+    assert source['claims'][0]['stale'] is True
+    assert source['claims'][0]['facts'] == []
     assert service.get_annotations(request)['progress'][0]['status'] == 'stale_baseline'
     with pytest.raises(AnnotationError):
         service.save_annotation(save.model_copy(update={'expected_revision':1}))

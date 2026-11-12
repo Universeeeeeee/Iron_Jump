@@ -109,11 +109,22 @@ def test_running_report_and_history_share_the_completed_data():
     source = incomplete()
     source['groups'] = {'all': {key: {'mean': None, 'count': 0} for key in (
         'duration_s', 'length_m', 'contact_s', 'swing_s', 'flight_s', 'single_support_s', 'double_support_s')}}
-    report = OvergroundRunningReport(touch_count=3, running_summary=source)
+    report = OvergroundRunningReport(touch_count=3, running_summary=complete_ground_metrics(source, 'run'))
     restored = _report_from_detail(_report_detail(report))
     assert restored.running_summary == report.running_summary
     assert report.running_summary['groups']['all']['swing_s']['mean'] == pytest.approx(.7)
     assert source['duration_s'] is None
+
+
+def test_loading_legacy_report_preserves_uncompleted_measurements():
+    from data.subject_store import _report_detail, _report_from_detail
+    source = incomplete()
+    report = OvergroundRunningReport(touch_count=3, running_summary=source)
+    restored = _report_from_detail(_report_detail(report))
+    assert report.running_summary == source
+    assert restored.running_summary == source
+    assert 'metric_completion' not in restored.running_summary
+    assert restored.running_summary['duration_s'] is None
 
 
 def test_previous_completion_is_upgraded_for_footfall_details_without_losing_raw_data():

@@ -47,6 +47,7 @@ def export_reports():
     walking_snapshot.pop('source_uncertainty_recovery', None)
     walking_snapshot.pop('footprint_publication', None)
     walking_snapshot.pop('bad_beam_policy', None)
+    walking_snapshot.pop('rolling_source_review', None)
     walking_summary = dict(walking.walking_summary)
     walking_summary.pop('bilateral', None)
     walking_summary.pop('contact_phases', None)

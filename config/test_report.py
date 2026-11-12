@@ -138,11 +138,6 @@ class GaitTestReport:
     def recognized_steps(self):
         return self.walking_summary.get('recognized_steps', self.touch_count)
 
-    def __post_init__(self):
-        from engine.ground_metric_completion import complete_ground_metrics
-        object.__setattr__(self, 'walking_summary', complete_ground_metrics(self.walking_summary, 'walk'))
-
-
 # 统一类型别名
 from config.overground_running_report import OvergroundRunningReport
 

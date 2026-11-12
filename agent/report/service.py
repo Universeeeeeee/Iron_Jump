@@ -398,7 +398,8 @@ class ReportAnalysisService:
             needs_comparison = previous is not None and not any(
                 historical_refs.intersection(claim.evidence_refs) for claim in result.draft.claims
             )
-            if question and (not result.draft.claims or needs_comparison):
+            inspection = question is not None and question.intent == "inspect"
+            if question and (inspection or not result.draft.claims or needs_comparison):
                 summary = next((
                     (item, predicate)
                     for bundle in result.evidence
@@ -425,7 +426,7 @@ class ReportAnalysisService:
                 )
                 result = result.model_copy(update={
                     "draft": result.draft.model_copy(update={"claims": (
-                        *result.draft.claims,
+                        *(() if inspection else result.draft.claims),
                         claim.model_copy(update={"claim_id": "question_summary_" + item.evidence_id}),
                     )}),
                 })

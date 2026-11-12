@@ -93,7 +93,7 @@ class AnnotationPanel(QWidget):
             message = response.get('message') or '备注读取失败，请点击备注按钮重试。'
             if self.dialog and self.dialog.isVisible():
                 self.error.setText(message)
-                self.buttons.button(QDialogButtonBox.Save).setEnabled(bool(self.data))
+                self.buttons.button(QDialogButtonBox.Save).setEnabled(self.claim.count() > 0)
             else:
                 self.summary.setTextFormat(Qt.PlainText)
                 self.summary.setText(message)
@@ -115,6 +115,8 @@ class AnnotationPanel(QWidget):
         if self.dialog:
             self.dialog.close()
         self.dialog = QDialog(self)
+        self.selected_claim = None
+        self.revision = 0
         self.dialog.setStyleSheet(
             f"QDialog {{ background: {PALETTE['surface']}; }} QLabel {{ color: {PALETTE['text']}; }}"
         )
@@ -132,7 +134,7 @@ class AnnotationPanel(QWidget):
         self.note.setMaximumHeight(150)
         form.addRow('用户备注', self.note)
         self.metric = QComboBox()
-        self.metric.currentIndexChanged.connect(self._select_metric)
+        self.metric.currentIndexChanged.connect(self._metric_changed)
         form.addRow('复测指标（完整测试均值）', self.metric)
         self.baseline = QLabel()
         form.addRow('基线', self.baseline)
@@ -191,6 +193,8 @@ class AnnotationPanel(QWidget):
         self.revision = existing.get('revision', 0)
         self.note.setPlainText(existing.get('note', ''))
         self.note.setReadOnly(claim['stale'])
+        self.target.setValue(0)
+        self.direction.setCurrentIndex(0)
         self.metric.clear()
         self.metric.addItem('不设置复测目标', None)
         if self.data['can_set_target']:
@@ -208,6 +212,12 @@ class AnnotationPanel(QWidget):
         self._select_metric()
         if claim['stale']:
             self.error.setText('原分析已更新，可将已有备注标记完成或归档。')
+
+    def _metric_changed(self):
+        fact = self.metric.currentData()
+        if fact:
+            self.target.setValue(fact['value'])
+        self._select_metric()
 
     def _select_metric(self):
         fact = self.metric.currentData()
@@ -231,6 +241,8 @@ class AnnotationPanel(QWidget):
         self._select_metric()
 
     def _save(self):
+        if self.selected_claim is None:
+            return
         note = self.note.toPlainText().strip()
         fact = self.metric.currentData()
         closing = self.revision > 0 and self.status.currentData() in {'archived', 'completed'}

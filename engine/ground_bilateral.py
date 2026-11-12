@@ -5,11 +5,10 @@ from statistics import mean, pstdev
 from engine.ground_derived_metrics import (derive_metrics, FORMULAS, SIGNED_METRICS,
     STEP_CODES, RUN_STEP_CODES, RUN_CONTACT_CODES)
 from engine.ground_contact_phases import PHASE_CODES
+from config.ground_phases import PHASES
 
 
 VERSION = 'ground_bilateral_v2'
-PHASES = ('stance_phase', 'swing_phase', 'single_support',
-          'total_double_support', 'load_response', 'pre_swing')
 CONTACT_METRICS = {'contact_time_s': 'contact_s'}
 STEP_METRICS = {'step_length_m': 'length_m', 'step_time_s': 'time_s', 'speed_m_s': 'speed_m_s'}
 CYCLE_METRICS = ('gait_cycle_s', 'stride_length_m') + tuple(

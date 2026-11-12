@@ -12,7 +12,3 @@ class OvergroundRunningReport:
     visual_timeline: tuple = ()
     export_frames: tuple = ()
     export_timestamps: tuple = ()
-
-    def __post_init__(self):
-        from engine.ground_metric_completion import complete_ground_metrics
-        self.running_summary = complete_ground_metrics(self.running_summary, 'run')

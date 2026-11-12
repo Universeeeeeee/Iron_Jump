@@ -48,6 +48,7 @@ def test_note_target_editor_roundtrip_and_retest_progress(qtbot, tmp_path):
     panel.note.setPlainText('下次保持相同速度，关注节奏。')
     panel.metric.setCurrentIndex(1)
     assert '0.35' in panel.baseline.text()
+    assert panel.target.value() == .35
     panel.target.setValue(.3)
     panel.buttons.button(QDialogButtonBox.Save).click()
     wait(qtbot, panel)
@@ -107,3 +108,17 @@ def test_late_annotation_response_cannot_repopulate_cleared_report(qtbot, tmp_pa
     wait(qtbot, panel)
     assert panel.data is None
     assert panel.summary.text() == ''
+
+
+def test_failed_editor_refresh_does_not_enable_saving_unloaded_fields(qtbot, tmp_path):
+    store, service, read, save, config, subject = setup_annotations(tmp_path)
+    panel = panel_for(qtbot, service, read)
+    assert panel.data['claims']
+    panel.client.get_report_annotations = lambda *args: {'error_code':'worker_unreachable','message':'连接失败'}
+    panel.open_editor()
+    wait(qtbot, panel)
+    assert '连接失败' in panel.error.text()
+    assert panel.claim.count() == 0
+    assert not panel.buttons.button(QDialogButtonBox.Save).isEnabled()
+    panel._save()
+    assert service.get_annotations(read)['annotations'] == []

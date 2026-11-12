@@ -176,6 +176,9 @@ def read_annotations(repository, request):
             note["analysis_run_id"], request.session_id, request.data_access_scope,
             package.metadata.package_digest, include_current_scope=request.data_access_scope.longitudinal,
         ) is None or bool(note["target"] and note["target"]["protocol"] != current_protocol)
+        for claim in claims:
+            if claim["analysis_run_id"] == note["analysis_run_id"] and claim["claim_id"] == note["claim_id"] and note["stale"]:
+                claim.update(stale=True, facts=[])
         if not any(claim["analysis_run_id"] == note["analysis_run_id"] and claim["claim_id"] == note["claim_id"] for claim in claims):
             facts = []
             if not note["stale"]:

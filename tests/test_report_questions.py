@@ -191,6 +191,17 @@ def test_scoped_question_cannot_use_global_fact(tmp_path):
     assert error.value.code == 'fact_outside_question_scope'
 
 
+def test_inspection_answer_uses_verified_range_statistics_even_if_model_draft_is_invalid(tmp_path):
+    service, repository, agent, original = setup_question_service(tmp_path)
+    package = repository.get_package(original.session_id)
+    agent.global_fact = next(f.fact_id for f in package.scalar_facts if f.metric_code == 'contact_time_s' and f.statistic == 'mean')
+    agent.plan_options = {"intent": "inspect", "segment": "second_half"}
+    answer = service.ask(request(original, "后半程触地时间均值是多少？"))
+    assert answer.claims[0].fact_refs == ()
+    assert answer.claims[0].evidence_refs == (answer.evidence[0].items[0].evidence_id,)
+    assert "均值 0.45 s" in answer.claims[0].text
+
+
 def test_synthesis_timeout_retry_creates_new_run_for_same_selection(tmp_path):
     service, repository, agent, original = setup_question_service(tmp_path)
     agent.plan_options = {'segment': 'second_half'}

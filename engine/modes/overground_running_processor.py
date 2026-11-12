@@ -13,6 +13,7 @@ from engine.ground_source_review import (SHORT_ISLAND_MS, ownership_record, assi
 from engine.ground_metric_evidence import METRIC_POLICY, group_release_evidence, metric
 from engine.ground_position_evidence import running_position_history
 from engine.ground_contact_phases import ContactShapeRecorder, build_contact_phases
+from engine.ground_metric_completion import complete_ground_metrics
 from config.overground_running_report import OvergroundRunningReport
 from hardware.sensor_frame import blocked_indices
 
@@ -2021,7 +2022,7 @@ class OvergroundRunningProcessor:
         return OvergroundRunningReport(
             touch_count=summary['valid_touches'],
             lift_count=sum(r['lift_s']['valid'] for r in summary['contacts']),
-            finish_reason=reason, running_summary=summary, visual_timeline=tuple(self.timeline),
+            finish_reason=reason, running_summary=complete_ground_metrics(summary, 'run'), visual_timeline=tuple(self.timeline),
             export_frames=export_frames, export_timestamps=export_timestamps,
             report_config_snapshot={**self.config.to_dict(), "device": self.device.snapshot(),
                                     "algorithm": "overground_running_v1.13", "metric_policy": METRIC_POLICY, "spatial_reference": "toe_to_toe",
