@@ -498,6 +498,16 @@ class ReportRepository:
                 );
                 CREATE INDEX IF NOT EXISTS idx_report_checkpoints_run
                     ON report_analysis_checkpoints(analysis_run_id, id DESC);
+                CREATE TABLE IF NOT EXISTS report_annotations (
+                    id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    session_id INTEGER NOT NULL REFERENCES test_sessions(id),
+                    analysis_run_id TEXT NOT NULL REFERENCES report_analyses(analysis_run_id),
+                    claim_id TEXT NOT NULL,
+                    revision INTEGER NOT NULL,
+                    payload_json TEXT NOT NULL,
+                    UNIQUE(analysis_run_id, claim_id, revision)
+                );
+                CREATE INDEX IF NOT EXISTS idx_report_annotations_session ON report_annotations(session_id, id DESC);
                 """
             )
             columns = {

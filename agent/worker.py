@@ -156,6 +156,8 @@ def _route_name(path: str) -> str | None:
         "/report/history": "report_history",
         "/report/saved": "report_saved",
         "/report/comparison": "report_comparison",
+        "/report/annotations": "report_annotations",
+        "/report/annotation/save": "report_annotation_save",
     }.get(path)
 
 
@@ -219,6 +221,8 @@ class _Handler(BaseHTTPRequestHandler):
             self._handle_report_history(data, saved=route == "report_saved")
         elif route == "report_comparison":
             self._handle_report_history(data, comparison=True)
+        elif route in {"report_annotations", "report_annotation_save"}:
+            self._handle_report_annotations(data, save=route == "report_annotation_save")
         else:
             self._send_json({"error": "not found"}, 404)
 
@@ -387,6 +391,29 @@ class _Handler(BaseHTTPRequestHandler):
             self._send_json(payload)
         except Exception as exc:
             self._send_json({"error_code": getattr(exc, "code", "analysis_unavailable")}, 422)
+
+    def _handle_report_annotations(self, data, *, save=False):
+        from reporting.annotations import AnnotationReadRequest, AnnotationSaveRequest
+        from pydantic import ValidationError
+        _touch_active()
+        try:
+            request = (AnnotationSaveRequest if save else AnnotationReadRequest).model_validate(data)
+        except ValidationError:
+            self._send_json({"error_code": "invalid_request", "message": "请检查备注和目标值。"}, 400)
+            return
+        try:
+            with _report_lock:
+                service = _get_report_service()
+                if save:
+                    service.save_annotation(request)
+                    request = AnnotationReadRequest(
+                        session_id=request.session_id, data_access_scope=request.data_access_scope,
+                    )
+                result = service.get_annotations(request)
+            self._send_json({"annotations": result})
+        except Exception as exc:
+            code = getattr(exc, "code", "annotation_unavailable")
+            self._send_json({"error_code": code, "message": str(exc)}, 409 if code == "annotation_conflict" else 422)
 
     def log_message(self, format, *args):
         pass  # silence HTTP log

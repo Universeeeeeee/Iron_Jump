@@ -26,6 +26,8 @@ def test_report_routes_are_namespaced_without_sharing_config_state():
     assert worker._route_name("/report/history") == "report_history"
     assert worker._route_name("/report/saved") == "report_saved"
     assert worker._route_name("/report/comparison") == "report_comparison"
+    assert worker._route_name("/report/annotations") == "report_annotations"
+    assert worker._route_name("/report/annotation/save") == "report_annotation_save"
     assert worker._report_lock is not worker._config_lock
     assert not hasattr(worker, "_agent_lock")
 
@@ -259,6 +261,30 @@ def test_report_ask_post_returns_not_ready_before_service(monkeypatch):
 
 def test_unknown_route_is_not_resolved():
     assert worker._route_name("/tools/run") is None
+
+
+def test_annotation_route_validates_request_and_reports_revision_conflict(monkeypatch):
+    from reporting.annotations import AnnotationError
+    service = Mock()
+    service.get_annotations.return_value = {'annotations': [], 'progress': [], 'claims': []}
+    monkeypatch.setattr(worker, '_get_report_service', lambda: service)
+    handler = object.__new__(worker._Handler)
+    responses = []
+    handler._send_json = lambda payload, status=200: responses.append((status, payload))
+    payload = {'session_id': 12, 'data_access_scope': {'current_session': True}}
+    handler._handle_report_annotations(payload)
+    assert responses[-1][0] == 200
+    handler._handle_report_annotations(payload, save=True)
+    assert responses[-1][0] == 400
+    service.save_annotation.assert_not_called()
+    payload.update(analysis_run_id='run1', claim_id='claim1', expected_revision=0, note='记录观察')
+    handler._handle_report_annotations(payload, save=True)
+    assert responses[-1][0] == 200
+    assert service.save_annotation.call_args.args[0].note == '记录观察'
+    service.save_annotation.side_effect = AnnotationError('annotation_conflict', '备注已被更新')
+    handler._handle_report_annotations(payload, save=True)
+    assert responses[-1][0] == 409
+    assert responses[-1][1]['error_code'] == 'annotation_conflict'
 
 
 @pytest.mark.parametrize(

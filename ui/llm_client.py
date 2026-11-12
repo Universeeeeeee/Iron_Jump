@@ -297,6 +297,17 @@ class AgentWorkerClient:
             timeout,
         )
 
+    def get_report_annotations(self, session_id, scope, analysis_run_id=None, timeout=5):
+        return self._request_report_analysis(
+            "/report/annotations", {"session_id": session_id, "data_access_scope": scope,
+                                    "analysis_run_id": analysis_run_id}, timeout,
+        )
+
+    def save_report_annotation(self, session_id, scope, **annotation):
+        return self._request_report_analysis(
+            "/report/annotation/save", {"session_id": session_id, "data_access_scope": scope, **annotation}, 10,
+        )
+
     def get_saved_analysis(self, session_id, scope, analysis_run_id, timeout=5):
         return self._request_report_analysis(
             "/report/saved",

@@ -23,6 +23,7 @@ from typing import Optional
 from reporting.analysis_html import analysis_html
 from reporting.models import EvidenceChart
 from ui.report_analysis import EvidenceChartWidget
+from ui.report_annotations import AnnotationPanel
 
 from reporting.excel import (
     build_report_workbook, has_export_data,
@@ -1001,6 +1002,8 @@ class ReportView(QWidget):
         self._comparison_result.hide()
         self._analysis_content_layout.addWidget(self._comparison_result)
         self._analysis_content_layout.addWidget(self._analysis_result)
+        self._annotation_panel = AnnotationPanel(self._llm_client)
+        self._analysis_content_layout.addWidget(self._annotation_panel)
         self._analysis_scroll.setWidget(self._analysis_content)
         analysis_layout.addWidget(self._analysis_scroll, 1)
         self._followup_target = QComboBox()
@@ -1220,6 +1223,7 @@ class ReportView(QWidget):
     def show_validated_analysis(self, analysis: dict, *, as_default=True) -> None:
         self._clear_evidence_charts()
         self._analysis_data = analysis
+        self._annotation_panel.set_context(self._session_id, analysis, self._is_temporary is False)
         run_id = analysis.get("analysis_run_id")
         if run_id:
             self._saved_analyses[run_id] = analysis
@@ -1330,6 +1334,7 @@ class ReportView(QWidget):
     def clear_analysis(self) -> None:
         self._analysis_generation += 1
         self._analysis_data = None
+        self._annotation_panel.set_context(None, None, False)
         self._default_analysis_data = None
         self._saved_analyses.clear()
         self._report_comparison = None
@@ -1480,6 +1485,7 @@ class ReportView(QWidget):
             return
         self.set_analysis_loading(False)
         if action == "latest" and isinstance(analysis, dict) and "default_analysis" in analysis:
+            self._annotation_panel.set_context(self._session_id, None, self._is_temporary is False)
             history = analysis["history"]
             self._analysis_history.blockSignals(True)
             self._analysis_history.clear()
@@ -2316,7 +2322,8 @@ class ReportView(QWidget):
                              stats=self._export_stats, reason=self._reason_label.text(),
                              detailed=detailed, subject=self._export_subject,
                              started_at=self._export_started_at, analysis=analysis,
-                             comparison=self._report_comparison)
+                             comparison=self._report_comparison,
+                             annotations=self._annotation_panel.data)
             QMessageBox.information(self, "导出成功", f"报告已保存至：\n{path}")
         except Exception as exc:
             QMessageBox.warning(self, "导出失败", f"保存报告失败：{exc}")

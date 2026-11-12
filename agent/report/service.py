@@ -802,6 +802,14 @@ class ReportAnalysisService:
             include_current_scope=access_scope.longitudinal,
         )
 
+    def get_annotations(self, request):
+        from reporting.annotations import read_annotations
+        return read_annotations(self._repository, request)
+
+    def save_annotation(self, request):
+        from reporting.annotations import save_annotation
+        return save_annotation(self._repository, request)
+
     def compare_previous(self, session_id, access_scope):
         if not access_scope.longitudinal:
             raise ReportAnalysisError("scope_not_authorized", "历史对比需要使用该用户的历史测试记录。")
