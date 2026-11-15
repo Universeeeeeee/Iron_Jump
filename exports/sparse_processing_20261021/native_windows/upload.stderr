@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/native_windows/transport.py", line 106, in <module>
+    if __name__=='__main__':main()
+                            ^^^^^^
+  File "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/native_windows/transport.py", line 54, in main
+    remote(code,'preflight_retry')
+  File "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/native_windows/transport.py", line 24, in remote
+    if result.returncode:raise RuntimeError((label,result.returncode,result.stderr))
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: ('preflight_retry', 255, 'ssh: connect to host 100.116.17.121 port 22: Operation timed out\n')

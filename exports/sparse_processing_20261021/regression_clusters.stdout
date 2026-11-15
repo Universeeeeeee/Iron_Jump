@@ -1,0 +1,18 @@
+........................................................................ [ 17%]
+........................................................................ [ 34%]
+........................................................................ [ 51%]
+........................................................................ [ 68%]
+........................................................................ [ 85%]
+..............F................................................          [100%]
+=================================== FAILURES ===================================
+___ test_large_calibrated_seam_is_not_a_contiguous_island_or_an_owner_margin ___
+tests/test_walking_temporal_islands.py:167: in test_large_calibrated_seam_is_not_a_contiguous_island_or_an_owner_margin
+    assert p._clusters(raw.contact_bits) == [(90, 95), (96, 105)]
+E   assert [(90, 105)] == [(90, 95), (96, 105)]
+E     
+E     At index 0 diff: (90, 105) != (90, 95)
+E     Right contains one more item: (96, 105)
+E     Use -v to get more diff
+=========================== short test summary info ============================
+FAILED tests/test_walking_temporal_islands.py::test_large_calibrated_seam_is_not_a_contiguous_island_or_an_owner_margin
+1 failed, 422 passed in 27.46s

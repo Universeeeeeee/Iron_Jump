@@ -1,0 +1,1069 @@
+{
+  "results": [
+    {
+      "case": "empty",
+      "variant": "idle",
+      "target": "formal_processor",
+      "runs": [
+        {
+          "case": "empty",
+          "variant": "baseline",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 383815333,
+          "wall_ns": 384017667,
+          "cpu_us_per_frame": 6.396922216666667,
+          "wall_us_per_frame": 6.4002944500000005,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "empty",
+          "variant": "idle",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 143262375,
+          "wall_ns": 143339250,
+          "cpu_us_per_frame": 2.3877062500000004,
+          "wall_us_per_frame": 2.3889875000000003,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "empty",
+          "variant": "idle",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 145682667,
+          "wall_ns": 145843541,
+          "cpu_us_per_frame": 2.42804445,
+          "wall_us_per_frame": 2.4307256833333333,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "empty",
+          "variant": "baseline",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 389533500,
+          "wall_ns": 389771083,
+          "cpu_us_per_frame": 6.492225,
+          "wall_us_per_frame": 6.496184716666667,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "empty",
+          "variant": "baseline",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 389115875,
+          "wall_ns": 389458709,
+          "cpu_us_per_frame": 6.4852645833333336,
+          "wall_us_per_frame": 6.4909784833333335,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "empty",
+          "variant": "idle",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 142090417,
+          "wall_ns": 142144416,
+          "cpu_us_per_frame": 2.3681736166666663,
+          "wall_us_per_frame": 2.3690736,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "empty",
+          "variant": "idle",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 142660666,
+          "wall_ns": 142779708,
+          "cpu_us_per_frame": 2.377677766666667,
+          "wall_us_per_frame": 2.3796618,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "empty",
+          "variant": "baseline",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 378818292,
+          "wall_ns": 379100084,
+          "cpu_us_per_frame": 6.313638200000001,
+          "wall_us_per_frame": 6.318334733333333,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        }
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "order": [
+            "baseline",
+            "idle"
+          ],
+          "cpu_reduction": 0.6267413970144856,
+          "wall_reduction": 0.6267378760988098
+        },
+        {
+          "pair": 1,
+          "order": [
+            "idle",
+            "baseline"
+          ],
+          "cpu_reduction": 0.6260073472499799,
+          "wall_reduction": 0.6258225728869682
+        },
+        {
+          "pair": 2,
+          "order": [
+            "baseline",
+            "idle"
+          ],
+          "cpu_reduction": 0.6348377793632809,
+          "wall_reduction": 0.6350205741579655
+        },
+        {
+          "pair": 3,
+          "order": [
+            "idle",
+            "baseline"
+          ],
+          "cpu_reduction": 0.6234060788173343,
+          "wall_reduction": 0.623371995876424
+        }
+      ],
+      "median_cpu_reduction": 0.6263743721322328,
+      "positive_pairs": 4,
+      "environment": "local macOS, unpaced CPU experiment, no GUI/ETW/hardware"
+    },
+    {
+      "case": "sparse",
+      "variant": "idle",
+      "target": "formal_processor",
+      "runs": [
+        {
+          "case": "sparse",
+          "variant": "baseline",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 1262164459,
+          "wall_ns": 1263033500,
+          "cpu_us_per_frame": 21.036074316666664,
+          "wall_us_per_frame": 21.050558333333335,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "sparse",
+          "variant": "idle",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 1084411417,
+          "wall_ns": 1085331334,
+          "cpu_us_per_frame": 18.073523616666666,
+          "wall_us_per_frame": 18.088855566666666,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "sparse",
+          "variant": "idle",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 1061904958,
+          "wall_ns": 1063107500,
+          "cpu_us_per_frame": 17.698415966666666,
+          "wall_us_per_frame": 17.71845833333333,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "sparse",
+          "variant": "baseline",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 1248496959,
+          "wall_ns": 1249625125,
+          "cpu_us_per_frame": 20.808282650000002,
+          "wall_us_per_frame": 20.827085416666666,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "sparse",
+          "variant": "baseline",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 1227426125,
+          "wall_ns": 1228221625,
+          "cpu_us_per_frame": 20.457102083333336,
+          "wall_us_per_frame": 20.470360416666665,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "sparse",
+          "variant": "idle",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 1110866417,
+          "wall_ns": 1112688291,
+          "cpu_us_per_frame": 18.514440283333332,
+          "wall_us_per_frame": 18.544804850000002,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "sparse",
+          "variant": "idle",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 1064269750,
+          "wall_ns": 1064958542,
+          "cpu_us_per_frame": 17.737829166666668,
+          "wall_us_per_frame": 17.749309033333336,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "sparse",
+          "variant": "baseline",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 1240256667,
+          "wall_ns": 1241207917,
+          "cpu_us_per_frame": 20.67094445,
+          "wall_us_per_frame": 20.686798616666668,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        }
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "order": [
+            "baseline",
+            "idle"
+          ],
+          "cpu_reduction": 0.1408319183229354,
+          "wall_reduction": 0.14069473691711265
+        },
+        {
+          "pair": 1,
+          "order": [
+            "idle",
+            "baseline"
+          ],
+          "cpu_reduction": 0.14945330836004067,
+          "wall_reduction": 0.14925886273293365
+        },
+        {
+          "pair": 2,
+          "order": [
+            "baseline",
+            "idle"
+          ],
+          "cpu_reduction": 0.09496270742974455,
+          "wall_reduction": 0.09406554293489178
+        },
+        {
+          "pair": 3,
+          "order": [
+            "idle",
+            "baseline"
+          ],
+          "cpu_reduction": 0.1418955621707615,
+          "wall_reduction": 0.14199826844965246
+        }
+      ],
+      "median_cpu_reduction": 0.14136374024684845,
+      "positive_pairs": 4,
+      "environment": "local macOS, unpaced CPU experiment, no GUI/ETW/hardware"
+    },
+    {
+      "case": "cross",
+      "variant": "idle",
+      "target": "formal_processor",
+      "runs": [
+        {
+          "case": "cross",
+          "variant": "baseline",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 863436542,
+          "wall_ns": 864797542,
+          "cpu_us_per_frame": 14.390609033333334,
+          "wall_us_per_frame": 14.413292366666667,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "cross",
+          "variant": "idle",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 578742291,
+          "wall_ns": 579149042,
+          "cpu_us_per_frame": 9.64570485,
+          "wall_us_per_frame": 9.652484033333334,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "cross",
+          "variant": "idle",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 603751917,
+          "wall_ns": 604180708,
+          "cpu_us_per_frame": 10.06253195,
+          "wall_us_per_frame": 10.069678466666666,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "cross",
+          "variant": "baseline",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 765439875,
+          "wall_ns": 765976125,
+          "cpu_us_per_frame": 12.75733125,
+          "wall_us_per_frame": 12.76626875,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "cross",
+          "variant": "baseline",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 756182250,
+          "wall_ns": 756844583,
+          "cpu_us_per_frame": 12.603037500000001,
+          "wall_us_per_frame": 12.614076383333334,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "cross",
+          "variant": "idle",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 590572667,
+          "wall_ns": 591107292,
+          "cpu_us_per_frame": 9.842877783333334,
+          "wall_us_per_frame": 9.851788200000001,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "cross",
+          "variant": "idle",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 580470708,
+          "wall_ns": 580840125,
+          "cpu_us_per_frame": 9.6745118,
+          "wall_us_per_frame": 9.68066875,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "cross",
+          "variant": "baseline",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 783058792,
+          "wall_ns": 783626958,
+          "cpu_us_per_frame": 13.050979866666667,
+          "wall_us_per_frame": 13.0604493,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        }
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "order": [
+            "baseline",
+            "idle"
+          ],
+          "cpu_reduction": 0.3297222634804817,
+          "wall_reduction": 0.3303067898867825
+        },
+        {
+          "pair": 1,
+          "order": [
+            "idle",
+            "baseline"
+          ],
+          "cpu_reduction": 0.2112353475183142,
+          "wall_reduction": 0.2112277546509691
+        },
+        {
+          "pair": 2,
+          "order": [
+            "baseline",
+            "idle"
+          ],
+          "cpu_reduction": 0.21900749852300816,
+          "wall_reduction": 0.2189845771810195
+        },
+        {
+          "pair": 3,
+          "order": [
+            "idle",
+            "baseline"
+          ],
+          "cpu_reduction": 0.258713759515518,
+          "wall_reduction": 0.25877980706222714
+        }
+      ],
+      "median_cpu_reduction": 0.23886062901926308,
+      "positive_pairs": 4,
+      "environment": "local macOS, unpaced CPU experiment, no GUI/ETW/hardware"
+    },
+    {
+      "case": "plateau",
+      "variant": "idle",
+      "target": "formal_processor",
+      "runs": [
+        {
+          "case": "plateau",
+          "variant": "baseline",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 811825709,
+          "wall_ns": 812582292,
+          "cpu_us_per_frame": 13.530428483333333,
+          "wall_us_per_frame": 13.543038200000002,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "plateau",
+          "variant": "idle",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 698514375,
+          "wall_ns": 699507250,
+          "cpu_us_per_frame": 11.64190625,
+          "wall_us_per_frame": 11.658454166666667,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "plateau",
+          "variant": "idle",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 738530292,
+          "wall_ns": 739167167,
+          "cpu_us_per_frame": 12.3088382,
+          "wall_us_per_frame": 12.319452783333334,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "plateau",
+          "variant": "baseline",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 799134792,
+          "wall_ns": 799723333,
+          "cpu_us_per_frame": 13.3189132,
+          "wall_us_per_frame": 13.328722216666668,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "plateau",
+          "variant": "baseline",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 807606417,
+          "wall_ns": 808266125,
+          "cpu_us_per_frame": 13.46010695,
+          "wall_us_per_frame": 13.471102083333333,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "plateau",
+          "variant": "idle",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 710673584,
+          "wall_ns": 711140791,
+          "cpu_us_per_frame": 11.844559733333334,
+          "wall_us_per_frame": 11.852346516666666,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "plateau",
+          "variant": "idle",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 689521167,
+          "wall_ns": 690015625,
+          "cpu_us_per_frame": 11.492019449999999,
+          "wall_us_per_frame": 11.500260416666666,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "plateau",
+          "variant": "baseline",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 1110519875,
+          "wall_ns": 1129845000,
+          "cpu_us_per_frame": 18.508664583333335,
+          "wall_us_per_frame": 18.83075,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        }
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "order": [
+            "baseline",
+            "idle"
+          ],
+          "cpu_reduction": 0.13957593698230608,
+          "wall_reduction": 0.1391551884815132
+        },
+        {
+          "pair": 1,
+          "order": [
+            "idle",
+            "baseline"
+          ],
+          "cpu_reduction": 0.07583764417054684,
+          "wall_reduction": 0.07572139451381998
+        },
+        {
+          "pair": 2,
+          "order": [
+            "baseline",
+            "idle"
+          ],
+          "cpu_reduction": 0.12002484249701051,
+          "wall_reduction": 0.1201650434131456
+        },
+        {
+          "pair": 3,
+          "order": [
+            "idle",
+            "baseline"
+          ],
+          "cpu_reduction": 0.37910056134744996,
+          "wall_reduction": 0.38928293261465063
+        }
+      ],
+      "median_cpu_reduction": 0.1298003897396583,
+      "positive_pairs": 4,
+      "environment": "local macOS, unpaced CPU experiment, no GUI/ETW/hardware"
+    },
+    {
+      "case": "stress",
+      "variant": "idle",
+      "target": "formal_processor",
+      "runs": [
+        {
+          "case": "stress",
+          "variant": "baseline",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 9310107334,
+          "wall_ns": 9335413917,
+          "cpu_us_per_frame": 155.16845556666667,
+          "wall_us_per_frame": 155.59023194999997,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "stress",
+          "variant": "idle",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 10192141542,
+          "wall_ns": 10241989250,
+          "cpu_us_per_frame": 169.8690257,
+          "wall_us_per_frame": 170.69982083333332,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "stress",
+          "variant": "idle",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 16216632917,
+          "wall_ns": 16961232583,
+          "cpu_us_per_frame": 270.2772152833333,
+          "wall_us_per_frame": 282.68720971666664,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "stress",
+          "variant": "baseline",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 16231989959,
+          "wall_ns": 16629235041,
+          "cpu_us_per_frame": 270.53316598333333,
+          "wall_us_per_frame": 277.15391735000003,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "stress",
+          "variant": "baseline",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 9704766209,
+          "wall_ns": 9722844875,
+          "cpu_us_per_frame": 161.74610348333334,
+          "wall_us_per_frame": 162.04741458333334,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "stress",
+          "variant": "idle",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 9138874875,
+          "wall_ns": 9215010167,
+          "cpu_us_per_frame": 152.31458124999997,
+          "wall_us_per_frame": 153.58350278333333,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "stress",
+          "variant": "idle",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 8874213042,
+          "wall_ns": 8886950583,
+          "cpu_us_per_frame": 147.90355069999998,
+          "wall_us_per_frame": 148.11584305,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "stress",
+          "variant": "baseline",
+          "target": "formal_processor",
+          "frames": 60000,
+          "cpu_ns": 8565605666,
+          "wall_ns": 8570657416,
+          "cpu_us_per_frame": 142.76009443333334,
+          "wall_us_per_frame": 142.8442902666667,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        }
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "order": [
+            "baseline",
+            "idle"
+          ],
+          "cpu_reduction": -0.0947394241931947,
+          "wall_reduction": -0.09711142334557943
+        },
+        {
+          "pair": 1,
+          "order": [
+            "idle",
+            "baseline"
+          ],
+          "cpu_reduction": 0.0009460973077725088,
+          "wall_reduction": -0.019964691170787363
+        },
+        {
+          "pair": 2,
+          "order": [
+            "baseline",
+            "idle"
+          ],
+          "cpu_reduction": 0.05831066115484618,
+          "wall_reduction": 0.05223108200623228
+        },
+        {
+          "pair": 3,
+          "order": [
+            "idle",
+            "baseline"
+          ],
+          "cpu_reduction": -0.0360286695458063,
+          "wall_reduction": -0.03690418968439135
+        }
+      ],
+      "median_cpu_reduction": -0.017541286119016897,
+      "positive_pairs": 2,
+      "environment": "local macOS, unpaced CPU experiment, no GUI/ETW/hardware"
+    },
+    {
+      "case": "field_run_20261015_02",
+      "variant": "idle",
+      "target": "formal_processor",
+      "runs": [
+        {
+          "case": "field_run_20261015_02",
+          "variant": "baseline",
+          "target": "formal_processor",
+          "frames": 24463,
+          "cpu_ns": 322482375,
+          "wall_ns": 323805083,
+          "cpu_us_per_frame": 13.182454114376815,
+          "wall_us_per_frame": 13.236523852348444,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "field_run_20261015_02",
+          "variant": "idle",
+          "target": "formal_processor",
+          "frames": 24463,
+          "cpu_ns": 305095542,
+          "wall_ns": 306245875,
+          "cpu_us_per_frame": 12.471714098843151,
+          "wall_us_per_frame": 12.518737481093897,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "field_run_20261015_02",
+          "variant": "idle",
+          "target": "formal_processor",
+          "frames": 24463,
+          "cpu_ns": 298286917,
+          "wall_ns": 301848666,
+          "cpu_us_per_frame": 12.193390712504598,
+          "wall_us_per_frame": 12.338988104484324,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "field_run_20261015_02",
+          "variant": "baseline",
+          "target": "formal_processor",
+          "frames": 24463,
+          "cpu_ns": 535003875,
+          "wall_ns": 652435958,
+          "cpu_us_per_frame": 21.86992090095246,
+          "wall_us_per_frame": 26.67031672321465,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "field_run_20261015_02",
+          "variant": "baseline",
+          "target": "formal_processor",
+          "frames": 24463,
+          "cpu_ns": 290022167,
+          "wall_ns": 290157250,
+          "cpu_us_per_frame": 11.855543759964029,
+          "wall_us_per_frame": 11.861065691043617,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "field_run_20261015_02",
+          "variant": "idle",
+          "target": "formal_processor",
+          "frames": 24463,
+          "cpu_ns": 284748500,
+          "wall_ns": 284949084,
+          "cpu_us_per_frame": 11.63996647999019,
+          "wall_us_per_frame": 11.648165964926624,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "field_run_20261015_02",
+          "variant": "idle",
+          "target": "formal_processor",
+          "frames": 24463,
+          "cpu_ns": 276213208,
+          "wall_ns": 276338917,
+          "cpu_us_per_frame": 11.2910602951396,
+          "wall_us_per_frame": 11.296199035277766,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "field_run_20261015_02",
+          "variant": "baseline",
+          "target": "formal_processor",
+          "frames": 24463,
+          "cpu_ns": 299138958,
+          "wall_ns": 299296667,
+          "cpu_us_per_frame": 12.228220496259658,
+          "wall_us_per_frame": 12.234667334341658,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        }
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "order": [
+            "baseline",
+            "idle"
+          ],
+          "cpu_reduction": 0.05391560701573228,
+          "wall_reduction": 0.05422770957551648
+        },
+        {
+          "pair": 1,
+          "order": [
+            "idle",
+            "baseline"
+          ],
+          "cpu_reduction": 0.4424583990162688,
+          "wall_reduction": 0.5373512721075376
+        },
+        {
+          "pair": 2,
+          "order": [
+            "baseline",
+            "idle"
+          ],
+          "cpu_reduction": 0.018183668698675715,
+          "wall_reduction": 0.017949460163411368
+        },
+        {
+          "pair": 3,
+          "order": [
+            "idle",
+            "baseline"
+          ],
+          "cpu_reduction": 0.07663913170413594,
+          "wall_reduction": 0.07670566541925439
+        }
+      ],
+      "median_cpu_reduction": 0.06527736935993411,
+      "positive_pairs": 4,
+      "environment": "local macOS, unpaced CPU experiment, no GUI/ETW/hardware"
+    },
+    {
+      "case": "field_walk_full_02",
+      "variant": "idle",
+      "target": "formal_processor",
+      "runs": [
+        {
+          "case": "field_walk_full_02",
+          "variant": "baseline",
+          "target": "formal_processor",
+          "frames": 29867,
+          "cpu_ns": 357948875,
+          "wall_ns": 358120084,
+          "cpu_us_per_frame": 11.984761609803462,
+          "wall_us_per_frame": 11.990493990022433,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "field_walk_full_02",
+          "variant": "idle",
+          "target": "formal_processor",
+          "frames": 29867,
+          "cpu_ns": 351055042,
+          "wall_ns": 351239792,
+          "cpu_us_per_frame": 11.75394388455486,
+          "wall_us_per_frame": 11.760129641410252,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "field_walk_full_02",
+          "variant": "idle",
+          "target": "formal_processor",
+          "frames": 29867,
+          "cpu_ns": 345988250,
+          "wall_ns": 346156208,
+          "cpu_us_per_frame": 11.584298724344595,
+          "wall_us_per_frame": 11.589922255331972,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "field_walk_full_02",
+          "variant": "baseline",
+          "target": "formal_processor",
+          "frames": 29867,
+          "cpu_ns": 396484583,
+          "wall_ns": 398598584,
+          "cpu_us_per_frame": 13.27500529011953,
+          "wall_us_per_frame": 13.345785783640807,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "field_walk_full_02",
+          "variant": "baseline",
+          "target": "formal_processor",
+          "frames": 29867,
+          "cpu_ns": 358506750,
+          "wall_ns": 358696042,
+          "cpu_us_per_frame": 12.003440251782903,
+          "wall_us_per_frame": 12.009778082833897,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "field_walk_full_02",
+          "variant": "idle",
+          "target": "formal_processor",
+          "frames": 29867,
+          "cpu_ns": 356354083,
+          "wall_ns": 356542958,
+          "cpu_us_per_frame": 11.931365152174642,
+          "wall_us_per_frame": 11.937689021327888,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "field_walk_full_02",
+          "variant": "idle",
+          "target": "formal_processor",
+          "frames": 29867,
+          "cpu_ns": 370616875,
+          "wall_ns": 370805459,
+          "cpu_us_per_frame": 12.408908661733685,
+          "wall_us_per_frame": 12.415222787692102,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        },
+        {
+          "case": "field_walk_full_02",
+          "variant": "baseline",
+          "target": "formal_processor",
+          "frames": 29867,
+          "cpu_ns": 358952791,
+          "wall_ns": 359229000,
+          "cpu_us_per_frame": 12.01837449358824,
+          "wall_us_per_frame": 12.027622459570765,
+          "source_root": "/Users/vae/Projects/Iron_Jump/exports/sparse_processing_20261021/baseline",
+          "profile_enabled": false,
+          "includes_stop_flush": false
+        }
+      ],
+      "pairs": [
+        {
+          "pair": 0,
+          "order": [
+            "baseline",
+            "idle"
+          ],
+          "cpu_reduction": 0.019259267122993418,
+          "wall_reduction": 0.01921224836973956
+        },
+        {
+          "pair": 1,
+          "order": [
+            "idle",
+            "baseline"
+          ],
+          "cpu_reduction": 0.1273601425253904,
+          "wall_reduction": 0.13156688986130471
+        },
+        {
+          "pair": 2,
+          "order": [
+            "baseline",
+            "idle"
+          ],
+          "cpu_reduction": 0.006004536874131383,
+          "wall_reduction": 0.006002530688643648
+        },
+        {
+          "pair": 3,
+          "order": [
+            "idle",
+            "baseline"
+          ],
+          "cpu_reduction": -0.03249475778557187,
+          "wall_reduction": -0.032225847579120837
+        }
+      ],
+      "median_cpu_reduction": 0.0126319019985624,
+      "positive_pairs": 3,
+      "environment": "local macOS, unpaced CPU experiment, no GUI/ETW/hardware"
+    }
+  ],
+  "complete": true
+}

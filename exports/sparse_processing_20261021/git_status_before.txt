@@ -1,0 +1,180 @@
+ M README.md
+ M agent/agent_test_ui.py
+ M agent/config/agent.py
+ M agent/config/prompts/treadmill_running.md
+ M agent/diagnose_latency.py
+ M agent/worker.py
+ M camera/logi_camera.py
+ M config/__init__.py
+ M docs/architecture.md
+ M docs/codex-camera/detect.md
+ M docs/treadmill_architecture.md
+ M docs/参数相关/代码步态参数汇总.md
+ M docs/参数相关/跑步机模式参数.md
+ M docs/算法协作/10.9现场步跑复核.md
+ M docs/算法协作/8m级联进度.md
+ M docs/算法协作/多米段步跑进度.md
+ M docs/算法相关/跑步机算法.md
+ M engine/modes/overground_running_processor.py
+ M engine/modes/walking_processor.py
+ M engine/overground_session.py
+ M engine/single_foot_tracker.py
+ M engine/spatial_clusterer.py
+ M hardware/beam_filter.py
+ M hardware/protocol.py
+ M hardware/receive.py
+ M led_con_package_8m_0918/README.txt
+ M led_con_package_8m_0918/start_led_con.bat
+ M led_con_package_8m_0918/tests/test_capture.py
+ M led_con_package_8m_0918/ui/capture_archive.py
+ M led_con_package_8m_0918/ui/led_con_8m.py
+ M led_con_package_8m_0918/软件接口与操作说明.md
+ M plan.md
+ M reporting/excel.py
+ M reporting/ground.py
+ M reporting/metric_catalog.py
+ M reporting/overground_running.py
+ M tests/report_export_fixtures.py
+ M tests/test_active_segments.py
+ M tests/test_embedded_camera_panel.py
+ M tests/test_footprint_channel.py
+ M tests/test_ground_frontend_comparison.py
+ M tests/test_ground_local_observation.py
+ M tests/test_ground_ui.py
+ M tests/test_history_view.py
+ M tests/test_live_walking_vision.py
+ M tests/test_overground_running.py
+ M tests/test_running_fragment_continuity.py
+ M tests/test_running_pending_fragments.py
+ M tests/test_session_controller_lifecycle.py
+ M tests/test_settings_view.py
+ M tests/test_setup_view.py
+ M tests/test_walking_contact_fragments.py
+ M tests/test_walking_narrow_candidates.py
+ M tools/annotate_foot_contacts.py
+ M tools/benchmark_report_agent.py
+ M tools/compare_ground_frontends.py
+ M tools/mac_mediapipe_validator.py
+ M tools/replay_foot_classifier.py
+ M tools/vision_diagnostic.py
+ M tools/vision_event_validator.py
+ M tools/vision_live.py
+ M ui/annotation_canvas.py
+ M ui/app_shell.py
+ M ui/data_show.py
+ M ui/embedded_camera_panel.py
+ M ui/footprint_channel.py
+ M ui/ground_track.py
+ M ui/led_con.py
+ M ui/llm_client.py
+ M ui/main_window.py
+ M ui/views/athletes_view.py
+ M ui/views/execution_view.py
+ M ui/views/history_view.py
+ M ui/views/report_view.py
+ M ui/views/settings_view.py
+ M ui/views/setup_view.py
+ M ui/voice_bridge.py
+ M vision/README.md
+ M vision/live_walking.py
+ M voice/README.md
+ M 素材.md
+ M 软著/制作依据/交付核对结果.json
+ M 软著/制作依据/源码文件清单.json
+ M 软著/制作依据/源码范围与节选说明.md
+ M 软著/制作依据/申请表字段核对.json
+ M 软著/填写结果/映衡智能步态分析系统_源程序.docx
+ M 软著/填写结果/映衡智能步态分析系统_用户操作手册.docx
+ M 软著/填写结果/映衡智能步态分析系统_申请表.docx
+ M 软著/填写结果/映衡智能步态分析系统_软件著作权所需资料.docx
+ M 软著/申报决策与待完成事项.md
+?? Obsbot_tinyse_OA_E_PW107_6.4.4.1_release.bin
+?? benchmark_results/config_agent_baseline_50_20261005.json
+?? benchmark_results/config_agent_fixed_50_20261005.json
+?? benchmark_results/config_agent_online_smoke_20261005.json
+?? benchmark_results/config_agent_smoke_20261005.json
+?? benchmark_results/eight_segment_diagnosis_20260929.json
+?? benchmark_results/eight_segment_filtered_preflight_20260928.json
+?? benchmark_results/ground_field_investigation_20261001.json
+?? benchmark_results/ground_filter_20261002.json
+?? benchmark_results/ground_local_observation_20260930.json
+?? benchmark_results/ground_report_agent_smoke_20261005.json
+?? benchmark_results/ground_ui_replay_20261003.json
+?? benchmark_results/led_monitor_optimization_20260928.json
+?? benchmark_results/main_acquisition_20260928.json
+?? benchmark_results/offline_ground_replay_20261003.json
+?? benchmark_results/offline_walking_vision_20261003.json
+?? benchmark_results/plan_continuation_20261005.json
+?? benchmark_results/power_supply_comparison_20260929.json
+?? benchmark_results/priority_tasks_20261005.json
+?? benchmark_results/two_segment_empty_field_20260928.json
+?? benchmark_results/ui_theme_20261005.json
+?? benchmark_results/usb_empty_field_20260928.json
+?? benchmark_results/walking_evidence_20261004.json
+?? benchmark_results/walking_pairing_20261004.json
+?? docs/八段现场数据排查_20261001.md
+?? docs/八段空场与协议复核_20260929.md
+?? docs/地面10毫秒过滤验证_20261002.md
+?? docs/地面局部异常模型验证_20260930.md
+?? docs/更换电源前后空场对照_20260929.md
+?? docs/算法协作/10.10时空脚印跟踪.md
+?? docs/算法协作/10.10现场结果复核.md
+?? docs/算法协作/10.9原帧与事件确认复核.md
+?? docs/论文/
+?? docs/设备空场与参考程序卡顿诊断_20260928.md
+?? engine/ground_metric_evidence.py
+?? engine/ground_position_evidence.py
+?? engine/ground_source_review.py
+?? exports/
+?? hardware/led_monitor.py
+?? hardware/payload_mirror.py
+?? led_con_package_8m_0918.zip
+?? tests/fixtures/config_agent/
+?? tests/test_application_boundaries.py
+?? tests/test_canvas_live_pose.py
+?? tests/test_config_agent_benchmark.py
+?? tests/test_config_benchmark_regressions.py
+?? tests/test_device_ui_messages.py
+?? tests/test_ground_candidate_groups.py
+?? tests/test_ground_integration.py
+?? tests/test_ground_metric_validity.py
+?? tests/test_ground_mirror_boundaries.py
+?? tests/test_ground_observation_budget.py
+?? tests/test_ground_ownership_publication.py
+?? tests/test_ground_ownership_review.py
+?? tests/test_ground_payload_mirror.py
+?? tests/test_ground_position_history.py
+?? tests/test_ground_publication_latency.py
+?? tests/test_ground_settled_filter.py
+?? tests/test_ground_source_review.py
+?? tests/test_ground_ui_replay.py
+?? tests/test_led_monitor.py
+?? tests/test_main_acquisition.py
+?? tests/test_preview_render_pixels.py
+?? tests/test_running_contact_competition.py
+?? tests/test_running_direction_evidence.py
+?? tests/test_running_pending_growth.py
+?? tests/test_running_spatiotemporal_ownership.py
+?? tests/test_ui_theme.py
+?? tests/test_walking_centre_evidence.py
+?? tests/test_walking_fragment_restoration.py
+?? tests/test_walking_local_pending_merge.py
+?? tests/test_walking_pairing_validation.py
+?? tests/test_walking_temporal_islands.py
+?? tests/test_walking_temporal_report.py
+?? tests/test_walking_terminal_release.py
+?? tests/test_walking_video_replay.py
+?? tools/benchmark_config_agent.py
+?? tools/replay_ground_ui.py
+?? tools/replay_walking_video.py
+?? tools/validate_walking_pairing.py
+?? ui/styles.py
+?? ui/theme.py
+?? 上位机下位机通信协议.xlsx
+?? 合同.pdf
+?? 现场测试/
+?? 软著/制作依据/V1.0_Python应用层源码快照_20261013.zip
+?? 软著/制作依据/V1.0_Python应用层源码快照_20261015.zip
+?? 软著/北京体育大学计算机软件著作权登记审批表.doc
+?? 软著/北京体育大学计算机软件著作权登记审批表_参考.doc
+?? 软著/北京体育大学计算机软件著作权登记审批表_模板.doc

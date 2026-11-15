@@ -1,0 +1,667 @@
+{
+  "runs": [
+    {
+      "case": "empty",
+      "frames": 60000,
+      "wire_same_pct": 100.0,
+      "wire_segment_same_pct": 100.0,
+      "raw_empty_pct": 100.0,
+      "input_sha256": "9544166c95b2a3ea34d291c3cb28cab65f9863c499c0505d7248daea8c56a666",
+      "mode": "run",
+      "activity": {
+        "settled_input": 59999,
+        "formal_calls": 60000,
+        "idle_eligible": 59999,
+        "with_active_contact": 0,
+        "with_narrow_candidate": 0
+      },
+      "stage_wall_us": {
+        "decode": {
+          "p50": 4.166,
+          "p95": 4.75,
+          "p99": 5.959,
+          "max": 62.375,
+          "sum": 255753.096,
+          "calls": 60000
+        },
+        "runtime": {
+          "p50": 3.625,
+          "p95": 4.083,
+          "p99": 4.875,
+          "max": 190.041,
+          "sum": 218222.993,
+          "calls": 60000
+        },
+        "filter": {
+          "p50": 7.709,
+          "p95": 8.5,
+          "p99": 10.125,
+          "max": 1948.625,
+          "sum": 475994.285,
+          "calls": 60000
+        },
+        "processor": {
+          "p50": 6.583,
+          "p95": 7.833,
+          "p99": 10.0,
+          "max": 349.541,
+          "sum": 405651.059,
+          "calls": 60000
+        },
+        "consumer": {
+          "p50": 31.334,
+          "p95": 36.25,
+          "p99": 125.04283000000017,
+          "max": 2497.792,
+          "sum": 1975718.838,
+          "calls": 60000
+        }
+      },
+      "retirement": {
+        "eligible_segment_samples": 0,
+        "total_segment_samples": 480000,
+        "events": [],
+        "all_spatial_wall_upper_bound_ns": 0,
+        "actual_retirement_enabled": false,
+        "limitation": "Spatial upper bound is perturbed wall time, not incremental retired-segment CPU savings."
+      },
+      "limitation": "Diagnostic wrappers and retirement shadow add overhead; nested stages must not be summed; not a scored performance run."
+    },
+    {
+      "case": "sparse",
+      "frames": 60000,
+      "wire_same_pct": 99.8666644444074,
+      "wire_segment_same_pct": 99.96666611110186,
+      "raw_empty_pct": 78.33333333333333,
+      "input_sha256": "c176de5366e8121098e8e0d84fb6dcd7f526176bb055aca23ce1b525aae40e7f",
+      "mode": "run",
+      "activity": {
+        "settled_input": 59119,
+        "formal_calls": 60000,
+        "idle_eligible": 46879,
+        "with_active_contact": 13080,
+        "with_narrow_candidate": 0
+      },
+      "stage_wall_us": {
+        "decode": {
+          "p50": 4.458,
+          "p95": 5.167,
+          "p99": 6.542,
+          "max": 69.917,
+          "sum": 274286.989,
+          "calls": 60000
+        },
+        "runtime": {
+          "p50": 3.875,
+          "p95": 4.458,
+          "p99": 5.542,
+          "max": 34.792,
+          "sum": 234177.777,
+          "calls": 60000
+        },
+        "filter": {
+          "p50": 8.208,
+          "p95": 9.416,
+          "p99": 29.0,
+          "max": 87.834,
+          "sum": 520919.177,
+          "calls": 60000
+        },
+        "processor": {
+          "p50": 21.625,
+          "p95": 37.458,
+          "p99": 42.292,
+          "max": 13363.167,
+          "sum": 1329756.732,
+          "calls": 60000
+        },
+        "consumer": {
+          "p50": 51.041,
+          "p95": 71.708,
+          "p99": 195.38792000000262,
+          "max": 13434.291,
+          "sum": 4105888.195,
+          "calls": 60000
+        }
+      },
+      "retirement": {
+        "eligible_segment_samples": 0,
+        "total_segment_samples": 480000,
+        "events": [],
+        "all_spatial_wall_upper_bound_ns": 0,
+        "actual_retirement_enabled": false,
+        "limitation": "Spatial upper bound is perturbed wall time, not incremental retired-segment CPU savings."
+      },
+      "limitation": "Diagnostic wrappers and retirement shadow add overhead; nested stages must not be summed; not a scored performance run."
+    },
+    {
+      "case": "cross",
+      "frames": 60000,
+      "wire_same_pct": 99.96666611110186,
+      "wire_segment_same_pct": 99.99458324305405,
+      "raw_empty_pct": 71.66666666666667,
+      "input_sha256": "8602e4a64a3e2944951da09f375025dd9f0cafac906a11908075f19f86c76a9f",
+      "mode": "run",
+      "activity": {
+        "settled_input": 59779,
+        "formal_calls": 60000,
+        "idle_eligible": 42969,
+        "with_active_contact": 17020,
+        "with_narrow_candidate": 0
+      },
+      "stage_wall_us": {
+        "decode": {
+          "p50": 4.416,
+          "p95": 5.0,
+          "p99": 6.334410000000084,
+          "max": 35.875,
+          "sum": 270651.003,
+          "calls": 60000
+        },
+        "runtime": {
+          "p50": 3.875,
+          "p95": 4.333,
+          "p99": 5.208,
+          "max": 81.791,
+          "sum": 232149.346,
+          "calls": 60000
+        },
+        "filter": {
+          "p50": 7.958,
+          "p95": 8.625,
+          "p99": 12.709410000000084,
+          "max": 374.416,
+          "sum": 490563.418,
+          "calls": 60000
+        },
+        "processor": {
+          "p50": 11.875,
+          "p95": 25.625,
+          "p99": 29.458,
+          "max": 2722.875,
+          "sum": 879648.204,
+          "calls": 60000
+        },
+        "consumer": {
+          "p50": 39.708,
+          "p95": 61.125,
+          "p99": 173.04267000000033,
+          "max": 2767.375,
+          "sum": 2852232.983,
+          "calls": 60000
+        }
+      },
+      "retirement": {
+        "eligible_segment_samples": 65362,
+        "total_segment_samples": 480000,
+        "events": [
+          {
+            "sample": 12319,
+            "segment": 0,
+            "action": "retire_mark"
+          },
+          {
+            "sample": 42319,
+            "segment": 1,
+            "action": "retire_mark"
+          }
+        ],
+        "all_spatial_wall_upper_bound_ns": 72411359,
+        "actual_retirement_enabled": false,
+        "limitation": "Spatial upper bound is perturbed wall time, not incremental retired-segment CPU savings."
+      },
+      "limitation": "Diagnostic wrappers and retirement shadow add overhead; nested stages must not be summed; not a scored performance run."
+    },
+    {
+      "case": "plateau",
+      "frames": 60000,
+      "wire_same_pct": 99.99666661111019,
+      "wire_segment_same_pct": 99.99958332638877,
+      "raw_empty_pct": 40.0,
+      "input_sha256": "098e7a24d5806b7086d5b34fa91f44c54d019c46ef636894dfdd50f5b32d681d",
+      "mode": "run",
+      "activity": {
+        "settled_input": 59977,
+        "formal_calls": 60000,
+        "idle_eligible": 23996,
+        "with_active_contact": 36002,
+        "with_narrow_candidate": 0
+      },
+      "stage_wall_us": {
+        "decode": {
+          "p50": 4.458,
+          "p95": 5.084,
+          "p99": 7.666,
+          "max": 34.459,
+          "sum": 273415.253,
+          "calls": 60000
+        },
+        "runtime": {
+          "p50": 3.834,
+          "p95": 4.292,
+          "p99": 5.041,
+          "max": 120.5,
+          "sum": 229382.891,
+          "calls": 60000
+        },
+        "filter": {
+          "p50": 7.833,
+          "p95": 8.417,
+          "p99": 10.25,
+          "max": 88.833,
+          "sum": 477124.387,
+          "calls": 60000
+        },
+        "processor": {
+          "p50": 19.542,
+          "p95": 22.375,
+          "p99": 25.625,
+          "max": 1135.709,
+          "sum": 923010.118,
+          "calls": 60000
+        },
+        "consumer": {
+          "p50": 47.125,
+          "p95": 52.958,
+          "p99": 127.75042000000009,
+          "max": 1170.917,
+          "sum": 2627371.059,
+          "calls": 60000
+        }
+      },
+      "retirement": {
+        "eligible_segment_samples": 0,
+        "total_segment_samples": 480000,
+        "events": [],
+        "all_spatial_wall_upper_bound_ns": 0,
+        "actual_retirement_enabled": false,
+        "limitation": "Spatial upper bound is perturbed wall time, not incremental retired-segment CPU savings."
+      },
+      "limitation": "Diagnostic wrappers and retirement shadow add overhead; nested stages must not be summed; not a scored performance run."
+    },
+    {
+      "case": "stress",
+      "frames": 60000,
+      "wire_same_pct": 0.0,
+      "wire_segment_same_pct": 0.0,
+      "raw_empty_pct": 0.0,
+      "input_sha256": "23f44f10638afb122ef58de1a3c5295fdb216ab6d56d2a8b48083509d28c3280",
+      "mode": "run",
+      "activity": {
+        "settled_input": 0,
+        "formal_calls": 60000,
+        "idle_eligible": 0,
+        "with_active_contact": 0,
+        "with_narrow_candidate": 0
+      },
+      "stage_wall_us": {
+        "decode": {
+          "p50": 4.75,
+          "p95": 5.291,
+          "p99": 6.542,
+          "max": 31.625,
+          "sum": 291093.316,
+          "calls": 60000
+        },
+        "runtime": {
+          "p50": 4.334,
+          "p95": 4.833,
+          "p99": 5.791010000000002,
+          "max": 37.583,
+          "sum": 261108.406,
+          "calls": 60000
+        },
+        "filter": {
+          "p50": 28.333,
+          "p95": 31.334,
+          "p99": 36.417,
+          "max": 118.584,
+          "sum": 1721351.216,
+          "calls": 60000
+        },
+        "processor": {
+          "p50": 132.083,
+          "p95": 144.042,
+          "p99": 159.167,
+          "max": 14054.625,
+          "sum": 8041291.159,
+          "calls": 60000
+        },
+        "consumer": {
+          "p50": 183.334,
+          "p95": 202.917,
+          "p99": 296.37833000000063,
+          "max": 14116.667,
+          "sum": 11219811.363,
+          "calls": 60000
+        }
+      },
+      "retirement": {
+        "eligible_segment_samples": 0,
+        "total_segment_samples": 480000,
+        "events": [],
+        "all_spatial_wall_upper_bound_ns": 0,
+        "actual_retirement_enabled": false,
+        "limitation": "Spatial upper bound is perturbed wall time, not incremental retired-segment CPU savings."
+      },
+      "limitation": "Diagnostic wrappers and retirement shadow add overhead; nested stages must not be summed; not a scored performance run."
+    },
+    {
+      "case": "field_run_20261015_02",
+      "frames": 24463,
+      "wire_same_pct": 97.98871719401521,
+      "wire_segment_same_pct": 99.73836971629466,
+      "raw_empty_pct": 0.0,
+      "input_sha256": "cfa96ce89d12a65804696268ed45eaa1795cddef1027f05080dddd09a356594f",
+      "mode": "run",
+      "activity": {
+        "settled_input": 22612,
+        "formal_calls": 24463,
+        "idle_eligible": 7270,
+        "with_active_contact": 2107,
+        "with_narrow_candidate": 4
+      },
+      "stage_wall_us": {
+        "decode": {
+          "p50": 4.417,
+          "p95": 5.208,
+          "p99": 5.917,
+          "max": 33.75,
+          "sum": 111245.407,
+          "calls": 24463
+        },
+        "runtime": {
+          "p50": 3.958,
+          "p95": 4.625,
+          "p99": 5.542,
+          "max": 32.792,
+          "sum": 94138.301,
+          "calls": 24463
+        },
+        "filter": {
+          "p50": 8.333,
+          "p95": 30.125,
+          "p99": 38.375,
+          "max": 90.917,
+          "sum": 253169.348,
+          "calls": 24463
+        },
+        "processor": {
+          "p50": 17.208,
+          "p95": 26.833,
+          "p99": 35.724580000000046,
+          "max": 493.083,
+          "sum": 382785.428,
+          "calls": 24463
+        },
+        "consumer": {
+          "p50": 45.416,
+          "p95": 82.5,
+          "p99": 136.89646000000016,
+          "max": 29140.417,
+          "sum": 1415652.81,
+          "calls": 24463
+        }
+      },
+      "retirement": {
+        "eligible_segment_samples": 0,
+        "total_segment_samples": 195704,
+        "events": [],
+        "all_spatial_wall_upper_bound_ns": 0,
+        "actual_retirement_enabled": false,
+        "limitation": "Spatial upper bound is perturbed wall time, not incremental retired-segment CPU savings."
+      },
+      "limitation": "Diagnostic wrappers and retirement shadow add overhead; nested stages must not be summed; not a scored performance run."
+    },
+    {
+      "case": "field_walk_full_02",
+      "frames": 29867,
+      "wire_same_pct": 95.83472845376014,
+      "wire_segment_same_pct": 99.46259961159848,
+      "raw_empty_pct": 0.0,
+      "input_sha256": "818031fe4a650aafb08eeb6fb180af59a4c4369901f16fbd6cbe74a12a17cb5b",
+      "mode": "walk",
+      "activity": {
+        "settled_input": 25481,
+        "formal_calls": 29867,
+        "idle_eligible": 5371,
+        "with_active_contact": 7483,
+        "with_narrow_candidate": 628
+      },
+      "stage_wall_us": {
+        "decode": {
+          "p50": 4.417,
+          "p95": 5.0,
+          "p99": 5.79134,
+          "max": 45.583,
+          "sum": 134809.442,
+          "calls": 29867
+        },
+        "runtime": {
+          "p50": 3.916,
+          "p95": 4.541,
+          "p99": 5.375,
+          "max": 37.083,
+          "sum": 114729.58,
+          "calls": 29867
+        },
+        "filter": {
+          "p50": 8.042,
+          "p95": 29.75,
+          "p99": 36.75,
+          "max": 94.208,
+          "sum": 342918.422,
+          "calls": 29867
+        },
+        "processor": {
+          "p50": 11.25,
+          "p95": 37.084,
+          "p99": 45.917,
+          "max": 13120.75,
+          "sum": 460455.945,
+          "calls": 29867
+        },
+        "consumer": {
+          "p50": 38.625,
+          "p95": 92.0837,
+          "p99": 139.19572000000002,
+          "max": 13150.417,
+          "sum": 1599280.23,
+          "calls": 29867
+        }
+      },
+      "retirement": {
+        "eligible_segment_samples": 0,
+        "total_segment_samples": 238936,
+        "events": [],
+        "all_spatial_wall_upper_bound_ns": 0,
+        "actual_retirement_enabled": false,
+        "limitation": "Spatial upper bound is perturbed wall time, not incremental retired-segment CPU savings."
+      },
+      "limitation": "Diagnostic wrappers and retirement shadow add overhead; nested stages must not be summed; not a scored performance run."
+    }
+  ],
+  "shadow_adversarial": [
+    {
+      "trigger": "return",
+      "revoked_on_trigger_sample": true,
+      "events": [
+        {
+          "sample": 20,
+          "segment": 0,
+          "action": "retire_mark"
+        },
+        {
+          "sample": 20,
+          "segment": 1,
+          "action": "retire_mark"
+        },
+        {
+          "sample": 20,
+          "segment": 2,
+          "action": "retire_mark"
+        },
+        {
+          "sample": 25,
+          "segment": 0,
+          "action": "reactivate"
+        }
+      ]
+    },
+    {
+      "trigger": "reverse",
+      "revoked_on_trigger_sample": true,
+      "events": [
+        {
+          "sample": 20,
+          "segment": 0,
+          "action": "retire_mark"
+        },
+        {
+          "sample": 20,
+          "segment": 1,
+          "action": "retire_mark"
+        },
+        {
+          "sample": 20,
+          "segment": 2,
+          "action": "retire_mark"
+        },
+        {
+          "sample": 25,
+          "action": "revoke_all"
+        }
+      ]
+    },
+    {
+      "trigger": "invalid",
+      "revoked_on_trigger_sample": true,
+      "events": [
+        {
+          "sample": 20,
+          "segment": 0,
+          "action": "retire_mark"
+        },
+        {
+          "sample": 20,
+          "segment": 1,
+          "action": "retire_mark"
+        },
+        {
+          "sample": 20,
+          "segment": 2,
+          "action": "retire_mark"
+        },
+        {
+          "sample": 25,
+          "action": "revoke_all"
+        }
+      ]
+    },
+    {
+      "trigger": "unknown_direction",
+      "revoked_on_trigger_sample": true,
+      "events": [
+        {
+          "sample": 20,
+          "segment": 0,
+          "action": "retire_mark"
+        },
+        {
+          "sample": 20,
+          "segment": 1,
+          "action": "retire_mark"
+        },
+        {
+          "sample": 20,
+          "segment": 2,
+          "action": "retire_mark"
+        },
+        {
+          "sample": 25,
+          "action": "revoke_all"
+        }
+      ]
+    },
+    {
+      "trigger": "pending",
+      "revoked_on_trigger_sample": true,
+      "events": [
+        {
+          "sample": 20,
+          "segment": 0,
+          "action": "retire_mark"
+        },
+        {
+          "sample": 20,
+          "segment": 1,
+          "action": "retire_mark"
+        },
+        {
+          "sample": 20,
+          "segment": 2,
+          "action": "retire_mark"
+        },
+        {
+          "sample": 25,
+          "segment": 0,
+          "action": "reactivate"
+        }
+      ]
+    },
+    {
+      "trigger": "gap",
+      "revoked_on_trigger_sample": true,
+      "events": [
+        {
+          "sample": 20,
+          "segment": 0,
+          "action": "retire_mark"
+        },
+        {
+          "sample": 20,
+          "segment": 1,
+          "action": "retire_mark"
+        },
+        {
+          "sample": 20,
+          "segment": 2,
+          "action": "retire_mark"
+        },
+        {
+          "sample": 27,
+          "action": "revoke_all"
+        }
+      ]
+    },
+    {
+      "trigger": "stream",
+      "revoked_on_trigger_sample": true,
+      "events": [
+        {
+          "sample": 20,
+          "segment": 0,
+          "action": "retire_mark"
+        },
+        {
+          "sample": 20,
+          "segment": 1,
+          "action": "retire_mark"
+        },
+        {
+          "sample": 20,
+          "segment": 2,
+          "action": "retire_mark"
+        },
+        {
+          "sample": 25,
+          "action": "revoke_all"
+        }
+      ]
+    }
+  ],
+  "source_verification": {
+    "sources_and_inputs_unchanged": true,
+    "python_sources": 126
+  }
+}
